@@ -22,10 +22,7 @@ const Root: React.FC = () => {
 				<Layout max="md">
 					<Stack direction="column" alignItems="center">
 						<Image src={logo} alt="JShare" width="300" />
-						<Text textAlign="center">
-							JShare makes splitting expenses as easy as splitting
-							a pizza. Sign in to get started.
-						</Text>
+
 						<Button
 							mt="4"
 							colorScheme="green"

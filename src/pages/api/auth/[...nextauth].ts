@@ -32,7 +32,6 @@ providers.push(
 		clientId: GOOGLE_OAUTH_CLIENT_ID,
 		clientSecret: GOOGLE_OAUTH_CLIENT_SECRET,
 		profile: (profile) => {
-			console.log('PROFILE', profile);
 			return {
 				id: profile.sub,
 				name: profile.name,
@@ -46,6 +45,16 @@ providers.push(
 	GitHubProvider({
 		clientId: GITHUB_OAUTH_CLIENT_ID,
 		clientSecret: GITHUB_OAUTH_CLIENT_SECRET,
+		profile: (profile) => {
+			return {
+				id: profile.node_id,
+				name: profile.name,
+				firstName: profile.name?.split(' ')[0] ?? '',
+				lastName: profile.name?.split(' ')[1] ?? '',
+				email: profile.email,
+				image: profile.avatar_url,
+			};
+		},
 	}),
 );
 
