@@ -1,0 +1,8 @@
+.chakra-popover__popper.fixed-to-bottom {
+	opacity: 0.2;
+}
+
+html, body, #__next {
+	background: white;
+	height: 100%;
+}

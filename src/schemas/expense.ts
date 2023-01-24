@@ -1,0 +1,28 @@
+import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
+import { z } from 'zod';
+
+export const createExpenseSchema = z.object({
+	title: z.string().optional().default(''),
+	amount: z.number().min(1, 'Please enter an amount'),
+	groupId: z.string().min(1, 'Please enter a group id'),
+	payerId: z.string().min(1, 'Please enter a payer id'),
+	shares: z.record(
+		z.string(),
+		z.object({ enabled: z.boolean(), amount: z.number().optional() }),
+	),
+});
+
+export type CreateExpenseSchema = z.infer<typeof createExpenseSchema>;
+
+export type ExpenseWithSenderAndShares = Expense & {
+	sender: User | null;
+	shares: ExpenseShareWithMember[];
+};
+
+export const createExpenseShareSchema = z.object({
+	memberId: z.string().min(1, 'Please enter a member id'),
+	amount: z.number().nullable(),
+	locked: z.boolean(),
+});
+
+export type CreateExpenseShareSchema = z.infer<typeof createExpenseShareSchema>;
