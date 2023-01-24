@@ -50,7 +50,13 @@ const GroupMessagesFooter = (props: Props) => {
 			borderTop="1px solid"
 			borderColor="gray.200"
 		>
-			<Stack background="white" direction="row" alignItems="center" p="2">
+			<Stack
+				background="white"
+				direction="row"
+				alignItems="center"
+				p="2"
+				pb="6"
+			>
 				<Input
 					pr="4.5rem"
 					placeholder="Write a message"

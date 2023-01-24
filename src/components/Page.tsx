@@ -23,7 +23,7 @@ const Page = (props: Props) => {
 		appBar,
 		appBarHeight = '72px',
 		footer,
-		footerHeight = '60px',
+		footerHeight = '72px',
 		wrapperProps,
 		contentProps,
 	} = props;
@@ -38,7 +38,7 @@ const Page = (props: Props) => {
 				/>
 			</Head>
 			<Stack
-				height="100%"
+				height="100vh"
 				maxHeight="100%"
 				direction="column"
 				spacing={0}
