@@ -2,6 +2,7 @@
 	"display": "standalone",
 	"short_name": "JShare",
 	"background_color": "#FFF8F8",
+	"start_url": "./",
 	"icons": [
 		{
 			"src": "manifest-icon-192.maskable.png",
