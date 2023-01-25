@@ -7,6 +7,8 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyDetails> = {
 		symbol: '$',
 		symbolPosition: 'before',
 		symbolSpacing: false,
+		decimalSeparator: '.',
+		thousandSeparator: ',',
 	},
 	EUR: {
 		code: 'EUR',
@@ -14,6 +16,8 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyDetails> = {
 		name: 'Euro',
 		symbolPosition: 'before',
 		symbolSpacing: false,
+		decimalSeparator: ',',
+		thousandSeparator: '.',
 	},
 	GBP: {
 		code: 'GBP',
@@ -21,6 +25,8 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyDetails> = {
 		name: 'Pound sterling',
 		symbolPosition: 'before',
 		symbolSpacing: false,
+		decimalSeparator: '.',
+		thousandSeparator: ',',
 	},
 	CHF: {
 		code: 'CHF',
@@ -28,5 +34,7 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyDetails> = {
 		name: 'Swiss franc',
 		symbolPosition: 'before',
 		symbolSpacing: true,
+		decimalSeparator: ',',
+		thousandSeparator: '.',
 	},
 };

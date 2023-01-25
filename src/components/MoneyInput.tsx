@@ -1,52 +1,51 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 
-import {
-	NumberInput,
-	NumberInputField,
-	NumberInputProps,
-} from '@chakra-ui/react';
+import { Input, InputProps } from '@chakra-ui/react';
 import { CurrencyCode } from '@prisma/client';
+import { NumericFormat } from 'react-number-format';
 
-import {
-	asMajorUnits,
-	asMinorUnits,
-	getCurrencyDetails,
-} from '@/modules/money';
+import { asMinorUnits } from '@/modules/money';
+import { formatAmount, getNumericFormatProps } from '@/modules/money/format';
 
-interface Props extends Omit<NumberInputProps, 'onChange' | 'value'> {
+interface Props extends Omit<InputProps, 'onChange' | 'value'> {
 	initialValue: number;
 	onChange: (value: number) => void;
 	currency: CurrencyCode;
 }
 
 const MoneyInput = (props: Props) => {
-	const { initialValue, onChange, currency, ...numberInputProps } = props;
-	const [inputValue, setInputValue] = React.useState<string>(
-		asMajorUnits(initialValue),
+	const { initialValue, onChange, currency, ...inputProps } = props;
+	console.log('INITIAL VALUE', initialValue);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInputValue(e.target.value);
+	};
+
+	const handleValueChange = ({ floatValue }: { floatValue: number }) => {
+		onChange(asMinorUnits(floatValue));
+	};
+
+	const numericFormatProps = useMemo(() => {
+		return getNumericFormatProps(currency);
+	}, [currency]);
+
+	const [inputValue, setInputValue] = useState<string>(
+		formatAmount(initialValue, currency),
 	);
-	const currencyDetails = getCurrencyDetails(currency);
-	const symbol = currencyDetails.symbol;
-
-	const format = (value: string) => {
-		return `${symbol}${value}`;
-	};
-	const parse = (value: string) => value.replace(symbol, '');
-
-	const handleValueChange = (valueString: string, valueNumber: number) => {
-		setInputValue(parse(valueString));
-		onChange(asMinorUnits(valueNumber));
-	};
 
 	return (
-		<NumberInput
-			onChange={handleValueChange}
-			value={format(inputValue)}
-			precision={2}
-			min={0}
-			{...numberInputProps}
-		>
-			<NumberInputField textAlign="center" />
-		</NumberInput>
+		<Input
+			as={NumericFormat}
+			value={inputValue}
+			onChange={handleChange}
+			onValueChange={handleValueChange}
+			placeholder="Amount"
+			textAlign="center"
+			allowNegative={false}
+			maxLength={20}
+			{...(numericFormatProps as any)}
+			{...inputProps}
+		/>
 	);
 };
 

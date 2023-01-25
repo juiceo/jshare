@@ -8,6 +8,8 @@ export const zCurrencyDetails = z.object({
 	symbol: z.string(),
 	symbolPosition: z.enum(['before', 'after']),
 	symbolSpacing: z.boolean(),
+	decimalSeparator: z.enum(['.', ',']),
+	thousandSeparator: z.enum(['.', ',']),
 });
 
 export type CurrencyDetails = z.infer<typeof zCurrencyDetails>;
