@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Box, BoxProps, Stack, StackProps } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
 
 interface Props {
 	children: React.ReactNode;
 	appBar?: React.ReactNode;
-	appBarHeight?: string;
 	footer?: React.ReactNode;
-	footerHeight?: string;
 	title?: string;
 	description?: string;
 	wrapperProps?: StackProps;
 	contentProps?: BoxProps;
 }
+
+const MotionBox = motion(Box);
 
 const Page = (props: Props) => {
 	const {
@@ -21,12 +22,39 @@ const Page = (props: Props) => {
 		description,
 		children,
 		appBar,
-		appBarHeight = '72px',
 		footer,
-		footerHeight = '72px',
 		wrapperProps,
 		contentProps,
 	} = props;
+
+	const [appBarHeight, setAppBarHeight] = useState<number>(0);
+	const [footerHeight, setFooterHeight] = useState<number>(0);
+
+	const appBarRef = useRef<HTMLDivElement>(null);
+	const footerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (!appBarRef.current) return; // wait for the elementRef to be available
+		const resizeObserver = new ResizeObserver(() => {
+			setAppBarHeight(appBarRef.current?.clientHeight ?? 0);
+			// Do what you want to do when the size of the element changes
+		});
+		resizeObserver.observe(appBarRef.current);
+		return () => resizeObserver.disconnect(); // clean up
+	}, []);
+
+	useEffect(() => {
+		if (!footerRef.current) return; // wait for the elementRef to be available
+		const resizeObserver = new ResizeObserver(() => {
+			setFooterHeight(footerRef.current?.clientHeight ?? 0);
+			// Do what you want to do when the size of the element changes
+		});
+		resizeObserver.observe(footerRef.current);
+		return () => resizeObserver.disconnect(); // clean up
+	}, []);
+
+	console.log('FOOTER HEIGHT', footerHeight);
+	console.log('APP BAR HEIGHT', appBarHeight);
 
 	return (
 		<>
@@ -38,13 +66,10 @@ const Page = (props: Props) => {
 				/>
 			</Head>
 			<Stack
-				height="100vh"
-				maxHeight="100%"
+				minHeight="100%"
 				direction="column"
 				spacing={0}
 				background="theme.pageBackground"
-				paddingTop={!!appBar ? appBarHeight : 0}
-				paddingBottom={!!footer ? footerHeight : 0}
 				{...wrapperProps}
 			>
 				{!!appBar && (
@@ -54,13 +79,28 @@ const Page = (props: Props) => {
 						left="0"
 						right="0"
 						zIndex={1000}
+						ref={appBarRef}
 					>
 						{appBar}
 					</Box>
 				)}
-				<Box flex={1} {...contentProps}>
+				<MotionBox
+					animate={{ height: appBarHeight }}
+					id="footer-filler"
+				/>
+				<MotionBox
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ delay: 0.1, opacity: { duration: 0.2 } }}
+					flex={1}
+					{...contentProps}
+				>
 					{children}
-				</Box>
+				</MotionBox>
+				<MotionBox
+					animate={{ height: footerHeight }}
+					id="footer-filler"
+				/>
 				{!!footer && (
 					<Box
 						position="fixed"
@@ -68,6 +108,7 @@ const Page = (props: Props) => {
 						left="0"
 						right="0"
 						zIndex={1000}
+						ref={footerRef}
 					>
 						{footer}
 					</Box>
