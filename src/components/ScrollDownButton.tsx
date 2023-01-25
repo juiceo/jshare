@@ -25,8 +25,6 @@ const ScrollDownButton = (props: ScrollDownButtonProps) => {
 			alignItems="center"
 			justifyContent="center"
 			position="relative"
-			border="2px solid black"
-			borderColor="green.300"
 		>
 			<RiArrowDownSLine color="inherit" size={24} />
 		</Button>

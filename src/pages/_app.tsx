@@ -6,6 +6,7 @@ import type { Session } from 'next-auth';
 import { SessionProvider, getSession } from 'next-auth/react';
 import type { AppType } from 'next/app';
 
+import { usePreserveScroll } from '@/hooks/usePreserveScroll';
 import { trpc } from '@/utils/trpc';
 
 const theme = extendTheme({
@@ -31,6 +32,7 @@ const App: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps,
 }) => {
+	usePreserveScroll();
 	return (
 		<ChakraProvider theme={theme}>
 			<SessionProvider session={pageProps.session}>
