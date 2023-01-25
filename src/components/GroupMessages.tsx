@@ -2,15 +2,18 @@ import React, { useMemo } from 'react';
 
 import { Box, Stack } from '@chakra-ui/react';
 import { Message, User } from '@prisma/client';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { chain } from 'lodash';
 import { useSession } from 'next-auth/react';
+import { RiArrowDownCircleLine } from 'react-icons/ri';
+import { useInView } from 'react-intersection-observer';
 
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { MessageWithSender } from '@/schemas/message';
 
 import ExpenseItem from './ExpenseItem';
 import MessageItem from './MessageItem';
+import ScrollDownButton from './ScrollDownButton';
 
 interface Props {
 	membersById: Record<string, User>;
@@ -18,6 +21,8 @@ interface Props {
 	expenses: ExpenseWithSenderAndShares[];
 	loading: boolean;
 }
+
+const MotionBox = motion(Box);
 
 type MessageWithType =
 	| {
@@ -32,6 +37,11 @@ type MessageWithType =
 const GroupMessages = (props: Props) => {
 	const { membersById, messages, expenses, loading } = props;
 	const session = useSession();
+
+	const { ref, inView: isScrolledDown } = useInView({
+		/* Optional options */
+		threshold: 0,
+	});
 
 	const itemsWithType = useMemo(() => {
 		const messageItems: MessageWithType[] = messages.map((message) => ({
@@ -56,18 +66,26 @@ const GroupMessages = (props: Props) => {
 			.value();
 	}, [messages, expenses, membersById]);
 
+	const handleScrollDown = () => {
+		window.scrollTo({
+			top: document.body.scrollHeight,
+			behavior: 'smooth',
+		});
+	};
+
 	return (
 		<Box
-			height="100%"
 			p="2"
-			overflow="auto"
-			scrollBehavior="smooth"
 			display="flex"
 			flexDirection="column-reverse"
 			position="relative"
 		>
 			{!loading && (
-				<Stack spacing={2} direction="column">
+				<Stack
+					spacing={2}
+					direction="column"
+					sx={{ position: 'relative' }}
+				>
 					<AnimatePresence initial={false}>
 						{itemsWithType.map((item, index) => {
 							const senderId = item.value.senderId;
@@ -106,7 +124,39 @@ const GroupMessages = (props: Props) => {
 								}
 							}
 						})}
+						{!isScrolledDown ? (
+							<MotionBox
+								initial={{
+									opacity: 0,
+								}}
+								animate={{
+									opacity: 1,
+								}}
+								exit={{
+									opacity: 0,
+								}}
+								sx={{
+									position: 'fixed',
+									bottom: '80px',
+									right: '8px',
+								}}
+							>
+								<ScrollDownButton onClick={handleScrollDown} />
+							</MotionBox>
+						) : null}
 					</AnimatePresence>
+					<Box
+						ref={ref}
+						sx={{
+							position: 'absolute',
+							height: '200px',
+							width: '1px',
+							bottom: 0,
+							left: 0,
+							right: 0,
+							opacity: 0,
+						}}
+					></Box>
 				</Stack>
 			)}
 		</Box>
