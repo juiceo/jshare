@@ -38,6 +38,19 @@ const Root: React.FC = () => {
 				<Layout max="md">
 					<Stack direction="column" alignItems="center">
 						<Image src={logo} alt="JShare" width="300" />
+						<Text textAlign="center">
+							Welcome!
+							<br />
+							<br />
+							JShare is an expense sharing app that was built as a
+							hobby project to replace the discontinued WeShare.
+							It helps your group of friends to easily keep track
+							of who paid for what, and crunches the numbers for
+							you when its time to settle the debt.
+							<br />
+							<br />
+							Log in to give it a try!
+						</Text>
 					</Stack>
 				</Layout>
 			</Page>
