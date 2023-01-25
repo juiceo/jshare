@@ -15,7 +15,6 @@ interface Props extends Omit<InputProps, 'onChange' | 'value'> {
 
 const MoneyInput = (props: Props) => {
 	const { initialValue, onChange, currency, ...inputProps } = props;
-	console.log('INITIAL VALUE', initialValue);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(e.target.value);

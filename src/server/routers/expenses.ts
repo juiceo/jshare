@@ -41,7 +41,7 @@ export const expenseRouter = trpc.router({
 					(acc, [memberId, share]) => {
 						acc.push({
 							memberId,
-							amount: amountByMember[memberId],
+							amount: amountByMember[memberId] ?? 0,
 							locked: share.amount !== undefined,
 						});
 						return acc;

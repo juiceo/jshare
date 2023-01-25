@@ -14,6 +14,13 @@ export const isUserInGroup = (userId: string, group: GroupMembers) => {
 	);
 };
 
+export const getAllGroupMembersById = (group: GroupWithMembers) => {
+	return getAllGroupMembers(group).reduce((result, member) => {
+		result[member.id] = member;
+		return result;
+	}, {} as { [id: string]: User });
+};
+
 export const getAllGroupMembers = (group: GroupWithMembers) => {
 	return uniqBy([group.owner, ...group.members], 'id');
 };

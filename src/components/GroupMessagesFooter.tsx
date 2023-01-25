@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
 
-import {
-	Button,
-	IconButton,
-	Input,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-	Stack,
-} from '@chakra-ui/react';
+import { IconButton, Input, Stack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { RiAddLine, RiSendPlaneFill } from 'react-icons/ri';
 
 import { Routes } from '@/routing';
@@ -24,7 +15,6 @@ interface Props {
 
 const GroupMessagesFooter = (props: Props) => {
 	const { group } = props;
-	const router = useRouter();
 	const sendMessage = trpc.messages.send.useMutation();
 	const [inputValue, setInputValue] = useState<string>('');
 
@@ -119,31 +109,16 @@ const GroupMessagesFooter = (props: Props) => {
 						}}
 					>
 						<Stack direction="row" spacing="2">
-							<Button
-								size="md"
-								width="40px"
-								height="40px"
-								borderRadius="20px"
-								colorScheme="green"
-								onClick={() =>
-									router.push(Routes.CreateExpense(group.id))
-								}
-							>
-								$
-							</Button>
-							<Menu>
-								<MenuButton
-									as={IconButton}
-									aria-label="More"
-									icon={<RiAddLine size={18} />}
+							<Link href={Routes.CreateExpense(group.id)}>
+								<IconButton
+									aria-label="Add expense"
 									borderRadius="50%"
-								/>
-								<MenuList>
-									<MenuItem>Action 1</MenuItem>
-									<MenuItem>Action 2</MenuItem>
-									<MenuItem>Action 3</MenuItem>
-								</MenuList>
-							</Menu>
+									onClick={handleSendMessage}
+									colorScheme="green"
+								>
+									<RiAddLine size={18} />
+								</IconButton>
+							</Link>
 						</Stack>
 					</motion.div>
 				</Stack>

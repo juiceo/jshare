@@ -38,7 +38,7 @@ const GroupMessages = (props: Props) => {
 			type: 'message',
 			value: {
 				...message,
-				sender: membersById[message.senderId],
+				sender: membersById[message.senderId] ?? null,
 			},
 		}));
 
@@ -46,7 +46,7 @@ const GroupMessages = (props: Props) => {
 			type: 'expense',
 			value: {
 				...expense,
-				sender: membersById[expense.senderId],
+				sender: membersById[expense.senderId] ?? null,
 			},
 		}));
 

@@ -67,7 +67,7 @@ const ExpenseSharesList = (props: Props) => {
 							currency={currency}
 							key={member.id}
 							user={member}
-							amount={amountByMember[member.id] ?? null}
+							amount={amountByMember[member.id] ?? 0}
 							total={total}
 							enabled={value[member.id]?.enabled ?? false}
 							onToggle={(enabled) =>

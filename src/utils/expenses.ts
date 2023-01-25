@@ -78,7 +78,9 @@ export const getAmountByMember = (args: {
 	if (membersLeft.length > 0 && difference > 0) {
 		range(difference).forEach((index) => {
 			const memberId = membersLeft[index % membersLeft.length];
-			amountByMember[memberId] += 1;
+			if (memberId) {
+				amountByMember[memberId] += 1;
+			}
 		});
 	}
 
@@ -92,14 +94,20 @@ export const getExpenseSummaryByMember = (
 		if (!result[expense.payerId]) {
 			result[expense.payerId] = { paid: 0, owed: 0, balance: 0 };
 		}
-		result[expense.payerId].paid += expense.amount;
-		result[expense.payerId].balance += expense.amount;
+		const summary = result[expense.payerId];
+		if (summary) {
+			summary.paid += expense.amount;
+			summary.balance += expense.amount;
+		}
 		expense.shares.forEach((share) => {
 			if (!result[share.memberId]) {
 				result[share.memberId] = { paid: 0, owed: 0, balance: 0 };
 			}
-			result[share.memberId].owed += share.amount;
-			result[share.memberId].balance -= share.amount;
+			const summary = result[share.memberId];
+			if (summary) {
+				summary.owed += share.amount;
+				summary.balance -= share.amount;
+			}
 		});
 
 		return result;

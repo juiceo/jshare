@@ -14,6 +14,7 @@ import {
 import { sumBy } from 'lodash';
 import { useRouter } from 'next/router';
 
+import AmountWithLabel from '@/components/AmountWithLabel';
 import AppBar from '@/components/AppBar';
 import BalanceList from '@/components/BalanceList';
 import ExpenseList from '@/components/ExpenseList';
@@ -83,19 +84,12 @@ const OverviewPage = (props: Props) => {
 					spacing="8"
 					p="8"
 				>
-					<Stack direction="column" alignItems="center">
-						{expenses.isLoading ? (
-							<CircularProgress
-								isIndeterminate
-								color="green.300"
-							/>
-						) : (
-							<Heading fontSize="3xl">
-								{formatAmount(total, group.currency)}
-							</Heading>
-						)}
-						<Text fontSize="xs">Total</Text>
-					</Stack>
+					<AmountWithLabel
+						loading={expenses.isLoading}
+						label="Total"
+						amount={total}
+						currency={group.currency}
+					/>
 				</Stack>
 				<Tabs
 					index={tabIndex}

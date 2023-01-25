@@ -10,7 +10,7 @@ export const getUserShortName = (user: User | null) => {
 	const nameParts = user.name?.split(' ') ?? [];
 
 	if (nameParts.length > 1) {
-		return `${nameParts[0]} ${nameParts[1][0]}`;
+		return `${nameParts[0]} ${nameParts[1]?.[0]}`;
 	}
 
 	return user.firstName || user.name?.split(' ')[0];
