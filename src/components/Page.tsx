@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Box, BoxProps, Stack, StackProps } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 
 interface Props {
@@ -53,9 +53,6 @@ const Page = (props: Props) => {
 		return () => resizeObserver.disconnect(); // clean up
 	}, []);
 
-	console.log('FOOTER HEIGHT', footerHeight);
-	console.log('APP BAR HEIGHT', appBarHeight);
-
 	return (
 		<>
 			<Head>
@@ -65,55 +62,52 @@ const Page = (props: Props) => {
 					content={description ?? "It's like WeShare, but better!"}
 				/>
 			</Head>
-			<Stack
-				minHeight="100%"
-				direction="column"
-				spacing={0}
-				background="theme.pageBackground"
-				{...wrapperProps}
-			>
-				{!!appBar && (
-					<Box
-						position="fixed"
-						top="0"
-						left="0"
-						right="0"
-						zIndex={1000}
-						ref={appBarRef}
-					>
-						{appBar}
-					</Box>
-				)}
-				<MotionBox
-					animate={{ height: appBarHeight }}
-					id="footer-filler"
-				/>
-				<MotionBox
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ delay: 0.1, opacity: { duration: 0.2 } }}
-					flex={1}
-					{...contentProps}
+			<AnimatePresence>
+				<Stack
+					minHeight="100%"
+					direction="column"
+					spacing={0}
+					background="theme.pageBackground"
+					{...wrapperProps}
 				>
-					{children}
-				</MotionBox>
-				<MotionBox
-					animate={{ height: footerHeight }}
-					id="footer-filler"
-				/>
-				{!!footer && (
-					<Box
-						position="fixed"
-						bottom="0"
-						left="0"
-						right="0"
-						zIndex={1000}
-						ref={footerRef}
+					{!!appBar && (
+						<Box
+							position="fixed"
+							top="0"
+							left="0"
+							right="0"
+							zIndex={1000}
+							ref={appBarRef}
+						>
+							{appBar}
+						</Box>
+					)}
+					<Box height={`${appBarHeight}px`} id="footer-filler" />
+					<MotionBox
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ delay: 0.1, opacity: { duration: 0.2 } }}
+						flex={1}
+						{...contentProps}
 					>
-						{footer}
-					</Box>
-				)}
-			</Stack>
+						{children}
+					</MotionBox>
+					<Box height={`${footerHeight}px`} id="footer-filler" />
+					{!!footer && (
+						<Box
+							position="fixed"
+							bottom="0"
+							left="0"
+							right="0"
+							zIndex={1000}
+							ref={footerRef}
+						>
+							{footer}
+						</Box>
+					)}
+				</Stack>
+			</AnimatePresence>
 		</>
 	);
 };
