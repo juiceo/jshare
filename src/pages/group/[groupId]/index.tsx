@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { User } from '@prisma/client';
 import background from 'assets/full-bloom.png';
@@ -35,11 +35,23 @@ const GroupPage = (props: Props) => {
 	trpc.messages.onSendMessageToGroup.useSubscription(group.id, {
 		onData: (message) => {
 			setLocalMessages((prev) => [...prev, message]);
+			setTimeout(() => {
+				window.scrollTo({
+					top: document.body.scrollHeight,
+					behavior: 'smooth',
+				});
+			}, 200);
 		},
 	});
 	trpc.expenses.onCreateExpenseInGroup.useSubscription(group.id, {
 		onData: (expense) => {
 			setLocalExpenses((prev) => [...prev, expense]);
+			setTimeout(() => {
+				window.scrollTo({
+					top: document.body.scrollHeight,
+					behavior: 'smooth',
+				});
+			}, 200);
 		},
 	});
 
@@ -56,11 +68,22 @@ const GroupPage = (props: Props) => {
 	const loading =
 		remoteMessages.isInitialLoading || remoteExpenses.isInitialLoading;
 
+	useEffect(() => {
+		setTimeout(() => {
+			window.scrollTo({
+				top: document.body.scrollHeight,
+			});
+		}, 200);
+	}, [remoteMessages.isFetched]);
+
 	return (
 		<Page
 			title={group.name}
 			appBar={<GroupHeader group={group} />}
 			footer={<GroupMessagesFooter group={group} />}
+			wrapperProps={{
+				flexDirection: 'column-reverse',
+			}}
 		>
 			<GroupMessages
 				messages={messages}
