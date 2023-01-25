@@ -42,7 +42,12 @@ const BalanceList = (props: BalanceListProps) => {
 			balance === 0 ? 'gray.500' : balance > 0 ? 'green.500' : 'red.500';
 
 		return (
-			<Text fontSize="xl" fontWeight="bold" color={textColor}>
+			<Text
+				fontSize="xl"
+				fontWeight="bold"
+				color={textColor}
+				textAlign="right"
+			>
 				{formatAmount(balance, currency)}
 			</Text>
 		);
@@ -61,8 +66,10 @@ const BalanceList = (props: BalanceListProps) => {
 								alignItems="flex-start"
 								spacing={0}
 							>
-								<Text>{getUserFullName(member)}</Text>
-								<Text fontSize="xs">
+								<Text textAlign="left">
+									{getUserFullName(member)}
+								</Text>
+								<Text textAlign="left" fontSize="xs">
 									{`Paid ${formatAmount(
 										summary.paid,
 										currency,

@@ -47,7 +47,9 @@ const ExpenseList = (props: ExpenseListProps) => {
 									alignItems="flex-start"
 									spacing={0}
 								>
-									<Text>{expense.title}</Text>
+									<Text textAlign="left" fontSize="md">
+										{expense.title}
+									</Text>
 									<Text fontSize="xs" textAlign="left">
 										{`${moment(expense.createdAt).format(
 											'MMM Do, YYYY',

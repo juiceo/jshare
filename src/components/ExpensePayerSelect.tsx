@@ -19,6 +19,8 @@ import { GroupWithMembers } from '@/schemas';
 import { getAllGroupMembers } from '@/utils/groups';
 import { getUserShortName } from '@/utils/users';
 
+import Layout from './Layout';
+
 interface Props {
 	group: GroupWithMembers;
 	payerId: string;
@@ -85,8 +87,14 @@ const ExpensePayerSelect = (props: Props) => {
 							Who paid?
 						</Text>
 					</Stack>
-					<Box maxWidth="600px" width="100%" margin="0 auto">
-						<SimpleGrid columns={3} spacing={3}>
+					<Layout max="md" noMargin>
+						<SimpleGrid
+							columns={3}
+							spacing={3}
+							alignItems="center"
+							justifyContent="center"
+							alignContent="center"
+						>
 							{members.map((member) => {
 								const isSelected = member.id === payerId;
 								const name =
@@ -140,7 +148,7 @@ const ExpensePayerSelect = (props: Props) => {
 								Close
 							</Button>
 						</Stack>
-					</Box>
+					</Layout>
 				</DrawerContent>
 			</Drawer>
 		</Stack>

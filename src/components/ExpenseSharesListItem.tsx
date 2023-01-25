@@ -7,6 +7,7 @@ import {
 	DrawerContent,
 	DrawerOverlay,
 	IconButton,
+	Show,
 	Stack,
 	Text,
 } from '@chakra-ui/react';
@@ -19,6 +20,7 @@ import {
 } from 'react-icons/ri';
 
 import { CurrencyCode, formatAmount } from '@/modules/money';
+import { getUserFullName, getUserShortName } from '@/utils/users';
 
 import MoneyInput from './MoneyInput';
 
@@ -61,7 +63,9 @@ const ExpenseSharesListItem = (props: Props) => {
 		<>
 			<Stack
 				direction="row"
+				alignItems="center"
 				p="4"
+				spacing={3}
 				sx={{
 					transition: 'opacity 0.2s ease-in-out',
 					opacity: enabled ? 1 : 0.3,
@@ -69,7 +73,13 @@ const ExpenseSharesListItem = (props: Props) => {
 			>
 				<Avatar src={user.image ?? ''} />
 				<Stack direction="column" flex={1}>
-					<Text>{user.name}</Text>
+					<Show above="sm">
+						<Text>{getUserFullName(user)}</Text>
+					</Show>
+
+					<Show below="sm">
+						<Text>{getUserShortName(user)}</Text>
+					</Show>
 				</Stack>
 				<Stack direction="row" alignItems="center">
 					<Text>{formatAmount(amount, currency)}</Text>
