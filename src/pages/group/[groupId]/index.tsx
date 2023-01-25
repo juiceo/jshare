@@ -35,23 +35,11 @@ const GroupPage = (props: Props) => {
 	trpc.messages.onSendMessageToGroup.useSubscription(group.id, {
 		onData: (message) => {
 			setLocalMessages((prev) => [...prev, message]);
-			setTimeout(() => {
-				window.scrollTo({
-					top: document.body.scrollHeight,
-					behavior: 'smooth',
-				});
-			}, 200);
 		},
 	});
 	trpc.expenses.onCreateExpenseInGroup.useSubscription(group.id, {
 		onData: (expense) => {
 			setLocalExpenses((prev) => [...prev, expense]);
-			setTimeout(() => {
-				window.scrollTo({
-					top: document.body.scrollHeight,
-					behavior: 'smooth',
-				});
-			}, 200);
 		},
 	});
 
@@ -67,14 +55,6 @@ const GroupPage = (props: Props) => {
 	const expenses = [...(remoteExpenses.data ?? []), ...localExpenses];
 	const loading =
 		remoteMessages.isInitialLoading || remoteExpenses.isInitialLoading;
-
-	useEffect(() => {
-		setTimeout(() => {
-			window.scrollTo({
-				top: document.body.scrollHeight,
-			});
-		}, 200);
-	}, [remoteMessages.isFetched]);
 
 	return (
 		<Page

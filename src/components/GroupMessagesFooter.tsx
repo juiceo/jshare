@@ -17,6 +17,7 @@ const GroupMessagesFooter = (props: Props) => {
 	const { group } = props;
 	const sendMessage = trpc.messages.send.useMutation();
 	const [inputValue, setInputValue] = useState<string>('');
+	const inputRef = React.useRef<HTMLInputElement>(null);
 
 	const handleSendMessage = () => {
 		sendMessage.mutate({
@@ -24,6 +25,13 @@ const GroupMessagesFooter = (props: Props) => {
 			groupId: group.id,
 		});
 		setInputValue('');
+		inputRef.current?.focus();
+		setTimeout(() => {
+			window.scrollTo({
+				top: document.body.scrollHeight,
+				behavior: 'smooth',
+			});
+		}, 200);
 	};
 
 	const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -58,6 +66,7 @@ const GroupMessagesFooter = (props: Props) => {
 					border="none"
 					background="gray.100"
 					flex={1}
+					ref={inputRef}
 				/>
 
 				<Stack direction="row" spacing={0} overflow="hidden">

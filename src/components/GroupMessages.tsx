@@ -1,11 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { Box, Stack } from '@chakra-ui/react';
 import { Message, User } from '@prisma/client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { chain } from 'lodash';
 import { useSession } from 'next-auth/react';
-import { RiArrowDownCircleLine } from 'react-icons/ri';
 import { useInView } from 'react-intersection-observer';
 
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
@@ -42,6 +41,7 @@ const GroupMessages = (props: Props) => {
 		/* Optional options */
 		threshold: 0,
 	});
+	const isScrolledDownRef = React.useRef<boolean>(isScrolledDown);
 
 	const itemsWithType = useMemo(() => {
 		const messageItems: MessageWithType[] = messages.map((message) => ({
@@ -66,11 +66,25 @@ const GroupMessages = (props: Props) => {
 			.value();
 	}, [messages, expenses, membersById]);
 
-	const handleScrollDown = () => {
-		window.scrollTo({
-			top: document.body.scrollHeight,
-			behavior: 'smooth',
-		});
+	const lastItemId = itemsWithType[itemsWithType.length - 1]?.value?.id;
+
+	useEffect(() => {
+		isScrolledDownRef.current = isScrolledDown;
+	}, [isScrolledDown]);
+
+	useEffect(() => {
+		if (isScrolledDownRef.current) {
+			scrollToBottom();
+		}
+	}, [lastItemId]);
+
+	const scrollToBottom = () => {
+		setTimeout(() => {
+			window.scrollTo({
+				top: document.body.scrollHeight,
+				behavior: 'smooth',
+			});
+		}, 100);
 	};
 
 	return (
@@ -141,7 +155,7 @@ const GroupMessages = (props: Props) => {
 									right: '8px',
 								}}
 							>
-								<ScrollDownButton onClick={handleScrollDown} />
+								<ScrollDownButton onClick={scrollToBottom} />
 							</MotionBox>
 						) : null}
 					</AnimatePresence>
