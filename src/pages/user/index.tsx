@@ -26,7 +26,7 @@ import { trpc } from '@/utils/trpc';
 type FormState = {
 	firstName: string;
 	lastName: string;
-	displayName: string;
+	email: string;
 };
 
 type Props = {
@@ -40,7 +40,7 @@ const UserPage: React.FC<Props> = (props) => {
 	const [formState, setFormState] = useState<FormState>({
 		firstName: user.firstName ?? '',
 		lastName: user.lastName ?? '',
-		displayName: user.displayName ?? '',
+		email: user.email ?? '',
 	});
 
 	const handleSubmit = async () => {
@@ -97,16 +97,16 @@ const UserPage: React.FC<Props> = (props) => {
 						</FormControl>
 						<Divider />
 						<FormControl p="4">
-							<FormLabel fontSize="xs">Display name</FormLabel>
+							<FormLabel fontSize="xs">Email</FormLabel>
 							<Input
 								type="text"
-								placeholder="johndoe"
+								placeholder="email@example.com"
 								variant="filled"
-								value={formState.displayName}
+								value={formState.email}
 								onChange={(e) =>
 									setFormState((prev) => ({
 										...prev,
-										displayName: e.target.value,
+										email: e.target.value,
 									}))
 								}
 							/>
