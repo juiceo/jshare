@@ -9,6 +9,7 @@ import { RiArrowLeftLine } from 'react-icons/ri';
 import ExpensePayerSelect from '@/components/ExpensePayerSelect';
 import ExpenseSharesList from '@/components/ExpenseSharesList';
 import MoneyInput from '@/components/MoneyInput';
+import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
@@ -19,7 +20,6 @@ import {
 	getInitialExpenseShares,
 } from '@/utils/expenses';
 import { getAllGroupMembers } from '@/utils/groups';
-import { formatAmount } from '@/utils/money';
 import { trpc } from '@/utils/trpc';
 
 type Props = {
@@ -117,7 +117,7 @@ const ExpenseForm = (props: Props) => {
 						<MoneyInput
 							initialValue={amount}
 							onChange={setAmount}
-							currencySymbol="€"
+							currency={group.currency}
 							background="white"
 							width="full"
 							size="lg"
@@ -132,6 +132,7 @@ const ExpenseForm = (props: Props) => {
 							onChange={handleTitleChange}
 						/>
 						<ExpenseSharesList
+							currency={group.currency}
 							value={shares}
 							onChange={setShares}
 							members={allMembers}
@@ -154,11 +155,11 @@ const ExpenseForm = (props: Props) => {
 						{difference < 0
 							? `${formatAmount(
 									difference * -1,
-									'€',
+									group.currency,
 							  )} too much assigned`
 							: `${formatAmount(
 									difference,
-									'€',
+									group.currency,
 							  )} not assigned to anyone`}
 					</Text>
 				)}

@@ -4,21 +4,22 @@ import { Avatar, Card, CardBody, Divider, Stack, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import { chain } from 'lodash';
 
+import { CurrencyCode, formatAmount } from '@/modules/money';
 import {
 	EMPTY_EXPENSE_SUMMARY,
 	ExpenseSummary,
 	getExpenseSummaryByMember,
 } from '@/utils/expenses';
-import { formatAmount } from '@/utils/money';
 import { getUserFullName } from '@/utils/users';
 
 interface BalanceListProps {
+	currency: CurrencyCode;
 	members: User[];
 	expenses: (Expense & { shares: ExpenseShareWithMember[] })[];
 }
 
 const BalanceList = (props: BalanceListProps) => {
-	const { members, expenses } = props;
+	const { members, expenses, currency } = props;
 	const expenseSummaries = useMemo(
 		() => getExpenseSummaryByMember(expenses),
 		[expenses],
@@ -42,7 +43,7 @@ const BalanceList = (props: BalanceListProps) => {
 
 		return (
 			<Text fontSize="xl" fontWeight="bold" color={textColor}>
-				{formatAmount(balance, '€')}
+				{formatAmount(balance, currency)}
 			</Text>
 		);
 	};
@@ -64,10 +65,10 @@ const BalanceList = (props: BalanceListProps) => {
 								<Text fontSize="xs">
 									{`Paid ${formatAmount(
 										summary.paid,
-										'€',
+										currency,
 									)}, Owed ${formatAmount(
 										summary.owed,
-										'€',
+										currency,
 									)}`}
 								</Text>
 							</Stack>

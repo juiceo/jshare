@@ -5,24 +5,35 @@ import {
 	NumberInputField,
 	NumberInputProps,
 } from '@chakra-ui/react';
+import { CurrencyCode } from '@prisma/client';
 
-import { asMajorUnits, asMinorUnits } from '@/utils/money';
+import {
+	asMajorUnits,
+	asMinorUnits,
+	getCurrencyDetails,
+} from '@/modules/money';
 
 interface Props extends Omit<NumberInputProps, 'onChange' | 'value'> {
 	initialValue: number;
 	onChange: (value: number) => void;
-	currencySymbol: string;
+	currency: CurrencyCode;
 }
 
 const MoneyInput = (props: Props) => {
-	const { initialValue, onChange, currencySymbol, ...numberInputProps } =
-		props;
+	const { initialValue, onChange, currency, ...numberInputProps } = props;
 	const [inputValue, setInputValue] = React.useState<string>(
 		asMajorUnits(initialValue),
 	);
+	const currencyDetails = getCurrencyDetails(currency);
 
-	const format = (value: string) => currencySymbol + value;
-	const parse = (value: string) => value.replace(currencySymbol, '');
+	const format = (value: string) => {
+		if (currencyDetails.symbolPosition === 'before') {
+			return currencyDetails.symbol + value;
+		} else {
+			return value + currencyDetails.symbol;
+		}
+	};
+	const parse = (value: string) => value.replace(currencyDetails.symbol, '');
 
 	const handleValueChange = (valueString: string, valueNumber: number) => {
 		setInputValue(parse(valueString));

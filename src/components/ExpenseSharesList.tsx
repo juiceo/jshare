@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Card, Divider, Stack } from '@chakra-ui/react';
-import { User } from '@prisma/client';
+import { CurrencyCode, User } from '@prisma/client';
 import { omit } from 'lodash';
 
 import { ExpenseShareByMember } from '@/utils/expenses';
@@ -14,10 +14,11 @@ interface Props {
 	total: number;
 	members: User[];
 	amountByMember: Record<string, number>;
+	currency: CurrencyCode;
 }
 
 const ExpenseSharesList = (props: Props) => {
-	const { value, onChange, total, members, amountByMember } = props;
+	const { value, onChange, total, members, amountByMember, currency } = props;
 
 	const handleMemberToggle = (memberId: string, enabled: boolean) => {
 		onChange({
@@ -63,6 +64,7 @@ const ExpenseSharesList = (props: Props) => {
 				{members.map((member) => {
 					return (
 						<ExpenseSharesListItem
+							currency={currency}
 							key={member.id}
 							user={member}
 							amount={amountByMember[member.id] ?? null}

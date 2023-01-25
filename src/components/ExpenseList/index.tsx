@@ -7,8 +7,8 @@ import moment from 'moment';
 import Link from 'next/link';
 import { RiArrowRightSLine } from 'react-icons/ri';
 
+import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
-import { formatAmount } from '@/utils/money';
 import { getUserFullName } from '@/utils/users';
 
 interface ExpenseListProps {
@@ -62,7 +62,10 @@ const ExpenseList = (props: ExpenseListProps) => {
 									spacing={1}
 								>
 									<Text fontSize="l">
-										{formatAmount(expense.amount, '€')}
+										{formatAmount(
+											expense.amount,
+											expense.currency,
+										)}
 									</Text>
 									<RiArrowRightSLine />
 								</Stack>

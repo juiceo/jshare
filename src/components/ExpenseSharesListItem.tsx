@@ -18,13 +18,14 @@ import {
 	RiPencilLine,
 } from 'react-icons/ri';
 
-import { formatAmount } from '@/utils/money';
+import { CurrencyCode, formatAmount } from '@/modules/money';
 
 import MoneyInput from './MoneyInput';
 
 interface Props {
 	user: User;
 	amount: number;
+	currency: CurrencyCode;
 	enabled: boolean;
 	locked: boolean;
 	onToggle: (enabled: boolean) => void;
@@ -37,6 +38,7 @@ const ExpenseSharesListItem = (props: Props) => {
 	const {
 		user,
 		amount,
+		currency,
 		enabled,
 		onToggle,
 		onAmountChange,
@@ -70,7 +72,7 @@ const ExpenseSharesListItem = (props: Props) => {
 					<Text>{user.name}</Text>
 				</Stack>
 				<Stack direction="row" alignItems="center">
-					<Text>{formatAmount(amount, '€')}</Text>
+					<Text>{formatAmount(amount, currency)}</Text>
 					<Stack direction="row" spacing={0}>
 						<IconButton
 							aria-label="Edit"
@@ -129,7 +131,7 @@ const ExpenseSharesListItem = (props: Props) => {
 						<MoneyInput
 							initialValue={amount}
 							onChange={setEditedAmount}
-							currencySymbol="€"
+							currency={currency}
 						/>
 						<Button width="full" onClick={handleAmountSave}>
 							Save

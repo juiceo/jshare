@@ -1,12 +1,9 @@
 import React from 'react';
 
 import {
-	Button,
 	Card,
 	CardBody,
-	CardFooter,
 	CardHeader,
-	Divider,
 	Heading,
 	IconButton,
 	Image,
@@ -22,10 +19,10 @@ import Link from 'next/link';
 import { RiMore2Line } from 'react-icons/ri';
 
 import pattern from '@/assets/paisley.webp';
+import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
 import { getGroupMemberCount } from '@/utils/groups';
-import { formatAmount } from '@/utils/money';
 import { trpc } from '@/utils/trpc';
 
 interface Props {

@@ -9,6 +9,7 @@ import { RiArrowLeftLine } from 'react-icons/ri';
 import ExpensePayerSelect from '@/components/ExpensePayerSelect';
 import ExpenseSharesList from '@/components/ExpenseSharesList';
 import MoneyInput from '@/components/MoneyInput';
+import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas/group';
 import {
@@ -17,7 +18,6 @@ import {
 	getInitialExpenseShares,
 } from '@/utils/expenses';
 import { getAllGroupMembers } from '@/utils/groups';
-import { formatAmount } from '@/utils/money';
 import { trpc } from '@/utils/trpc';
 
 type Props = {
@@ -45,7 +45,6 @@ const CreateExpense = (props: Props) => {
 	};
 
 	const handleSharesChange = (shares: ExpenseShareByMember) => {
-		console.log('SHARES', shares);
 		setShares(shares);
 	};
 
@@ -57,7 +56,7 @@ const CreateExpense = (props: Props) => {
 			payerId,
 			title,
 			amount,
-			currency: 'EUR',
+			currency: group.currency,
 			shares,
 		});
 
@@ -117,7 +116,7 @@ const CreateExpense = (props: Props) => {
 						<MoneyInput
 							initialValue={amount}
 							onChange={setAmount}
-							currencySymbol="€"
+							currency={group.currency}
 							background="white"
 							width="full"
 							size="lg"
@@ -132,6 +131,7 @@ const CreateExpense = (props: Props) => {
 							onChange={handleTitleChange}
 						/>
 						<ExpenseSharesList
+							currency={group.currency}
 							value={shares}
 							onChange={handleSharesChange}
 							members={allMembers}
@@ -154,11 +154,11 @@ const CreateExpense = (props: Props) => {
 						{difference < 0
 							? `${formatAmount(
 									difference * -1,
-									'€',
+									group.currency,
 							  )} too much assigned`
 							: `${formatAmount(
 									difference,
-									'€',
+									group.currency,
 							  )} not assigned to anyone`}
 					</Text>
 				)}

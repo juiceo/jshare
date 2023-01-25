@@ -20,11 +20,11 @@ import ExpenseList from '@/components/ExpenseList';
 import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
+import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { OverviewTabId } from '@/routing/types';
 import { GroupWithMembers } from '@/schemas';
 import { getAllGroupMembers } from '@/utils/groups';
-import { formatAmount } from '@/utils/money';
 import { trpc } from '@/utils/trpc';
 
 interface Props {
@@ -91,7 +91,7 @@ const OverviewPage = (props: Props) => {
 							/>
 						) : (
 							<Heading fontSize="3xl">
-								{formatAmount(total, '€')}
+								{formatAmount(total, group.currency)}
 							</Heading>
 						)}
 						<Text fontSize="xs">Total</Text>
@@ -112,6 +112,7 @@ const OverviewPage = (props: Props) => {
 					<TabPanels>
 						<TabPanel px="0">
 							<BalanceList
+								currency={group.currency}
 								members={members}
 								expenses={expenses.data ?? []}
 							/>

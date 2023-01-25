@@ -12,6 +12,7 @@ import ExpenseSharesList from '@/components/ExpenseSharesList';
 import Layout from '@/components/Layout';
 import MoneyInput from '@/components/MoneyInput';
 import Page from '@/components/Page';
+import { formatAmount } from '@/modules/money';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas/group';
@@ -22,9 +23,7 @@ import {
 	getInitialExpenseShares,
 } from '@/utils/expenses';
 import { getAllGroupMembers } from '@/utils/groups';
-import { formatAmount } from '@/utils/money';
 import { trpc } from '@/utils/trpc';
-import CreateExpense from '@/views/CreateExpense';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -119,11 +118,11 @@ const CreateExpensePage = (props: Props) => {
 							{difference < 0
 								? `${formatAmount(
 										difference * -1,
-										'€',
+										group.currency,
 								  )} too much assigned`
 								: `${formatAmount(
 										difference,
-										'€',
+										group.currency,
 								  )} not assigned to anyone`}
 						</Text>
 					)}
@@ -153,7 +152,7 @@ const CreateExpensePage = (props: Props) => {
 						key={amountKey}
 						initialValue={amount}
 						onChange={handleAmountChange}
-						currencySymbol="€"
+						currency={group.currency}
 						background="white"
 						width="full"
 						size="lg"
@@ -169,6 +168,7 @@ const CreateExpensePage = (props: Props) => {
 					/>
 					<ExpenseSharesList
 						value={shares}
+						currency={group.currency}
 						onChange={handleSharesChange}
 						members={allMembers}
 						total={amount || 0}

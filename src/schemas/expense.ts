@@ -1,11 +1,14 @@
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import { z } from 'zod';
 
+import { zCurrencyCode } from '@/modules/money';
+
 export const createExpenseSchema = z.object({
 	title: z.string().optional().default(''),
 	amount: z.number().min(1, 'Please enter an amount'),
 	groupId: z.string().min(1, 'Please enter a group id'),
 	payerId: z.string().min(1, 'Please enter a payer id'),
+	currency: zCurrencyCode,
 	shares: z.record(
 		z.string(),
 		z.object({ enabled: z.boolean(), amount: z.number().optional() }),

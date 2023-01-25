@@ -4,8 +4,8 @@ import { Box, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 
+import { formatAmount } from '@/modules/money';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
-import { formatAmount } from '@/utils/money';
 import { getUserShortName } from '@/utils/users';
 
 import ChatItem from './ChatItem';
@@ -60,14 +60,16 @@ const ExpenseItem = (props: Props) => {
 						paid
 					</Text>
 					<Text align="center" fontSize="2xl" color="whiteAlpha.900">
-						{formatAmount(expense.amount, '€')}
+						{formatAmount(expense.amount, expense.currency)}
 					</Text>
 					<Text color="white">{expense.title}</Text>
 				</Box>
 				<Box p="2" background="green.700">
 					<Text color="white" align="center">
 						Your share:{' '}
-						{ownShare != null ? formatAmount(ownShare, '€') : '???'}
+						{ownShare != null
+							? formatAmount(ownShare, expense.currency)
+							: '???'}
 					</Text>
 				</Box>
 			</Box>
