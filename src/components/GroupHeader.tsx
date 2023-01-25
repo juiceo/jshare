@@ -9,7 +9,6 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import router from 'next/router';
 
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';

@@ -12,7 +12,7 @@ export default function Custom404() {
 				<Stack direction="column">
 					<Heading textAlign="center">404 Not found</Heading>
 					<Text textAlign="center">
-						Looks like there's nothing here... Are you sure you
+						Looks like there is nothing here... Are you sure you
 						typed the link correctly?
 					</Text>
 					<Button onClick={() => router.back()}>Go back</Button>

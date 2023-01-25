@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
 	Box,
-	Button,
 	Heading,
 	IconButton,
 	Menu,
@@ -14,8 +13,6 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiArrowLeftLine, RiMore2Line } from 'react-icons/ri';
-
-import { Routes } from '@/routing';
 
 export type AppBarVariant = 'default' | 'transparent';
 export interface AppBarProps {

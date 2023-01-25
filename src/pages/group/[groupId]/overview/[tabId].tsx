@@ -1,8 +1,6 @@
 import React from 'react';
 
 import {
-	CircularProgress,
-	Heading,
 	Stack,
 	Tab,
 	TabList,
@@ -21,7 +19,6 @@ import ExpenseList from '@/components/ExpenseList';
 import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
-import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { OverviewTabId } from '@/routing/types';
 import { GroupWithMembers } from '@/schemas';

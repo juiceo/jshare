@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Button, Card, Stack, Text } from '@chakra-ui/react';
+import { Button, Card, Stack, Text } from '@chakra-ui/react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { signIn, useSession } from 'next-auth/react';
@@ -34,17 +34,17 @@ const InvitePage = (props: Props) => {
 
 	const isAlreadyInGroup = !!session && isUserInGroup(session.userId, group);
 
-	/**
-	 * TODO: Maybe good to implement a custom "Invalid invite" page here,
-	 * instead of using the generic 404 page
-	 */
 	return (
-		<Page title={`Join ${group.name}`}>
+		<Page
+			title={`Join ${group.name}`}
+			description={`Join ${group.name} on JShare and start sharing your expenses now`}
+		>
 			<Layout max="md">
 				<Card background="white" p="4">
 					<Text align="center" fontSize="2xl" mb="8">
 						{group.name}
 					</Text>
+
 					{!!isAlreadyInGroup ? (
 						<Stack direction="column" alignItems="center">
 							<Text>You are already a member</Text>

@@ -29,7 +29,7 @@ export const groupRouter = trpc.router({
 		}),
 	archive: trpc.authenticatedProcedure
 		.input(z.string())
-		.mutation(async ({ input, ctx }) => {
+		.mutation(async ({ input }) => {
 			try {
 				const group = await prisma.group.findUnique({
 					where: {
