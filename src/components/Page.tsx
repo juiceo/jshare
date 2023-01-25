@@ -31,23 +31,21 @@ const Page = (props: Props) => {
 	const footerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!appBarRef.current) return; // wait for the elementRef to be available
+		if (!appBarRef.current) return;
 		const resizeObserver = new ResizeObserver(() => {
 			setAppBarHeight(appBarRef.current?.clientHeight ?? 0);
-			// Do what you want to do when the size of the element changes
 		});
 		resizeObserver.observe(appBarRef.current);
-		return () => resizeObserver.disconnect(); // clean up
+		return () => resizeObserver.disconnect();
 	}, []);
 
 	useEffect(() => {
-		if (!footerRef.current) return; // wait for the elementRef to be available
+		if (!footerRef.current) return;
 		const resizeObserver = new ResizeObserver(() => {
 			setFooterHeight(footerRef.current?.clientHeight ?? 0);
-			// Do what you want to do when the size of the element changes
 		});
 		resizeObserver.observe(footerRef.current);
-		return () => resizeObserver.disconnect(); // clean up
+		return () => resizeObserver.disconnect();
 	}, []);
 
 	return (

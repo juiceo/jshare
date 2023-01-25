@@ -112,9 +112,14 @@ const CreateExpensePage = (props: Props) => {
 				/>
 			}
 			footer={
-				<Layout max="md" noMargin py="2" bg="theme.pageBackground">
+				<Layout max="md" noMargin py="2">
 					{difference !== 0 && (
-						<Text color="red" mb="2" fontSize="xs">
+						<Text
+							color="red"
+							mb="2"
+							fontSize="xs"
+							textAlign="center"
+						>
 							{difference < 0
 								? `${formatAmount(
 										difference * -1,
@@ -129,7 +134,6 @@ const CreateExpensePage = (props: Props) => {
 					<Button
 						colorScheme="green"
 						width="full"
-						maxWidth="600px"
 						borderRadius="2xl"
 						isLoading={createExpense.isLoading}
 						disabled={!canSubmit}

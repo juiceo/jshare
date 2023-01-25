@@ -14,7 +14,7 @@ const SignedInUser: React.FC<Props> = (props) => {
 
 	return (
 		<Link href={Routes.USER}>
-			<Avatar size="md" src={session.user?.image ?? ''} as="button" />
+			<Avatar size="md" src={session.user?.image ?? ''} />
 		</Link>
 	);
 };

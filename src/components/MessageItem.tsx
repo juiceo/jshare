@@ -33,7 +33,7 @@ const MessageItem = (props: Props) => {
 					)}
 					<Stack
 						direction="row"
-						maxWidth="300"
+						maxWidth="300px"
 						alignItems="flex-end"
 						justifyContent="space-between"
 					>

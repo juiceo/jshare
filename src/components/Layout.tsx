@@ -11,7 +11,7 @@ interface Props extends BoxProps {
 const Layout: React.FC<Props> = (props) => {
 	const { children, noMargin, max, ...boxProps } = props;
 	return (
-		<Box px="4" {...boxProps}>
+		<Box px="4" background="theme.pageBackground" {...boxProps}>
 			<Box
 				maxW={max ?? '5xl'}
 				margin="0 auto"
