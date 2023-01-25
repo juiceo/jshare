@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Box, BoxProps, Stack, StackProps } from '@chakra-ui/react';
-import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 
 interface Props {
@@ -13,8 +12,6 @@ interface Props {
 	wrapperProps?: StackProps;
 	contentProps?: BoxProps;
 }
-
-const MotionBox = motion(Box);
 
 const Page = (props: Props) => {
 	const {
@@ -62,52 +59,43 @@ const Page = (props: Props) => {
 					content={description ?? "It's like WeShare, but better!"}
 				/>
 			</Head>
-			<AnimatePresence>
-				<Stack
-					minHeight="100%"
-					direction="column"
-					spacing={0}
-					background="theme.pageBackground"
-					{...wrapperProps}
-				>
-					{!!appBar && (
-						<Box
-							position="fixed"
-							top="0"
-							left="0"
-							right="0"
-							zIndex={1000}
-							ref={appBarRef}
-						>
-							{appBar}
-						</Box>
-					)}
-					<Box height={`${appBarHeight}px`} id="footer-filler" />
-					<MotionBox
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ delay: 0.1, opacity: { duration: 0.2 } }}
-						flex={1}
-						{...contentProps}
+			<Stack
+				minHeight="100%"
+				direction="column"
+				spacing={0}
+				background="theme.pageBackground"
+				{...wrapperProps}
+			>
+				{!!appBar && (
+					<Box
+						position="fixed"
+						top="0"
+						left="0"
+						right="0"
+						zIndex={1000}
+						ref={appBarRef}
 					>
-						{children}
-					</MotionBox>
-					<Box height={`${footerHeight}px`} id="footer-filler" />
-					{!!footer && (
-						<Box
-							position="fixed"
-							bottom="0"
-							left="0"
-							right="0"
-							zIndex={1000}
-							ref={footerRef}
-						>
-							{footer}
-						</Box>
-					)}
-				</Stack>
-			</AnimatePresence>
+						{appBar}
+					</Box>
+				)}
+				<Box height={`${appBarHeight}px`} id="footer-filler" />
+				<Box flex={1} {...contentProps}>
+					{children}
+				</Box>
+				<Box height={`${footerHeight}px`} id="footer-filler" />
+				{!!footer && (
+					<Box
+						position="fixed"
+						bottom="0"
+						left="0"
+						right="0"
+						zIndex={1000}
+						ref={footerRef}
+					>
+						{footer}
+					</Box>
+				)}
+			</Stack>
 		</>
 	);
 };
