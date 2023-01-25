@@ -26,7 +26,7 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyDetails> = {
 		code: 'CHF',
 		symbol: 'Fr.',
 		name: 'Swiss franc',
-		symbolPosition: 'after',
+		symbolPosition: 'before',
 		symbolSpacing: true,
 	},
 };

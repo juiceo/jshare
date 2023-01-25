@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
 	Box,
@@ -11,23 +11,28 @@ import {
 	Text,
 	Tooltip,
 } from '@chakra-ui/react';
+import { CurrencyCode } from '@prisma/client';
 import router from 'next/router';
 import { RiQuestionLine } from 'react-icons/ri';
 
 import AppBar from '@/components/AppBar';
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
+import { CURRENCIES } from '@/modules/money';
 import { Routes } from '@/routing';
 import { trpc } from '@/utils/trpc';
 
 const CreateGroup: React.FC = () => {
-	const [name, setName] = React.useState('');
+	const [name, setName] = useState<string>('');
+	const [currency, setCurrency] = useState<CurrencyCode>('EUR');
 
 	const createGroup = trpc.groups.create.useMutation();
 
 	const handleCreateGroup = async () => {
-		const group = await createGroup.mutateAsync({ name, currency: 'EUR' });
-		router.push(Routes.Group(group.id));
+		try {
+			const group = await createGroup.mutateAsync({ name, currency });
+			router.push(Routes.Group(group.id));
+		} catch (err) {}
 	};
 
 	return (
@@ -60,7 +65,7 @@ const CreateGroup: React.FC = () => {
 							}}
 						>
 							Currency
-							<Tooltip label="The currency expenses will be added and calculated in. Support for multiple currencies per group coming soon!">
+							<Tooltip label="The currency expenses will be added and calculated in. Support for adding expenses in multiple currencies coming soon!">
 								<Box
 									ml="2"
 									display="inline-flex"
@@ -71,14 +76,28 @@ const CreateGroup: React.FC = () => {
 								</Box>
 							</Tooltip>
 						</FormLabel>
-						<Select placeholder="Select currency">
-							<option value="option1">EUR</option>
-							<option value="option2">USD</option>
+						<Select
+							placeholder="Select currency"
+							value={currency}
+							onChange={(e) =>
+								setCurrency(e.target.value as CurrencyCode)
+							}
+						>
+							{Object.values(CURRENCIES).map((currency) => (
+								<option
+									value={currency.code}
+									key={currency.code}
+								>
+									{currency.name} ({currency.code})
+								</option>
+							))}
 						</Select>
-						<Text fontSize="xs" mt="1">
-							More currencies coming soon!
-						</Text>
 					</FormControl>
+					{createGroup.error && (
+						<Text my="4" color="red" textAlign="center">
+							Something went wrong!
+						</Text>
+					)}
 					<Button
 						colorScheme="green"
 						isLoading={createGroup.isLoading}
@@ -88,7 +107,6 @@ const CreateGroup: React.FC = () => {
 						Create
 					</Button>
 				</Card>
-				{createGroup.error && <Text>Something went wrong!</Text>}
 			</Layout>
 		</Page>
 	);

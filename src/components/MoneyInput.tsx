@@ -25,15 +25,12 @@ const MoneyInput = (props: Props) => {
 		asMajorUnits(initialValue),
 	);
 	const currencyDetails = getCurrencyDetails(currency);
+	const symbol = currencyDetails.symbol;
 
 	const format = (value: string) => {
-		if (currencyDetails.symbolPosition === 'before') {
-			return currencyDetails.symbol + value;
-		} else {
-			return value + currencyDetails.symbol;
-		}
+		return `${symbol}${value}`;
 	};
-	const parse = (value: string) => value.replace(currencyDetails.symbol, '');
+	const parse = (value: string) => value.replace(symbol, '');
 
 	const handleValueChange = (valueString: string, valueNumber: number) => {
 		setInputValue(parse(valueString));
