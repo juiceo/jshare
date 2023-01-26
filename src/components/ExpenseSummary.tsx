@@ -36,7 +36,7 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
 
 		return (
 			<CardBody key={share.memberId}>
-				<Stack direction="row" spacing={4}>
+				<Stack direction="row" alignItems="center" spacing={4}>
 					<Avatar src={user?.image ?? undefined} />
 					<Stack direction="column" flex={1}>
 						<Text>{getUserDisplayName(user, 'full')}</Text>
@@ -62,10 +62,6 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
 				/>
 			</Stack>
 			<Card background="white" mt="8">
-				<CardHeader textAlign="center">
-					<Text fontSize="lg">Shares</Text>
-				</CardHeader>
-				<Divider />
 				{expense.shares.map((share) => renderShare(share))}
 			</Card>
 			<Box mt="4">

@@ -39,7 +39,11 @@ const BalanceList = (props: BalanceListProps) => {
 		const { balance } = summary;
 
 		const textColor =
-			balance === 0 ? 'gray.500' : balance > 0 ? 'green.500' : 'red.500';
+			balance === 0
+				? 'blackAlpha.500'
+				: balance > 0
+				? 'green.500'
+				: 'red.500';
 
 		return (
 			<Text

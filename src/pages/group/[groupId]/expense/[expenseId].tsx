@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 import AppBar from '@/components/AppBar';
+import DeleteExpenseAlert from '@/components/DeleteExpenseAlert';
 import ExpenseForm, { ExpenseFormValue } from '@/components/ExpenseForm';
 import ExpenseSummary from '@/components/ExpenseSummary';
 import Layout from '@/components/Layout';
@@ -29,6 +30,7 @@ const EditExpensePage = (props: {
 	session: Session;
 	onExpenseUpdated: () => void;
 }) => {
+	const router = useRouter();
 	const { group, expense, session } = props;
 
 	const allMembers = getAllGroupMembers(group);
@@ -36,6 +38,7 @@ const EditExpensePage = (props: {
 	const updateExpense = trpc.expenses.edit.useMutation();
 
 	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [isDeleting, setIsDeleting] = useState<boolean>(false);
 	const initialFormValue: ExpenseFormValue = useMemo(
 		() => ({
 			payerId: expense.payerId,
@@ -80,6 +83,14 @@ const EditExpensePage = (props: {
 				<AppBar
 					heading={getExpenseName(expense)}
 					backTo={Routes.Group(group.id)}
+					actions={[
+						{
+							key: 'delete',
+							label: 'Delete expense',
+							onClick: () => setIsDeleting(true),
+							hidden: !canEditExpense,
+						},
+					]}
 				/>
 			}
 			footer={
@@ -139,18 +150,26 @@ const EditExpensePage = (props: {
 				</Layout>
 			}
 		>
-			<Layout max="md">
-				{isEditing ? (
-					<ExpenseForm
-						value={editedExpense}
-						onChange={setEditedExpense}
-						currency={expense.currency}
-						members={allMembers}
-					/>
-				) : (
-					<ExpenseSummary expense={expense} group={group} />
-				)}
-			</Layout>
+			<>
+				<Layout max="md">
+					{isEditing ? (
+						<ExpenseForm
+							value={editedExpense}
+							onChange={setEditedExpense}
+							currency={expense.currency}
+							members={allMembers}
+						/>
+					) : (
+						<ExpenseSummary expense={expense} group={group} />
+					)}
+				</Layout>
+				<DeleteExpenseAlert
+					expenseId={expense.id}
+					isOpen={isDeleting}
+					onClose={() => setIsDeleting(false)}
+					onDelete={() => router.back()}
+				/>
+			</>
 		</Page>
 	);
 };

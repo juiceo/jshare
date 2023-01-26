@@ -34,7 +34,7 @@ export const usePreserveScroll = () => {
 					setTimeout(() => {
 						window.scroll({
 							top: document.body.scrollHeight,
-							behavior: 'smooth',
+							behavior: 'auto',
 						});
 					}, 200);
 				}

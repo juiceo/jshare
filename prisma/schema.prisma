@@ -124,9 +124,9 @@ model ExpenseShareWithMember {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   expenseId String
-  expense   Expense  @relation(fields: [expenseId], references: [id])
+  expense   Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
   memberId  String
-  member    User     @relation(fields: [memberId], references: [id])
+  member    User     @relation(fields: [memberId], references: [id], onDelete: Cascade)
   amount    Int
   locked    Boolean  @default(false)
 

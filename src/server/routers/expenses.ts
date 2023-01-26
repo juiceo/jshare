@@ -185,6 +185,50 @@ export const expenseRouter = trpc.router({
 
 			return expenseAfter;
 		}),
+	delete: trpc.authenticatedProcedure
+		.input(z.string())
+		.mutation(async ({ input, ctx }) => {
+			const expense = await prisma.expense.findUnique({
+				where: {
+					id: input,
+				},
+			});
+
+			if (!expense) {
+				throw new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Expense not found',
+				});
+			}
+
+			if (expense.senderId !== ctx.user.id) {
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'You cannot delete an expense you did not create',
+				});
+			}
+
+			await prisma.$transaction([
+				prisma.expense.delete({
+					where: {
+						id: expense.id,
+					},
+				}),
+				prisma.group.update({
+					where: {
+						id: expense.groupId,
+					},
+					data: {
+						total: {
+							decrement: expense.amount,
+						},
+						expenseCount: {
+							decrement: 1,
+						},
+					},
+				}),
+			]);
+		}),
 	onCreateExpenseInGroup: trpc.authenticatedProcedure
 		.input(z.string())
 		.subscription(async ({ input }) => {
