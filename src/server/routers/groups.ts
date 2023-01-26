@@ -27,37 +27,63 @@ export const groupRouter = trpc.router({
 				});
 			}
 		}),
-	archive: trpc.authenticatedProcedure
+	delete: trpc.authenticatedProcedure
 		.input(z.string())
-		.mutation(async ({ input }) => {
-			try {
-				const group = await prisma.group.findUnique({
-					where: {
-						id: input,
-					},
-				});
-				if (!group) {
-					throw new TRPCError({
-						code: 'NOT_FOUND',
-						message: 'Group not found',
-					});
-				}
-				const updatedGroup = await prisma.group.update({
-					where: {
-						id: input,
-					},
-					data: {
-						archived: true,
-					},
-				});
-				return updatedGroup;
-			} catch (err) {
+		.mutation(async ({ input, ctx }) => {
+			const group = await prisma.group.findUnique({
+				where: {
+					id: input,
+				},
+			});
+			if (!group) {
 				throw new TRPCError({
-					code: 'BAD_REQUEST',
-					message: 'Failed to create group',
-					cause: err,
+					code: 'NOT_FOUND',
+					message: 'Group not found',
 				});
 			}
+			if (ctx.user.id !== group.ownerId) {
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'You are not the group owner',
+				});
+			}
+			return await prisma.group.update({
+				where: {
+					id: input,
+				},
+				data: {
+					archived: true,
+				},
+			});
+		}),
+	archive: trpc.authenticatedProcedure
+		.input(z.string())
+		.mutation(async ({ input, ctx }) => {
+			const group = await prisma.group.findUnique({
+				where: {
+					id: input,
+				},
+			});
+			if (!group) {
+				throw new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Group not found',
+				});
+			}
+			if (ctx.user.id !== group.ownerId) {
+				throw new TRPCError({
+					code: 'UNAUTHORIZED',
+					message: 'You are not the group owner',
+				});
+			}
+			return await prisma.group.update({
+				where: {
+					id: input,
+				},
+				data: {
+					archived: true,
+				},
+			});
 		}),
 	joinGroupWithInviteId: trpc.authenticatedProcedure
 		.input(z.string())
@@ -144,7 +170,7 @@ export const groupRouter = trpc.router({
 
 			return group;
 		}),
-	getByGroupId: trpc.authenticatedProcedure
+	getById: trpc.authenticatedProcedure
 		.input(z.string())
 		.query(async ({ input, ctx }) => {
 			const group = await prisma.group.findUnique({
@@ -168,8 +194,8 @@ export const groupRouter = trpc.router({
 			}
 			return group;
 		}),
-	getByUserId: trpc.authenticatedProcedure.query(async ({ ctx }) => {
-		const groups = await prisma.group.findMany({
+	listOwnGroups: trpc.authenticatedProcedure.query(async ({ ctx }) => {
+		const ownedGroups = await prisma.group.findMany({
 			where: {
 				ownerId: ctx.user.id,
 				archived: false,
@@ -179,6 +205,21 @@ export const groupRouter = trpc.router({
 				owner: true,
 			},
 		});
-		return groups;
+
+		const memberGroups = await prisma.group.findMany({
+			where: {
+				members: {
+					some: {
+						id: ctx.user.id,
+					},
+				},
+			},
+			include: {
+				members: true,
+				owner: true,
+			},
+		});
+
+		return [...ownedGroups, ...memberGroups];
 	}),
 });

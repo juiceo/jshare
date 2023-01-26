@@ -17,7 +17,7 @@ import { trpc } from '@/services/trpc';
 import GroupCard from './GroupCard';
 
 const Groups = () => {
-	const groupsQuery = trpc.groups.getByUserId.useQuery();
+	const groupsQuery = trpc.groups.listOwnGroups.useQuery();
 
 	const renderContent = () => {
 		if (!!groupsQuery.isLoading) return null;
@@ -33,6 +33,7 @@ const Groups = () => {
 							group={group}
 							key={group.id}
 							onArchive={() => groupsQuery.refetch()}
+							onDelete={() => groupsQuery.refetch()}
 						/>
 					))}
 				</SimpleGrid>

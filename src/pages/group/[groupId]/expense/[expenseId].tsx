@@ -179,7 +179,7 @@ const EditExpensePageWrapper = () => {
 	const { groupId, expenseId } = router.query;
 
 	const session = useSession();
-	const group = trpc.groups.getByGroupId.useQuery(groupId as string);
+	const group = trpc.groups.getById.useQuery(groupId as string);
 	const expense = trpc.expenses.getById.useQuery(expenseId as string);
 
 	if (group.isLoading || expense.isLoading) return <LoadingPage />;

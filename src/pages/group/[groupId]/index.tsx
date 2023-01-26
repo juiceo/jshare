@@ -103,7 +103,7 @@ export const getServerSideProps: GetServerSideProps<
 
 		const group = await appRouter
 			.createCaller({ session })
-			.groups.getByGroupId(ctx.params.groupId);
+			.groups.getById(ctx.params.groupId);
 
 		if (!group) {
 			return {

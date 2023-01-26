@@ -28,6 +28,7 @@ import { trpc } from '@/services/trpc';
 interface Props {
 	group: GroupWithMembers;
 	onArchive?: () => void;
+	onDelete?: () => void;
 }
 
 const GroupCard: React.FC<Props> = (props) => {
@@ -35,10 +36,16 @@ const GroupCard: React.FC<Props> = (props) => {
 	const session = useSession();
 
 	const archiveGroup = trpc.groups.archive.useMutation();
+	const deleteGroup = trpc.groups.delete.useMutation();
 
 	const handleArchive = async () => {
 		await archiveGroup.mutateAsync(group.id);
 		props.onArchive?.();
+	};
+
+	const handleDelete = async () => {
+		await deleteGroup.mutateAsync(group.id);
+		props.onDelete?.();
 	};
 
 	const memberCount = getGroupMemberCount(group);
@@ -57,6 +64,7 @@ const GroupCard: React.FC<Props> = (props) => {
 					direction="row"
 					justifyContent="space-between"
 					alignItems="center"
+					minHeight="40px"
 				>
 					<Heading fontSize="lg">{group.name}</Heading>
 					{isOwner && (
@@ -78,6 +86,13 @@ const GroupCard: React.FC<Props> = (props) => {
 									}
 								>
 									Archive group
+								</MenuItem>
+								<MenuItem
+									key="archive"
+									onClick={handleDelete}
+									disabled={isOwner || deleteGroup.isLoading}
+								>
+									Delete group
 								</MenuItem>
 							</MenuList>
 						</Menu>
