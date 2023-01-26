@@ -5,6 +5,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import type { Session } from 'next-auth';
 import { SessionProvider, getSession } from 'next-auth/react';
 import type { AppType } from 'next/app';
+import Head from 'next/head';
 
 import { usePreserveScroll } from '@/hooks/usePreserveScroll';
 import { trpc } from '@/services/trpc';
@@ -34,11 +35,19 @@ const App: AppType<{ session: Session | null }> = ({
 }) => {
 	usePreserveScroll();
 	return (
-		<ChakraProvider theme={theme}>
-			<SessionProvider session={pageProps.session}>
-				<Component {...pageProps} />
-			</SessionProvider>
-		</ChakraProvider>
+		<>
+			<Head>
+				<meta
+					name="viewport"
+					content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+				/>
+			</Head>
+			<ChakraProvider theme={theme}>
+				<SessionProvider session={pageProps.session}>
+					<Component {...pageProps} />
+				</SessionProvider>
+			</ChakraProvider>
+		</>
 	);
 };
 

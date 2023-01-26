@@ -4,7 +4,19 @@ export default function Document() {
 	return (
 		<Html>
 			<Head>
+				<meta name="description" content="Expense sharing made easy" />
+				<meta name="application-name" content="JShare" />
+				<meta name="apple-mobile-web-app-title" content="JShare" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<meta name="mobile-web-app-capable" content="yes" />
+				<meta
+					name="msapplication-config"
+					content="/browserconfig.xml"
+				/>
+				<meta name="msapplication-TileColor" content="#2B5797" />
+				<meta name="msapplication-tap-highlight" content="no" />
+				<meta name="theme-color" content="#000000" />
+
 				<meta
 					name="apple-mobile-web-app-status-bar-style"
 					content="default"
@@ -12,6 +24,30 @@ export default function Document() {
 				<meta
 					name="viewport"
 					content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+				/>
+
+				<meta name="twitter:card" content="summary" />
+				<meta name="twitter:url" content="https://jshare.me" />
+				<meta name="twitter:title" content="JShare" />
+				<meta
+					name="twitter:description"
+					content="Expense sharing made easy"
+				/>
+				<meta
+					name="twitter:image"
+					content="https://jshare.me/android-chrome-192x192.png"
+				/>
+				<meta property="og:type" content="website" />
+				<meta property="og:title" content="JShare" />
+				<meta
+					property="og:description"
+					content="Expense sharing made easy"
+				/>
+				<meta property="og:site_name" content="JShare" />
+				<meta property="og:url" content="https://jshare.me" />
+				<meta
+					property="og:image"
+					content="https://jshare.me/apple-touch-icon.png"
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
 
