@@ -53,7 +53,7 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
 	};
 
 	return (
-		<Stack>
+		<Box>
 			<Stack direction="column">
 				<AmountWithLabel
 					label={`Paid by ${getUserName(expense.payerId)}`}
@@ -75,7 +75,7 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
 					{getUserName(expense.senderId)}
 				</Text>
 			</Box>
-		</Stack>
+		</Box>
 	);
 };
 

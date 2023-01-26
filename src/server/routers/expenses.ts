@@ -9,6 +9,7 @@ import { isUserInGroup } from '@/modules/groups';
 import {
 	ExpenseWithSenderAndShares,
 	createExpenseSchema,
+	editExpenseSchema,
 } from '@/schemas/expense';
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
@@ -94,6 +95,96 @@ export const expenseRouter = trpc.router({
 				});
 			}
 		}),
+	edit: trpc.authenticatedProcedure
+		.input(editExpenseSchema)
+		.mutation(async ({ input, ctx }) => {
+			const expense = await prisma.expense.findUnique({
+				where: {
+					id: input.id,
+				},
+				include: {
+					sender: true,
+				},
+			});
+
+			if (!expense) {
+				throw new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Expense not found',
+				});
+			}
+
+			const amountByMember = getAmountByMember({
+				shares: input.shares,
+				total: input.amount,
+			});
+
+			const shares = Object.entries(input.shares).reduce(
+				(acc, [memberId, share]) => {
+					acc.push({
+						memberId,
+						amount: amountByMember[memberId] ?? 0,
+						locked: share.amount !== undefined,
+					});
+					return acc;
+				},
+				[] as {
+					memberId: string;
+					amount: number;
+					locked: boolean;
+				}[],
+			);
+
+			const [updatedExpense, updatedGroup, ...updatedShares] =
+				await prisma.$transaction([
+					prisma.expense.update({
+						where: {
+							id: input.id,
+						},
+						data: {
+							payerId: input.payerId,
+							amount: input.amount,
+							title: input.title,
+						},
+					}),
+					prisma.group.update({
+						where: {
+							id: expense.groupId,
+						},
+						data: {
+							total: {
+								increment: input.amount - expense.amount,
+							},
+						},
+					}),
+					...shares.map((share) =>
+						prisma.expenseShareWithMember.update({
+							where: {
+								expenseId_memberId: {
+									expenseId: expense.id,
+									memberId: share.memberId,
+								},
+							},
+							data: {
+								amount: share.amount,
+								locked: share.locked,
+							},
+						}),
+					),
+				]);
+
+			const expenseAfter = {
+				...updatedExpense,
+				shares: updatedShares,
+			};
+
+			ee.emit(
+				Events.EditExpenseInGroup(expenseAfter.groupId),
+				expenseAfter,
+			);
+
+			return expenseAfter;
+		}),
 	onCreateExpenseInGroup: trpc.authenticatedProcedure
 		.input(z.string())
 		.subscription(async ({ input }) => {
@@ -108,6 +199,21 @@ export const expenseRouter = trpc.router({
 				};
 			});
 		}),
+	onEditExpenseInGroup: trpc.authenticatedProcedure
+		.input(z.string())
+		.subscription(async ({ input }) => {
+			return observable<ExpenseWithSenderAndShares>((emit) => {
+				const onSend = (data: ExpenseWithSenderAndShares) => {
+					emit.next(data);
+				};
+				ee.on(Events.EditExpenseInGroup(input), onSend);
+
+				return () => {
+					ee.off(Events.EditExpenseInGroup(input), onSend);
+				};
+			});
+		}),
+
 	getByGroupId: trpc.authenticatedProcedure
 		.input(z.string())
 		.query(async ({ input, ctx }) => {

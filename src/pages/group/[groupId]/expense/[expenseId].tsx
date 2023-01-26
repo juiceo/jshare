@@ -1,33 +1,39 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { Button, Stack, Text } from '@chakra-ui/react';
-import { isEmpty } from 'lodash';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { Session, unstable_getServerSession } from 'next-auth';
+import { Session } from 'next-auth';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 import AppBar from '@/components/AppBar';
 import ExpenseForm, { ExpenseFormValue } from '@/components/ExpenseForm';
 import ExpenseSummary from '@/components/ExpenseSummary';
 import Layout from '@/components/Layout';
+import LoadingPage from '@/components/LoadingPage';
+import NotFoundPage from '@/components/NotFoundPage';
 import Page from '@/components/Page';
 import {
 	getExpenseName,
 	getExpenseSharesFromExpense,
 	validateExpenseFormValue,
 } from '@/modules/expenses';
-import { getAllGroupMembers } from '@/modules/groups';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getAllGroupMembers, isUserInGroup } from '@/modules/groups';
 import { Routes } from '@/routing';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
-import { appRouter } from '@/server/routers/_app';
+import { trpc } from '@/services/trpc';
 
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
-
-const EditExpensePage = (props: Props) => {
-	const { group, expense } = props;
+const EditExpensePage = (props: {
+	group: GroupWithMembers;
+	expense: ExpenseWithSenderAndShares;
+	session: Session;
+	onExpenseUpdated: () => void;
+}) => {
+	const { group, expense, session } = props;
 
 	const allMembers = getAllGroupMembers(group);
+	const canEditExpense = session.userId === expense.senderId;
+	const updateExpense = trpc.expenses.edit.useMutation();
 
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const initialFormValue: ExpenseFormValue = useMemo(
@@ -51,8 +57,17 @@ const EditExpensePage = (props: Props) => {
 	const handleCancel = () => {
 		setIsEditing(false);
 	};
-	const handleSave = () => {
-		console.log('SAVE');
+	const handleSave = async () => {
+		try {
+			await updateExpense.mutateAsync({
+				id: expense.id,
+				...editedExpense,
+			});
+			setIsEditing(false);
+			props.onExpenseUpdated();
+		} catch (err) {
+			console.log('ERR', err);
+		}
 	};
 
 	const validation = isEditing
@@ -81,26 +96,41 @@ const EditExpensePage = (props: Props) => {
 						</Text>
 					)}
 					{!isEditing ? (
-						<Button
-							width="full"
-							colorScheme="green"
-							onClick={() => setIsEditing(true)}
-						>
-							Edit expense
-						</Button>
+						<Stack direction="column">
+							{!canEditExpense && (
+								<Text fontSize="xs" textAlign="center">
+									Only the person who created this expense can
+									edit it
+								</Text>
+							)}
+							<Button
+								key="edit"
+								width="full"
+								colorScheme="green"
+								onClick={() => setIsEditing(true)}
+								disabled={!canEditExpense}
+							>
+								Edit expense
+							</Button>
+						</Stack>
 					) : (
 						<Stack direction="column">
 							<Button
+								key="save"
 								width="full"
 								colorScheme="green"
 								onClick={handleSave}
+								disabled={updateExpense.isLoading}
+								isLoading={updateExpense.isLoading}
 							>
 								Save changes
 							</Button>
 							<Button
+								key="cancel"
 								width="full"
 								variant="ghost"
 								onClick={handleCancel}
+								disabled={updateExpense.isLoading}
 							>
 								Cancel
 							</Button>
@@ -125,62 +155,28 @@ const EditExpensePage = (props: Props) => {
 	);
 };
 
-const EditExpensePageWrapper = (props: Props) => {
-	if (isEmpty(props)) return null;
-	return <EditExpensePage {...props} />;
-};
+const EditExpensePageWrapper = () => {
+	const router = useRouter();
+	const { groupId, expenseId } = router.query;
 
-export const getServerSideProps: GetServerSideProps<
-	{
-		group: GroupWithMembers;
-		expense: ExpenseWithSenderAndShares;
-		session: Session;
-	},
-	{
-		groupId: string;
-		expenseId: string;
-	}
-> = async (ctx) => {
-	try {
-		const session = await unstable_getServerSession(
-			ctx.req,
-			ctx.res,
-			authOptions,
-		);
+	const session = useSession();
+	const group = trpc.groups.getByGroupId.useQuery(groupId as string);
+	const expense = trpc.expenses.getById.useQuery(expenseId as string);
 
-		if (!session || !ctx.params?.groupId || !ctx.params?.expenseId) {
-			return {
-				notFound: true,
-			};
-		}
+	if (group.isLoading || expense.isLoading) return <LoadingPage />;
+	if (group.isError || expense.isError) return <NotFoundPage />;
+	if (!group.data || !expense.data || !session.data) return <NotFoundPage />;
+	if (!isUserInGroup(session.data.userId, group.data))
+		return <NotFoundPage />;
 
-		const [group, expense] = await Promise.all([
-			await appRouter
-				.createCaller({ session })
-				.groups.getByGroupId(ctx.params.groupId),
-			await appRouter
-				.createCaller({ session })
-				.expenses.getById(ctx.params?.expenseId),
-		]);
-
-		if (!expense || !group) {
-			return {
-				notFound: true,
-			};
-		}
-
-		return {
-			props: {
-				group,
-				expense,
-				session,
-			},
-		};
-	} catch (err) {
-		return {
-			notFound: true,
-		};
-	}
+	return (
+		<EditExpensePage
+			group={group.data}
+			expense={expense.data}
+			onExpenseUpdated={expense.refetch}
+			session={session.data}
+		/>
+	);
 };
 
 export default EditExpensePageWrapper;

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Box, BoxProps, Stack, StackProps } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -33,7 +33,7 @@ const Page = (props: Props) => {
 	const appBarRef = useRef<HTMLDivElement>(null);
 	const footerRef = useRef<HTMLDivElement>(null);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (!appBarRef.current) return;
 		const resizeObserver = new ResizeObserver(() => {
 			setAppBarHeight(appBarRef.current?.clientHeight ?? 0);
@@ -42,7 +42,7 @@ const Page = (props: Props) => {
 		return () => resizeObserver.disconnect();
 	}, []);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (!footerRef.current) return;
 		const resizeObserver = new ResizeObserver(() => {
 			setFooterHeight(footerRef.current?.clientHeight ?? 0);
