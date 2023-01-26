@@ -19,8 +19,6 @@ interface Props {
 const MessageItem = (props: Props) => {
 	const { message, sender, hideAvatar, hideName, isSelf } = props;
 
-	console.log('RENDER MESSAGE');
-
 	return (
 		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf}>
 			<Card variant="outline" borderRadius="lg" background="gray.200">
