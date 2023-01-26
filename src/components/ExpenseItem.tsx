@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, Text } from '@chakra-ui/react';
+import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -9,12 +10,12 @@ import { getExpenseName } from '@/modules/expenses';
 import { formatAmount } from '@/modules/money';
 import { getUserDisplayName } from '@/modules/users';
 import { Routes } from '@/routing';
-import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 
 import ChatItem from './ChatItem';
 
 interface Props {
-	expense: ExpenseWithSenderAndShares;
+	expense: Expense & { shares: ExpenseShareWithMember[] };
+	sender: User | null;
 	hideAvatar?: boolean;
 	hideName?: boolean;
 	isSelf?: boolean;
@@ -23,18 +24,14 @@ interface Props {
 const ExpenseItem = (props: Props) => {
 	const session = useSession();
 	const userId = session?.data?.userId;
-	const { expense, hideAvatar, isSelf } = props;
+	const { expense, sender, hideAvatar, isSelf } = props;
 
 	const ownShare = !!userId
 		? expense.shares.find((share) => share.memberId === userId)?.amount
 		: null;
 
 	return (
-		<ChatItem
-			sender={expense.sender}
-			hideAvatar={hideAvatar}
-			isSelf={isSelf}
-		>
+		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf}>
 			<Link href={Routes.Expense(expense.groupId, expense.id)}>
 				<Box
 					background="green.500"
@@ -65,7 +62,7 @@ const ExpenseItem = (props: Props) => {
 							color="whiteAlpha.900"
 						>
 							{!isSelf
-								? getUserDisplayName(expense.sender, 'short')
+								? getUserDisplayName(sender, 'short')
 								: 'You'}{' '}
 							paid
 						</Text>

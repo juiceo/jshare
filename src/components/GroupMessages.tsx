@@ -1,14 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
 
 import { Box, Stack } from '@chakra-ui/react';
-import { Message, User } from '@prisma/client';
+import { Expense, ExpenseShareWithMember, Message, User } from '@prisma/client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { chain } from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
-import { MessageWithSender } from '@/schemas/message';
 
 import ExpenseItem from './ExpenseItem';
 import MessageItem from './MessageItem';
@@ -26,11 +25,11 @@ const MotionBox = motion(Box);
 type MessageWithType =
 	| {
 			type: 'message';
-			value: MessageWithSender;
+			value: Message;
 	  }
 	| {
 			type: 'expense';
-			value: ExpenseWithSenderAndShares;
+			value: Expense & { shares: ExpenseShareWithMember[] };
 	  };
 
 const GroupMessages = (props: Props) => {
@@ -46,25 +45,19 @@ const GroupMessages = (props: Props) => {
 	const itemsWithType = useMemo(() => {
 		const messageItems: MessageWithType[] = messages.map((message) => ({
 			type: 'message',
-			value: {
-				...message,
-				sender: membersById[message.senderId] ?? null,
-			},
+			value: message,
 		}));
 
 		const expenseItems: MessageWithType[] = expenses.map((expense) => ({
 			type: 'expense',
-			value: {
-				...expense,
-				sender: membersById[expense.senderId] ?? null,
-			},
+			value: expense,
 		}));
 
 		return chain([...messageItems, ...expenseItems])
 			.uniqBy((item) => item.value.id)
 			.sortBy((item) => item.value.createdAt)
 			.value();
-	}, [messages, expenses, membersById]);
+	}, [messages, expenses]);
 
 	const lastItemId = itemsWithType[itemsWithType.length - 1]?.value?.id;
 
@@ -114,8 +107,12 @@ const GroupMessages = (props: Props) => {
 								case 'message': {
 									return (
 										<MessageItem
-											message={item.value}
 											key={item.value.id}
+											message={item.value}
+											sender={
+												membersById[item.value.id] ??
+												null
+											}
 											hideAvatar={nextItemHasSameSender}
 											hideName={prevItemHasSameSender}
 											isSelf={isSelf}
@@ -125,8 +122,12 @@ const GroupMessages = (props: Props) => {
 								case 'expense': {
 									return (
 										<ExpenseItem
-											expense={item.value}
 											key={item.value.id}
+											expense={item.value}
+											sender={
+												membersById[item.value.id] ??
+												null
+											}
 											hideAvatar={nextItemHasSameSender}
 											hideName={prevItemHasSameSender}
 											isSelf={isSelf}

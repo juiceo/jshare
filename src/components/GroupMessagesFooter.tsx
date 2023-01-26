@@ -20,8 +20,10 @@ const GroupMessagesFooter = (props: Props) => {
 	const inputRef = React.useRef<HTMLInputElement>(null);
 
 	const handleSendMessage = () => {
+		const message = inputValue.trim();
+		if (!message) return;
 		sendMessage.mutate({
-			message: inputValue,
+			message,
 			groupId: group.id,
 		});
 		setInputValue('');
@@ -68,7 +70,6 @@ const GroupMessagesFooter = (props: Props) => {
 					flex={1}
 					ref={inputRef}
 				/>
-
 				<Stack direction="row" spacing={0} overflow="hidden">
 					<motion.div
 						animate={!!inputValue ? 'visible' : 'hidden'}

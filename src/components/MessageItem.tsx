@@ -1,34 +1,33 @@
 import React from 'react';
 
 import { Card, Stack, Text } from '@chakra-ui/react';
+import { Message, User } from '@prisma/client';
 import moment from 'moment';
 
 import { getUserDisplayName } from '@/modules/users';
-import { MessageWithSender } from '@/schemas/message';
 
 import ChatItem from './ChatItem';
 
 interface Props {
-	message: MessageWithSender;
+	message: Message;
+	sender: User | null;
 	hideAvatar?: boolean;
 	hideName?: boolean;
 	isSelf?: boolean;
 }
 
 const MessageItem = (props: Props) => {
-	const { message, hideAvatar, hideName, isSelf } = props;
+	const { message, sender, hideAvatar, hideName, isSelf } = props;
+
+	console.log('RENDER MESSAGE');
 
 	return (
-		<ChatItem
-			sender={message.sender}
-			hideAvatar={hideAvatar}
-			isSelf={isSelf}
-		>
+		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf}>
 			<Card variant="outline" borderRadius="lg" background="gray.200">
 				<Stack direction="column" spacing={1} px="2">
 					{!hideName && (
 						<Text fontSize="xs">
-							{getUserDisplayName(message.sender, 'short')}
+							{getUserDisplayName(sender, 'short')}
 						</Text>
 					)}
 					<Stack
@@ -48,4 +47,4 @@ const MessageItem = (props: Props) => {
 	);
 };
 
-export default MessageItem;
+export default React.memo(MessageItem);
