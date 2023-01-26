@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { IconButton, Input, Stack } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { Box, IconButton, Input, Stack } from '@chakra-ui/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { RiAddLine, RiSendPlaneFill } from 'react-icons/ri';
 
@@ -12,6 +12,8 @@ import { trpc } from '@/services/trpc';
 interface Props {
 	group: GroupWithMembers;
 }
+
+const MotionBox = motion(Box);
 
 const GroupMessagesFooter = (props: Props) => {
 	const { group } = props;
@@ -70,68 +72,49 @@ const GroupMessagesFooter = (props: Props) => {
 					flex={1}
 					ref={inputRef}
 				/>
-				<Stack direction="row" spacing={0} overflow="hidden">
-					<motion.div
-						animate={!!inputValue ? 'visible' : 'hidden'}
-						variants={{
-							visible: {
-								width: 'auto',
-								opacity: 1,
-								transition: {
-									scale: {
-										delay: 0.2,
-									},
-								},
-							},
-							hidden: {
-								width: 0,
-								opacity: 0,
-								translateX: '50px',
-							},
-						}}
-						style={{ overflow: 'hidden' }}
-					>
-						<IconButton
-							aria-label="Send"
-							borderRadius="50%"
-							onClick={handleSendMessage}
-							colorScheme="teal"
-						>
-							<RiSendPlaneFill size={18} />
-						</IconButton>
-					</motion.div>
-					<motion.div
-						initial={false}
-						animate={!inputValue ? 'visible' : 'hidden'}
-						variants={{
-							visible: {
-								width: 'auto',
-							},
-							hidden: {
-								width: 0,
-							},
-						}}
-						style={{
-							overflow: 'hidden',
-							borderRadius: '20px',
-							background: 'white',
-							zIndex: 5,
-						}}
-					>
-						<Stack direction="row" spacing="2">
-							<Link href={Routes.CreateExpense(group.id)}>
+				<Box>
+					<AnimatePresence mode="popLayout">
+						{!!inputValue ? (
+							<MotionBox
+								key="send-message"
+								initial={{ scale: 0.5 }}
+								animate={{
+									scale: 1,
+								}}
+								exit={{ scale: 0.5 }}
+							>
 								<IconButton
-									aria-label="Add expense"
+									aria-label="Send"
 									borderRadius="50%"
 									onClick={handleSendMessage}
-									colorScheme="green"
+									colorScheme="teal"
 								>
-									<RiAddLine size={18} />
+									<RiSendPlaneFill size={18} />
 								</IconButton>
-							</Link>
-						</Stack>
-					</motion.div>
-				</Stack>
+							</MotionBox>
+						) : (
+							<MotionBox
+								key="add-expense"
+								initial={{ scale: 0.5 }}
+								animate={{
+									scale: 1,
+								}}
+								exit={{ scale: 0.5 }}
+							>
+								<Link href={Routes.CreateExpense(group.id)}>
+									<IconButton
+										aria-label="Add expense"
+										borderRadius="50%"
+										onClick={handleSendMessage}
+										colorScheme="green"
+									>
+										<RiAddLine size={18} />
+									</IconButton>
+								</Link>
+							</MotionBox>
+						)}
+					</AnimatePresence>
+				</Box>
 			</Stack>
 		</Stack>
 	);
