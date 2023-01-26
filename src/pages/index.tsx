@@ -21,7 +21,7 @@ const Root: React.FC = () => {
 			<Page
 				wrapperProps={{ background: '#FFF8F8' }}
 				footer={
-					<Layout noMargin max="md" p="4">
+					<Layout noMargin max="md" p="4" background="#fff8f8">
 						<Button
 							mt="4"
 							colorScheme="green"
@@ -35,7 +35,7 @@ const Root: React.FC = () => {
 					</Layout>
 				}
 			>
-				<Layout max="md">
+				<Layout max="md" background="#fff8f8">
 					<Stack direction="column" alignItems="center">
 						<Image src={logo} alt="JShare" width="300" />
 						<Text textAlign="center">

@@ -51,7 +51,7 @@ const CreateGroup: React.FC = () => {
 					<FormControl mb="4">
 						<FormLabel>Name</FormLabel>
 						<Input
-							placeholder="Boys trip to Berlin"
+							placeholder="Boys' trip to Berlin"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 						></Input>
