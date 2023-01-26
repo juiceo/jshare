@@ -13,8 +13,8 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
 import { appRouter } from '@/server/routers/_app';
+import { trpc } from '@/services/trpc';
 import { isUserInGroup } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

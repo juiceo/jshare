@@ -21,7 +21,7 @@ import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
 import Redirect from '@/components/Redirect';
 import { Routes } from '@/routing';
-import { trpc } from '@/utils/trpc';
+import { trpc } from '@/services/trpc';
 
 type FormState = {
 	firstName: string;

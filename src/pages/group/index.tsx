@@ -20,7 +20,7 @@ import Layout from '@/components/Layout';
 import Page from '@/components/Page';
 import { CURRENCIES } from '@/modules/money';
 import { Routes } from '@/routing';
-import { trpc } from '@/utils/trpc';
+import { trpc } from '@/services/trpc';
 
 const CreateGroup: React.FC = () => {
 	const [name, setName] = useState<string>('');

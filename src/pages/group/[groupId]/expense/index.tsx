@@ -17,13 +17,13 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas/group';
 import { appRouter } from '@/server/routers/_app';
+import { trpc } from '@/services/trpc';
 import {
 	ExpenseShareByMember,
 	getAmountByMember,
 	getInitialExpenseShares,
 } from '@/utils/expenses';
 import { getAllGroupMembers } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

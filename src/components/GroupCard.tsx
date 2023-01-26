@@ -22,8 +22,8 @@ import pattern from '@/assets/paisley.webp';
 import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
+import { trpc } from '@/services/trpc';
 import { getGroupMemberCount } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 interface Props {
 	group: GroupWithMembers;

@@ -7,7 +7,7 @@ import { SessionProvider, getSession } from 'next-auth/react';
 import type { AppType } from 'next/app';
 
 import { usePreserveScroll } from '@/hooks/usePreserveScroll';
-import { trpc } from '@/utils/trpc';
+import { trpc } from '@/services/trpc';
 
 const theme = extendTheme({
 	colors: {

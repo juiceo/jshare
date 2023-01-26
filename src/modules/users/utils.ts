@@ -1,8 +1,6 @@
 import { User } from '@prisma/client';
 
-export const getUserShortName = (user: User | null) => {
-	if (!user) return '';
-
+export const getUserShortName = (user: User) => {
 	if (!!user.firstName && !!user.lastName) {
 		return `${user.firstName} ${user.lastName[0]}`;
 	}
@@ -16,11 +14,24 @@ export const getUserShortName = (user: User | null) => {
 	return user.firstName || user.name?.split(' ')[0];
 };
 
-export const getUserFullName = (user: User | null) => {
-	if (!user) return '';
+export const getUserFullName = (user: User) => {
 	const name = [user.firstName, user.lastName]
 		.filter((part) => !!part)
 		.join(' ');
 
-	return name || user.name || 'Anonymous';
+	return name || user.name || 'Unknown';
+};
+
+export const getUserDisplayName = (
+	user: User | null,
+	variant: 'short' | 'full' = 'short',
+) => {
+	if (!user) return 'Unknown';
+
+	switch (variant) {
+		case 'short':
+			return getUserShortName(user);
+		case 'full':
+			return getUserFullName(user);
+	}
 };

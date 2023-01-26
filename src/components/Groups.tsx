@@ -12,7 +12,7 @@ import {
 import Link from 'next/link';
 
 import { Routes } from '@/routing';
-import { trpc } from '@/utils/trpc';
+import { trpc } from '@/services/trpc';
 
 import GroupCard from './GroupCard';
 

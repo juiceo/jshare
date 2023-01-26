@@ -1,56 +1,38 @@
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import { range, sum } from 'lodash';
 
-export type ExpenseShareByMember = {
-	[id: string]: ExpenseShare;
-};
+import { AmountByMember } from '@/utils/expenses';
 
-export type AmountByMember = {
-	[id: string]: number;
-};
-
-export type ExpenseShare = {
-	enabled: boolean;
-	amount?: number;
-};
-
-export type ExpenseSummary = {
-	paid: number;
-	owed: number;
-	balance: number;
-};
-
-export type ExpenseSummaryByMember = {
-	[id: string]: ExpenseSummary;
-};
+import { ByUserId } from '../common/types';
+import { ExpenseShare, ExpenseSummary } from './types';
 
 export const getInitialExpenseShares = (
 	members: User[],
-): ExpenseShareByMember => {
+): ByUserId<ExpenseShare> => {
 	return members.reduce((acc, member) => {
 		acc[member.id] = {
 			enabled: true,
 		};
 		return acc;
-	}, {} as ExpenseShareByMember);
+	}, {} as ByUserId<ExpenseShare>);
 };
 
 export const getExpenseSharesByMember = (
 	value: ExpenseShareWithMember[],
-): ExpenseShareByMember => {
+): ByUserId<ExpenseShare> => {
 	return value.reduce((acc, share) => {
 		acc[share.memberId] = {
 			enabled: true, //TODO: This is not yet correct
 		};
 
 		return acc;
-	}, {} as ExpenseShareByMember);
+	}, {} as ByUserId<ExpenseShare>);
 };
 
 export const getAmountByMember = (args: {
-	shares: ExpenseShareByMember;
+	shares: ByUserId<ExpenseShare>;
 	total: number;
-}): AmountByMember => {
+}): ByUserId<number> => {
 	const { shares, total } = args;
 
 	const amountByMember: AmountByMember = {};
@@ -88,8 +70,8 @@ export const getAmountByMember = (args: {
 };
 
 export const getExpenseSummaryByMember = (
-	expenses: Array<Expense & { shares: ExpenseShareWithMember[] }>,
-): ExpenseSummaryByMember => {
+	expenses: (Expense & { shares: ExpenseShareWithMember[] })[],
+): ByUserId<ExpenseSummary> => {
 	return expenses.reduce((result, expense) => {
 		if (!result[expense.payerId]) {
 			result[expense.payerId] = { paid: 0, owed: 0, balance: 0 };
@@ -111,7 +93,7 @@ export const getExpenseSummaryByMember = (
 		});
 
 		return result;
-	}, {} as ExpenseSummaryByMember);
+	}, {} as ByUserId<ExpenseSummary>);
 };
 
 export const EMPTY_EXPENSE_SUMMARY: ExpenseSummary = {

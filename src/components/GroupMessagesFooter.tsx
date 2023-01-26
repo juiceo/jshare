@@ -7,7 +7,7 @@ import { RiAddLine, RiSendPlaneFill } from 'react-icons/ri';
 
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
-import { trpc } from '@/utils/trpc';
+import { trpc } from '@/services/trpc';
 
 interface Props {
 	group: GroupWithMembers;

@@ -5,8 +5,8 @@ import { User } from '@prisma/client';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
 import { MessageWithSender } from '@/schemas/message';
+import { trpc } from '@/services/trpc';
 import { getAllGroupMembers } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 import GroupMessages from './GroupMessages';
 

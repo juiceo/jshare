@@ -22,8 +22,8 @@ import Page from '@/components/Page';
 import { Routes } from '@/routing';
 import { OverviewTabId } from '@/routing/types';
 import { GroupWithMembers } from '@/schemas';
+import { trpc } from '@/services/trpc';
 import { getAllGroupMembers } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 interface Props {
 	group: GroupWithMembers;

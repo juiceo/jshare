@@ -12,8 +12,8 @@ import Link from 'next/link';
 
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
+import { trpc } from '@/services/trpc';
 import { getAllGroupMembers } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 import AppBar from './AppBar';
 

@@ -15,8 +15,8 @@ import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
 import { MessageWithSender } from '@/schemas/message';
 import { appRouter } from '@/server/routers/_app';
+import { trpc } from '@/services/trpc';
 import { getAllGroupMembers } from '@/utils/groups';
-import { trpc } from '@/utils/trpc';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
