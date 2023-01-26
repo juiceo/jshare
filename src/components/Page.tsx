@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import { Box, BoxProps, Stack, StackProps } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import Head from 'next/head';
 
 interface Props {
@@ -13,6 +14,8 @@ interface Props {
 	contentProps?: BoxProps;
 }
 
+const MotionBox = motion(Box);
+
 const Page = (props: Props) => {
 	const {
 		title,
@@ -24,13 +27,13 @@ const Page = (props: Props) => {
 		contentProps,
 	} = props;
 
-	const [appBarHeight, setAppBarHeight] = useState<number>(0);
-	const [footerHeight, setFooterHeight] = useState<number>(0);
+	const [appBarHeight, setAppBarHeight] = useState<number>(!!appBar ? 82 : 0);
+	const [footerHeight, setFooterHeight] = useState<number>(!!footer ? 72 : 0);
 
 	const appBarRef = useRef<HTMLDivElement>(null);
 	const footerRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (!appBarRef.current) return;
 		const resizeObserver = new ResizeObserver(() => {
 			setAppBarHeight(appBarRef.current?.clientHeight ?? 0);
@@ -39,7 +42,7 @@ const Page = (props: Props) => {
 		return () => resizeObserver.disconnect();
 	}, []);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (!footerRef.current) return;
 		const resizeObserver = new ResizeObserver(() => {
 			setFooterHeight(footerRef.current?.clientHeight ?? 0);
@@ -76,11 +79,19 @@ const Page = (props: Props) => {
 						{appBar}
 					</Box>
 				)}
-				<Box height={`${appBarHeight}px`} id="footer-filler" />
+				<MotionBox
+					initial={false}
+					animate={{ height: appBarHeight }}
+					id="appbar-filler"
+				/>
 				<Box flex={1} {...contentProps}>
 					{children}
 				</Box>
-				<Box height={`${footerHeight}px`} id="footer-filler" />
+				<MotionBox
+					initial={false}
+					animate={{ height: footerHeight }}
+					id="footer-filler"
+				/>
 				{!!footer && (
 					<Box
 						position="fixed"
