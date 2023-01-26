@@ -123,6 +123,7 @@ const ExpenseSharesListItem = (props: Props) => {
 				isOpen={drawerOpen}
 				onClose={() => setDrawerOpen(false)}
 				variant="always-on-top"
+				autoFocus
 			>
 				<DrawerOverlay />
 				<DrawerContent>
@@ -142,6 +143,11 @@ const ExpenseSharesListItem = (props: Props) => {
 							initialValue={amount}
 							onChange={setEditedAmount}
 							currency={currency}
+							onKeyDown={(e) => {
+								if (e.code === 'Enter') {
+									handleAmountSave();
+								}
+							}}
 						/>
 						<Button width="full" onClick={handleAmountSave}>
 							Save
