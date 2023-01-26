@@ -27,7 +27,7 @@ const Page = (props: Props) => {
 		contentProps,
 	} = props;
 
-	const [appBarHeight, setAppBarHeight] = useState<number>(!!appBar ? 82 : 0);
+	const [appBarHeight, setAppBarHeight] = useState<number>(!!appBar ? 72 : 0);
 	const [footerHeight, setFooterHeight] = useState<number>(!!footer ? 72 : 0);
 
 	const appBarRef = useRef<HTMLDivElement>(null);

@@ -12,12 +12,19 @@ import SignedInUser from './SignedInUser';
 const Header: React.FC = () => {
 	const { data: session, status } = useSession();
 	return (
-		<Layout noMargin background="white" boxShadow="sm">
-			<Box w="full" py="4" margin="0 auto">
+		<Layout
+			noMargin
+			background="white"
+			boxShadow="sm"
+			height="72px"
+			innerProps={{ height: '100%' }}
+		>
+			<Box w="full" margin="0 auto" height="100%">
 				<Stack
 					direction="row"
 					justifyContent="space-between"
 					alignItems="center"
+					height="100%"
 				>
 					<Stack direction="row" alignItems="center">
 						<Image src={logo} alt={'JShare'} width={50} />

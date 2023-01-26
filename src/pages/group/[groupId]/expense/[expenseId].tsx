@@ -1,31 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import {
-	Avatar,
-	Box,
-	Button,
-	Card,
-	CardBody,
-	CardHeader,
-	Divider,
-	Stack,
-	Text,
-} from '@chakra-ui/react';
-import { ExpenseShareWithMember } from '@prisma/client';
+import { Button, Stack } from '@chakra-ui/react';
 import { isEmpty } from 'lodash';
-import moment from 'moment';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Session, unstable_getServerSession } from 'next-auth';
 
-import AmountWithLabel from '@/components/AmountWithLabel';
 import AppBar from '@/components/AppBar';
+import ExpenseForm, { ExpenseFormValue } from '@/components/ExpenseForm';
+import ExpenseSummary from '@/components/ExpenseSummary';
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
-import { byId } from '@/modules/common/utils';
-import { getExpenseName } from '@/modules/expenses';
+import {
+	getExpenseName,
+	getExpenseSharesFromExpense,
+} from '@/modules/expenses';
 import { getAllGroupMembers } from '@/modules/groups';
-import { formatAmount } from '@/modules/money';
-import { getUserDisplayName } from '@/modules/users';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
@@ -37,33 +26,15 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const EditExpensePage = (props: Props) => {
 	const { group, expense } = props;
 
-	const membersById = byId(getAllGroupMembers(group));
+	const allMembers = getAllGroupMembers(group);
 
-	const renderShare = (share: ExpenseShareWithMember) => {
-		const user = membersById[share.memberId];
-
-		return (
-			<CardBody key={share.memberId}>
-				<Stack direction="row" spacing={4}>
-					<Avatar src={user?.image ?? undefined} />
-					<Stack direction="column" flex={1}>
-						<Text>{getUserDisplayName(user, 'full')}</Text>
-					</Stack>
-					<Text>{formatAmount(share.amount, expense.currency)}</Text>
-				</Stack>
-			</CardBody>
-		);
-	};
-
-	const getPayerName = () => {
-		const user = membersById[expense.payerId];
-		return getUserDisplayName(user, 'full');
-	};
-
-	const getCreatorName = () => {
-		const user = membersById[expense.senderId];
-		return getUserDisplayName(user, 'full');
-	};
+	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [editedExpense, setEditedExpense] = useState<ExpenseFormValue>({
+		payerId: expense.payerId,
+		amount: expense.amount,
+		title: expense.title,
+		shares: getExpenseSharesFromExpense(expense),
+	});
 
 	return (
 		<Page
@@ -75,36 +46,42 @@ const EditExpensePage = (props: Props) => {
 			}
 			footer={
 				<Layout max="md" noMargin p="4" bg="theme.pageBackground">
-					<Button width="full" colorScheme="green" disabled>
-						Edit expense
-					</Button>
+					{!isEditing ? (
+						<Button
+							width="full"
+							colorScheme="green"
+							onClick={() => setIsEditing(true)}
+						>
+							Edit expense
+						</Button>
+					) : (
+						<Stack direction="column">
+							<Button
+								width="full"
+								colorScheme="green"
+								onClick={() => setIsEditing(false)}
+							>
+								Save changes
+							</Button>
+							<Button width="full" variant="ghost">
+								Cancel
+							</Button>
+						</Stack>
+					)}
 				</Layout>
 			}
 		>
 			<Layout max="md">
-				<Stack direction="column">
-					<AmountWithLabel
-						label={`Paid by ${getPayerName()}`}
-						amount={expense.amount}
+				{isEditing ? (
+					<ExpenseForm
+						value={editedExpense}
+						onChange={setEditedExpense}
 						currency={expense.currency}
+						members={allMembers}
 					/>
-				</Stack>
-				<Card background="white" mt="8">
-					<CardHeader textAlign="center">
-						<Text fontSize="lg">Shares</Text>
-					</CardHeader>
-					<Divider />
-					{expense.shares.map((share) => renderShare(share))}
-				</Card>
-				<Box mt="4">
-					<Text fontSize="xs" textAlign="center">
-						Created{' '}
-						{moment(expense.createdAt).format(
-							'MMMM Do, YYYY HH:mm',
-						)}{' '}
-						by {getCreatorName()}
-					</Text>
-				</Box>
+				) : (
+					<ExpenseSummary expense={expense} group={group} />
+				)}
 			</Layout>
 		</Page>
 	);

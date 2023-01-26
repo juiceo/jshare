@@ -5,7 +5,7 @@ import { CurrencyCode, User } from '@prisma/client';
 import { omit } from 'lodash';
 
 import { ByUserId } from '@/modules/common/types';
-import { ExpenseShare } from '@/modules/expenses';
+import { ExpenseShare, getAmountByMember } from '@/modules/expenses';
 
 import ExpenseSharesListItem from './ExpenseSharesListItem';
 
@@ -14,12 +14,16 @@ interface Props {
 	onChange: (value: ByUserId<ExpenseShare>) => void;
 	total: number;
 	members: User[];
-	amountByMember: Record<string, number>;
 	currency: CurrencyCode;
 }
 
 const ExpenseSharesList = (props: Props) => {
-	const { value, onChange, total, members, amountByMember, currency } = props;
+	const { value, onChange, total, members, currency } = props;
+
+	const amountByMember = getAmountByMember({
+		shares: value,
+		total,
+	});
 
 	const handleMemberToggle = (memberId: string, enabled: boolean) => {
 		onChange({

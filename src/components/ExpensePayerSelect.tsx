@@ -11,27 +11,25 @@ import {
 	Stack,
 	Text,
 } from '@chakra-ui/react';
+import { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 
-import { getAllGroupMembers } from '@/modules/groups';
-import { getUserDisplayName, getUserShortName } from '@/modules/users';
-import { GroupWithMembers } from '@/schemas';
+import { getUserDisplayName } from '@/modules/users';
 
 import Layout from './Layout';
 
 interface Props {
-	group: GroupWithMembers;
 	payerId: string;
 	onPayerIdChange: (payerId: string) => void;
+	users: User[];
 }
 
 const ExpensePayerSelect = (props: Props) => {
 	const session = useSession();
-	const { group, payerId, onPayerIdChange } = props;
+	const { users, payerId, onPayerIdChange } = props;
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-	const members = getAllGroupMembers(group);
-	const payer = members.find((member) => member.id === payerId);
+	const payer = users.find((user) => user.id === payerId);
 	const isSelf = session.data?.userId === payerId;
 
 	const handlePayerIdChange = (newPayerId: string) => {
@@ -95,19 +93,19 @@ const ExpensePayerSelect = (props: Props) => {
 							justifyContent="center"
 							alignContent="center"
 						>
-							{members.map((member) => {
-								const isSelected = member.id === payerId;
+							{users.map((user) => {
+								const isSelected = user.id === payerId;
 								const name =
-									member.id === session.data?.userId
+									user.id === session.data?.userId
 										? 'Me'
-										: getUserShortName(member);
+										: getUserDisplayName(user, 'short');
 								return (
 									<Button
 										variant="unstyled"
-										key={member.id + Math.random()}
+										key={user.id}
 										height="auto"
 										onClick={() =>
-											handlePayerIdChange(member.id)
+											handlePayerIdChange(user.id)
 										}
 									>
 										<Stack
@@ -126,8 +124,8 @@ const ExpensePayerSelect = (props: Props) => {
 											padding="4"
 											borderRadius="md"
 										>
-											<Avatar src={member.image ?? ''}>
-												{payerId === member.id && (
+											<Avatar src={user.image ?? ''}>
+												{payerId === user.id && (
 													<AvatarBadge
 														boxSize="1.25em"
 														bg="green.500"

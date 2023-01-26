@@ -1,17 +1,32 @@
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import { range, sum } from 'lodash';
 
+import { ExpenseFormValue } from '@/components/ExpenseForm';
+
 import { ByUserId } from '../common/types';
+import { CurrencyCode, formatAmount } from '../money';
 import { ExpenseShare, ExpenseSummary } from './types';
 
 export const getInitialExpenseShares = (
 	members: User[],
 ): ByUserId<ExpenseShare> => {
-	return members.reduce((acc, member) => {
-		acc[member.id] = {
+	return members.reduce((result, member) => {
+		result[member.id] = {
 			enabled: true,
 		};
-		return acc;
+		return result;
+	}, {} as ByUserId<ExpenseShare>);
+};
+
+export const getExpenseSharesFromExpense = (
+	expense: Expense & { shares: ExpenseShareWithMember[] },
+): ByUserId<ExpenseShare> => {
+	return expense.shares.reduce((result, share) => {
+		result[share.memberId] = {
+			enabled: share.amount > 0,
+			amount: share.locked ? share.amount : undefined,
+		};
+		return result;
 	}, {} as ByUserId<ExpenseShare>);
 };
 
@@ -102,4 +117,53 @@ export const EMPTY_EXPENSE_SUMMARY: ExpenseSummary = {
 
 export const getExpenseName = (expense: Expense): string => {
 	return expense.title || `Expense #${expense.number}`;
+};
+
+export const validateExpenseFormValue = (
+	expense: ExpenseFormValue,
+	currency: CurrencyCode,
+) => {
+	const amountByMember = getAmountByMember({
+		shares: expense.shares,
+		total: expense.amount,
+	});
+
+	const totalAmount = sum(Object.values(amountByMember));
+	const difference = expense.amount - totalAmount;
+
+	if (!expense.amount) {
+		return {
+			valid: false,
+		};
+	}
+
+	if (difference > 0) {
+		return {
+			valid: false,
+			message: `The total amount is ${formatAmount(
+				difference,
+				currency,
+			)} too high`,
+		};
+	}
+
+	if (difference < 0) {
+		return {
+			valid: false,
+			message: `The total amount is ${formatAmount(
+				Math.abs(difference),
+				currency,
+			)} too low`,
+		};
+	}
+
+	if (!Object.values(expense.shares).some((s) => s.enabled)) {
+		return {
+			valid: false,
+		};
+	}
+
+	return {
+		valid: true,
+	};
 };

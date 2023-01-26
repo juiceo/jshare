@@ -56,6 +56,7 @@ const AppBar = (props: AppBarProps) => {
 			boxShadow={boxShadows[variant]}
 			zIndex={2}
 			py="4"
+			height="72px"
 		>
 			<Box width="40px" height="40px">
 				{!!backTo && (
