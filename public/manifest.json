@@ -1,8 +1,9 @@
 {
+	"name": "JShare",
 	"short_name": "JShare",
 	"theme_color": "#fff8f8",
 	"background_color": "#FFF8F8",
-	"start_url": "./",
+	"start_url": "/",
 	"orientation": "portrait",
 	"display": "standalone",
 	"icons": [
