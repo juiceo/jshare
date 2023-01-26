@@ -85,7 +85,7 @@ const ExpensePayerSelect = (props: Props) => {
 							Who paid?
 						</Text>
 					</Stack>
-					<Layout max="md" noMargin>
+					<Layout max="md" noMargin background="white">
 						<SimpleGrid
 							columns={3}
 							spacing={3}

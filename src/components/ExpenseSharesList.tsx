@@ -57,7 +57,7 @@ const ExpenseSharesList = (props: Props) => {
 	};
 
 	return (
-		<Card variant="outline">
+		<Card background="white">
 			<Stack
 				direction="column"
 				background="white"

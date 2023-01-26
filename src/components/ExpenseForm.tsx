@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Input, Stack } from '@chakra-ui/react';
+import { Card, Input, Stack } from '@chakra-ui/react';
 import { CurrencyCode, User } from '@prisma/client';
 import { sumBy } from 'lodash';
 
@@ -78,24 +78,31 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 				users={members}
 			/>
 
-			<MoneyInput
-				key={amountKey}
-				initialValue={amount}
-				onChange={handleAmountChange}
-				currency={currency}
-				background="white"
-				width="full"
-				size="lg"
-				borderRadius="lg"
-			/>
-			<Input
-				textAlign="center"
-				placeholder="Add comment"
-				background="white"
-				size="lg"
-				value={title}
-				onChange={(e) => handleTitleChange(e.target.value)}
-			/>
+			<Card background="white" borderRadius="lg">
+				<MoneyInput
+					key={amountKey}
+					initialValue={amount}
+					onChange={handleAmountChange}
+					currency={currency}
+					width="full"
+					size="lg"
+					borderRadius="lg"
+					sx={{ borderColor: 'transparent' }}
+				/>
+			</Card>
+
+			<Card background="white" borderRadius="lg">
+				<Input
+					textAlign="center"
+					placeholder="Add comment"
+					background="white"
+					size="lg"
+					value={title}
+					onChange={(e) => handleTitleChange(e.target.value)}
+					sx={{ borderColor: 'transparent' }}
+				/>
+			</Card>
+
 			<ExpenseSharesList
 				value={shares}
 				currency={currency}

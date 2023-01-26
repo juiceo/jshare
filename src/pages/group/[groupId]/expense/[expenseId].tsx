@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { Button, Stack } from '@chakra-ui/react';
+import { Button, Stack, Text } from '@chakra-ui/react';
 import { isEmpty } from 'lodash';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Session, unstable_getServerSession } from 'next-auth';
@@ -13,6 +13,7 @@ import Page from '@/components/Page';
 import {
 	getExpenseName,
 	getExpenseSharesFromExpense,
+	validateExpenseFormValue,
 } from '@/modules/expenses';
 import { getAllGroupMembers } from '@/modules/groups';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
@@ -29,12 +30,34 @@ const EditExpensePage = (props: Props) => {
 	const allMembers = getAllGroupMembers(group);
 
 	const [isEditing, setIsEditing] = useState<boolean>(false);
-	const [editedExpense, setEditedExpense] = useState<ExpenseFormValue>({
-		payerId: expense.payerId,
-		amount: expense.amount,
-		title: expense.title,
-		shares: getExpenseSharesFromExpense(expense),
-	});
+	const initialFormValue: ExpenseFormValue = useMemo(
+		() => ({
+			payerId: expense.payerId,
+			amount: expense.amount,
+			title: expense.title,
+			shares: getExpenseSharesFromExpense(expense),
+		}),
+		[expense],
+	);
+	const [editedExpense, setEditedExpense] =
+		useState<ExpenseFormValue>(initialFormValue);
+
+	useEffect(() => {
+		if (!isEditing) {
+			setEditedExpense(initialFormValue);
+		}
+	}, [initialFormValue, isEditing]);
+
+	const handleCancel = () => {
+		setIsEditing(false);
+	};
+	const handleSave = () => {
+		console.log('SAVE');
+	};
+
+	const validation = isEditing
+		? validateExpenseFormValue(editedExpense, group.currency)
+		: null;
 
 	return (
 		<Page
@@ -46,6 +69,17 @@ const EditExpensePage = (props: Props) => {
 			}
 			footer={
 				<Layout max="md" noMargin p="4" bg="theme.pageBackground">
+					{validation?.message && (
+						<Text
+							color="red.500"
+							mb="2"
+							fontSize="xs"
+							textAlign="center"
+							fontWeight="bold"
+						>
+							{validation.message}
+						</Text>
+					)}
 					{!isEditing ? (
 						<Button
 							width="full"
@@ -59,11 +93,15 @@ const EditExpensePage = (props: Props) => {
 							<Button
 								width="full"
 								colorScheme="green"
-								onClick={() => setIsEditing(false)}
+								onClick={handleSave}
 							>
 								Save changes
 							</Button>
-							<Button width="full" variant="ghost">
+							<Button
+								width="full"
+								variant="ghost"
+								onClick={handleCancel}
+							>
 								Cancel
 							</Button>
 						</Stack>
