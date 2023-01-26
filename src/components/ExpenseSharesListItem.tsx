@@ -20,7 +20,7 @@ import {
 } from 'react-icons/ri';
 
 import { CurrencyCode, formatAmount } from '@/modules/money';
-import { getUserFullName, getUserShortName } from '@/utils/users';
+import { getUserDisplayName } from '@/modules/users';
 
 import MoneyInput from './MoneyInput';
 
@@ -74,11 +74,11 @@ const ExpenseSharesListItem = (props: Props) => {
 				<Avatar src={user.image ?? ''} />
 				<Stack direction="column" flex={1}>
 					<Show above="sm">
-						<Text>{getUserFullName(user)}</Text>
+						<Text>{getUserDisplayName(user, 'full')}</Text>
 					</Show>
 
 					<Show below="sm">
-						<Text>{getUserShortName(user)}</Text>
+						<Text>{getUserDisplayName(user, 'short')}</Text>
 					</Show>
 				</Stack>
 				<Stack direction="row" alignItems="center">

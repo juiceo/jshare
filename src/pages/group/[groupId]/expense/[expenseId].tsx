@@ -21,22 +21,23 @@ import AmountWithLabel from '@/components/AmountWithLabel';
 import AppBar from '@/components/AppBar';
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
+import { byId } from '@/modules/common/utils';
+import { getExpenseName } from '@/modules/expenses';
+import { getAllGroupMembers } from '@/modules/groups';
 import { formatAmount } from '@/modules/money';
+import { getUserDisplayName } from '@/modules/users';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
 import { appRouter } from '@/server/routers/_app';
-import { getExpenseName } from '@/utils/expenses';
-import { getAllGroupMembersById } from '@/utils/groups';
-import { getUserFullName } from '@/utils/users';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const EditExpensePage = (props: Props) => {
 	const { group, expense } = props;
 
-	const membersById = getAllGroupMembersById(group);
+	const membersById = byId(getAllGroupMembers(group));
 
 	const renderShare = (share: ExpenseShareWithMember) => {
 		const user = membersById[share.memberId];
@@ -46,9 +47,7 @@ const EditExpensePage = (props: Props) => {
 				<Stack direction="row" spacing={4}>
 					<Avatar src={user?.image ?? undefined} />
 					<Stack direction="column" flex={1}>
-						<Text>
-							{!!user ? getUserFullName(user) : 'Unknown'}
-						</Text>
+						<Text>{getUserDisplayName(user, 'full')}</Text>
 					</Stack>
 					<Text>{formatAmount(share.amount, expense.currency)}</Text>
 				</Stack>
@@ -58,12 +57,12 @@ const EditExpensePage = (props: Props) => {
 
 	const getPayerName = () => {
 		const user = membersById[expense.payerId];
-		return !!user ? getUserFullName(user) : 'Unknown';
+		return getUserDisplayName(user, 'full');
 	};
 
 	const getCreatorName = () => {
 		const user = membersById[expense.senderId];
-		return !!user ? getUserFullName(user) : 'Unknown';
+		return getUserDisplayName(user, 'full');
 	};
 
 	return (

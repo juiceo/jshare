@@ -1,8 +1,6 @@
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import { range, sum } from 'lodash';
 
-import { AmountByMember } from '@/utils/expenses';
-
 import { ByUserId } from '../common/types';
 import { ExpenseShare, ExpenseSummary } from './types';
 
@@ -35,7 +33,7 @@ export const getAmountByMember = (args: {
 }): ByUserId<number> => {
 	const { shares, total } = args;
 
-	const amountByMember: AmountByMember = {};
+	const amountByMember: ByUserId<number> = {};
 	let membersLeft = Object.keys(shares);
 	let totalLeft = total;
 

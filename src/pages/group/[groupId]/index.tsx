@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { User } from '@prisma/client';
-import background from 'assets/full-bloom.png';
 import { isEmpty } from 'lodash';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Session, unstable_getServerSession } from 'next-auth';
@@ -10,13 +9,13 @@ import GroupHeader from '@/components/GroupHeader';
 import GroupMessages from '@/components/GroupMessages';
 import GroupMessagesFooter from '@/components/GroupMessagesFooter';
 import Page from '@/components/Page';
+import { getAllGroupMembers } from '@/modules/groups';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
 import { MessageWithSender } from '@/schemas/message';
 import { appRouter } from '@/server/routers/_app';
 import { trpc } from '@/services/trpc';
-import { getAllGroupMembers } from '@/utils/groups';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

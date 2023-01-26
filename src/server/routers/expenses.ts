@@ -4,6 +4,8 @@ import EventEmitter from 'events';
 import { sumBy } from 'lodash';
 import { z } from 'zod';
 
+import { getAmountByMember } from '@/modules/expenses';
+import { isUserInGroup } from '@/modules/groups';
 import {
 	ExpenseWithSenderAndShares,
 	createExpenseSchema,
@@ -11,8 +13,6 @@ import {
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';
-import { getAmountByMember } from '@/utils/expenses';
-import { isUserInGroup } from '@/utils/groups';
 
 const ee = new EventEmitter();
 

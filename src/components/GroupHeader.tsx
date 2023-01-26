@@ -10,10 +10,10 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 
+import { getAllGroupMembers } from '@/modules/groups';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
-import { getAllGroupMembers } from '@/utils/groups';
 
 import AppBar from './AppBar';
 

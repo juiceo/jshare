@@ -4,13 +4,13 @@ import { Avatar, Card, CardBody, Divider, Stack, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import { chain } from 'lodash';
 
-import { CurrencyCode, formatAmount } from '@/modules/money';
 import {
 	EMPTY_EXPENSE_SUMMARY,
 	ExpenseSummary,
 	getExpenseSummaryByMember,
-} from '@/utils/expenses';
-import { getUserFullName } from '@/utils/users';
+} from '@/modules/expenses';
+import { CurrencyCode, formatAmount } from '@/modules/money';
+import { getUserFullName } from '@/modules/users';
 
 interface BalanceListProps {
 	currency: CurrencyCode;

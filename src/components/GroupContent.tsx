@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 
 import { User } from '@prisma/client';
 
+import { getAllGroupMembers } from '@/modules/groups';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { GroupWithMembers } from '@/schemas/group';
 import { MessageWithSender } from '@/schemas/message';
 import { trpc } from '@/services/trpc';
-import { getAllGroupMembers } from '@/utils/groups';
 
 import GroupMessages from './GroupMessages';
 

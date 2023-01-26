@@ -4,13 +4,14 @@ import { Card, Divider, Stack } from '@chakra-ui/react';
 import { CurrencyCode, User } from '@prisma/client';
 import { omit } from 'lodash';
 
-import { ExpenseShareByMember } from '@/utils/expenses';
+import { ByUserId } from '@/modules/common/types';
+import { ExpenseShare } from '@/modules/expenses';
 
 import ExpenseSharesListItem from './ExpenseSharesListItem';
 
 interface Props {
-	value: ExpenseShareByMember;
-	onChange: (value: ExpenseShareByMember) => void;
+	value: ByUserId<ExpenseShare>;
+	onChange: (value: ByUserId<ExpenseShare>) => void;
 	total: number;
 	members: User[];
 	amountByMember: Record<string, number>;

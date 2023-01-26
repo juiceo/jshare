@@ -9,12 +9,12 @@ import { useRouter } from 'next/router';
 
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
+import { isUserInGroup } from '@/modules/groups';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
 import { appRouter } from '@/server/routers/_app';
 import { trpc } from '@/services/trpc';
-import { isUserInGroup } from '@/utils/groups';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 

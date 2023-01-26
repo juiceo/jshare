@@ -23,7 +23,7 @@ export const getUserFullName = (user: User) => {
 };
 
 export const getUserDisplayName = (
-	user: User | null,
+	user: User | null | undefined,
 	variant: 'short' | 'full' = 'short',
 ) => {
 	if (!user) return 'Unknown';

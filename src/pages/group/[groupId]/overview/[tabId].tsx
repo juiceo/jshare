@@ -19,11 +19,11 @@ import ExpenseList from '@/components/ExpenseList';
 import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
+import { getAllGroupMembers } from '@/modules/groups';
 import { Routes } from '@/routing';
 import { OverviewTabId } from '@/routing/types';
 import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
-import { getAllGroupMembers } from '@/utils/groups';
 
 interface Props {
 	group: GroupWithMembers;

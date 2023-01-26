@@ -5,11 +5,11 @@ import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
+import { getExpenseName } from '@/modules/expenses';
 import { formatAmount } from '@/modules/money';
+import { getUserDisplayName } from '@/modules/users';
 import { Routes } from '@/routing';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
-import { getExpenseName } from '@/utils/expenses';
-import { getUserShortName } from '@/utils/users';
 
 import ChatItem from './ChatItem';
 
@@ -64,7 +64,9 @@ const ExpenseItem = (props: Props) => {
 							align="center"
 							color="whiteAlpha.900"
 						>
-							{!isSelf ? getUserShortName(expense.sender) : 'You'}{' '}
+							{!isSelf
+								? getUserDisplayName(expense.sender, 'short')
+								: 'You'}{' '}
 							paid
 						</Text>
 						<Text

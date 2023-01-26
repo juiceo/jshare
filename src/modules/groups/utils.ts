@@ -17,6 +17,6 @@ export const getAllGroupMembers = (
 	return uniqBy([group.owner, ...group.members], 'id');
 };
 
-export const getGroupMemberCount = (group: Group & { members: [] }) => {
+export const getGroupMemberCount = (group: Group & { members: User[] }) => {
 	return group.members.length + 1;
 };

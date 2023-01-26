@@ -19,11 +19,11 @@ import Link from 'next/link';
 import { RiMore2Line } from 'react-icons/ri';
 
 import pattern from '@/assets/paisley.webp';
+import { getGroupMemberCount } from '@/modules/groups';
 import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
-import { getGroupMemberCount } from '@/utils/groups';
 
 interface Props {
 	group: GroupWithMembers;

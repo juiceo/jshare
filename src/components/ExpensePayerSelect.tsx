@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import {
 	Avatar,
 	AvatarBadge,
-	Box,
 	Button,
 	Drawer,
 	DrawerContent,
@@ -15,9 +14,9 @@ import {
 import { useSession } from 'next-auth/react';
 import { RiArrowDownSLine } from 'react-icons/ri';
 
+import { getAllGroupMembers } from '@/modules/groups';
+import { getUserDisplayName, getUserShortName } from '@/modules/users';
 import { GroupWithMembers } from '@/schemas';
-import { getAllGroupMembers } from '@/utils/groups';
-import { getUserShortName } from '@/utils/users';
 
 import Layout from './Layout';
 
@@ -66,8 +65,9 @@ const ExpensePayerSelect = (props: Props) => {
 						<Text fontSize="md" mb="2px">
 							{isSelf
 								? 'I paid'
-								: `${getUserShortName(
+								: `${getUserDisplayName(
 										payer ?? null,
+										'short',
 								  )} paid`}{' '}
 						</Text>
 						<RiArrowDownSLine display="inline" size={20} />

@@ -3,11 +3,11 @@ import { observable } from '@trpc/server/observable';
 import EventEmitter from 'events';
 import { z } from 'zod';
 
+import { isUserInGroup } from '@/modules/groups';
 import { MessageWithSender, createMessageSchema } from '@/schemas/message';
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';
-import { isUserInGroup } from '@/utils/groups';
 
 const ee = new EventEmitter();
 

@@ -12,18 +12,19 @@ import ExpenseSharesList from '@/components/ExpenseSharesList';
 import Layout from '@/components/Layout';
 import MoneyInput from '@/components/MoneyInput';
 import Page from '@/components/Page';
+import { ByUserId } from '@/modules/common/types';
+import {
+	ExpenseShare,
+	getAmountByMember,
+	getInitialExpenseShares,
+} from '@/modules/expenses';
+import { getAllGroupMembers } from '@/modules/groups';
 import { formatAmount } from '@/modules/money';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
 import { GroupWithMembers } from '@/schemas/group';
 import { appRouter } from '@/server/routers/_app';
 import { trpc } from '@/services/trpc';
-import {
-	ExpenseShareByMember,
-	getAmountByMember,
-	getInitialExpenseShares,
-} from '@/utils/expenses';
-import { getAllGroupMembers } from '@/utils/groups';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -47,7 +48,7 @@ const CreateExpensePage = (props: Props) => {
 		}
 	}, [amount, amountEdited]);
 
-	const [shares, setShares] = useState<ExpenseShareByMember>(
+	const [shares, setShares] = useState<ByUserId<ExpenseShare>>(
 		getInitialExpenseShares(allMembers),
 	);
 
@@ -55,9 +56,7 @@ const CreateExpensePage = (props: Props) => {
 		setTitle(e.target.value);
 	};
 
-	const handleSharesChange = (shares: ExpenseShareByMember) => {
-		console.log('SHARES', shares);
-		console.log('AMOUNT EDITED', amountEdited);
+	const handleSharesChange = (shares: ByUserId<ExpenseShare>) => {
 		setShares(shares);
 		if (!amountEdited) {
 			const sum = sumBy(

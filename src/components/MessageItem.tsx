@@ -3,8 +3,8 @@ import React from 'react';
 import { Card, Stack, Text } from '@chakra-ui/react';
 import moment from 'moment';
 
+import { getUserDisplayName } from '@/modules/users';
 import { MessageWithSender } from '@/schemas/message';
-import { getUserShortName } from '@/utils/users';
 
 import ChatItem from './ChatItem';
 
@@ -28,7 +28,7 @@ const MessageItem = (props: Props) => {
 				<Stack direction="column" spacing={1} px="2">
 					{!hideName && (
 						<Text fontSize="xs">
-							{getUserShortName(message.sender)}
+							{getUserDisplayName(message.sender, 'short')}
 						</Text>
 					)}
 					<Stack

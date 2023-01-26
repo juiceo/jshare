@@ -8,8 +8,8 @@ import Link from 'next/link';
 import { RiArrowRightSLine } from 'react-icons/ri';
 
 import { formatAmount } from '@/modules/money';
+import { getUserFullName } from '@/modules/users';
 import { Routes } from '@/routing';
-import { getUserFullName } from '@/utils/users';
 
 interface ExpenseListProps {
 	expenses: (Expense & { sender: User })[];

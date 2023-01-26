@@ -2,10 +2,10 @@ import { TRPCError } from '@trpc/server';
 import shortId from 'shortid';
 import { z } from 'zod';
 
+import { isUserInGroup } from '@/modules/groups';
 import { createGroupSchema } from '@/schemas/group';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';
-import { isUserInGroup } from '@/utils/groups';
 
 export const groupRouter = trpc.router({
 	create: trpc.authenticatedProcedure
