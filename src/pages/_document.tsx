@@ -49,7 +49,7 @@ export default function Document() {
 					property="og:image"
 					content="https://jshare.me/apple-touch-icon.png"
 				/>
-				<link rel="manifest" href="/site.webmanifest" />
+				<link rel="manifest" href="/manifest.json" />
 
 				<link
 					rel="icon"
