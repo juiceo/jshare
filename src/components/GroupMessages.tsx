@@ -110,8 +110,9 @@ const GroupMessages = (props: Props) => {
 											key={item.value.id}
 											message={item.value}
 											sender={
-												membersById[item.value.id] ??
-												null
+												membersById[
+													item.value.senderId
+												] ?? null
 											}
 											hideAvatar={nextItemHasSameSender}
 											hideName={prevItemHasSameSender}
@@ -125,8 +126,9 @@ const GroupMessages = (props: Props) => {
 											key={item.value.id}
 											expense={item.value}
 											sender={
-												membersById[item.value.id] ??
-												null
+												membersById[
+													item.value.senderId
+												] ?? null
 											}
 											hideAvatar={nextItemHasSameSender}
 											hideName={prevItemHasSameSender}
