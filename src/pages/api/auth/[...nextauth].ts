@@ -45,7 +45,7 @@ if (!!FACEBOOK_CLIENT_ID && !!FACEBOOK_CLIENT_SECRET) {
 			profile: (profile) => {
 				return {
 					id: profile.id,
-					name: 'Juuso Lappalainen',
+					name: profile.name,
 					firstName: profile.name?.split(' ')[0] ?? '',
 					lastName: profile.name?.split(' ')[1] ?? '',
 					email: profile.email,

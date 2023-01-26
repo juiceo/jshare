@@ -7,6 +7,7 @@ import moment from 'moment';
 import Link from 'next/link';
 import { RiArrowRightSLine } from 'react-icons/ri';
 
+import { getExpenseName } from '@/modules/expenses';
 import { formatAmount } from '@/modules/money';
 import { getUserFullName } from '@/modules/users';
 import { Routes } from '@/routing';
@@ -48,7 +49,7 @@ const ExpenseList = (props: ExpenseListProps) => {
 									spacing={0}
 								>
 									<Text textAlign="left" fontSize="md">
-										{expense.title}
+										{getExpenseName(expense)}
 									</Text>
 									<Text fontSize="xs" textAlign="left">
 										{`${moment(expense.createdAt).format(
