@@ -85,14 +85,9 @@ const Page = (props: Props) => {
 					animate={{ height: appBarHeight }}
 					id="appbar-filler"
 				/>
-				<MotionBox
-					flex={1}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					{...contentProps}
-				>
+				<Box flex={1} {...contentProps}>
 					{children}
-				</MotionBox>
+				</Box>
 				<MotionBox
 					initial={false}
 					animate={{ height: footerHeight }}
