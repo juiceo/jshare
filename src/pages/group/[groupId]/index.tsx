@@ -131,6 +131,7 @@ const GroupPage = (props: Props) => {
 			}
 			wrapperProps={{
 				overflow: 'hidden',
+				overscrollBehavior: 'contain',
 			}}
 			contentProps={{
 				display: 'flex',
