@@ -131,13 +131,13 @@ const GroupPage = (props: Props) => {
 			}
 			wrapperProps={{
 				overflow: 'hidden',
-				overscrollBehavior: 'contain',
 			}}
 			contentProps={{
 				display: 'flex',
 				flexDirection: 'column-reverse',
 				height: '100%',
 				overflow: 'auto',
+				overscrollBehavior: 'contain',
 			}}
 		>
 			<Box height="1px" width="full" ref={bottomRef} />
