@@ -11,7 +11,11 @@ if (!global.fetch) {
 const wss = new ws.Server({
 	port: 3001,
 });
-const handler = applyWSSHandler({ wss, router: appRouter, createContext });
+const handler = applyWSSHandler({
+	wss,
+	router: appRouter,
+	createContext: createContext as any,
+});
 
 wss.on('connection', (ws) => {
 	console.log(`➕➕ Connection (${wss.clients.size})`);

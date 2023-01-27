@@ -31,7 +31,11 @@ app.prepare().then(() => {
 		}
 	});
 	const wss = new ws.Server({ server });
-	const handler = applyWSSHandler({ wss, router: appRouter, createContext });
+	const handler = applyWSSHandler({
+		wss,
+		router: appRouter,
+		createContext: createContext as any,
+	});
 
 	process.on('SIGTERM', () => {
 		console.log('SIGTERM');
