@@ -60,7 +60,9 @@
 	"dependencies": {
 		"@chakra-ui/react": "^2.4.1",
 		"@ducanh2912/next-pwa": "^7.3.2",
+		"@emotion/cache": "^11.10.5",
 		"@emotion/react": "^11.10.5",
+		"@emotion/server": "^11.10.0",
 		"@emotion/styled": "^11.10.5",
 		"@fontsource/open-sans": "^4.5.13",
 		"@fontsource/poppins": "^4.5.10",
