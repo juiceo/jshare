@@ -10,7 +10,7 @@ import Document, {
 
 import emotionCache from '@/lib/emotion-cache';
 
-import theme from './theme';
+import theme from '../lib/theme';
 
 const { extractCritical } = createEmotionServer(emotionCache);
 

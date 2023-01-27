@@ -10,7 +10,7 @@ import Head from 'next/head';
 import useHideSnapshot from '@/hooks/useHideSnapshot';
 import { trpc } from '@/services/trpc';
 
-import theme from './theme';
+import theme from '../lib/theme';
 
 const App: AppType<{ session: Session | null }> = ({
 	Component,
