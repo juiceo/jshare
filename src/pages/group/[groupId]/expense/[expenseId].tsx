@@ -131,7 +131,10 @@ const EditExpensePage = (props: {
 								width="full"
 								colorScheme="green"
 								onClick={handleSave}
-								disabled={updateExpense.isLoading}
+								disabled={
+									updateExpense.isLoading ||
+									!validation?.valid
+								}
 								isLoading={updateExpense.isLoading}
 							>
 								Save changes

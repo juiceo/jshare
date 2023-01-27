@@ -45,7 +45,7 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 	};
 
 	const handleAmountChange = (amount: number) => {
-		setAmountEdited(!!amount);
+		setAmountEdited(true);
 		onChange({
 			...value,
 			amount,
@@ -61,7 +61,7 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 
 	const handleSharesChange = (shares: ByUserId<ExpenseShare>) => {
 		const newValue = { ...value, shares };
-		if (!amountEdited || !value.amount) {
+		if (!value.amount) {
 			newValue.amount = sumBy(
 				Object.values(shares),
 				(share) => share.amount ?? 0,
