@@ -258,12 +258,13 @@ export const expenseRouter = trpc.router({
 			});
 		}),
 
-	getByGroupId: trpc.authenticatedProcedure
+	listByGroupId: trpc.authenticatedProcedure
 		.input(z.string())
 		.query(async ({ input, ctx }) => {
+			const groupId = input;
 			const group = await prisma.group.findUnique({
 				where: {
-					id: input,
+					id: groupId,
 				},
 				select: {
 					ownerId: true,
@@ -283,7 +284,7 @@ export const expenseRouter = trpc.router({
 
 			const expenses = await prisma.expense.findMany({
 				where: {
-					groupId: input,
+					groupId,
 				},
 				include: {
 					shares: true,

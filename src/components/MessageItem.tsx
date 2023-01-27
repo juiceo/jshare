@@ -21,7 +21,7 @@ const MessageItem = (props: Props) => {
 
 	return (
 		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf}>
-			<Card variant="outline" borderRadius="lg" background="gray.200">
+			<Card borderRadius="lg" background="gray.200">
 				<Stack direction="column" spacing={1} px="2">
 					{!hideName && (
 						<Text fontSize="xs">

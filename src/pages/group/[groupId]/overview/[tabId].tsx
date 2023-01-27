@@ -42,7 +42,7 @@ const OverviewPage = (props: Props) => {
 	const { tabId } = router.query as { tabId: OverviewTabId };
 
 	const members = getAllGroupMembers(group);
-	const expenses = trpc.expenses.getByGroupId.useQuery(group.id);
+	const expenses = trpc.expenses.listByGroupId.useQuery(group.id);
 
 	const total = sumBy(expenses.data ?? [], (expense) => {
 		return expense.amount;

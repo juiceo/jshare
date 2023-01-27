@@ -1,69 +1,55 @@
 import React from 'react';
 
-import { Button, Link, Stack, Text } from '@chakra-ui/react';
-import { signIn, useSession } from 'next-auth/react';
-import Image from 'next/image';
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { GetServerSidePropsContext } from 'next';
+import { getSession, useSession } from 'next-auth/react';
+import superjson from 'superjson';
 
-import logo from '@/assets/brand/jshare_logo_with_name.svg';
 import Groups from '@/components/Groups';
 import Header from '@/components/Header';
+import LandingPage from '@/components/LandingPage';
 import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
+import { createContextInner } from '@/server/context';
+import { appRouter } from '@/server/routers/_app';
 
 import Layout from '../components/Layout';
 
 const Root: React.FC = () => {
 	const { status } = useSession();
 
-	if (status === 'loading') return <LoadingPage />;
-	if (status === 'unauthenticated') {
-		return (
-			<Page
-				wrapperProps={{ background: '#FFF8F8' }}
-				footer={
-					<Layout noMargin max="md" p="4" background="#fff8f8">
-						<Button
-							mt="4"
-							colorScheme="green"
-							variant="solid"
-							onClick={() => signIn()}
-							width="full"
-							alignSelf="center"
-						>
-							Sign in
-						</Button>
+	switch (status) {
+		case 'loading':
+			return <LoadingPage />;
+		case 'unauthenticated':
+			return <LandingPage />;
+		case 'authenticated':
+			return (
+				<Page appBar={<Header />}>
+					<Layout>
+						<Groups />
 					</Layout>
-				}
-			>
-				<Layout max="md" background="#fff8f8">
-					<Stack direction="column" alignItems="center">
-						<Image src={logo} alt="JShare" width="300" />
-						<Text textAlign="center">
-							Welcome!
-							<br />
-							<br />
-							JShare is an expense sharing app that was built as a
-							hobby project to replace the discontinued WeShare.
-							It helps your group of friends to easily keep track
-							of who paid for what, and crunches the numbers for
-							you when its time to settle the debt.
-							<br />
-							<br />
-							Log in to give it a try!
-						</Text>
-					</Stack>
-				</Layout>
-			</Page>
-		);
+				</Page>
+			);
 	}
+};
 
-	return (
-		<Page appBar={<Header />}>
-			<Layout>
-				<Groups />
-			</Layout>
-		</Page>
-	);
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+	const session = await getSession(ctx);
+	const ssg = createProxySSGHelpers({
+		router: appRouter,
+		ctx: await createContextInner({ session }),
+		transformer: superjson,
+	});
+
+	await ssg.groups.listOwnGroups.prefetch();
+
+	return {
+		props: {
+			trpcState: ssg.dehydrate(),
+			session,
+		},
+	};
 };
 
 export default Root;

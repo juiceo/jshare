@@ -33,7 +33,6 @@ const App: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps,
 }) => {
-	usePreserveScroll();
 	return (
 		<>
 			<Head>

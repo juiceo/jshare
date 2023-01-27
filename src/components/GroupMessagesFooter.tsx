@@ -11,31 +11,27 @@ import { trpc } from '@/services/trpc';
 
 interface Props {
 	group: GroupWithMembers;
+	onSendMessage?: () => void;
 }
 
 const MotionBox = motion(Box);
 
 const GroupMessagesFooter = (props: Props) => {
-	const { group } = props;
+	const { group, onSendMessage } = props;
 	const sendMessage = trpc.messages.send.useMutation();
 	const [inputValue, setInputValue] = useState<string>('');
 	const inputRef = React.useRef<HTMLInputElement>(null);
 
-	const handleSendMessage = () => {
+	const handleSendMessage = async () => {
 		const message = inputValue.trim();
 		if (!message) return;
-		sendMessage.mutate({
+		setInputValue('');
+		inputRef.current?.focus();
+		await sendMessage.mutateAsync({
 			message,
 			groupId: group.id,
 		});
-		setInputValue('');
-		inputRef.current?.focus();
-		setTimeout(() => {
-			window.scrollTo({
-				top: document.body.scrollHeight,
-				behavior: 'smooth',
-			});
-		}, 200);
+		onSendMessage?.();
 	};
 
 	const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,7 +69,7 @@ const GroupMessagesFooter = (props: Props) => {
 					ref={inputRef}
 				/>
 				<Box>
-					<AnimatePresence mode="popLayout">
+					<AnimatePresence mode="popLayout" initial={false}>
 						{!!inputValue ? (
 							<MotionBox
 								key="send-message"

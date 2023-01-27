@@ -14,32 +14,37 @@ import Link from 'next/link';
 import { Routes } from '@/routing';
 import { trpc } from '@/services/trpc';
 
+import EmptyCard from './EmptyCard';
 import GroupCard from './GroupCard';
 
 const Groups = () => {
-	const groupsQuery = trpc.groups.listOwnGroups.useQuery();
+	const groups = trpc.groups.listOwnGroups.useQuery();
 
 	const renderContent = () => {
-		if (!!groupsQuery.isLoading) return null;
-		if (!!groupsQuery.isError) {
+		if (!!groups.isLoading) return null;
+		if (!!groups.isError) {
 			return <Text>Something went wrong...</Text>;
 		}
 
-		if (!!groupsQuery.data?.length) {
+		if (!!groups.data?.length) {
 			return (
 				<SimpleGrid columns={[1, 2, 3]} spacing={4}>
-					{groupsQuery.data.map((group) => (
-						<GroupCard
-							group={group}
-							key={group.id}
-							onArchive={() => groupsQuery.refetch()}
-							onDelete={() => groupsQuery.refetch()}
-						/>
+					{groups.data.map((group) => (
+						<GroupCard group={group} key={group.id} />
 					))}
 				</SimpleGrid>
 			);
 		} else {
-			return <NoGroups />;
+			return (
+				<EmptyCard
+					title="You have no groups"
+					description="Create a group to track your expenses"
+					link={{
+						href: Routes.CREATE_GROUP,
+						label: 'New group',
+					}}
+				/>
+			);
 		}
 	};
 
@@ -48,7 +53,7 @@ const Groups = () => {
 			<Stack direction="row" justifyContent="space-between" mb="6">
 				<Heading fontSize="xl" mb="2">
 					Your groups{' '}
-					{!!groupsQuery.isLoading && (
+					{!!groups.isLoading && (
 						<CircularProgress
 							isIndeterminate
 							color="green.300"
@@ -65,29 +70,5 @@ const Groups = () => {
 		</Box>
 	);
 };
-
-const NoGroups = () => (
-	<Box
-		width="full"
-		background="white"
-		p="4"
-		borderRadius="md"
-		display="flex"
-		alignItems="center"
-		justifyContent="center"
-		flexDirection="column"
-		minHeight="200"
-	>
-		<Text fontSize="xl" mb="1">
-			You have no groups
-		</Text>
-		<Text fontSize="md" mb="6">
-			Create a group to track your expenses
-		</Text>
-		<Link href={Routes.CREATE_GROUP}>
-			<Button colorScheme="green">New group</Button>
-		</Link>
-	</Box>
-);
 
 export default Groups;

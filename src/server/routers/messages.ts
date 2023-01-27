@@ -67,7 +67,7 @@ export const messageRouter = trpc.router({
 				};
 			});
 		}),
-	getByGroupId: trpc.authenticatedProcedure
+	listByGroupId: trpc.authenticatedProcedure
 		.input(z.string())
 		.query(async ({ input }) => {
 			try {
@@ -88,5 +88,58 @@ export const messageRouter = trpc.router({
 					cause: err,
 				});
 			}
+		}),
+	listByGroupIdInfinite: trpc.authenticatedProcedure
+		.input(
+			z.object({
+				groupId: z.string(),
+				limit: z.number().min(1),
+				cursor: z.string().nullish(),
+			}),
+		)
+		.query(async ({ input, ctx }) => {
+			const { groupId, limit, cursor } = input;
+			const group = await prisma.group.findUnique({
+				where: {
+					id: groupId,
+				},
+				include: {
+					members: true,
+					owner: true,
+				},
+			});
+
+			if (!group || !isUserInGroup(ctx.user.id, group)) {
+				throw new TRPCError({
+					code: 'NOT_FOUND',
+					message: 'Group not found',
+				});
+			}
+
+			const messages = await prisma.message.findMany({
+				take: limit + 1,
+				where: {
+					groupId,
+				},
+				include: {
+					sender: true,
+				},
+				cursor: cursor ? { id: cursor } : undefined,
+				orderBy: {
+					createdAt: 'desc',
+				},
+			});
+
+			let nextCursor: typeof cursor | undefined = undefined;
+			if (messages.length > limit) {
+				const nextItem = messages.pop();
+				if (!!nextItem) {
+					nextCursor = nextItem.id;
+				}
+			}
+			return {
+				messages,
+				nextCursor,
+			};
 		}),
 });

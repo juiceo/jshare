@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
-import { Box, Stack } from '@chakra-ui/react';
+import { Box, Button, Stack, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, Message, User } from '@prisma/client';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { chain } from 'lodash';
 import { useSession } from 'next-auth/react';
-import { useInView } from 'react-intersection-observer';
 
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 
 import ExpenseItem from './ExpenseItem';
 import MessageItem from './MessageItem';
-import ScrollDownButton from './ScrollDownButton';
 
 interface Props {
 	membersById: Record<string, User>;
 	messages: Message[];
 	expenses: ExpenseWithSenderAndShares[];
+	canLoadMore: boolean;
+	hasLoadedMore: boolean;
+	isLoadingMore: boolean;
+	onLoadMore: () => void;
 	loading: boolean;
 }
-
-const MotionBox = motion(Box);
 
 type MessageWithType =
 	| {
@@ -33,14 +33,17 @@ type MessageWithType =
 	  };
 
 const GroupMessages = (props: Props) => {
-	const { membersById, messages, expenses, loading } = props;
+	const {
+		membersById,
+		messages,
+		expenses,
+		loading,
+		canLoadMore,
+		isLoadingMore,
+		hasLoadedMore,
+		onLoadMore,
+	} = props;
 	const session = useSession();
-
-	const { ref, inView: isScrolledDown } = useInView({
-		/* Optional options */
-		threshold: 0,
-	});
-	const isScrolledDownRef = React.useRef<boolean>(isScrolledDown);
 
 	const itemsWithType = useMemo(() => {
 		const messageItems: MessageWithType[] = messages.map((message) => ({
@@ -59,27 +62,6 @@ const GroupMessages = (props: Props) => {
 			.value();
 	}, [messages, expenses]);
 
-	const lastItemId = itemsWithType[itemsWithType.length - 1]?.value?.id;
-
-	useEffect(() => {
-		isScrolledDownRef.current = isScrolledDown;
-	}, [isScrolledDown]);
-
-	useEffect(() => {
-		if (isScrolledDownRef.current) {
-			scrollToBottom();
-		}
-	}, [lastItemId]);
-
-	const scrollToBottom = () => {
-		setTimeout(() => {
-			window.scrollTo({
-				top: document.body.scrollHeight,
-				behavior: 'smooth',
-			});
-		}, 100);
-	};
-
 	return (
 		<Box
 			p="2"
@@ -93,6 +75,29 @@ const GroupMessages = (props: Props) => {
 					direction="column"
 					sx={{ position: 'relative' }}
 				>
+					<Stack direction="column" alignItems="center" py="20px">
+						{canLoadMore ? (
+							<Button
+								onClick={onLoadMore}
+								isLoading={isLoadingMore}
+								color="black"
+								size="sm"
+								borderRadius="2xl"
+							>
+								Load older messages
+							</Button>
+						) : hasLoadedMore ? (
+							<Button
+								disabled
+								color="black"
+								size="sm"
+								borderRadius="2xl"
+							>
+								All messages loaded
+							</Button>
+						) : null}
+					</Stack>
+
 					<AnimatePresence initial={false}>
 						{itemsWithType.map((item, index) => {
 							const senderId = item.value.senderId;
@@ -141,39 +146,7 @@ const GroupMessages = (props: Props) => {
 								}
 							}
 						})}
-						{!isScrolledDown ? (
-							<MotionBox
-								initial={{
-									opacity: 0,
-								}}
-								animate={{
-									opacity: 1,
-								}}
-								exit={{
-									opacity: 0,
-								}}
-								sx={{
-									position: 'fixed',
-									bottom: '80px',
-									right: '8px',
-								}}
-							>
-								<ScrollDownButton onClick={scrollToBottom} />
-							</MotionBox>
-						) : null}
 					</AnimatePresence>
-					<Box
-						ref={ref}
-						sx={{
-							position: 'absolute',
-							height: '200px',
-							width: '1px',
-							bottom: 0,
-							left: 0,
-							right: 0,
-							opacity: 0,
-						}}
-					></Box>
 				</Stack>
 			)}
 		</Box>

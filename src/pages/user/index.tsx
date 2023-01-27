@@ -11,16 +11,18 @@ import {
 	Input,
 	Stack,
 } from '@chakra-ui/react';
-import { User } from '@prisma/client';
-import { signOut } from 'next-auth/react';
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { GetServerSidePropsContext } from 'next';
+import { getSession, signOut } from 'next-auth/react';
 import router from 'next/router';
+import superjson from 'superjson';
 
 import AppBar from '@/components/AppBar';
 import Layout from '@/components/Layout';
-import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
-import Redirect from '@/components/Redirect';
 import { Routes } from '@/routing';
+import { createContextInner } from '@/server/context';
+import { appRouter } from '@/server/routers/_app';
 import { trpc } from '@/services/trpc';
 
 type FormState = {
@@ -29,18 +31,15 @@ type FormState = {
 	email: string;
 };
 
-type Props = {
-	user: User;
-};
-
-const UserPage: React.FC<Props> = (props) => {
-	const { user } = props;
+const UserPage = () => {
+	const userQuery = trpc.users.getSelf.useQuery();
 	const updateUser = trpc.users.updateSelf.useMutation();
+	const user = userQuery.data;
 
 	const [formState, setFormState] = useState<FormState>({
-		firstName: user.firstName ?? '',
-		lastName: user.lastName ?? '',
-		email: user.email ?? '',
+		firstName: user?.firstName ?? '',
+		lastName: user?.lastName ?? '',
+		email: user?.email ?? '',
 	});
 
 	const handleSubmit = async () => {
@@ -141,12 +140,22 @@ const UserPage: React.FC<Props> = (props) => {
 	);
 };
 
-export const UserPageWrapper = () => {
-	const user = trpc.users.getSelf.useQuery();
-	if (user.isLoading) return <LoadingPage />;
-	if (user.isError) return <Redirect to="/" />;
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+	const session = await getSession(ctx);
+	const ssg = createProxySSGHelpers({
+		router: appRouter,
+		ctx: await createContextInner({ session }),
+		transformer: superjson,
+	});
 
-	return <UserPage user={user.data} />;
+	await ssg.users.getSelf.prefetch();
+
+	return {
+		props: {
+			trpcState: ssg.dehydrate(),
+			session,
+		},
+	};
 };
 
-export default UserPageWrapper;
+export default UserPage;
