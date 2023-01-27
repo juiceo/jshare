@@ -65,6 +65,7 @@ const Page = (props: Props) => {
 				direction="column"
 				spacing={0}
 				background="theme.pageBackground"
+				id="current-page"
 				{...wrapperProps}
 			>
 				{!!appBar && (
@@ -84,9 +85,14 @@ const Page = (props: Props) => {
 					animate={{ height: appBarHeight }}
 					id="appbar-filler"
 				/>
-				<Box flex={1} {...contentProps}>
+				<MotionBox
+					flex={1}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					{...contentProps}
+				>
 					{children}
-				</Box>
+				</MotionBox>
 				<MotionBox
 					initial={false}
 					animate={{ height: footerHeight }}

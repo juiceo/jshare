@@ -7,6 +7,7 @@ import { SessionProvider, getSession } from 'next-auth/react';
 import type { AppType } from 'next/app';
 import Head from 'next/head';
 
+import useHideSnapshot from '@/hooks/useHideSnapshot';
 import { usePreserveScroll } from '@/hooks/usePreserveScroll';
 import { trpc } from '@/services/trpc';
 
@@ -33,6 +34,7 @@ const App: AppType<{ session: Session | null }> = ({
 	Component,
 	pageProps,
 }) => {
+	useHideSnapshot();
 	return (
 		<>
 			<Head>
@@ -50,10 +52,10 @@ const App: AppType<{ session: Session | null }> = ({
 	);
 };
 
-App.getInitialProps = async ({ ctx }) => {
-	return {
-		session: await getSession(ctx),
-	};
-};
+// App.getInitialProps = async ({ ctx }) => {
+// 	return {
+// 		session: await getSession(ctx),
+// 	};
+// };
 
 export default trpc.withTRPC(App);
