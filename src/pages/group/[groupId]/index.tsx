@@ -166,10 +166,11 @@ const GroupPage = (props: Props) => {
 				messages={messages}
 				expenses={expenses}
 				membersById={membersById}
-				hasMultiplePages={messages.length >= MESSAGES_PER_PAGE}
 				hasLoadedAll={!messagesQuery.hasNextPage}
 				isLoadingMore={messagesQuery.isFetchingNextPage}
 				onLoadMore={messagesQuery.fetchNextPage}
+				ownerId={group.ownerId}
+				createdAt={group.createdAt}
 			/>
 		</Page>
 	);

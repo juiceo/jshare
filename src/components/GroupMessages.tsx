@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 
-import { Box, Stack, Text } from '@chakra-ui/react';
+import { Box, CircularProgress, Stack, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, Message, User } from '@prisma/client';
 import { AnimatePresence } from 'framer-motion';
 import { chain } from 'lodash';
+import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import InfiniteScroll from 'react-infinite-scroller';
 
+import { getUserDisplayName } from '@/modules/users';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 
 import ExpenseItem from './ExpenseItem';
@@ -16,10 +18,11 @@ interface Props {
 	membersById: Record<string, User>;
 	messages: Message[];
 	expenses: ExpenseWithSenderAndShares[];
-	hasMultiplePages: boolean;
 	hasLoadedAll: boolean;
 	isLoadingMore: boolean;
 	onLoadMore: () => void;
+	ownerId: string;
+	createdAt: Date;
 }
 
 type MessageWithType =
@@ -37,10 +40,11 @@ const GroupMessages = (props: Props) => {
 		membersById,
 		messages,
 		expenses,
-		hasMultiplePages,
 		hasLoadedAll,
 		isLoadingMore,
 		onLoadMore,
+		ownerId,
+		createdAt,
 	} = props;
 	const session = useSession();
 
@@ -60,6 +64,8 @@ const GroupMessages = (props: Props) => {
 			.sortBy((item) => item.value.createdAt)
 			.value();
 	}, [messages, expenses]);
+
+	const owner = membersById[ownerId];
 
 	return (
 		<Box
@@ -84,6 +90,11 @@ const GroupMessages = (props: Props) => {
 						p="8"
 						key="loading"
 					>
+						<CircularProgress
+							isIndeterminate
+							size="20px"
+							color="green.300"
+						/>
 						<Text fontSize="sm">Loading older messages...</Text>
 					</Stack>
 				}
@@ -94,11 +105,16 @@ const GroupMessages = (props: Props) => {
 					direction="column"
 					sx={{ position: 'relative' }}
 				>
-					{hasMultiplePages && hasLoadedAll && (
-						<Stack direction="column" alignItems="center" p="8">
-							<Text fontSize="sm">All messages loaded</Text>
-						</Stack>
-					)}
+					<Stack direction="column" alignItems="center" p="8">
+						<Text fontSize="sm" maxWidth="50%" textAlign="center">
+							{`Group created by ${getUserDisplayName(
+								owner,
+								'full',
+							)} on ${moment(createdAt).format(
+								'dddd MMM Do, YYYY',
+							)}`}
+						</Text>
+					</Stack>
 					<AnimatePresence initial={false}>
 						{itemsWithType.map((item, index) => {
 							const senderId = item.value.senderId;
