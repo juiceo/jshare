@@ -16,7 +16,8 @@ interface Props {
 	membersById: Record<string, User>;
 	messages: Message[];
 	expenses: ExpenseWithSenderAndShares[];
-	canLoadMore: boolean;
+	hasMultiplePages: boolean;
+	hasLoadedAll: boolean;
 	isLoadingMore: boolean;
 	onLoadMore: () => void;
 }
@@ -36,7 +37,8 @@ const GroupMessages = (props: Props) => {
 		membersById,
 		messages,
 		expenses,
-		canLoadMore,
+		hasMultiplePages,
+		hasLoadedAll,
 		isLoadingMore,
 		onLoadMore,
 	} = props;
@@ -72,7 +74,7 @@ const GroupMessages = (props: Props) => {
 					if (isLoadingMore) return;
 					onLoadMore();
 				}}
-				hasMore={canLoadMore}
+				hasMore={!hasLoadedAll}
 				initialLoad={false}
 				threshold={500}
 				loader={
@@ -92,7 +94,7 @@ const GroupMessages = (props: Props) => {
 					direction="column"
 					sx={{ position: 'relative' }}
 				>
-					{!canLoadMore && (
+					{hasMultiplePages && hasLoadedAll && (
 						<Stack direction="column" alignItems="center" p="8">
 							<Text fontSize="sm">All messages loaded</Text>
 						</Stack>
