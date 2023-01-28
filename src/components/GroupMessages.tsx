@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 
-import { Box, Button, Stack, Text } from '@chakra-ui/react';
+import { Box, Stack, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, Message, User } from '@prisma/client';
 import { AnimatePresence } from 'framer-motion';
 import { chain } from 'lodash';
 import { useSession } from 'next-auth/react';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 
@@ -16,10 +17,8 @@ interface Props {
 	messages: Message[];
 	expenses: ExpenseWithSenderAndShares[];
 	canLoadMore: boolean;
-	hasLoadedMore: boolean;
 	isLoadingMore: boolean;
 	onLoadMore: () => void;
-	loading: boolean;
 }
 
 type MessageWithType =
@@ -37,10 +36,8 @@ const GroupMessages = (props: Props) => {
 		membersById,
 		messages,
 		expenses,
-		loading,
 		canLoadMore,
 		isLoadingMore,
-		hasLoadedMore,
 		onLoadMore,
 	} = props;
 	const session = useSession();
@@ -69,35 +66,37 @@ const GroupMessages = (props: Props) => {
 			flexDirection="column-reverse"
 			position="relative"
 		>
-			{!loading && (
+			<InfiniteScroll
+				pageStart={0}
+				loadMore={() => {
+					if (isLoadingMore) return;
+					onLoadMore();
+				}}
+				hasMore={canLoadMore}
+				initialLoad={false}
+				threshold={500}
+				loader={
+					<Stack
+						direction="column"
+						alignItems="center"
+						p="8"
+						key="loading"
+					>
+						<Text fontSize="sm">Loading older messages...</Text>
+					</Stack>
+				}
+				isReverse
+			>
 				<Stack
 					spacing={2}
 					direction="column"
 					sx={{ position: 'relative' }}
 				>
-					<Stack direction="column" alignItems="center" py="20px">
-						{canLoadMore ? (
-							<Button
-								onClick={onLoadMore}
-								isLoading={isLoadingMore}
-								color="black"
-								size="sm"
-								borderRadius="2xl"
-							>
-								Load older messages
-							</Button>
-						) : hasLoadedMore ? (
-							<Button
-								disabled
-								color="black"
-								size="sm"
-								borderRadius="2xl"
-							>
-								All messages loaded
-							</Button>
-						) : null}
-					</Stack>
-
+					{!canLoadMore && (
+						<Stack direction="column" alignItems="center" p="8">
+							<Text fontSize="sm">All messages loaded</Text>
+						</Stack>
+					)}
 					<AnimatePresence initial={false}>
 						{itemsWithType.map((item, index) => {
 							const senderId = item.value.senderId;
@@ -148,7 +147,7 @@ const GroupMessages = (props: Props) => {
 						})}
 					</AnimatePresence>
 				</Stack>
-			)}
+			</InfiniteScroll>
 		</Box>
 	);
 };

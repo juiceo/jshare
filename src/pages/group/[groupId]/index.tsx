@@ -167,10 +167,8 @@ const GroupPage = (props: Props) => {
 				expenses={expenses}
 				membersById={membersById}
 				canLoadMore={!!messagesQuery.hasNextPage}
-				hasLoadedMore={(messagesQuery.data?.pages.length ?? 0) > 1}
 				isLoadingMore={messagesQuery.isFetchingNextPage}
 				onLoadMore={messagesQuery.fetchNextPage}
-				loading={false}
 			/>
 		</Page>
 	);
