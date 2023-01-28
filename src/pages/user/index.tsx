@@ -20,6 +20,7 @@ import superjson from 'superjson';
 import AppBar from '@/components/AppBar';
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
+import Redirect from '@/components/Redirect';
 import { Routes } from '@/routing';
 import { createContextInner } from '@/server/context';
 import { appRouter } from '@/server/routers/_app';
@@ -46,6 +47,10 @@ const UserPage = () => {
 		await updateUser.mutate(formState);
 		router.push('/');
 	};
+
+	if (!user) {
+		return <Redirect to={Routes.ROOT} />;
+	}
 
 	return (
 		<Page
