@@ -37,7 +37,7 @@ const AppBar = (props: AppBarProps) => {
 
 	const backgroundColors: Record<AppBarVariant, string> = {
 		default: 'white',
-		transparent: 'transparent',
+		transparent: 'theme.pageBackground',
 	};
 
 	const boxShadows: Record<AppBarVariant, string> = {
