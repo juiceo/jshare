@@ -13,8 +13,8 @@ interface GroupCreatedProps {
 const GroupCreated = (props: GroupCreatedProps) => {
 	const { group } = props;
 	return (
-		<Stack direction="column" alignItems="center" px="2" py="20">
-			<Text fontSize="sm">
+		<Stack direction="column" alignItems="center" px="8" py="20">
+			<Text fontSize="sm" textAlign="center">
 				{getUserDisplayName(group.owner, 'full')} created this group on{' '}
 				{moment(group.createdAt).format('MMMM Do, YYYY')}
 			</Text>
