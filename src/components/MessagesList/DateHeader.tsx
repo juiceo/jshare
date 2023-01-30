@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Button, Stack, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import moment from 'moment';
+import { useInView } from 'react-intersection-observer';
 
 interface DateHeaderProps {
 	date: Date;
@@ -43,20 +44,15 @@ const DateHeader = (props: DateHeaderProps) => {
 	const formattedDate = formatDate(date);
 
 	return (
-		<MotionStack
-			direction="column"
-			alignItems="center"
-			p="4"
-			sx={{ position: 'sticky', top: 0 }}
-			zIndex={date.valueOf()}
-		>
+		<MotionStack direction="column" alignItems="center" py="4" sx={{ position: 'sticky', top: '0' }}>
 			<Button
-				colorScheme="blackAlpha"
+				variant="outline"
+				colorScheme="gray"
 				borderRadius="2xl"
 				width="105px"
 				size="xs"
 				onClick={handleClick}
-				margin="0"
+				background="theme.pageBackground"
 			>
 				<Text fontSize="xs" textAlign="center" py="1" margin="0">
 					{formattedDate}
