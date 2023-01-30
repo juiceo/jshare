@@ -37,7 +37,7 @@ const DateHeader = (props: DateHeaderProps) => {
 	const handleClick = () => {
 		const messageEl = document.getElementById(props.messageId);
 		if (!!messageEl) {
-			messageEl.scrollIntoView({ behavior: 'smooth' });
+			messageEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}
 	};
 
