@@ -108,7 +108,7 @@ model Message {
   group     Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
   expenseId String?
   expense   Expense?    @relation(fields: [expenseId], references: [id], onDelete: SetNull)
-  type      MessageType @default(TEXT)
+  type      MessageType
 }
 
 model Expense {
