@@ -10,10 +10,7 @@ import AppBar from '@/components/AppBar';
 import ExpenseForm, { ExpenseFormValue } from '@/components/ExpenseForm';
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
-import {
-	getInitialExpenseShares,
-	validateExpenseFormValue,
-} from '@/modules/expenses';
+import { getInitialExpenseShares, validateExpenseFormValue } from '@/modules/expenses';
 import { getAllGroupMembers } from '@/modules/groups';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
@@ -58,23 +55,11 @@ const CreateExpensePage = (props: Props) => {
 	return (
 		<Page
 			title="New Expense"
-			appBar={
-				<AppBar
-					heading="New Expense"
-					backTo={Routes.Group(group.id)}
-					variant="transparent"
-				/>
-			}
+			appBar={<AppBar heading="New Expense" backTo={Routes.Group(group.id)} />}
 			footer={
 				<Layout max="md" noMargin py="2">
 					{validation.message && (
-						<Text
-							color="red.500"
-							mb="2"
-							fontSize="xs"
-							textAlign="center"
-							fontWeight="bold"
-						>
+						<Text color="red.500" mb="2" fontSize="xs" textAlign="center" fontWeight="bold">
 							{validation.message}
 						</Text>
 					)}
@@ -93,12 +78,7 @@ const CreateExpensePage = (props: Props) => {
 			}
 		>
 			<Layout max="md">
-				<ExpenseForm
-					value={expense}
-					onChange={setExpense}
-					currency={group.currency}
-					members={allMembers}
-				/>
+				<ExpenseForm value={expense} onChange={setExpense} currency={group.currency} members={allMembers} />
 			</Layout>
 		</Page>
 	);
@@ -119,11 +99,7 @@ export const getServerSideProps: GetServerSideProps<
 	}
 > = async (ctx) => {
 	try {
-		const session = await unstable_getServerSession(
-			ctx.req,
-			ctx.res,
-			authOptions,
-		);
+		const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions);
 
 		if (!session || !ctx.params?.groupId) {
 			return {
@@ -131,9 +107,7 @@ export const getServerSideProps: GetServerSideProps<
 			};
 		}
 
-		const group = await appRouter
-			.createCaller({ session })
-			.groups.getById(ctx.params.groupId);
+		const group = await appRouter.createCaller({ session }).groups.getById(ctx.params.groupId);
 
 		if (!group) {
 			return {

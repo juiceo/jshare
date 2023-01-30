@@ -1,16 +1,6 @@
 import React from 'react';
 
-import {
-	Box,
-	Heading,
-	IconButton,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-	Stack,
-	Text,
-} from '@chakra-ui/react';
+import { Box, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList, Stack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiArrowLeftLine, RiMore2Line } from 'react-icons/ri';
 
@@ -20,7 +10,6 @@ export interface AppBarProps {
 	subheading?: string;
 	backTo?: string;
 	actions?: AppBarAction[];
-	variant?: AppBarVariant;
 }
 
 export type AppBarAction = {
@@ -31,19 +20,9 @@ export type AppBarAction = {
 };
 
 const AppBar = (props: AppBarProps) => {
-	const { heading, subheading, backTo, actions, variant = 'default' } = props;
+	const { heading, subheading, backTo, actions } = props;
 
 	const actionsToRender = actions?.filter((action) => !action.hidden);
-
-	const backgroundColors: Record<AppBarVariant, string> = {
-		default: 'white',
-		transparent: 'theme.pageBackground',
-	};
-
-	const boxShadows: Record<AppBarVariant, string> = {
-		default: 'sm',
-		transparent: 'none',
-	};
 
 	return (
 		<Stack
@@ -52,8 +31,8 @@ const AppBar = (props: AppBarProps) => {
 			alignItems="center"
 			justifyContent="space-between"
 			spacing={2}
-			background={backgroundColors[variant]}
-			boxShadow={boxShadows[variant]}
+			background="white"
+			boxShadow="sm"
 			zIndex={2}
 			py="4"
 			height="72px"
@@ -101,10 +80,7 @@ const AppBar = (props: AppBarProps) => {
 						/>
 						<MenuList>
 							{actionsToRender.map((action) => (
-								<MenuItem
-									key={action.key}
-									onClick={action.onClick}
-								>
+								<MenuItem key={action.key} onClick={action.onClick}>
 									{action.label}
 								</MenuItem>
 							))}

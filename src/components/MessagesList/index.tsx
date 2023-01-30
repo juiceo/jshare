@@ -62,7 +62,7 @@ const MessageList = (props: Props) => {
 	}, [messages, expenses]);
 
 	return (
-		<Stack spacing={2} direction="column" sx={{ position: 'relative' }} py="2">
+		<Stack spacing={2} direction="column" sx={{ position: 'relative' }} py="2" pb="10">
 			{canLoadMore ? (
 				<LoadMoreMessages onLoadMore={onLoadMore} isLoadingMore={isLoadingMore} />
 			) : (

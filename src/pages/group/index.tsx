@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-	Box,
-	Button,
-	Card,
-	FormControl,
-	FormLabel,
-	Input,
-	Select,
-	Text,
-	Tooltip,
-} from '@chakra-ui/react';
+import { Box, Button, Card, FormControl, FormLabel, Input, Select, Text, Tooltip } from '@chakra-ui/react';
 import { CurrencyCode } from '@prisma/client';
 import router from 'next/router';
 import { RiQuestionLine } from 'react-icons/ri';
@@ -36,16 +26,7 @@ const CreateGroup: React.FC = () => {
 	};
 
 	return (
-		<Page
-			appBar={
-				<AppBar
-					heading="New group"
-					backTo={Routes.ROOT}
-					variant="transparent"
-				/>
-			}
-			title="New group"
-		>
+		<Page appBar={<AppBar heading="New group" backTo={Routes.ROOT} />} title="New group">
 			<Layout max="md">
 				<Card background="white" p="4">
 					<FormControl mb="4">
@@ -66,12 +47,7 @@ const CreateGroup: React.FC = () => {
 						>
 							Currency
 							<Tooltip label="The currency expenses will be added and calculated in. Support for adding expenses in multiple currencies coming soon!">
-								<Box
-									ml="2"
-									display="inline-flex"
-									alignItems="center"
-									justifyContent="center"
-								>
+								<Box ml="2" display="inline-flex" alignItems="center" justifyContent="center">
 									<RiQuestionLine />
 								</Box>
 							</Tooltip>
@@ -79,15 +55,10 @@ const CreateGroup: React.FC = () => {
 						<Select
 							placeholder="Select currency"
 							value={currency}
-							onChange={(e) =>
-								setCurrency(e.target.value as CurrencyCode)
-							}
+							onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
 						>
 							{Object.values(CURRENCIES).map((currency) => (
-								<option
-									value={currency.code}
-									key={currency.code}
-								>
+								<option value={currency.code} key={currency.code}>
 									{currency.name} ({currency.code})
 								</option>
 							))}

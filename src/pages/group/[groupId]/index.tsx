@@ -110,7 +110,7 @@ const GroupPage = (props: Props) => {
 					flexDirection: 'column-reverse',
 				}}
 			>
-				<Box height="1px" width="full" ref={bottomRef} />
+				<Box height="1px" width="full" background="red" ref={bottomRef} />
 				<ScrollDetector
 					onChange={setScrolledDown}
 					onChangeRef={scrolledDownRef}

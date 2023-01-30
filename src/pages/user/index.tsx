@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-	Avatar,
-	Box,
-	Button,
-	Card,
-	Divider,
-	FormControl,
-	FormLabel,
-	Input,
-	Stack,
-} from '@chakra-ui/react';
+import { Avatar, Box, Button, Card, Divider, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { GetServerSidePropsContext } from 'next';
 import { getSession, signOut } from 'next-auth/react';
@@ -53,16 +43,7 @@ const UserPage = () => {
 	}
 
 	return (
-		<Page
-			title="Edit profile"
-			appBar={
-				<AppBar
-					heading="Edit profile"
-					backTo={Routes.ROOT}
-					variant="transparent"
-				/>
-			}
-		>
+		<Page title="Edit profile" appBar={<AppBar heading="Edit profile" backTo={Routes.ROOT} />}>
 			<Layout max="md">
 				<Stack direction="column" alignItems="center" spacing={6}>
 					<Avatar src={user?.image ?? ''} size="xl" />
