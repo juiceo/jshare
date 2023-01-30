@@ -50,26 +50,18 @@ const DateHeader = (props: DateHeaderProps) => {
 			sx={{ position: 'sticky', top: 0 }}
 			zIndex={date.valueOf()}
 		>
-			<Box
-				width="105px"
-				background="theme.pageBackground"
-				// borderWidth="4px"
-				// borderColor="red.400"
+			<Button
+				colorScheme="blackAlpha"
 				borderRadius="2xl"
+				width="105px"
+				size="xs"
+				onClick={handleClick}
+				margin="0"
 			>
-				<Button
-					colorScheme="blackAlpha"
-					borderRadius="2xl"
-					width="full"
-					size="sm"
-					height="auto"
-					onClick={handleClick}
-				>
-					<Text fontSize="xs" textAlign="center" py="1">
-						{formattedDate}
-					</Text>
-				</Button>
-			</Box>
+				<Text fontSize="xs" textAlign="center" py="1" margin="0">
+					{formattedDate}
+				</Text>
+			</Button>
 		</MotionStack>
 	);
 };
