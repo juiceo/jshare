@@ -26,14 +26,7 @@ const ScrollDetector = (props: ScrollDetectorProps) => {
 
 	return (
 		<Box width="full" position="relative">
-			<Box
-				ref={innerRef}
-				position="absolute"
-				bottom="0"
-				left="0"
-				right="0"
-				height={height}
-			></Box>
+			<Box ref={innerRef} position="absolute" bottom="0" left="0" right="0" height={height}></Box>
 		</Box>
 	);
 };

@@ -9,6 +9,7 @@ import { getUserDisplayName } from '@/modules/users';
 import ChatItem from './ChatItem';
 
 interface Props {
+	id: string;
 	message: Message;
 	sender: User | null;
 	hideAvatar?: boolean;
@@ -17,23 +18,14 @@ interface Props {
 }
 
 const MessageItem = (props: Props) => {
-	const { message, sender, hideAvatar, hideName, isSelf } = props;
+	const { id, message, sender, hideAvatar, hideName, isSelf } = props;
 
 	return (
-		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf}>
+		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf} id={id}>
 			<Card borderRadius="lg" background="gray.200">
 				<Stack direction="column" spacing={1} px="2">
-					{!hideName && (
-						<Text fontSize="xs">
-							{getUserDisplayName(sender, 'short')}
-						</Text>
-					)}
-					<Stack
-						direction="row"
-						maxWidth="300px"
-						alignItems="flex-end"
-						justifyContent="space-between"
-					>
+					{!hideName && <Text fontSize="xs">{getUserDisplayName(sender, 'short')}</Text>}
+					<Stack direction="row" maxWidth="300px" alignItems="flex-end" justifyContent="space-between">
 						<Text fontSize="md">{message.message}</Text>
 						<Text fontSize="xs" align="right" pb="2px">
 							{moment(message.createdAt).format('HH:mm')}

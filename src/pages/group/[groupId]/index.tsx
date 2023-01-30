@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import { Box } from '@chakra-ui/react';
-import { User } from '@prisma/client';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { sortBy } from 'lodash';
@@ -10,12 +9,11 @@ import { getSession } from 'next-auth/react';
 import superjson from 'superjson';
 
 import GroupHeader from '@/components/GroupHeader';
-import GroupMessages from '@/components/GroupMessages';
 import GroupMessagesFooter from '@/components/GroupMessagesFooter';
+import MessagesList from '@/components/MessagesList';
 import Page from '@/components/Page';
 import ScrollDetector from '@/components/ScrollDetector';
 import ScrollDownButton from '@/components/ScrollDownButton';
-import { getAllGroupMembers } from '@/modules/groups';
 import NotFoundPage from '@/pages/404';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import { MessageWithSender } from '@/schemas/message';
@@ -49,9 +47,7 @@ const GroupPage = (props: Props) => {
 	const group = groupQuery.data;
 
 	const [localMessages, setLocalMessages] = useState<MessageWithSender[]>([]);
-	const [localExpenses, setLocalExpenses] = useState<
-		ExpenseWithSenderAndShares[]
-	>([]);
+	const [localExpenses, setLocalExpenses] = useState<ExpenseWithSenderAndShares[]>([]);
 
 	trpc.messages.onSendMessageToGroup.useSubscription(groupId, {
 		onData: (message) => {
@@ -70,52 +66,26 @@ const GroupPage = (props: Props) => {
 		},
 	});
 
-	const membersById = useMemo(() => {
-		if (!group) return {};
-		const allMembers = getAllGroupMembers(group);
-		return allMembers.reduce((acc, member) => {
-			acc[member.id] = member;
-			return acc;
-		}, {} as Record<string, User>);
-	}, [group]);
-
 	const messages = useMemo(() => {
 		const remoteMessages =
 			messagesQuery.data?.pages.flatMap((page) => {
 				return page.messages;
 			}) ?? [];
-		return sortBy(
-			[...remoteMessages, ...localMessages],
-			(message) => -message.createdAt,
-		);
+		return sortBy([...remoteMessages, ...localMessages], (message) => -message.createdAt);
 	}, [localMessages, messagesQuery.data?.pages]);
 
 	const expenses = useMemo(() => {
-		const firstMessageCreated =
-			messages[messages.length - 1]?.createdAt?.valueOf() ?? 0;
+		const firstMessageCreated = messages[messages.length - 1]?.createdAt?.valueOf() ?? 0;
 		const allExpenses = [...(remoteExpenses.data ?? []), ...localExpenses];
 		const filteredExpenses = messagesQuery.hasNextPage
-			? allExpenses.filter(
-					(e) => e.createdAt.valueOf() >= firstMessageCreated,
-			  )
+			? allExpenses.filter((e) => e.createdAt.valueOf() >= firstMessageCreated)
 			: allExpenses;
 		return sortBy(filteredExpenses, (e) => -e.createdAt);
-	}, [
-		localExpenses,
-		messages,
-		messagesQuery.hasNextPage,
-		remoteExpenses.data,
-	]);
+	}, [localExpenses, messages, messagesQuery.hasNextPage, remoteExpenses.data]);
 
-	const scrollToBottom = () => {
-		setTimeout(() => {
-			bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-		}, 100);
+	const scrollToBottom = (behavior: 'auto' | 'smooth' = 'auto') => {
+		bottomRef.current?.scrollIntoView({ behavior });
 	};
-
-	useEffect(() => {
-		bottomRef.current?.scrollIntoView({ behavior: 'auto' });
-	}, []);
 
 	if (!group) return <NotFoundPage />;
 
@@ -123,55 +93,55 @@ const GroupPage = (props: Props) => {
 		<Page
 			title={group.name}
 			appBar={<GroupHeader group={group} />}
-			footer={
-				<GroupMessagesFooter
-					group={group}
-					onSendMessage={scrollToBottom}
-				/>
-			}
-			wrapperProps={{
-				overflow: 'hidden',
-			}}
+			footer={<GroupMessagesFooter group={group} onSendMessage={scrollToBottom} />}
 			contentProps={{
-				display: 'flex',
-				flexDirection: 'column-reverse',
-				height: '100%',
-				overflow: 'auto',
-				overscrollBehavior: 'contain',
+				position: 'relative',
 			}}
 		>
-			<Box height="1px" width="full" ref={bottomRef} />
-			<ScrollDetector
-				onChange={setScrolledDown}
-				onChangeRef={scrolledDownRef}
-				height="200px"
-				initial={true}
-			/>
+			<Box
+				sx={{
+					position: 'absolute',
+					bottom: 0,
+					left: 0,
+					right: 0,
+					top: 0,
+					overflowY: 'auto',
+					display: 'flex',
+					flexDirection: 'column-reverse',
+				}}
+			>
+				<Box height="1px" width="full" ref={bottomRef} />
+				<ScrollDetector
+					onChange={setScrolledDown}
+					onChangeRef={scrolledDownRef}
+					height="200px"
+					initial={true}
+				/>
+				<MessagesList
+					messages={messages}
+					expenses={expenses}
+					group={group}
+					onLoadMore={messagesQuery.fetchNextPage}
+					canLoadMore={messagesQuery.hasNextPage ?? false}
+					isLoadingMore={messagesQuery.isFetchingNextPage}
+				/>
+			</Box>
 			<AnimatePresence initial={false}>
 				{!isScrolledDown && (
 					<MotionBox
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
 						position="fixed"
 						zIndex="10"
-						bottom="82px"
-						right="10px"
+						bottom="72px"
+						right="0"
+						p="2"
 					>
-						<ScrollDownButton onClick={scrollToBottom} />
+						<ScrollDownButton onClick={() => scrollToBottom('smooth')} />
 					</MotionBox>
 				)}
 			</AnimatePresence>
-
-			<GroupMessages
-				messages={messages}
-				expenses={expenses}
-				membersById={membersById}
-				hasLoadedAll={!messagesQuery.hasNextPage}
-				isLoadingMore={messagesQuery.isFetchingNextPage}
-				onLoadMore={messagesQuery.fetchNextPage}
-				ownerId={group.ownerId}
-				createdAt={group.createdAt}
-			/>
 		</Page>
 	);
 };

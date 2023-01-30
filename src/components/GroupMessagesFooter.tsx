@@ -27,11 +27,11 @@ const GroupMessagesFooter = (props: Props) => {
 		if (!message) return;
 		setInputValue('');
 		inputRef.current?.focus();
+		onSendMessage?.();
 		await sendMessage.mutateAsync({
 			message,
 			groupId: group.id,
 		});
-		onSendMessage?.();
 	};
 
 	const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -41,20 +41,8 @@ const GroupMessagesFooter = (props: Props) => {
 	};
 
 	return (
-		<Stack
-			direction="column"
-			alignItems="stretch"
-			background="white"
-			borderTop="1px solid"
-			borderColor="gray.200"
-		>
-			<Stack
-				background="white"
-				direction="row"
-				alignItems="center"
-				p="2"
-				pb="6"
-			>
+		<Stack direction="column" alignItems="stretch" background="white" borderTop="1px solid" borderColor="gray.200">
+			<Stack background="white" direction="row" alignItems="center" p="2" pb="6">
 				<Input
 					pr="4.5rem"
 					placeholder="Write a message"

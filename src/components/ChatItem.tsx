@@ -5,6 +5,7 @@ import { User } from '@prisma/client';
 import { motion } from 'framer-motion';
 
 interface Props {
+	id: string;
 	hideAvatar?: boolean;
 	sender: User | null;
 	children: React.ReactNode;
@@ -12,18 +13,16 @@ interface Props {
 }
 
 const ChatItem = (props: Props) => {
-	const { sender, hideAvatar, children, isSelf } = props;
+	const { id, sender, hideAvatar, children, isSelf } = props;
 	return (
-		<motion.div
-			initial={{ opacity: 0, height: 0 }}
-			animate={{ opacity: 1, height: 'auto' }}
-		>
+		<motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} id={id}>
 			<Stack
 				direction={isSelf ? 'row-reverse' : 'row'}
 				spacing={2}
 				alignItems="flex-start"
 				justifyContent="flex-start"
 				width="full"
+				px="2"
 			>
 				{!isSelf && (
 					<Box
@@ -33,9 +32,7 @@ const ChatItem = (props: Props) => {
 						flexDirection="column"
 						justifyContent="flex-end"
 					>
-						{!hideAvatar && (
-							<Avatar src={sender?.image ?? ''}></Avatar>
-						)}
+						{!hideAvatar && <Avatar src={sender?.image ?? ''}></Avatar>}
 					</Box>
 				)}
 				<Box sx={{ maxWidth: 'calc(100vw - 100px)' }}>{children}</Box>
