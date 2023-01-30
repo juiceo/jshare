@@ -7,11 +7,11 @@ import { chain } from 'lodash';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 
-import ExpenseItem from '@/components/ExpenseItem';
-import MessageItem from '@/components/MessageItem';
 import DateHeader from '@/components/MessagesList/DateHeader';
+import ExpenseItem from '@/components/MessagesList/ExpenseItem';
 import GroupCreated from '@/components/MessagesList/GroupCreated';
 import LoadMoreMessages from '@/components/MessagesList/LoadMoreMessages';
+import MessageItem from '@/components/MessagesList/MessageItem';
 import { byId } from '@/modules/common/utils';
 import { getAllGroupMembers } from '@/modules/groups';
 import { GroupWithMembers } from '@/schemas';
