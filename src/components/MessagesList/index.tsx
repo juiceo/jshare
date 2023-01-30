@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { Stack } from '@chakra-ui/react';
-import { Expense, ExpenseShareWithMember, Message } from '@prisma/client';
+import { Expense, ExpenseShareWithMember, Message, User } from '@prisma/client';
 import { AnimatePresence } from 'framer-motion';
 import { chain } from 'lodash';
 import moment from 'moment';
@@ -95,7 +95,7 @@ const MessageList = (props: Props) => {
 									id={item.value.id}
 									key={item.value.id}
 									message={item.value}
-									sender={membersById[item.value.senderId] ?? null}
+									sender={!!item.value.senderId ? membersById[item.value.senderId] ?? null : null}
 									hideAvatar={nextItemHasSameSender}
 									hideName={prevItemHasSameSender}
 									isSelf={isSelf}
