@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Button, Stack, Text } from '@chakra-ui/react';
+import { Button, Stack, Text, useToast } from '@chakra-ui/react';
 import { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -13,11 +13,7 @@ import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import NotFoundPage from '@/components/NotFoundPage';
 import Page from '@/components/Page';
-import {
-	getExpenseName,
-	getExpenseSharesFromExpense,
-	validateExpenseFormValue,
-} from '@/modules/expenses';
+import { getExpenseName, getExpenseSharesFromExpense, validateExpenseFormValue } from '@/modules/expenses';
 import { getAllGroupMembers, isUserInGroup } from '@/modules/groups';
 import { Routes } from '@/routing';
 import { ExpenseWithSenderAndShares } from '@/schemas/expense';
@@ -31,6 +27,7 @@ const EditExpensePage = (props: {
 	onExpenseUpdated: () => void;
 }) => {
 	const router = useRouter();
+	const toast = useToast();
 	const { group, expense, session } = props;
 
 	const allMembers = getAllGroupMembers(group);
@@ -48,8 +45,7 @@ const EditExpensePage = (props: {
 		}),
 		[expense],
 	);
-	const [editedExpense, setEditedExpense] =
-		useState<ExpenseFormValue>(initialFormValue);
+	const [editedExpense, setEditedExpense] = useState<ExpenseFormValue>(initialFormValue);
 
 	useEffect(() => {
 		if (!isEditing) {
@@ -69,13 +65,17 @@ const EditExpensePage = (props: {
 			setIsEditing(false);
 			props.onExpenseUpdated();
 		} catch (err) {
-			console.log('ERR', err);
+			toast({
+				title: 'Something went wrong',
+				description: 'The expense was not updated. Please try again.',
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
 		}
 	};
 
-	const validation = isEditing
-		? validateExpenseFormValue(editedExpense, group.currency)
-		: null;
+	const validation = isEditing ? validateExpenseFormValue(editedExpense, group.currency) : null;
 
 	return (
 		<Page
@@ -96,13 +96,7 @@ const EditExpensePage = (props: {
 			footer={
 				<Layout max="md" noMargin p="4" bg="theme.pageBackground">
 					{validation?.message && (
-						<Text
-							color="red.500"
-							mb="2"
-							fontSize="xs"
-							textAlign="center"
-							fontWeight="bold"
-						>
+						<Text color="red.500" mb="2" fontSize="xs" textAlign="center" fontWeight="bold">
 							{validation.message}
 						</Text>
 					)}
@@ -110,8 +104,7 @@ const EditExpensePage = (props: {
 						<Stack direction="column">
 							{!canEditExpense && (
 								<Text fontSize="xs" textAlign="center">
-									Only the person who created this expense can
-									edit it
+									Only the person who created this expense can edit it
 								</Text>
 							)}
 							<Button
@@ -131,10 +124,7 @@ const EditExpensePage = (props: {
 								width="full"
 								colorScheme="green"
 								onClick={handleSave}
-								disabled={
-									updateExpense.isLoading ||
-									!validation?.valid
-								}
+								disabled={updateExpense.isLoading || !validation?.valid}
 								isLoading={updateExpense.isLoading}
 							>
 								Save changes
@@ -188,8 +178,7 @@ const EditExpensePageWrapper = () => {
 	if (group.isLoading || expense.isLoading) return <LoadingPage />;
 	if (group.isError || expense.isError) return <NotFoundPage />;
 	if (!group.data || !expense.data || !session.data) return <NotFoundPage />;
-	if (!isUserInGroup(session.data.userId, group.data))
-		return <NotFoundPage />;
+	if (!isUserInGroup(session.data.userId, group.data)) return <NotFoundPage />;
 
 	return (
 		<EditExpensePage
