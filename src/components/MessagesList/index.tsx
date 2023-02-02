@@ -7,6 +7,7 @@ import { chain } from 'lodash';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 
+import BotMessageItem from '@/components/MessagesList/BotMessageItem';
 import DateHeader from '@/components/MessagesList/DateHeader';
 import ExpenseItem from '@/components/MessagesList/ExpenseItem';
 import GroupCreated from '@/components/MessagesList/GroupCreated';
@@ -32,6 +33,10 @@ type MessageWithType =
 			value: Message;
 	  }
 	| {
+			type: 'bot';
+			value: Message;
+	  }
+	| {
 			type: 'expense';
 			value: Expense & { shares: ExpenseShareWithMember[] };
 	  };
@@ -45,10 +50,23 @@ const MessageList = (props: Props) => {
 	}, [group]);
 
 	const itemsWithType = useMemo(() => {
-		const messageItems: MessageWithType[] = messages.map((message) => ({
-			type: 'message',
-			value: message,
-		}));
+		const messageItems: MessageWithType[] = messages.map((message) => {
+			switch (message.type) {
+				case 'BOT': {
+					return {
+						type: 'bot',
+						value: message,
+					};
+				}
+				case 'EXPENSE':
+				case 'TEXT': {
+					return {
+						type: 'message',
+						value: message,
+					};
+				}
+			}
+		});
 
 		const expenseItems: MessageWithType[] = expenses.map((expense) => ({
 			type: 'expense',
@@ -102,6 +120,18 @@ const MessageList = (props: Props) => {
 								/>,
 							];
 						}
+						case 'bot': {
+							return [
+								!!dateSeparator ? (
+									<DateHeader
+										key={dateSeparator.toString()}
+										date={dateSeparator}
+										messageId={item.value.id}
+									/>
+								) : null,
+								<BotMessageItem id={item.value.id} key={item.value.id} message={item.value} />,
+							];
+						}
 						case 'expense': {
 							return [
 								!!dateSeparator ? (
@@ -116,6 +146,7 @@ const MessageList = (props: Props) => {
 									key={item.value.id}
 									expense={item.value}
 									sender={membersById[item.value.senderId] ?? null}
+									payer={membersById[item.value.payerId] ?? null}
 									hideAvatar={nextItemHasSameSender}
 									hideName={prevItemHasSameSender}
 									isSelf={isSelf}

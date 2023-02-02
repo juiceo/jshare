@@ -16,6 +16,7 @@ import ChatItem from './ChatItem';
 interface Props {
 	id: string;
 	expense: Expense & { shares: ExpenseShareWithMember[] };
+	payer: User | null;
 	sender: User | null;
 	hideAvatar?: boolean;
 	hideName?: boolean;
@@ -25,7 +26,7 @@ interface Props {
 const ExpenseItem = (props: Props) => {
 	const session = useSession();
 	const userId = session?.data?.userId;
-	const { id, expense, sender, hideAvatar, isSelf } = props;
+	const { id, expense, sender, payer, hideAvatar, isSelf } = props;
 
 	const ownShare = !!userId ? expense.shares.find((share) => share.memberId === userId)?.amount : null;
 
@@ -38,7 +39,7 @@ const ExpenseItem = (props: Props) => {
 					</Text>
 					<Box p="6" alignItems="center" justifyContent="center" display="flex" flexDirection="column">
 						<Text fontSize="xs" align="center" color="whiteAlpha.900">
-							{!isSelf ? getUserDisplayName(sender, 'short') : 'You'} paid
+							{!isSelf ? getUserDisplayName(payer, 'short') : 'You'} paid
 						</Text>
 						<Text align="center" fontSize="2xl" color="whiteAlpha.900">
 							{formatAmount(expense.amount, expense.currency)}
