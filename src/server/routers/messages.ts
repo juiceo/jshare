@@ -1,6 +1,5 @@
 import { TRPCError } from '@trpc/server';
 import { observable } from '@trpc/server/observable';
-import EventEmitter from 'events';
 import { z } from 'zod';
 
 import { isUserInGroup } from '@/modules/groups';
@@ -8,8 +7,6 @@ import { MessageWithSender, createMessageSchema } from '@/schemas/message';
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';
-
-const ee = new EventEmitter();
 
 export const messageRouter = trpc.router({
 	send: trpc.authenticatedProcedure.input(createMessageSchema).mutation(async ({ input, ctx }) => {
@@ -40,7 +37,7 @@ export const messageRouter = trpc.router({
 					sender: true,
 				},
 			});
-			ee.emit(Events.CreateMessageInGroup(input.groupId), message);
+			Events.emit(Events.CreateMessageInGroup(input.groupId), message);
 			return message;
 		} catch (err) {
 			throw new TRPCError({
@@ -57,10 +54,10 @@ export const messageRouter = trpc.router({
 					emit.next(data);
 				}
 			};
-			ee.on(Events.CreateMessageInGroup(input), onSend);
+			Events.on(Events.CreateMessageInGroup(input), onSend);
 
 			return () => {
-				ee.off(Events.CreateMessageInGroup(input), onSend);
+				Events.off(Events.CreateMessageInGroup(input), onSend);
 			};
 		});
 	}),
