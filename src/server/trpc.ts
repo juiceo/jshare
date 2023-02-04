@@ -199,3 +199,23 @@ export const expenseOwnerProcedure = authenticatedProcedure
 			},
 		});
 	});
+
+/**
+ * User procedure
+ */
+export const userProcedure = authenticatedProcedure
+	.input(
+		z.object({
+			userId: z.string(),
+		}),
+	)
+	.use(async ({ input, ctx, next }) => {
+		if (input.userId !== ctx.user.id) {
+			throw new TRPCError({
+				code: 'UNAUTHORIZED',
+				message: "You don't have access to edit this user",
+			});
+		}
+
+		return next();
+	});

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Avatar, Box, Button, Card, Divider, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
 import { createProxySSGHelpers } from '@trpc/react-query/ssg';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import router from 'next/router';
 import superjson from 'superjson';
@@ -22,9 +22,10 @@ type FormState = {
 	email: string;
 };
 
-const UserPage = () => {
-	const userQuery = trpc.users.getSelf.useQuery();
-	const updateUser = trpc.users.updateSelf.useMutation();
+const UserPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	const { userId } = props.session;
+	const userQuery = trpc.users.getById.useQuery({ userId });
+	const updateUser = trpc.users.update.useMutation();
 	const user = userQuery.data;
 
 	const [formState, setFormState] = useState<FormState>({
@@ -34,7 +35,10 @@ const UserPage = () => {
 	});
 
 	const handleSubmit = async () => {
-		await updateUser.mutate(formState);
+		await updateUser.mutate({
+			userId,
+			...formState,
+		});
 		router.push('/');
 	};
 
@@ -134,7 +138,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 		transformer: superjson,
 	});
 
-	await ssg.users.getSelf.prefetch();
+	if (!session) {
+		return {
+			notFound: true,
+		};
+	}
+
+	await ssg.users.getById.prefetch({ userId: session.userId });
 
 	return {
 		props: {
