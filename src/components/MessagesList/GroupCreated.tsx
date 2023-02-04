@@ -3,8 +3,8 @@ import React from 'react';
 import { Stack, Text } from '@chakra-ui/react';
 import moment from 'moment';
 
+import { GroupWithMembers } from '@/modules/groups/types';
 import { getUserDisplayName } from '@/modules/users';
-import { GroupWithMembers } from '@/schemas';
 
 interface GroupCreatedProps {
 	group: GroupWithMembers;

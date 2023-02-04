@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { Stack } from '@chakra-ui/react';
-import { Expense, ExpenseShareWithMember, Message, User } from '@prisma/client';
+import { Expense, ExpenseShareWithMember, Message } from '@prisma/client';
 import { AnimatePresence } from 'framer-motion';
 import { chain } from 'lodash';
 import moment from 'moment';
@@ -14,9 +14,9 @@ import GroupCreated from '@/components/MessagesList/GroupCreated';
 import LoadMoreMessages from '@/components/MessagesList/LoadMoreMessages';
 import MessageItem from '@/components/MessagesList/MessageItem';
 import { byId } from '@/modules/common/utils';
+import { ExpenseWithSenderAndShares } from '@/modules/expenses';
 import { getAllGroupMembers } from '@/modules/groups';
-import { GroupWithMembers } from '@/schemas';
-import { ExpenseWithSenderAndShares } from '@/schemas/expense';
+import { GroupWithMembers } from '@/modules/groups/types';
 
 interface Props {
 	messages: Message[];

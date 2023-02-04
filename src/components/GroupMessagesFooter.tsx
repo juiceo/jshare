@@ -5,8 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { RiAddLine, RiSendPlaneFill } from 'react-icons/ri';
 
+import { GroupWithMembers } from '@/modules/groups/types';
 import { Routes } from '@/routing';
-import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
 
 interface Props {

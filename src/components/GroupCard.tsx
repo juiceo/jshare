@@ -20,9 +20,9 @@ import { RiMore2Line } from 'react-icons/ri';
 
 import pattern from '@/assets/paisley.webp';
 import { getGroupMemberCount } from '@/modules/groups';
+import { GroupWithMembers } from '@/modules/groups/types';
 import { formatAmount } from '@/modules/money';
 import { Routes } from '@/routing';
-import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
 
 interface Props {

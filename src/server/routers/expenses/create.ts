@@ -1,9 +1,8 @@
 import { observable } from '@trpc/server/observable';
 import { z } from 'zod';
 
-import { getAmountByMember } from '@/modules/expenses';
+import { ExpenseWithSenderAndShares, getAmountByMember } from '@/modules/expenses';
 import { zCurrencyCode } from '@/modules/money';
-import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';

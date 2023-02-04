@@ -4,8 +4,8 @@ import { Box, Button, Stack, ToastId, UseToastOptions, useToast } from '@chakra-
 import Link from 'next/link';
 
 import { getAllGroupMembers } from '@/modules/groups';
+import { GroupWithMembers } from '@/modules/groups/types';
 import { Routes } from '@/routing';
-import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
 
 import AppBar from './AppBar';

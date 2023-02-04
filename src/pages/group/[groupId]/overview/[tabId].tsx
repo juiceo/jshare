@@ -12,9 +12,9 @@ import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
 import { getAllGroupMembers } from '@/modules/groups';
+import { GroupWithMembers } from '@/modules/groups/types';
 import { Routes } from '@/routing';
 import { OverviewTabId } from '@/routing/types';
-import { GroupWithMembers } from '@/schemas';
 import { trpc } from '@/services/trpc';
 
 interface Props {

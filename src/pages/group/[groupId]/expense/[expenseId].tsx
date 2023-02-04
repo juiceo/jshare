@@ -13,11 +13,15 @@ import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import NotFoundPage from '@/components/NotFoundPage';
 import Page from '@/components/Page';
-import { getExpenseName, getExpenseSharesFromExpense, validateExpenseFormValue } from '@/modules/expenses';
+import {
+	ExpenseWithSenderAndShares,
+	getExpenseName,
+	getExpenseSharesFromExpense,
+	validateExpenseFormValue,
+} from '@/modules/expenses';
 import { getAllGroupMembers, isUserInGroup } from '@/modules/groups';
+import { GroupWithMembers } from '@/modules/groups/types';
 import { Routes } from '@/routing';
-import { ExpenseWithSenderAndShares } from '@/schemas/expense';
-import { GroupWithMembers } from '@/schemas/group';
 import { trpc } from '@/services/trpc';
 
 const EditExpensePage = (props: {

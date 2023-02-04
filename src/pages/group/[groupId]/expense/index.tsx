@@ -12,9 +12,9 @@ import Layout from '@/components/Layout';
 import Page from '@/components/Page';
 import { getInitialExpenseShares, validateExpenseFormValue } from '@/modules/expenses';
 import { getAllGroupMembers } from '@/modules/groups';
+import { GroupWithMembers } from '@/modules/groups/types';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { Routes } from '@/routing';
-import { GroupWithMembers } from '@/schemas/group';
 import { appRouter } from '@/server/routers/_app';
 import { trpc } from '@/services/trpc';
 

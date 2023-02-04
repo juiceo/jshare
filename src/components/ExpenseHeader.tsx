@@ -4,8 +4,8 @@ import { Box, IconButton, Stack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { RiCloseLine } from 'react-icons/ri';
 
+import { GroupWithMembers } from '@/modules/groups/types';
 import { Routes } from '@/routing';
-import { GroupWithMembers } from '@/schemas';
 
 interface Props {
 	group: GroupWithMembers;

@@ -1,7 +1,7 @@
 import { observable } from '@trpc/server/observable';
 import { z } from 'zod';
 
-import { MessageWithSender } from '@/schemas/message';
+import { MessageWithSender } from '@/modules/messages';
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';
