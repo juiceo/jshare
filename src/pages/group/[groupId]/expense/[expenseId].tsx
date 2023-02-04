@@ -60,7 +60,7 @@ const EditExpensePage = (props: {
 		try {
 			await updateExpense.mutateAsync({
 				expenseId: expense.id,
-				data: editedExpense,
+				...editedExpense,
 			});
 			setIsEditing(false);
 			props.onExpenseUpdated();
