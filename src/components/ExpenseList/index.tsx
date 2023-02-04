@@ -27,49 +27,21 @@ const ExpenseList = (props: ExpenseListProps) => {
 		<Card background="white">
 			<Stack divider={<Divider />} spacing={0}>
 				{sortedExpenses.map((expense) => (
-					<Link
-						key={expense.id}
-						prefetch={false}
-						href={Routes.Expense(expense.groupId, expense.id)}
-					>
+					<Link key={expense.id} prefetch={false} href={Routes.Expense(expense.groupId, expense.id)}>
 						<CardBody key={expense.id}>
-							<Stack
-								direction="row"
-								alignItems="center"
-								spacing="4"
-							>
-								<Avatar
-									size="md"
-									src={expense.sender.image ?? undefined}
-								/>
-								<Stack
-									flex="1"
-									direction="column"
-									alignItems="flex-start"
-									spacing={0}
-								>
+							<Stack direction="row" alignItems="center" spacing="4">
+								<Stack flex="1" direction="column" alignItems="flex-start" spacing={0}>
 									<Text textAlign="left" fontSize="md">
 										{getExpenseName(expense)}
 									</Text>
 									<Text fontSize="xs" textAlign="left">
-										{`${moment(expense.createdAt).format(
-											'MMM Do, YYYY',
-										)} by ${getUserFullName(
+										{`${moment(expense.createdAt).format('MMM Do, YYYY')} by ${getUserFullName(
 											expense.sender,
 										)}`}
 									</Text>
 								</Stack>
-								<Stack
-									direction="row"
-									alignItems="center"
-									spacing={1}
-								>
-									<Text fontSize="l">
-										{formatAmount(
-											expense.amount,
-											expense.currency,
-										)}
-									</Text>
+								<Stack direction="row" alignItems="center" spacing={1}>
+									<Text fontSize="l">{formatAmount(expense.amount, expense.currency)}</Text>
 									<RiArrowRightSLine />
 								</Stack>
 							</Stack>
