@@ -1,4 +1,3 @@
-import { TRPCError } from '@trpc/server';
 import { observable } from '@trpc/server/observable';
 import { z } from 'zod';
 
@@ -16,23 +15,8 @@ export const updateExpenseInput = z.object({
 	shares: z.record(z.string(), z.object({ enabled: z.boolean(), amount: z.number().optional() })),
 });
 
-export const updateExpense = trpc.authenticatedProcedure.input(updateExpenseInput).mutation(async ({ input }) => {
-	const expense = await prisma.expense.findUnique({
-		where: {
-			id: input.id,
-		},
-		include: {
-			sender: true,
-		},
-	});
-
-	if (!expense) {
-		throw new TRPCError({
-			code: 'NOT_FOUND',
-			message: 'Expense not found',
-		});
-	}
-
+export const updateExpense = trpc.expenseOwnerProcedure.input(updateExpenseInput).mutation(async ({ input, ctx }) => {
+	const { expense } = ctx;
 	const amountByMember = getAmountByMember({
 		shares: input.shares,
 		total: input.amount,
@@ -107,21 +91,15 @@ export const updateExpense = trpc.authenticatedProcedure.input(updateExpenseInpu
 	return expenseAfter;
 });
 
-export const onUpdateExpenseInGroup = trpc.authenticatedProcedure
-	.input(
-		z.object({
-			groupId: z.string(),
-		}),
-	)
-	.subscription(async ({ input }) => {
-		return observable<ExpenseWithSenderAndShares>((emit) => {
-			const onSend = (data: ExpenseWithSenderAndShares) => {
-				emit.next(data);
-			};
-			Events.on(Events.EditExpenseInGroup(input.groupId), onSend);
+export const onUpdateExpenseInGroup = trpc.groupMemberProcedure.subscription(async ({ input }) => {
+	return observable<ExpenseWithSenderAndShares>((emit) => {
+		const onSend = (data: ExpenseWithSenderAndShares) => {
+			emit.next(data);
+		};
+		Events.on(Events.EditExpenseInGroup(input.groupId), onSend);
 
-			return () => {
-				Events.off(Events.EditExpenseInGroup(input.groupId), onSend);
-			};
-		});
+		return () => {
+			Events.off(Events.EditExpenseInGroup(input.groupId), onSend);
+		};
 	});
+});

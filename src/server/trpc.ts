@@ -10,6 +10,10 @@
 
 import { TRPCError, initTRPC } from '@trpc/server';
 import superjson from 'superjson';
+import { z } from 'zod';
+
+import { isUserInGroup } from '@/modules/groups';
+import { prisma } from '@/server/prisma';
 
 import { Context } from './context';
 
@@ -70,3 +74,86 @@ const isAuthenticated = middleware(({ next, ctx }) => {
  * Protected base procedure
  */
 export const authenticatedProcedure = t.procedure.use(isAuthenticated);
+
+/**
+ * Protected procedure for group members
+ */
+export const groupMemberProcedure = authenticatedProcedure
+	.input(
+		z.object({
+			groupId: z.string(),
+		}),
+	)
+	.use(async ({ input, ctx, next }) => {
+		const group = await prisma.group.findUnique({
+			where: {
+				id: input.groupId,
+			},
+			include: {
+				members: true,
+				owner: true,
+			},
+		});
+
+		if (!group) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'Group not found',
+			});
+		}
+
+		if (!isUserInGroup(ctx.user.id, group)) {
+			throw new TRPCError({
+				code: 'UNAUTHORIZED',
+				message: 'You are not a member of this group',
+			});
+		}
+
+		return next({
+			ctx: {
+				...ctx,
+				group,
+			},
+		});
+	});
+
+/**
+ * Protected procedure for expense owners
+ */
+export const expenseOwnerProcedure = authenticatedProcedure
+	.input(
+		z.object({
+			expenseId: z.string(),
+		}),
+	)
+	.use(async ({ input, ctx, next }) => {
+		const expense = await prisma.expense.findUnique({
+			where: {
+				id: input.expenseId,
+			},
+			include: {
+				sender: true,
+			},
+		});
+
+		if (!expense) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'Expense not found',
+			});
+		}
+
+		if (expense.senderId !== ctx.user.id) {
+			throw new TRPCError({
+				code: 'UNAUTHORIZED',
+				message: 'You are not the owner of this expense',
+			});
+		}
+
+		return next({
+			ctx: {
+				...ctx,
+				expense,
+			},
+		});
+	});

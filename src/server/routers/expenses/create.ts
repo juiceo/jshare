@@ -1,13 +1,12 @@
-import { TRPCError } from '@trpc/server';
+import { observable } from '@trpc/server/observable';
+import { z } from 'zod';
 
 import { getAmountByMember } from '@/modules/expenses';
-import {  ExpenseWithSenderAndShares } from '@/schemas/expense';
+import { zCurrencyCode } from '@/modules/money';
+import { ExpenseWithSenderAndShares } from '@/schemas/expense';
 import * as Events from '@/server/events';
 import { prisma } from '@/server/prisma';
 import * as trpc from '@/server/trpc';
-import { observable } from '@trpc/server/observable';
-import { z } from 'zod';
-import { zCurrencyCode } from '@/modules/money';
 
 export const createExpenseInput = z.object({
 	title: z.string().optional().default(''),
@@ -15,100 +14,75 @@ export const createExpenseInput = z.object({
 	groupId: z.string().min(1, 'Group ID is required'),
 	payerId: z.string().min(1, 'Payer ID is required'),
 	currency: zCurrencyCode,
-	shares: z.record(
-		z.string(),
-		z.object({ enabled: z.boolean(), amount: z.number().optional() }),
-	),
+	shares: z.record(z.string(), z.object({ enabled: z.boolean(), amount: z.number().optional() })),
 });
 
-export const createExpense = trpc.authenticatedProcedure.input(createExpenseInput).mutation(async ({ input, ctx }) => {
-	try {
-		const group = await prisma.group.findUnique({
-			where: {
-				id: input.groupId,
-			},
-		});
-
-		if (!group) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'Group not found',
+export const createExpense = trpc.groupMemberProcedure.input(createExpenseInput).mutation(async ({ input, ctx }) => {
+	const { group } = ctx;
+	const amountByMember = getAmountByMember({
+		shares: input.shares,
+		total: input.amount,
+	});
+	const sharesToCreate = Object.entries(input.shares).reduce(
+		(acc, [memberId, share]) => {
+			acc.push({
+				memberId,
+				amount: amountByMember[memberId] ?? 0,
+				locked: share.amount !== undefined,
 			});
-		}
-		const amountByMember = getAmountByMember({
-			shares: input.shares,
-			total: input.amount,
-		});
-		const sharesToCreate = Object.entries(input.shares).reduce(
-			(acc, [memberId, share]) => {
-				acc.push({
-					memberId,
-					amount: amountByMember[memberId] ?? 0,
-					locked: share.amount !== undefined,
-				});
-				return acc;
+			return acc;
+		},
+		[] as {
+			memberId: string;
+			amount: number;
+			locked: boolean;
+		}[],
+	);
+	const [expense] = await prisma.$transaction([
+		prisma.expense.create({
+			data: {
+				...input,
+				senderId: ctx.user.id,
+				currency: group.currency,
+				number: group.expenseCount + 1,
+				shares: {
+					create: sharesToCreate,
+				},
 			},
-			[] as {
-				memberId: string;
-				amount: number;
-				locked: boolean;
-			}[],
-		);
-		const [expense] = await prisma.$transaction([
-			prisma.expense.create({
-				data: {
-					...input,
-					senderId: ctx.user.id,
-					currency: group.currency,
-					number: group.expenseCount + 1,
-					shares: {
-						create: sharesToCreate,
-					},
+			include: {
+				shares: true,
+				sender: true,
+			},
+		}),
+		prisma.group.update({
+			where: {
+				id: group.id,
+			},
+			data: {
+				expenseCount: {
+					increment: 1,
 				},
-				include: {
-					shares: true,
-					sender: true,
+				total: {
+					increment: input.amount,
 				},
-			}),
-			prisma.group.update({
-				where: {
-					id: group.id,
-				},
-				data: {
-					expenseCount: {
-						increment: 1,
-					},
-					total: {
-						increment: input.amount,
-					},
-				},
-			}),
-		]);
+			},
+		}),
+	]);
 
-		Events.emit(Events.CreateExpenseInGroup(input.groupId), expense);
+	Events.emit(Events.CreateExpenseInGroup(input.groupId), expense);
 
-		return expense;
-	} catch (err) {
-		throw new TRPCError({
-			code: 'BAD_REQUEST',
-			message: 'Failed to create expense',
-			cause: err,
-		});
-	}
+	return expense;
 });
 
+export const onCreateExpenseInGroup = trpc.groupMemberProcedure.subscription(async ({ input }) => {
+	return observable<ExpenseWithSenderAndShares>((emit) => {
+		const onSend = (data: ExpenseWithSenderAndShares) => {
+			emit.next(data);
+		};
+		Events.on(Events.CreateExpenseInGroup(input.groupId), onSend);
 
-export const onCreateExpenseInGroup = trpc.authenticatedProcedure.input(z.object({
-    groupId: z.string(),
-})).subscription(async ({ input }) => {
-    return observable<ExpenseWithSenderAndShares>((emit) => {
-        const onSend = (data: ExpenseWithSenderAndShares) => {
-            emit.next(data);
-        };
-        Events.on(Events.CreateExpenseInGroup(input.groupId), onSend);
-
-        return () => {
-            Events.off(Events.CreateExpenseInGroup(input.groupId), onSend);
-        };
-    });
-}),
+		return () => {
+			Events.off(Events.CreateExpenseInGroup(input.groupId), onSend);
+		};
+	});
+});
