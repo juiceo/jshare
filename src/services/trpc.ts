@@ -1,5 +1,4 @@
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
-import { loggerLink } from '@trpc/client/links/loggerLink';
 import { createWSClient, wsLink } from '@trpc/client/links/wsLink';
 import { createTRPCNext } from '@trpc/next';
 import type { inferProcedureOutput } from '@trpc/server';
@@ -39,16 +38,7 @@ function getEndingLink(ctx: NextPageContext | undefined) {
 export const trpc = createTRPCNext<AppRouter>({
 	config({ ctx }) {
 		return {
-			links: [
-				// loggerLink({
-				// 	enabled: (opts) =>
-				// 		(process.env.NODE_ENV === 'development' &&
-				// 			typeof window !== 'undefined') ||
-				// 		(opts.direction === 'down' &&
-				// 			opts.result instanceof Error),
-				// }),
-				getEndingLink(ctx),
-			],
+			links: [getEndingLink(ctx)],
 			transformer: superjson,
 			queryClientConfig: {
 				defaultOptions: { queries: { staleTime: 60 } },
