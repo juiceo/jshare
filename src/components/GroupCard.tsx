@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+	Box,
 	Card,
 	CardBody,
 	CardHeader,
@@ -68,7 +69,7 @@ const GroupCard: React.FC<Props> = (props) => {
 		} else {
 			return (
 				<Text color={balance < 0 ? 'red.500' : 'gray.500'} fontWeight="bold">
-					You owe {formatAmount(balance, group.currency)}
+					You owe {formatAmount(-1 * balance, group.currency)}
 				</Text>
 			);
 		}
