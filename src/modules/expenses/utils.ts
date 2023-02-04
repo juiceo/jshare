@@ -1,5 +1,5 @@
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
-import { range, sum } from 'lodash';
+import { range, sum, sumBy } from 'lodash';
 
 import { ExpenseFormValue } from '@/components/ExpenseForm';
 
@@ -7,9 +7,7 @@ import { ByUserId } from '../common/types';
 import { CurrencyCode, formatAmount } from '../money';
 import { ExpenseShare, ExpenseSummary } from './types';
 
-export const getInitialExpenseShares = (
-	members: User[],
-): ByUserId<ExpenseShare> => {
+export const getInitialExpenseShares = (members: User[]): ByUserId<ExpenseShare> => {
 	return members.reduce((result, member) => {
 		result[member.id] = {
 			enabled: true,
@@ -30,9 +28,7 @@ export const getExpenseSharesFromExpense = (
 	}, {} as ByUserId<ExpenseShare>);
 };
 
-export const getExpenseSharesByMember = (
-	value: ExpenseShareWithMember[],
-): ByUserId<ExpenseShare> => {
+export const getExpenseSharesByMember = (value: ExpenseShareWithMember[]): ByUserId<ExpenseShare> => {
 	return value.reduce((acc, share) => {
 		acc[share.memberId] = {
 			enabled: true, //TODO: This is not yet correct
@@ -42,10 +38,7 @@ export const getExpenseSharesByMember = (
 	}, {} as ByUserId<ExpenseShare>);
 };
 
-export const getAmountByMember = (args: {
-	shares: ByUserId<ExpenseShare>;
-	total: number;
-}): ByUserId<number> => {
+export const getAmountByMember = (args: { shares: ByUserId<ExpenseShare>; total: number }): ByUserId<number> => {
 	const { shares, total } = args;
 
 	const amountByMember: ByUserId<number> = {};
@@ -119,10 +112,7 @@ export const getExpenseName = (expense: Expense): string => {
 	return expense.title || `Expense #${expense.number}`;
 };
 
-export const validateExpenseFormValue = (
-	expense: ExpenseFormValue,
-	currency: CurrencyCode,
-) => {
+export const validateExpenseFormValue = (expense: ExpenseFormValue, currency: CurrencyCode) => {
 	const amountByMember = getAmountByMember({
 		shares: expense.shares,
 		total: expense.amount,
@@ -140,20 +130,14 @@ export const validateExpenseFormValue = (
 	if (difference > 0) {
 		return {
 			valid: false,
-			message: `The total amount is ${formatAmount(
-				difference,
-				currency,
-			)} too high`,
+			message: `The total amount is ${formatAmount(difference, currency)} too high`,
 		};
 	}
 
 	if (difference < 0) {
 		return {
 			valid: false,
-			message: `The total amount is ${formatAmount(
-				Math.abs(difference),
-				currency,
-			)} too low`,
+			message: `The total amount is ${formatAmount(Math.abs(difference), currency)} too low`,
 		};
 	}
 

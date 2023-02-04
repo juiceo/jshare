@@ -36,6 +36,10 @@ const GroupCard: React.FC<Props> = (props) => {
 
 	const archiveGroup = trpc.groups.archive.useMutation();
 	const deleteGroup = trpc.groups.delete.useMutation();
+	const expenseSummary = trpc.expenses.getExpenseSummaryForUser.useQuery({
+		groupId: group.id,
+		userId: session.data?.userId ?? '',
+	});
 
 	const handleArchive = async () => {
 		await archiveGroup.mutateAsync({ groupId: group.id });
@@ -50,6 +54,25 @@ const GroupCard: React.FC<Props> = (props) => {
 	const memberCount = getGroupMemberCount(group);
 
 	const isOwner = group.ownerId === session.data?.userId;
+
+	const renderBalance = () => {
+		if (!expenseSummary.data) return null;
+		const { balance } = expenseSummary.data;
+
+		if (balance > 0) {
+			return (
+				<Text color="green.500" fontWeight="bold">
+					You will receive {formatAmount(balance, group.currency)}
+				</Text>
+			);
+		} else {
+			return (
+				<Text color={balance < 0 ? 'red.500' : 'gray.500'} fontWeight="bold">
+					You owe {formatAmount(balance, group.currency)}
+				</Text>
+			);
+		}
+	};
 
 	return (
 		<Card background="white" borderRadius="lg" overflow="hidden" variant="outline">
@@ -91,6 +114,7 @@ const GroupCard: React.FC<Props> = (props) => {
 					<Text>{memberCount === 1 ? `1 member` : `${memberCount} members`}</Text>
 					<Text>{group.expenseCount} expenses</Text>
 					<Text>{formatAmount(group.total ?? 0, group.currency)} revenue</Text>
+					{renderBalance()}
 				</CardBody>
 			</Link>
 		</Card>
