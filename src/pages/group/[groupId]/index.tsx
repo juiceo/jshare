@@ -49,14 +49,17 @@ const GroupPage = (props: Props) => {
 	const [localMessages, setLocalMessages] = useState<MessageWithSender[]>([]);
 	const [localExpenses, setLocalExpenses] = useState<ExpenseWithSenderAndShares[]>([]);
 
-	trpc.messages.onSendMessageToGroup.useSubscription(groupId, {
-		onData: (message) => {
-			setLocalMessages((prev) => [...prev, message]);
-			if (scrolledDownRef.current) {
-				scrollToBottom();
-			}
+	trpc.messages.onCreateMessageInGroup.useSubscription(
+		{ groupId },
+		{
+			onData: (message) => {
+				setLocalMessages((prev) => [...prev, message]);
+				if (scrolledDownRef.current) {
+					scrollToBottom();
+				}
+			},
 		},
-	});
+	);
 	trpc.expenses.onCreateExpenseInGroup.useSubscription(
 		{ groupId },
 		{

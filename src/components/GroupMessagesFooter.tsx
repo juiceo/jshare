@@ -18,7 +18,7 @@ const MotionBox = motion(Box);
 
 const GroupMessagesFooter = (props: Props) => {
 	const { group, onSendMessage } = props;
-	const sendMessage = trpc.messages.send.useMutation();
+	const sendMessage = trpc.messages.create.useMutation();
 	const [inputValue, setInputValue] = useState<string>('');
 	const inputRef = React.useRef<HTMLInputElement>(null);
 
