@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import {
 	AlertDialog,
@@ -26,32 +26,22 @@ const DeleteExpenseAlert = (props: DeleteExpenseAlertProps) => {
 	const cancelRef = useRef<HTMLButtonElement>(null);
 
 	const handleDelete = async () => {
-		await deleteExpense.mutateAsync(expenseId);
+		await deleteExpense.mutateAsync({ expenseId });
 		onClose();
 		onDelete?.();
 	};
 	return (
-		<AlertDialog
-			isOpen={isOpen}
-			leastDestructiveRef={cancelRef}
-			onClose={onClose}
-		>
+		<AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
 			<AlertDialogOverlay>
 				<AlertDialogContent>
 					<AlertDialogHeader fontSize="lg" fontWeight="bold">
 						Delete Expense?
 					</AlertDialogHeader>
 
-					<AlertDialogBody>
-						{'Are you sure? This expense will be gone forever'}
-					</AlertDialogBody>
+					<AlertDialogBody>{'Are you sure? This expense will be gone forever'}</AlertDialogBody>
 
 					<AlertDialogFooter>
-						<Button
-							ref={cancelRef}
-							onClick={onClose}
-							disabled={deleteExpense.isLoading}
-						>
+						<Button ref={cancelRef} onClick={onClose} disabled={deleteExpense.isLoading}>
 							Cancel
 						</Button>
 						<Button

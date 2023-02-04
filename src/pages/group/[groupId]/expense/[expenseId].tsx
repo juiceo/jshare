@@ -32,7 +32,7 @@ const EditExpensePage = (props: {
 
 	const allMembers = getAllGroupMembers(group);
 	const canEditExpense = session.userId === expense.senderId;
-	const updateExpense = trpc.expenses.edit.useMutation();
+	const updateExpense = trpc.expenses.update.useMutation();
 
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -59,8 +59,8 @@ const EditExpensePage = (props: {
 	const handleSave = async () => {
 		try {
 			await updateExpense.mutateAsync({
-				id: expense.id,
-				...editedExpense,
+				expenseId: expense.id,
+				data: editedExpense,
 			});
 			setIsEditing(false);
 			props.onExpenseUpdated();
@@ -169,11 +169,11 @@ const EditExpensePage = (props: {
 
 const EditExpensePageWrapper = () => {
 	const router = useRouter();
-	const { groupId, expenseId } = router.query;
+	const { groupId, expenseId } = router.query as { groupId: string; expenseId: string };
 
 	const session = useSession();
 	const group = trpc.groups.getById.useQuery(groupId as string);
-	const expense = trpc.expenses.getById.useQuery(expenseId as string);
+	const expense = trpc.expenses.getById.useQuery({ expenseId, groupId });
 
 	if (group.isLoading || expense.isLoading) return <LoadingPage />;
 	if (group.isError || expense.isError) return <NotFoundPage />;

@@ -42,7 +42,7 @@ const GroupPage = (props: Props) => {
 			getNextPageParam: (lastPage) => lastPage.nextCursor,
 		},
 	);
-	const remoteExpenses = trpc.expenses.listByGroupId.useQuery(groupId);
+	const remoteExpenses = trpc.expenses.listByGroupId.useQuery({ groupId });
 
 	const group = groupQuery.data;
 
@@ -57,14 +57,17 @@ const GroupPage = (props: Props) => {
 			}
 		},
 	});
-	trpc.expenses.onCreateExpenseInGroup.useSubscription(groupId, {
-		onData: (expense) => {
-			setLocalExpenses((prev) => [...prev, expense]);
-			if (scrolledDownRef.current) {
-				scrollToBottom();
-			}
+	trpc.expenses.onCreateExpenseInGroup.useSubscription(
+		{ groupId },
+		{
+			onData: (expense) => {
+				setLocalExpenses((prev) => [...prev, expense]);
+				if (scrolledDownRef.current) {
+					scrollToBottom();
+				}
+			},
 		},
-	});
+	);
 
 	const messages = useMemo(() => {
 		const remoteMessages =
@@ -177,7 +180,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 			groupId,
 			limit: MESSAGES_PER_PAGE,
 		}),
-		await ssg.expenses.listByGroupId.prefetch(groupId),
+		await ssg.expenses.listByGroupId.prefetch({ groupId }),
 	]);
 
 	return {

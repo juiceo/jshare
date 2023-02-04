@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-	Stack,
-	Tab,
-	TabList,
-	TabPanel,
-	TabPanels,
-	Tabs,
-	Text,
-} from '@chakra-ui/react';
+import { Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react';
 import { sumBy } from 'lodash';
 import { useRouter } from 'next/router';
 
@@ -42,7 +34,7 @@ const OverviewPage = (props: Props) => {
 	const { tabId } = router.query as { tabId: OverviewTabId };
 
 	const members = getAllGroupMembers(group);
-	const expenses = trpc.expenses.listByGroupId.useQuery(group.id);
+	const expenses = trpc.expenses.listByGroupId.useQuery({ groupId: group.id });
 
 	const total = sumBy(expenses.data ?? [], (expense) => {
 		return expense.amount;
@@ -51,36 +43,20 @@ const OverviewPage = (props: Props) => {
 	const tabIndex = OverviewTabs[tabId];
 
 	const handleTabChange = (index: number) => {
-		const tabId = Object.entries(OverviewTabs).find(
-			([key, value]) => value === index,
-		)?.[0];
+		const tabId = Object.entries(OverviewTabs).find(([key, value]) => value === index)?.[0];
 
 		if (tabId) {
-			router.replace(
-				Routes.OverviewTab(group.id, tabId as OverviewTabId),
-			);
+			router.replace(Routes.OverviewTab(group.id, tabId as OverviewTabId));
 		}
 	};
 
 	return (
 		<Page
 			title={`Overview - ${group.name}`}
-			appBar={
-				<AppBar
-					heading="Overview"
-					subheading={group.name}
-					backTo={Routes.Group(group.id)}
-				/>
-			}
+			appBar={<AppBar heading="Overview" subheading={group.name} backTo={Routes.Group(group.id)} />}
 		>
 			<Layout max="lg" noMargin>
-				<Stack
-					direction="row"
-					justifyContent="center"
-					alignItems="center"
-					spacing="8"
-					p="8"
-				>
+				<Stack direction="row" justifyContent="center" alignItems="center" spacing="8" p="8">
 					<AmountWithLabel
 						loading={expenses.isLoading}
 						label="Total"
@@ -88,13 +64,7 @@ const OverviewPage = (props: Props) => {
 						currency={group.currency}
 					/>
 				</Stack>
-				<Tabs
-					index={tabIndex}
-					onChange={handleTabChange}
-					isLazy
-					isFitted
-					align="center"
-				>
+				<Tabs index={tabIndex} onChange={handleTabChange} isLazy isFitted align="center">
 					<TabList>
 						<Tab>Balances</Tab>
 						<Tab>Expenses</Tab>
@@ -102,11 +72,7 @@ const OverviewPage = (props: Props) => {
 					</TabList>
 					<TabPanels>
 						<TabPanel px="0">
-							<BalanceList
-								currency={group.currency}
-								members={members}
-								expenses={expenses.data ?? []}
-							/>
+							<BalanceList currency={group.currency} members={members} expenses={expenses.data ?? []} />
 						</TabPanel>
 						<TabPanel px="0">
 							<ExpenseList expenses={expenses.data ?? []} />
