@@ -1,13 +1,6 @@
 import React, { useRef } from 'react';
 
-import {
-	Box,
-	Button,
-	Stack,
-	ToastId,
-	UseToastOptions,
-	useToast,
-} from '@chakra-ui/react';
+import { Box, Button, Stack, ToastId, UseToastOptions, useToast } from '@chakra-ui/react';
 import Link from 'next/link';
 
 import { getAllGroupMembers } from '@/modules/groups';
@@ -55,7 +48,7 @@ const GroupHeader = (props: Props) => {
 	const generateInviteLink = async () => {
 		inviteLinkToastRef.current = toast(GENERATING_INVITE_LINK);
 
-		const { inviteId } = await generateInviteId.mutateAsync(group.id);
+		const { inviteId } = await generateInviteId.mutateAsync({ groupId: group.id });
 		if (!!inviteId) {
 			await copyInviteLinkToClipboard(inviteId);
 		}
@@ -63,9 +56,7 @@ const GroupHeader = (props: Props) => {
 	};
 
 	const copyInviteLinkToClipboard = async (inviteId: string) => {
-		await navigator.clipboard.writeText(
-			`${window.location.host}/invite/${inviteId}`,
-		);
+		await navigator.clipboard.writeText(`${window.location.host}/invite/${inviteId}`);
 	};
 
 	const memberCount = getAllGroupMembers(group).length;
@@ -74,9 +65,7 @@ const GroupHeader = (props: Props) => {
 		<Box sx={{ position: 'relative' }}>
 			<AppBar
 				heading={group.name}
-				subheading={
-					memberCount === 1 ? '1 member' : `${memberCount} members`
-				}
+				subheading={memberCount === 1 ? '1 member' : `${memberCount} members`}
 				backTo="/"
 				actions={[
 					{
@@ -103,12 +92,7 @@ const GroupHeader = (props: Props) => {
 				}}
 			>
 				<Link href={Routes.OverviewTab(group.id, 'balances')}>
-					<Button
-						size="xs"
-						borderRadius="xl"
-						colorScheme="teal"
-						px="4"
-					>
+					<Button size="xs" borderRadius="xl" colorScheme="teal" px="4">
 						View expenses
 					</Button>
 				</Link>

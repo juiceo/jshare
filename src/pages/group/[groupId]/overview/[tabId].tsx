@@ -91,7 +91,7 @@ const OverviewPageWrapper = () => {
 	const router = useRouter();
 	const { groupId } = router.query as { groupId: string };
 
-	const group = trpc.groups.getById.useQuery(groupId);
+	const group = trpc.groups.getById.useQuery({ groupId });
 
 	if (group.isLoading) return <LoadingPage />;
 	if (group.isError) return <Text>Something went wrong...</Text>;

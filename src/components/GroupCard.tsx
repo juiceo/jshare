@@ -38,12 +38,12 @@ const GroupCard: React.FC<Props> = (props) => {
 	const deleteGroup = trpc.groups.delete.useMutation();
 
 	const handleArchive = async () => {
-		await archiveGroup.mutateAsync(group.id);
+		await archiveGroup.mutateAsync({ groupId: group.id });
 		utils.groups.invalidate();
 	};
 
 	const handleDelete = async () => {
-		await deleteGroup.mutateAsync(group.id);
+		await deleteGroup.mutateAsync({ groupId: group.id });
 		utils.groups.invalidate();
 	};
 
@@ -52,19 +52,9 @@ const GroupCard: React.FC<Props> = (props) => {
 	const isOwner = group.ownerId === session.data?.userId;
 
 	return (
-		<Card
-			background="white"
-			borderRadius="lg"
-			overflow="hidden"
-			variant="outline"
-		>
+		<Card background="white" borderRadius="lg" overflow="hidden" variant="outline">
 			<CardHeader>
-				<Stack
-					direction="row"
-					justifyContent="space-between"
-					alignItems="center"
-					minHeight="40px"
-				>
+				<Stack direction="row" justifyContent="space-between" alignItems="center" minHeight="40px">
 					<Heading fontSize="lg">{group.name}</Heading>
 					{isOwner && (
 						<Menu>
@@ -78,11 +68,7 @@ const GroupCard: React.FC<Props> = (props) => {
 								<MenuItem
 									key="archive"
 									onClick={handleArchive}
-									disabled={
-										group.ownerId !==
-											session.data?.userId ||
-										archiveGroup.isLoading
-									}
+									disabled={group.ownerId !== session.data?.userId || archiveGroup.isLoading}
 								>
 									Archive group
 								</MenuItem>
@@ -99,25 +85,12 @@ const GroupCard: React.FC<Props> = (props) => {
 				</Stack>
 			</CardHeader>
 			<Link href={Routes.Group(group.id)}>
-				<Image
-					width="full"
-					height="200px"
-					src={pattern.src}
-					bgRepeat="repeat"
-					objectFit="cover"
-					alt=""
-				/>
+				<Image width="full" height="200px" src={pattern.src} bgRepeat="repeat" objectFit="cover" alt="" />
 
 				<CardBody>
-					<Text>
-						{memberCount === 1
-							? `1 member`
-							: `${memberCount} members`}
-					</Text>
+					<Text>{memberCount === 1 ? `1 member` : `${memberCount} members`}</Text>
 					<Text>{group.expenseCount} expenses</Text>
-					<Text>
-						{formatAmount(group.total ?? 0, group.currency)} revenue
-					</Text>
+					<Text>{formatAmount(group.total ?? 0, group.currency)} revenue</Text>
 				</CardBody>
 			</Link>
 		</Card>

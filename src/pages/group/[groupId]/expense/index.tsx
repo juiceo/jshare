@@ -100,14 +100,15 @@ export const getServerSideProps: GetServerSideProps<
 > = async (ctx) => {
 	try {
 		const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions);
+		const { groupId } = ctx.params ?? {};
 
-		if (!session || !ctx.params?.groupId) {
+		if (!session || !groupId) {
 			return {
 				notFound: true,
 			};
 		}
 
-		const group = await appRouter.createCaller({ session }).groups.getById(ctx.params.groupId);
+		const group = await appRouter.createCaller({ session }).groups.getById({ groupId });
 
 		if (!group) {
 			return {

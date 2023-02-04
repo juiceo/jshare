@@ -27,7 +27,7 @@ const InvitePage = (props: Props) => {
 
 	const handleJoin = async () => {
 		if (!group.inviteId) return;
-		await joinGroup.mutateAsync(group.inviteId);
+		await joinGroup.mutateAsync({ inviteId: group.inviteId });
 
 		router.push(Routes.Group(group.id));
 	};
@@ -53,11 +53,7 @@ const InvitePage = (props: Props) => {
 							</Link>
 						</Stack>
 					) : !!session?.user ? (
-						<Button
-							colorScheme="green"
-							onClick={() => handleJoin()}
-							isLoading={joinGroup.isLoading}
-						>
+						<Button colorScheme="green" onClick={() => handleJoin()} isLoading={joinGroup.isLoading}>
 							Join group
 						</Button>
 					) : (
@@ -76,24 +72,18 @@ export const InvitePageWrapper = (props: Props) => {
 	return <InvitePage {...props} />;
 };
 
-export const getServerSideProps: GetServerSideProps<
-	{ group: GroupWithMembers },
-	{ inviteId: string }
-> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<{ group: GroupWithMembers }, { inviteId: string }> = async (
+	ctx,
+) => {
 	try {
-		if (!ctx.params?.inviteId) {
+		const { inviteId } = ctx.params ?? {};
+		if (!inviteId) {
 			return {
 				notFound: true,
 			};
 		}
-		const session = await unstable_getServerSession(
-			ctx.req,
-			ctx.res,
-			authOptions,
-		);
-		const group = await appRouter
-			.createCaller({ session })
-			.groups.getByInviteId(ctx.params?.inviteId);
+		const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions);
+		const group = await appRouter.createCaller({ session }).groups.getByInviteId({ inviteId });
 
 		return {
 			props: {

@@ -118,6 +118,48 @@ export const groupMemberProcedure = authenticatedProcedure
 	});
 
 /**
+ * Protected procedure for group owners
+ */
+export const groupOwnerProcedure = authenticatedProcedure
+	.input(
+		z.object({
+			groupId: z.string(),
+		}),
+	)
+	.use(async ({ input, ctx, next }) => {
+		const group = await prisma.group.findUnique({
+			where: {
+				id: input.groupId,
+			},
+			include: {
+				members: true,
+				owner: true,
+			},
+		});
+
+		if (!group) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'Group not found',
+			});
+		}
+
+		if (group.ownerId !== ctx.user.id) {
+			throw new TRPCError({
+				code: 'UNAUTHORIZED',
+				message: 'You are not the owner of this group',
+			});
+		}
+
+		return next({
+			ctx: {
+				...ctx,
+				group,
+			},
+		});
+	});
+
+/**
  * Protected procedure for expense owners
  */
 export const expenseOwnerProcedure = authenticatedProcedure

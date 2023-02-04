@@ -32,7 +32,7 @@ const GroupPage = (props: Props) => {
 	const bottomRef = useRef<HTMLDivElement>(null);
 	const scrolledDownRef = useRef<boolean>(true);
 	const [isScrolledDown, setScrolledDown] = useState<boolean>(true);
-	const groupQuery = trpc.groups.getById.useQuery(groupId);
+	const groupQuery = trpc.groups.getById.useQuery({ groupId });
 	const messagesQuery = trpc.messages.listByGroupIdInfinite.useInfiniteQuery(
 		{
 			groupId,
@@ -153,8 +153,8 @@ const GroupPage = (props: Props) => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-	const groupId = ctx.params?.groupId as string | undefined;
-	if (!groupId) {
+	const { groupId } = ctx.params ?? {};
+	if (!groupId || typeof groupId !== 'string') {
 		return {
 			notFound: true,
 		};
@@ -168,8 +168,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	});
 
 	try {
-		const data = await ssg.groups.getById.fetch(groupId);
-		const key = trpc.groups.getById.getQueryKey(groupId);
+		const data = await ssg.groups.getById.fetch({ groupId });
+		const key = trpc.groups.getById.getQueryKey({ groupId });
 		if (!data) throw new Error('Group not found');
 		ssg.queryClient.setQueryData(key, data);
 	} catch (err) {
