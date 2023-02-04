@@ -21,26 +21,24 @@ export const usersRouter = trpc.router({
 
 		return user;
 	}),
-	updateSelf: trpc.authenticatedProcedure
-		.input(updateUserSchema)
-		.mutation(async ({ input, ctx }) => {
-			const updatedUser = await prisma.user.update({
-				where: {
-					id: ctx.user.id,
-				},
-				data: {
-					...input,
-					name: `${input.firstName} ${input.lastName}`,
-				},
+	updateSelf: trpc.authenticatedProcedure.input(updateUserSchema).mutation(async ({ input, ctx }) => {
+		const updatedUser = await prisma.user.update({
+			where: {
+				id: ctx.user.id,
+			},
+			data: {
+				...input,
+				name: `${input.firstName} ${input.lastName}`,
+			},
+		});
+
+		if (!updatedUser) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'User not found',
 			});
+		}
 
-			if (!updatedUser) {
-				throw new TRPCError({
-					code: 'NOT_FOUND',
-					message: 'User not found',
-				});
-			}
-
-			return updatedUser;
-		}),
+		return updatedUser;
+	}),
 });
