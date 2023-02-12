@@ -15,6 +15,7 @@ import {
 	ModalOverlay,
 	Stack,
 	Text,
+	useToast,
 } from '@chakra-ui/react';
 import { User } from '@prisma/client';
 
@@ -23,6 +24,7 @@ import { ExpenseSummary } from '@/modules/expenses';
 import { CurrencyCode, formatAmount } from '@/modules/money';
 import { getPendingPaymentsByUser } from '@/modules/payments/utils';
 import { getUserDisplayName } from '@/modules/users';
+import { trpc } from '@/services/trpc';
 
 export interface PaymentModalProps {
 	isOpen: boolean;
@@ -30,12 +32,17 @@ export interface PaymentModalProps {
 	balances: ByUserId<ExpenseSummary>;
 	currency: CurrencyCode;
 	userId: string;
+	groupId: string;
 	usersById: ById<User>;
 }
 
 const PaymentModal = (props: PaymentModalProps) => {
-	const { isOpen, onClose, balances, userId, usersById, currency } = props;
+	const { isOpen, onClose, balances, userId, usersById, groupId, currency } = props;
 
+	const toast = useToast();
+	const createPayment = trpc.payments.create.useMutation();
+
+	const [loading, setLoading] = useState<boolean>(false);
 	const [paidItems, setPaidItems] = useState<string[]>([]);
 
 	const paymentsByUser = useMemo(() => {
@@ -45,6 +52,38 @@ const PaymentModal = (props: PaymentModalProps) => {
 	const ownBalance = balances[userId]?.balance ?? 0;
 	const toPay = paymentsByUser.filter((p) => p.from === userId);
 	const toReceive = paymentsByUser.filter((p) => p.to === userId);
+
+	const handleMarkAsPaid = async () => {
+		setLoading(true);
+		try {
+			for (const id of paidItems) {
+				const payment = paymentsByUser.find((p) => p.id === id);
+				if (!!payment) {
+					await createPayment.mutateAsync({
+						currency,
+						groupId,
+						amount: payment.amount,
+						to: payment.to,
+						from: payment.from,
+					});
+				}
+			}
+		} catch (err) {
+			console.log('ERR', err);
+			toast({
+				title: 'Failed to save payments',
+				description: 'Please try again',
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
+		}
+
+		onClose();
+
+		setLoading(false);
+	};
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} size="lg">
 			<ModalOverlay />
@@ -128,7 +167,13 @@ const PaymentModal = (props: PaymentModalProps) => {
 						Close
 					</Button>
 					{toPay.length > 0 && (
-						<Button variant="solid" disabled={paidItems.length === 0} colorScheme="green">
+						<Button
+							variant="solid"
+							disabled={paidItems.length === 0 || loading}
+							isLoading={loading}
+							colorScheme="green"
+							onClick={handleMarkAsPaid}
+						>
 							Mark as paid ({paidItems.length})
 						</Button>
 					)}

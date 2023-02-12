@@ -5,6 +5,7 @@ import { publicProcedure, router } from '../trpc';
 import { expenseRouter } from './expenses';
 import { groupRouter } from './groups';
 import { messageRouter } from './messages';
+import { paymentsRouter } from './payments';
 import { usersRouter } from './users';
 
 export const appRouter = router({
@@ -12,6 +13,7 @@ export const appRouter = router({
 	groups: groupRouter,
 	messages: messageRouter,
 	expenses: expenseRouter,
+	payments: paymentsRouter,
 	users: usersRouter,
 });
 

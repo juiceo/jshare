@@ -14,7 +14,7 @@ const BotMessageItem = (props: Props) => {
 	return (
 		<Stack direction="column" alignItems="center" px="4">
 			<Box background="blackAlpha.500" px="4" py="0.5" borderRadius="xl" boxShadow="sm">
-				<Text fontSize="sm" color="white" fontWeight="bold">
+				<Text textAlign="center" fontSize="sm" color="white" fontWeight="bold">
 					{message.message}
 				</Text>
 			</Box>

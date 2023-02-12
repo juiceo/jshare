@@ -124,6 +124,7 @@ const OverviewPage = (props: Props) => {
 				onClose={() => setPaymentModalOpen(false)}
 				balances={summaryByMember}
 				currency={group.currency}
+				groupId={group.id}
 				userId={userId}
 				usersById={membersById}
 			/>
