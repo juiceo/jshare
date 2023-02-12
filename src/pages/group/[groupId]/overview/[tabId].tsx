@@ -13,6 +13,7 @@ import Layout from '@/components/Layout';
 import LoadingPage from '@/components/LoadingPage';
 import Page from '@/components/Page';
 import PaymentModal from '@/components/PaymentModal';
+import PaymentsList from '@/components/PaymentsList';
 import { byId } from '@/modules/common/utils';
 import { EMPTY_EXPENSE_SUMMARY, getExpenseSummaryByMember } from '@/modules/expenses';
 import { getAllGroupMembers } from '@/modules/groups';
@@ -43,13 +44,14 @@ const OverviewPage = (props: Props) => {
 	const members = getAllGroupMembers(group);
 	const membersById = byId(members);
 	const expenses = trpc.expenses.listByGroupId.useQuery({ groupId: group.id });
+	const payments = trpc.payments.listByGroupId.useQuery({ groupId: group.id });
 	const total = sumBy(expenses.data ?? [], (expense) => {
 		return expense.amount;
 	});
 
 	const summaryByMember = useMemo(() => {
-		return getExpenseSummaryByMember(expenses.data ?? []);
-	}, [expenses.data]);
+		return getExpenseSummaryByMember(expenses.data ?? [], payments.data ?? []);
+	}, [expenses.data, payments.data]);
 
 	const ownSummary = summaryByMember[userId] ?? EMPTY_EXPENSE_SUMMARY;
 
@@ -114,7 +116,7 @@ const OverviewPage = (props: Props) => {
 							<ExpenseList expenses={expenses.data ?? []} />
 						</TabPanel>
 						<TabPanel px="0">
-							<Text fontSize="xl">Coming soon :)</Text>
+							<PaymentsList payments={payments.data ?? []} />
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
@@ -122,6 +124,7 @@ const OverviewPage = (props: Props) => {
 			<PaymentModal
 				isOpen={paymentModalOpen}
 				onClose={() => setPaymentModalOpen(false)}
+				onPaid={() => payments.refetch()}
 				balances={summaryByMember}
 				currency={group.currency}
 				groupId={group.id}

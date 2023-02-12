@@ -50,7 +50,7 @@ const BalanceList = (props: BalanceListProps) => {
 							<Stack flex="1" direction="column" alignItems="flex-start" spacing={0}>
 								<Text textAlign="left">{getUserFullName(member)}</Text>
 								<Text textAlign="left" fontSize="xs">
-									{`Paid ${formatAmount(summary.paid, currency)}, Owed ${formatAmount(
+									{`Paid ${formatAmount(summary.paid, currency)}, Owes ${formatAmount(
 										summary.owed,
 										currency,
 									)}`}

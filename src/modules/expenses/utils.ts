@@ -1,4 +1,4 @@
-import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
+import { Expense, ExpenseShareWithMember, Payment, User } from '@prisma/client';
 import { range, sum, sumBy } from 'lodash';
 
 import { ExpenseFormValue } from '@/components/ExpenseForm';
@@ -77,8 +77,9 @@ export const getAmountByMember = (args: { shares: ByUserId<ExpenseShare>; total:
 
 export const getExpenseSummaryByMember = (
 	expenses: (Expense & { shares: ExpenseShareWithMember[] })[],
+	payments: Payment[],
 ): ByUserId<ExpenseSummary> => {
-	return expenses.reduce((result, expense) => {
+	const summary = expenses.reduce((result, expense) => {
 		if (!result[expense.payerId]) {
 			result[expense.payerId] = { paid: 0, owed: 0, balance: 0 };
 		}
@@ -100,6 +101,20 @@ export const getExpenseSummaryByMember = (
 
 		return result;
 	}, {} as ByUserId<ExpenseSummary>);
+
+	payments.forEach((payment) => {
+		if (!summary[payment.fromId]) summary[payment.fromId] = EMPTY_EXPENSE_SUMMARY;
+
+		summary[payment.fromId]!.paid += payment.amount;
+		summary[payment.fromId]!.balance += payment.amount;
+
+		if (!summary[payment.toId]) summary[payment.toId] = EMPTY_EXPENSE_SUMMARY;
+
+		summary[payment.toId]!.owed += payment.amount;
+		summary[payment.toId]!.balance -= payment.amount;
+	});
+
+	return summary;
 };
 
 export const EMPTY_EXPENSE_SUMMARY: ExpenseSummary = {

@@ -29,6 +29,7 @@ import { trpc } from '@/services/trpc';
 export interface PaymentModalProps {
 	isOpen: boolean;
 	onClose: () => void;
+	onPaid: () => void;
 	balances: ByUserId<ExpenseSummary>;
 	currency: CurrencyCode;
 	userId: string;
@@ -37,7 +38,7 @@ export interface PaymentModalProps {
 }
 
 const PaymentModal = (props: PaymentModalProps) => {
-	const { isOpen, onClose, balances, userId, usersById, groupId, currency } = props;
+	const { isOpen, onClose, onPaid, balances, userId, usersById, groupId, currency } = props;
 
 	const toast = useToast();
 	const createPayment = trpc.payments.create.useMutation();
@@ -68,6 +69,7 @@ const PaymentModal = (props: PaymentModalProps) => {
 					});
 				}
 			}
+			onPaid();
 		} catch (err) {
 			console.log('ERR', err);
 			toast({
