@@ -91,6 +91,7 @@ model Group {
   total        Int          @default(0)
   expenseCount Int          @default(0)
   archived     Boolean      @default(false)
+  Payment      Payment[]
 }
 
 enum MessageType {
@@ -141,6 +142,8 @@ model Payment {
   from      User         @relation("payment_from", fields: [fromId], references: [id])
   toId      String
   to        User         @relation("payment_to", fields: [toId], references: [id])
+  groupId   String
+  group     Group        @relation(fields: [groupId], references: [id], onDelete: Cascade)
 }
 
 model ExpenseShareWithMember {

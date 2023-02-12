@@ -112,21 +112,6 @@ const PaymentModal = (props: PaymentModalProps) => {
 													</Text>{' '}
 													from {getUserDisplayName(from, 'full')}
 												</Text>
-												<Checkbox
-													isChecked={paidItems.includes(payment.id)}
-													onChange={(e) => {
-														if (e.target.checked) {
-															setPaidItems((prev) => [...prev, payment.id]);
-														} else {
-															setPaidItems((prev) =>
-																prev.filter((id) => id !== payment.id),
-															);
-														}
-													}}
-													colorScheme="green"
-												>
-													Paid
-												</Checkbox>
 											</Stack>
 										</ListItem>
 									);
@@ -142,9 +127,11 @@ const PaymentModal = (props: PaymentModalProps) => {
 					<Button variant="ghost" onClick={onClose}>
 						Close
 					</Button>
-					<Button variant="solid" disabled={paidItems.length === 0} colorScheme="green">
-						Mark as paid ({paidItems.length})
-					</Button>
+					{toPay.length > 0 && (
+						<Button variant="solid" disabled={paidItems.length === 0} colorScheme="green">
+							Mark as paid ({paidItems.length})
+						</Button>
+					)}
 				</ModalFooter>
 			</ModalContent>
 		</Modal>
