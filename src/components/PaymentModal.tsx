@@ -21,7 +21,7 @@ import { User } from '@prisma/client';
 import { ById, ByUserId } from '@/modules/common/types';
 import { ExpenseSummary } from '@/modules/expenses';
 import { CurrencyCode, formatAmount } from '@/modules/money';
-import { getPaymentsByUser } from '@/modules/payments/utils';
+import { getPendingPaymentsByUser } from '@/modules/payments/utils';
 import { getUserDisplayName } from '@/modules/users';
 
 export interface PaymentModalProps {
@@ -39,7 +39,7 @@ const PaymentModal = (props: PaymentModalProps) => {
 	const [paidItems, setPaidItems] = useState<string[]>([]);
 
 	const paymentsByUser = useMemo(() => {
-		return getPaymentsByUser(balances);
+		return getPendingPaymentsByUser(balances);
 	}, [balances]);
 
 	const ownBalance = balances[userId]?.balance ?? 0;

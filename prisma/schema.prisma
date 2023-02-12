@@ -41,22 +41,24 @@ model Session {
 }
 
 model User {
-  id              String                   @id @default(cuid())
-  name            String?
-  firstName       String?
-  lastName        String?
-  displayName     String?
-  email           String?                  @unique
-  emailVerified   DateTime?
-  image           String?
-  accounts        Account[]
-  sessions        Session[]
-  groupsOwned     Group[]                  @relation("group_owner")
-  groupsMember    Group[]                  @relation("group_members")
-  messages        Message[]
-  expensesCreated Expense[]                @relation("expense_sender")
-  expensesPaid    Expense[]                @relation("expense_payer")
-  expenseShares   ExpenseShareWithMember[]
+  id               String                   @id @default(cuid())
+  name             String?
+  firstName        String?
+  lastName         String?
+  displayName      String?
+  email            String?                  @unique
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  groupsOwned      Group[]                  @relation("group_owner")
+  groupsMember     Group[]                  @relation("group_members")
+  messages         Message[]
+  expensesCreated  Expense[]                @relation("expense_sender")
+  expensesPaid     Expense[]                @relation("expense_payer")
+  expenseShares    ExpenseShareWithMember[]
+  paymentsPaid     Payment[]                @relation("payment_from")
+  paymentsReceived Payment[]                @relation("payment_to")
 }
 
 model VerificationToken {
@@ -127,6 +129,18 @@ model Expense {
   group     Group                    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   shares    ExpenseShareWithMember[]
   Message   Message[]
+}
+
+model Payment {
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  amount    Int
+  currency  CurrencyCode
+  fromId    String
+  from      User         @relation("payment_from", fields: [fromId], references: [id])
+  toId      String
+  to        User         @relation("payment_to", fields: [toId], references: [id])
 }
 
 model ExpenseShareWithMember {

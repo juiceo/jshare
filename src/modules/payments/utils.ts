@@ -4,19 +4,19 @@ import shortid from 'shortid';
 import { ByUserId } from '@/modules/common/types';
 import { ExpenseSummary } from '@/modules/expenses';
 
-type Payment = {
+type PendingPayment = {
 	id: string;
 	from: string;
 	to: string;
 	amount: number;
 };
 
-export const getPaymentsByUser = (balances: ByUserId<ExpenseSummary>) => {
+export const getPendingPaymentsByUser = (balances: ByUserId<ExpenseSummary>) => {
 	const balancesWithUserId = Object.entries(balances).map(([userId, balance]) => ({
 		userId,
 		balance: balance.balance,
 	}));
-	const payments: Payment[] = [];
+	const payments: PendingPayment[] = [];
 	const sortedBalances = sortBy(balancesWithUserId, (item) => item.balance);
 	const payers = sortedBalances.filter((item) => item.balance < 0);
 	let receivers = sortedBalances.filter((item) => item.balance > 0).reverse();
