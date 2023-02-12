@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import {
 	Box,
@@ -53,6 +53,10 @@ const PaymentModal = (props: PaymentModalProps) => {
 	const ownBalance = balances[userId]?.balance ?? 0;
 	const toPay = paymentsByUser.filter((p) => p.from === userId);
 	const toReceive = paymentsByUser.filter((p) => p.to === userId);
+
+	useEffect(() => {
+		setPaidItems([]);
+	}, [balances]);
 
 	const handleMarkAsPaid = async () => {
 		setLoading(true);
