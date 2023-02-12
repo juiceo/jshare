@@ -22,22 +22,23 @@ export const getPendingPaymentsByUser = (balances: ByUserId<ExpenseSummary>) => 
 	let receivers = sortedBalances.filter((item) => item.balance > 0).reverse();
 
 	payers.forEach(({ userId, balance }) => {
-		const amountToPay = Math.abs(balance);
-		let amountPaid = 0;
-		while (amountPaid < amountToPay) {
+		const totalToPay = Math.abs(balance);
+		let totalRemaining = totalToPay;
+		while (totalRemaining > 0) {
 			const receiver = receivers.find((item) => item.balance > 0);
 			if (!receiver) {
 				// Should never happen
 				break;
 			}
-			if (receiver.balance > amountToPay) {
+			if (receiver.balance > totalRemaining) {
+				const amountToPay = totalRemaining;
 				payments.push({
 					id: shortid(),
 					from: userId,
 					to: receiver.userId,
 					amount: amountToPay,
 				});
-				amountPaid = amountToPay;
+				totalRemaining = 0;
 				receivers = receivers.map((r) => {
 					if (r.userId === receiver.userId) {
 						return {
@@ -48,13 +49,14 @@ export const getPendingPaymentsByUser = (balances: ByUserId<ExpenseSummary>) => 
 					return r;
 				});
 			} else {
+				const amountToPay = Math.min(receiver.balance, totalRemaining);
 				payments.push({
 					id: shortid(),
 					from: userId,
 					to: receiver.userId,
-					amount: receiver.balance,
+					amount: amountToPay,
 				});
-				amountPaid += receiver.balance;
+				totalRemaining -= amountToPay;
 				receivers = receivers.map((r) => {
 					if (r.userId === receiver.userId) {
 						return {
