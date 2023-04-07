@@ -3,9 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { Card, Input, Stack } from '@chakra-ui/react';
 import { CurrencyCode, User } from '@prisma/client';
 import { sumBy } from 'lodash';
+import shortId from 'shortid';
 
+import FileUpload from '@/components/FileUpload';
+import FileUploadEmpty from '@/components/FileUploadEmpty';
+import FileUploadImage from '@/components/FileUploadImage';
 import { ByUserId } from '@/modules/common/types';
 import { ExpenseShare } from '@/modules/expenses';
+import { supabase } from '@/services/supabase';
 
 import ExpensePayerSelect from './ExpensePayerSelect';
 import ExpenseSharesList from './ExpenseSharesList';
@@ -30,6 +35,8 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 
 	const [amountKey, setAmountKey] = useState<number>(0);
 	const [amountEdited, setAmountEdited] = useState<boolean>(false);
+	const [isUploading, setIsUploading] = useState<boolean>(false);
+	const [image, setImage] = useState<string | null>(null);
 
 	useEffect(() => {
 		if (!amountEdited) {
@@ -59,24 +66,43 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 		});
 	};
 
+	const handleFileSelect = async (file: File, name: string) => {
+		console.log('FILE SELECTED');
+		setIsUploading(true);
+		const path = `${shortId.generate()}/${name}`;
+		const { error } = await supabase.storage.from('expenses').upload(path, file, {
+			cacheControl: '3600',
+			upsert: false,
+		});
+
+		if (error) {
+			console.log('File upload error', error);
+		} else {
+			const publicUrl = supabase.storage.from('expenses').getPublicUrl(path).data.publicUrl;
+			console.log('Uploaded file', publicUrl);
+			setImage(publicUrl);
+		}
+		setIsUploading(false);
+	};
+
 	const handleSharesChange = (shares: ByUserId<ExpenseShare>) => {
 		const newValue = { ...value, shares };
 		if (!value.amount) {
-			newValue.amount = sumBy(
-				Object.values(shares),
-				(share) => share.amount ?? 0,
-			);
+			newValue.amount = sumBy(Object.values(shares), (share) => share.amount ?? 0);
 		}
 		onChange(newValue);
 	};
 
 	return (
 		<Stack direction="column" spacing={1}>
-			<ExpensePayerSelect
-				payerId={payerId}
-				onPayerIdChange={handlePayerIdChange}
-				users={members}
-			/>
+			<ExpensePayerSelect payerId={payerId} onPayerIdChange={handlePayerIdChange} users={members} />
+			<FileUpload accept={'image/*'} onFileSelected={handleFileSelect} disabled={isUploading}>
+				{!image ? (
+					<FileUploadEmpty label="Add an image" isLoading={isUploading} />
+				) : (
+					<FileUploadImage image={image} onRemove={() => setImage(null)} />
+				)}
+			</FileUpload>
 
 			<Card background="white" borderRadius="lg">
 				<MoneyInput
@@ -102,7 +128,6 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 					sx={{ borderColor: 'transparent' }}
 				/>
 			</Card>
-
 			<ExpenseSharesList
 				value={shares}
 				currency={currency}
