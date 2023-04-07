@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 
-import { Box } from '@chakra-ui/react';
+import { Box, Stack, Text } from '@chakra-ui/react';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { createServerSideHelpers } from '@trpc/react-query/server';
@@ -49,6 +49,8 @@ const GroupPage = (props: Props) => {
 	const expensesQuery = trpc.expenses.listByGroupId.useQuery({ groupId });
 
 	const group = groupQuery.data;
+
+	console.log('GROUP', group);
 
 	trpc.messages.onCreateMessageInGroup.useSubscription(
 		{ groupId },
@@ -116,7 +118,13 @@ const GroupPage = (props: Props) => {
 		<Page
 			title={group.name}
 			appBar={<GroupHeader group={group} />}
-			footer={<GroupMessagesFooter group={group} onSendMessage={scrollToBottom} />}
+			footer={
+				<GroupMessagesFooter
+					group={group}
+					onSendMessage={scrollToBottom}
+					showInviteBanner={!messagesQuery.isLoading && messages.length === 0}
+				/>
+			}
 			contentProps={{
 				position: 'relative',
 			}}
@@ -149,6 +157,7 @@ const GroupPage = (props: Props) => {
 					isLoadingMore={messagesQuery.isFetchingNextPage}
 				/>
 			</Box>
+
 			<AnimatePresence initial={false}>
 				{!isScrolledDown && (
 					<MotionBox
