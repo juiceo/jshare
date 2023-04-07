@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Text } from '@chakra-ui/react';
+import { Avatar, AvatarBadge, Box, Divider, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -21,12 +21,13 @@ interface Props {
 	hideAvatar?: boolean;
 	hideName?: boolean;
 	isSelf?: boolean;
+	isPaidBySelf?: boolean;
 }
 
 const ExpenseItem = (props: Props) => {
 	const session = useSession();
 	const userId = session?.data?.userId;
-	const { id, expense, sender, payer, hideAvatar, isSelf } = props;
+	const { id, expense, sender, payer, hideAvatar, isSelf, isPaidBySelf } = props;
 
 	const ownShare = !!userId ? expense.shares.find((share) => share.memberId === userId)?.amount : null;
 
@@ -37,10 +38,14 @@ const ExpenseItem = (props: Props) => {
 					<Text px="2" pt="1" fontSize="xs" color="whiteAlpha.800" align="right">
 						{moment(expense.createdAt).format('HH:mm')}
 					</Text>
-					<Box p="6" alignItems="center" justifyContent="center" display="flex" flexDirection="column">
+					<Box p="6" pt={0} alignItems="center" justifyContent="center" display="flex" flexDirection="column">
 						<Text fontSize="xs" align="center" color="whiteAlpha.900">
-							{!isSelf ? getUserDisplayName(payer, 'short') : 'You'} paid
+							<Box mb={2} alignItems="center" display="flex" flexDir="column">
+								<Avatar size="sm" src={payer?.image ?? ''} />
+								{!isPaidBySelf ? getUserDisplayName(payer, 'short') : 'You'} paid
+							</Box>
 						</Text>
+						<Divider w={'50%'} m={2} />
 						<Text align="center" fontSize="2xl" color="whiteAlpha.900">
 							{formatAmount(expense.amount, expense.currency)}
 						</Text>
