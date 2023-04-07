@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 
-import { Box } from '@chakra-ui/react';
+import { Box, Stack, Text } from '@chakra-ui/react';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { createServerSideHelpers } from '@trpc/react-query/server';
@@ -18,6 +18,7 @@ import Page from '@/components/Page';
 import ScrollDetector from '@/components/ScrollDetector';
 import ScrollDownButton from '@/components/ScrollDownButton';
 import { ExpenseWithSenderAndShares } from '@/modules/expenses';
+import { getGroupMemberCount } from '@/modules/groups';
 import { MessageWithSender } from '@/modules/messages';
 import NotFoundPage from '@/pages/404';
 import { createContextInner } from '@/server/context';
@@ -116,7 +117,13 @@ const GroupPage = (props: Props) => {
 		<Page
 			title={group.name}
 			appBar={<GroupHeader group={group} />}
-			footer={<GroupMessagesFooter group={group} onSendMessage={scrollToBottom} />}
+			footer={
+				<GroupMessagesFooter
+					group={group}
+					onSendMessage={scrollToBottom}
+					showInviteBanner={!groupQuery.isLoading && getGroupMemberCount(group) === 1}
+				/>
+			}
 			contentProps={{
 				position: 'relative',
 			}}
@@ -149,6 +156,7 @@ const GroupPage = (props: Props) => {
 					isLoadingMore={messagesQuery.isFetchingNextPage}
 				/>
 			</Box>
+
 			<AnimatePresence initial={false}>
 				{!isScrolledDown && (
 					<MotionBox
