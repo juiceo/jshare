@@ -67,7 +67,7 @@ const GroupMessagesFooter = (props: Props) => {
 				>
 					<Stack direction="column" alignItems={{ base: 'center', md: 'flex-start' }} spacing={0}>
 						<Heading fontSize="md" textAlign={{ base: 'center', md: 'left' }}>
-							It's pretty lonely in here...
+							{`It's pretty lonely in here...`}
 						</Heading>
 						<Text fontSize="sm" textAlign={{ base: 'center', md: 'left' }}>
 							Share an invite link with your friends to invite them!

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Button, Card, Text } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 interface EmptyCardProps {
