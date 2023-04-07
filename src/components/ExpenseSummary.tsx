@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Avatar, Box, Card, CardBody, Stack, Text } from '@chakra-ui/react';
+import { Avatar, Box, Card, CardBody, Image, Stack, Text } from '@chakra-ui/react';
 import { ExpenseShareWithMember } from '@prisma/client';
 import moment from 'moment';
 
@@ -45,17 +45,22 @@ const ExpenseSummary = (props: ExpenseSummaryProps) => {
 
 	return (
 		<Box>
-			<Stack direction="column">
+			<Stack direction="column" mb="8">
 				<AmountWithLabel
 					label={`Paid by ${getUserName(expense.payerId)}`}
 					amount={expense.amount}
 					currency={expense.currency}
 				/>
 			</Stack>
-			<Card background="white" mt="8">
+			{!!expense.image && (
+				<Card background="white" mb="2">
+					<Image src={expense.image} width="100%" />
+				</Card>
+			)}
+			<Card background="white" mb="4">
 				{expense.shares.map((share) => renderShare(share))}
 			</Card>
-			<Box mt="4">
+			<Box>
 				<Text fontSize="xs" textAlign="center">
 					Created {moment(expense.createdAt).format('MMMM Do, YYYY HH:mm')} by {getUserName(expense.senderId)}
 				</Text>
