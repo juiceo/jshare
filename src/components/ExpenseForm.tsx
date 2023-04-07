@@ -79,7 +79,7 @@ const ExpenseForm = (props: ExpenseFormProps) => {
 
 	const handleFileSelect = async (file: File, name: string) => {
 		setIsUploading(true);
-		const path = `${shortId.generate()}/${name}`;
+		const path = `${shortId.generate()}-${name}`;
 		const { error } = await supabase.storage.from('expenses').upload(path, file, {
 			cacheControl: '3600',
 			upsert: false,
