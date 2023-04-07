@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext } from 'next';
 import { getSession, useSession } from 'next-auth/react';
 import superjson from 'superjson';
@@ -36,7 +36,7 @@ const Root: React.FC = () => {
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	const session = await getSession(ctx);
-	const ssg = createProxySSGHelpers({
+	const ssg = createServerSideHelpers({
 		router: appRouter,
 		ctx: await createContextInner({ session }),
 		transformer: superjson,

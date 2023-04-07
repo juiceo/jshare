@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Avatar, Box, Button, Card, Divider, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import router from 'next/router';
@@ -132,7 +132,7 @@ const UserPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	const session = await getSession(ctx);
-	const ssg = createProxySSGHelpers({
+	const ssg = createServerSideHelpers({
 		router: appRouter,
 		ctx: await createContextInner({ session }),
 		transformer: superjson,
