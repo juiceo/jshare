@@ -18,6 +18,7 @@ import Page from '@/components/Page';
 import ScrollDetector from '@/components/ScrollDetector';
 import ScrollDownButton from '@/components/ScrollDownButton';
 import { ExpenseWithSenderAndShares } from '@/modules/expenses';
+import { getGroupMemberCount } from '@/modules/groups';
 import { MessageWithSender } from '@/modules/messages';
 import NotFoundPage from '@/pages/404';
 import { createContextInner } from '@/server/context';
@@ -49,8 +50,6 @@ const GroupPage = (props: Props) => {
 	const expensesQuery = trpc.expenses.listByGroupId.useQuery({ groupId });
 
 	const group = groupQuery.data;
-
-	console.log('GROUP', group);
 
 	trpc.messages.onCreateMessageInGroup.useSubscription(
 		{ groupId },
@@ -122,7 +121,7 @@ const GroupPage = (props: Props) => {
 				<GroupMessagesFooter
 					group={group}
 					onSendMessage={scrollToBottom}
-					showInviteBanner={!messagesQuery.isLoading && messages.length === 0}
+					showInviteBanner={!groupQuery.isLoading && getGroupMemberCount(group) === 1}
 				/>
 			}
 			contentProps={{

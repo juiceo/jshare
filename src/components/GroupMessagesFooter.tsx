@@ -18,7 +18,7 @@ interface Props {
 const MotionBox = motion(Box);
 
 const GroupMessagesFooter = (props: Props) => {
-	const { group, onSendMessage } = props;
+	const { group, onSendMessage, showInviteBanner } = props;
 	const toast = useToast();
 	const sendMessage = trpc.messages.create.useMutation();
 	const [inputValue, setInputValue] = useState<string>('');
@@ -55,27 +55,29 @@ const GroupMessagesFooter = (props: Props) => {
 
 	return (
 		<Box>
-			<Stack
-				direction={{ base: 'column', md: 'row' }}
-				alignItems="center"
-				justifyContent="space-between"
-				p="4"
-				spacing="4"
-				bgColor="gray.200"
-				width="100%"
-			>
-				<Stack direction="column" alignItems={{ base: 'center', md: 'flex-start' }} spacing={0}>
-					<Heading fontSize="md" textAlign={{ base: 'center', md: 'left' }}>
-						It's pretty lonely in here...
-					</Heading>
-					<Text fontSize="sm" textAlign={{ base: 'center', md: 'left' }}>
-						Share an invite link with your friends to invite them!
-					</Text>
+			{showInviteBanner && (
+				<Stack
+					direction={{ base: 'column', md: 'row' }}
+					alignItems="center"
+					justifyContent="space-between"
+					p="4"
+					spacing="4"
+					bgColor="gray.200"
+					width="100%"
+				>
+					<Stack direction="column" alignItems={{ base: 'center', md: 'flex-start' }} spacing={0}>
+						<Heading fontSize="md" textAlign={{ base: 'center', md: 'left' }}>
+							It's pretty lonely in here...
+						</Heading>
+						<Text fontSize="sm" textAlign={{ base: 'center', md: 'left' }}>
+							Share an invite link with your friends to invite them!
+						</Text>
+					</Stack>
+					<Button colorScheme="green" variant="solid" onClick={handleCopyInviteLink}>
+						Copy invite link
+					</Button>
 				</Stack>
-				<Button colorScheme="green" variant="solid" onClick={handleCopyInviteLink}>
-					Copy invite link
-				</Button>
-			</Stack>
+			)}
 
 			<Stack
 				direction="column"
