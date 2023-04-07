@@ -45,6 +45,7 @@ const CreateExpensePage = (props: Props) => {
 			amount: expense.amount,
 			shares: expense.shares,
 			currency: group.currency,
+			image: expense.image,
 		});
 
 		router.push(Routes.Group(groupId));

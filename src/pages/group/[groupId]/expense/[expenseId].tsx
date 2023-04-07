@@ -45,6 +45,7 @@ const EditExpensePage = (props: {
 			payerId: expense.payerId,
 			amount: expense.amount,
 			title: expense.title,
+			image: expense.image ?? undefined,
 			shares: getExpenseSharesFromExpense(expense),
 		}),
 		[expense],

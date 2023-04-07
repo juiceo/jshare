@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Image, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -32,6 +32,11 @@ const ExpenseItem = (props: Props) => {
 
 	return (
 		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf} id={id}>
+			{!!expense.image && (
+				<Box mb="2" borderRadius="lg">
+					<Image src={expense.image} width="100%" />
+				</Box>
+			)}
 			<Link href={Routes.Expense(expense.groupId, expense.id)}>
 				<Box background="green.500" borderRadius="lg" maxWidth="100%" minWidth="300" overflow="hidden">
 					<Text px="2" pt="1" fontSize="xs" color="whiteAlpha.800" align="right">
