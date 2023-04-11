@@ -32,14 +32,31 @@ const ExpenseItem = (props: Props) => {
 
 	return (
 		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf} id={id}>
-			{!!expense.image && (
-				<Box mb="2" borderRadius="lg">
-					<Image src={expense.image} width="100%" />
-				</Box>
-			)}
 			<Link href={Routes.Expense(expense.groupId, expense.id)}>
-				<Box background="green.500" borderRadius="lg" maxWidth="100%" minWidth="300" overflow="hidden">
-					<Text px="2" pt="1" fontSize="xs" color="whiteAlpha.800" align="right">
+				<Box
+					background="green.500"
+					borderRadius="lg"
+					maxWidth="100%"
+					minWidth="300"
+					overflow="hidden"
+					position="relative"
+				>
+					{!!expense.image && (
+						<Box mb="2" background="black">
+							<Image src={expense.image} width="100%" />
+						</Box>
+					)}
+					<Text
+						px="2"
+						pt="1"
+						fontSize="xs"
+						color="whiteAlpha.800"
+						align="right"
+						position="absolute"
+						right="0"
+						top="0"
+						zIndex="10"
+					>
 						{moment(expense.createdAt).format('HH:mm')}
 					</Text>
 					<Box p="6" alignItems="center" justifyContent="center" display="flex" flexDirection="column">
