@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 
-import { Box, Stack, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { getQueryKey } from '@trpc/react-query';
 import { createServerSideHelpers } from '@trpc/react-query/server';

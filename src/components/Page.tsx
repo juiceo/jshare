@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Box, BoxProps, Stack, StackProps } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -17,15 +17,7 @@ interface Props {
 const MotionBox = motion(Box);
 
 const Page = (props: Props) => {
-	const {
-		title,
-		description,
-		children,
-		appBar,
-		footer,
-		wrapperProps,
-		contentProps,
-	} = props;
+	const { title, description, children, appBar, footer, wrapperProps, contentProps } = props;
 
 	const [appBarHeight, setAppBarHeight] = useState<number>(!!appBar ? 72 : 0);
 	const [footerHeight, setFooterHeight] = useState<number>(!!footer ? 72 : 0);
@@ -55,10 +47,7 @@ const Page = (props: Props) => {
 		<>
 			<Head>
 				<title>{title ? `${title} | JShare` : 'JShare'}</title>
-				<meta
-					name="description"
-					content={description ?? "It's like WeShare, but better!"}
-				/>
+				<meta name="description" content={description ?? "It's like WeShare, but better!"} />
 			</Head>
 			<Stack
 				minHeight="100%"
@@ -69,39 +58,17 @@ const Page = (props: Props) => {
 				{...wrapperProps}
 			>
 				{!!appBar && (
-					<Box
-						position="fixed"
-						top="0"
-						left="0"
-						right="0"
-						zIndex={1000}
-						ref={appBarRef}
-					>
+					<Box position="fixed" top="0" left="0" right="0" zIndex={1000} ref={appBarRef}>
 						{appBar}
 					</Box>
 				)}
-				<MotionBox
-					initial={false}
-					animate={{ height: appBarHeight }}
-					id="appbar-filler"
-				/>
+				<MotionBox initial={false} animate={{ height: appBarHeight }} id="appbar-filler" />
 				<Box flex={1} {...contentProps}>
 					{children}
 				</Box>
-				<MotionBox
-					initial={false}
-					animate={{ height: footerHeight }}
-					id="footer-filler"
-				/>
+				<MotionBox initial={false} animate={{ height: footerHeight }} id="footer-filler" />
 				{!!footer && (
-					<Box
-						position="fixed"
-						bottom="0"
-						left="0"
-						right="0"
-						zIndex={1000}
-						ref={footerRef}
-					>
+					<Box position="fixed" bottom="0" left="0" right="0" zIndex={1000} ref={footerRef}>
 						{footer}
 					</Box>
 				)}

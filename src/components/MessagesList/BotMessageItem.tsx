@@ -9,7 +9,7 @@ interface Props {
 }
 
 const BotMessageItem = (props: Props) => {
-	const { id, message } = props;
+	const { message } = props;
 
 	return (
 		<Stack direction="column" alignItems="center" px="4">

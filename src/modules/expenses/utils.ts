@@ -1,5 +1,5 @@
 import { Expense, ExpenseShareWithMember, Payment, User } from '@prisma/client';
-import { range, sum, sumBy } from 'lodash';
+import { range, sum } from 'lodash';
 
 import { ExpenseFormValue } from '@/components/ExpenseForm';
 
