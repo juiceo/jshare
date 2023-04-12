@@ -28,8 +28,9 @@ const MoneyInput = (props: Props) => {
 		return getNumericFormatProps(currency);
 	}, [currency]);
 
-	const [inputValue, setInputValue] = useState<string>(
-		formatAmount(initialValue, currency),
+	const [inputValue, setInputValue] = useState<string | undefined>(
+		// when initialValue is 0, we want to show the input as empty
+		initialValue ? formatAmount(initialValue, currency) : undefined,
 	);
 
 	return (
