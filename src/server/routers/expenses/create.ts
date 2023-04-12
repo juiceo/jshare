@@ -14,6 +14,7 @@ export const createExpenseInput = z.object({
 	payerId: z.string().min(1, 'Payer ID is required'),
 	currency: zCurrencyCode,
 	shares: z.record(z.string(), z.object({ enabled: z.boolean(), amount: z.number().optional() })),
+	image: z.string().optional(),
 });
 
 export const createExpense = trpc.groupMemberProcedure.input(createExpenseInput).mutation(async ({ input, ctx }) => {

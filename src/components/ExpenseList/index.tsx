@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { Avatar, Card, CardBody, Divider, Stack, Text } from '@chakra-ui/react';
+import { Card, CardBody, Divider, Stack, Text } from '@chakra-ui/react';
 import { Expense, User } from '@prisma/client';
 import { sortBy } from 'lodash';
 import moment from 'moment';

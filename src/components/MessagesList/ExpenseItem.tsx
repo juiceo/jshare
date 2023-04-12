@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Avatar, AvatarBadge, Box, Divider, Text } from '@chakra-ui/react';
+import { Avatar, Box, Divider, Image, Text } from '@chakra-ui/react';
 import { Expense, ExpenseShareWithMember, User } from '@prisma/client';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -34,8 +34,30 @@ const ExpenseItem = (props: Props) => {
 	return (
 		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf} id={id}>
 			<Link href={Routes.Expense(expense.groupId, expense.id)}>
-				<Box background="green.500" borderRadius="lg" maxWidth="100%" minWidth="300" overflow="hidden">
-					<Text px="2" pt="1" fontSize="xs" color="whiteAlpha.800" align="right">
+				<Box
+					background="green.500"
+					borderRadius="lg"
+					maxWidth="100%"
+					minWidth="300"
+					overflow="hidden"
+					position="relative"
+				>
+					{!!expense.image && (
+						<Box mb="2" background="black">
+							<Image src={expense.image} width="100%" />
+						</Box>
+					)}
+					<Text
+						px="2"
+						pt="1"
+						fontSize="xs"
+						color="whiteAlpha.800"
+						align="right"
+						position="absolute"
+						right="0"
+						top="0"
+						zIndex="10"
+					>
 						{moment(expense.createdAt).format('HH:mm')}
 					</Text>
 					<Box p="6" pt={0} alignItems="center" justifyContent="center" display="flex" flexDirection="column">

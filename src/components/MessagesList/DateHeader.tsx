@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Button, Stack, Text } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import moment from 'moment';
 
 interface DateHeaderProps {

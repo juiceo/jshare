@@ -130,6 +130,7 @@ model Expense {
   group     Group                    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   shares    ExpenseShareWithMember[]
   Message   Message[]
+  image     String?
 }
 
 model Payment {

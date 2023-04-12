@@ -1,3 +1,4 @@
+import shortId from 'shortid';
 import { z } from 'zod';
 
 import { zCurrencyCode } from '@/modules/money';
@@ -14,6 +15,7 @@ export const createGroup = trpc.authenticatedProcedure.input(createGroupInput).m
 		data: {
 			...input,
 			ownerId: ctx.user.id,
+			inviteId: shortId.generate(),
 		},
 	});
 });

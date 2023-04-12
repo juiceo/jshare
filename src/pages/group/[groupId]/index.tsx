@@ -1,8 +1,11 @@
 import React, { useMemo, useRef, useState } from 'react';
 
 import { Box } from '@chakra-ui/react';
-import { createProxySSGHelpers } from '@trpc/react-query/ssg';
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
+import { createServerSideHelpers } from '@trpc/react-query/server';
 import { AnimatePresence, motion } from 'framer-motion';
+import { produce } from 'immer';
 import { sortBy } from 'lodash';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { getSession } from 'next-auth/react';
@@ -15,6 +18,7 @@ import Page from '@/components/Page';
 import ScrollDetector from '@/components/ScrollDetector';
 import ScrollDownButton from '@/components/ScrollDownButton';
 import { ExpenseWithSenderAndShares } from '@/modules/expenses';
+import { getGroupMemberCount } from '@/modules/groups';
 import { MessageWithSender } from '@/modules/messages';
 import NotFoundPage from '@/pages/404';
 import { createContextInner } from '@/server/context';
@@ -32,6 +36,7 @@ const GroupPage = (props: Props) => {
 	const bottomRef = useRef<HTMLDivElement>(null);
 	const scrolledDownRef = useRef<boolean>(true);
 	const [isScrolledDown, setScrolledDown] = useState<boolean>(true);
+	const queryClient = useQueryClient();
 	const groupQuery = trpc.groups.getById.useQuery({ groupId });
 	const messagesQuery = trpc.messages.listByGroupIdInfinite.useInfiniteQuery(
 		{
@@ -42,21 +47,31 @@ const GroupPage = (props: Props) => {
 			getNextPageParam: (lastPage) => lastPage.nextCursor,
 		},
 	);
-	const remoteExpenses = trpc.expenses.listByGroupId.useQuery({ groupId });
+	const expensesQuery = trpc.expenses.listByGroupId.useQuery({ groupId });
 
 	const group = groupQuery.data;
-
-	const [localMessages, setLocalMessages] = useState<MessageWithSender[]>([]);
-	const [localExpenses, setLocalExpenses] = useState<ExpenseWithSenderAndShares[]>([]);
 
 	trpc.messages.onCreateMessageInGroup.useSubscription(
 		{ groupId },
 		{
 			onData: (message) => {
-				setLocalMessages((prev) => [...prev, message]);
-				if (scrolledDownRef.current) {
-					scrollToBottom();
-				}
+				queryClient.setQueryData(
+					getQueryKey(trpc.messages.listByGroupIdInfinite, { groupId, limit: MESSAGES_PER_PAGE }, 'infinite'),
+					(
+						prev:
+							| InfiniteData<{
+									messages: MessageWithSender[];
+									nextCursor: string | undefined;
+							  }>
+							| undefined,
+					) => {
+						if (!prev) return;
+
+						return produce(prev, (draft) => {
+							draft.pages[0]?.messages.unshift(message);
+						});
+					},
+				);
 			},
 		},
 	);
@@ -64,30 +79,33 @@ const GroupPage = (props: Props) => {
 		{ groupId },
 		{
 			onData: (expense) => {
-				setLocalExpenses((prev) => [...prev, expense]);
-				if (scrolledDownRef.current) {
-					scrollToBottom();
-				}
+				queryClient.setQueryData(
+					getQueryKey(trpc.expenses.listByGroupId, { groupId }, 'query'),
+					(prev: ExpenseWithSenderAndShares[] | undefined) => {
+						if (!prev) return;
+						return [expense, ...prev];
+					},
+				);
 			},
 		},
 	);
 
 	const messages = useMemo(() => {
-		const remoteMessages =
+		const allMessages =
 			messagesQuery.data?.pages.flatMap((page) => {
 				return page.messages;
 			}) ?? [];
-		return sortBy([...remoteMessages, ...localMessages], (message) => -message.createdAt);
-	}, [localMessages, messagesQuery.data?.pages]);
+		return sortBy([...allMessages], (message) => -message.createdAt);
+	}, [messagesQuery.data?.pages]);
 
 	const expenses = useMemo(() => {
 		const firstMessageCreated = messages[messages.length - 1]?.createdAt?.valueOf() ?? 0;
-		const allExpenses = [...(remoteExpenses.data ?? []), ...localExpenses];
+		const allExpenses = expensesQuery.data ?? [];
 		const filteredExpenses = messagesQuery.hasNextPage
 			? allExpenses.filter((e) => e.createdAt.valueOf() >= firstMessageCreated)
 			: allExpenses;
 		return sortBy(filteredExpenses, (e) => -e.createdAt);
-	}, [localExpenses, messages, messagesQuery.hasNextPage, remoteExpenses.data]);
+	}, [messages, messagesQuery.hasNextPage, expensesQuery.data]);
 
 	const scrollToBottom = (behavior: 'auto' | 'smooth' = 'auto') => {
 		bottomRef.current?.scrollIntoView({ behavior });
@@ -99,7 +117,13 @@ const GroupPage = (props: Props) => {
 		<Page
 			title={group.name}
 			appBar={<GroupHeader group={group} />}
-			footer={<GroupMessagesFooter group={group} onSendMessage={scrollToBottom} />}
+			footer={
+				<GroupMessagesFooter
+					group={group}
+					onSendMessage={scrollToBottom}
+					showInviteBanner={!groupQuery.isLoading && getGroupMemberCount(group) === 1}
+				/>
+			}
 			contentProps={{
 				position: 'relative',
 			}}
@@ -132,6 +156,7 @@ const GroupPage = (props: Props) => {
 					isLoadingMore={messagesQuery.isFetchingNextPage}
 				/>
 			</Box>
+
 			<AnimatePresence initial={false}>
 				{!isScrolledDown && (
 					<MotionBox
@@ -161,7 +186,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 	}
 
 	const session = await getSession(ctx);
-	const ssg = createProxySSGHelpers({
+	const ssg = createServerSideHelpers({
 		router: appRouter,
 		ctx: await createContextInner({ session }),
 		transformer: superjson,
