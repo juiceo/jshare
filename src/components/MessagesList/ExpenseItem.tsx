@@ -41,6 +41,7 @@ const ExpenseItem = (props: Props) => {
 					minWidth="300"
 					overflow="hidden"
 					position="relative"
+					pt={4}
 				>
 					{!!expense.image && (
 						<Box mb="2" background="black">
@@ -62,8 +63,8 @@ const ExpenseItem = (props: Props) => {
 					</Text>
 					<Box p="6" pt={0} alignItems="center" justifyContent="center" display="flex" flexDirection="column">
 						<Text fontSize="xs" align="center" color="whiteAlpha.900">
-							<Box mb={2} alignItems="center" display="flex" flexDir="column">
-								<Avatar size="sm" src={payer?.image ?? ''} />
+							<Box m={2} alignItems="center" display="flex" flexDir="column">
+								<Avatar my={1} size="sm" src={payer?.image ?? ''} />
 								{!isPaidBySelf ? getUserDisplayName(payer, 'short') : 'You'} paid
 							</Box>
 						</Text>

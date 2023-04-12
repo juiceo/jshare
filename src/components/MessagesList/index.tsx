@@ -90,7 +90,6 @@ const MessageList = (props: Props) => {
 				{itemsWithType.map((item, index) => {
 					const senderId = item.value.senderId;
 					const isSelf = session.data?.userId === senderId;
-					const isPaidBySelf = session.data?.userId === membersById[item.value.payerId];
 					const nextItem: MessageWithType | undefined = itemsWithType[index + 1];
 					const prevItem: MessageWithType | undefined = itemsWithType[index - 1];
 					const nextItemHasSameSender = nextItem?.value.senderId === senderId;
@@ -134,6 +133,14 @@ const MessageList = (props: Props) => {
 							];
 						}
 						case 'expense': {
+							const payerId = membersById[item.value.payerId]?.id;
+							const sessionUserId = session.data?.userId;
+
+							if (!payerId || !sessionUserId) {
+								throw new Error('Expense payer or current user id could not be found');
+							}
+
+							const isPaidBySelf = payerId === sessionUserId;
 							return [
 								!!dateSeparator ? (
 									<DateHeader
