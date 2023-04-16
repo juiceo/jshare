@@ -28,6 +28,7 @@ const UserPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
 	const updateUser = trpc.users.update.useMutation();
 	const user = userQuery.data;
 
+	const [signingOut, setSigningOut] = useState<boolean>(false);
 	const [formState, setFormState] = useState<FormState>({
 		firstName: user?.firstName ?? '',
 		lastName: user?.lastName ?? '',
@@ -40,6 +41,12 @@ const UserPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
 			...formState,
 		});
 		router.push('/');
+	};
+
+	const handleSignout = async () => {
+		setSigningOut(true);
+		await signOut();
+		setSigningOut(false);
 	};
 
 	if (!user) {
@@ -107,19 +114,18 @@ const UserPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>)
 							width="full"
 							onClick={handleSubmit}
 							isLoading={updateUser.isLoading}
-							disabled={updateUser.isLoading}
+							disabled={updateUser.isLoading || signingOut}
 						>
 							Save changes
 						</Button>
 						<Button
+							isLoading={signingOut}
+							disabled={signingOut}
 							colorScheme="red"
 							width="full"
 							variant="ghost"
 							mt="2"
-							onClick={() => {
-								signOut();
-								router.push('/');
-							}}
+							onClick={handleSignout}
 						>
 							Log out
 						</Button>
@@ -140,7 +146,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
 	if (!session) {
 		return {
-			notFound: true,
+			redirect: {
+				destination: Routes.ROOT,
+				permanent: false,
+			},
 		};
 	}
 
