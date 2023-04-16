@@ -33,12 +33,13 @@ const ExpenseItem = (props: Props) => {
 
 	return (
 		<ChatItem sender={sender} hideAvatar={hideAvatar} isSelf={isSelf} id={id}>
-			<Link href={Routes.Expense(expense.groupId, expense.id)}>
+			<Link href={Routes.Expense(expense.groupId, expense.id)} style={{ alignSelf: 'stretch' }}>
 				<Box
 					background="green.500"
 					borderRadius="lg"
 					maxWidth="100%"
-					minWidth="300"
+					width="100%"
+					alignSelf="stretch"
 					overflow="hidden"
 					position="relative"
 					pt={4}

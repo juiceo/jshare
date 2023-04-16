@@ -25,7 +25,13 @@ const MessageItem = (props: Props) => {
 			<Card borderRadius="lg" background="gray.200">
 				<Stack direction="column" spacing={1} px="2">
 					{!hideName && <Text fontSize="xs">{getUserDisplayName(sender, 'short')}</Text>}
-					<Stack direction="row" maxWidth="300px" alignItems="flex-end" justifyContent="space-between">
+					<Stack
+						direction="row"
+						maxWidth="300px"
+						flex={0}
+						alignItems="flex-end"
+						justifyContent="space-between"
+					>
 						<Text fontSize="md">{message.message}</Text>
 						<Text fontSize="xs" align="right" pb="2px">
 							{moment(message.createdAt).format('HH:mm')}

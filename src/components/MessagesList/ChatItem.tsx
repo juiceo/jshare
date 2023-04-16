@@ -35,7 +35,13 @@ const ChatItem = (props: Props) => {
 						{!hideAvatar && <Avatar src={sender?.image ?? ''}></Avatar>}
 					</Box>
 				)}
-				<Box sx={{ maxWidth: 'calc(100vw - 100px)' }}>{children}</Box>
+				<Stack
+					direction="column"
+					sx={{ width: '300px', maxWidth: '70%' }}
+					alignItems={isSelf ? 'flex-end' : 'flex-start'}
+				>
+					{children}
+				</Stack>
 			</Stack>
 		</motion.div>
 	);
