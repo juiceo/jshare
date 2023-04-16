@@ -27,7 +27,7 @@ const MessageItem = (props: Props) => {
 					{!hideName && <Text fontSize="xs">{getUserDisplayName(sender, 'short')}</Text>}
 					<Stack
 						direction="row"
-						maxWidth="300px"
+						maxWidth="100%"
 						flex={0}
 						alignItems="flex-end"
 						justifyContent="space-between"

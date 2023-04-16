@@ -42,7 +42,6 @@ const ExpenseItem = (props: Props) => {
 					alignSelf="stretch"
 					overflow="hidden"
 					position="relative"
-					pt={4}
 				>
 					{!!expense.image && (
 						<Box mb="2" background="black">
@@ -62,7 +61,7 @@ const ExpenseItem = (props: Props) => {
 					>
 						{moment(expense.createdAt).format('HH:mm')}
 					</Text>
-					<Box p="6" pt={0} alignItems="center" justifyContent="center" display="flex" flexDirection="column">
+					<Box p="6" pt={4} alignItems="center" justifyContent="center" display="flex" flexDirection="column">
 						<Text fontSize="xs" align="center" color="whiteAlpha.900">
 							<Box m={2} alignItems="center" display="flex" flexDir="column">
 								<Avatar my={1} size="sm" src={payer?.image ?? ''} />
