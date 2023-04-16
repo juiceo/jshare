@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-	Box,
-	Button,
-	CircularProgress,
-	Heading,
-	SimpleGrid,
-	Stack,
-	Text,
-} from '@chakra-ui/react';
+import { Box, Button, CircularProgress, Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 import { Routes } from '@/routing';
@@ -29,9 +21,11 @@ const Groups = () => {
 		if (!!groups.data?.length) {
 			return (
 				<SimpleGrid columns={[1, 2, 3]} spacing={4}>
-					{groups.data.map((group) => (
-						<GroupCard group={group} key={group.id} />
-					))}
+					{groups.data
+						.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+						.map((group) => (
+							<GroupCard group={group} key={group.id} />
+						))}
 				</SimpleGrid>
 			);
 		} else {
@@ -54,12 +48,7 @@ const Groups = () => {
 				<Heading fontSize="xl" mb="2">
 					Your groups{' '}
 					{!!groups.isLoading && (
-						<CircularProgress
-							isIndeterminate
-							color="green.300"
-							size={6}
-							sx={{ ml: 2 }}
-						/>
+						<CircularProgress isIndeterminate color="green.300" size={6} sx={{ ml: 2 }} />
 					)}
 				</Heading>
 				<Link href={Routes.CREATE_GROUP}>

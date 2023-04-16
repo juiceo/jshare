@@ -133,6 +133,14 @@ const MessageList = (props: Props) => {
 							];
 						}
 						case 'expense': {
+							const payerId = membersById[item.value.payerId]?.id;
+							const sessionUserId = session.data?.userId;
+
+							if (!payerId || !sessionUserId) {
+								throw new Error('Expense payer or current user id could not be found');
+							}
+
+							const isPaidBySelf = payerId === sessionUserId;
 							return [
 								!!dateSeparator ? (
 									<DateHeader
@@ -150,6 +158,7 @@ const MessageList = (props: Props) => {
 									hideAvatar={nextItemHasSameSender}
 									hideName={prevItemHasSameSender}
 									isSelf={isSelf}
+									isPaidBySelf={isPaidBySelf}
 								/>,
 							];
 						}
