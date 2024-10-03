@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@acme/app-mobile",
+  "name": "@jshare/app-mobile",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "eas-build-post-install": "pnpm run -w build:mobile"
   },
   "dependencies": {
-    "@acme/feature-home": "workspace:*",
+    "@jshare/feature-home": "workspace:*",
     "@expo/metro-runtime": "^3.2.1",
     "expo": "^51.0.17",
     "expo-dev-client": "~4.0.19",
@@ -26,14 +26,14 @@
     "react-native-web": "~0.19.11"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
+    "@jshare/eslint-config": "workspace:*",
     "@babel/core": "^7.24.5",
     "@types/react": "~18.2.79",
     "@types/react-dom": "~18.2.25",
     "babel-preset-expo": "~11.0.11"
   },
   "eslintConfig": {
-    "extends": "@acme/eslint-config",
+    "extends": "@jshare/eslint-config",
     "ignorePatterns": [
       "node_modules",
       "build",

@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "@acme/ui",
+  "name": "@jshare/ui",
   "version": "1.0.0",
-  "description": "Acme UI components for React Native",
-  "author": "Cedric van Putten <me@bycedric.com>",
+  "description": "JShare theme and UI components",
+  "author": "Juuso Lappalainen <hello@juiceo.me>",
   "license": "MIT",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -19,7 +19,7 @@
     "build": "tsup --clean"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
+    "@jshare/eslint-config": "workspace:*",
     "@testing-library/react-native": "^12.5.0",
     "@tsconfig/recommended": "^1.0.6",
     "@types/jest": "^29.5.12",
@@ -46,7 +46,7 @@
     }
   },
   "eslintConfig": {
-    "extends": "@acme/eslint-config",
+    "extends": "@jshare/eslint-config",
     "ignorePatterns": [
       "node_modules",
       "build"

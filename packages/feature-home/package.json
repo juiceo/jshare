@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "@acme/feature-home",
+  "name": "@jshare/feature-home",
   "version": "1.0.0",
-  "description": "Acme home feature for React (Native)",
-  "author": "Cedric van Putten <me@bycedric.com>",
+  "description": "JShare home feature for React (Native)",
+  "author": "Juuso Lappalainen <hello@juiceo.me>",
   "license": "MIT",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -19,10 +19,10 @@
     "build": "tsup --clean"
   },
   "dependencies": {
-    "@acme/ui": "workspace:*"
+    "@jshare/ui": "workspace:*"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
+    "@jshare/eslint-config": "workspace:*",
     "@testing-library/react-native": "^12.5.0",
     "@tsconfig/recommended": "^1.0.6",
     "@types/jest": "^29.5.12",
@@ -49,7 +49,7 @@
     }
   },
   "eslintConfig": {
-    "extends": "@acme/eslint-config",
+    "extends": "@jshare/eslint-config",
     "ignorePatterns": [
       "node_modules",
       "build"
