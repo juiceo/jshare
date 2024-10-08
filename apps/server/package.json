@@ -1,0 +1,37 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "tsx --env-file=.env ./src/index.ts"
+    },
+    "keywords": [],
+    "author": "Juuso Lappalainen",
+    "license": "ISC",
+    "dependencies": {
+        "@jshare/eslint-config": "workspace:*",
+        "@jshare/tsconfig": "workspace:*",
+        "express": "^4.21.0"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "tsx": "^4.19.1"
+    },
+    "eslintConfig": {
+        "extends": "@jshare/eslint-config",
+        "ignorePatterns": [
+            "node_modules",
+            "build"
+        ]
+    },
+    "tsup": {
+        "entry": [
+            "src/index.ts"
+        ],
+        "outDir": "build",
+        "sourcemap": true,
+        "dts": true,
+        "external": []
+    }
+}
