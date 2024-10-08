@@ -12,6 +12,7 @@
         "build:web": "turbo build --filter=\"...{./apps/web}\""
     },
     "devDependencies": {
+        "prettier": "3.3.3",
         "turbo": "^1.10.7",
         "typescript": "^4.9.5"
     },
