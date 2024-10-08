@@ -21,7 +21,6 @@
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "@jshare/prettier": "workspace:*",
         "@testing-library/react-native": "^12.5.0",
         "@tsconfig/recommended": "^1.0.6",
         "@types/jest": "^29.5.12",
@@ -54,7 +53,6 @@
             "build"
         ]
     },
-    "prettier": "@jshare/prettier",
     "jest": {
         "preset": "jest-expo"
     },
