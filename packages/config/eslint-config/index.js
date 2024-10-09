@@ -3,6 +3,7 @@ module.exports = {
     // // do some additional things with it
     rules: {
         'prettier/prettier': 0,
+        'import/order': 0,
     },
     // Disable import/namespace due to https://github.com/facebook/react-native/issues/28549
     // By setting delimiters to `\|/`, this ignore is supported on Windows too

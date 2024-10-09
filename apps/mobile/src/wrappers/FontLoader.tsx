@@ -1,5 +1,6 @@
 import { useEffect, type PropsWithChildren } from 'react';
 import { useFonts } from 'expo-font';
+
 import { Fonts } from '@jshare/theme';
 
 export type FontLoaderProps = {
