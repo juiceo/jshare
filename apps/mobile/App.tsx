@@ -1,4 +1,4 @@
-import { Themes, ThemeProvider } from '@jshare/theme';
+import { ThemeProvider, Themes } from '@jshare/theme';
 
 import { Home } from './src/Home';
 import { FontLoader } from './src/wrappers/FontLoader';

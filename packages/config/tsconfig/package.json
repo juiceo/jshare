@@ -1,18 +1,18 @@
 {
-  "private": true,
-  "name": "@jshare/tsconfig",
-  "version": "1.0.0",
-  "description": "JShare shared TSConfig",
-  "author": "Juuso Lappalainen <hello@juiceo.me>",
-  "license": "MIT",
-  "main": "tsconfig.json",
-  "files": [
-    "tsconfig.json"
-  ],
-  "dependencies": {
-    "@tsconfig/recommended": "^1.0.6"
-  },
-  "eslintConfig": {
-    "extends": "."
-  }
+    "private": true,
+    "name": "@jshare/tsconfig",
+    "version": "1.0.0",
+    "description": "JShare shared TSConfig",
+    "author": "Juuso Lappalainen <hello@juiceo.me>",
+    "license": "MIT",
+    "main": "tsconfig.json",
+    "files": [
+        "tsconfig.json"
+    ],
+    "dependencies": {
+        "@tsconfig/recommended": "^1.0.6"
+    },
+    "eslintConfig": {
+        "extends": "."
+    }
 }
