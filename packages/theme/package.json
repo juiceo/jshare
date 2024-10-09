@@ -5,12 +5,39 @@
     "description": "JShare theme",
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
+    "scripts": {
+        "lint": "eslint --ext js,ts,tsx .",
+        "build": "tsup --clean"
+    },
     "devDependencies": {
+        "@jshare/tsconfig": "workspace:*",
+        "@jshare/eslint-config": "workspace:*",
         "expo-font": "^12.0.10",
-        "react-native": "^0.74.2"
+        "react-native": "^0.74.2",
+        "tsup": "^8.3.0"
     },
     "peerDependencies": {
         "expo-font": "^12.0.10",
         "react-native": "^0.74.2"
+    },
+    "eslintConfig": {
+        "extends": "@jshare/eslint-config",
+        "ignorePatterns": [
+            "node_modules",
+            "build"
+        ]
+    },
+    "tsup": {
+        "entry": [
+            "src/index.ts"
+        ],
+        "outDir": "build",
+        "sourcemap": true,
+        "dts": true,
+        "external": [
+            "react",
+            "react-native",
+            "react-native-web"
+        ]
     }
 }
