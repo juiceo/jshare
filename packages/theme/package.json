@@ -5,6 +5,7 @@
     "description": "JShare theme",
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
+    "main": "build/index.js",
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
         "build": "tsup --clean"
