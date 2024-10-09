@@ -1,6 +1,6 @@
-import { Fonts } from '@jshare/theme';
-import { useFonts } from 'expo-font';
 import { useEffect, type PropsWithChildren } from 'react';
+import { useFonts } from 'expo-font';
+import { Fonts } from '@jshare/theme';
 
 export type FontLoaderProps = {
     onLoad?: () => void;

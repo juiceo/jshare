@@ -1,6 +1,6 @@
-import { useTheme } from '@jshare/theme';
+import { Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from 'react-native';
+import { useTheme } from '@jshare/theme';
 
 export const Home = () => {
     const { theme } = useTheme();

@@ -2,5 +2,19 @@
     "printWidth": 100,
     "tabWidth": 4,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+    "importOrder": [
+        "<BUILTIN_MODULES>",
+        "react$",
+        "^react-.*$",
+        "<THIRD_PARTY_MODULES>",
+        "",
+        "@jshare/(.*)$",
+        "",
+        "^[.]"
+    ],
+    "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+    "importOrderTypeScriptVersion": "5.0.0",
+    "importOrderCaseSensitive": false
 }
