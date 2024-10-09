@@ -1,11 +1,19 @@
+import {
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
+} from '@expo-google-fonts/nunito';
+import { Poppins_500Medium, Poppins_800ExtraBold } from '@expo-google-fonts/poppins';
 import type { FontSource } from 'expo-font';
 
 export const Fonts = {
-    'Poppins-Medium': require('./assets/Poppins-Medium.ttf'),
-    'Nunito-Regular': require('./assets/Nunito-Regular.ttf'),
-    'Nunito-Medium': require('./assets/Nunito-Medium.ttf'),
-    'Nunito-SemiBold': require('./assets/Nunito-SemiBold.ttf'),
-    'Nunito-Bold': require('./assets/Nunito-Bold.ttf'),
+    Poppins_500Medium,
+    Poppins_800ExtraBold,
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
 } satisfies Record<string, FontSource>;
 
 export type FontFamily = keyof typeof Fonts;

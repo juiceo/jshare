@@ -32,6 +32,9 @@ importers:
       expo-dev-client:
         specifier: ~4.0.19
         version: 4.0.19(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
+      expo-font:
+        specifier: ~12.0.10
+        version: 12.0.10(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
       expo-status-bar:
         specifier: ~1.12.1
         version: 1.12.1
@@ -109,6 +112,12 @@ importers:
 
   packages/theme:
     devDependencies:
+      '@expo-google-fonts/nunito':
+        specifier: ^0.2.3
+        version: 0.2.3
+      '@expo-google-fonts/poppins':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@jshare/eslint-config':
         specifier: workspace:*
         version: link:../config/eslint-config
@@ -996,6 +1005,12 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@expo-google-fonts/nunito@0.2.3':
+    resolution: {integrity: sha512-z+Bx3IuT0t3jguoMxiyWuC7pW3wDVNHgYko/G9V23QhR/yDSjEsT+Kx+VGDT/hu9TXSxw3CtpQ5MFHikqSVDYw==}
+
+  '@expo-google-fonts/poppins@0.2.3':
+    resolution: {integrity: sha512-PXkur1ZY/puy1PwVFYPJx8qiI3dtBzC2ig1bo53swCt7/sI7krCGYRO6hLBNp15M0kcNh2J4cCR9ZQyFxsving==}
 
   '@expo/bunyan@4.0.0':
     resolution: {integrity: sha512-Ydf4LidRB/EBI+YrB+cVLqIseiRfjUI/AeHBgjGMtq3GroraDu81OV7zqophRgupngoL3iS3JUMDMnxO7g39qA==}
@@ -2587,11 +2602,6 @@ packages:
 
   expo-font@12.0.10:
     resolution: {integrity: sha512-Q1i2NuYri3jy32zdnBaHHCya1wH1yMAsI+3CCmj9zlQzlhsS9Bdwcj2W3c5eU5FvH2hsNQy4O+O1NnM6o/pDaQ==}
-    peerDependencies:
-      expo: '*'
-
-  expo-font@12.0.7:
-    resolution: {integrity: sha512-rbSdpjtT/A3M+u9xchR9tdD+5VGSxptUis7ngX5zfAVp3O5atOcPNSA82Jeo15HkrQE+w/upfFBOvi56lsGdsQ==}
     peerDependencies:
       expo: '*'
 
@@ -6091,6 +6101,10 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
+  '@expo-google-fonts/nunito@0.2.3': {}
+
+  '@expo-google-fonts/poppins@0.2.3': {}
+
   '@expo/bunyan@4.0.0':
     dependencies:
       uuid: 8.3.2
@@ -8377,11 +8391,6 @@ snapshots:
       expo: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
       fontfaceobserver: 2.3.0
 
-  expo-font@12.0.7(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))):
-    dependencies:
-      expo: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
-      fontfaceobserver: 2.3.0
-
   expo-json-utils@0.13.1: {}
 
   expo-keep-awake@13.0.2(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))):
@@ -8449,7 +8458,7 @@ snapshots:
       babel-preset-expo: 11.0.11(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
       expo-asset: 10.0.10(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
       expo-file-system: 17.0.1(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
-      expo-font: 12.0.7(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
+      expo-font: 12.0.10(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
       expo-keep-awake: 13.0.2(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
       expo-modules-autolinking: 1.11.1
       expo-modules-core: 1.12.18

@@ -15,7 +15,9 @@ export const Home = () => {
             }}
         >
             <StatusBar style="auto" />
-            <Text style={{ color: theme.palette.text.primary }}>Hello there! Testing</Text>
+            <Text style={{ color: theme.palette.text.primary, ...theme.typography.h1 }}>
+                Hello there! Testing
+            </Text>
         </View>
     );
 };

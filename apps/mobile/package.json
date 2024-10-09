@@ -14,10 +14,11 @@
         "eas-build-post-install": "pnpm run -w build:mobile"
     },
     "dependencies": {
-        "@jshare/theme": "workspace:*",
         "@expo/metro-runtime": "^3.2.1",
+        "@jshare/theme": "workspace:*",
         "expo": "^51.0.17",
         "expo-dev-client": "~4.0.19",
+        "expo-font": "~12.0.10",
         "expo-status-bar": "~1.12.1",
         "expo-updates": "~0.25.18",
         "react": "18.2.0",
@@ -26,8 +27,8 @@
         "react-native-web": "~0.19.11"
     },
     "devDependencies": {
-        "@jshare/eslint-config": "workspace:*",
         "@babel/core": "^7.24.5",
+        "@jshare/eslint-config": "workspace:*",
         "@types/react": "~18.2.79",
         "@types/react-dom": "~18.2.25",
         "babel-preset-expo": "~11.0.11"
