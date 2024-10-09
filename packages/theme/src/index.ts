@@ -5,3 +5,5 @@ import { buildTheme } from './utils';
 export const Themes = {
     dark: buildTheme({ palette: darkPalette }),
 } satisfies Record<string, Theme>;
+
+export { Fonts } from './fonts';
