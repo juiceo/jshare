@@ -8,8 +8,7 @@
     "main": "build/index.js",
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
-        "build": "tsup --clean",
-        "format": "prettier --write ./src"
+        "build": "tsup --clean"
     },
     "devDependencies": {
         "@expo-google-fonts/nunito": "^0.2.3",

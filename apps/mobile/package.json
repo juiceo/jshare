@@ -11,8 +11,7 @@
         "android": "expo run:android",
         "ios": "expo run:ios",
         "web": "expo start --web",
-        "eas-build-post-install": "pnpm run -w build:mobile",
-        "format": "prettier --write ./src"
+        "eas-build-post-install": "pnpm run -w build:mobile"
     },
     "dependencies": {
         "@expo/metro-runtime": "^3.2.1",
