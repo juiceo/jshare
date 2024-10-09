@@ -8,3 +8,5 @@ export const spacingUnits: SpacingUnits = {
     lg: 12,
     xl: 16,
 };
+
+export * from './types';

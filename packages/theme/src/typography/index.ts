@@ -44,3 +44,5 @@ export const typographyVariants: TypographyVariants = {
         letterSpacing: 1.25,
     },
 };
+
+export * from './types';
