@@ -28,8 +28,5 @@ export const FontLoader = (props: PropsWithChildren<FontLoaderProps>) => {
         return placeholder;
     }
 
-    console.log('FONTS LOADED', loaded);
-    console.log('FONT LOAD ERROR', error);
-
     return props.children;
 };
