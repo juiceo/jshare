@@ -23,9 +23,6 @@ importers:
       '@expo/metro-runtime':
         specifier: ^3.2.1
         version: 3.2.1(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0))
-      '@jshare/feature-home':
-        specifier: workspace:*
-        version: link:../../packages/feature-home
       expo:
         specifier: ^51.0.17
         version: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
@@ -189,6 +186,15 @@ importers:
       tsup:
         specifier: ^6.5.0
         version: 6.5.0(postcss@8.4.38)(typescript@4.9.5)
+
+  packages/theme:
+    devDependencies:
+      expo-font:
+        specifier: ^12.0.10
+        version: 12.0.10(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
+      react-native:
+        specifier: 0.74.2
+        version: 0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0)
 
   packages/ui:
     dependencies:
@@ -3285,6 +3291,11 @@ packages:
 
   expo-file-system@17.0.1:
     resolution: {integrity: sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==}
+    peerDependencies:
+      expo: '*'
+
+  expo-font@12.0.10:
+    resolution: {integrity: sha512-Q1i2NuYri3jy32zdnBaHHCya1wH1yMAsI+3CCmj9zlQzlhsS9Bdwcj2W3c5eU5FvH2hsNQy4O+O1NnM6o/pDaQ==}
     peerDependencies:
       expo: '*'
 
@@ -8621,7 +8632,7 @@ snapshots:
   '@jridgewell/source-map@0.3.2':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.20
+      '@jridgewell/trace-mapping': 0.3.25
 
   '@jridgewell/sourcemap-codec@1.4.14': {}
 
@@ -8732,7 +8743,7 @@ snapshots:
 
   '@react-native-community/cli-debugger-ui@13.6.8':
     dependencies:
-      serve-static: 1.15.0
+      serve-static: 1.16.2
     transitivePeerDependencies:
       - supports-color
 
@@ -8804,7 +8815,7 @@ snapshots:
       errorhandler: 1.5.1
       nocache: 3.0.4
       pretty-format: 26.6.2
-      serve-static: 1.15.0
+      serve-static: 1.16.2
       ws: 6.2.2
     transitivePeerDependencies:
       - bufferutil
@@ -11439,6 +11450,11 @@ snapshots:
     dependencies:
       expo: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
 
+  expo-font@12.0.10(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))):
+    dependencies:
+      expo: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
+      fontfaceobserver: 2.3.0
+
   expo-font@12.0.7(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))):
     dependencies:
       expo: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
@@ -13070,7 +13086,7 @@ snapshots:
       nullthrows: 1.1.1
       walker: 1.0.8
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     transitivePeerDependencies:
       - supports-color
 
@@ -14023,7 +14039,7 @@ snapshots:
       ast-types: 0.15.2
       esprima: 4.0.1
       source-map: 0.6.1
-      tslib: 2.5.0
+      tslib: 2.6.2
 
   redent@3.0.0:
     dependencies:
@@ -14649,7 +14665,7 @@ snapshots:
   terser@5.16.5:
     dependencies:
       '@jridgewell/source-map': 0.3.2
-      acorn: 8.8.2
+      acorn: 8.11.3
       commander: 2.20.3
       source-map-support: 0.5.21
 
