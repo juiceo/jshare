@@ -7,6 +7,8 @@ export const borderRadiusUnits: BorderRadiusUnits = {
     md: 8,
     lg: 10,
     xl: 12,
+    '2xl': 18,
+    '3xl': 24,
     full: 9999,
 };
 

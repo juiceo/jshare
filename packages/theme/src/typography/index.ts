@@ -38,8 +38,8 @@ export const typographyVariants: TypographyVariants = {
         letterSpacing: 0.4,
     },
     button: {
-        fontFamily: 'Poppins_500Medium',
-        fontSize: 14,
+        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 16,
         lineHeight: 20,
         letterSpacing: 1.25,
     },

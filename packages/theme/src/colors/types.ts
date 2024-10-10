@@ -1,18 +1,17 @@
 export type ColorPalette = {
-    accent: Color;
-    background: Color;
-    success: Color;
-    warning: Color;
-    error: Color;
+    accent: BackgroundColor;
+    background: BackgroundColor;
+    success: BackgroundColor;
+    warning: BackgroundColor;
+    error: BackgroundColor;
 
     text: TextColor;
 };
 
-export type Color = {
+export type BackgroundColor = {
     light: string;
     main: string;
     dark: string;
-    contrastText: string;
 };
 
 export type TextColor = {
@@ -22,5 +21,8 @@ export type TextColor = {
     hint: string;
 };
 
-export type ColorKey = `${keyof Omit<ColorPalette, 'text'>}.${keyof Omit<Color, 'contrastText'>}`;
-export type TextColorKey = `text.${keyof TextColor}`;
+export type BackgroundColorVariant = keyof BackgroundColor;
+export type BackgroundColorKey = keyof Omit<ColorPalette, 'text'>;
+export type BackgroundColorPath = `${BackgroundColorKey}.${BackgroundColorVariant}`;
+export type TextColorVariant = keyof TextColor;
+export type TextColorPath = `text.${TextColorVariant}`;

@@ -1,26 +1,33 @@
-import { Text, type TextProps } from 'react-native';
+import { Text, type TextProps, type TextStyle } from 'react-native';
 
 import {
     getSxStyles,
+    getTextColorFromPath,
     useTheme,
+    type BackgroundColorPath,
     type SxProps,
-    type TextColor,
+    type TextColorVariant,
     type TypographyVariant,
 } from '@jshare/theme';
 
 export type TypographyProps = {
-    variant: TypographyVariant;
-    color: keyof TextColor;
+    variant?: TypographyVariant;
+    color?: TextColorVariant | BackgroundColorPath;
+    align?: TextStyle['textAlign'];
 } & TextProps &
     SxProps;
 
 export const Typography = (props: TypographyProps) => {
-    const { variant, color, style, ...rest } = props;
+    const { variant = 'body1', color = 'primary', align, style, ...rest } = props;
     const { theme } = useTheme();
     return (
         <Text
             style={[
-                { ...theme.typography[variant], color: theme.palette.text[color] },
+                {
+                    ...theme.typography[variant],
+                    color: getTextColorFromPath(color, theme),
+                    textAlign: align,
+                },
                 getSxStyles(rest, theme),
                 style,
             ]}

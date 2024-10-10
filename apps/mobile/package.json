@@ -16,6 +16,7 @@
     "dependencies": {
         "@expo/metro-runtime": "^3.2.1",
         "@jshare/theme": "workspace:*",
+        "chroma-js": "^3.1.1",
         "expo": "^51.0.17",
         "expo-dev-client": "~4.0.19",
         "expo-font": "~12.0.10",
@@ -29,6 +30,7 @@
     "devDependencies": {
         "@babel/core": "^7.24.5",
         "@jshare/eslint-config": "workspace:*",
+        "@types/chroma-js": "^2.4.4",
         "@types/react": "~18.2.79",
         "@types/react-dom": "~18.2.25",
         "babel-preset-expo": "~11.0.11"

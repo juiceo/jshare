@@ -1,7 +1,7 @@
 import type { ViewStyle } from 'react-native';
 
 import type { BorderRadiusUnit } from '../borderRadius';
-import type { ColorKey } from '../colors';
+import type { BackgroundColorPath } from '../colors';
 import type { SpacingUnit } from '../spacing';
 
 /**
@@ -41,5 +41,5 @@ export type SxProps = {
     /**
      * Background color
      */
-    bg?: ColorKey;
+    bg?: BackgroundColorPath;
 };

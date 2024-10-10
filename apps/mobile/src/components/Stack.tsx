@@ -1,4 +1,3 @@
-import type { PropsWithChildren } from 'react';
 import { View, type ViewProps, type ViewStyle } from 'react-native';
 
 import {
@@ -23,6 +22,7 @@ export type StackProps = {
     alignCenter?: boolean;
     alignEnd?: boolean;
     alignStretch?: boolean;
+    center?: boolean;
     spacing?: SpacingUnit;
 } & ViewProps &
     SxProps;
@@ -62,7 +62,7 @@ const getDirection = (props: StackProps): ViewStyle['flexDirection'] => {
 const getJustify = (props: StackProps): ViewStyle['justifyContent'] => {
     return props.justifyStart
         ? 'flex-start'
-        : props.justifyCenter
+        : props.justifyCenter || props.center
           ? 'center'
           : props.justifyEnd
             ? 'flex-end'
@@ -74,7 +74,7 @@ const getJustify = (props: StackProps): ViewStyle['justifyContent'] => {
 const getAlign = (props: StackProps): ViewStyle['alignItems'] => {
     return props.alignStart
         ? 'flex-start'
-        : props.alignCenter
+        : props.alignCenter || props.center
           ? 'center'
           : props.alignEnd
             ? 'flex-end'

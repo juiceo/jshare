@@ -1,7 +1,7 @@
 import type { ViewStyle } from 'react-native';
 
 import { getBorderRadius } from '../borderRadius';
-import { getColor } from '../colors/utils';
+import { getColorFromPath } from '../colors/utils';
 import { getSpacing } from '../spacing';
 import type { Theme } from '../types';
 import type { SxProps } from './types';
@@ -27,6 +27,6 @@ export const getSxStyles = (sx: SxProps, theme: Theme): ViewStyle => {
         marginTop: getSpacing(sx.mt),
         marginBottom: getSpacing(sx.mb),
         borderRadius: getBorderRadius(sx.radius ?? sx.br),
-        backgroundColor: getColor(sx.bg, theme),
+        backgroundColor: getColorFromPath(sx.bg, theme),
     };
 };
