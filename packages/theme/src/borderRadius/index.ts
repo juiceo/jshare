@@ -1,4 +1,4 @@
-import type { BorderRadiusUnits } from './types';
+import type { BorderRadiusUnit, BorderRadiusUnits } from './types';
 
 export const borderRadiusUnits: BorderRadiusUnits = {
     none: 0,
@@ -8,6 +8,10 @@ export const borderRadiusUnits: BorderRadiusUnits = {
     lg: 10,
     xl: 12,
     full: 9999,
+};
+
+export const getBorderRadius = (unit: BorderRadiusUnit | undefined) => {
+    return unit ? borderRadiusUnits[unit] : undefined;
 };
 
 export * from './types';

@@ -1,19 +1,30 @@
-import type { PropsWithChildren } from 'react';
-import { Text } from 'react-native';
+import { Text, type TextProps } from 'react-native';
 
-import { useTheme, type TextColor, type TypographyVariant } from '@jshare/theme';
+import {
+    getSxStyles,
+    useTheme,
+    type SxProps,
+    type TextColor,
+    type TypographyVariant,
+} from '@jshare/theme';
 
 export type TypographyProps = {
     variant: TypographyVariant;
     color: keyof TextColor;
-};
+} & TextProps &
+    SxProps;
 
-export const Typography = (props: PropsWithChildren<TypographyProps>) => {
-    const { variant, color } = props;
+export const Typography = (props: TypographyProps) => {
+    const { variant, color, style, ...rest } = props;
     const { theme } = useTheme();
     return (
-        <Text style={{ ...theme.typography[variant], color: theme.palette.text[color] }}>
-            {props.children}
-        </Text>
+        <Text
+            style={[
+                { ...theme.typography[variant], color: theme.palette.text[color] },
+                getSxStyles(rest, theme),
+                style,
+            ]}
+            {...rest}
+        />
     );
 };

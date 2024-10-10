@@ -21,3 +21,6 @@ export type TextColor = {
     disabled: string;
     hint: string;
 };
+
+export type ColorKey = `${keyof Omit<ColorPalette, 'text'>}.${keyof Omit<Color, 'contrastText'>}`;
+export type TextColorKey = `text.${keyof TextColor}`;

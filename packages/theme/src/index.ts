@@ -5,5 +5,6 @@ export * from './spacing';
 export * from './typography';
 export * from './types';
 export * from './themes';
+export * from './sx';
 export { ThemeProvider } from './ThemeContext';
 export { useTheme } from './useTheme';

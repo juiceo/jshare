@@ -1,7 +1,14 @@
 import type { PropsWithChildren } from 'react';
 import { View, type ViewProps, type ViewStyle } from 'react-native';
 
-import { useTheme, type SpacingUnit, type Theme } from '@jshare/theme';
+import {
+    getSpacing,
+    getSxStyles,
+    useTheme,
+    type SpacingUnit,
+    type SxProps,
+    type Theme,
+} from '@jshare/theme';
 
 export type StackProps = {
     row?: boolean;
@@ -17,9 +24,10 @@ export type StackProps = {
     alignEnd?: boolean;
     alignStretch?: boolean;
     spacing?: SpacingUnit;
-} & ViewProps;
+} & ViewProps &
+    SxProps;
 
-export const Stack = (props: PropsWithChildren<StackProps>) => {
+export const Stack = (props: StackProps) => {
     const { style, ...rest } = props;
     const { theme } = useTheme();
     return (
@@ -31,6 +39,7 @@ export const Stack = (props: PropsWithChildren<StackProps>) => {
                     alignItems: getAlign(props),
                     gap: getGap(props, theme),
                 },
+                getSxStyles(rest, theme),
                 style,
             ]}
             {...rest}
@@ -75,5 +84,5 @@ const getAlign = (props: StackProps): ViewStyle['alignItems'] => {
 };
 
 const getGap = (props: StackProps, theme: Theme): ViewStyle['gap'] => {
-    return props.spacing ? theme.spacing[props.spacing] : 0;
+    return getSpacing(props.spacing);
 };

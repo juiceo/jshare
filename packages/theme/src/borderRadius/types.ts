@@ -8,4 +8,4 @@ export type BorderRadiusUnits = {
     full: number;
 };
 
-export type BorderRadius = keyof BorderRadiusUnits;
+export type BorderRadiusUnit = keyof BorderRadiusUnits;
