@@ -1,4 +1,4 @@
-import type { ViewStyle } from 'react-native';
+import type { View, ViewStyle } from 'react-native';
 
 import type { BorderRadiusUnit } from '../borderRadius';
 import type { BackgroundColorPath } from '../colors';
@@ -13,6 +13,7 @@ export type SxProps = {
      */
     w?: ViewStyle['width'];
     h?: ViewStyle['height'];
+    flex?: ViewStyle['flex'];
     /**
      * Padding
      */

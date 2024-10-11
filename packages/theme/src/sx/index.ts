@@ -12,6 +12,7 @@ export const getSxStyles = (sx: SxProps, theme: Theme): ViewStyle => {
     return {
         height: sx.h,
         width: sx.w,
+        flex: sx.flex,
         padding: getSpacing(sx.p),
         paddingHorizontal: getSpacing(sx.px),
         paddingLeft: getSpacing(sx.pl),
