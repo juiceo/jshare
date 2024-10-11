@@ -1,4 +1,6 @@
 import type { PropsWithChildren } from 'react';
+import type { ViewProps } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { SafeAreaView, type SafeAreaViewProps } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
@@ -24,9 +26,15 @@ const ScreenFooter = (props: SafeAreaViewProps) => {
     return <SafeAreaView style={[{ flex: 0 }, style]} {...rest} />;
 };
 
-const ScreenContent = (props: SafeAreaViewProps) => {
-    const { style, ...rest } = props;
-    return <SafeAreaView style={[{ flex: 1 }, style]} {...rest} />;
+const ScreenContent = (props: ViewProps) => {
+    const { style, children, ...rest } = props;
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <KeyboardAvoidingView behavior="padding" style={[{ flex: 1 }, style]} {...rest}>
+                {props.children}
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
 };
 
 Screen.Header = ScreenHeader;
