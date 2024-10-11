@@ -38,10 +38,10 @@ export const typographyVariants: TypographyVariants = {
         letterSpacing: 0.4,
     },
     button: {
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Nunito_700Bold',
         fontSize: 16,
         lineHeight: 20,
-        letterSpacing: 1.25,
+        letterSpacing: 2,
     },
 };
 

@@ -41,9 +41,24 @@ export const Home = () => {
                 Button
             </Typography>
             <Stack column spacing="md">
-                <Button text="Contained, small" size="md" variant="contained" />
-                <Button text="Contained, medium" size="md" variant="outlined" />
-                <Button text="Contained, large" size="md" variant="text" />
+                <Button color="primary" variant="contained">
+                    Press me
+                </Button>
+                <Button color="error" variant="contained">
+                    Press me
+                </Button>
+                <Button color="secondary" variant="contained">
+                    Press me
+                </Button>
+                <Button color="primary" variant="text">
+                    Press me
+                </Button>
+                <Button color="error" variant="text">
+                    Press me
+                </Button>
+                <Button color="secondary" variant="text">
+                    Press me
+                </Button>
             </Stack>
         </View>
     );

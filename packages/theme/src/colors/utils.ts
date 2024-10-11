@@ -48,3 +48,7 @@ export const isAcceptableContrast = (hex1: string, hex2: string) => {
 export const alpha = (hex: string, alpha: number) => {
     return chroma(hex).alpha(alpha).hex();
 };
+
+export const darken = (hex: string, factor: number) => {
+    return chroma(hex).darken(factor).hex();
+};

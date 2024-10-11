@@ -1,140 +1,76 @@
 import { Pressable, type TextStyle, type ViewStyle } from 'react-native';
 
-import {
-    alpha,
-    getBorderRadius,
-    getColorVariant,
-    getContrastTextColor,
-    isAcceptableContrast,
-    useTheme,
-    type BackgroundColorKey,
-    type Theme,
-} from '@jshare/theme';
+import { alpha, darken, getContrastTextColor, useTheme, type Theme } from '@jshare/theme';
 
-import { Stack } from './Stack';
 import { Typography } from './Typography';
 
 export type ButtonProps = {
-    variant?: 'contained' | 'outlined' | 'text';
-    shape?: 'rounded' | 'rect';
-    color?: BackgroundColorKey;
-    size?: 'sm' | 'md' | 'lg';
-    fullWidth?: boolean;
-    text: string;
+    variant: 'contained' | 'text';
+    color: 'primary' | 'secondary' | 'error';
+    children: string;
 };
 
 export const Button = (props: ButtonProps) => {
-    const propsWithDefaults: Required<ButtonProps> = {
-        variant: 'contained',
-        shape: 'rounded',
-        color: 'background',
-        size: 'md',
-        fullWidth: false,
-        ...props,
-    };
     const { theme } = useTheme();
-    const pressedStyles = getStyles(propsWithDefaults, true, theme);
-    const defaultStyles = getStyles(propsWithDefaults, false, theme);
+
     return (
         <Pressable
-            style={({ pressed }) => ({
-                ...(pressed ? pressedStyles.view : defaultStyles.view),
-                width: propsWithDefaults.fullWidth ? '100%' : undefined,
-                alignSelf: 'baseline',
-                borderRadius: propsWithDefaults.shape === 'rounded' ? getBorderRadius('3xl') : 0,
-            })}
+            style={({ pressed }) => [
+                {
+                    paddingVertical: theme.spacing.lg,
+                    paddingHorizontal: theme.spacing.xl,
+                    borderRadius: theme.borderRadius['3xl'],
+                },
+                getButtonStyles(props, pressed, theme),
+            ]}
         >
-            <Stack row center>
-                <Typography variant="button" align="center" style={{ ...defaultStyles.text }}>
-                    {propsWithDefaults.text}
-                </Typography>
-            </Stack>
+            <Typography variant="button" style={getTextStyles(props, theme)} align="center">
+                {props.children}
+            </Typography>
         </Pressable>
     );
 };
 
-const getStyles = (
-    props: Required<ButtonProps>,
-    pressed: boolean,
-    theme: Theme
-): {
-    view: ViewStyle;
-    text: TextStyle;
-} => {
+const getButtonStyles = (props: ButtonProps, pressed: boolean, theme: Theme): ViewStyle => {
+    const primaryColor = getPrimaryColor(props.color, theme);
+
     switch (props.variant) {
         case 'contained': {
             return {
-                view: {
-                    backgroundColor: getColorVariant(props.color, pressed ? 'dark' : 'main', theme),
-                    ...getPaddings(props.size, 0, theme),
-                },
-                text: {
-                    color: getContrastTextColor(getColorVariant(props.color, 'main', theme)),
-                },
-            };
-        }
-        case 'outlined': {
-            return {
-                view: {
-                    backgroundColor: pressed
-                        ? alpha(getColorVariant(props.color, 'main', theme), 0.1)
-                        : 'transparent',
-                    borderWidth: 2,
-                    borderColor: getColorVariant(props.color, 'main', theme),
-                    borderStyle: 'solid',
-                    ...getPaddings(props.size, 2, theme),
-                },
-                text: {
-                    color: getColorVariant(props.color, 'main', theme),
-                },
+                backgroundColor: pressed ? darken(primaryColor, 1) : primaryColor,
             };
         }
         case 'text': {
-            const textColor = getColorVariant(props.color, 'main', theme);
-            const backgroundColor = theme.palette.background.main;
             return {
-                view: {
-                    backgroundColor: pressed
-                        ? alpha(getColorVariant(props.color, 'main', theme), 0.1)
-                        : 'transparent',
-                    ...getPaddings(props.size, 0, theme),
-                },
-                text: {
-                    color: isAcceptableContrast(backgroundColor, textColor)
-                        ? textColor
-                        : theme.palette.text.primary,
-                },
+                backgroundColor: pressed ? alpha(primaryColor, 0.1) : 'transparent',
             };
         }
     }
 };
 
-const getPaddings = (
-    size: Required<ButtonProps['size']>,
-    borderWidth: number,
-    theme: Theme
-): ViewStyle => {
-    switch (size) {
-        case 'sm': {
+const getTextStyles = (props: ButtonProps, theme: Theme): TextStyle => {
+    const primaryColor = getPrimaryColor(props.color, theme);
+    switch (props.variant) {
+        case 'contained': {
             return {
-                paddingHorizontal: theme.spacing.md - borderWidth,
-                paddingVertical: theme.spacing.sm - borderWidth,
+                color: getContrastTextColor(primaryColor),
             };
         }
-        case 'md': {
+        case 'text': {
             return {
-                paddingHorizontal: theme.spacing.lg - borderWidth,
-                paddingVertical: theme.spacing.md - borderWidth,
+                color: primaryColor,
             };
         }
-        case 'lg': {
-            return {
-                paddingHorizontal: theme.spacing.xl - borderWidth,
-                paddingVertical: theme.spacing.lg - borderWidth,
-            };
-        }
-        default: {
-            return {};
-        }
+    }
+};
+
+const getPrimaryColor = (color: ButtonProps['color'], theme: Theme) => {
+    switch (color) {
+        case 'primary':
+            return theme.palette.accent.main;
+        case 'secondary':
+            return theme.palette.text.secondary;
+        case 'error':
+            return theme.palette.error.main;
     }
 };
