@@ -1,3 +1,4 @@
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -12,7 +13,9 @@ export default function App() {
             <KeyboardProvider>
                 <ThemeProvider theme={Themes.dark}>
                     <FontLoader>
-                        <Home />
+                        <GestureHandlerRootView style={{ flex: 1 }}>
+                            <Home />
+                        </GestureHandlerRootView>
                     </FontLoader>
                 </ThemeProvider>
             </KeyboardProvider>
