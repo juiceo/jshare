@@ -24,6 +24,7 @@ export const Home = () => {
                         TextInputProps={{
                             placeholder: '+1 123 456 7890',
                             keyboardType: 'phone-pad',
+                            autoComplete: 'tel',
                         }}
                     />
                     <Button variant="contained" color="primary">
