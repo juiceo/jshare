@@ -13,11 +13,12 @@ export type ButtonProps = {
     loading?: boolean;
     children: string;
     fill?: boolean;
+    onPress?: () => void;
 };
 
 export const Button = (props: ButtonProps) => {
     const { theme } = useTheme();
-    const { disabled, loading } = props;
+    const { disabled, loading, onPress } = props;
     const styles = getStyles(theme, props);
 
     return (
@@ -25,6 +26,7 @@ export const Button = (props: ButtonProps) => {
             style={styles.button}
             underlayColor={styles.buttonUnderlay.backgroundColor}
             enabled={!disabled && !loading}
+            onPress={onPress}
         >
             <Stack row center flex={1} spacing="md">
                 {loading && <ActivityIndicator color={styles.text.color} />}

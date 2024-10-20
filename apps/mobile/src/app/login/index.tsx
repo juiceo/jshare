@@ -1,13 +1,21 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 
-import { Button } from '../components/Button';
-import { Screen } from '../components/Screen';
-import { Stack } from '../components/Stack';
-import { TextField } from '../components/TextField';
-import { Typography } from '../components/Typography';
+import { Button } from '../../components/Button';
+import { Screen } from '../../components/Screen';
+import { Stack } from '../../components/Stack';
+import { TextField } from '../../components/TextField';
+import { Typography } from '../../components/Typography';
+import { useAuth } from '../../wrappers/AuthContext';
 
 export default function Page() {
+    const auth = useAuth();
     const [phone, setPhone] = useState<string>('');
+
+    const handleContinue = () => {
+        auth.signIn();
+        router.push('/');
+    };
     return (
         <Screen enableTopInset>
             <Screen.ContentFixed>
@@ -27,7 +35,7 @@ export default function Page() {
                             autoComplete: 'tel',
                         }}
                     />
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onPress={handleContinue}>
                         Continue
                     </Button>
                 </Stack>
