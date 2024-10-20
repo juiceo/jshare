@@ -7,6 +7,8 @@ export const spacingUnits: SpacingUnits = {
     md: 8,
     lg: 12,
     xl: 16,
+    '2xl': 24,
+    '3xl': 32,
 };
 
 export const getSpacing = (unit: SpacingUnit | undefined) => {

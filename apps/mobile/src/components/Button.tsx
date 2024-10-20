@@ -50,7 +50,7 @@ const getStyles = (theme: Theme, props: ButtonProps) => {
     return StyleSheet.create({
         button: (() => {
             const baseStyles = {
-                borderRadius: theme.borderRadius['3xl'],
+                borderRadius: theme.borderRadius.lg,
                 maxHeight: 52,
                 minHeight: 52,
                 paddingLeft: theme.spacing.xl,

@@ -1,4 +1,6 @@
 import type { ReactElement } from 'react';
+import { Keyboard, Pressable } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { Stack } from '../Stack';
 import { ScreenContentFixed, ScreenContentScrollable } from './ScreenContent';
@@ -36,11 +38,16 @@ export const Screen = (props: ScreenProps) => {
     }
 
     return (
-        <Stack flex={1} bg="background.main">
-            <ScreenProvider enableTopInset={enableTopInset} disableBottomInset={disableBottomInset}>
-                {props.children}
-            </ScreenProvider>
-        </Stack>
+        <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
+            <Stack flex={1} bg="background.main">
+                <ScreenProvider
+                    enableTopInset={enableTopInset}
+                    disableBottomInset={disableBottomInset}
+                >
+                    {props.children}
+                </ScreenProvider>
+            </Stack>
+        </Pressable>
     );
 };
 
