@@ -1,10 +1,9 @@
-import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Slot } from 'expo-router';
 
-import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
+import { ThemeProvider, Themes } from '@jshare/theme';
 
 import { AuthProvider } from '../wrappers/AuthContext';
 import { FontLoader } from '../wrappers/FontLoader';
@@ -17,7 +16,7 @@ export default function AppLayout() {
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <AuthProvider>
-                                <RootView />
+                                <Slot />
                             </AuthProvider>
                         </GestureHandlerRootView>
                     </FontLoader>
@@ -26,13 +25,3 @@ export default function AppLayout() {
         </SafeAreaProvider>
     );
 }
-
-const RootView = () => {
-    const { theme } = useTheme();
-
-    return (
-        <View style={{ flex: 1, backgroundColor: theme.palette.background.main }}>
-            <Slot />
-        </View>
-    );
-};

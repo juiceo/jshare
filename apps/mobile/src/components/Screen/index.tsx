@@ -1,5 +1,8 @@
 import type { ReactElement } from 'react';
 import { Keyboard, Pressable } from 'react-native';
+import { Stack } from 'expo-router';
+
+import { useTheme } from '@jshare/theme';
 
 import { ScreenContentFixed, ScreenContentScrollable } from './ScreenContent';
 import { ScreenFooter } from './ScreenFooter';
@@ -9,13 +12,6 @@ import { useHasParentScreen } from './useHasParentScreen';
 
 export type ScreenProps = {
     children: ReactElement | ReactElement[];
-    /**
-     * Enables the top safe area inset for the screen. For most screens this does not need to be enabled,
-     * since the system header bar already takes care of this.
-     *
-     * @default false;
-     */
-    enableTopInset?: boolean;
 
     /**
      * Disables the bottom safe area inset for the screen. For most screens this should be enabled, but exceptions
@@ -25,10 +21,24 @@ export type ScreenProps = {
      * @default false;
      */
     disableBottomInset?: boolean;
+    /**
+     * The name of the screen
+     */
+    name: string;
+
+    /**
+     * Hides the system header for this screen
+     */
+    disableHeader?: true;
+    /**
+     * The label to show for the back button
+     */
+    backButtonLabel?: string;
 };
 
 export const Screen = (props: ScreenProps) => {
-    const { enableTopInset, disableBottomInset } = props;
+    const { disableBottomInset, name, disableHeader, backButtonLabel } = props;
+    const { theme } = useTheme();
     const hasParentScreen = useHasParentScreen();
 
     if (hasParentScreen) {
@@ -36,11 +46,33 @@ export const Screen = (props: ScreenProps) => {
     }
 
     return (
-        <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
-            <ScreenProvider enableTopInset={enableTopInset} disableBottomInset={disableBottomInset}>
-                {props.children}
-            </ScreenProvider>
-        </Pressable>
+        <>
+            <Stack.Screen
+                options={{
+                    title: name,
+                    contentStyle: {
+                        backgroundColor: theme.palette.background.main,
+                    },
+                    headerStyle: {
+                        backgroundColor: theme.palette.background.main,
+                    },
+                    headerTintColor: theme.palette.text.primary,
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    },
+                    headerShown: !disableHeader,
+                    headerBackTitle: backButtonLabel,
+                }}
+            />
+            <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
+                <ScreenProvider
+                    enableTopInset={disableHeader}
+                    disableBottomInset={disableBottomInset}
+                >
+                    {props.children}
+                </ScreenProvider>
+            </Pressable>
+        </>
     );
 };
 

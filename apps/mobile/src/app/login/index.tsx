@@ -14,10 +14,10 @@ export default function Page() {
 
     const handleContinue = () => {
         auth.signIn();
-        router.push('/');
+        router.push('/login/code');
     };
     return (
-        <Screen enableTopInset>
+        <Screen name="Sign in" disableHeader>
             <Screen.ContentFixed>
                 <Stack flex={1} center>
                     <Typography variant="h1" color="accent.main">

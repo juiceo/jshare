@@ -1,4 +1,4 @@
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 
 import { useAuth } from '../../wrappers/AuthContext';
 
@@ -12,5 +12,5 @@ export default function AuthenticatedLayout() {
         return <Redirect href="/login" />;
     }
 
-    return <Slot />;
+    return <Stack />;
 }
