@@ -1,20 +1,20 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Slot } from 'expo-router';
 
 import { ThemeProvider, Themes } from '@jshare/theme';
 
-import { Home } from './src/Home';
-import { FontLoader } from './src/wrappers/FontLoader';
+import { FontLoader } from '../wrappers/FontLoader';
 
-export default function App() {
+export default function AppLayout() {
     return (
         <SafeAreaProvider>
             <KeyboardProvider>
                 <ThemeProvider theme={Themes.dark}>
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
-                            <Home />
+                            <Slot />
                         </GestureHandlerRootView>
                     </FontLoader>
                 </ThemeProvider>

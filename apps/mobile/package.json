@@ -2,7 +2,7 @@
     "private": true,
     "name": "@jshare/app-mobile",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "expo-router/entry",
     "scripts": {
         "dev": "expo start",
         "lint": "eslint --ext js,ts,tsx .",

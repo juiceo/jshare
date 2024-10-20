@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import { Button } from './components/Button';
-import { Screen } from './components/Screen';
-import { Stack } from './components/Stack';
-import { TextField } from './components/TextField';
-import { Typography } from './components/Typography';
+import { Button } from '../components/Button';
+import { Screen } from '../components/Screen';
+import { Stack } from '../components/Stack';
+import { TextField } from '../components/TextField';
+import { Typography } from '../components/Typography';
 
-export const Home = () => {
+export default function Page() {
     const [phone, setPhone] = useState<string>('');
     return (
         <Screen enableTopInset>
@@ -34,4 +34,4 @@ export const Home = () => {
             </Screen.ContentFixed>
         </Screen>
     );
-};
+}
