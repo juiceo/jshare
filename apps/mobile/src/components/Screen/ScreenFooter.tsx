@@ -15,7 +15,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
     const { disableBottomInset } = useScreen();
     return (
         <SafeAreaView
-            style={[{ flex: 0, padding: theme.spacing[padding] }, style]}
+            style={[{ padding: theme.spacing[padding] }, style]}
             edges={{
                 left: 'additive',
                 right: 'additive',

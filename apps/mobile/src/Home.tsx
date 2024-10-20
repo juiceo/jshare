@@ -1,5 +1,3 @@
-import { useTheme } from '@jshare/theme';
-
 import { Button } from './components/Button';
 import { Screen } from './components/Screen';
 import { Stack } from './components/Stack';
@@ -7,7 +5,6 @@ import { TextField } from './components/TextField';
 import { Typography } from './components/Typography';
 
 export const Home = () => {
-    const { theme } = useTheme();
     return (
         <Screen enableTopInset>
             <Screen.ContentFixed>
@@ -16,13 +13,14 @@ export const Home = () => {
                         Welcome to JShare
                     </Typography>
                 </Stack>
-                <TextField />
+                <Stack spacing="md">
+                    <TextField />
+
+                    <Button variant="contained" color="primary">
+                        Continue
+                    </Button>
+                </Stack>
             </Screen.ContentFixed>
-            <Screen.Footer style={{ backgroundColor: 'red' }}>
-                <Button variant="contained" color="primary">
-                    Continue
-                </Button>
-            </Screen.Footer>
         </Screen>
     );
 };
