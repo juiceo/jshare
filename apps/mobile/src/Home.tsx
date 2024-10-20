@@ -9,16 +9,16 @@ import { Typography } from './components/Typography';
 export const Home = () => {
     const { theme } = useTheme();
     return (
-        <Screen>
-            <Screen.Content>
+        <Screen enableTopInset>
+            <Screen.ContentFixed>
                 <Stack flex={1} center>
                     <Typography variant="h1" color="accent.main">
                         Welcome to JShare
                     </Typography>
                 </Stack>
                 <TextField />
-            </Screen.Content>
-            <Screen.Footer>
+            </Screen.ContentFixed>
+            <Screen.Footer style={{ backgroundColor: 'red' }}>
                 <Button variant="contained" color="primary">
                     Continue
                 </Button>

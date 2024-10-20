@@ -1,12 +1,7 @@
-import { BaseButton } from 'react-native-gesture-handler';
-import Animated, {
-    interpolateColor,
-    useAnimatedStyle,
-    useSharedValue,
-    withTiming,
-} from 'react-native-reanimated';
+import { StyleSheet } from 'react-native';
+import { BaseButton, RectButton } from 'react-native-gesture-handler';
 
-import { alpha, darken, getContrastTextColor, useTheme, type Theme } from '@jshare/theme';
+import { getContrastTextColor, useTheme, type Theme } from '@jshare/theme';
 
 import { Typography } from './Typography';
 
@@ -18,47 +13,21 @@ export type ButtonProps = {
 
 export const Button = (props: ButtonProps) => {
     const { theme } = useTheme();
-    const active = useSharedValue<number>(0);
-
+    const styles = getStyles(theme);
     const colors = getButtonColors(props, theme);
 
-    const animatedButtonStyles = useAnimatedStyle(() => {
-        return {
-            backgroundColor: interpolateColor(
-                active.value,
-                [0, 1],
-                [colors.defaultBackground, colors.activeBackground]
-            ),
-        };
-    });
-
     return (
-        <BaseButton
-            onActiveStateChange={(value) => {
-                active.value = withTiming(value ? 1 : 0, { duration: 200 });
-            }}
-        >
-            <Animated.View
-                style={[
-                    {
-                        paddingVertical: theme.spacing.lg,
-                        paddingHorizontal: theme.spacing.xl,
-                        borderRadius: theme.borderRadius['3xl'],
-                    },
-                    animatedButtonStyles,
-                ]}
+        <RectButton style={[styles.button, { backgroundColor: colors.background }]}>
+            <Typography
+                variant="button"
+                style={{
+                    color: colors.text,
+                }}
+                align="center"
             >
-                <Typography
-                    variant="button"
-                    style={{
-                        color: colors.text,
-                    }}
-                    align="center"
-                >
-                    {props.children}
-                </Typography>
-            </Animated.View>
-        </BaseButton>
+                {props.children}
+            </Typography>
+        </RectButton>
     );
 };
 
@@ -67,16 +36,14 @@ const getButtonColors = (props: ButtonProps, theme: Theme) => {
         case 'contained': {
             const primaryColor = getPrimaryColor(props.color, theme);
             return {
-                defaultBackground: primaryColor,
-                activeBackground: darken(primaryColor, 1),
+                background: primaryColor,
                 text: getContrastTextColor(primaryColor),
             };
         }
         case 'text': {
             const primaryColor = getPrimaryColor(props.color, theme);
             return {
-                defaultBackground: 'transparent',
-                activeBackground: alpha(primaryColor, 0.1),
+                background: 'transparent',
                 text: primaryColor,
             };
         }
@@ -92,4 +59,12 @@ const getPrimaryColor = (color: ButtonProps['color'], theme: Theme) => {
         case 'error':
             return theme.palette.error.main;
     }
+};
+
+const getStyles = (theme: Theme) => {
+    return StyleSheet.create({
+        button: {
+            padding: theme.spacing.xl,
+        },
+    });
 };
