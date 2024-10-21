@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { TextInput } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 import { router } from 'expo-router';
-import parsePhoneNumber, { AsYouType } from 'libphonenumber-js';
+import parsePhoneNumber from 'libphonenumber-js';
 
 import { Button } from '../../components/Button';
 import { Screen } from '../../components/Screen';
@@ -11,18 +13,32 @@ import { useAuth } from '../../wrappers/AuthContext';
 
 export default function Page() {
     const auth = useAuth();
+    const inputRef = useRef<TextInput>(null);
     const [phone, setPhone] = useState<string>('');
+    const [error, setError] = useState<boolean>(false);
 
     const parsed = parsePhoneNumber(phone);
-    console.log('PARSED', parsed?.country);
+    const isValid = parsed?.isValid ?? false;
+    const countryCode = parsed?.country;
 
     const handleContinue = () => {
+        if (!isValid || !parsed) {
+            setError(true);
+            inputRef.current?.focus();
+            return;
+        }
         auth.signIn();
         router.push({
             pathname: '/login/verify/[phoneNumber]',
-            params: { phoneNumber: phone },
+            params: { phoneNumber: parsed.formatInternational() },
         });
     };
+
+    useEffect(() => {
+        if (error && isValid) {
+            setError(false);
+        }
+    }, [error, isValid]);
 
     return (
         <Screen name="Sign in" disableHeader>
@@ -42,10 +58,16 @@ export default function Page() {
                             keyboardType: 'phone-pad',
                             autoComplete: 'tel',
                         }}
+                        inputRef={inputRef}
+                        endAdornment={
+                            countryCode ? <CountryFlag isoCode={countryCode} size={16} /> : null
+                        }
+                        error={
+                            error
+                                ? 'Please enter a valid phone number, including country code and other details'
+                                : null
+                        }
                     />
-                    <Typography>{new AsYouType().input(phone)}</Typography>
-                    <Typography>Is valid?: {parsed?.isValid() ? 'Yes' : 'No'}</Typography>
-                    <Typography>Country: {parsed?.country}</Typography>
                     <Button variant="contained" color="primary" onPress={handleContinue}>
                         Continue
                     </Button>

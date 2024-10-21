@@ -3,20 +3,20 @@ import { StyleSheet, TextInput, type TextInputProps } from 'react-native';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
-import { FormControl } from './FormControl';
+import { FormControl, type FormControlProps } from './FormControl';
 
 export type TextFieldProps = {
-    label: string;
-    error?: string | null;
     value: string;
     onChange: (value: string) => void;
     TextInputProps?: TextInputProps;
-};
+    inputRef?: React.RefObject<TextInput>;
+} & Pick<FormControlProps, 'endAdornment' | 'error' | 'label'>;
 
 export const TextField = (props: TextFieldProps) => {
     const { theme } = useTheme();
-    const { label, error, value, onChange, TextInputProps } = props;
-    const inputRef = useRef<TextInput>(null);
+    const { label, error, value, onChange, endAdornment, TextInputProps } = props;
+    const innerInputRef = useRef<TextInput>(null);
+    const inputRef = props.inputRef ?? innerInputRef;
     const [focused, setFocused] = useState<boolean>(false);
     const styles = getStyles(theme);
     return (
@@ -25,6 +25,7 @@ export const TextField = (props: TextFieldProps) => {
             error={error}
             onPress={() => inputRef.current?.focus()}
             focused={focused}
+            endAdornment={endAdornment}
         >
             <TextInput
                 value={value}

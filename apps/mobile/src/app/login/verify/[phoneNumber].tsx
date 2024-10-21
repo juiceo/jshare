@@ -15,7 +15,10 @@ export default function VerifyLogin() {
                         Enter code
                     </Typography>
                     <Typography variant="body1" align="center">
-                        Please enter the 6-digit code sent to {phoneNumber}
+                        Please enter the 6-digit code sent to
+                    </Typography>
+                    <Typography variant="body1" align="center">
+                        {phoneNumber}
                     </Typography>
                 </Stack>
                 <Button color="primary" variant="contained" disabled>
