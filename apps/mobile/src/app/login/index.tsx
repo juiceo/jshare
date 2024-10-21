@@ -8,9 +8,10 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
+import { db } from '~/services/instantdb';
 import { useAuth } from '~/wrappers/AuthContext';
 
-export default function Page() {
+export default function LoginScreen() {
     const auth = useAuth();
     const inputRef = useRef<TextInput>(null);
     const [email, setEmail] = useState<string>('');
@@ -24,6 +25,7 @@ export default function Page() {
             inputRef.current?.focus();
             return;
         }
+        db.auth.sendMagicCode({ email });
         auth.signIn();
         router.push({
             pathname: '/login/verify/[email]',
