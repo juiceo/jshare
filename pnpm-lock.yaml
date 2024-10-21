@@ -56,6 +56,9 @@ importers:
       expo-updates:
         specifier: ~0.25.18
         version: 0.25.18(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
+      libphonenumber-js:
+        specifier: ^1.11.12
+        version: 1.11.12
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -3875,6 +3878,9 @@ packages:
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
+
+  libphonenumber-js@1.11.12:
+    resolution: {integrity: sha512-QkJn9/D7zZ1ucvT++TQSvZuSA2xAWeUytU+DiEQwbPKLyrDpvbul2AFs1CGbRAPpSCCk47aRAb5DX5mmcayp4g==}
 
   lighthouse-logger@1.4.2:
     resolution: {integrity: sha512-gPWxznF6TKmUHrOQjlVo2UbaL2EJ71mb2CCeRs/2qBpi4L/g4LUVc9+3lKQ6DTUZwJswfM7ainGrLO1+fOqa2g==}
@@ -10499,6 +10505,8 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  libphonenumber-js@1.11.12: {}
 
   lighthouse-logger@1.4.2:
     dependencies:

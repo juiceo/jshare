@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { router } from 'expo-router';
+import parsePhoneNumber, { AsYouType } from 'libphonenumber-js';
 
 import { Button } from '../../components/Button';
 import { Screen } from '../../components/Screen';
@@ -12,6 +13,9 @@ export default function Page() {
     const auth = useAuth();
     const [phone, setPhone] = useState<string>('');
 
+    const parsed = parsePhoneNumber(phone);
+    console.log('PARSED', parsed?.country);
+
     const handleContinue = () => {
         auth.signIn();
         router.push({
@@ -19,6 +23,7 @@ export default function Page() {
             params: { phoneNumber: phone },
         });
     };
+
     return (
         <Screen name="Sign in" disableHeader>
             <Screen.Content>
@@ -38,6 +43,9 @@ export default function Page() {
                             autoComplete: 'tel',
                         }}
                     />
+                    <Typography>{new AsYouType().input(phone)}</Typography>
+                    <Typography>Is valid?: {parsed?.isValid() ? 'Yes' : 'No'}</Typography>
+                    <Typography>Country: {parsed?.country}</Typography>
                     <Button variant="contained" color="primary" onPress={handleContinue}>
                         Continue
                     </Button>
