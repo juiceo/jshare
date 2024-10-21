@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, type TextInputProps } from 'react-native';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
-import { FormControl, type FormControlProps } from './FormControl';
+import { FormControl, type FormControlProps } from '~/components/atoms/FormControl';
 
 export type TextFieldProps = {
     value: string;

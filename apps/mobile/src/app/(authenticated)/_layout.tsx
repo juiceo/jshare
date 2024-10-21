@@ -1,6 +1,6 @@
 import { Redirect, Stack } from 'expo-router';
 
-import { useAuth } from '../../wrappers/AuthContext';
+import { useAuth } from '~/wrappers/AuthContext';
 
 export default function AuthenticatedLayout() {
     const { userId } = useAuth();

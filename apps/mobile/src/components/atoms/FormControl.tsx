@@ -3,8 +3,8 @@ import { Pressable, StyleSheet } from 'react-native';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
-import { Stack } from './Stack';
-import { Typography } from './Typography';
+import { Stack } from '~/components/atoms/Stack';
+import { Typography } from '~/components/atoms/Typography';
 
 export type FormControlProps = {
     label: string;
@@ -19,6 +19,7 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
     const { label, error, onPress, focused, endAdornment } = props;
 
     const styles = getStyles(theme);
+
     return (
         <Pressable style={styles.wrapper} onPress={onPress}>
             <Stack row spacing="md">

@@ -14,6 +14,7 @@ export type TypographyProps = {
     variant?: TypographyVariant;
     color?: TextColorVariant | BackgroundColorPath;
     align?: TextStyle['textAlign'];
+    weight?: TextStyle['fontWeight'];
 } & TextProps &
     SxProps;
 

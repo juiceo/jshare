@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useTheme, type SpacingUnit } from '@jshare/theme';
 
-import { useScreen } from './useScreen';
+import { useScreen } from '~/components/Screen/useScreen';
 
 export type ScreenFooterProps = {
     padding?: SpacingUnit;

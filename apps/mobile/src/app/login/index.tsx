@@ -3,12 +3,12 @@ import type { TextInput } from 'react-native';
 import { router } from 'expo-router';
 import isEmail from 'validator/es/lib/isEmail';
 
-import { Button } from '../../components/Button';
-import { Screen } from '../../components/Screen';
-import { Stack } from '../../components/Stack';
-import { TextField } from '../../components/TextField';
-import { Typography } from '../../components/Typography';
-import { useAuth } from '../../wrappers/AuthContext';
+import { Button } from '~/components/atoms/Button';
+import { Stack } from '~/components/atoms/Stack';
+import { TextField } from '~/components/atoms/TextField';
+import { Typography } from '~/components/atoms/Typography';
+import { Screen } from '~/components/Screen';
+import { useAuth } from '~/wrappers/AuthContext';
 
 export default function Page() {
     const auth = useAuth();

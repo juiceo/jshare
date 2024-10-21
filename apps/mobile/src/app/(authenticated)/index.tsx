@@ -1,8 +1,8 @@
-import { Button } from '../../components/Button';
-import { Screen } from '../../components/Screen';
-import { Stack } from '../../components/Stack';
-import { Typography } from '../../components/Typography';
-import { useSession } from '../../wrappers/AuthContext';
+import { Button } from '~/components/atoms/Button';
+import { Stack } from '~/components/atoms/Stack';
+import { Typography } from '~/components/atoms/Typography';
+import { Screen } from '~/components/Screen';
+import { useSession } from '~/wrappers/AuthContext';
 
 export default function Page() {
     const { userId, signOut } = useSession();

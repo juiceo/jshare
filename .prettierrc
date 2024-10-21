@@ -12,6 +12,7 @@
         "",
         "@jshare/(.*)$",
         "",
+        "^[~]",
         "^[.]"
     ],
     "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],

@@ -5,8 +5,8 @@ import { Slot } from 'expo-router';
 
 import { ThemeProvider, Themes } from '@jshare/theme';
 
-import { AuthProvider } from '../wrappers/AuthContext';
-import { FontLoader } from '../wrappers/FontLoader';
+import { AuthProvider } from '~/wrappers/AuthContext';
+import { FontLoader } from '~/wrappers/FontLoader';
 
 export default function AppLayout() {
     return (

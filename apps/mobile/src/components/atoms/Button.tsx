@@ -3,8 +3,8 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import { getContrastTextColor, useTheme, type Theme } from '@jshare/theme';
 
-import { Stack } from './Stack';
-import { Typography } from './Typography';
+import { Stack } from '~/components/atoms/Stack';
+import { Typography } from '~/components/atoms/Typography';
 
 export type ButtonProps = {
     variant: 'contained' | 'outlined' | 'text';

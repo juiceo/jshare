@@ -1,7 +1,7 @@
 import { Children, type ReactElement } from 'react';
 
-import { ScreenContext } from './ScreenContext';
-import { ScreenFooter } from './ScreenFooter';
+import { ScreenContext } from '~/components/Screen/ScreenContext';
+import { ScreenFooter } from '~/components/Screen/ScreenFooter';
 
 export const ScreenProvider = (props: {
     children: ReactElement | ReactElement[];

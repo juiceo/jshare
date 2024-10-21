@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { ScreenContext } from './ScreenContext';
+import { ScreenContext } from '~/components/Screen/ScreenContext';
 
 export const useScreen = () => {
     const context = useContext(ScreenContext);

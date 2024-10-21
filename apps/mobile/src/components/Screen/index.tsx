@@ -4,10 +4,10 @@ import { Stack } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
-import { ScreenContent } from './ScreenContent';
-import { ScreenFooter } from './ScreenFooter';
-import { ScreenProvider } from './ScreenProvider';
-import { useHasParentScreen } from './useHasParentScreen';
+import { ScreenContent } from '~/components/Screen/ScreenContent';
+import { ScreenFooter } from '~/components/Screen/ScreenFooter';
+import { ScreenProvider } from '~/components/Screen/ScreenProvider';
+import { useHasParentScreen } from '~/components/Screen/useHasParentScreen';
 
 export type ScreenProps = {
     children: ReactElement | ReactElement[];
