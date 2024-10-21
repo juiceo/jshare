@@ -6,7 +6,7 @@ import { Stack } from '../../../components/Stack';
 import { Typography } from '../../../components/Typography';
 
 export default function VerifyLogin() {
-    const { phoneNumber } = useLocalSearchParams<{ phoneNumber: string }>();
+    const { email } = useLocalSearchParams<{ email: string }>();
     return (
         <Screen name="Verify" backButtonLabel="Back">
             <Screen.Content>
@@ -18,7 +18,7 @@ export default function VerifyLogin() {
                         Please enter the 6-digit code sent to
                     </Typography>
                     <Typography variant="body1" align="center">
-                        {phoneNumber}
+                        {email}
                     </Typography>
                 </Stack>
                 <Button color="primary" variant="contained" disabled>

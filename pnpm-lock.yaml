@@ -89,6 +89,9 @@ importers:
       react-native-web:
         specifier: ~0.19.11
         version: 0.19.11(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      validator:
+        specifier: ^13.12.0
+        version: 13.12.0
     devDependencies:
       '@babel/core':
         specifier: ^7.24.5
@@ -105,6 +108,9 @@ importers:
       '@types/react-dom':
         specifier: ~18.2.25
         version: 18.2.25
+      '@types/validator':
+        specifier: ^13.12.2
+        version: 13.12.2
       babel-preset-expo:
         specifier: ~11.0.11
         version: 11.0.11(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
@@ -1890,6 +1896,9 @@ packages:
 
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
+
+  '@types/validator@13.12.2':
+    resolution: {integrity: sha512-6SlHBzUW8Jhf3liqrGGXyTJSIFe4nqlJ5A5KaMZ2l/vbM3Wh3KSybots/wfWVzNLK4D1NZluDlSQIbIEPx6oyA==}
 
   '@types/yargs-parser@21.0.0':
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -5596,6 +5605,10 @@ packages:
   validate-npm-package-name@3.0.0:
     resolution: {integrity: sha512-M6w37eVCMMouJ9V/sdPGnC5H4uDr73/+xdq0FBLO3TFFX1+7wiUY6Es328NN+y43tmY+doUdN9g9J21vqB7iLw==}
 
+  validator@13.12.0:
+    resolution: {integrity: sha512-c1Q0mCiPlgdTVVVIJIrBuxNicYE+t/7oKeI9MWLj3fh/uq2Pxh/3eeWbVZ4OcGW1TUf53At0njHw5SMdA3tmMg==}
+    engines: {node: '>= 0.10'}
+
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
@@ -8109,6 +8122,8 @@ snapshots:
       '@types/send': 0.17.4
 
   '@types/stack-utils@2.0.1': {}
+
+  '@types/validator@13.12.2': {}
 
   '@types/yargs-parser@21.0.0': {}
 
@@ -12385,6 +12400,8 @@ snapshots:
   validate-npm-package-name@3.0.0:
     dependencies:
       builtins: 1.0.3
+
+  validator@13.12.0: {}
 
   vary@1.1.2: {}
 
