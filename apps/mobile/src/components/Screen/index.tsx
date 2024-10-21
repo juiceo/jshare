@@ -4,9 +4,8 @@ import { Stack } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
-import { ScreenContentFixed, ScreenContentScrollable } from './ScreenContent';
+import { ScreenContent } from './ScreenContent';
 import { ScreenFooter } from './ScreenFooter';
-import { ScreenHeader } from './ScreenHeader';
 import { ScreenProvider } from './ScreenProvider';
 import { useHasParentScreen } from './useHasParentScreen';
 
@@ -76,7 +75,5 @@ export const Screen = (props: ScreenProps) => {
     );
 };
 
-Screen.Content = ScreenContentScrollable;
-Screen.ContentFixed = ScreenContentFixed;
+Screen.Content = ScreenContent;
 Screen.Footer = ScreenFooter;
-Screen.Header = ScreenHeader;

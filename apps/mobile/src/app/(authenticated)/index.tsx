@@ -7,8 +7,8 @@ import { useSession } from '../../wrappers/AuthContext';
 export default function Page() {
     const { userId, signOut } = useSession();
     return (
-        <Screen enableTopInset>
-            <Screen.ContentFixed>
+        <Screen name="Home">
+            <Screen.Content>
                 <Stack flex={1} center>
                     <Typography variant="h1" color="accent.main">
                         Welcome to JShare
@@ -18,7 +18,7 @@ export default function Page() {
                         Log out
                     </Button>
                 </Stack>
-            </Screen.ContentFixed>
+            </Screen.Content>
         </Screen>
     );
 }

@@ -14,11 +14,14 @@ export default function Page() {
 
     const handleContinue = () => {
         auth.signIn();
-        router.push('/login/code');
+        router.push({
+            pathname: '/login/verify/[phoneNumber]',
+            params: { phoneNumber: phone },
+        });
     };
     return (
         <Screen name="Sign in" disableHeader>
-            <Screen.ContentFixed>
+            <Screen.Content>
                 <Stack flex={1} center>
                     <Typography variant="h1" color="accent.main">
                         Welcome to JShare
@@ -39,7 +42,7 @@ export default function Page() {
                         Continue
                     </Button>
                 </Stack>
-            </Screen.ContentFixed>
+            </Screen.Content>
         </Screen>
     );
 }
