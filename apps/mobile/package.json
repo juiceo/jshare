@@ -54,22 +54,14 @@
         "babel-preset-expo": "~11.0.11"
     },
     "eslintConfig": {
-        "extends": "@jshare/eslint-config",
+        "extends": [
+            "@jshare/eslint-config"
+        ],
         "ignorePatterns": [
             "node_modules",
             "build",
             ".expo",
             ".expo-shared"
-        ],
-        "overrides": [
-            {
-                "files": [
-                    "*.js"
-                ],
-                "env": {
-                    "node": true
-                }
-            }
         ]
     }
 }

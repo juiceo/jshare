@@ -1,28 +1,27 @@
-import { createContext, useCallback, useContext, useState, type PropsWithChildren } from 'react';
+import { createContext, useCallback, useContext, type PropsWithChildren } from 'react';
+import type { AuthState } from '@instantdb/react-native';
+
+import { db } from '~/services/instantdb';
 
 const AuthContext = createContext<{
-    signIn: () => void;
     signOut: () => void;
-    userId: string | null;
+    error: AuthState['error'];
+    isLoading: AuthState['isLoading'];
+    user: AuthState['user'];
 } | null>(null);
 
 export const AuthProvider = (props: PropsWithChildren) => {
-    const [userId, setUserId] = useState<string | null>(null);
-
-    const signIn = useCallback(() => {
-        setUserId('abc_123');
-    }, []);
+    const authState = db.useAuth();
 
     const signOut = useCallback(() => {
-        setUserId(null);
+        db.auth.signOut();
     }, []);
 
     return (
         <AuthContext.Provider
             value={{
-                signIn,
                 signOut,
-                userId,
+                ...authState,
             }}
         >
             {props.children}
@@ -44,12 +43,12 @@ export function useAuth() {
 export function useSession() {
     const auth = useAuth();
 
-    if (!auth.userId) {
+    if (!auth.user) {
         throw new Error('useSession can only be used within authenticated routes');
     }
 
     return {
         ...auth,
-        userId: auth.userId,
+        user: auth.user,
     };
 }

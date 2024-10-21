@@ -19,6 +19,14 @@ export default function LoginScreen() {
 
     const isValid = isEmail(email);
 
+    useEffect(() => {
+        if (auth.user) {
+            router.replace({
+                pathname: '/',
+            });
+        }
+    }, [auth.user]);
+
     const handleContinue = () => {
         if (!isValid || !email) {
             setError(true);
@@ -26,7 +34,6 @@ export default function LoginScreen() {
             return;
         }
         db.auth.sendMagicCode({ email });
-        auth.signIn();
         router.push({
             pathname: '/login/verify/[email]',
             params: { email },

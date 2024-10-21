@@ -3,12 +3,9 @@ import { Redirect, Stack } from 'expo-router';
 import { useAuth } from '~/wrappers/AuthContext';
 
 export default function AuthenticatedLayout() {
-    const { userId } = useAuth();
+    const { user } = useAuth();
 
-    if (!userId) {
-        /**
-         * TODO: Make sure we have strict typing for routes
-         */
+    if (!user) {
         return <Redirect href="/login" />;
     }
 
