@@ -1,6 +1,6 @@
 import { i } from '@instantdb/core';
 
-const graph = i.graph(
+export const graph = i.graph(
     {
         $users: i.entity({
             email: i.string().unique(),
