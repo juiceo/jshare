@@ -29,6 +29,9 @@ importers:
       '@instantdb/react-native':
         specifier: ^0.14.19
         version: 0.14.19(@react-native-async-storage/async-storage@1.23.1(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0)))(@react-native-community/netinfo@11.3.1(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0)))(react-native-get-random-values@1.11.0(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0)))(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
+      '@jshare/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@jshare/theme':
         specifier: workspace:*
         version: link:../../packages/theme
@@ -175,19 +178,13 @@ importers:
 
   packages/db:
     dependencies:
-      '@instantdb/core':
-        specifier: ^0.14.19
-        version: 0.14.19
-      '@types/chroma-js':
-        specifier: ^2.4.4
-        version: 2.4.4
-      chroma-js:
-        specifier: ^3.1.1
-        version: 3.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@instantdb/core':
+        specifier: ^0.14.19
+        version: 0.14.19
       '@jshare/eslint-config':
         specifier: workspace:*
         version: link:../config/eslint-config

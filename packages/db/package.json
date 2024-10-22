@@ -6,17 +6,14 @@
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
     "main": "index.ts",
-    "files": [
-        "instant.perms.ts",
-        "instant.schema.ts",
-        "index.ts"
-    ],
+    "files": [],
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
         "push:schema": "npx instant-cli push-schema -y",
         "push:perms": "npx instant-cli push-perms -y"
     },
     "devDependencies": {
+        "@instantdb/core": "^0.14.19",
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
         "@types/lodash": "^4.17.10",
@@ -24,6 +21,7 @@
         "tsup": "^8.3.0"
     },
     "peerDependencies": {
+        "@instantdb/core": "^0.14.19",
         "lodash": "^4.17.21"
     },
     "eslintConfig": {
@@ -32,19 +30,5 @@
             "node_modules",
             "build"
         ]
-    },
-    "tsup": {
-        "entry": [
-            "index.ts"
-        ],
-        "outDir": "build",
-        "sourcemap": true,
-        "dts": true,
-        "external": []
-    },
-    "dependencies": {
-        "@instantdb/core": "^0.14.19",
-        "@types/chroma-js": "^2.4.4",
-        "chroma-js": "^3.1.1"
     }
 }
