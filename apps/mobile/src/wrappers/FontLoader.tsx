@@ -17,7 +17,7 @@ export const FontLoader = (props: PropsWithChildren<FontLoaderProps>) => {
         if (loaded) {
             onLoad?.();
         }
-    }, [loaded]);
+    }, [loaded, onLoad]);
 
     useEffect(() => {
         if (error) {

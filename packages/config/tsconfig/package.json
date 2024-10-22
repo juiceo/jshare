@@ -9,10 +9,18 @@
     "files": [
         "tsconfig.json"
     ],
+    "scripts": {
+        "lint": "eslint --ext tsconfig.json"
+    },
     "dependencies": {
+        "@jshare/eslint-config": "workspace:*",
         "@tsconfig/recommended": "^1.0.6"
     },
     "eslintConfig": {
-        "extends": "."
+        "extends": "@jshare/eslint-config",
+        "ignorePatterns": [
+            "node_modules",
+            "build"
+        ]
     }
 }

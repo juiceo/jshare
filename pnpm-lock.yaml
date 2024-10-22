@@ -172,6 +172,9 @@ importers:
 
   packages/config/tsconfig:
     dependencies:
+      '@jshare/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
       '@tsconfig/recommended':
         specifier: ^1.0.6
         version: 1.0.6

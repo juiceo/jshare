@@ -20,4 +20,7 @@ module.exports = {
             files: ['*.tsx', '*.ts'],
         },
     ],
+    env: {
+        node: true,
+    },
 };
