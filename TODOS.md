@@ -1,3 +1,0 @@
--   Add react-native-gesture-handler, refactor buttons to use it
--   Add TextField component
--   Add react-native-keyboard-controller, make sure Screen component avoids keyboard correctly
