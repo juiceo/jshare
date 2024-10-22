@@ -1,7 +1,9 @@
+import dotenv from 'dotenv';
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
     entry: ['index.ts'],
+    env: dotenv.config().parsed,
     splitting: true,
     skipNodeModulesBundle: true,
     sourcemap: false,

@@ -2,7 +2,6 @@
     "private": true,
     "name": "@jshare/monorepo",
     "scripts": {
-        "dev": "turbo watch dev",
         "dev:mobile": "turbo watch dev --filter=\"{./apps/mobile}...\"",
         "dev:web": "turbo watch dev --filter=\"{./apps/web}...\"",
         "lint": "turbo lint",

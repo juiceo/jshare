@@ -194,6 +194,9 @@ importers:
       '@types/lodash':
         specifier: ^4.17.10
         version: 4.17.10
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       instant-cli:
         specifier: ^0.14.19
         version: 0.14.19
