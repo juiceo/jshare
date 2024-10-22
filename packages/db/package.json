@@ -12,6 +12,7 @@
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
         "build": "tsup-node",
+        "watch": "tsup-node --watch",
         "push:schema": "npx instant-cli push-schema -y",
         "push:perms": "npx instant-cli push-perms -y"
     },

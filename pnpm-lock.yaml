@@ -202,13 +202,6 @@ importers:
         version: 8.3.0(jiti@1.21.6)(postcss@8.4.38)(tsx@4.19.1)(typescript@5.6.3)
 
   packages/theme:
-    dependencies:
-      '@types/chroma-js':
-        specifier: ^2.4.4
-        version: 2.4.4
-      chroma-js:
-        specifier: ^3.1.1
-        version: 3.1.1
     devDependencies:
       '@expo-google-fonts/nunito':
         specifier: ^0.2.3
@@ -222,9 +215,15 @@ importers:
       '@jshare/tsconfig':
         specifier: workspace:*
         version: link:../config/tsconfig
+      '@types/chroma-js':
+        specifier: ^2.4.4
+        version: 2.4.4
       '@types/lodash':
         specifier: ^4.17.10
         version: 4.17.10
+      chroma-js:
+        specifier: ^3.1.1
+        version: 3.1.1
       expo-font:
         specifier: ^12.0.10
         version: 12.0.10(expo@51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5)))
