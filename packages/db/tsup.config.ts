@@ -15,5 +15,4 @@ export default defineConfig({
     platform: 'neutral',
     target: 'es2020',
     replaceNodeEnv: true,
-    external: ['@instantdb/core'],
 });
