@@ -1,7 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 
 import { ThemeProvider, Themes } from '@jshare/theme';
 
@@ -16,7 +16,7 @@ export default function AppLayout() {
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <AuthProvider>
-                                <Slot />
+                                <Stack />
                             </AuthProvider>
                         </GestureHandlerRootView>
                     </FontLoader>
