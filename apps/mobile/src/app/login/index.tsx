@@ -59,6 +59,7 @@ export default function LoginScreen() {
                             keyboardType: 'email-address',
                             autoComplete: 'email',
                             autoCapitalize: 'none',
+                            autoCorrect: false,
                         }}
                         inputRef={inputRef}
                         error={error ? 'Please enter a valid email address' : null}
