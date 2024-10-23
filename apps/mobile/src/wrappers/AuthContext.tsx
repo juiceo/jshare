@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, type PropsWithChildren } from 'react';
 import type { AuthState } from '@instantdb/react-native';
+import { router } from 'expo-router';
 
 import { db } from '~/services/instantdb';
 
@@ -15,6 +16,7 @@ export const AuthProvider = (props: PropsWithChildren) => {
 
     const signOut = useCallback(() => {
         db.auth.signOut();
+        router.replace('/login');
     }, []);
 
     return (
@@ -50,5 +52,29 @@ export function useSession() {
     return {
         ...auth,
         user: auth.user,
+    };
+}
+
+export function useProfile() {
+    const auth = useAuth();
+    const userId = auth.user?.id;
+    const profileQuery = db.useQuery(
+        userId
+            ? {
+                  profiles: {
+                      $: {
+                          where: {
+                              userId,
+                          },
+                      },
+                  },
+              }
+            : null
+    );
+
+    return {
+        isLoading: profileQuery.isLoading,
+        error: profileQuery.error,
+        data: profileQuery.data?.profiles[0] ?? null,
     };
 }

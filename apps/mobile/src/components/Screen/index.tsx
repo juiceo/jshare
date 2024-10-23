@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { Keyboard, Pressable } from 'react-native';
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Stack } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
@@ -21,22 +22,13 @@ export type ScreenProps = {
      */
     disableBottomInset?: boolean;
     /**
-     * The name of the screen
+     * Options to pass to the underlying Stack.Screen component
      */
-    name: string;
-
-    /**
-     * Hides the system header for this screen
-     */
-    disableHeader?: true;
-    /**
-     * The label to show for the back button
-     */
-    backButtonLabel?: string;
+    screenOptions?: NativeStackNavigationOptions;
 };
 
 export const Screen = (props: ScreenProps) => {
-    const { disableBottomInset, name, disableHeader, backButtonLabel } = props;
+    const { disableBottomInset, screenOptions } = props;
     const { theme } = useTheme();
     const hasParentScreen = useHasParentScreen();
 
@@ -48,7 +40,6 @@ export const Screen = (props: ScreenProps) => {
         <>
             <Stack.Screen
                 options={{
-                    title: name,
                     contentStyle: {
                         backgroundColor: theme.palette.background.main,
                     },
@@ -59,13 +50,12 @@ export const Screen = (props: ScreenProps) => {
                     headerTitleStyle: {
                         fontWeight: 'bold',
                     },
-                    headerShown: !disableHeader,
-                    headerBackTitle: backButtonLabel,
+                    ...screenOptions,
                 }}
             />
             <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
                 <ScreenProvider
-                    enableTopInset={disableHeader}
+                    enableTopInset={!screenOptions?.headerShown}
                     disableBottomInset={disableBottomInset}
                 >
                     {props.children}

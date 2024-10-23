@@ -3,7 +3,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 
-import { ThemeProvider, Themes } from '@jshare/theme';
+import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { AuthProvider } from '~/wrappers/AuthContext';
 import { FontLoader } from '~/wrappers/FontLoader';
@@ -16,7 +16,7 @@ export default function AppLayout() {
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <AuthProvider>
-                                <Stack />
+                                <RootStack />
                             </AuthProvider>
                         </GestureHandlerRootView>
                     </FontLoader>
@@ -25,3 +25,24 @@ export default function AppLayout() {
         </SafeAreaProvider>
     );
 }
+
+const RootStack = () => {
+    const { theme } = useTheme();
+    return (
+        <Stack
+            screenOptions={{
+                contentStyle: {
+                    backgroundColor: theme.palette.background.main,
+                },
+                headerStyle: {
+                    backgroundColor: theme.palette.background.main,
+                },
+                headerTintColor: theme.palette.text.primary,
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+                headerShown: false,
+            }}
+        />
+    );
+};

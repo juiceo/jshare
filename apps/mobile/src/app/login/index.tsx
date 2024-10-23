@@ -9,23 +9,13 @@ import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
 import { db } from '~/services/instantdb';
-import { useAuth } from '~/wrappers/AuthContext';
 
 export default function LoginScreen() {
-    const auth = useAuth();
     const inputRef = useRef<TextInput>(null);
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<boolean>(false);
 
     const isValid = isEmail(email);
-
-    useEffect(() => {
-        if (auth.user) {
-            router.replace({
-                pathname: '/',
-            });
-        }
-    }, [auth.user]);
 
     const handleContinue = () => {
         if (!isValid || !email) {
@@ -47,7 +37,12 @@ export default function LoginScreen() {
     }, [error, isValid]);
 
     return (
-        <Screen name="Sign in" disableHeader>
+        <Screen
+            screenOptions={{
+                title: 'Sign in',
+                headerShown: false,
+            }}
+        >
             <Screen.Content>
                 <Stack flex={1} center>
                     <Typography variant="h1" color="accent.main">

@@ -1,4 +1,4 @@
-export const perms = {
+const perms = {
     $users: {
         allow: {
             view: 'auth.id == data.id',
@@ -11,7 +11,7 @@ export const perms = {
         allow: {
             view: 'true',
             create: 'auth.id == data.userId',
-            update: 'auth.id == data.userId && data.userId == newData.userId',
+            update: 'true',
             delete: 'false',
         },
     },

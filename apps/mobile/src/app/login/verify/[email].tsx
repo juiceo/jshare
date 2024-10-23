@@ -10,7 +10,7 @@ import { Screen } from '~/components/Screen';
 import { useTimer } from '~/hooks/useTimer';
 import { db } from '~/services/instantdb';
 
-export default function VerifyLogin() {
+export default function LoginVerifyPage() {
     const { email } = useLocalSearchParams<{ email: string }>();
     const [code, setCode] = useState<number[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -23,8 +23,29 @@ export default function VerifyLogin() {
             Keyboard.dismiss();
             setLoading(true);
             try {
-                await db.auth.signInWithMagicCode({ email, code: value.join('') });
-                router.push('/');
+                const authResult = await db.auth.signInWithMagicCode({
+                    email,
+                    code: value.join(''),
+                });
+                const userId = authResult.user.id;
+                const profile = await db
+                    .queryOnce({
+                        profiles: {
+                            $: {
+                                where: {
+                                    userId,
+                                },
+                            },
+                        },
+                    })
+                    .then((res) => res.data.profiles[0]);
+
+                if (!profile) {
+                    router.replace('/login/welcome');
+                } else {
+                    router.dismissAll();
+                    router.replace('/');
+                }
             } catch {
                 Alert.alert('Invalid code, please try again');
                 setCode([]);
@@ -39,7 +60,12 @@ export default function VerifyLogin() {
     };
 
     return (
-        <Screen name="Verify email" backButtonLabel="Back">
+        <Screen
+            screenOptions={{
+                title: 'Verify email',
+                headerBackTitle: 'Back',
+            }}
+        >
             <Screen.Content>
                 <Stack flex={1} center>
                     <Typography variant="body1" align="center">
