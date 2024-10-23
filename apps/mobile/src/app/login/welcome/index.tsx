@@ -8,12 +8,14 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
+import { useIdenticon } from '~/hooks/useIdenticon';
 import { db } from '~/services/instantdb';
 import { useAuth } from '~/wrappers/AuthContext';
 
 export default function LoginWelcomePage() {
     const auth = useAuth();
 
+    const identicon = useIdenticon(auth.user?.id ?? null);
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
 
