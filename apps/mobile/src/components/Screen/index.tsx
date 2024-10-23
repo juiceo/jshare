@@ -1,5 +1,4 @@
 import type { ReactElement } from 'react';
-import { Keyboard, Pressable } from 'react-native';
 import type { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Stack } from 'expo-router';
 
@@ -53,14 +52,13 @@ export const Screen = (props: ScreenProps) => {
                     ...screenOptions,
                 }}
             />
-            <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
-                <ScreenProvider
-                    enableTopInset={!screenOptions?.headerShown}
-                    disableBottomInset={disableBottomInset}
-                >
-                    {props.children}
-                </ScreenProvider>
-            </Pressable>
+
+            <ScreenProvider
+                enableTopInset={screenOptions?.headerShown === false}
+                disableBottomInset={disableBottomInset}
+            >
+                {props.children}
+            </ScreenProvider>
         </>
     );
 };

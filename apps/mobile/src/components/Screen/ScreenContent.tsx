@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme, type SpacingUnit } from '@jshare/theme';
 
@@ -10,30 +10,36 @@ import { useScreen } from '~/components/Screen/useScreen';
 export type ScreenContentProps = {
     padding?: SpacingUnit;
     style?: ViewStyle;
+    contentStyle?: ViewStyle;
+    scrollable?: boolean;
 };
 
 export const ScreenContent = (props: PropsWithChildren<ScreenContentProps>) => {
-    const { style, padding = 'md' } = props;
+    const { style, contentStyle, padding = 'md', scrollable = false } = props;
     const { theme } = useTheme();
+    const insets = useSafeAreaInsets();
     const { hasFooter, enableTopInset, disableBottomInset } = useScreen();
 
+    const bottomInset = hasFooter || disableBottomInset ? 0 : insets.bottom;
+    const topInset = !enableTopInset ? 0 : insets.top;
+
     return (
-        <SafeAreaView
-            style={[style, { flex: 1 }]}
-            edges={{
-                top: !enableTopInset ? 'off' : 'additive',
-                bottom: hasFooter || disableBottomInset ? 'off' : 'additive',
-                left: 'additive',
-                right: 'additive',
-            }}
+        <KeyboardAwareScrollView
+            style={[{ flex: 1 }, style]}
+            scrollEnabled={scrollable}
+            contentContainerStyle={[
+                {
+                    paddingLeft: theme.spacing[padding] + insets.left,
+                    paddingRight: theme.spacing[padding] + insets.right,
+                    paddingBottom: theme.spacing[padding] + bottomInset,
+                    paddingTop: theme.spacing[padding] + topInset,
+                },
+                !scrollable && { flex: 1 },
+                contentStyle,
+            ]}
+            extraKeyboardSpace={-1 * bottomInset}
         >
-            <KeyboardAvoidingView
-                style={{ margin: theme.spacing[padding], flex: 1 }}
-                behavior="padding"
-                keyboardVerticalOffset={theme.spacing[padding]}
-            >
-                {props.children}
-            </KeyboardAvoidingView>
-        </SafeAreaView>
+            {props.children}
+        </KeyboardAwareScrollView>
     );
 };
