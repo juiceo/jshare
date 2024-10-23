@@ -7,6 +7,7 @@ const graph = i.graph(
         }),
         profiles: i.entity({
             userId: i.string().unique(),
+            avatar: i.string().optional(),
             firstName: i.string(),
             lastName: i.string(),
         }),

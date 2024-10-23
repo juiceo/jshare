@@ -32,6 +32,7 @@ export default function LoginWelcomePage() {
                         userId,
                         firstName,
                         lastName,
+                        avatar: identicon,
                     })
                     .link({
                         user: userId,
