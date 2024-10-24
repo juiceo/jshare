@@ -1,7 +1,7 @@
 <div align="center">
   <h1>JShare monorepo</h1>
   <p>Monorepo for the JShare expense tracking app</p>
-  <img src="https://github.com/juiceo/jshare-monorepo/actions/workflows/test.yml/badge.svg?branch=asdasd" />
+  <img src="https://github.com/juiceo/jshare-monorepo/actions/workflows/test.yml/badge.svg?branch=main" />
 </div>
 
 ## What is JShare?
