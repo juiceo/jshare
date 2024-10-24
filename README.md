@@ -16,7 +16,7 @@ JShare is a hobby project which aims to be the spiritual successor to WeShare. I
 - Track payments made within the group
 - Keep track of who you owe, and who owes you - across all groups
 
-## Do you handle payments?
+#### Do you handle payments?
 
 JShare is never involved in any monetary transactions. This is for two reasons: 
 
