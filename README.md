@@ -95,4 +95,4 @@ cd apps/mobile
 pnpm ios
 ```
 
-This guide is incomplete, and will be continued.
+This guide is incomplete, and will be continued...
