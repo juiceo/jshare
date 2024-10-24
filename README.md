@@ -3,6 +3,9 @@
   <p>Monorepo for the JShare expense tracking app</p>
 </div>
 
+![Status](https://github.com/juiceo/jshare-monorepo/actions/workflows/test.yml/badge.svg)
+
+
 ## What is JShare?
 
 JShare is the ultimate application for keeping track of who paid for what and who owes who, for example when travelling with a group of friends. The name is derived from the WeShare app, which was originally created by Danske Bank / MobilePay, and was the de facto application for tracking expenses. WeShare was sadly shut down in 2022 when MobilePay merged with Vipps, and similar functionality was reintroduced later within the MobilePay application. Unfortunately the new version of it is somewhat of a UX disaster, and is missing many of the great features that made WeShare so popular.
