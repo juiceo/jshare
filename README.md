@@ -23,7 +23,7 @@ JShare is never involved in any monetary transactions. This is for a few reasons
 
 - Open Banking is not so open in reality: good APIs for sending money between individuals either do not exist or have significant transaction fees
 - Most countries have a different system that is the de facto way to send money to other people. Most of the effort in developing this app would go towards building banking integrations.
-- This is a hobby project, and as such the software is provided as-is and without warranty. I don't want to spend my freetime figuring out where someone's money has disappeared :D
+- This is a hobby project, and as such the software is provided as-is and without warranty. I don't want to spend my freetime figuring out where someone's money has disappeared 😄
 
 However, I strongly believe that JShare can be very valuable despite not being able to handle this last step of actually moving money around. Actually making the transaction is a vanishingly small part of the experience: the vast majority of your time will be used in adding expenses and keeping track of who paid for what. JShare aims to be the best experience on the market for that user job.
 
