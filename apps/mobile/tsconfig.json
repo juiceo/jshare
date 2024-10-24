@@ -1,7 +1,6 @@
 {
-    "extends": ["@jshare/tsconfig"],
+    "extends": ["expo/tsconfig.base", "@jshare/tsconfig"],
     "compilerOptions": {
-        "strict": true,
         "baseUrl": ".",
         "paths": {
             "~/*": ["./src/*"]

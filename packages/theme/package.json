@@ -9,7 +9,8 @@
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
         "build": "tsup-node",
-        "watch": "tsup-node --watch"
+        "watch": "tsup-node --watch",
+        "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
         "@expo-google-fonts/nunito": "^0.2.3",

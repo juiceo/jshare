@@ -14,7 +14,8 @@
         "build": "tsup-node",
         "watch": "tsup-node --watch",
         "push:schema": "npx instant-cli push-schema -y",
-        "push:perms": "npx instant-cli push-perms -y"
+        "push:perms": "npx instant-cli push-perms -y",
+        "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
         "@instantdb/core": "^0.14.19",

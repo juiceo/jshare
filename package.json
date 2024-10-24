@@ -4,6 +4,7 @@
     "scripts": {
         "dev:mobile": "turbo watch dev --filter=\"{./apps/mobile}...\"",
         "lint": "turbo lint",
+        "typecheck": "turbo typecheck",
         "test": "turbo test",
         "build": "turbo build",
         "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
