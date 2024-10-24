@@ -2,7 +2,7 @@
     "private": true,
     "name": "@jshare/eslint-config",
     "version": "1.0.0",
-    "description": "JShare shared Eslint configuration",
+    "description": "JShare shared ESlint configuration",
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
     "main": "index.js",

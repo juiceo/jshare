@@ -1,15 +1,16 @@
 {
-    "name": "server",
+    "private": true,
+    "name": "@jshare/server",
     "version": "1.0.0",
-    "description": "",
+    "description": "JShare server",
+    "author": "Juuso Lappalainen <hello@juiceo.me>",
+    "license": "MIT",
     "main": "src/index.ts",
     "scripts": {
         "dev": "tsx watch --env-file=.env  --clear-screen=false ./src/index.ts",
         "typecheck": "tsc --noEmit"
     },
     "keywords": [],
-    "author": "Juuso Lappalainen",
-    "license": "ISC",
     "dependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",

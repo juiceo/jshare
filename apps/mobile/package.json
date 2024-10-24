@@ -1,6 +1,9 @@
 {
     "private": true,
-    "name": "@jshare/app-mobile",
+    "name": "@jshare/mobile",
+    "description": "JShare mobile app",
+    "author": "Juuso Lappalainen <hello@juiceo.me>",
+    "license": "MIT",
     "version": "1.0.0",
     "main": "expo-router/entry",
     "scripts": {
