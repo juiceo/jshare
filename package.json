@@ -3,12 +3,10 @@
     "name": "@jshare/monorepo",
     "scripts": {
         "dev:mobile": "turbo watch dev --filter=\"{./apps/mobile}...\"",
-        "dev:web": "turbo watch dev --filter=\"{./apps/web}...\"",
         "lint": "turbo lint",
         "test": "turbo test",
         "build": "turbo build",
         "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
-        "build:web": "turbo build --filter=\"...{./apps/web}\"",
         "turbo:clean": "turbo daemon clean",
         "format": "prettier './**/*.{js,jsx,ts,tsx,json}' --write"
     },
