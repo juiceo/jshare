@@ -29,6 +29,16 @@ However, I strongly believe that JShare can be very valuable despite not being a
 
 When the time comes to settle your expenses and pay or receive money from someone, you should use another app of your preference to make the transaction: MobilePay, Venmo, etc.
 
+#### How is this different from Splitwise/Splid/etc.?
+
+Honestly, I haven't done much digging into these competitors. This is a hobby project built by one person, primarily because I find it fun and useful - the aim will never be to achieve world domination in the "split bills" category. Feature-wise, those apps will always probably have more things to offer.
+
+Here's a few things that JShare can promise, though: 
+
+- The app will always be fully free to use
+- It's really good for the use cases that it's made for
+- All features are designed by users, for users - not because the app needs to generate revenue
+
 ## Design philosophy
 
 From the start, the goal with building JShare has been to improve on all aspects of existing alternatives - especially in terms of user experience. Some high-level design goals have been:
