@@ -21,7 +21,7 @@ JShare is a hobby project which aims to be the spiritual successor to WeShare. I
 
 JShare is never involved in any monetary transactions. This is for a few reasons: 
 
-- Open Banking is not so open in reality: good APIs for sending money between individuals either do not exist, or are prohibitively expensive
+- Open Banking is not so open in reality: good APIs for sending money between individuals either do not exist or have significant transaction fees
 - Even if that was possible: most countries have a different system that is the de facto way to send money to other people. Most of the effort in developing this app would go towards building banking integrations.
 - Most people would have a hard time trusting their card or bank details to some random open source application
 - This is a hobby project, and as such the software is provided as-is and without warranty. I don't want to spend my freetime figuring out where someone's money has disappeared :D
