@@ -1,7 +1,7 @@
 import { type PropsWithChildren, type ReactNode } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
-import { useTheme, type Theme } from '@jshare/theme';
+import { getSxStyles, useTheme, type SxMarginProps, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
@@ -12,7 +12,7 @@ export type FormControlProps = {
     onPress: () => void;
     focused: boolean;
     endAdornment?: ReactNode;
-};
+} & SxMarginProps;
 
 export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
     const { theme } = useTheme();
@@ -21,7 +21,7 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
     const styles = getStyles(theme);
 
     return (
-        <Pressable style={styles.wrapper} onPress={onPress}>
+        <Pressable style={[styles.wrapper, getSxStyles(props, theme)]} onPress={onPress}>
             <Stack row spacing="md">
                 <Stack column spacing="md" flex={1}>
                     <Typography variant="caption" color={focused ? 'accent.main' : 'primary'}>

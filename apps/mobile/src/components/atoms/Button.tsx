@@ -1,7 +1,13 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-import { getContrastTextColor, useTheme, type Theme } from '@jshare/theme';
+import {
+    getContrastTextColor,
+    getSxStyles,
+    useTheme,
+    type SxMarginProps,
+    type Theme,
+} from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
@@ -14,7 +20,7 @@ export type ButtonProps = {
     children: string;
     fill?: boolean;
     onPress?: () => void;
-};
+} & SxMarginProps;
 
 export const Button = (props: ButtonProps) => {
     const { theme } = useTheme();
@@ -23,7 +29,7 @@ export const Button = (props: ButtonProps) => {
 
     return (
         <RectButton
-            style={styles.button}
+            style={[styles.button, getSxStyles(props, theme)]}
             underlayColor={styles.buttonUnderlay.backgroundColor}
             enabled={!disabled && !loading}
             onPress={onPress}

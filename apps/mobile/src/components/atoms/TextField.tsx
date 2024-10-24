@@ -10,22 +10,20 @@ export type TextFieldProps = {
     onChange: (value: string) => void;
     TextInputProps?: TextInputProps;
     inputRef?: React.RefObject<TextInput>;
-} & Pick<FormControlProps, 'endAdornment' | 'error' | 'label'>;
+} & Omit<FormControlProps, 'focused' | 'onPress'>;
 
 export const TextField = (props: TextFieldProps) => {
     const { theme } = useTheme();
-    const { label, error, value, onChange, endAdornment, TextInputProps } = props;
+    const { value, onChange, inputRef: _inputRef, TextInputProps, ...formControlProps } = props;
     const innerInputRef = useRef<TextInput>(null);
     const inputRef = props.inputRef ?? innerInputRef;
     const [focused, setFocused] = useState<boolean>(false);
     const styles = getStyles(theme);
     return (
         <FormControl
-            label={label}
-            error={error}
+            {...formControlProps}
             onPress={() => inputRef.current?.focus()}
             focused={focused}
-            endAdornment={endAdornment}
         >
             <TextInput
                 value={value}

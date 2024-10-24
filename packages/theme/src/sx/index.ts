@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import { memoize, merge } from 'lodash';
 
 import { getBorderRadius } from '../borderRadius';
@@ -9,8 +8,8 @@ import type { SxProps } from './types';
 
 export * from './types';
 
-export const getSxStyles = (sx: SxProps, theme: Theme): ViewStyle => {
-    const trimmedEntries = Object.entries(sx).filter(([key, value]) => isSxKey(key));
+export const getSxStyles = (sx: SxProps, theme: Theme) => {
+    const trimmedEntries = Object.entries(sx).filter(([key]) => isSxKey(key));
 
     return memoizedMergeStyles(trimmedEntries, theme);
 };
@@ -63,7 +62,7 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
     key: TKey,
     value: SxProps[TKey],
     theme: Theme
-): ViewStyle => {
+) => {
     switch (key) {
         case 'height':
         case 'h': {

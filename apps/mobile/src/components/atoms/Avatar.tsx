@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 
-import { useTheme, type Theme } from '@jshare/theme';
+import { getSxStyles, useTheme, type SxMarginProps, type Theme } from '@jshare/theme';
 
 export type AvatarProps = {
     source: string | null | undefined;
     size: 'sm' | 'md' | 'lg';
-};
+} & SxMarginProps;
 
 export const Avatar = (props: AvatarProps) => {
     const { theme } = useTheme();
@@ -19,6 +19,7 @@ export const Avatar = (props: AvatarProps) => {
                 props.size === 'sm' && styles.sizeSm,
                 props.size === 'md' && styles.sizeMd,
                 props.size === 'lg' && styles.sizeLg,
+                getSxStyles(props, theme),
             ]}
             contentFit="cover"
         />
