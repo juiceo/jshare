@@ -1,164 +1,75 @@
 <div align="center">
-  <h1>Expo monorepo</h1>
-  <p>Fast pnpm monorepo for cross-platform apps built with Expo and React</p>
+  <h1>JShare monorepo</h1>
+  <p>Monorepo for the JShare expense tracking app</p>
 </div>
 
-<p align="center">
-  <a href="https://github.com/byCedric/expo-monorepo-example#-why-is-it-fast"><b>Why is it fast?</b></a>
-  &ensp;&mdash;&ensp;
-  <a href="https://github.com/byCedric/expo-monorepo-example#-how-to-use-it"><b>How to use it</b></a>
-  &ensp;&mdash;&ensp;
-  <a href="https://github.com/byCedric/expo-monorepo-example#-structure"><b>Structure</b></a>
-  &ensp;&mdash;&ensp;
-  <a href="https://github.com/byCedric/expo-monorepo-example#-workflows"><b>Workflows</b></a>
-  &ensp;&mdash;&ensp;
-  <a href="https://github.com/byCedric/expo-monorepo-example#%EF%B8%8F-caveats"><b>Caveats & Issues</b></a>
-</p>
+## What is JShare?
 
-<br />
+JShare is the ultimate application for keeping track of who paid for what and who owes who, for example when travelling with a group of friends. The name is derived from the WeShare app, which was originally created by Danske Bank / MobilePay, but was sadly shut down when MobilePay merged with Vipps. They did launch a new version of WeShare within the MobilePay application, but unfortunately the new version of it is somewhat of a UX disaster.
 
-## ⚡ Why is it fast?
+JShare is a hobby project which aims to be the spiritual successor to WeShare. It's available on Android and iOS, is free to use and fully open source (and accepting contributions) and is the best way to keep track of your expenses. A web version may also be coming in the future. 
 
-This repository uses both [pnpm](https://pnpm.io/) and [Turborepo](https://turbo.build/repo) to speed things up, _by a lot_. With pnpm, we leverage the installation performance using the global store cache. Turborepo helps us to run certain tasks, and cache the result if we rerun tasks with the same input or code. In the workflows we cache the [pnpm store](./.github/actions/setup-monorepo/action.yml#L37) and [Turborepo cache](./.github/actions/setup-monorepo/action.yml#L50-L56) using GitHub Actions built-in cache, resulting in the best performance possible.
+## Features
 
-### What about Metro?
+- Create groups with your friends and track expenses
+- Full-fledged group chat, with notifications, replies and reactions
+- Track payments made within the group
+- Keep track of who you owe, and who owes you - across all groups
 
-In **apps/mobile** we leverage the Metro cache to speed up building and publishing. We use Turborepo to restore or invalidate this cache. To populate this Metro cache, the **apps/mobile** has a [`$ pnpm build`](./apps/mobile/package.json#L9) script that exports React Native bundles. The resulting Metro cache is then reused when [publishing previews](./.github/workflows/preview.yml#L26-L28).
+## Design philosophy
 
-## ℹ️ Should I use it?
+From the start, the goal with building JShare has been to improve on all aspects of existing alternatives - especially in terms of user experience. Some high-level design goals have been:
 
-This repository demonstrates a working stack using [Expo](https://docs.expo.dev/) in a fast monorepo, while sharing most of the codebase with web. The primary goal of this repository is to showcase what is possible with Expo while keeping the code as "vanilla" as possible. Feel free to use this repository however you prefer, but when starting a project from scratch, consider a template with more assumptions. Those assumptions should help you develop your project faster than this repository can.
+- Simple: all features should be distilled to the simplest possible form, no over-engineering
+- Offline-first: the app should be fully usable whether you are online or not
+- Fast: optimistic updates over loading screens whenever possible
+- Useful: everyone working on the app is a power user themselves - and all features added to the app are things we want to see in it
+- Fun: financial apps are usually boring. Travelling with your friends is fun, and so should the apps you use during your travels
 
-- [`create-t3-turbo`](https://github.com/t3-oss/create-t3-turbo) → [Expo](https://docs.expo.dev/), [Next.js](https://nextjs.org/), [pnpm](https://pnpm.io/), [Turborepo](https://turbo.build/repo), [NextAuth.js](https://next-auth.js.org/), [Prisma](https://www.prisma.io/), and [tRPC](https://trpc.io/).
+## How is it built?
 
-## 🚀 How to use it
+At the core of JShare is a React Native application built with [Expo](https://expo.dev/), a Node.js server and [InstantDB](https://www.instantdb.com/) as the database. All of this lives in a PNPM / Turborepo monorepo. Strict-mode TypeScript everywhere!
 
-You can use and modify this repository however you want. If you want to use EAS to build your app, you'll need to create an [Expo access token](https://expo.dev/accounts/[account]/settings/access-tokens) and set it as `EXPO_TOKEN` GitHub actions secret.
+### Monorepo structure
 
-To run the repository locally, run these two commands:
+The monorepo contains two main folders: 
 
-- `$ pnpm install` - This installs all required Node libraries using [pnpm](https://pnpm.io/).
-- `$ pnpm dev` - Starts the development servers for all **apps**.
+- `apps`: Any package that results in an application being deployed. For now, this contains `mobile` (The mobile application) and `server` (The backend server). Applications may never depend on other applications.
+- `packages`: Any package that is used as a dependency for other packages or applications. Packages may depend on other packages, but may never depend on anything inside the `apps` directory.
 
-### Commands
+At the root, there are some monorepo-level scripts: 
 
-Because this monorepo uses [Turborepo](https://turbo.build/repo), you don't need to run additional commands to set things up. Whenever you run `$ pnpm build`, it will build all **packages** if they aren't built yet. In this monorepo we use a few commands or pipelines:
+- `lint`: Runs ESLint for all packages
+- `typecheck`: Runs the TypeScript compiler to typecheck all packages
+- `test`: Runs test suites for all packages
+- `build`: Builds all packages
+- `format:check`: Runs Prettier to check formatting for all packages
+- `format:write`: Runs Prettier to fix formatting for all packages
 
-- `$ pnpm dev` - Build and watch all **apps** and **packages** for development.
-- `$ pnpm lint` - Analyze the source code of all **apps** and **packages** using ESLint.
-- `$ pnpm test` - Run all tests for packages with Jest tests.
-- `$ pnpm build` - Build all **apps** and **packages** for production or to publish them on npm.
+### Development environment
 
-When developing or deploying a single app, you might not need the development server for all apps. For example, if you need to make a fix in the mobile app, you don't need the web development server. Or when deploying a single app to production, you only need to build that single app with all dependencies.
+To develop and run the app locally, you will need:
 
-This monorepo uses a simple npm script convention of `dev:<app-name>` and `build:<app-name>` to keep this process simple. Under the hood, it uses [Turborepo's workspace filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering), defined as an npm script in the root [**package.json**](./package.json).
+- Node.js 20.x (I recommend using e.g. [nodenv](https://github.com/nodenv/nodenv) to manage this automatically)
+- PNPM (https://pnpm.io/installation)
+- Mobile app: set up your environment for React Native development, see [Expo guide](https://docs.expo.dev/get-started/set-up-your-environment/?mode=development-build)
 
-- `$ pnpm dev:mobile` - Build and watch **app/mobile** and all **packages** used in mobile, for development.
-- `$ pnpm dev:web` - Build and watch **app/web** and all **packages** used in web, for development.
-- `$ pnpm build:mobile` - Build **apps/mobile** and all **packages** used in mobile, for production deployments
-- `$ pnpm build:web` - Build **apps/web** and all **packages** used in web, for production deployments
-
-### Switching to bun, yarn or npm
-
-You can use any package manager with Expo. If you want to use bun, yarn, or pnpm, instead of pnpm, all you have to do is:
-
-- Remove **.npmrc**, **pnpm-lock.yaml**, and **pnpm-workspace.yaml**.
-- Remove the `pnpm` property from the root **package.json** file.
-- Add the [`workspaces`](https://docs.npmjs.com/cli/v8/using-npm/workspaces) property to the root **package.json** file.
-- Update the workflows to use bun, yarn, or npm instead.
-
-> [!WARNING]
-> Unfortunately, npm does not support the [workspace protocol](https://yarnpkg.com/protocol/workspace). You also have to change the `"<package>": "workspace:*"` references to just `"<package>": "*"` for npm.
-
-## 📁 Structure
-
-- [`apps`](./apps) - Apps that only use packages and aren't aware of other apps.
-- [`packages`](./packages) - Packages that may use external and/or other monorepo packages.
-
-### Apps
-
-- [`apps/mobile`](./apps/mobile) - Expo app using `eslint-config` and `feature-home` packages.
-- [`apps/web`](./apps/web) - Next.js app using `eslint-config` and `feature-home` packages.
-
-### Packages
-
-- [`packages/eslint-config`](./packages/eslint-config) - Preconfigured ESLint configuration for each app or package.
-- [`packages/feature-home`](./packages/feature-home) - Shared React Native domain-logic for apps, using both `ui` and `eslint-config` packages.
-- [`packages/ui`](./packages/ui) - Shared React Native UI components for apps, using the `eslint-config` package.
-
-## 👷 Workflows
-
-- [`build`](./.github/workflows/build.yml) - Starts the EAS builds for **apps/mobile** using the given profile.
-- [`preview`](./.github/workflows/preview.yml) - Publishes apps to a PR-specific release channel and adds a QR code to that PR.
-- [`test`](./.github/workflows/test.yml) - Ensures that the apps and packages are healthy on multiple OSs.
-
-### Composite workflows
-
-- [`setup-monorepo`](./.github/actions/setup-monorepo/action.yml) - Reusable composite workflow to setup the monorepo in GitHub Actions.
-
-## ⚠️ Caveats
-
-### Installing multiple React Native versions
-
-React Native is a complex library, split over multiple different packages. Unfortunately, React Native only supports a single version per monorepo. When using multiple different versions, things might break in unexpected ways without proper error reporting.
-
-You can check if your monorepo is installing multiple versions of React Native with the `npm list` command, supported by all major package managers:
+When you have the prerequisites installed on your system, clone the repository and install dependencies to get started: 
 
 ```bash
-$ npm why react-native
-$ yarn why react-native
-
-# Bun doesn't have `bun why` (yet), but you can use `yarn why` instead
-$ bun install --yarn && yarn why react-native
-
-# pnpm needs `--recursive` to search in all workspaces within the monorepo
-$ pnpm why --recursive react-native
+git clone git@github.com:juiceo/jshare-monorepo.git
+cd jshare-monorepo
+pnpm install
 ```
 
-If you are using multiple versions, try to update all **package.json** files, or use an [`overrides`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#overrides)/[`resolutions`](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) in the root **package.json** to force only one React Native version.
+### Running the app
 
-### Using environment variables in React Native
+Once you have the environment set up, you can create the first development build on your device:
 
-Reusing Metro caches can be dangerous if you use Babel plugins like [transform-inline-environment-variables](https://babeljs.io/docs/en/babel-plugin-transform-inline-environment-variables/). When using Babel plugins to swap out environment variables for their actual value, you are creating a dependency on environment variables. Because Metro is unaware of dependencies on environment variables, Metro might reuse an incorrect cached environment variable.
+```bash
+pnpm dev:mobile
+cd apps/mobile
+pnpm ios
+```
 
-Since Turborepo handles the cache in this repository, we can leverage [caching based on environment variables](https://turbo.build/repo/docs/core-concepts/caching#altering-caching-based-on-environment-variables). This invalidates the Metro cache whenever certain environment variables are changed and avoid reusing incorrect cached code.
-
-> [!TIP]
-> Expo now supports `.env` files out-of-the-box. This also means that Metro is now smart enough to invalidate the cache whenever these variables change. There is no need to do this manually anymore.
-
-### pnpm workarounds
-
-In the current React Native ecosystem, there are a lot of implicit dependencies. These can be from the native code that is shipped within packages, or even implicit dependencies through installing a specific version of Expo or React Native. In the newer package managers like pnpm, you will run into issues due to these implicit dependencies. Besides that there are other issues like [Metro not following symlinks](https://github.com/facebook/metro/issues/1).
-
-To workaround these issues, we have to change some config:
-
-1. Let pnpm generate a flat **node_modules** folder, without symlinks. You can do that by creating a root [**.npmrc**](./.npmrc) file containing ([`node-linker=hoisted`](https://pnpm.io/npmrc#node-linker)). This works around two things; no Metro symlink support, and having a simple way to determine where the modules are installed (see point 3).
-
-2. Either disable [`strict-peer-dependencies`](https://pnpm.io/npmrc#strict-peer-dependencies) or add [`peerDependencyRules.ignoreMissing`](./package.json#L14-L22) rules in the **package.json**. This disables some of the expected implicit peer dependencies issues. Without these changes, pnpm will fail on install asking you to install various peer dependencies.
-
-3. Update the **metro.config.js** configuration for usage in monorepos. Full explanation per configuration option can be found in the [Expo docs](https://docs.expo.dev/guides/monorepos/#modify-the-metro-config). The only addition in this repository is the [`config.cacheStores`](./apps/mobile/metro.config.js#L22-L24). This change moves the Metro cache to a place which is accessible by Turborepo, our main cache handler (see [Why is it fast?](#-why-is-it-fast)).
-
-
-### Precompile packages
-
-EAS only sends the files which are committed to the repository. That means [the `packages/*/build` folders](.gitignore#L3) need to be generated before building our apps. To tell EAS how to compile our packages, we can [use the `postinstall` hook](https://docs.expo.dev/build-reference/how-tos/#how-to-set-up-eas-build-with).
-
-### Running EAS from apps directories
-
-As of writing, the `eas build` command needs to be executed from the package folder itself. EAS will still create a tarball with all files from your monorepo, but runs the build commands from this local folder. You can see this happening in the [build workflow](./.github/workflows/build.yml#L32).
-
-### Using local credentials in CI
-
-If you want to maintain the keystore or certificates yourself, you have to [configure EAS with local credentials](https://docs.expo.dev/app-signing/local-credentials/#credentialsjson). When your CI provider doesn't allow you to add "secret files", you can [encode these files to base64 strings](https://docs.expo.dev/app-signing/local-credentials/#using-local-credentials-on-builds-triggered-from) and decode whenever you need it.
-
-> It's highly recommended to keep keystores and certificates out of your repository to avoid security issues.
-
-## ❌ Common issues
-
-_No ongoing issues, we are actively monitoring and fixing potential issues_
-
-<div align="center">
-  <br />
-  with&nbsp;:heart:&nbsp;&nbsp;<strong>byCedric</strong>
-  <br />
-</div>
+This guide is incomplete, and will be continued.
