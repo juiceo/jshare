@@ -15,6 +15,10 @@ module.exports = {
     // By setting delimiters to `\|/`, this ignore is supported on Windows too
     settings: {
         'import/ignore': ['node_modules(\\\\|/)react-native(\\\\|/)index\\.js$'],
+        "react": {
+            "version": "detect",
+            "defaultVersion": "18.2.0"
+        }
     },
     overrides: [
         {
