@@ -5,7 +5,7 @@
 
 ## What is JShare?
 
-JShare is the ultimate application for keeping track of who paid for what and who owes who, for example when travelling with a group of friends. The name is derived from the WeShare app, which was originally created by Danske Bank / MobilePay, but was sadly shut down when MobilePay merged with Vipps. They did launch a new version of WeShare within the MobilePay application, but unfortunately the new version of it is somewhat of a UX disaster.
+JShare is the ultimate application for keeping track of who paid for what and who owes who, for example when travelling with a group of friends. The name is derived from the WeShare app, which was originally created by Danske Bank / MobilePay, and was the de facto application for tracking expenses. WeShare was sadly shut down in 2022 when MobilePay merged with Vipps, and similar functionality was reintroduced later within the MobilePay application. Unfortunately the new version of it is somewhat of a UX disaster, and is much different from the WeShare that was loved by many.
 
 JShare is a hobby project which aims to be the spiritual successor to WeShare. It's available on Android and iOS, is free to use and fully open source (and accepting contributions) and is the best way to keep track of your expenses. A web version may also be coming in the future. 
 
