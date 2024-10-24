@@ -9,7 +9,8 @@
         "build": "turbo build",
         "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
         "turbo:clean": "turbo daemon clean",
-        "format": "prettier './**/*.{js,jsx,ts,tsx,json}' --write"
+        "format:write": "prettier './**/*.{js,jsx,ts,tsx,json}' --write",
+        "format:check": "prettier './**/*.{js,jsx,ts,tsx,json}' --check"
     },
     "devDependencies": {
         "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
