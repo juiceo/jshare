@@ -51,6 +51,7 @@ const isSxKey = (key: string): boolean => {
         case 'background':
         case 'borderRadius':
         case 'br':
+        case 'border':
         case 'absoluteFill': {
             return true;
         }
@@ -176,6 +177,16 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
                 borderRadius: getBorderRadius(value as SxProps['br']),
             };
         }
+        case 'border': {
+            const _value = value as SxProps['border'];
+            return _value
+                ? {
+                      borderColor: theme.palette.border[_value],
+                      borderWidth: 1,
+                      borderStyle: 'solid',
+                  }
+                : {};
+        }
         case 'absoluteFill': {
             return {
                 position: 'absolute',
@@ -185,6 +196,7 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
                 bottom: 0,
             };
         }
+
         default: {
             assertUnreachable(key);
             return {};

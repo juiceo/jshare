@@ -8,10 +8,10 @@ export default function LoginLayout() {
         <Stack
             screenOptions={{
                 contentStyle: {
-                    backgroundColor: theme.palette.background.main,
+                    backgroundColor: theme.palette.background.default,
                 },
                 headerStyle: {
-                    backgroundColor: theme.palette.background.main,
+                    backgroundColor: theme.palette.background.default,
                 },
                 headerTintColor: theme.palette.text.primary,
                 headerTitleStyle: {

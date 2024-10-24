@@ -31,7 +31,7 @@ const getStyles = (theme: Theme) => {
         avatar: {
             borderRadius: theme.borderRadius.full,
             borderWidth: 1,
-            borderColor: theme.palette.background.light,
+            borderColor: theme.palette.border.paper,
 
             borderStyle: 'solid',
         },

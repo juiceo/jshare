@@ -4,7 +4,7 @@ import {
     getSxStyles,
     getTextColorFromPath,
     useTheme,
-    type BackgroundColorPath,
+    type PrimaryColorPath,
     type SxProps,
     type TextColorVariant,
     type TypographyVariant,
@@ -12,7 +12,7 @@ import {
 
 export type TypographyProps = {
     variant?: TypographyVariant;
-    color?: TextColorVariant | BackgroundColorPath;
+    color?: TextColorVariant | PrimaryColorPath;
     align?: TextStyle['textAlign'];
     weight?: TextStyle['fontWeight'];
 } & TextProps &

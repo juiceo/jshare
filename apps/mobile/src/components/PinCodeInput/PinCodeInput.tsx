@@ -84,11 +84,11 @@ const Digit = (props: { value: number | undefined; focused?: boolean }) => {
                 width: 36,
                 height: 36,
                 borderRadius: theme.borderRadius.md,
-                backgroundColor: theme.palette.background.light,
+                backgroundColor: theme.palette.background.elevation1,
                 borderWidth: 2,
                 borderColor: props.focused
                     ? theme.palette.accent.main
-                    : theme.palette.background.light,
+                    : theme.palette.background.elevation1,
                 borderStyle: 'solid',
             }}
         >

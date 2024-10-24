@@ -1,7 +1,7 @@
 import type { ViewStyle } from 'react-native';
 
 import type { BorderRadiusUnit } from '../borderRadius';
-import type { BackgroundColorPath } from '../colors';
+import type { BackgroundColorPath, BorderColorPath, BorderColorVariant } from '../colors';
 import type { SpacingUnit } from '../spacing';
 
 /**
@@ -43,6 +43,7 @@ export type SxPaddingProps = {
 export type SxBorderProps = {
     br?: BorderRadiusUnit;
     borderRadius?: BorderRadiusUnit;
+    border?: BorderColorVariant;
 };
 
 export type SxColorProps = {
