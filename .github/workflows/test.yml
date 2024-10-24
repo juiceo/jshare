@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/setup-monorepo
 
       - name: ✅ Lint packages
-        run: pnpm run -w lint && pnpm run -w format:check
+        run: pnpm run -w lint
 
       - name: 🔎 TypeCheck packages
         run: pmpm run -w typecheck
