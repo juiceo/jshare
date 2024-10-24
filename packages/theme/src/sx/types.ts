@@ -22,9 +22,12 @@ export type SxMarginProps = {
 export type SxLayoutProps = {
     w?: ViewStyle['width'];
     width?: ViewStyle['width'];
+    maxW?: ViewStyle['maxWidth'];
     h?: ViewStyle['height'];
     height?: ViewStyle['height'];
+    maxH?: ViewStyle['maxHeight'];
     flex?: ViewStyle['flex'];
+    absoluteFill?: boolean;
 };
 
 export type SxPaddingProps = {

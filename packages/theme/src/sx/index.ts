@@ -28,8 +28,10 @@ const isSxKey = (key: string): boolean => {
     switch (_key) {
         case 'height':
         case 'h':
+        case 'maxH':
         case 'width':
         case 'w':
+        case 'maxW':
         case 'flex':
         case 'm':
         case 'my':
@@ -48,7 +50,8 @@ const isSxKey = (key: string): boolean => {
         case 'bg':
         case 'background':
         case 'borderRadius':
-        case 'br': {
+        case 'br':
+        case 'absoluteFill': {
             return true;
         }
         default: {
@@ -70,10 +73,20 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
                 height: value as SxProps['h'],
             };
         }
+        case 'maxH': {
+            return {
+                maxHeight: value as SxProps['maxH'],
+            };
+        }
         case 'width':
         case 'w': {
             return {
                 width: value as SxProps['w'],
+            };
+        }
+        case 'maxW': {
+            return {
+                maxWidth: value as SxProps['maxW'],
             };
         }
         case 'flex': {
@@ -161,6 +174,15 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
         case 'borderRadius': {
             return {
                 borderRadius: getBorderRadius(value as SxProps['br']),
+            };
+        }
+        case 'absoluteFill': {
+            return {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
             };
         }
         default: {
