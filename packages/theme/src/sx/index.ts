@@ -1,4 +1,5 @@
 import type { ViewStyle } from 'react-native';
+import { memoize, merge } from 'lodash';
 
 import { getBorderRadius } from '../borderRadius';
 import { getColorFromPath } from '../colors/utils';
@@ -8,26 +9,166 @@ import type { SxProps } from './types';
 
 export * from './types';
 
-export const getSxStyles = (sx: Partial<SxProps>, theme: Theme): ViewStyle => {
-    return {
-        height: sx.h,
-        width: sx.w,
-        flex: sx.flex,
-        padding: getSpacing(sx.p),
-        paddingHorizontal: getSpacing(sx.px),
-        paddingLeft: getSpacing(sx.pl),
-        paddingRight: getSpacing(sx.pr),
-        paddingVertical: getSpacing(sx.py),
-        paddingTop: getSpacing(sx.pt),
-        paddingBottom: getSpacing(sx.pb),
-        margin: getSpacing(sx.m),
-        marginHorizontal: getSpacing(sx.mx),
-        marginLeft: getSpacing(sx.ml),
-        marginRight: getSpacing(sx.mr),
-        marginVertical: getSpacing(sx.my),
-        marginTop: getSpacing(sx.mt),
-        marginBottom: getSpacing(sx.mb),
-        borderRadius: getBorderRadius(sx.borderRadius ?? sx.br),
-        backgroundColor: getColorFromPath(sx.bg, theme),
-    };
+export const getSxStyles = (sx: SxProps, theme: Theme): ViewStyle => {
+    const trimmedEntries = Object.entries(sx).filter(([key, value]) => isSxKey(key));
+
+    return memoizedMergeStyles(trimmedEntries, theme);
 };
+
+const mergeStyles = (entries: [string, SxProps[keyof SxProps]][], theme: Theme) => {
+    return merge(
+        entries.map(([key, value]) => {
+            return getStylesFromSxProperty(key as keyof SxProps, value, theme);
+        })
+    );
+};
+const memoizedMergeStyles = memoize(mergeStyles);
+
+const isSxKey = (key: string): boolean => {
+    const _key = key as keyof SxProps;
+    switch (_key) {
+        case 'height':
+        case 'h':
+        case 'width':
+        case 'w':
+        case 'flex':
+        case 'm':
+        case 'my':
+        case 'mx':
+        case 'mb':
+        case 'mt':
+        case 'ml':
+        case 'mr':
+        case 'p':
+        case 'py':
+        case 'px':
+        case 'pt':
+        case 'pb':
+        case 'pl':
+        case 'pr':
+        case 'bg':
+        case 'background':
+        case 'borderRadius':
+        case 'br': {
+            return true;
+        }
+        default: {
+            assertUnreachable(_key);
+            return false;
+        }
+    }
+};
+
+const getStylesFromSxProperty = <TKey extends keyof SxProps>(
+    key: TKey,
+    value: SxProps[TKey],
+    theme: Theme
+): ViewStyle => {
+    switch (key) {
+        case 'height':
+        case 'h': {
+            return {
+                height: value as SxProps['h'],
+            };
+        }
+        case 'width':
+        case 'w': {
+            return {
+                width: value as SxProps['w'],
+            };
+        }
+        case 'flex': {
+            return {
+                flex: value as SxProps['flex'],
+            };
+        }
+        case 'p': {
+            return {
+                padding: getSpacing(value as SxProps['p']),
+            };
+        }
+        case 'px': {
+            return {
+                paddingHorizontal: getSpacing(value as SxProps['px']),
+            };
+        }
+        case 'py': {
+            return {
+                paddingVertical: getSpacing(value as SxProps['py']),
+            };
+        }
+        case 'pt': {
+            return {
+                paddingTop: getSpacing(value as SxProps['pt']),
+            };
+        }
+        case 'pb': {
+            return {
+                paddingBottom: getSpacing(value as SxProps['pb']),
+            };
+        }
+        case 'pl': {
+            return {
+                paddingLeft: getSpacing(value as SxProps['pl']),
+            };
+        }
+        case 'pr': {
+            return {
+                paddingRight: getSpacing(value as SxProps['pr']),
+            };
+        }
+        case 'm': {
+            return {
+                margin: getSpacing(value as SxProps['m']),
+            };
+        }
+        case 'mx': {
+            return {
+                marginHorizontal: getSpacing(value as SxProps['mx']),
+            };
+        }
+        case 'my': {
+            return {
+                marginVertical: getSpacing(value as SxProps['my']),
+            };
+        }
+        case 'mt': {
+            return {
+                marginTop: getSpacing(value as SxProps['mt']),
+            };
+        }
+        case 'mb': {
+            return {
+                marginBottom: getSpacing(value as SxProps['mb']),
+            };
+        }
+        case 'ml': {
+            return {
+                marginLeft: getSpacing(value as SxProps['ml']),
+            };
+        }
+        case 'mr': {
+            return {
+                marginRight: getSpacing(value as SxProps['mr']),
+            };
+        }
+        case 'bg':
+        case 'background': {
+            return {
+                backgroundColor: getColorFromPath(value as SxProps['bg'], theme),
+            };
+        }
+        case 'br':
+        case 'borderRadius': {
+            return {
+                borderRadius: getBorderRadius(value as SxProps['br']),
+            };
+        }
+        default: {
+            assertUnreachable(key);
+            return {};
+        }
+    }
+};
+
+function assertUnreachable(x: never) {}

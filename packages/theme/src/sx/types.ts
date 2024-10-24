@@ -17,13 +17,15 @@ export type SxMarginProps = {
     my?: SpacingUnit;
     mt?: SpacingUnit;
     mb?: SpacingUnit;
-}
+};
 
 export type SxLayoutProps = {
     w?: ViewStyle['width'];
+    width?: ViewStyle['width'];
     h?: ViewStyle['height'];
+    height?: ViewStyle['height'];
     flex?: ViewStyle['flex'];
-}
+};
 
 export type SxPaddingProps = {
     p?: SpacingUnit;
@@ -33,13 +35,14 @@ export type SxPaddingProps = {
     py?: SpacingUnit;
     pt?: SpacingUnit;
     pb?: SpacingUnit;
-}
+};
 
 export type SxBorderProps = {
     br?: BorderRadiusUnit;
     borderRadius?: BorderRadiusUnit;
-}
+};
 
 export type SxColorProps = {
     bg?: BackgroundColorPath;
-}
+    background?: BackgroundColorPath;
+};
