@@ -1,5 +1,5 @@
 {
-    "extends": "expo/tsconfig.base",
+    "extends": ["@jshare/tsconfig"],
     "compilerOptions": {
         "strict": true,
         "baseUrl": ".",
