@@ -5,7 +5,7 @@
 
 ## What is JShare?
 
-JShare is the ultimate application for keeping track of who paid for what and who owes who, for example when travelling with a group of friends. The name is derived from the WeShare app, which was originally created by Danske Bank / MobilePay, but was sadly shut down when MobilePay merged with Vipps. They did launch a new version of WeShare within the MobilePay application, but unfortunately the new version of it is somewhat of a UX disaster.
+JShare is the ultimate application for keeping track of who paid for what and who owes who, for example when travelling with a group of friends. The name is derived from the WeShare app, which was originally created by Danske Bank / MobilePay, and was the de facto application for tracking expenses. WeShare was sadly shut down in 2022 when MobilePay merged with Vipps, and similar functionality was reintroduced later within the MobilePay application. Unfortunately the new version of it is somewhat of a UX disaster, and is missing many of the great features that made WeShare so popular.
 
 JShare is a hobby project which aims to be the spiritual successor to WeShare. It's available on Android and iOS, is free to use and fully open source (and accepting contributions) and is the best way to keep track of your expenses. A web version may also be coming in the future. 
 
@@ -15,6 +15,29 @@ JShare is a hobby project which aims to be the spiritual successor to WeShare. I
 - Full-fledged group chat, with notifications, replies and reactions
 - Track payments made within the group
 - Keep track of who you owe, and who owes you - across all groups
+
+#### Do you handle payments?
+
+JShare is never involved in any monetary transactions. This is for a few reasons: 
+
+- Open Banking is not so open in reality: good APIs for sending money between individuals either do not exist, or are prohibitively expensive
+- Even if that was possible: most countries have a different system that is the de facto way to send money to other people. Most of the effort in developing this app would go towards building banking integrations.
+- Most people would have a hard time trusting their card or bank details to some random open source application
+- This is a hobby project, and as such the software is provided as-is and without warranty. I don't want to spend my freetime figuring out where someone's money has disappeared :D
+
+However, I strongly believe that JShare can be very valuable despite not being able to handle this last step of actually moving money around. Actually making the transaction is a vanishingly small part of the experience: the vast majority of your time will be used in adding expenses and keeping track of who paid for what. JShare aims to be the best experience on the market for that user job.
+
+When the time comes to settle your expenses and pay or receive money from someone, you should use another app of your preference to make the transaction: MobilePay, Venmo, etc.
+
+#### How is this different from Splitwise/Splid/etc.?
+
+Honestly, I haven't done much digging into these competitors. This is a hobby project built by one person, primarily because I find it fun and useful - the aim will never be to achieve world domination in the "split bills" category. Feature-wise, those apps will always probably have more things to offer.
+
+Here's a few things that JShare can promise, though: 
+
+- The app will always be fully free to use
+- It's really good for the use cases that it's made for
+- All features are designed by users, for users - not because the app needs to generate revenue
 
 ## Design philosophy
 
