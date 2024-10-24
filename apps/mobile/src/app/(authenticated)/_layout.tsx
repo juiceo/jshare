@@ -10,5 +10,16 @@ export default function AuthenticatedLayout() {
         return <Redirect href="/login" />;
     }
 
-    return <Stack />;
+    return (
+        <Stack>
+            <Stack.Screen
+                name="create-group"
+                options={{ presentation: 'modal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="join-group/index"
+                options={{ presentation: 'modal', headerShown: false }}
+            />
+        </Stack>
+    );
 }

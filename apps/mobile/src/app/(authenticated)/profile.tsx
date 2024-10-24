@@ -21,7 +21,7 @@ export default function ProfilePage() {
                         <Typography variant="body2" color="secondary">
                             Joined Oct 24, 2024
                         </Typography>
-                        <Avatar size="lg" source="https://picsum.photos/200/200" mt="xl" />
+                        <Avatar size="lg" source={profile?.avatar} mt="xl" />
                     </Stack>
                     <TextField
                         label={'First name'}

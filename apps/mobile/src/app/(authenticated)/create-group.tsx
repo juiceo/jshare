@@ -1,0 +1,68 @@
+import { Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
+
+import { Avatar } from '~/components/atoms/Avatar';
+import { Button } from '~/components/atoms/Button';
+import { Stack } from '~/components/atoms/Stack';
+import { TextField } from '~/components/atoms/TextField';
+import { Typography } from '~/components/atoms/Typography';
+import { Screen } from '~/components/Screen';
+import { useProfile } from '~/wrappers/AuthContext';
+
+export default function CreateGroupPage() {
+    const router = useRouter();
+    const { data: profile } = useProfile();
+
+    return (
+        <Screen screenOptions={{ title: 'Create group' }}>
+            <Screen.Content scrollable>
+                <Stack column spacing="md">
+                    <Stack p="3xl">
+                        <Typography variant="h3" align="center">
+                            New group
+                        </Typography>
+                    </Stack>
+                    <Stack height={200} bg="background.elevation1" center br="md">
+                        <Typography variant="body2">Add image</Typography>
+                    </Stack>
+                    <TextField
+                        label="Group name"
+                        TextInputProps={{
+                            placeholder: "Boys' trip to Berlin",
+                        }}
+                        value={''}
+                        onChange={function (value: string): void {
+                            throw new Error('Function not implemented.');
+                        }}
+                    />
+                    <TextField
+                        label="Currency"
+                        TextInputProps={{
+                            placeholder: 'USD',
+                        }}
+                        value={''}
+                        onChange={function (value: string): void {
+                            throw new Error('Function not implemented.');
+                        }}
+                    />
+                </Stack>
+            </Screen.Content>
+            <Screen.Footer>
+                <Stack column spacing="md">
+                    <Button color="secondary" variant="text">
+                        Cancel
+                    </Button>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onPress={() => {
+                            router.replace('/profile');
+                        }}
+                    >
+                        Create group
+                    </Button>
+                </Stack>
+            </Screen.Footer>
+        </Screen>
+    );
+}

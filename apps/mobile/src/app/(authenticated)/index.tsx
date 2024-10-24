@@ -30,10 +30,22 @@ export default function HomePage() {
                     </Typography>
                 </Stack>
                 <Stack column mt="xl" spacing="md">
-                    <Button color="secondary" variant="text">
+                    <Button
+                        color="secondary"
+                        variant="text"
+                        onPress={() => {
+                            router.push('/join-group');
+                        }}
+                    >
                         Enter invite code
                     </Button>
-                    <Button color="primary" variant="contained">
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onPress={() => {
+                            router.push('/create-group');
+                        }}
+                    >
                         Create new group
                     </Button>
                 </Stack>
