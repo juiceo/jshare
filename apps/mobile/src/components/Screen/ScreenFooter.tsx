@@ -1,4 +1,4 @@
-import type { ViewProps } from 'react-native';
+import { View, type ViewProps } from 'react-native';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -38,7 +38,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                     {props.children}
                 </KeyboardStickyView>
             ) : (
-                props.children
+                <View style={[{ padding: theme.spacing[padding] }, style]}>{props.children}</View>
             )}
         </SafeAreaView>
     );

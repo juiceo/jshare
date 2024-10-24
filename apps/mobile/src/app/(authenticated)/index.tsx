@@ -1,12 +1,15 @@
+import { Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
+
 import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { useProfile, useSession } from '~/wrappers/AuthContext';
+import { useProfile } from '~/wrappers/AuthContext';
 
-export default function Page() {
-    const { isLoading, signOut } = useSession();
+export default function HomePage() {
+    const router = useRouter();
     const { data: profile } = useProfile();
 
     return (
@@ -14,14 +17,24 @@ export default function Page() {
             <Screen.Content>
                 <Stack row justifyBetween p="md">
                     <Typography variant="h3">JShare</Typography>
-                    <Avatar size="sm" source={profile?.avatar} />
+                    <Pressable onPress={() => router.push('/profile')}>
+                        <Avatar size="sm" source={profile?.avatar} />
+                    </Pressable>
                 </Stack>
                 <Stack flex={1} center>
                     <Typography variant="h3" color="primary" align="center" maxW="60%">
-                        Welcome, {profile?.firstName} {profile?.lastName}!
+                        Hi there! 👋
                     </Typography>
-                    <Button color="error" variant="text" onPress={signOut} loading={isLoading}>
-                        Log out
+                    <Typography variant="body1" color="primary" align="center" maxW="60%">
+                        Good to see you here. Create a group or join an existing one to get started.
+                    </Typography>
+                </Stack>
+                <Stack column mt="xl" spacing="md">
+                    <Button color="secondary" variant="text">
+                        Enter invite code
+                    </Button>
+                    <Button color="primary" variant="contained">
+                        Create new group
                     </Button>
                 </Stack>
             </Screen.Content>
