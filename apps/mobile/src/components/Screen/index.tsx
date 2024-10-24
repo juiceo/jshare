@@ -40,10 +40,10 @@ export const Screen = (props: ScreenProps) => {
             <Stack.Screen
                 options={{
                     contentStyle: {
-                        backgroundColor: theme.palette.background.default,
+                        backgroundColor: theme.palette.background.main,
                     },
                     headerStyle: {
-                        backgroundColor: theme.palette.background.default,
+                        backgroundColor: theme.palette.background.main,
                     },
                     headerTintColor: theme.palette.text.primary,
                     headerTitleStyle: {

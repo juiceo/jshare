@@ -10,11 +10,14 @@ export default function Page() {
     const { data: profile } = useProfile();
 
     return (
-        <Screen screenOptions={{ title: 'Home' }}>
+        <Screen screenOptions={{ title: 'Home', headerShown: false }}>
             <Screen.Content>
+                <Stack row justifyBetween p="md">
+                    <Typography variant="h3">JShare</Typography>
+                    <Avatar size="sm" source={profile?.avatar} />
+                </Stack>
                 <Stack flex={1} center>
-                    <Avatar size="md" source={profile?.avatar} />
-                    <Typography variant="h1" color="accent.main" align="center">
+                    <Typography variant="h3" color="primary" align="center" maxW="60%">
                         Welcome, {profile?.firstName} {profile?.lastName}!
                     </Typography>
                     <Button color="error" variant="text" onPress={signOut} loading={isLoading}>

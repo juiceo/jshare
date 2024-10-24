@@ -16,8 +16,8 @@ export type PrimaryColor = {
 };
 
 export type BackgroundColor = {
-    dark: string;
     default: string;
+    main: string;
     elevation1: string;
     elevation2: string;
     elevation3: string;
