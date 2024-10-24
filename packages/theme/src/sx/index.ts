@@ -8,7 +8,7 @@ import type { SxProps } from './types';
 
 export * from './types';
 
-export const getSxStyles = (sx: SxProps, theme: Theme): ViewStyle => {
+export const getSxStyles = (sx: Partial<SxProps>, theme: Theme): ViewStyle => {
     return {
         height: sx.h,
         width: sx.w,
@@ -27,7 +27,7 @@ export const getSxStyles = (sx: SxProps, theme: Theme): ViewStyle => {
         marginVertical: getSpacing(sx.my),
         marginTop: getSpacing(sx.mt),
         marginBottom: getSpacing(sx.mb),
-        borderRadius: getBorderRadius(sx.radius ?? sx.br),
+        borderRadius: getBorderRadius(sx.borderRadius ?? sx.br),
         backgroundColor: getColorFromPath(sx.bg, theme),
     };
 };
