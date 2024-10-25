@@ -1,14 +1,30 @@
+import { useCallback, useState } from 'react';
+
+import type { Profile } from '@jshare/db';
+
 import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { useProfile, useSession } from '~/wrappers/AuthContext';
+import { db } from '~/services/instantdb';
+import { useAuth } from '~/wrappers/AuthContext';
+import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
 
 export default function ProfilePage() {
-    const { signOut } = useSession();
-    const { data: profile } = useProfile();
+    const { signOut } = useAuth();
+    const { profile } = useAuthenticatedContext();
+
+    const [firstName, setFirstName] = useState<string>(profile.firstName);
+    const [lastName, setLastName] = useState<string>(profile.lastName);
+
+    const handleSaveProfile = useCallback(
+        (value: Partial<Profile>) => {
+            return db.transact([db.tx.profiles[profile.id].merge(value)]);
+        },
+        [profile.id]
+    );
 
     return (
         <Screen screenOptions={{ title: 'Profile' }}>
@@ -25,32 +41,27 @@ export default function ProfilePage() {
                     </Stack>
                     <TextField
                         label={'First name'}
+                        value={firstName}
+                        onChange={setFirstName}
                         TextInputProps={{
                             placeholder: 'John',
-                        }}
-                        value={profile?.firstName ?? ''}
-                        onChange={function (value: string): void {
-                            throw new Error('Function not implemented.');
+                            onBlur: () => handleSaveProfile({ firstName }),
                         }}
                     />
                     <TextField
                         label={'Last name'}
-                        value={profile?.lastName ?? ''}
+                        value={lastName}
+                        onChange={setLastName}
                         TextInputProps={{
                             placeholder: 'Doe',
-                        }}
-                        onChange={function (value: string): void {
-                            throw new Error('Function not implemented.');
+                            onBlur: () => handleSaveProfile({ lastName }),
                         }}
                     />
                 </Stack>
+            </Screen.Content>
+            <Screen.Footer>
                 <Button color="error" variant="text" onPress={signOut} mt="3xl">
                     Sign out
-                </Button>
-            </Screen.Content>
-            <Screen.Footer padding="md">
-                <Button color="primary" variant="contained">
-                    Save changes
                 </Button>
             </Screen.Footer>
         </Screen>

@@ -1,17 +1,13 @@
-import { Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { useProfile } from '~/wrappers/AuthContext';
 
 export default function CreateGroupPage() {
     const router = useRouter();
-    const { data: profile } = useProfile();
 
     return (
         <Screen screenOptions={{ title: 'Create group' }}>

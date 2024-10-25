@@ -6,11 +6,11 @@ import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { useProfile } from '~/wrappers/AuthContext';
+import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
 
 export default function HomePage() {
     const router = useRouter();
-    const { data: profile } = useProfile();
+    const { profile } = useAuthenticatedContext();
 
     return (
         <Screen screenOptions={{ title: 'Home', headerShown: false }}>
