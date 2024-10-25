@@ -19,6 +19,12 @@ export const typographyVariants: TypographyVariants = {
         lineHeight: 32,
         letterSpacing: 0,
     },
+    h4: {
+        fontFamily: 'Poppins_500Medium',
+        fontSize: 18,
+        lineHeight: 32,
+        letterSpacing: 0,
+    },
     body1: {
         fontFamily: 'Nunito_400Regular',
         fontSize: 16,

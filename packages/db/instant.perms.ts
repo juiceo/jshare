@@ -11,7 +11,7 @@ const perms = {
         allow: {
             view: 'true',
             create: 'auth.id == data.userId',
-            update: 'true',
+            update: 'auth.id == data.userId && auth.id == newData.userId',
             delete: 'false',
         },
     },

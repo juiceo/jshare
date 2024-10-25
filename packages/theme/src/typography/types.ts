@@ -6,6 +6,7 @@ export type TypographyVariants = {
     h1: TypographyVariantDefinition;
     h2: TypographyVariantDefinition;
     h3: TypographyVariantDefinition;
+    h4: TypographyVariantDefinition;
     body1: TypographyVariantDefinition;
     body2: TypographyVariantDefinition;
     caption: TypographyVariantDefinition;

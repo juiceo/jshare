@@ -9,8 +9,8 @@ export const darkPalette: ColorPalette = {
     background: {
         default: '#0A0A0A',
         main: '#121212',
-        elevation1: '#1A1A1A', // Slightly lighter for low elevation
-        elevation2: '#222222', // Medium elevation
+        elevation1: '#1A1A1A',
+        elevation2: '#222222',
         elevation3: '#2A2A2A',
     },
     border: {

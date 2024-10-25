@@ -13,18 +13,15 @@ export const ModalHeader = (props: ModalHeaderProps) => {
     const { title } = props;
     const router = useRouter();
     return (
-        <Stack py="2xl" style={{ position: 'relative', backgroundColor: 'blue' }}>
+        <Stack py="2xl" style={{ position: 'relative' }}>
             <Stack row alignCenter>
-                <Pressable
-                    style={{ width: 24, backgroundColor: 'red' }}
-                    onPress={() => router.dismiss()}
-                >
+                <Pressable style={{ width: 24 }} onPress={() => router.dismiss()} hitSlop={32}>
                     <ChevronDown size={24} color="white" />
                 </Pressable>
-                <Typography variant="button" align="center" flex={1}>
+                <Typography variant="h4" align="center" flex={1}>
                     {title}
                 </Typography>
-                <View style={{ width: 40 }} />
+                <View style={{ width: 24 }} />
             </Stack>
         </Stack>
     );

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { Pressable } from 'react-native';
 
 import type { Profile } from '@jshare/db';
 
@@ -8,6 +9,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
+import { generateIdenticon } from '~/services/identicons';
 import { db } from '~/services/instantdb';
 import { useAuth } from '~/wrappers/AuthContext';
 import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
@@ -16,6 +18,7 @@ export default function ProfilePage() {
     const { signOut } = useAuth();
     const { profile } = useAuthenticatedContext();
 
+    const [avatar, setAvatar] = useState<string | undefined>(profile.avatar);
     const [firstName, setFirstName] = useState<string>(profile.firstName);
     const [lastName, setLastName] = useState<string>(profile.lastName);
 
@@ -37,7 +40,15 @@ export default function ProfilePage() {
                         <Typography variant="body2" color="secondary">
                             Joined Oct 24, 2024
                         </Typography>
-                        <Avatar size="lg" source={profile?.avatar} mt="xl" />
+                        <Pressable
+                            onPress={() => {
+                                const identicon = generateIdenticon(`${Math.random()}`);
+                                setAvatar(identicon);
+                                handleSaveProfile({ avatar: identicon });
+                            }}
+                        >
+                            <Avatar size="lg" source={avatar} mt="xl" />
+                        </Pressable>
                     </Stack>
                     <TextField
                         label={'First name'}

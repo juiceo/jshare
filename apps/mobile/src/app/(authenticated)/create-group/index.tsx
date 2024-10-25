@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'expo-router';
 
 import { Button } from '~/components/atoms/Button';
@@ -9,6 +10,8 @@ import { Screen } from '~/components/Screen';
 
 export default function CreateGroupPage() {
     const router = useRouter();
+    const [name, setName] = useState<string>('');
+    const [currency, setCurrency] = useState<string>('');
 
     return (
         <Screen screenOptions={{ title: 'Create group' }}>
@@ -23,20 +26,16 @@ export default function CreateGroupPage() {
                         TextInputProps={{
                             placeholder: "Boys' trip to Berlin",
                         }}
-                        value={''}
-                        onChange={function (value: string): void {
-                            throw new Error('Function not implemented.');
-                        }}
+                        value={name}
+                        onChange={setName}
                     />
                     <TextField
                         label="Currency"
                         TextInputProps={{
                             placeholder: 'USD',
                         }}
-                        value={''}
-                        onChange={function (value: string): void {
-                            throw new Error('Function not implemented.');
-                        }}
+                        value={currency}
+                        onChange={setCurrency}
                     />
                 </Stack>
             </Screen.Content>

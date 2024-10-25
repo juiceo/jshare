@@ -31,7 +31,7 @@ export default function AuthenticatedLayout() {
         <AuthenticatedContextProvider user={user} profile={profile}>
             <Stack>
                 <Stack.Screen
-                    name="create-group"
+                    name="create-group/index"
                     options={{ presentation: 'modal', headerShown: false }}
                 />
                 <Stack.Screen
