@@ -4,6 +4,7 @@ import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
+import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
 
 export default function CreateGroupPage() {
@@ -13,11 +14,7 @@ export default function CreateGroupPage() {
         <Screen screenOptions={{ title: 'Create group' }}>
             <Screen.Content scrollable>
                 <Stack column spacing="md">
-                    <Stack p="3xl">
-                        <Typography variant="h3" align="center">
-                            New group
-                        </Typography>
-                    </Stack>
+                    <ModalHeader title="New group" />
                     <Stack height={200} bg="background.elevation1" center br="md">
                         <Typography variant="body2">Add image</Typography>
                     </Stack>
