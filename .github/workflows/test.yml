@@ -1,40 +1,39 @@
 name: test
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-  pull_request:
-    types: [opened, synchronize]
+    workflow_dispatch:
+    push:
+        branches: [main]
+    pull_request:
+        types: [opened, synchronize]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
-  cancel-in-progress: true
+    group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+    cancel-in-progress: true
 
 env:
-  EXPO_USE_FAST_RESOLVER: true # Use the faster Metro resolver in SDK 51
+    EXPO_USE_FAST_RESOLVER: true # Use the faster Metro resolver in SDK 51
 
 jobs:
-  packages:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - name: 🏗 Setup repository
-        uses: actions/checkout@v4
+    packages:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - name: 🏗 Setup repository
+              uses: actions/checkout@v4
 
-      - name: 🏗 Setup monorepo
-        uses: ./.github/actions/setup-monorepo
+            - name: 🏗 Setup monorepo
+              uses: ./.github/actions/setup-monorepo
 
-      - name: ✅ Lint packages
-        run: pnpm run -w lint
+            - name: ✅ Lint packages
+              run: pnpm run -w lint
 
-      - name: 🔎 TypeCheck packages
-        run: pmpm run -w typecheck
-      
-      - name: 👷 Build packages
-        run: pnpm run -w build
+            - name: 🔎 TypeCheck packages
+              run: pnpm run -w typecheck
 
+            - name: 👷 Build packages
+              run: pnpm run -w build
 
-      - name: 🧪 Test packages
-        run: pnpm run -w test
+            - name: 🧪 Test packages
+              run: pnpm run -w test
