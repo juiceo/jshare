@@ -1,5 +1,6 @@
-import { Alert, Pressable } from 'react-native';
-import { X } from 'lucide-react-native';
+import { Alert, Pressable, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ChevronDown } from 'lucide-react-native';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
@@ -10,16 +11,21 @@ export type ModalHeaderProps = {
 
 export const ModalHeader = (props: ModalHeaderProps) => {
     const { title } = props;
+    const router = useRouter();
     return (
-        <Stack p="3xl" style={{ position: 'relative' }}>
-            <Stack style={{ position: 'absolute', top: 0, left: 0 }} p="md">
-                <Pressable onPress={() => Alert.alert('Closing!')}>
-                    <X size={26} color="white" />
+        <Stack py="2xl" style={{ position: 'relative', backgroundColor: 'blue' }}>
+            <Stack row alignCenter>
+                <Pressable
+                    style={{ width: 24, backgroundColor: 'red' }}
+                    onPress={() => router.dismiss()}
+                >
+                    <ChevronDown size={24} color="white" />
                 </Pressable>
+                <Typography variant="button" align="center" flex={1}>
+                    {title}
+                </Typography>
+                <View style={{ width: 40 }} />
             </Stack>
-            <Typography variant="h3" align="center">
-                {title}
-            </Typography>
         </Stack>
     );
 };
