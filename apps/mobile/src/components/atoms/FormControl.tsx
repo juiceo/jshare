@@ -9,6 +9,7 @@ import { Typography } from '~/components/atoms/Typography';
 export type FormControlProps = {
     label: string;
     error?: string | null;
+    helperText?: string | null;
     onPress: () => void;
     focused: boolean;
     endAdornment?: ReactNode;
@@ -16,7 +17,7 @@ export type FormControlProps = {
 
 export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
     const { theme } = useTheme();
-    const { label, error, onPress, focused, endAdornment } = props;
+    const { label, error, onPress, focused, endAdornment, helperText } = props;
 
     const styles = getStyles(theme);
 
@@ -31,6 +32,11 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
                     {error && (
                         <Typography variant="caption" color="error.main">
                             {error}
+                        </Typography>
+                    )}
+                    {helperText && (
+                        <Typography variant="caption" color="hint">
+                            {helperText}
                         </Typography>
                     )}
                 </Stack>

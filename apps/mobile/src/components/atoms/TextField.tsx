@@ -44,15 +44,6 @@ export const TextField = (props: TextFieldProps) => {
 
 const getStyles = (theme: Theme) => {
     return StyleSheet.create({
-        inputWrapper: {
-            borderRadius: theme.borderRadius.lg,
-            width: '100%',
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.background.elevation1,
-            fontSize: theme.typography.body1.fontSize,
-            borderWidth: 1,
-            borderStyle: 'solid',
-        },
         input: {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,

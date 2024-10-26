@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'expo-router';
 
 import { Button } from '~/components/atoms/Button';
+import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
@@ -11,7 +12,7 @@ import { Screen } from '~/components/Screen';
 export default function CreateGroupPage() {
     const router = useRouter();
     const [name, setName] = useState<string>('');
-    const [currency, setCurrency] = useState<string>('');
+    const [currency, setCurrency] = useState<string>('USD');
 
     return (
         <Screen screenOptions={{ title: 'Create group' }}>
@@ -29,11 +30,18 @@ export default function CreateGroupPage() {
                         value={name}
                         onChange={setName}
                     />
-                    <TextField
+                    <Select
                         label="Currency"
-                        TextInputProps={{
-                            placeholder: 'USD',
-                        }}
+                        options={[
+                            {
+                                id: 'USD',
+                                label: 'United States Dollar',
+                            },
+                            {
+                                id: 'EUR',
+                                label: 'Euro',
+                            },
+                        ]}
                         value={currency}
                         onChange={setCurrency}
                     />
@@ -41,9 +49,6 @@ export default function CreateGroupPage() {
             </Screen.Content>
             <Screen.Footer>
                 <Stack column spacing="md">
-                    <Button color="secondary" variant="text">
-                        Cancel
-                    </Button>
                     <Button
                         color="primary"
                         variant="contained"

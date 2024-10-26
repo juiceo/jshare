@@ -1,6 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { Stack } from 'expo-router';
 
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
@@ -16,7 +17,9 @@ export default function AppLayout() {
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <AuthProvider>
-                                <RootStack />
+                                <BottomSheetModalProvider>
+                                    <RootStack />
+                                </BottomSheetModalProvider>
                             </AuthProvider>
                         </GestureHandlerRootView>
                     </FontLoader>
