@@ -1,10 +1,10 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
-import type { AuthState } from '@instantdb/react-native';
+import type { User } from '@instantdb/react-native';
 
 import type { Profile } from '@jshare/db';
 
 export type AuthenticatedContextType = {
-    user: AuthState['user'];
+    user: User;
     profile: Profile;
 };
 

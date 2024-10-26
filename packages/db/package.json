@@ -28,6 +28,7 @@
     },
     "peerDependencies": {
         "@instantdb/core": "^0.14.19",
+        "@jshare/common": "workspace:*",
         "lodash": "^4.17.21"
     },
     "eslintConfig": {

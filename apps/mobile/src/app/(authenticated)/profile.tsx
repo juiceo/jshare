@@ -22,6 +22,7 @@ export default function ProfilePage() {
     const avatar = useFormField<string | undefined>(profile.avatar);
     const firstName = useFormField<string>(profile.firstName, (value) => {
         if (!value) return 'First name is required';
+        return { value };
     });
     const lastName = useFormField<string>(profile.lastName);
 

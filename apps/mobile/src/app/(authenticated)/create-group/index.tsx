@@ -1,5 +1,7 @@
-import { Alert } from 'react-native';
+import { id } from '@instantdb/react-native';
 import { useRouter } from 'expo-router';
+
+import { CurrencyCode } from '@jshare/common';
 
 import { Button } from '~/components/atoms/Button';
 import { Select } from '~/components/atoms/Select';
@@ -8,25 +10,52 @@ import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
-import { useFormField, validateAll } from '~/hooks/useFormField';
+import { useFormField } from '~/hooks/useFormField';
+import { db } from '~/services/instantdb';
+import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
 
 export default function CreateGroupPage() {
     const router = useRouter();
+    const { user } = useAuthenticatedContext();
     const name = useFormField<string>('', (value) => {
-        if (!value) return 'Name is required';
+        if (!value) return 'Please enter a name';
+        return { value };
     });
-    const currency = useFormField<'EUR' | 'USD' | undefined>(undefined, (value) => {
-        if (!value) return 'Currency is required';
+    const currency = useFormField<CurrencyCode | undefined, CurrencyCode>('USD', (value) => {
+        if (!value) return 'Please enter a currency';
+        return { value };
     });
 
-    const handleCreate = () => {
-        const validation = validateAll([name, currency]);
+    const handleCreate = async () => {
+        const validatedName = name.validate();
+        const validatedCurrency = currency.validate();
 
-        if (!validation.ok) {
-            return;
-        }
+        if (!validatedName.ok) return;
+        if (!validatedCurrency.ok) return;
 
-        Alert.alert('All good! Creating group.');
+        const groupId = id();
+        const participantId = id();
+        await db.transact([
+            db.tx.participants[participantId]
+                .update({
+                    groupId,
+                    userId: user.id,
+                    role: 'admin',
+                })
+                .link({
+                    user: user.id,
+                }),
+            db.tx.groups[groupId]
+                .update({
+                    name: validatedName.value,
+                    currency: validatedCurrency.value,
+                })
+                .link({
+                    participants: [participantId],
+                }),
+        ]);
+
+        router.dismiss();
     };
 
     return (
