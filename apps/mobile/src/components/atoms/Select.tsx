@@ -12,23 +12,24 @@ import { FormControl, type FormControlProps } from '~/components/atoms/FormContr
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 
-export type SelectProps = {
-    value: string;
-    onChange: (value: string) => void;
+export type SelectProps<T extends string> = {
+    value: T | undefined;
+    onChange: (value: T | undefined) => void;
+    placeholder?: string;
     options: {
-        id: string;
+        id: T;
         label: string;
         secondary?: string;
     }[];
 } & Omit<FormControlProps, 'focused' | 'onPress'>;
 
-export const Select = (props: SelectProps) => {
-    const { value, onChange, options, ...formControlProps } = props;
+export const Select = <T extends string>(props: SelectProps<T>) => {
+    const { value, onChange, placeholder, options, ...formControlProps } = props;
     const [isOpen, setOpen] = useState<boolean>(false);
     const insets = useSafeAreaInsets();
     const { theme } = useTheme();
 
-    const handleSelect = (id: string) => {
+    const handleSelect = (id: T) => {
         onChange(id);
         setOpen(false);
     };
@@ -44,7 +45,7 @@ export const Select = (props: SelectProps) => {
                 endAdornment={<ChevronDown color={theme.palette.text.primary} />}
             >
                 <Typography variant="body1" color={selectedItem ? 'primary' : 'disabled'}>
-                    {selectedItem?.label ?? 'Placeholder here'}
+                    {selectedItem?.label ?? placeholder}
                 </Typography>
             </FormControl>
             <BottomSheet isOpen={isOpen} onClose={() => setOpen(false)}>

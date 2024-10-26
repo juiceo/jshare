@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { Button } from '~/components/atoms/Button';
@@ -8,11 +8,26 @@ import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
+import { useFormField, validateAll } from '~/hooks/useFormField';
 
 export default function CreateGroupPage() {
     const router = useRouter();
-    const [name, setName] = useState<string>('');
-    const [currency, setCurrency] = useState<string>('USD');
+    const name = useFormField<string>('', (value) => {
+        if (!value) return 'Name is required';
+    });
+    const currency = useFormField<'EUR' | 'USD' | undefined>(undefined, (value) => {
+        if (!value) return 'Currency is required';
+    });
+
+    const handleCreate = () => {
+        const validation = validateAll([name, currency]);
+
+        if (!validation.ok) {
+            return;
+        }
+
+        Alert.alert('All good! Creating group.');
+    };
 
     return (
         <Screen screenOptions={{ title: 'Create group' }}>
@@ -24,14 +39,14 @@ export default function CreateGroupPage() {
                     </Stack>
                     <TextField
                         label="Group name"
-                        TextInputProps={{
-                            placeholder: "Boys' trip to Berlin",
-                        }}
-                        value={name}
-                        onChange={setName}
+                        placeholder="Boys' trip to Berlin"
+                        value={name.value}
+                        onChange={name.setValue}
+                        error={name.error}
                     />
                     <Select
                         label="Currency"
+                        placeholder="Select currency"
                         options={[
                             {
                                 id: 'USD',
@@ -42,8 +57,9 @@ export default function CreateGroupPage() {
                                 label: 'Euro',
                             },
                         ]}
-                        value={currency}
-                        onChange={setCurrency}
+                        value={currency.value}
+                        onChange={currency.setValue}
+                        error={currency.error}
                     />
                 </Stack>
             </Screen.Content>
@@ -53,7 +69,7 @@ export default function CreateGroupPage() {
                         color="primary"
                         variant="contained"
                         onPress={() => {
-                            router.replace('/profile');
+                            handleCreate();
                         }}
                     >
                         Create group

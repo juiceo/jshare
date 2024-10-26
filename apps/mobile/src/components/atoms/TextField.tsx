@@ -8,13 +8,21 @@ import { FormControl, type FormControlProps } from '~/components/atoms/FormContr
 export type TextFieldProps = {
     value: string;
     onChange: (value: string) => void;
+    placeholder?: string;
     TextInputProps?: TextInputProps;
     inputRef?: React.RefObject<TextInput>;
 } & Omit<FormControlProps, 'focused' | 'onPress'>;
 
 export const TextField = (props: TextFieldProps) => {
     const { theme } = useTheme();
-    const { value, onChange, inputRef: _inputRef, TextInputProps, ...formControlProps } = props;
+    const {
+        value,
+        onChange,
+        inputRef: _inputRef,
+        placeholder,
+        TextInputProps,
+        ...formControlProps
+    } = props;
     const innerInputRef = useRef<TextInput>(null);
     const inputRef = props.inputRef ?? innerInputRef;
     const [focused, setFocused] = useState<boolean>(false);
@@ -36,6 +44,7 @@ export const TextField = (props: TextFieldProps) => {
                 cursorColor={theme.palette.accent.main}
                 selectionColor={theme.palette.accent.main}
                 selectionHandleColor={theme.palette.accent.main}
+                placeholder={placeholder}
                 {...TextInputProps}
             />
         </FormControl>
