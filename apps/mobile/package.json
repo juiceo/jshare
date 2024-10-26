@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@expo/metro-runtime": "^3.2.1",
+        "@gorhom/bottom-sheet": "^5",
         "@instantdb/react-native": "^0.14.19",
         "@jshare/db": "workspace:*",
         "@jshare/theme": "workspace:*",
