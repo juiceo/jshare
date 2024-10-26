@@ -1,0 +1,32 @@
+{
+    "private": true,
+    "name": "@jshare/common",
+    "version": "1.0.0",
+    "description": "JShare common shared modules",
+    "author": "Juuso Lappalainen <hello@juiceo.me>",
+    "license": "MIT",
+    "main": "build/index.js",
+    "scripts": {
+        "lint": "eslint --ext js,ts,tsx .",
+        "build": "tsup-node",
+        "watch": "tsup-node --watch",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@jshare/eslint-config": "workspace:*",
+        "@jshare/tsconfig": "workspace:*",
+        "@types/lodash": "^4.17.10",
+        "lodash": "^4.17.21",
+        "tsup": "^8.3.0"
+    },
+    "peerDependencies": {
+        "lodash": "^4.17.21"
+    },
+    "eslintConfig": {
+        "extends": "@jshare/eslint-config",
+        "ignorePatterns": [
+            "node_modules",
+            "build"
+        ]
+    }
+}

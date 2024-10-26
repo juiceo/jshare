@@ -7,13 +7,12 @@
     "version": "1.0.0",
     "main": "expo-router/entry",
     "scripts": {
-        "dev": "expo start",
+        "dev": "expo run:ios",
         "lint": "eslint --ext js,ts,tsx .",
         "build": "expo export --output-dir ./build --platform all",
         "start": "expo start",
         "android": "expo run:android",
         "ios": "expo run:ios",
-        "web": "expo start --web",
         "eas-build-post-install": "pnpm run -w build:mobile",
         "typecheck": "tsc --noEmit"
     },
@@ -23,6 +22,7 @@
         "@instantdb/react-native": "^0.14.19",
         "@jshare/db": "workspace:*",
         "@jshare/theme": "workspace:*",
+        "@jshare/common": "workspace:*",
         "@react-native-async-storage/async-storage": "^1.23.1",
         "@react-native-community/netinfo": "^11.3.1",
         "@types/md5": "^2.3.5",
