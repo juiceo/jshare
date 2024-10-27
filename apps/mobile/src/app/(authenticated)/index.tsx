@@ -6,25 +6,14 @@ import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
+import { trpc } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function HomePage() {
     const router = useRouter();
     const { session } = useSession();
 
-    const testRequest = async () => {
-        const test = await fetch('http://localhost:3000/profiles', {
-            headers: new Headers([['Authorization', session?.access_token ?? '']]),
-        })
-            .then(async (res) => {
-                console.log('GOT RES', res.status);
-                const data = await res.json();
-                console.log('TEST REQUEST SUCCESS', data);
-            })
-            .catch((err) => {
-                console.log('TEST REQUEST ERROR', err);
-            });
-    };
+    const profile = trpc.profiles.get.useQuery();
 
     return (
         <Screen screenOptions={{ title: 'Home', headerShown: false }}>
@@ -42,9 +31,6 @@ export default function HomePage() {
                     <Typography variant="body1" color="primary" align="center" maxW="60%">
                         Good to see you here. Create a group or join an existing one to get started.
                     </Typography>
-                    <Button variant="contained" color="primary" onPress={testRequest}>
-                        Test request
-                    </Button>
                 </Stack>
                 <Stack column mt="xl" spacing="md">
                     <Button

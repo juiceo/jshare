@@ -9,8 +9,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Screen } from '~/components/Screen';
 import { useIdenticon } from '~/hooks/useIdenticon';
-import { tsr } from '~/services/react-query';
-import { getAccessToken } from '~/state/auth';
+import { trpc } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function LoginWelcomePage() {
@@ -20,7 +19,7 @@ export default function LoginWelcomePage() {
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
 
-    const createProfile = tsr.profiles.create.useMutation();
+    const createProfile = trpc.profiles.create.useMutation();
 
     const handleContinue = async () => {
         const email = session?.user.email;
@@ -30,11 +29,9 @@ export default function LoginWelcomePage() {
             return;
         }
         await createProfile.mutateAsync({
-            body: {
-                firstName,
-                lastName,
-                email,
-            },
+            firstName,
+            lastName,
+            email,
         });
 
         router.dismissAll();

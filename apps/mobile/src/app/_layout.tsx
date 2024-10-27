@@ -8,6 +8,7 @@ import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
+import { QueryProvider } from '~/wrappers/QueryProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
 
 export default function AppLayout() {
@@ -19,9 +20,11 @@ export default function AppLayout() {
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <JotaiProvider>
                                 <SessionProvider>
-                                    <BottomSheetModalProvider>
-                                        <RootStack />
-                                    </BottomSheetModalProvider>
+                                    <QueryProvider>
+                                        <BottomSheetModalProvider>
+                                            <RootStack />
+                                        </BottomSheetModalProvider>
+                                    </QueryProvider>
                                 </SessionProvider>
                             </JotaiProvider>
                         </GestureHandlerRootView>

@@ -8,9 +8,9 @@ import { Typography } from '~/components/atoms/Typography';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { useTimer } from '~/hooks/useTimer';
-import { tsr } from '~/services/react-query';
 import { supabase } from '~/services/supabase';
-import { getAccessToken } from '~/state/auth';
+import { trpcUniversal } from '~/services/trpc';
+import { setAccessToken } from '~/state/auth';
 
 export default function LoginVerifyPage() {
     const { email } = useLocalSearchParams<{ email: string }>();
@@ -30,13 +30,15 @@ export default function LoginVerifyPage() {
                     token: value.join(''),
                     type: 'email',
                 });
+                const accessToken = authResult.data.session?.access_token;
 
-                if (authResult.error) {
+                if (!accessToken) {
                     Alert.alert('Invalid code, please try again');
                 } else {
-                    const profile = await tsr.profiles.get.query();
+                    setAccessToken(accessToken);
+                    const profile = await trpcUniversal.profiles.get.query().catch(() => null);
 
-                    if (profile.status === 200) {
+                    if (profile) {
                         router.replace('/');
                     } else {
                         router.replace('/login/welcome');

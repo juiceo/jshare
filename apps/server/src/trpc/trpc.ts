@@ -30,7 +30,7 @@ export const publicProcedure = t.procedure;
 
 export const authProcedure = t.procedure.use(async function isAuthed(opts) {
     const { ctx } = opts;
-    const header = ctx.req.headers.authorization;
+    const header = ctx.req.headers['authorization'];
 
     if (!header) {
         throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Authorization header missing' });
