@@ -6,7 +6,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npx prisma generate",
-        "db:migrate": "npx prisma migrate dev"
+        "db:migrate": "npx prisma migrate dev",
+        "db:inspect": "npx prisma studio"
     },
     "keywords": [],
     "author": "Juuso Lappalainen <hello@juiceo.me> (https://juiceo.me)",
