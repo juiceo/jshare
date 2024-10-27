@@ -1,0 +1,20 @@
+{
+    "name": "@jshare/prisma",
+    "version": "1.0.0",
+    "description": "JShare Prisma schema and client",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npx prisma generate",
+        "db:migrate": "npx prisma migrate dev"
+    },
+    "keywords": [],
+    "author": "Juuso Lappalainen <hello@juiceo.me> (https://juiceo.me)",
+    "license": "MIT",
+    "devDependencies": {
+        "prisma": "5.21.1"
+    },
+    "dependencies": {
+        "@prisma/client": "5.21.1"
+    }
+}
