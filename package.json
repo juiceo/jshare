@@ -3,6 +3,7 @@
     "name": "@jshare/monorepo",
     "scripts": {
         "dev:mobile": "turbo watch dev --filter=\"{./apps/mobile}...\"",
+        "dev:server": "turbo watch dev --filter=\"{./apps/server}...\"",
         "lint": "turbo lint",
         "typecheck": "turbo typecheck",
         "test": "turbo test",

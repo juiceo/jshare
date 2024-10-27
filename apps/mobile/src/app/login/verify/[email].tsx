@@ -8,7 +8,9 @@ import { Typography } from '~/components/atoms/Typography';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { useTimer } from '~/hooks/useTimer';
+import { tsr } from '~/services/react-query';
 import { supabase } from '~/services/supabase';
+import { getAccessToken } from '~/state/auth';
 
 export default function LoginVerifyPage() {
     const { email } = useLocalSearchParams<{ email: string }>();
@@ -32,10 +34,13 @@ export default function LoginVerifyPage() {
                 if (authResult.error) {
                     Alert.alert('Invalid code, please try again');
                 } else {
-                    /**
-                     * TODO: Check if user has profile or not
-                     */
-                    router.replace('/login/welcome');
+                    const profile = await tsr.profiles.get.query();
+
+                    if (profile.status === 200) {
+                        router.replace('/');
+                    } else {
+                        router.replace('/login/welcome');
+                    }
                 }
             } catch {
                 Alert.alert('Invalid code, please try again');

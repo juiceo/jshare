@@ -10,6 +10,7 @@ import type { AuthError, Session } from '@supabase/supabase-js';
 import { useRouter } from 'expo-router';
 
 import { supabase } from '~/services/supabase';
+import { setAccessToken } from '~/state/auth';
 
 const SessionContext = createContext<{
     session: Session | null;
@@ -29,6 +30,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
             setSession(session);
             setError(error);
             setLoading(false);
+            setAccessToken(session?.access_token ?? null);
         });
 
         const {
@@ -36,6 +38,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
         } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
             setLoading(false);
+            setAccessToken(session?.access_token ?? null);
         });
 
         return () => subscription.unsubscribe();

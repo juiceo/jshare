@@ -9,6 +9,8 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Screen } from '~/components/Screen';
 import { useIdenticon } from '~/hooks/useIdenticon';
+import { tsr } from '~/services/react-query';
+import { getAccessToken } from '~/state/auth';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function LoginWelcomePage() {
@@ -18,29 +20,22 @@ export default function LoginWelcomePage() {
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
 
-    const handleContinue = async () => {
-        // const profileId = id();
-        // const userId = auth.user!.id;
+    const createProfile = tsr.profiles.create.useMutation();
 
-        // await db
-        //     .transact([
-        //         db.tx.profiles[profileId]
-        //             .update({
-        //                 userId,
-        //                 firstName,
-        //                 lastName,
-        //                 avatar: identicon,
-        //             })
-        //             .link({
-        //                 user: userId,
-        //             }),
-        //     ])
-        //     .catch((err) => {
-        //         Alert.alert(
-        //             'Something went wrong - please try again',
-        //             `Error: ${JSON.stringify(err)}`
-        //         );
-        //     });
+    const handleContinue = async () => {
+        const email = session?.user.email;
+
+        if (!email) {
+            Alert.alert('Missing email!');
+            return;
+        }
+        await createProfile.mutateAsync({
+            body: {
+                firstName,
+                lastName,
+                email,
+            },
+        });
 
         router.dismissAll();
         router.replace('/');
@@ -95,7 +90,12 @@ export default function LoginWelcomePage() {
                 </Stack>
             </Screen.Content>
             <Screen.Footer>
-                <Button variant={'contained'} color={'primary'} onPress={handleContinue}>
+                <Button
+                    variant={'contained'}
+                    color={'primary'}
+                    onPress={handleContinue}
+                    loading={createProfile.isPending}
+                >
                     Continue
                 </Button>
             </Screen.Footer>

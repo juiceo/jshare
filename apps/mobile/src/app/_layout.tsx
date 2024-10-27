@@ -7,6 +7,7 @@ import { Stack } from 'expo-router';
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { FontLoader } from '~/wrappers/FontLoader';
+import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
 
 export default function AppLayout() {
@@ -16,11 +17,13 @@ export default function AppLayout() {
                 <ThemeProvider theme={Themes.dark}>
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
-                            <SessionProvider>
-                                <BottomSheetModalProvider>
-                                    <RootStack />
-                                </BottomSheetModalProvider>
-                            </SessionProvider>
+                            <JotaiProvider>
+                                <SessionProvider>
+                                    <BottomSheetModalProvider>
+                                        <RootStack />
+                                    </BottomSheetModalProvider>
+                                </SessionProvider>
+                            </JotaiProvider>
                         </GestureHandlerRootView>
                     </FontLoader>
                 </ThemeProvider>

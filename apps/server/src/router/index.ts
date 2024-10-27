@@ -1,6 +1,8 @@
-import { contract } from "@jshare/api-contract";
-import { initServer } from "@ts-rest/express";
-import { profiles } from "./profiles";
+import { initServer } from '@ts-rest/express';
+
+import { contract } from '@jshare/api-contract';
+
+import { profiles } from './profiles';
 
 const s = initServer();
 
