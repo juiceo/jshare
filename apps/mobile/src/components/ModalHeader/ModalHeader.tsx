@@ -1,4 +1,4 @@
-import { Alert, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ChevronDown } from 'lucide-react-native';
 

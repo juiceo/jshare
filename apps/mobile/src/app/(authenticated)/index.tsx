@@ -6,14 +6,9 @@ import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { trpc } from '~/services/trpc';
-import { useSession } from '~/wrappers/SessionProvider';
 
 export default function HomePage() {
     const router = useRouter();
-    const { session } = useSession();
-
-    const profile = trpc.profiles.get.useQuery();
 
     return (
         <Screen screenOptions={{ title: 'Home', headerShown: false }}>
