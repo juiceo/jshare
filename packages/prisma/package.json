@@ -4,7 +4,6 @@
     "description": "JShare Prisma schema and client",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npx prisma generate",
         "db:migrate": "npx prisma migrate dev",
         "db:inspect": "npx prisma studio"
