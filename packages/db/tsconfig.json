@@ -1,5 +1,0 @@
-{
-    "extends": "@jshare/tsconfig",
-    "include": ["index.ts"],
-    "compilerOptions": {}
-}

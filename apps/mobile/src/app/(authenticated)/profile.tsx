@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
 import { Pressable } from 'react-native';
 
-import type { Profile } from '@jshare/db';
-
 import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
@@ -23,7 +21,7 @@ export default function ProfilePage() {
     });
     const lastName = useFormField<string>('');
 
-    const handleSaveProfile = useCallback((value: Partial<Profile>) => {
+    const handleSaveProfile = useCallback((value: any) => {
         /**
          * TODO: Implement
          */
