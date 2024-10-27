@@ -29,9 +29,6 @@ importers:
       '@gorhom/bottom-sheet':
         specifier: ^5
         version: 5.0.4(@types/react@18.2.79)(react-native-gesture-handler@2.16.2(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native-reanimated@3.10.1(@babel/core@7.24.5)(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native@0.74.2(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
-      '@jshare/api-contract':
-        specifier: workspace:*
-        version: link:../../packages/api-contract
       '@jshare/common':
         specifier: workspace:*
         version: link:../../packages/common
@@ -50,9 +47,6 @@ importers:
       '@tanstack/react-query':
         specifier: '5'
         version: 5.59.16(react@18.2.0)
-      '@ts-rest/react-query':
-        specifier: ^3.51.0
-        version: 3.51.0(@tanstack/react-query@5.59.16(react@18.2.0))(@ts-rest/core@3.51.0(@types/node@22.7.7)(zod@3.23.8))(react@18.2.0)(zod@3.23.8)
       expo:
         specifier: ^51.0.17
         version: 51.0.17(@babel/core@7.24.5)(@babel/preset-env@7.20.2(@babel/core@7.24.5))
@@ -144,6 +138,9 @@ importers:
       '@jshare/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config/eslint-config
+      '@jshare/server':
+        specifier: workspace:*
+        version: link:../server
       '@jshare/tsconfig':
         specifier: workspace:*
         version: link:../../packages/config/tsconfig
@@ -168,18 +165,12 @@ importers:
 
   apps/server:
     dependencies:
-      '@jshare/api-contract':
-        specifier: workspace:*
-        version: link:../../packages/api-contract
       '@jshare/prisma':
         specifier: workspace:*
         version: link:../../packages/prisma
       '@trpc/server':
         specifier: 11.0.0-rc.593
         version: 11.0.0-rc.593
-      '@ts-rest/express':
-        specifier: ^3.51.0
-        version: 3.51.0(@ts-rest/core@3.51.0(@types/node@22.7.7)(zod@3.23.8))(express@4.21.0)(zod@3.23.8)
       express:
         specifier: ^4.21.0
         version: 4.21.0
@@ -202,25 +193,6 @@ importers:
       tsx:
         specifier: ^4.19.1
         version: 4.19.1
-
-  packages/api-contract:
-    dependencies:
-      '@jshare/prisma':
-        specifier: workspace:*
-        version: link:../prisma
-      '@ts-rest/core':
-        specifier: ^3.51.0
-        version: 3.51.0(@types/node@22.7.7)(zod@3.23.8)
-      zod:
-        specifier: ^3
-        version: 3.23.8
-    devDependencies:
-      '@jshare/eslint-config':
-        specifier: workspace:*
-        version: link:../config/eslint-config
-      '@jshare/tsconfig':
-        specifier: workspace:*
-        version: link:../config/tsconfig
 
   packages/common:
     devDependencies:
@@ -2014,38 +1986,6 @@ packages:
 
   '@trpc/server@11.0.0-rc.593':
     resolution: {integrity: sha512-ihZNf7nM3OriZkkuOUFjuB51FJdtCXZUUj8FIXkq0VXF9VmMOD7j4QTl5YojIzMTJBMGUK9VADcO0shgELEmyw==}
-
-  '@ts-rest/core@3.51.0':
-    resolution: {integrity: sha512-v6lnWEcpZj1UgN9wb84XQ+EORP1QEtncFumoXMJjno5ZUV6vdjKze3MYcQN0C6vjBpIJPQEaI/gab2jr4/0KzQ==}
-    peerDependencies:
-      '@types/node': ^18.18.7 || >=20.8.4
-      zod: ^3.22.3
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      zod:
-        optional: true
-
-  '@ts-rest/express@3.51.0':
-    resolution: {integrity: sha512-osOo040EHoCMNMFBbEwZ6XheeEhG/zJGF4k3FOYUtaYSdxxYp5XkP8jQoV6I+Lu+O5jopnOQWoCpmNrrraIO8g==}
-    peerDependencies:
-      '@ts-rest/core': ~3.51.0
-      express: ^4.0.0
-      zod: ^3.22.3
-    peerDependenciesMeta:
-      zod:
-        optional: true
-
-  '@ts-rest/react-query@3.51.0':
-    resolution: {integrity: sha512-pWrbyRqvcvmjvm+ORu3zE3sPFqsS6CHOq5vra/UtyLEgXrcnEA+fu/7d9tj/+BLRwe0kOWvalu2S3/d3SDxvFQ==}
-    peerDependencies:
-      '@tanstack/react-query': ^4.0.0 || ^5.0.0
-      '@ts-rest/core': ~3.51.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      zod: ^3.22.3
-    peerDependenciesMeta:
-      zod:
-        optional: true
 
   '@tsconfig/recommended@1.0.6':
     resolution: {integrity: sha512-0IKu9GHYF1NGTJiYgfWwqnOQSlnE9V9R7YohHNNf0/fj/SyOZWzdd06JFr0fLpg1Mqw0kGbYg8w5xdkSqLKM9g==}
@@ -8491,26 +8431,6 @@ snapshots:
       react: 18.2.0
 
   '@trpc/server@11.0.0-rc.593': {}
-
-  '@ts-rest/core@3.51.0(@types/node@22.7.7)(zod@3.23.8)':
-    optionalDependencies:
-      '@types/node': 22.7.7
-      zod: 3.23.8
-
-  '@ts-rest/express@3.51.0(@ts-rest/core@3.51.0(@types/node@22.7.7)(zod@3.23.8))(express@4.21.0)(zod@3.23.8)':
-    dependencies:
-      '@ts-rest/core': 3.51.0(@types/node@22.7.7)(zod@3.23.8)
-      express: 4.21.0
-    optionalDependencies:
-      zod: 3.23.8
-
-  '@ts-rest/react-query@3.51.0(@tanstack/react-query@5.59.16(react@18.2.0))(@ts-rest/core@3.51.0(@types/node@22.7.7)(zod@3.23.8))(react@18.2.0)(zod@3.23.8)':
-    dependencies:
-      '@tanstack/react-query': 5.59.16(react@18.2.0)
-      '@ts-rest/core': 3.51.0(@types/node@22.7.7)(zod@3.23.8)
-      react: 18.2.0
-    optionalDependencies:
-      zod: 3.23.8
 
   '@tsconfig/recommended@1.0.6': {}
 

@@ -5,8 +5,6 @@ import express from 'express';
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';
 
-// created for each request
-
 const PORT = process.env.PORT;
 
 if (!PORT) {
@@ -28,3 +26,5 @@ app.use(
 app.listen(PORT, () => {
     console.log(`JShare server listening on port ${PORT}`);
 });
+
+export type AppRouter = typeof appRouter;

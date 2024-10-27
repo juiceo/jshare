@@ -6,16 +6,21 @@
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
     "main": "src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./build/index.d.ts",
+            "default": null
+        }
+    },
     "scripts": {
         "dev": "tsx watch --env-file=.env  --clear-screen=false ./src/index.ts",
+        "build": "tsup-node",
         "typecheck": "tsc --noEmit"
     },
     "keywords": [],
     "dependencies": {
-        "@jshare/api-contract": "workspace:*",
         "@jshare/prisma": "workspace:*",
         "@trpc/server": "11.0.0-rc.593",
-        "@ts-rest/express": "^3.51.0",
         "express": "^4.21.0",
         "jsonwebtoken": "^9.0.2"
     },
