@@ -1,12 +1,18 @@
-export type ApiError<TStatus extends number = number, TReason extends string = string> = {
-    status: TStatus;
+export type ApiError<TReason extends string = string> = {
     reason: TReason;
     message?: string;   
 }
 
-export type ApiErrorBadRequest = ApiError<400, "Bad Request">
-export type ApiErrorUnauthorized = ApiError<401, "Unauthorized">;
-export type ApiErrorForbidden = ApiError<403, "Forbidden">;
-export type ApiErrorNotFound = ApiError<404, "Not Found">;
-export type ApiErrorInternal = ApiError<500, "Internal Server Error">;
+export enum ApiErrorReason {
+    BAD_REQUEST = "Bad Request",
+    UNAUTHORIZED = "Unauthorized",
+    FORBIDDEN = "Forbidden",
+    NOT_FOUND = "Not Found",
+    INTERNAL = "Internal Server Error",
+} 
 
+export type ApiErrorBadRequest = ApiError<ApiErrorReason.BAD_REQUEST>
+export type ApiErrorUnauthorized = ApiError<ApiErrorReason.UNAUTHORIZED>;
+export type ApiErrorForbidden = ApiError<ApiErrorReason.FORBIDDEN>;
+export type ApiErrorNotFound = ApiError<ApiErrorReason.NOT_FOUND>;
+export type ApiErrorInternal = ApiError<ApiErrorReason.INTERNAL>;

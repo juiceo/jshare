@@ -3,7 +3,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 import { Profile } from '@jshare/prisma';
-import type { ApiSuccessResponse } from '../types/ApiResponse';
+
 
 const c = initContract();
 
@@ -16,7 +16,7 @@ export const profiles = c.router({
             lastName: z.string(),
         }),
         responses: {
-            201: c.type<ApiSuccessResponse<Profile>>(),
+            201: c.type<Profile>(),
         },
         summary: "Create a profile",
     },
@@ -24,7 +24,7 @@ export const profiles = c.router({
         method: "GET",
         path: "/profiles",
         responses: {
-            200: c.type<ApiSuccessResponse<Profile>>(),
+            200: c.type<Profile>(),
         },
         summary: "Get your own profile"
     },
