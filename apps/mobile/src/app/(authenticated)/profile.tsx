@@ -11,36 +11,30 @@ import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
 import { useFormField } from '~/hooks/useFormField';
 import { generateIdenticon } from '~/services/identicons';
-import { db } from '~/services/instantdb';
-import { useAuth } from '~/wrappers/AuthContext';
-import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
+import { useSession } from '~/wrappers/SessionProvider';
 
 export default function ProfilePage() {
-    const { signOut } = useAuth();
-    const { profile } = useAuthenticatedContext();
+    const { signOut } = useSession();
 
-    const avatar = useFormField<string | undefined>(profile.avatar);
-    const firstName = useFormField<string>(profile.firstName, (value) => {
+    const avatar = useFormField<string | undefined>('');
+    const firstName = useFormField<string>('', (value) => {
         if (!value) return 'First name is required';
         return { value };
     });
-    const lastName = useFormField<string>(profile.lastName);
+    const lastName = useFormField<string>('');
 
-    const handleSaveProfile = useCallback(
-        (value: Partial<Profile>) => {
-            return db.transact([db.tx.profiles[profile.id].merge(value)]);
-        },
-        [profile.id]
-    );
+    const handleSaveProfile = useCallback((value: Partial<Profile>) => {
+        /**
+         * TODO: Implement
+         */
+    }, []);
 
     return (
         <Screen screenOptions={{ title: 'Profile' }}>
             <Screen.Content scrollable>
                 <Stack flex={1} spacing="md">
                     <Stack column center p="xl" br="md" spacing="none">
-                        <Typography variant="body2">
-                            {profile?.firstName} {profile?.lastName}
-                        </Typography>
+                        <Typography variant="body2">Firstname Lastname</Typography>
                         <Typography variant="body2" color="secondary">
                             Joined Oct 24, 2024
                         </Typography>

@@ -6,11 +6,9 @@ import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
 
 export default function HomePage() {
     const router = useRouter();
-    const { profile } = useAuthenticatedContext();
 
     return (
         <Screen screenOptions={{ title: 'Home', headerShown: false }}>
@@ -18,7 +16,7 @@ export default function HomePage() {
                 <Stack row justifyBetween p="md">
                     <Typography variant="h3">JShare</Typography>
                     <Pressable onPress={() => router.push('/profile')}>
-                        <Avatar size="sm" source={profile?.avatar} />
+                        <Avatar size="sm" source={''} />
                     </Pressable>
                 </Stack>
                 <Stack flex={1} center>

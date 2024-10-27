@@ -3,32 +3,32 @@ import { ActivityIndicator } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
 
 import { Stack as StackView } from '~/components/atoms/Stack';
-import { useProfile } from '~/hooks/useProfile';
-import { useAuth } from '~/wrappers/AuthContext';
-import { AuthenticatedContextProvider } from '~/wrappers/AuthenticatedContext';
+import { AuthenticatedContextProvider } from '~/wrappers/AuthenticatedContextProvider';
+import { useSession } from '~/wrappers/SessionProvider';
 
 export default function AuthenticatedLayout() {
-    const { user } = useAuth();
-    const { data: profile, isLoading: isProfileLoading } = useProfile();
+    const { session, isLoading } = useSession();
 
-    if (!user) {
-        return <Redirect href="/login" />;
-    }
-
-    if (isProfileLoading) {
+    if (isLoading) {
+        /**
+         * TODO: Return splash screen here
+         */
         return (
             <StackView center absoluteFill>
                 <ActivityIndicator />
             </StackView>
         );
     }
-
-    if (!profile) {
-        return <Redirect href="/login/welcome" />;
+    if (!session) {
+        return <Redirect href="/login" />;
     }
 
+    /**
+     * TODO: If no profile, redirect to login/welcome
+     */
+
     return (
-        <AuthenticatedContextProvider user={user} profile={profile}>
+        <AuthenticatedContextProvider session={session}>
             <Stack>
                 <Stack.Screen
                     name="create-group/index"

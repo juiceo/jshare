@@ -8,7 +8,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { Screen } from '~/components/Screen';
-import { db } from '~/services/instantdb';
+import { supabase } from '~/services/supabase';
 
 export default function LoginScreen() {
     const inputRef = useRef<TextInput>(null);
@@ -23,7 +23,9 @@ export default function LoginScreen() {
             inputRef.current?.focus();
             return;
         }
-        db.auth.sendMagicCode({ email });
+        supabase.auth.signInWithOtp({
+            email,
+        });
         router.push({
             pathname: '/login/verify/[email]',
             params: { email },

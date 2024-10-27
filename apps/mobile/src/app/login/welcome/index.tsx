@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { id } from '@instantdb/react-native';
 import { Redirect, router } from 'expo-router';
 
 import { Avatar } from '~/components/atoms/Avatar';
@@ -10,46 +9,44 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Screen } from '~/components/Screen';
 import { useIdenticon } from '~/hooks/useIdenticon';
-import { db } from '~/services/instantdb';
-import { useAuth } from '~/wrappers/AuthContext';
+import { useSession } from '~/wrappers/SessionProvider';
 
 export default function LoginWelcomePage() {
-    const auth = useAuth();
-
+    const { session } = useSession();
     const [identiconSeed, setIdenticonSeed] = useState<number>(0);
-    const identicon = useIdenticon(auth.user?.id ?? null, `${identiconSeed}`);
+    const identicon = useIdenticon(session?.user.id ?? null, `${identiconSeed}`);
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
 
     const handleContinue = async () => {
-        const profileId = id();
-        const userId = auth.user!.id;
+        // const profileId = id();
+        // const userId = auth.user!.id;
 
-        await db
-            .transact([
-                db.tx.profiles[profileId]
-                    .update({
-                        userId,
-                        firstName,
-                        lastName,
-                        avatar: identicon,
-                    })
-                    .link({
-                        user: userId,
-                    }),
-            ])
-            .catch((err) => {
-                Alert.alert(
-                    'Something went wrong - please try again',
-                    `Error: ${JSON.stringify(err)}`
-                );
-            });
+        // await db
+        //     .transact([
+        //         db.tx.profiles[profileId]
+        //             .update({
+        //                 userId,
+        //                 firstName,
+        //                 lastName,
+        //                 avatar: identicon,
+        //             })
+        //             .link({
+        //                 user: userId,
+        //             }),
+        //     ])
+        //     .catch((err) => {
+        //         Alert.alert(
+        //             'Something went wrong - please try again',
+        //             `Error: ${JSON.stringify(err)}`
+        //         );
+        //     });
 
         router.dismissAll();
         router.replace('/');
     };
 
-    if (!auth.user) {
+    if (!session) {
         return <Redirect href={{ pathname: '/login' }} />;
     }
 

@@ -1,4 +1,3 @@
-import { id } from '@instantdb/react-native';
 import { useRouter } from 'expo-router';
 
 import { CurrencyCode } from '@jshare/common';
@@ -11,12 +10,9 @@ import { Typography } from '~/components/atoms/Typography';
 import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
 import { useFormField } from '~/hooks/useFormField';
-import { db } from '~/services/instantdb';
-import { useAuthenticatedContext } from '~/wrappers/AuthenticatedContext';
 
 export default function CreateGroupPage() {
     const router = useRouter();
-    const { user } = useAuthenticatedContext();
     const name = useFormField<string>('', (value) => {
         if (!value) return 'Please enter a name';
         return { value };
@@ -33,27 +29,9 @@ export default function CreateGroupPage() {
         if (!validatedName.ok) return;
         if (!validatedCurrency.ok) return;
 
-        const groupId = id();
-        const participantId = id();
-        await db.transact([
-            db.tx.participants[participantId]
-                .update({
-                    groupId,
-                    userId: user.id,
-                    role: 'admin',
-                })
-                .link({
-                    user: user.id,
-                }),
-            db.tx.groups[groupId]
-                .update({
-                    name: validatedName.value,
-                    currency: validatedCurrency.value,
-                })
-                .link({
-                    participants: [participantId],
-                }),
-        ]);
+        /**
+         * TODO: Create group here
+         */
 
         router.dismiss();
     };

@@ -1,11 +1,8 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
-import type { User } from '@instantdb/react-native';
-
-import type { Profile } from '@jshare/db';
+import type { Session } from '@supabase/supabase-js';
 
 export type AuthenticatedContextType = {
-    user: User;
-    profile: Profile;
+    session: Session;
 };
 
 export const AuthenticatedContext = createContext<AuthenticatedContextType | null>(null);
@@ -13,20 +10,20 @@ export const AuthenticatedContext = createContext<AuthenticatedContextType | nul
 export const AuthenticatedContextProvider = (
     props: PropsWithChildren<AuthenticatedContextType>
 ) => {
-    const { user, profile } = props;
+    const { session } = props;
     return (
-        <AuthenticatedContext.Provider value={{ user, profile }}>
+        <AuthenticatedContext.Provider value={{ session }}>
             {props.children}
         </AuthenticatedContext.Provider>
     );
 };
 
-export const useAuthenticatedContext = () => {
+export const useAuthenticatedSession = () => {
     const context = useContext(AuthenticatedContext);
 
     if (!context) {
         throw new Error(
-            'useAuthenticatedContext can only be used within an AuthenticatedContextProvider'
+            'useAuthenticatedSession can only be used within an AuthenticatedContextProvider'
         );
     }
 
