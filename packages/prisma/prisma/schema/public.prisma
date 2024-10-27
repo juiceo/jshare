@@ -1,0 +1,9 @@
+model Profile {
+    userId    Int    @id()
+    email     String
+    firstName String
+    lastName  String
+
+    @@map("profiles")
+    @@schema("public")
+}
