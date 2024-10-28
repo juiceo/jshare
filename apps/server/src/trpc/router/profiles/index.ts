@@ -11,6 +11,7 @@ export const profilesRouter = router({
                 firstName: z.string(),
                 lastName: z.string(),
                 email: z.string(),
+                avatar: z.string().optional(),
             })
         )
         .mutation(async (opts) => {
@@ -20,6 +21,7 @@ export const profilesRouter = router({
                     firstName: opts.input.firstName,
                     lastName: opts.input.lastName,
                     email: opts.input.email,
+                    avatar: opts.input.avatar,
                 },
             });
 
@@ -40,11 +42,14 @@ export const profilesRouter = router({
     }),
     update: authProcedure
         .input(
-            z.object({
-                firstName: z.string(),
-                lastName: z.string(),
-                email: z.string(),
-            })
+            z
+                .object({
+                    firstName: z.string(),
+                    lastName: z.string(),
+                    email: z.string(),
+                    avatar: z.string(),
+                })
+                .partial()
         )
         .mutation(async (opts) => {
             const updatedProfile = await prisma.profile
@@ -56,6 +61,7 @@ export const profilesRouter = router({
                         firstName: opts.input.firstName,
                         lastName: opts.input.lastName,
                         email: opts.input.email,
+                        avatar: opts.input.avatar,
                     },
                 })
                 .catch((err: any) => {
