@@ -3,6 +3,7 @@ model Profile {
     email     String
     firstName String
     lastName  String
+    avatar    String?
     groups    GroupParticipant[]
 
     @@map("profiles")
