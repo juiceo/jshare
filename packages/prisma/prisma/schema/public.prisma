@@ -1,9 +1,47 @@
 model Profile {
-    userId    String @id()
+    userId    String             @id()
     email     String
     firstName String
     lastName  String
+    groups    GroupParticipant[]
 
     @@map("profiles")
+    @@schema("public")
+}
+
+model Group {
+    id           String             @id @default(uuid())
+    name         String
+    currency     Currency
+    participants GroupParticipant[]
+
+    @@map("groups")
+    @@schema("public")
+}
+
+model GroupParticipant {
+    id      String  @id @default(uuid())
+    userId  String
+    user    Profile @relation(fields: [userId], references: [userId])
+    groupId String
+    group   Group   @relation(fields: [groupId], references: [id])
+    role    Role
+
+    @@map("group_participants")
+    @@schema("public")
+}
+
+enum Role {
+    Owner
+    Admin
+    Member
+
+    @@schema("public")
+}
+
+enum Currency {
+    USD
+    EUR
+
     @@schema("public")
 }
