@@ -36,7 +36,7 @@
                 "projectId": "2ea87411-854e-47b5-8d23-f03472ae81fd"
             }
         },
-        "plugins": ["expo-router"],
+        "plugins": ["expo-router", "expo-image-picker"],
         "experiments": {
             "typedRoutes": true
         }

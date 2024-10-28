@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { Pressable } from 'react-native';
 
 import type { Profile } from '@jshare/prisma';
 
-import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
+import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Screen } from '~/components/Screen';
 import { useProfile } from '~/hooks/useProfile';
-import { generateIdenticon } from '~/services/identicons';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function ProfilePage() {
@@ -40,17 +38,17 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
                         <Typography variant="body2" color="secondary">
                             Joined Oct 24, 2024
                         </Typography>
-                        <Pressable
-                            onPress={() => {
-                                const identicon = generateIdenticon(`${Math.random()}`);
-                                setAvatar(identicon);
-                                updateProfile({
-                                    avatar: identicon,
-                                });
-                            }}
-                        >
-                            <Avatar size="lg" source={avatar} mt="xl" />
-                        </Pressable>
+                        <Stack mt="2xl">
+                            <AvatarPicker
+                                value={avatar}
+                                onChange={(url) => {
+                                    setAvatar(url);
+                                    updateProfile({
+                                        avatar: url,
+                                    });
+                                }}
+                            />
+                        </Stack>
                     </Stack>
                     <TextField
                         label={'First name'}
