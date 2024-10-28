@@ -32,6 +32,7 @@ export default function LoginWelcomePage() {
             firstName,
             lastName,
             email,
+            avatar: identicon ?? undefined,
         });
 
         router.dismissAll();
@@ -54,7 +55,6 @@ export default function LoginWelcomePage() {
                         <RectButton
                             activeOpacity={0.5}
                             onPress={() => {
-                                console.log('Pressed avatar');
                                 Alert.alert('Pressed!');
                             }}
                         >
