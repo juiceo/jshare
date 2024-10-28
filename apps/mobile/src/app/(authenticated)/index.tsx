@@ -11,6 +11,7 @@ import { trpc } from '~/services/trpc';
 export default function HomePage() {
     const router = useRouter();
     const profile = trpc.profiles.get.useQuery();
+    const groups = trpc.groups.listParticipating.useQuery();
 
     return (
         <Screen screenOptions={{ title: 'Home', headerShown: false }}>
@@ -27,6 +28,9 @@ export default function HomePage() {
                     </Typography>
                     <Typography variant="body1" color="primary" align="center" maxW="60%">
                         Good to see you here. Create a group or join an existing one to get started.
+                    </Typography>
+                    <Typography variant="body1" color="primary" align="center" maxW="60%">
+                        Your groups: {groups.data?.map((g) => g.name).join(', ') ?? 'None'}
                     </Typography>
                 </Stack>
                 <Stack column mt="xl" spacing="md">

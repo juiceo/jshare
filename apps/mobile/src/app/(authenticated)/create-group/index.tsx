@@ -1,6 +1,7 @@
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-
-import { CurrencyCode } from '@jshare/common';
+import { z } from 'zod';
 
 import { Button } from '~/components/atoms/Button';
 import { Select } from '~/components/atoms/Select';
@@ -9,30 +10,31 @@ import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
-import { useFormField } from '~/hooks/useFormField';
+import { trpc } from '~/services/trpc';
+
+const schema = z.object({
+    name: z.string().min(1, 'Name is required'),
+    currency: z.enum(['USD', 'EUR']),
+});
+type Schema = z.infer<typeof schema>;
 
 export default function CreateGroupPage() {
     const router = useRouter();
-    const name = useFormField<string>('', (value) => {
-        if (!value) return 'Please enter a name';
-        return { value };
+
+    const trpcUtils = trpc.useUtils();
+    const createGroupMutation = trpc.groups.create.useMutation();
+
+    const form = useForm<Schema>({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            name: '',
+            currency: 'USD',
+        },
     });
-    const currency = useFormField<CurrencyCode | undefined, CurrencyCode>('USD', (value) => {
-        if (!value) return 'Please enter a currency';
-        return { value };
-    });
 
-    const handleCreate = async () => {
-        const validatedName = name.validate();
-        const validatedCurrency = currency.validate();
-
-        if (!validatedName.ok) return;
-        if (!validatedCurrency.ok) return;
-
-        /**
-         * TODO: Create group here
-         */
-
+    const handleSubmit = async (data: Schema) => {
+        await createGroupMutation.mutateAsync(data);
+        trpcUtils.groups.invalidate();
         router.dismiss();
     };
 
@@ -44,29 +46,41 @@ export default function CreateGroupPage() {
                     <Stack height={200} bg="background.elevation1" center br="md">
                         <Typography variant="body2">Add image</Typography>
                     </Stack>
-                    <TextField
-                        label="Group name"
-                        placeholder="Boys' trip to Berlin"
-                        value={name.value}
-                        onChange={name.setValue}
-                        error={name.error}
+                    <Controller
+                        control={form.control}
+                        name="name"
+                        render={({ field, fieldState: { error } }) => (
+                            <TextField
+                                label="Group name"
+                                placeholder="Boys' trip to Berlin"
+                                value={field.value}
+                                onChange={field.onChange}
+                                error={error?.message}
+                            />
+                        )}
                     />
-                    <Select
-                        label="Currency"
-                        placeholder="Select currency"
-                        options={[
-                            {
-                                id: 'USD',
-                                label: 'United States Dollar',
-                            },
-                            {
-                                id: 'EUR',
-                                label: 'Euro',
-                            },
-                        ]}
-                        value={currency.value}
-                        onChange={currency.setValue}
-                        error={currency.error}
+                    <Controller
+                        control={form.control}
+                        name="currency"
+                        render={({ field, fieldState: { error } }) => (
+                            <Select
+                                label="Currency"
+                                placeholder="Select currency"
+                                options={[
+                                    {
+                                        id: 'USD',
+                                        label: 'United States Dollar',
+                                    },
+                                    {
+                                        id: 'EUR',
+                                        label: 'Euro',
+                                    },
+                                ]}
+                                value={field.value}
+                                onChange={field.onChange}
+                                error={error?.message}
+                            />
+                        )}
                     />
                 </Stack>
             </Screen.Content>
@@ -75,9 +89,7 @@ export default function CreateGroupPage() {
                     <Button
                         color="primary"
                         variant="contained"
-                        onPress={() => {
-                            handleCreate();
-                        }}
+                        onPress={form.handleSubmit(handleSubmit)}
                     >
                         Create group
                     </Button>
