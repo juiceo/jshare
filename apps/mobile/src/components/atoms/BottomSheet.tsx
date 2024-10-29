@@ -11,7 +11,7 @@ import {
 import { useTheme, type Theme } from '@jshare/theme';
 
 export type BottomSheetProps = {
-    isOpen?: boolean;
+    isOpen: boolean;
     onClose: () => void;
 };
 

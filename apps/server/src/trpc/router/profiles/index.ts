@@ -47,7 +47,7 @@ export const profilesRouter = router({
                     firstName: z.string(),
                     lastName: z.string(),
                     email: z.string(),
-                    avatar: z.string(),
+                    avatar: z.string().nullable(),
                 })
                 .partial()
         )

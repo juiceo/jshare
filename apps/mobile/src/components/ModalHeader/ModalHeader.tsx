@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ChevronDown } from 'lucide-react-native';
 
+import Icon from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 
@@ -16,7 +16,7 @@ export const ModalHeader = (props: ModalHeaderProps) => {
         <Stack py="2xl" style={{ position: 'relative' }}>
             <Stack row alignCenter>
                 <Pressable style={{ width: 24 }} onPress={() => router.dismiss()} hitSlop={32}>
-                    <ChevronDown size={24} color="white" />
+                    <Icon name="ChevronDown" />
                 </Pressable>
                 <Typography variant="h4" align="center" flex={1}>
                     {title}

@@ -13,7 +13,8 @@ export const Avatar = (props: AvatarProps) => {
     const styles = getStyles(theme);
     return (
         <Image
-            source={{ uri: props.source ?? undefined }}
+            key={props.source}
+            source={props.source ? { uri: props.source } : null}
             style={[
                 styles.avatar,
                 props.size === 'sm' && styles.sizeSm,

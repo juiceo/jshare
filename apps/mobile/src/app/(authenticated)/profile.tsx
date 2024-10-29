@@ -23,9 +23,11 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
     const { signOut } = useSession();
     const { updateProfile } = useProfile();
 
-    const [avatar, setAvatar] = useState<string | undefined>(profile?.avatar ?? undefined);
+    const [avatar, setAvatar] = useState<string | null>(profile?.avatar ?? null);
     const [firstName, setFirstName] = useState<string>(profile?.firstName ?? '');
     const [lastName, setLastName] = useState<string>(profile?.lastName ?? '');
+
+    console.log('AVATAR NOW', avatar);
 
     return (
         <Screen screenOptions={{ title: 'Profile' }}>

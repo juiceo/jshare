@@ -1,23 +1,40 @@
 import { useState } from 'react';
-import { ActivityIndicator, Alert, Pressable } from 'react-native';
+import { ActivityIndicator, Alert, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 import { Avatar } from '~/components/atoms/Avatar';
+import { Button } from '~/components/atoms/Button';
+import Icon from '~/components/atoms/Icon';
+import { Menu } from '~/components/atoms/Menu';
 import { Stack } from '~/components/atoms/Stack';
 import { supabase } from '~/services/supabase';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export type AvatarPickerProps = {
     value: string | null | undefined;
-    onChange: (value: string) => void;
+    onChange: (value: string | null) => void;
 };
 
 export const AvatarPicker = (props: AvatarPickerProps) => {
     const { value, onChange } = props;
+    console.log('RENDER AVATAR PICKER WITH VALUE', props.value);
     const { session } = useSession();
+    const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const [isUploading, setIsUploading] = useState<boolean>(false);
 
-    const handlePress = async () => {
+    const handlePress = () => {
+        if (value) {
+            setMenuOpen(true);
+        } else {
+            handleImageUpload();
+        }
+    };
+
+    const handleImageRemove = () => {
+        onChange(null);
+    };
+
+    const handleImageUpload = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -52,10 +69,46 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
     };
 
     return (
-        <Pressable onPress={handlePress} style={{ position: 'relative' }}>
-            <Avatar source={value} size={'lg'} />
-            <LoadingOverlay visible={isUploading} />
-        </Pressable>
+        <>
+            <View style={{ position: 'relative' }}>
+                <Avatar source={value} size={'lg'} />
+                <LoadingOverlay visible={isUploading} />
+                <Stack absoluteFill justifyEnd alignEnd>
+                    <Button color="paper" variant="contained" size="sm" onPress={handlePress}>
+                        Edit
+                    </Button>
+                </Stack>
+                {!value && (
+                    <Stack absoluteFill center style={{ pointerEvents: 'none' }}>
+                        <Icon name="User" size={36} />
+                    </Stack>
+                )}
+            </View>
+            <Menu
+                isOpen={isMenuOpen}
+                onClose={() => setMenuOpen(false)}
+                options={[
+                    {
+                        id: 'change',
+                        label: 'Change image',
+                    },
+                    {
+                        id: 'remove',
+                        label: 'Remove image',
+                    },
+                ]}
+                onChange={(value) => {
+                    switch (value) {
+                        case 'change': {
+                            return handleImageUpload();
+                        }
+                        case 'remove': {
+                            return handleImageRemove();
+                        }
+                    }
+                }}
+            />
+        </>
     );
 };
 
