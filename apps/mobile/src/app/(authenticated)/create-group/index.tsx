@@ -7,7 +7,7 @@ import { Button } from '~/components/atoms/Button';
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
-import { Typography } from '~/components/atoms/Typography';
+import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';
@@ -43,9 +43,8 @@ export default function CreateGroupPage() {
             <Screen.Content scrollable>
                 <Stack column spacing="md">
                     <ModalHeader title="New group" />
-                    <Stack height={200} bg="background.elevation1" center br="md">
-                        <Typography variant="body2">Add image</Typography>
-                    </Stack>
+
+                    <ImageUploader value={null} onChange={() => {}} />
                     <Controller
                         control={form.control}
                         name="name"
