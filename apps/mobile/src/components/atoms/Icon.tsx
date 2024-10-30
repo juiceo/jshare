@@ -3,8 +3,10 @@ import { icons } from 'lucide-react-native';
 
 import { useTheme } from '@jshare/theme';
 
+export type IconName = keyof typeof icons;
+
 export type IconProps = {
-    name: keyof typeof icons;
+    name: IconName;
     color?: string;
     size?: number;
     style?: StyleProp<ViewStyle>;
