@@ -5,13 +5,9 @@ import { merge } from 'lodash';
 import { supabase } from '~/services/supabase';
 import { useSession } from '~/wrappers/SessionProvider';
 
-export type UseImageUploadArgs = {
-    bucket: 'avatars';
-    defaultOptions?: ImagePicker.ImagePickerOptions;
-};
+export const MediaTypeOptions = ImagePicker.MediaTypeOptions;
 
-export const useImageUpload = (args: UseImageUploadArgs) => {
-    const { defaultOptions, bucket } = args;
+export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) => {
     const { session } = useSession();
     const [uploadingCount, setUploadingCount] = useState<number>(0);
     const isUploading = uploadingCount > 0;
@@ -28,12 +24,14 @@ export const useImageUpload = (args: UseImageUploadArgs) => {
                         const arrayBuffer = await new Response(blob).arrayBuffer();
                         const imageId = `${session?.user.id ?? 'anon'}_${Math.random().toString(36)}`;
                         const image = await supabase.storage
-                            .from(bucket)
+                            .from('uploads')
                             .upload(imageId, arrayBuffer, {
                                 contentType: asset.mimeType,
                             });
                         if (image.data) {
-                            const url = await supabase.storage.from(bucket).getPublicUrl(imageId);
+                            const url = await supabase.storage
+                                .from('uploads')
+                                .getPublicUrl(imageId);
                             return url.data.publicUrl;
                         } else {
                             return null;
@@ -51,7 +49,7 @@ export const useImageUpload = (args: UseImageUploadArgs) => {
                 failed: urls.filter((url) => url === null).length,
             };
         },
-        [bucket, session?.user.id]
+        [session?.user.id]
     );
 
     const uploadFromCamera = useCallback(

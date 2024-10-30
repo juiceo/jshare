@@ -8,6 +8,7 @@
         "typecheck": "turbo typecheck",
         "test": "turbo test",
         "build": "turbo build",
+        "fullcheck": "pnpm lint && pnpm typecheck && pnpm test",
         "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
         "turbo:clean": "turbo daemon clean",
         "format:write": "prettier './**/*.{js,jsx,ts,tsx,json}' --write",

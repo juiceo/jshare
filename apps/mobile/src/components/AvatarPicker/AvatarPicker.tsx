@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
 
 import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import Icon from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
-import { useImageUpload } from '~/hooks/useImageUpload';
+import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
 
 export type AvatarPickerProps = {
     value: string | null | undefined;
@@ -18,21 +17,14 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
     const { value, onChange } = props;
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({
-        bucket: 'avatars',
-        defaultOptions: {
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.1,
-            selectionLimit: 1,
-            base64: true,
-            allowsMultipleSelection: false,
-        },
+        mediaTypes: MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.1,
+        selectionLimit: 1,
+        base64: true,
+        allowsMultipleSelection: false,
     });
-
-    const handleImageRemove = () => {
-        onChange(null);
-    };
 
     return (
         <>
@@ -72,7 +64,7 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
                             });
                         }
                         case 'remove': {
-                            return handleImageRemove();
+                            return onChange(null);
                         }
                     }
                 }}
