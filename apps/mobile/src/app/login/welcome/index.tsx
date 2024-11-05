@@ -1,40 +1,53 @@
-import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
-import { Redirect, router } from 'expo-router';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Redirect, useRouter } from 'expo-router';
+import { z } from 'zod';
 
-import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
+import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Screen } from '~/components/Screen';
-import { useIdenticon } from '~/hooks/useIdenticon';
+import { generateIdenticon } from '~/services/identicons';
 import { trpc } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
+const schema = z.object({
+    firstName: z.string().min(1),
+    lastName: z.string(),
+    avatar: z.string(),
+});
+
+type Schema = z.infer<typeof schema>;
+
 export default function LoginWelcomePage() {
     const { session } = useSession();
-    const [identiconSeed, setIdenticonSeed] = useState<number>(0);
-    const identicon = useIdenticon(session?.user.id ?? null, `${identiconSeed}`);
-    const [firstName, setFirstName] = useState<string>('');
-    const [lastName, setLastName] = useState<string>('');
+    const router = useRouter();
+
+    const form = useForm<Schema>({
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            avatar: generateIdenticon(session?.user.id ?? ''),
+        },
+        resolver: zodResolver(schema),
+    });
 
     const createProfile = trpc.profiles.create.useMutation();
 
-    const handleContinue = async () => {
+    const handleSubmit = async (data: Schema) => {
         const email = session?.user.email;
-
         if (!email) {
             Alert.alert('Missing email!');
             return;
         }
         await createProfile.mutateAsync({
-            firstName,
-            lastName,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            avatar: data.avatar,
             email,
-            avatar: identicon ?? undefined,
         });
-
         router.dismissAll();
         router.replace('/');
     };
@@ -51,38 +64,40 @@ export default function LoginWelcomePage() {
         >
             <Screen.Content scrollable>
                 <Stack flex={1} center spacing="md">
-                    <Stack column center mb="3xl" spacing="sm">
-                        <RectButton
-                            activeOpacity={0.5}
-                            onPress={() => {
-                                Alert.alert('Pressed!');
-                            }}
-                        >
-                            <Avatar source={identicon} size="lg" />
-                        </RectButton>
-                        <Button
-                            variant="text"
-                            color="primary"
-                            onPress={() => setIdenticonSeed((prev) => prev + 1)}
-                        >
-                            Regenerate
-                        </Button>
+                    <Stack py="3xl">
+                        <Controller
+                            control={form.control}
+                            name="avatar"
+                            render={({ field }) => (
+                                <AvatarPicker value={field.value} onChange={field.onChange} />
+                            )}
+                        />
                     </Stack>
-                    <TextField
-                        label={'First name'}
-                        value={firstName}
-                        onChange={setFirstName}
-                        TextInputProps={{
-                            placeholder: 'John',
-                        }}
+                    <Controller
+                        control={form.control}
+                        name="firstName"
+                        render={({ field, fieldState }) => (
+                            <TextField
+                                label={'First name'}
+                                value={field.value}
+                                onChange={field.onChange}
+                                error={fieldState.error?.message}
+                                placeholder="John"
+                            />
+                        )}
                     />
-                    <TextField
-                        label={'Last name'}
-                        value={lastName}
-                        onChange={setLastName}
-                        TextInputProps={{
-                            placeholder: 'Doe',
-                        }}
+                    <Controller
+                        control={form.control}
+                        name="lastName"
+                        render={({ field, fieldState }) => (
+                            <TextField
+                                label={'Last name'}
+                                value={field.value}
+                                onChange={field.onChange}
+                                error={fieldState.error?.message}
+                                placeholder="Doe"
+                            />
+                        )}
                     />
                 </Stack>
             </Screen.Content>
@@ -90,7 +105,7 @@ export default function LoginWelcomePage() {
                 <Button
                     variant={'contained'}
                     color={'primary'}
-                    onPress={handleContinue}
+                    onPress={form.handleSubmit(handleSubmit)}
                     loading={createProfile.isPending}
                 >
                     Continue
