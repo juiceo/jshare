@@ -1,57 +1,71 @@
 import { Pressable } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 
 import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
+import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { Screen } from '~/components/Screen';
+import { EmptyState } from '~/components/util/EmptyState';
+import { LoadingState } from '~/components/util/LoadingState';
+import { QuerySwitch } from '~/components/util/QuerySwitch';
 import { trpc } from '~/services/trpc';
 
 export default function HomePage() {
     const router = useRouter();
     const profile = trpc.profiles.get.useQuery();
-    const groups = trpc.groups.listParticipating.useQuery();
+    const groupsQuery = trpc.groups.listParticipating.useQuery();
 
     return (
-        <Screen screenOptions={{ title: 'Home', headerShown: false }}>
-            <Screen.Content>
+        <Screen screenOptions={{ title: 'Home', headerShown: false }} disableBottomInset>
+            <Screen.Content padding="none">
                 <Stack row justifyBetween p="md">
-                    <Typography variant="h3">JShare</Typography>
+                    <Typography variant="h3">Your groups</Typography>
                     <Pressable onPress={() => router.push('/profile')}>
                         <Avatar size="sm" source={profile.data?.avatar} />
                     </Pressable>
                 </Stack>
-                <Stack flex={1} center>
-                    <Typography variant="h3" color="primary" align="center" maxW="60%">
-                        Hi there! 👋
-                    </Typography>
-                    <Typography variant="body1" color="primary" align="center" maxW="60%">
-                        Good to see you here. Create a group or join an existing one to get started.
-                    </Typography>
-                    <Typography variant="body1" color="primary" align="center" maxW="60%">
-                        Your groups: {groups.data?.map((g) => g.name).join(', ') ?? 'None'}
-                    </Typography>
-                </Stack>
-                <Stack column mt="xl" spacing="md">
-                    <Button
-                        color="secondary"
-                        variant="text"
-                        onPress={() => {
-                            router.push('/join-group');
-                        }}
+                <Stack flex={1}>
+                    <QuerySwitch
+                        query={groupsQuery}
+                        loading={<LoadingState message="Loading groups..." />}
+                        error={
+                            <Stack flex={1}>
+                                <EmptyState
+                                    title="Oops!"
+                                    message="Something went wrong while loading your groups..."
+                                />
+                                <Button color="secondary" onPress={groupsQuery.refetch}>
+                                    Retry
+                                </Button>
+                            </Stack>
+                        }
+                        empty={
+                            <Stack flex={1}>
+                                <EmptyState
+                                    title="Hi there! 👋"
+                                    message="Good to see you here. Create a group or join an existing one to get started."
+                                />
+                            </Stack>
+                        }
                     >
-                        Enter invite code
-                    </Button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onPress={() => {
-                            router.push('/create-group');
-                        }}
-                    >
-                        Create new group
-                    </Button>
+                        {(groups) => (
+                            <Stack flex={1}>
+                                <ScrollView
+                                    style={{ flex: 1 }}
+                                    contentContainerStyle={{ paddingVertical: 20 }}
+                                >
+                                    <Stack column spacing="md">
+                                        {groups.map((g) => (
+                                            <GroupCard key={g.id} group={g} />
+                                        ))}
+                                    </Stack>
+                                </ScrollView>
+                            </Stack>
+                        )}
+                    </QuerySwitch>
                 </Stack>
             </Screen.Content>
         </Screen>
