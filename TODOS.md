@@ -1,0 +1,2 @@
+-   New home page design based on: https://dribbble.com/shots/23739385-Mobile-Banking-App-Design
+-   Theme update based on above dribbble: paper color, secondary button color, font variants, etc.
