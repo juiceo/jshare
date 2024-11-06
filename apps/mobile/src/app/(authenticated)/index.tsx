@@ -41,7 +41,7 @@ export default function HomePage() {
                             <Typography variant="overline">Your groups</Typography>
                             <Button
                                 size="sm"
-                                color="paper"
+                                color="primary"
                                 onPress={() => router.push('/create-group')}
                             >
                                 New group
