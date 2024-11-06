@@ -17,6 +17,7 @@ export default function LoginLayout() {
                 headerTitleStyle: {
                     fontWeight: 'bold',
                 },
+                headerShown: false,
             }}
         />
     );

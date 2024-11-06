@@ -39,19 +39,12 @@ export default function LoginScreen() {
     }, [error, isValid]);
 
     return (
-        <Screen
-            screenOptions={{
-                title: 'Sign in',
-                headerShown: false,
-            }}
-        >
+        <Screen>
             <Screen.Content>
-                <Stack flex={1} center>
-                    <Typography variant="h1" color="accent.main">
-                        Welcome to JShare
-                    </Typography>
+                <Stack flex={1} center p="xl">
+                    <Typography variant="h1">Welcome to JShare</Typography>
                 </Stack>
-                <Stack spacing="md">
+                <Stack spacing="md" p="xl">
                     <TextField
                         label="Email address"
                         value={email}
@@ -66,7 +59,7 @@ export default function LoginScreen() {
                         inputRef={inputRef}
                         error={error ? 'Please enter a valid email address' : null}
                     />
-                    <Button variant="contained" color="primary" onPress={handleContinue}>
+                    <Button variant="contained" color="paper" onPress={handleContinue}>
                         Continue
                     </Button>
                 </Stack>

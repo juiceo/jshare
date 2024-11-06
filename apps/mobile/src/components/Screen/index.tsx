@@ -21,13 +21,17 @@ export type ScreenProps = {
      */
     disableBottomInset?: boolean;
     /**
+     * Disables the top safe area inset for the screen
+     */
+    disableTopInset?: boolean;
+    /**
      * Options to pass to the underlying Stack.Screen component
      */
     screenOptions?: NativeStackNavigationOptions;
 };
 
 export const Screen = (props: ScreenProps) => {
-    const { disableBottomInset, screenOptions } = props;
+    const { disableBottomInset, disableTopInset, screenOptions } = props;
     const { theme } = useTheme();
     const hasParentScreen = useHasParentScreen();
 
@@ -54,7 +58,7 @@ export const Screen = (props: ScreenProps) => {
             />
 
             <ScreenProvider
-                enableTopInset={screenOptions?.headerShown === false}
+                enableTopInset={!disableTopInset}
                 disableBottomInset={disableBottomInset}
             >
                 {props.children}

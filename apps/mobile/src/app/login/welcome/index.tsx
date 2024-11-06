@@ -8,6 +8,7 @@ import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
+import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { generateIdenticon } from '~/services/identicons';
 import { trpc } from '~/services/trpc';
@@ -57,13 +58,10 @@ export default function LoginWelcomePage() {
     }
 
     return (
-        <Screen
-            screenOptions={{
-                title: 'Complete your profile',
-            }}
-        >
+        <Screen>
             <Screen.Content scrollable>
-                <Stack flex={1} center spacing="md">
+                <Header title="Complete your profile" />
+                <Stack p="xl" flex={1} center spacing="md">
                     <Stack py="3xl">
                         <Controller
                             control={form.control}
@@ -101,7 +99,7 @@ export default function LoginWelcomePage() {
                     />
                 </Stack>
             </Screen.Content>
-            <Screen.Footer>
+            <Screen.Footer padding="xl">
                 <Button
                     variant={'contained'}
                     color={'primary'}

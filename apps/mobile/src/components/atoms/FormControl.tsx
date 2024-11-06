@@ -56,7 +56,7 @@ const getStyles = (theme: Theme) => {
             borderRadius: theme.borderRadius.lg,
             width: '100%',
             color: theme.palette.text.primary,
-            backgroundColor: 'rgba(255,255,255,0.05)',
+            backgroundColor: theme.palette.background.elevation1,
             fontSize: theme.typography.body1.fontSize,
             paddingHorizontal: theme.spacing.xl,
             paddingVertical: theme.spacing.lg,

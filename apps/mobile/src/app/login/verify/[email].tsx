@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
+import { Header } from '~/components/Header/Header';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { useTimer } from '~/hooks/useTimer';
@@ -60,13 +61,9 @@ export default function LoginVerifyPage() {
     };
 
     return (
-        <Screen
-            screenOptions={{
-                title: 'Verify email',
-                headerBackTitle: 'Back',
-            }}
-        >
+        <Screen>
             <Screen.Content>
+                <Header title="Verify email" />
                 <Stack flex={1} center>
                     <Typography variant="body1" align="center">
                         Please enter the 6-digit code sent to

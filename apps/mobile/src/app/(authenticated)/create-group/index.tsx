@@ -7,6 +7,7 @@ import { Button } from '~/components/atoms/Button';
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
+import { Header } from '~/components/Header/Header';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
@@ -40,10 +41,10 @@ export default function CreateGroupPage() {
     };
 
     return (
-        <Screen screenOptions={{ title: 'Create group' }}>
+        <Screen disableTopInset>
             <Screen.Content scrollable>
-                <Stack column spacing="md">
-                    <ModalHeader title="New group" />
+                <Header title="Create group" backButtonStyle="close" />
+                <Stack column spacing="md" p="xl">
                     <Controller
                         control={form.control}
                         name="image"
@@ -93,10 +94,10 @@ export default function CreateGroupPage() {
                     />
                 </Stack>
             </Screen.Content>
-            <Screen.Footer>
+            <Screen.Footer padding="xl">
                 <Stack column spacing="md">
                     <Button
-                        color="primary"
+                        color="paper"
                         variant="contained"
                         onPress={form.handleSubmit(handleSubmit)}
                     >

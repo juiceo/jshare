@@ -7,6 +7,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
+import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { useProfile } from '~/hooks/useProfile';
 import { useSession } from '~/wrappers/SessionProvider';
@@ -27,12 +28,11 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
     const [firstName, setFirstName] = useState<string>(profile?.firstName ?? '');
     const [lastName, setLastName] = useState<string>(profile?.lastName ?? '');
 
-    console.log('AVATAR NOW', avatar);
-
     return (
-        <Screen screenOptions={{ title: 'Profile' }}>
+        <Screen>
             <Screen.Content scrollable>
-                <Stack flex={1} spacing="md">
+                <Header title="Profile" />
+                <Stack flex={1} spacing="md" p="xl">
                     <Stack column center p="xl" br="md" spacing="none">
                         <Typography variant="body2">
                             {profile?.firstName} {profile?.lastName}
@@ -83,7 +83,7 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
                     />
                 </Stack>
             </Screen.Content>
-            <Screen.Footer>
+            <Screen.Footer padding="xl">
                 <Button color="error" variant="text" onPress={signOut} mt="3xl">
                     Sign out
                 </Button>

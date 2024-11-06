@@ -7,14 +7,16 @@ export type TypographyVariants = {
     h2: TypographyVariantDefinition;
     h3: TypographyVariantDefinition;
     h4: TypographyVariantDefinition;
+    h5: TypographyVariantDefinition;
     body1: TypographyVariantDefinition;
     body2: TypographyVariantDefinition;
+    overline: TypographyVariantDefinition;
     caption: TypographyVariantDefinition;
     button: TypographyVariantDefinition;
 };
 
 export type TypographyVariantDefinition = {
     fontFamily: FontFamily;
-} & Pick<TextStyle, 'fontSize' | 'lineHeight' | 'letterSpacing'>;
+} & Pick<TextStyle, 'fontSize' | 'lineHeight' | 'letterSpacing' | 'textTransform'>;
 
 export type TypographyVariant = keyof TypographyVariants;

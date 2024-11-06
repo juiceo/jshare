@@ -10,7 +10,7 @@ export default function JoinGroupPage() {
     const router = useRouter();
 
     return (
-        <Screen screenOptions={{ title: 'Join Group' }}>
+        <Screen disableTopInset>
             <Screen.Content>
                 <ModalHeader title="Join group" />
                 <Stack column spacing="md" justifyEnd flex={1}>
@@ -35,19 +35,6 @@ export default function JoinGroupPage() {
                     </Button>
                 </Stack>
             </Screen.Content>
-            {/* <Screen.Footer>
-                <Stack column spacing="md">
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onPress={() => {
-                            router.replace('/profile');
-                        }}
-                    >
-                        Join group
-                    </Button>
-                </Stack>
-            </Screen.Footer> */}
         </Screen>
     );
 }

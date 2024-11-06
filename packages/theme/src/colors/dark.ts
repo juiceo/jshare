@@ -2,15 +2,15 @@ import type { ColorPalette } from './types';
 
 export const darkPalette: ColorPalette = {
     accent: {
-        light: '#CFF2CF',
-        main: '#AFE1AF',
-        dark: '#88B688',
+        light: '#FF8199',
+        main: '#E54B6F',
+        dark: '#B03554',
     },
     background: {
         default: '#0A0A0A',
-        main: '#121212',
-        elevation1: '#1A1A1A',
-        elevation2: '#222222',
+        main: '#15171C',
+        elevation1: '#1D1F27',
+        elevation2: '#32353E',
         elevation3: '#2A2A2A',
     },
     border: {

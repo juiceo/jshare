@@ -2,11 +2,14 @@ import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
 
+import { useTheme } from '@jshare/theme';
+
 import { Stack as StackView } from '~/components/atoms/Stack';
 import { AuthenticatedContextProvider } from '~/wrappers/AuthenticatedContextProvider';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function AuthenticatedLayout() {
+    const { theme } = useTheme();
     const { session, isLoading } = useSession();
 
     if (isLoading) {
@@ -29,7 +32,14 @@ export default function AuthenticatedLayout() {
 
     return (
         <AuthenticatedContextProvider session={session}>
-            <Stack>
+            <Stack
+                screenOptions={{
+                    contentStyle: {
+                        backgroundColor: theme.palette.background.main,
+                    },
+                    headerShown: false,
+                }}
+            >
                 <Stack.Screen
                     name="create-group/index"
                     options={{ presentation: 'modal', headerShown: false }}

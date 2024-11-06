@@ -75,7 +75,7 @@ const getStyles = (
             case 'error':
                 return theme.palette.error.main;
             case 'paper': {
-                return theme.palette.background.elevation3;
+                return theme.palette.background.elevation2;
             }
         }
     })();
@@ -93,7 +93,7 @@ const getStyles = (
                         return {
                             maxHeight: 32,
                             minHeight: 32,
-                            paddingHorizontal: theme.spacing.md,
+                            paddingHorizontal: theme.spacing.lg,
                         };
                     }
                     case 'md': {
@@ -145,15 +145,30 @@ const getStyles = (
             }
         })(),
         text: (() => {
+            const sizeStyles = (() => {
+                switch (props.size) {
+                    case 'sm': {
+                        return {
+                            fontSize: 12,
+                        };
+                    }
+                    case 'md': {
+                        return {};
+                    }
+                }
+            })();
+
             switch (props.variant) {
                 case 'contained': {
                     return {
+                        ...sizeStyles,
                         color: getContrastTextColor(primaryColor),
                     };
                 }
                 case 'outlined':
                 case 'text': {
                     return {
+                        ...sizeStyles,
                         color: primaryColor,
                     };
                 }
