@@ -1,8 +1,6 @@
 import { Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { useTheme } from '@jshare/theme';
-
 import Icon, { type IconName } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
@@ -15,7 +13,6 @@ export type HeaderProps = {
 export const Header = (props: HeaderProps) => {
     const { title, backButtonStyle = 'back' } = props;
     const router = useRouter();
-    const { theme } = useTheme();
 
     const backIcon = ((): IconName => {
         switch (backButtonStyle) {

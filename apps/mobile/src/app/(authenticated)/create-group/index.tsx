@@ -9,7 +9,6 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Header } from '~/components/Header/Header';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
-import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';
 
