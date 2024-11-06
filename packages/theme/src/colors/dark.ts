@@ -1,10 +1,15 @@
 import type { ColorPalette } from './types';
 
 export const darkPalette: ColorPalette = {
-    accent: {
+    primary: {
         light: '#557687',
         main: '#254459',
         dark: '#1A3242',
+    },
+    accent: {
+        light: '#FFA5A5',
+        main: '#FF7070',
+        dark: '#CC5A5A',
     },
     background: {
         default: '#0A0A0A',

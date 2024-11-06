@@ -69,7 +69,7 @@ const getStyles = (
     const primaryColor = (() => {
         switch (props.color) {
             case 'primary':
-                return theme.palette.accent.main;
+                return theme.palette.primary.main;
             case 'secondary':
                 return theme.palette.text.secondary;
             case 'error':

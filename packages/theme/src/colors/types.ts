@@ -1,4 +1,5 @@
 export type ColorPalette = {
+    primary: PrimaryColor;
     accent: PrimaryColor;
     success: PrimaryColor;
     warning: PrimaryColor;
