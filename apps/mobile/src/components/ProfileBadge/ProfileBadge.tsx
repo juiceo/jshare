@@ -38,7 +38,7 @@ export const ProfileBadge = (props: ProfileBadgeProps) => {
                 />
                 <Stack row center pl="lg" pr="md" spacing="md">
                     <Typography variant="h4">{getName()}</Typography>
-                    <Icon name="ChevronRight" size={16} color={theme.palette.accent.main} />
+                    <Icon name="ChevronRight" size={16} />
                 </Stack>
             </Stack>
         </Pressable>

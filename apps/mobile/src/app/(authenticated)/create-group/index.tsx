@@ -97,7 +97,7 @@ export default function CreateGroupPage() {
             <Screen.Footer padding="xl">
                 <Stack column spacing="md">
                     <Button
-                        color="paper"
+                        color="primary"
                         variant="contained"
                         onPress={form.handleSubmit(handleSubmit)}
                     >
