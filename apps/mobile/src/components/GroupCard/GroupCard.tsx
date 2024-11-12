@@ -20,7 +20,7 @@ export const GroupCard = (props: GroupCardProps) => {
         >
             <Stack absoluteFill style={{ opacity: 0.8 }}>
                 <Image
-                    source={{ uri: 'https://picsum.photos/id/10/400/300' }}
+                    source={{ id: group.imageId }}
                     style={{
                         width: '100%',
                         height: '100%',

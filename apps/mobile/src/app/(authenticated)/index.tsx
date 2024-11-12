@@ -15,7 +15,7 @@ export default function HomePage() {
 
     return (
         <Screen disableBottomInset>
-            <Screen.Content scrollable>
+            <Screen.Content scrollable contentStyle={{ paddingBottom: 100 }}>
                 <Stack column px="xl" pt="3xl">
                     <Stack row justifyBetween>
                         <ProfileBadge onPress={() => router.push('/profile')} />

@@ -16,7 +16,7 @@ import { trpc } from '~/services/trpc';
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
     currency: z.enum(['USD', 'EUR']),
-    image: z.string().optional(),
+    imageId: z.string().optional(),
 });
 type Schema = z.infer<typeof schema>;
 
@@ -47,7 +47,7 @@ export default function CreateGroupPage() {
                 <Stack column spacing="md" p="xl">
                     <Controller
                         control={form.control}
-                        name="image"
+                        name="imageId"
                         render={({ field }) => (
                             <ImageUploader
                                 value={field.value}
