@@ -1,56 +1,41 @@
 import { useCallback, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { merge } from 'lodash';
+import { merge, partition } from 'lodash';
 
-import { supabase } from '~/services/supabase';
-import { useSession } from '~/wrappers/SessionProvider';
+import { uploadImage } from '~/services/images';
 
 export const MediaTypeOptions = ImagePicker.MediaTypeOptions;
 
 export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) => {
-    const { session } = useSession();
     const [uploadingCount, setUploadingCount] = useState<number>(0);
     const isUploading = uploadingCount > 0;
 
-    const uploadFiles = useCallback(
-        async (assets: ImagePicker.ImagePickerAsset[]) => {
-            setUploadingCount((prev) => prev + assets.length);
+    const uploadFiles = useCallback(async (assets: ImagePicker.ImagePickerAsset[]) => {
+        setUploadingCount((prev) => prev + assets.length);
 
-            const urls = await Promise.all(
-                assets.map(async (asset) => {
-                    try {
-                        const fetchResponse = await fetch(asset.uri);
-                        const blob = await fetchResponse.blob();
-                        const arrayBuffer = await new Response(blob).arrayBuffer();
-                        const imageId = `${session?.user.id ?? 'anon'}_${Math.random().toString(36)}`;
-                        const image = await supabase.storage
-                            .from('uploads')
-                            .upload(imageId, arrayBuffer, {
-                                contentType: asset.mimeType,
-                            });
-                        if (image.data) {
-                            const url = await supabase.storage
-                                .from('uploads')
-                                .getPublicUrl(imageId);
-                            return url.data.publicUrl;
-                        } else {
-                            return null;
-                        }
-                    } catch (err: any) {
-                        console.error('Image upload failed: ' + err.message);
-                        return null;
-                    }
-                })
-            );
-            setUploadingCount((prev) => prev - assets.length);
+        const imageIds = await Promise.all(
+            assets.map(async (asset) => {
+                try {
+                    const { imageId } = await uploadImage({
+                        uri: asset.uri,
+                        mimeType: asset.mimeType,
+                    });
 
-            return {
-                uploaded: urls.filter((url) => !!url),
-                failed: urls.filter((url) => url === null).length,
-            };
-        },
-        [session?.user.id]
-    );
+                    return imageId;
+                } catch (err: any) {
+                    console.error('Image upload failed: ' + err.message);
+                    return null;
+                }
+            })
+        );
+        const [uploaded, failed] = partition(imageIds, (id) => !!id);
+        setUploadingCount((prev) => prev - assets.length);
+
+        return {
+            uploaded,
+            failed,
+        };
+    }, []);
 
     const uploadFromCamera = useCallback(
         async (options?: ImagePicker.ImagePickerOptions) => {

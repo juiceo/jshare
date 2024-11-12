@@ -1,0 +1,29 @@
+import { useCallback } from 'react';
+
+import { trpc, type TrpcInputs } from '~/services/trpc';
+
+export const useGroups = () => {
+    const groupsQuery = trpc.groups.listParticipating.useQuery();
+
+    return [groupsQuery.data, groupsQuery];
+};
+
+export const useCreateGroup = () => {
+    const trpcUtils = trpc.useUtils();
+    const createGroupMutation = trpc.groups.create.useMutation();
+
+    const createGroup = useCallback(
+        (args: TrpcInputs['groups']['create']) => {
+            return createGroupMutation.mutateAsync(args, {
+                onSuccess: (data) => {
+                    trpcUtils.groups.listParticipating.setData(undefined, (prev) => {
+                        return prev ? [...prev, data] : [data];
+                    });
+                },
+            });
+        },
+        [createGroupMutation, trpcUtils.groups.listParticipating]
+    );
+
+    return { createGroup, ...createGroupMutation };
+};

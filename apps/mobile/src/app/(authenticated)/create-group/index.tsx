@@ -10,6 +10,7 @@ import { TextField } from '~/components/atoms/TextField';
 import { Header } from '~/components/Header/Header';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
+import { useCreateGroup } from '~/hooks/useGroups';
 import { trpc } from '~/services/trpc';
 
 const schema = z.object({
@@ -21,9 +22,9 @@ type Schema = z.infer<typeof schema>;
 
 export default function CreateGroupPage() {
     const router = useRouter();
+    const { createGroup, isPending } = useCreateGroup();
 
     const trpcUtils = trpc.useUtils();
-    const createGroupMutation = trpc.groups.create.useMutation();
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
@@ -34,7 +35,7 @@ export default function CreateGroupPage() {
     });
 
     const handleSubmit = async (data: Schema) => {
-        await createGroupMutation.mutateAsync(data);
+        await createGroup(data);
         trpcUtils.groups.invalidate();
         router.dismiss();
     };
@@ -51,6 +52,7 @@ export default function CreateGroupPage() {
                             <ImageUploader
                                 value={field.value}
                                 onChange={field.onChange}
+                                aspectRatio={[16, 9]}
                                 placeholder="Add a cover image"
                             />
                         )}
@@ -99,6 +101,7 @@ export default function CreateGroupPage() {
                         color="primary"
                         variant="contained"
                         onPress={form.handleSubmit(handleSubmit)}
+                        loading={isPending}
                     >
                         Create group
                     </Button>

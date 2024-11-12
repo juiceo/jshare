@@ -29,7 +29,7 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
     return (
         <>
             <View style={{ position: 'relative' }}>
-                <Avatar source={value} size={'lg'} />
+                <Avatar imageId={value} size={'lg'} />
                 <LoadingOverlay visible={imageUpload.isUploading} />
                 <Stack absoluteFill justifyEnd alignEnd>
                     <Button

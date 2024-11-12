@@ -10,7 +10,6 @@ import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
-import { generateIdenticon } from '~/services/identicons';
 import { trpc } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
@@ -30,7 +29,7 @@ export default function LoginWelcomePage() {
         defaultValues: {
             firstName: '',
             lastName: '',
-            avatar: generateIdenticon(session?.user.id ?? ''),
+            avatar: '',
         },
         resolver: zodResolver(schema),
     });

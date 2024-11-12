@@ -21,9 +21,9 @@
         "@gorhom/bottom-sheet": "^5",
         "@hookform/resolvers": "^3.9.0",
         "@jshare/common": "workspace:*",
+        "@jshare/env": "workspace:*",
         "@jshare/prisma": "workspace:*",
         "@jshare/theme": "workspace:*",
-        "@jshare/env": "workspace:*",
         "@react-native-async-storage/async-storage": "^1.23.1",
         "@react-native-community/netinfo": "^11.3.1",
         "@supabase/supabase-js": "^2.45.6",
@@ -60,6 +60,7 @@
         "react-native-screens": "3.31.1",
         "react-native-svg": "15.2.0",
         "react-native-url-polyfill": "^2.0.0",
+        "react-native-uuid": "^2.0.3",
         "react-native-web": "~0.19.11",
         "validator": "^13.12.0"
     },

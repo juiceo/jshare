@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Pressable } from 'react-native';
+import { ActivityIndicator, Dimensions, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 
 import Icon from '~/components/atoms/Icon';
@@ -7,13 +7,16 @@ import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
+import { getHeightFromRatio, getImageUrl } from '~/services/images';
 
 export type ImageUploaderProps = {
     value: string | null | undefined;
     onChange: (value: string | null) => void;
-    aspectRatio?: [number, number];
+    aspectRatio: [number, number];
     placeholder?: string;
 };
+
+const screenWidth = Dimensions.get('window').width;
 
 export const ImageUploader = (props: ImageUploaderProps) => {
     const { value, onChange, aspectRatio = [16, 9], placeholder } = props;
@@ -27,6 +30,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         base64: true,
         allowsMultipleSelection: false,
     });
+
     return (
         <>
             <Pressable onPress={() => setMenuOpen(true)}>
@@ -44,7 +48,16 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                     {imageUpload.isUploading && <LoadingOverlay />}
                     <Image
                         key={value}
-                        source={value ? { uri: value } : null}
+                        source={
+                            value
+                                ? {
+                                      uri: getImageUrl(value, {
+                                          width: screenWidth,
+                                          height: getHeightFromRatio(screenWidth, aspectRatio),
+                                      }),
+                                  }
+                                : null
+                        }
                         style={[
                             {
                                 width: '100%',

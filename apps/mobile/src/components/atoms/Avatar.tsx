@@ -3,8 +3,10 @@ import { Image } from 'expo-image';
 
 import { getSxStyles, useTheme, type SxMarginProps, type Theme } from '@jshare/theme';
 
+import { getImageUrl } from '~/services/images';
+
 export type AvatarProps = {
-    source: string | null | undefined;
+    imageId: string | null | undefined;
     size: 'sm' | 'md' | 'lg';
 } & SxMarginProps;
 
@@ -13,8 +15,18 @@ export const Avatar = (props: AvatarProps) => {
     const styles = getStyles(theme);
     return (
         <Image
-            key={props.source}
-            source={props.source ? { uri: props.source } : null}
+            key={props.imageId}
+            source={
+                props.imageId
+                    ? {
+                          uri: getImageUrl(props.imageId, {
+                              width: 128,
+                              height: 128,
+                              resize: 'cover',
+                          }),
+                      }
+                    : null
+            }
             style={[
                 styles.avatar,
                 props.size === 'sm' && styles.sizeSm,
