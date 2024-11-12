@@ -29,7 +29,7 @@ export const ProfileBadge = (props: ProfileBadgeProps) => {
                     width={50}
                     height={50}
                     br="xl"
-                    border="paper"
+                    border="accent.main"
                     darken={0.2}
                     source={{
                         id: profile.data?.avatar,

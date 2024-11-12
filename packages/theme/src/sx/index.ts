@@ -181,7 +181,7 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
             const _value = value as SxProps['border'];
             return _value
                 ? {
-                      borderColor: theme.palette.border[_value],
+                      borderColor: getColorFromPath(_value, theme),
                       borderWidth: 1,
                       borderStyle: 'solid',
                   }

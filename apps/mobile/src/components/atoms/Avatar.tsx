@@ -35,7 +35,7 @@ export const Avatar = (props: AvatarProps) => {
             fit="cover"
             br="full"
             p="xl"
-            border="paper"
+            border="accent.main"
             bg="background.elevation1"
             darken={0.2}
         />
