@@ -42,7 +42,7 @@ export default function CreateGroupPage() {
     return (
         <Screen disableTopInset>
             <Screen.Content scrollable>
-                <Header title="Create group" backButtonStyle="close" />
+                <Header title="Create group" backButtonStyle="down" />
                 <Stack column spacing="md" p="xl">
                     <Controller
                         control={form.control}

@@ -1,13 +1,14 @@
-import { Pressable } from 'react-native';
+import { View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import Icon, { type IconName } from '~/components/atoms/Icon';
+import { type IconName } from '~/components/atoms/Icon';
+import { IconButton } from '~/components/atoms/IconButton';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 
 export type HeaderProps = {
     title: string;
-    backButtonStyle?: 'back' | 'close';
+    backButtonStyle?: 'back' | 'close' | 'down';
 };
 
 export const Header = (props: HeaderProps) => {
@@ -22,23 +23,19 @@ export const Header = (props: HeaderProps) => {
             case 'close': {
                 return 'X';
             }
+            case 'down':
+                return 'ChevronDown';
         }
     })();
     return (
         <Stack row spacing="xl" width="100%" p="xl">
-            <Pressable onPress={() => router.dismiss()}>
-                <Stack height={48} width={48} bg="background.elevation1" br="xl" center>
-                    <Icon name={backIcon} size={16} />
-                </Stack>
-            </Pressable>
+            <IconButton variant="ghost" onPress={() => router.dismiss()} icon={backIcon} />
             <Stack center flex={1}>
                 <Typography variant="h5">{title}</Typography>
             </Stack>
-            <Pressable>
-                <Stack height={48} width={48} bg="background.elevation1" br="xl" center>
-                    <Icon name="Ellipsis" size={16} />
-                </Stack>
-            </Pressable>
+            <View style={{ width: 48 }}>
+                {/* <IconButton variant={buttonVariant} onPress={() => {}} icon="Ellipsis" /> */}
+            </View>
         </Stack>
     );
 };
