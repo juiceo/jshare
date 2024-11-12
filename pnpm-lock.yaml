@@ -35,6 +35,9 @@ importers:
       '@jshare/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@jshare/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@jshare/prisma':
         specifier: workspace:*
         version: link:../../packages/prisma
@@ -189,6 +192,9 @@ importers:
 
   apps/server:
     dependencies:
+      '@jshare/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@jshare/prisma':
         specifier: workspace:*
         version: link:../../packages/prisma
@@ -262,6 +268,15 @@ importers:
       '@tsconfig/recommended':
         specifier: ^1.0.6
         version: 1.0.6
+
+  packages/env:
+    devDependencies:
+      '@jshare/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint-config
+      '@jshare/tsconfig':
+        specifier: workspace:*
+        version: link:../config/tsconfig
 
   packages/prisma:
     dependencies:

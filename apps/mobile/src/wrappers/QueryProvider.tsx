@@ -4,12 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { trpc, trpcHttpLink } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_JSHARE_API_URL;
-
-if (!API_BASE_URL) {
-    throw new Error('Missing required environment variable: EXPO_PUBLIC_JSHARE_API_URL');
-}
-
 export const QueryProvider = (props: PropsWithChildren) => {
     const { session } = useSession();
     const accessToken = session?.access_token;

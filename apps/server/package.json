@@ -20,6 +20,7 @@
     "keywords": [],
     "dependencies": {
         "@jshare/prisma": "workspace:*",
+        "@jshare/env": "workspace:*",
         "@trpc/server": "11.0.0-rc.593",
         "express": "^4.21.0",
         "jsonwebtoken": "^9.0.2"
