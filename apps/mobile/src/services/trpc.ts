@@ -1,6 +1,7 @@
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
+import superjson from 'superjson';
 
 import { getEnv } from '@jshare/env';
 import type { AppRouter } from '@jshare/server';
@@ -23,6 +24,7 @@ export const trpcHttpLink = httpBatchLink({
             authorization: getAccessToken(),
         };
     },
+    transformer: superjson,
 });
 
 export const trpcUniversal = createTRPCClient<AppRouter>({

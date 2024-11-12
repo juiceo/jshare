@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import jwt from 'jsonwebtoken';
+import superjson from 'superjson';
 
 import { getEnv } from '@jshare/env';
 
@@ -17,7 +18,9 @@ type Context = Awaited<ReturnType<typeof createContext>>;
  * Initialization of tRPC backend
  * Should be done only once per backend!
  */
-const t = initTRPC.context<Context>().create();
+const t = initTRPC.context<Context>().create({
+    transformer: superjson,
+});
 
 /**
  * Export reusable router and procedure helpers

@@ -40,6 +40,9 @@ export const groupsRouter = router({
                     },
                 },
             },
+            orderBy: {
+                updatedAt: 'desc',
+            },
         });
 
         return groups;
