@@ -1,3 +1,4 @@
+import { Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { Button } from '~/components/atoms/Button';
@@ -52,7 +53,19 @@ export default function HomePage() {
                         </Stack>
                     </Stack>
                     <Stack column spacing="xl">
-                        {groups?.map((group) => <GroupCard key={group.id} group={group} />)}
+                        {groups?.map((group) => (
+                            <Pressable
+                                key={group.id}
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/group/[id]',
+                                        params: { id: group.id },
+                                    })
+                                }
+                            >
+                                <GroupCard group={group} />
+                            </Pressable>
+                        ))}
                     </Stack>
                 </Stack>
             </Screen.Content>

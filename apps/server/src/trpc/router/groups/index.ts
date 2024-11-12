@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { Currency, Role } from '@jshare/prisma';
@@ -31,6 +32,27 @@ export const groupsRouter = router({
 
             return group;
         }),
+    get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
+        const group = await prisma.group.findUnique({
+            where: {
+                id: opts.input.id,
+                participants: {
+                    some: {
+                        userId: opts.ctx.userId,
+                    },
+                },
+            },
+        });
+
+        if (!group) {
+            throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `Group with id ${opts.input.id} not found`,
+            });
+        }
+
+        return group;
+    }),
     listParticipating: authProcedure.query(async (opts) => {
         const groups = await prisma.group.findMany({
             where: {
