@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { Image } from 'expo-image';
 
 import { getSxStyles, useTheme, type SxMarginProps, type Theme } from '@jshare/theme';
 
-import { getImageUrl } from '~/services/images';
+import { Image } from '~/components/atoms/Image';
 
 export type AvatarProps = {
     imageId: string | null | undefined;
@@ -13,28 +12,32 @@ export type AvatarProps = {
 export const Avatar = (props: AvatarProps) => {
     const { theme } = useTheme();
     const styles = getStyles(theme);
+
+    const imageSize = (() => {
+        switch (props.size) {
+            case 'sm':
+                return 32;
+            case 'md':
+                return 64;
+            case 'lg':
+                return 128;
+        }
+    })();
     return (
         <Image
             key={props.imageId}
-            source={
-                props.imageId
-                    ? {
-                          uri: getImageUrl(props.imageId, {
-                              width: 128,
-                              height: 128,
-                              resize: 'cover',
-                          }),
-                      }
-                    : null
-            }
-            style={[
-                styles.avatar,
-                props.size === 'sm' && styles.sizeSm,
-                props.size === 'md' && styles.sizeMd,
-                props.size === 'lg' && styles.sizeLg,
-                getSxStyles(props, theme),
-            ]}
-            contentFit="cover"
+            source={{
+                id: props.imageId,
+            }}
+            width={imageSize}
+            height={imageSize}
+            style={[styles.avatar, getSxStyles(props, theme)]}
+            fit="cover"
+            br="full"
+            p="xl"
+            border="paper"
+            bg="background.elevation1"
+            darken={0.2}
         />
     );
 };
@@ -44,21 +47,8 @@ const getStyles = (theme: Theme) => {
         avatar: {
             borderRadius: theme.borderRadius.full,
             borderWidth: 1,
-            borderColor: theme.palette.border.paper,
-
+            borderColor: theme.palette.accent.main,
             borderStyle: 'solid',
-        },
-        sizeSm: {
-            width: 32,
-            height: 32,
-        },
-        sizeMd: {
-            width: 64,
-            height: 64,
-        },
-        sizeLg: {
-            width: 128,
-            height: 128,
         },
     });
 };

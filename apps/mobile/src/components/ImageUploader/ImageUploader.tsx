@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { ActivityIndicator, Dimensions, Pressable } from 'react-native';
-import { Image } from 'expo-image';
 
-import Icon from '~/components/atoms/Icon';
+import { Icon } from '~/components/atoms/Icon';
+import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
@@ -48,24 +48,17 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                     {imageUpload.isUploading && <LoadingOverlay />}
                     <Image
                         key={value}
-                        source={
-                            value
-                                ? {
-                                      uri: getImageUrl(value, {
-                                          width: screenWidth,
-                                          height: getHeightFromRatio(screenWidth, aspectRatio),
-                                      }),
-                                  }
-                                : null
-                        }
+                        source={{
+                            id: value,
+                        }}
+                        quality={0.3}
                         style={[
                             {
                                 width: '100%',
-                                height: '100%',
+                                aspectRatio: `${aspectRatio[0]}/${aspectRatio[1]}`,
                             },
                         ]}
-                        contentFit="cover"
-                        contentPosition="center"
+                        fit="cover"
                     />
                 </Stack>
             </Pressable>

@@ -3,7 +3,7 @@ import { ActivityIndicator, View } from 'react-native';
 
 import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
-import Icon from '~/components/atoms/Icon';
+import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';

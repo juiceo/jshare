@@ -1,14 +1,17 @@
 import { useRouter } from 'expo-router';
 
 import { Button } from '~/components/atoms/Button';
-import Icon from '~/components/atoms/Icon';
+import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
+import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { ProfileBadge } from '~/components/ProfileBadge/ProfileBadge';
 import { Screen } from '~/components/Screen';
+import { useGroups } from '~/hooks/useGroups';
 
 export default function HomePage() {
     const router = useRouter();
+    const { groups } = useGroups();
 
     return (
         <Screen disableBottomInset>
@@ -36,7 +39,7 @@ export default function HomePage() {
                             style={{ position: 'relative', right: -50 }}
                         />
                     </Stack>
-                    <Stack mt="3xl" bg="background.elevation1" p="xl" br="xl">
+                    <Stack mt="3xl" p="xl" br="xl">
                         <Stack row alignCenter justifyBetween>
                             <Typography variant="overline">Your groups</Typography>
                             <Button
@@ -47,6 +50,9 @@ export default function HomePage() {
                                 New group
                             </Button>
                         </Stack>
+                    </Stack>
+                    <Stack column spacing="xl">
+                        {groups?.map((group) => <GroupCard key={group.id} group={group} />)}
                     </Stack>
                 </Stack>
             </Screen.Content>

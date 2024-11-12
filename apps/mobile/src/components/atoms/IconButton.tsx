@@ -2,7 +2,7 @@ import { Pressable } from 'react-native';
 
 import { useTheme } from '@jshare/theme';
 
-import Icon, { type IconName } from '~/components/atoms/Icon';
+import { Icon, type IconName } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 
 export type IconButtonProps = {

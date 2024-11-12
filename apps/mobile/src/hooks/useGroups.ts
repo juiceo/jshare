@@ -5,7 +5,7 @@ import { trpc, type TrpcInputs } from '~/services/trpc';
 export const useGroups = () => {
     const groupsQuery = trpc.groups.listParticipating.useQuery();
 
-    return [groupsQuery.data, groupsQuery];
+    return { groups: groupsQuery.data, ...groupsQuery };
 };
 
 export const useCreateGroup = () => {

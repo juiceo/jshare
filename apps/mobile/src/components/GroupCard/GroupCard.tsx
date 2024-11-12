@@ -1,8 +1,8 @@
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import type { Group } from '@jshare/prisma';
 
+import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 
@@ -15,7 +15,7 @@ export const GroupCard = (props: GroupCardProps) => {
     return (
         <Stack
             bg="background.elevation2"
-            br="3xl"
+            br="xl"
             style={{ aspectRatio: '1/1', position: 'relative', overflow: 'hidden' }}
         >
             <Stack absoluteFill style={{ opacity: 0.8 }}>

@@ -12,7 +12,7 @@ export type IconProps = {
     style?: StyleProp<ViewStyle>;
 };
 
-const Icon = (props: IconProps) => {
+export const Icon = (props: IconProps) => {
     const { theme } = useTheme();
     const { name, color = theme.palette.text.primary, size = 24, style } = props;
     const LucideIcon = icons[name];

@@ -1,9 +1,9 @@
 import { Pressable } from 'react-native';
-import { Image } from 'expo-image';
 
 import { useTheme } from '@jshare/theme';
 
-import Icon from '~/components/atoms/Icon';
+import { Icon } from '~/components/atoms/Icon';
+import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { trpc } from '~/services/trpc';
@@ -26,15 +26,15 @@ export const ProfileBadge = (props: ProfileBadgeProps) => {
         <Pressable onPress={props.onPress}>
             <Stack row bg="background.elevation1" br="lg">
                 <Image
-                    style={{
-                        width: 50,
-                        height: 50,
-                        opacity: 0.8,
-                        borderWidth: 1,
-                        borderColor: theme.palette.accent.main,
-                        borderRadius: theme.borderRadius.lg,
+                    width={50}
+                    height={50}
+                    br="xl"
+                    border="paper"
+                    darken={0.2}
+                    source={{
+                        id: profile.data?.avatar,
                     }}
-                    source={profile.data?.avatar ? { uri: profile.data.avatar } : null}
+                    fit={'fill'}
                 />
                 <Stack row center pl="lg" pr="md" spacing="md">
                     <Typography variant="h4">{getName()}</Typography>
