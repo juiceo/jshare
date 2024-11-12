@@ -59,7 +59,7 @@ export default function LoginScreen() {
                         inputRef={inputRef}
                         error={error ? 'Please enter a valid email address' : null}
                     />
-                    <Button variant="contained" color="paper" onPress={handleContinue}>
+                    <Button variant="contained" color="primary" onPress={handleContinue}>
                         Continue
                     </Button>
                 </Stack>
