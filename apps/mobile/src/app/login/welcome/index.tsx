@@ -16,7 +16,7 @@ import { useSession } from '~/wrappers/SessionProvider';
 const schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string(),
-    avatar: z.string(),
+    avatarId: z.string().optional(),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -29,7 +29,6 @@ export default function LoginWelcomePage() {
         defaultValues: {
             firstName: '',
             lastName: '',
-            avatar: '',
         },
         resolver: zodResolver(schema),
     });
@@ -45,7 +44,7 @@ export default function LoginWelcomePage() {
         await createProfile.mutateAsync({
             firstName: data.firstName,
             lastName: data.lastName,
-            avatar: data.avatar,
+            avatarId: data.avatarId,
             email,
         });
         router.dismissAll();
@@ -64,7 +63,7 @@ export default function LoginWelcomePage() {
                     <Stack py="3xl">
                         <Controller
                             control={form.control}
-                            name="avatar"
+                            name="avatarId"
                             render={({ field }) => (
                                 <AvatarPicker value={field.value} onChange={field.onChange} />
                             )}

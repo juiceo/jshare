@@ -24,7 +24,7 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
     const { signOut } = useSession();
     const { updateProfile } = useProfile();
 
-    const [avatar, setAvatar] = useState<string | null>(profile?.avatar ?? null);
+    const [avatarId, setAvatarId] = useState<string | null>(profile?.avatarId ?? null);
     const [firstName, setFirstName] = useState<string>(profile?.firstName ?? '');
     const [lastName, setLastName] = useState<string>(profile?.lastName ?? '');
 
@@ -42,11 +42,11 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
                         </Typography>
                         <Stack mt="2xl">
                             <AvatarPicker
-                                value={avatar}
-                                onChange={(url) => {
-                                    setAvatar(url);
+                                value={avatarId}
+                                onChange={(id) => {
+                                    setAvatarId(id);
                                     updateProfile({
-                                        avatar: url,
+                                        avatarId: id,
                                     });
                                 }}
                             />

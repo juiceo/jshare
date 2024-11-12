@@ -32,7 +32,7 @@ export const ProfileBadge = (props: ProfileBadgeProps) => {
                     border="accent.main"
                     darken={0.2}
                     source={{
-                        id: profile.data?.avatar,
+                        id: profile.data?.avatarId,
                     }}
                     fit={'fill'}
                 />

@@ -11,6 +11,7 @@ export const groupsRouter = router({
             z.object({
                 name: z.string(),
                 currency: z.nativeEnum(Currency),
+                imageId: z.string().optional(),
             })
         )
         .mutation(async (opts) => {
@@ -18,6 +19,7 @@ export const groupsRouter = router({
                 data: {
                     name: opts.input.name,
                     currency: opts.input.currency,
+                    imageId: opts.input.imageId,
                     participants: {
                         create: {
                             userId: opts.ctx.userId,
