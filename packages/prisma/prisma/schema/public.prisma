@@ -4,7 +4,8 @@ model Profile {
     firstName String
     lastName  String
     groups    GroupParticipant[]
-    images    Image[]
+    avatarId  String?
+    avatar    Image?             @relation(fields: [avatarId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -18,6 +19,8 @@ model Group {
     name         String
     currency     Currency
     participants GroupParticipant[]
+    coverImageId String?
+    coverImage   Image?             @relation(fields: [coverImageId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -44,15 +47,16 @@ model GroupParticipant {
 }
 
 model Image {
-    id     String @id @default(uuid())
-    path   String
-    bucket String
-
-    uploadedBy   Profile @relation(fields: [uploadedById], references: [userId])
+    id           String @id @default(uuid())
+    path         String
+    bucket       String
     uploadedById String
 
-    createdAt DateTime @default(now())
+    Group   Group[]
+    Profile Profile[]
+
     updatedAt DateTime @default(now()) @updatedAt
+    createdAt DateTime @default(now())
 
     @@map("images")
     @@schema("public")
