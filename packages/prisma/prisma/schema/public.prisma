@@ -3,8 +3,8 @@ model Profile {
     email     String
     firstName String
     lastName  String
-    avatarId  String?
     groups    GroupParticipant[]
+    images    Image[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -16,7 +16,6 @@ model Profile {
 model Group {
     id           String             @id @default(uuid())
     name         String
-    imageId      String?
     currency     Currency
     participants GroupParticipant[]
 
@@ -41,6 +40,21 @@ model GroupParticipant {
     @@index([groupId])
     @@index([userId])
     @@map("group_participants")
+    @@schema("public")
+}
+
+model Image {
+    id     String @id @default(uuid())
+    path   String
+    bucket String
+
+    uploadedBy   Profile @relation(fields: [uploadedById], references: [userId])
+    uploadedById String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    @@map("images")
     @@schema("public")
 }
 
