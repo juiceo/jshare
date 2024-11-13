@@ -14,9 +14,9 @@
     "author": "Juuso Lappalainen <hello@juiceo.me> (https://juiceo.me)",
     "license": "MIT",
     "devDependencies": {
-        "prisma": "5.21.1"
+        "prisma": "catalog:"
     },
     "dependencies": {
-        "@prisma/client": "5.21.1"
+        "@prisma/client": "catalog:"
     }
 }
