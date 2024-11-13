@@ -1,5 +1,6 @@
 import { publicProcedure, router } from '../trpc';
 import { groupsRouter } from './groups';
+import { imagesRouter } from './images';
 import { profilesRouter } from './profiles';
 
 export const appRouter = router({
@@ -8,4 +9,5 @@ export const appRouter = router({
     }),
     profiles: profilesRouter,
     groups: groupsRouter,
+    images: imagesRouter,
 });
