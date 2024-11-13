@@ -47,10 +47,11 @@ model GroupParticipant {
 }
 
 model Image {
-    id           String @id @default(uuid())
+    id           String  @id @default(uuid())
     path         String
     bucket       String
     uploadedById String
+    blurhash     String?
 
     Group   Group[]
     Profile Profile[]
