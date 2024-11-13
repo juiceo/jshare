@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Dimensions, Pressable } from 'react-native';
+import { ActivityIndicator, Pressable } from 'react-native';
 
 import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
@@ -7,7 +7,6 @@ import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { getHeightFromRatio, getImageUrl } from '~/services/images';
 
 export type ImageUploaderProps = {
     value: string | null | undefined;
@@ -15,8 +14,6 @@ export type ImageUploaderProps = {
     aspectRatio: [number, number];
     placeholder?: string;
 };
-
-const screenWidth = Dimensions.get('window').width;
 
 export const ImageUploader = (props: ImageUploaderProps) => {
     const { value, onChange, aspectRatio = [16, 9], placeholder } = props;
