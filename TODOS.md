@@ -1,3 +1,1 @@
--   New home page design based on: https://dribbble.com/shots/23739385-Mobile-Banking-App-Design
--   Theme update based on above dribbble: paper color, secondary button color, font variants, etc.
--   Image uploads: create images table, create image resources when uploading, create image component with dynamic size (supabase transformations) / loading state.
+Nothing here for now!
