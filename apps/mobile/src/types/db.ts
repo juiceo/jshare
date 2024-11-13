@@ -9,6 +9,7 @@ export const zDbImage: z.ZodType<DbImage> = z.object({
     createdAt: z.date(),
     updatedAt: z.date(),
     uploadedById: z.string(),
+    blurhash: z.string().nullable(),
 });
 
 export type DbImage = Image;
