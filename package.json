@@ -14,13 +14,17 @@
         "format:write": "prettier './**/*.{js,jsx,ts,tsx,json}' --write",
         "format:check": "prettier './**/*.{js,jsx,ts,tsx,json}' --check",
         "inbox": "open http://127.0.0.1:54324",
-        "studio": "open http://127.0.0.1:54323"
+        "studio": "open http://127.0.0.1:54323",
+        "create:package": "tsx ./scripts/create-package.ts"
     },
+    "type": "module",
     "devDependencies": {
         "@ianvs/prettier-plugin-sort-imports": "catalog:",
         "prettier": "catalog:",
+        "tsx": "^4.19.2",
         "turbo": "catalog:",
-        "typescript": "catalog:"
+        "typescript": "catalog:",
+        "zx": "^8.2.2"
     },
     "pnpm": {
         "peerDependencyRules": {
