@@ -21,7 +21,16 @@ export const profilesRouter = router({
                     firstName: opts.input.firstName,
                     lastName: opts.input.lastName,
                     email: opts.input.email,
-                    avatarId: opts.input.avatarId,
+                    avatar: opts.input.avatarId
+                        ? {
+                              connect: {
+                                  id: opts.input.avatarId,
+                              },
+                          }
+                        : undefined,
+                },
+                include: {
+                    avatar: true,
                 },
             });
 
@@ -61,7 +70,20 @@ export const profilesRouter = router({
                         firstName: opts.input.firstName,
                         lastName: opts.input.lastName,
                         email: opts.input.email,
-                        avatarId: opts.input.avatarId,
+                        avatar: opts.input.avatarId
+                            ? {
+                                  connect: {
+                                      id: opts.input.avatarId,
+                                  },
+                              }
+                            : opts.input.avatarId === null
+                              ? {
+                                    disconnect: true,
+                                }
+                              : undefined,
+                    },
+                    include: {
+                        avatar: true,
                     },
                 })
                 .catch((err: any) => {
