@@ -4,19 +4,10 @@ import { ImageSource as ExpoImageSource } from 'expo-image';
 import type { SxProps } from '@jshare/theme';
 
 import { getImageUrl } from '~/services/images';
-
-export type ImageSource = ImageSourceID | ExpoImageSource;
-
-export type ImageSourceID = {
-    id?: string | null;
-};
-
-export type ImageSourceURI = {
-    uri?: string | null;
-};
+import type { DbImage } from '~/types/db';
 
 export type ImageProps = {
-    source: ImageSource;
+    image: DbImage | null | undefined;
     fit?: 'cover' | 'contain' | 'fill';
     width?: number;
     height?: number;
@@ -25,23 +16,15 @@ export type ImageProps = {
     style?: StyleProp<ViewStyle>;
 } & SxProps;
 
-const isIdSource = (source: ImageSource): source is ImageSourceID => {
-    return 'id' in source;
-};
-
 export const getSourceFromProps = (props: ImageProps): ExpoImageSource => {
-    const { source } = props;
-    if (isIdSource(source)) {
-        const uri = source.id
-            ? getImageUrl(source.id, {
-                  width: props.width,
-                  height: props.height,
-                  resize: props.fit,
-                  quality: props.quality,
-              })
-            : undefined;
-        return { uri };
-    }
-
-    return source;
+    const { image } = props;
+    if (!image) return { uri: undefined };
+    return {
+        uri: getImageUrl(image.id, {
+            width: props.width,
+            height: props.height,
+            resize: props.fit,
+            quality: props.quality,
+        }),
+    };
 };

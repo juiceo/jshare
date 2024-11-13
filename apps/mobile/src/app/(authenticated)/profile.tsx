@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import type { Profile } from '@jshare/prisma';
-
 import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
@@ -10,23 +8,24 @@ import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { useProfile } from '~/hooks/useProfile';
+import type { ProfileWithAvatar } from '~/types/db';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function ProfilePage() {
     const { profile, isFetched } = useProfile();
     if (!isFetched) return null;
+    if (!profile) return null;
 
-    return <ProfilePageInner profile={profile ?? null} />;
+    return <ProfilePageInner profile={profile} />;
 }
 
-const ProfilePageInner = (props: { profile: Profile | null }) => {
+const ProfilePageInner = (props: { profile: ProfileWithAvatar }) => {
     const { profile } = props;
     const { signOut } = useSession();
     const { updateProfile } = useProfile();
 
-    const [avatarId, setAvatarId] = useState<string | null>(profile?.avatarId ?? null);
-    const [firstName, setFirstName] = useState<string>(profile?.firstName ?? '');
-    const [lastName, setLastName] = useState<string>(profile?.lastName ?? '');
+    const [firstName, setFirstName] = useState<string>(profile.firstName);
+    const [lastName, setLastName] = useState<string>(profile.lastName);
 
     return (
         <Screen>
@@ -42,11 +41,10 @@ const ProfilePageInner = (props: { profile: Profile | null }) => {
                         </Typography>
                         <Stack mt="2xl">
                             <AvatarPicker
-                                value={avatarId}
-                                onChange={(id) => {
-                                    setAvatarId(id);
+                                value={profile.avatar}
+                                onChange={(image) => {
                                     updateProfile({
-                                        avatarId: id,
+                                        avatarId: image?.id ?? null,
                                     });
                                 }}
                             />

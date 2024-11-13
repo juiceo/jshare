@@ -7,10 +7,11 @@ import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
+import type { DbImage } from '~/types/db';
 
 export type ImageUploaderProps = {
-    value: string | null | undefined;
-    onChange: (value: string | null) => void;
+    value: DbImage | null | undefined;
+    onChange: (value: DbImage | null) => void;
     aspectRatio: [number, number];
     placeholder?: string;
 };
@@ -44,11 +45,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                     {!value && <EmptyPlaceholder text={placeholder ?? 'Upload an image'} />}
                     {imageUpload.isUploading && <LoadingOverlay />}
                     <Image
-                        key={value}
-                        source={{
-                            id: value,
-                        }}
-                        quality={0.3}
+                        key={value?.id}
+                        image={value}
+                        quality={50}
                         style={[
                             {
                                 width: '100%',

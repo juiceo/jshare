@@ -41,6 +41,9 @@ export const profilesRouter = router({
             where: {
                 userId: opts.ctx.userId,
             },
+            include: {
+                avatar: true,
+            },
         });
 
         if (!profile) {

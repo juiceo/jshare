@@ -11,12 +11,13 @@ import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';
+import { zDbImage } from '~/types/db';
 import { useSession } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string(),
-    avatarId: z.string().optional(),
+    image: zDbImage.optional(),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -44,7 +45,7 @@ export default function LoginWelcomePage() {
         await createProfile.mutateAsync({
             firstName: data.firstName,
             lastName: data.lastName,
-            avatarId: data.avatarId,
+            avatarId: data.image?.id,
             email,
         });
         router.dismissAll();
@@ -63,7 +64,7 @@ export default function LoginWelcomePage() {
                     <Stack py="3xl">
                         <Controller
                             control={form.control}
-                            name="avatarId"
+                            name="image"
                             render={({ field }) => (
                                 <AvatarPicker value={field.value} onChange={field.onChange} />
                             )}

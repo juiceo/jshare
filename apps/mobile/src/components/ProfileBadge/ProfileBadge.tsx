@@ -31,9 +31,7 @@ export const ProfileBadge = (props: ProfileBadgeProps) => {
                     br="xl"
                     border="accent.main"
                     darken={0.2}
-                    source={{
-                        id: profile.data?.avatarId,
-                    }}
+                    image={profile.data?.avatar}
                     fit={'fill'}
                 />
                 <Stack row center pl="lg" pr="md" spacing="md">

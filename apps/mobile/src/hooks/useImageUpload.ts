@@ -3,6 +3,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { merge, partition } from 'lodash';
 
 import { uploadImage } from '~/services/images';
+import type { DbImage } from '~/types/db';
 
 export const MediaTypeOptions = ImagePicker.MediaTypeOptions;
 
@@ -10,35 +11,38 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
     const [uploadingCount, setUploadingCount] = useState<number>(0);
     const isUploading = uploadingCount > 0;
 
-    const uploadFiles = useCallback(async (assets: ImagePicker.ImagePickerAsset[]) => {
-        setUploadingCount((prev) => prev + assets.length);
+    const uploadFiles = useCallback(
+        async (
+            assets: ImagePicker.ImagePickerAsset[]
+        ): Promise<{ uploaded: DbImage[]; failed: number }> => {
+            setUploadingCount((prev) => prev + assets.length);
 
-        const imageIds = await Promise.all(
-            assets.map(async (asset) => {
-                try {
-                    const { imageId } = await uploadImage({
+            const imageIds = await Promise.all(
+                assets.map(async (asset) => {
+                    return uploadImage({
                         uri: asset.uri,
                         mimeType: asset.mimeType,
+                    }).catch((err: any) => {
+                        console.error('Image upload failed: ' + err.message);
+                        return null;
                     });
+                })
+            );
+            const [uploaded, failed] = partition(imageIds, (id) => !!id);
+            setUploadingCount((prev) => prev - assets.length);
 
-                    return imageId;
-                } catch (err: any) {
-                    console.error('Image upload failed: ' + err.message);
-                    return null;
-                }
-            })
-        );
-        const [uploaded, failed] = partition(imageIds, (id) => !!id);
-        setUploadingCount((prev) => prev - assets.length);
-
-        return {
-            uploaded,
-            failed,
-        };
-    }, []);
+            return {
+                uploaded,
+                failed: failed.length,
+            };
+        },
+        []
+    );
 
     const uploadFromCamera = useCallback(
-        async (options?: ImagePicker.ImagePickerOptions) => {
+        async (
+            options?: ImagePicker.ImagePickerOptions
+        ): Promise<{ uploaded: DbImage[]; failed: number }> => {
             const result = await ImagePicker.launchCameraAsync(merge({}, defaultOptions, options));
 
             if (result.canceled || !result.assets.length) {
@@ -54,7 +58,9 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
     );
 
     const uploadFromLibrary = useCallback(
-        async (options?: ImagePicker.ImagePickerOptions) => {
+        async (
+            options?: ImagePicker.ImagePickerOptions
+        ): Promise<{ uploaded: DbImage[]; failed: number }> => {
             const result = await ImagePicker.launchImageLibraryAsync(
                 merge({}, defaultOptions, options)
             );

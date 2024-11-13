@@ -1,15 +1,14 @@
 import { Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import type { Group } from '@jshare/prisma';
-
 import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
+import type { GroupWithCoverImage } from '~/types/db';
 
 export type GroupCardProps = {
-    group: Group;
+    group: GroupWithCoverImage;
 };
 
 export const GroupCard = (props: GroupCardProps) => {
@@ -27,9 +26,7 @@ export const GroupCard = (props: GroupCardProps) => {
                 <Image
                     height={140}
                     width={Dimensions.get('window').width}
-                    source={{
-                        id: group.imageId,
-                    }}
+                    image={group.coverImage}
                     fit="cover"
                     quality={80}
                 />

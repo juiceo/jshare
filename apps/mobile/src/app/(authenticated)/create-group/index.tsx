@@ -12,11 +12,12 @@ import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { useCreateGroup } from '~/hooks/useGroups';
 import { trpc } from '~/services/trpc';
+import { zDbImage } from '~/types/db';
 
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
     currency: z.enum(['USD', 'EUR']),
-    imageId: z.string().optional(),
+    coverImage: zDbImage.optional(),
 });
 type Schema = z.infer<typeof schema>;
 
@@ -47,7 +48,7 @@ export default function CreateGroupPage() {
                 <Stack column spacing="md" p="xl">
                     <Controller
                         control={form.control}
-                        name="imageId"
+                        name="coverImage"
                         render={({ field }) => (
                             <ImageUploader
                                 value={field.value}

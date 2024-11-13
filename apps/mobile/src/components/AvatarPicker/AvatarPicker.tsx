@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
-import { Avatar } from '~/components/atoms/Avatar';
 import { Button } from '~/components/atoms/Button';
 import { Icon } from '~/components/atoms/Icon';
+import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
+import type { DbImage } from '~/types/db';
 
 export type AvatarPickerProps = {
-    value: string | null | undefined;
-    onChange: (value: string | null) => void;
+    value: DbImage | null | undefined;
+    onChange: (value: DbImage | null) => void;
 };
 
 export const AvatarPicker = (props: AvatarPickerProps) => {
@@ -29,7 +30,7 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
     return (
         <>
             <View style={{ position: 'relative' }}>
-                <Avatar imageId={value} size={'lg'} />
+                <Image image={value} w={64} h={64} br="full" />
                 <LoadingOverlay visible={imageUpload.isUploading} />
                 <Stack absoluteFill justifyEnd alignEnd>
                     <Button

@@ -2,28 +2,32 @@ import uuid from 'react-native-uuid';
 import { clamp } from 'lodash';
 
 import { supabase } from '~/services/supabase';
+import { trpcUniversal } from '~/services/trpc';
+import type { DbImage } from '~/types/db';
 
 const SUPABASE_BUCKET_NAME = 'uploads';
 
-export const uploadImage = async (args: {
-    uri: string;
-    mimeType?: string;
-}): Promise<{ imageId: string }> => {
+export const uploadImage = async (args: { uri: string; mimeType?: string }): Promise<DbImage> => {
     const fetchResponse = await fetch(args.uri);
     const blob = await fetchResponse.blob();
     const arrayBuffer = await new Response(blob).arrayBuffer();
-    const imageId = 'test_' + uuid.v4();
-    const image = await supabase.storage.from(SUPABASE_BUCKET_NAME).upload(imageId, arrayBuffer, {
-        contentType: args.mimeType,
-    });
+    const path = uuid.v4();
+    const supabaseImage = await supabase.storage
+        .from(SUPABASE_BUCKET_NAME)
+        .upload(path, arrayBuffer, {
+            contentType: args.mimeType,
+        });
 
-    if (!image.data) {
-        throw new Error(image.error.message);
+    if (!supabaseImage.data) {
+        throw new Error(supabaseImage.error.message);
     }
 
-    return {
-        imageId,
-    };
+    const dbImage = await trpcUniversal.images.create.mutate({
+        path,
+        bucket: SUPABASE_BUCKET_NAME,
+    });
+
+    return dbImage;
 };
 
 export const getImageUrl = (
