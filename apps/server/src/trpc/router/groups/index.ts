@@ -12,7 +12,7 @@ export const groupsRouter = router({
             z.object({
                 name: z.string(),
                 currency: z.nativeEnum(Currency),
-                imageId: z.string().optional(),
+                coverImageId: z.string().optional(),
             })
         )
         .mutation(async (opts) => {
@@ -20,13 +20,22 @@ export const groupsRouter = router({
                 data: {
                     name: opts.input.name,
                     currency: opts.input.currency,
-                    imageId: opts.input.imageId,
+                    coverImage: opts.input.coverImageId
+                        ? {
+                              connect: {
+                                  id: opts.input.coverImageId,
+                              },
+                          }
+                        : undefined,
                     participants: {
                         create: {
                             userId: opts.ctx.userId,
                             role: Role.Owner,
                         },
                     },
+                },
+                include: {
+                    coverImage: true,
                 },
             });
 
@@ -41,6 +50,9 @@ export const groupsRouter = router({
                         userId: opts.ctx.userId,
                     },
                 },
+            },
+            include: {
+                coverImage: true,
             },
         });
 
@@ -64,6 +76,9 @@ export const groupsRouter = router({
             },
             orderBy: {
                 updatedAt: 'desc',
+            },
+            include: {
+                coverImage: true,
             },
         });
 
