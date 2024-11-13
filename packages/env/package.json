@@ -16,7 +16,6 @@
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*"
     },
-    "peerDependencies": {},
     "eslintConfig": {
         "extends": "@jshare/eslint-config",
         "ignorePatterns": [
