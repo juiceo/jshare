@@ -21,7 +21,9 @@
     "dependencies": {
         "@jshare/env": "workspace:*",
         "@jshare/prisma": "workspace:*",
+        "@supabase/supabase-js": "^2.45.6",
         "@trpc/server": "11.0.0-rc.593",
+        "blurhash": "^2.0.5",
         "express": "^4.21.0",
         "jsonwebtoken": "^9.0.2",
         "superjson": "^2.2.1"
