@@ -3,19 +3,24 @@ import { $, fs, question } from 'zx';
 
 console.log('Welcome to the package creation wizard!\n');
 
-const name = await question('Enter a name for your package (@jshare/package-name): ');
+const name = await question('Enter a name for your package: ');
 
 if (!name) {
     console.log('A name is required');
     process.exit(1);
 }
 
-const description = await question('Enter a short description for your package: ');
+function isValidName(str) {
+    const regex = /^[a-z-]+$/;
+    return regex.test(str);
+}
 
-if (!description) {
-    console.log('A description is required');
+if (!isValidName(name)) {
+    console.log('Name can only include lowercase letters and hyphens');
     process.exit(1);
 }
+
+const description = await question('Enter a short description for your package: ');
 
 const packageName = `@jshare/${name}`;
 const packageJson = {
