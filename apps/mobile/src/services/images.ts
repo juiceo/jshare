@@ -1,4 +1,5 @@
 import uuid from 'react-native-uuid';
+import type { ImagePickerAsset } from 'expo-image-picker';
 import { clamp } from 'lodash';
 
 import { supabase } from '~/services/supabase';
@@ -7,15 +8,15 @@ import type { DbImage } from '~/types/db';
 
 const SUPABASE_BUCKET_NAME = 'uploads';
 
-export const uploadImage = async (args: { uri: string; mimeType?: string }): Promise<DbImage> => {
-    const fetchResponse = await fetch(args.uri);
-    const blob = await fetchResponse.blob();
+export const uploadImage = async (asset: ImagePickerAsset): Promise<DbImage> => {
+    const response = await fetch(asset.uri);
+    const blob = await response.blob();
     const arrayBuffer = await new Response(blob).arrayBuffer();
     const path = uuid.v4();
     const supabaseImage = await supabase.storage
         .from(SUPABASE_BUCKET_NAME)
         .upload(path, arrayBuffer, {
-            contentType: args.mimeType,
+            contentType: asset.mimeType,
         });
 
     if (!supabaseImage.data) {

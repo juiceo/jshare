@@ -19,10 +19,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
 
             const imageIds = await Promise.all(
                 assets.map(async (asset) => {
-                    return uploadImage({
-                        uri: asset.uri,
-                        mimeType: asset.mimeType,
-                    }).catch((err: any) => {
+                    return uploadImage(asset).catch((err: any) => {
                         console.error('Image upload failed: ' + err.message);
                         return null;
                     });
@@ -43,7 +40,9 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
         async (
             options?: ImagePicker.ImagePickerOptions
         ): Promise<{ uploaded: DbImage[]; failed: number }> => {
-            const result = await ImagePicker.launchCameraAsync(merge({}, defaultOptions, options));
+            const result = await ImagePicker.launchCameraAsync(
+                merge({}, defaultOptions, options, { base64: true })
+            );
 
             if (result.canceled || !result.assets.length) {
                 return {
@@ -62,7 +61,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
             options?: ImagePicker.ImagePickerOptions
         ): Promise<{ uploaded: DbImage[]; failed: number }> => {
             const result = await ImagePicker.launchImageLibraryAsync(
-                merge({}, defaultOptions, options)
+                merge({}, defaultOptions, options, { base64: true })
             );
 
             if (result.canceled || !result.assets.length) {

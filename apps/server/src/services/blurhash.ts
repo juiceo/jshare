@@ -1,4 +1,5 @@
 import { encode } from 'blurhash';
+import sharp from 'sharp';
 
 import { supabase } from './supabase';
 
@@ -19,9 +20,11 @@ export const downloadImage = async (args: {
 export const generateBlurhash = async (image: Blob): Promise<string | null> => {
     try {
         const arrayBuffer = await image.arrayBuffer();
-        const uIntArray = new Uint8ClampedArray(arrayBuffer);
-
-        return encode(uIntArray, 32, 32, 4, 4);
+        const resizedImage = await sharp(arrayBuffer).resize(32, 32).ensureAlpha().raw().toBuffer({
+            resolveWithObject: true,
+        });
+        const uIntArray = new Uint8ClampedArray(resizedImage.data);
+        return encode(uIntArray, resizedImage.info.width, resizedImage.info.height, 4, 4);
     } catch (err: any) {
         console.error('Error generating blurhash: ' + err.message);
         return null;

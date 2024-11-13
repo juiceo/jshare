@@ -20,6 +20,7 @@ export const getSourceFromProps = (props: ImageProps): ExpoImageSource => {
     const { image } = props;
     if (!image) return { uri: undefined };
     return {
+        blurhash: image.blurhash ?? undefined,
         uri: getImageUrl(image, {
             width: props.width,
             height: props.height,
