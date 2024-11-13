@@ -3,6 +3,8 @@
     "version": "1.0.0",
     "description": "JShare Prisma schema and client",
     "main": "build/index.js",
+    "keywords": [],
+    "license": "MIT",
     "scripts": {
         "build": "npx prisma generate",
         "db:migrate:dev": "npx prisma migrate dev",
@@ -10,9 +12,6 @@
         "db:migrate:deploy": "npx prisma migrate deploy",
         "db:inspect": "npx prisma studio"
     },
-    "keywords": [],
-    "author": "Juuso Lappalainen <hello@juiceo.me> (https://juiceo.me)",
-    "license": "MIT",
     "devDependencies": {
         "prisma": "catalog:"
     },

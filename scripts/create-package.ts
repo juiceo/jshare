@@ -28,7 +28,6 @@ const packageJson = {
     name: packageName,
     version: '1.0.0',
     description: `${description}`,
-    author: 'Juuso Lappalainen <hello@juiceo.me>',
     license: 'MIT',
     main: 'build/index.js',
     scripts: {

@@ -3,7 +3,6 @@
     "name": "@jshare/common",
     "version": "1.0.0",
     "description": "JShare common shared modules",
-    "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
     "main": "build/index.js",
     "scripts": {

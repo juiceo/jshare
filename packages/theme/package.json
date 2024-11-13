@@ -3,7 +3,6 @@
     "name": "@jshare/theme",
     "version": "1.0.0",
     "description": "JShare theme",
-    "author": "Juuso Lappalainen <hello@juiceo.me>",
     "license": "MIT",
     "main": "build/index.js",
     "scripts": {
