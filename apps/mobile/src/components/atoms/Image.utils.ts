@@ -20,7 +20,7 @@ export const getSourceFromProps = (props: ImageProps): ExpoImageSource => {
     const { image } = props;
     if (!image) return { uri: undefined };
     return {
-        uri: getImageUrl(image.id, {
+        uri: getImageUrl(image, {
             width: props.width,
             height: props.height,
             resize: props.fit,

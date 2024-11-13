@@ -31,14 +31,8 @@ const ProfilePageInner = (props: { profile: ProfileWithAvatar }) => {
         <Screen>
             <Screen.Content scrollable>
                 <Header title="Profile" />
-                <Stack flex={1} spacing="md" p="xl">
+                <Stack flex={1} spacing="md">
                     <Stack column center p="xl" br="md" spacing="none">
-                        <Typography variant="body2">
-                            {profile?.firstName} {profile?.lastName}
-                        </Typography>
-                        <Typography variant="body2" color="secondary">
-                            Joined Oct 24, 2024
-                        </Typography>
                         <Stack mt="2xl">
                             <AvatarPicker
                                 value={profile.avatar}
@@ -48,6 +42,12 @@ const ProfilePageInner = (props: { profile: ProfileWithAvatar }) => {
                                     });
                                 }}
                             />
+                            <Typography variant="body2" align="center" mt="xl">
+                                {profile?.firstName} {profile?.lastName}
+                            </Typography>
+                            <Typography variant="body2" color="secondary" align="center">
+                                Joined Oct 24, 2024
+                            </Typography>
                         </Stack>
                     </Stack>
                     <TextField

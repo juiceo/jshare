@@ -31,7 +31,7 @@ export const uploadImage = async (args: { uri: string; mimeType?: string }): Pro
 };
 
 export const getImageUrl = (
-    id: string,
+    image: DbImage,
     transform?: {
         width?: number;
         height?: number;
@@ -39,7 +39,7 @@ export const getImageUrl = (
         quality?: number;
     }
 ): string => {
-    return supabase.storage.from(SUPABASE_BUCKET_NAME).getPublicUrl(id, {
+    return supabase.storage.from(image.bucket).getPublicUrl(image.path, {
         transform: {
             ...transform,
             width: transform?.width ? Math.round(transform.width) : undefined,
