@@ -12,8 +12,15 @@
         "db:migrate:deploy": "npx prisma migrate deploy",
         "db:inspect": "npx prisma studio"
     },
+    "prisma": {
+        "seed": "tsx prisma/seed.ts"
+    },
     "devDependencies": {
-        "prisma": "catalog:"
+        "@faker-js/faker": "^9.2.0",
+        "@jshare/env": "workspace:*",
+        "lodash": "catalog:",
+        "prisma": "catalog:",
+        "tsx": "catalog:"
     },
     "dependencies": {
         "@prisma/client": "catalog:"
