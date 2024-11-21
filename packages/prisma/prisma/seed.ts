@@ -1,10 +1,20 @@
 import { PrismaClient } from '../build';
-import { seedAuthUsers } from './seeders/authUsers';
+import { seedExpenses } from './seeders/expenses';
+import { seedGroups } from './seeders/groups';
+import { seedMessages } from './seeders/messages';
+import { seedUsers } from './seeders/users';
 
 const prisma = new PrismaClient();
 
 const main = async () => {
-    const users = await seedAuthUsers(prisma);
+    const users = await seedUsers(prisma);
+    console.log(`Created ${users.length} users`);
+    const groups = await seedGroups(prisma, users);
+    console.log(`Created ${groups.length} groups`);
+    const expenses = await seedExpenses(prisma, groups);
+    console.log(`Created ${expenses.length} expenses`);
+    const messages = await seedMessages(prisma, groups);
+    console.log(`Created ${messages.length} messages`);
 };
 
 main()

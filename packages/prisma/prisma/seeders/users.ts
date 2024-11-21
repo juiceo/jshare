@@ -5,6 +5,7 @@ import { range } from 'lodash';
 import { getEnv } from '@jshare/env';
 
 import type { PrismaClient } from '../../build';
+import { TEST_USER_EMAIL } from './constants';
 
 const supabaseUrl = getEnv('SUPABASE_API_URL', { required: true });
 const supabaseServiceRoleKey = getEnv('SUPABASE_SERVICE_ROLE_KEY', { required: true });
@@ -16,7 +17,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
     },
 });
 
-export const seedAuthUsers = async (prisma: PrismaClient, count: number = 25): Promise<User[]> => {
+export const seedUsers = async (prisma: PrismaClient, count: number = 25): Promise<User[]> => {
     const currentUsers = await supabase.auth.admin.listUsers();
     await Promise.all(
         currentUsers.data.users.map((user) => supabase.auth.admin.deleteUser(user.id))
@@ -37,7 +38,7 @@ export const seedAuthUsers = async (prisma: PrismaClient, count: number = 25): P
         .concat({
             firstName: 'Test',
             lastName: 'User',
-            email: 'test@jshare.me',
+            email: TEST_USER_EMAIL,
         });
 
     const createdUsers = await Promise.all(
