@@ -9,6 +9,7 @@ model Profile {
     messages      Message[]
     expensesOwned Expense[]          @relation("expense_owner")
     expensesPaid  Expense[]          @relation("expense_payer")
+    expenseShares ExpenseShare[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -101,8 +102,31 @@ model Expense {
     amount      Int
     currency    Currency
     description String?
+    shares      ExpenseShare[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
 
     @@map("expenses")
+    @@schema("public")
+}
+
+model ExpenseShare {
+    id String @id @default(uuid())
+
+    userId String
+    user   Profile @relation(fields: [userId], references: [userId])
+
+    expenseId String
+    expense   Expense @relation(fields: [expenseId], references: [id])
+
+    amount   Int
+    currency Currency
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    @@map("expense_shares")
     @@schema("public")
 }
 
