@@ -1,13 +1,14 @@
 model Profile {
-    userId    String             @id()
-    email     String
-    firstName String
-    lastName  String
-    groups    GroupParticipant[]
-    avatarId  String?
-    avatar    Image?             @relation(fields: [avatarId], references: [id])
-    messages  Message[]
-    expenses  Expense[]
+    userId        String             @id()
+    email         String
+    firstName     String
+    lastName      String
+    groups        GroupParticipant[]
+    avatarId      String?
+    avatar        Image?             @relation(fields: [avatarId], references: [id])
+    messages      Message[]
+    expensesOwned Expense[]          @relation("expense_owner")
+    expensesPaid  Expense[]          @relation("expense_payer")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -89,7 +90,10 @@ model Expense {
     id String @id @default(uuid())
 
     ownerId String
-    owner   Profile @relation(fields: [ownerId], references: [userId])
+    owner   Profile @relation(name: "expense_owner", fields: [ownerId], references: [userId])
+
+    payerId String
+    payer   Profile @relation(name: "expense_payer", fields: [payerId], references: [userId])
 
     groupId String
     group   Group  @relation(fields: [groupId], references: [id])
