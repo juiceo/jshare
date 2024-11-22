@@ -6,6 +6,7 @@ model Profile {
     groups    GroupParticipant[]
     avatarId  String?
     avatar    Image?             @relation(fields: [avatarId], references: [id])
+    messages  Message[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -21,6 +22,7 @@ model Group {
     participants GroupParticipant[]
     coverImageId String?
     coverImage   Image?             @relation(fields: [coverImageId], references: [id])
+    messages     Message[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -63,6 +65,24 @@ model Image {
     @@schema("public")
 }
 
+model Message {
+    id   String  @id @default(uuid())
+    text String?
+
+    authorType AuthorType
+    authorId   String?
+    author     Profile?   @relation(fields: [authorId], references: [userId])
+
+    groupId String
+    group   Group  @relation(fields: [groupId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    @@map("messages")
+    @@schema("public")
+}
+
 enum Role {
     Owner
     Admin
@@ -74,6 +94,13 @@ enum Role {
 enum Currency {
     USD
     EUR
+
+    @@schema("public")
+}
+
+enum AuthorType {
+    User
+    System
 
     @@schema("public")
 }
