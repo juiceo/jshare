@@ -7,6 +7,7 @@ model Profile {
     avatarId  String?
     avatar    Image?             @relation(fields: [avatarId], references: [id])
     messages  Message[]
+    expenses  Expense[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -23,6 +24,7 @@ model Group {
     coverImageId String?
     coverImage   Image?             @relation(fields: [coverImageId], references: [id])
     messages     Message[]
+    expenses     Expense[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -80,6 +82,23 @@ model Message {
     updatedAt DateTime @default(now()) @updatedAt
 
     @@map("messages")
+    @@schema("public")
+}
+
+model Expense {
+    id String @id @default(uuid())
+
+    ownerId String
+    owner   Profile @relation(fields: [ownerId], references: [userId])
+
+    groupId String
+    group   Group  @relation(fields: [groupId], references: [id])
+
+    amount      Int
+    currency    Currency
+    description String?
+
+    @@map("expenses")
     @@schema("public")
 }
 
