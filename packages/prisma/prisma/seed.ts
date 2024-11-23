@@ -1,4 +1,5 @@
 import { PrismaClient } from '../build';
+import { TEST_USER_EMAIL, TEST_USER_PASSWORD } from './seeders/constants';
 import { seedExpenses } from './seeders/expenses';
 import { seedGroups } from './seeders/groups';
 import { seedMessages } from './seeders/messages';
@@ -19,7 +20,10 @@ const main = async () => {
 
 main()
     .then(() => {
-        console.log('Seeding done.');
+        console.log('Seeding done.\n');
+        console.log(`- Run "pnpm studio" to view the database in Supabase Studio`);
+        console.log(`- The primary test user email is "${TEST_USER_EMAIL}"`);
+        console.log(`- The password for all users is "${TEST_USER_PASSWORD}"`);
         process.exit(0);
     })
     .catch((error) => {

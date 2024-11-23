@@ -5,7 +5,7 @@ import { range } from 'lodash';
 import { getEnv } from '@jshare/env';
 
 import type { PrismaClient } from '../../build';
-import { TEST_USER_EMAIL } from './constants';
+import { TEST_USER_EMAIL, TEST_USER_PASSWORD } from './constants';
 
 const supabaseUrl = getEnv('SUPABASE_API_URL', { required: true });
 const supabaseServiceRoleKey = getEnv('SUPABASE_SERVICE_ROLE_KEY', { required: true });
@@ -46,7 +46,7 @@ export const seedUsers = async (prisma: PrismaClient, count: number = 25): Promi
             return supabase.auth.admin.createUser({
                 email: user.email,
                 email_confirm: true,
-                password: '12345678',
+                password: TEST_USER_PASSWORD,
                 user_metadata: {
                     firstName: user.firstName,
                     lastName: user.lastName,
