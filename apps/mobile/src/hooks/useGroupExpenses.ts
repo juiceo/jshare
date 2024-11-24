@@ -1,0 +1,7 @@
+import { trpc } from '~/services/trpc';
+
+export const useGroupExpenses = (groupId: string) => {
+    const expensesQuery = trpc.expenses.listByGroup.useQuery({ groupId });
+
+    return expensesQuery;
+};

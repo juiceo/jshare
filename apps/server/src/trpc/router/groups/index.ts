@@ -5,6 +5,7 @@ import { Currency, Role } from '@jshare/prisma';
 
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
+import { defaultGroupInclude } from './util';
 
 export const groupsRouter = router({
     create: authProcedure
@@ -35,7 +36,7 @@ export const groupsRouter = router({
                     },
                 },
                 include: {
-                    coverImage: true,
+                    ...defaultGroupInclude,
                 },
             });
 
@@ -52,7 +53,7 @@ export const groupsRouter = router({
                 },
             },
             include: {
-                coverImage: true,
+                ...defaultGroupInclude,
             },
         });
 
@@ -78,7 +79,7 @@ export const groupsRouter = router({
                 updatedAt: 'desc',
             },
             include: {
-                coverImage: true,
+                ...defaultGroupInclude,
             },
         });
 

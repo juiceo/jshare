@@ -1,4 +1,5 @@
 import { publicProcedure, router } from '../trpc';
+import { expensesRouter } from './expenses';
 import { groupsRouter } from './groups';
 import { imagesRouter } from './images';
 import { messagesRouter } from './messages';
@@ -12,4 +13,5 @@ export const appRouter = router({
     groups: groupsRouter,
     images: imagesRouter,
     messages: messagesRouter,
+    expenses: expensesRouter,
 });
