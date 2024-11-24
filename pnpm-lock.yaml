@@ -485,6 +485,9 @@ importers:
       '@jshare/eslint-config':
         specifier: workspace:*
         version: link:../config/eslint-config
+      '@jshare/prisma':
+        specifier: workspace:*
+        version: link:../prisma
       '@jshare/tsconfig':
         specifier: workspace:*
         version: link:../config/tsconfig

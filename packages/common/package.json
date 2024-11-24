@@ -17,6 +17,7 @@
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
+        "@jshare/prisma": "workspace:*",
         "@types/lodash": "catalog:",
         "tsup": "catalog:"
     },
