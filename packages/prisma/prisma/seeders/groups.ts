@@ -12,7 +12,7 @@ export const seedGroups = async (prisma: PrismaClient, users: User[]): Promise<G
             currency: 'USD',
             participants: {
                 createMany: {
-                    data: users.slice(0, 25).map((user) => {
+                    data: users.map((user) => {
                         return {
                             userId: user.id,
                             role:
