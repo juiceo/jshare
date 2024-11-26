@@ -29,9 +29,6 @@ const meta = {
                 <Button {...args} color="secondary">
                     Secondary
                 </Button>
-                <Button {...args} color="paper">
-                    Paper
-                </Button>
                 <Button {...args} color="error">
                     Error
                 </Button>
@@ -56,8 +53,8 @@ export const Outlined: Story = {
     },
 };
 
-export const Text: Story = {
+export const Ghost: Story = {
     args: {
-        variant: 'text',
+        variant: 'ghost',
     },
 };

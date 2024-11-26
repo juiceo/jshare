@@ -82,7 +82,7 @@ const ProfilePageInner = (props: { profile: ProfileWithAvatar }) => {
                 </Stack>
             </Screen.Content>
             <Screen.Footer padding="xl">
-                <Button color="error" variant="text" onPress={signOut} mt="3xl">
+                <Button color="error" variant="ghost" onPress={signOut} mt="3xl">
                     Sign out
                 </Button>
             </Screen.Footer>

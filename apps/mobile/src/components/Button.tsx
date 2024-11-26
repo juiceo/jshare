@@ -13,8 +13,8 @@ import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 
 export type ButtonProps = {
-    variant?: 'contained' | 'outlined' | 'text';
-    color?: 'primary' | 'secondary' | 'error' | 'paper';
+    variant?: 'contained' | 'outlined' | 'ghost';
+    color?: 'primary' | 'secondary' | 'error';
     size?: 'sm' | 'md';
     disabled?: boolean;
     loading?: boolean;
@@ -71,12 +71,9 @@ const getStyles = (
             case 'primary':
                 return theme.palette.primary.main;
             case 'secondary':
-                return theme.palette.text.secondary;
+                return theme.palette.background.elevation2;
             case 'error':
                 return theme.palette.error.main;
-            case 'paper': {
-                return theme.palette.background.elevation2;
-            }
         }
     })();
     return StyleSheet.create({
@@ -84,7 +81,6 @@ const getStyles = (
             const baseStyles = {
                 borderRadius: theme.borderRadius.lg,
                 flex: props.fill ? 1 : undefined,
-
                 opacity: props.disabled || props.loading ? 0.5 : 1,
             };
 
@@ -124,7 +120,7 @@ const getStyles = (
                         borderStyle: 'solid',
                     };
                 }
-                case 'text': {
+                case 'ghost': {
                     return {
                         ...baseStyles,
                         ...sizeStyles,
@@ -138,7 +134,7 @@ const getStyles = (
                     return {};
                 }
                 case 'outlined':
-                case 'text': {
+                case 'ghost': {
                     return {
                         backgroundColor: primaryColor,
                     };
@@ -167,7 +163,7 @@ const getStyles = (
                     };
                 }
                 case 'outlined':
-                case 'text': {
+                case 'ghost': {
                     return {
                         ...sizeStyles,
                         color: primaryColor,
