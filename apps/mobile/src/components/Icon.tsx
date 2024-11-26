@@ -4,6 +4,7 @@ import { icons } from 'lucide-react-native';
 import { useTheme, type Theme } from '@jshare/theme';
 
 export type IconName = keyof typeof icons;
+export const IconList: IconName[] = Object.keys(icons) as IconName[];
 
 export type IconProps = {
     name: IconName;

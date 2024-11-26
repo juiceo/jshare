@@ -6,8 +6,8 @@ import { useTheme } from '@jshare/theme';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
 import { Divider } from '~/components/atoms/Divider';
-import { Icon, type IconName } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
+import { Icon, type IconName } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type MenuOption<T extends string> = {

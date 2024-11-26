@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { type IconName } from '~/components/atoms/Icon';
-import { IconButton } from '~/components/atoms/IconButton';
 import { Stack } from '~/components/atoms/Stack';
+import { type IconName } from '~/components/Icon';
+import { IconButton } from '~/components/IconButton';
 import { Typography } from '~/components/Typography';
 
 export type HeaderProps = {

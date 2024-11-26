@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
+import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ModalHeaderProps = {

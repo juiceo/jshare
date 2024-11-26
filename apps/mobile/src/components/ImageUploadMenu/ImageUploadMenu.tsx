@@ -4,8 +4,8 @@ import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
 import { Divider } from '~/components/atoms/Divider';
-import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
+import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ImageUploadMenuProps = {

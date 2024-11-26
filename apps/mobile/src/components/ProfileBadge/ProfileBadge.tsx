@@ -2,9 +2,9 @@ import { Pressable } from 'react-native';
 
 import { useTheme } from '@jshare/theme';
 
-import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
+import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/services/trpc';
 

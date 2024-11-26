@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { FormControl, type FormControlProps } from '~/components/atoms/FormControl';
-import { Icon } from '~/components/atoms/Icon';
 import { Menu } from '~/components/atoms/Menu';
+import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type SelectProps<T extends string> = {

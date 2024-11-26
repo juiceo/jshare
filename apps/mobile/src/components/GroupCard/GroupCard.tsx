@@ -1,9 +1,9 @@
 import { Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
+import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 import type { GroupWithCoverImage } from '~/types/db';
 
