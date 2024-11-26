@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 
-import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
+import { Button } from '~/components/Button';
 import { Header } from '~/components/Header/Header';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';

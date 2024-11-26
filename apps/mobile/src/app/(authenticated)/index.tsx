@@ -1,10 +1,10 @@
 import { Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { Button } from '~/components/atoms/Button';
 import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
+import { Button } from '~/components/Button';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { ProfileBadge } from '~/components/ProfileBadge/ProfileBadge';
 import { Screen } from '~/components/Screen';

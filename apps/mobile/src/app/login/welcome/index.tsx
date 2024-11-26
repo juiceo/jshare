@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Redirect, useRouter } from 'expo-router';
 import { z } from 'zod';
 
-import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
+import { Button } from '~/components/Button';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';

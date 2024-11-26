@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { Button } from '~/components/atoms/Button';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Typography } from '~/components/atoms/Typography';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
+import { Button } from '~/components/Button';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { useProfile } from '~/hooks/useProfile';

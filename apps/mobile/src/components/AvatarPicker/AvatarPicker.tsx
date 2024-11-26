@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
-import { Button } from '~/components/atoms/Button';
 import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
+import { Button } from '~/components/Button';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
 import type { DbImage } from '~/types/db';
