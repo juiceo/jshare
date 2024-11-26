@@ -85,7 +85,7 @@ export default function LoginVerifyPage() {
             <Screen.Footer sticky>
                 <Stack spacing="md">
                     {timer.isDone ? (
-                        <Button variant={'text'} color={'secondary'} onPress={handleResend}>
+                        <Button variant="ghost" color={'secondary'} onPress={handleResend}>
                             Get new code
                         </Button>
                     ) : (

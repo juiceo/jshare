@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import {
@@ -13,15 +13,18 @@ import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/atoms/Typography';
 
 export type ButtonProps = {
-    variant?: 'contained' | 'outlined' | 'ghost';
-    color?: 'primary' | 'secondary' | 'error';
+    variant?: ButtonVariant;
+    color?: ButtonColor;
     size?: 'sm' | 'md';
+    rounded?: boolean;
     disabled?: boolean;
     loading?: boolean;
     children: string;
-    fill?: boolean;
     onPress?: () => void;
 } & SxMarginProps;
+
+type ButtonColor = 'primary' | 'secondary' | 'error';
+type ButtonVariant = 'contained' | 'outlined' | 'ghost';
 
 export const Button = (props: ButtonProps) => {
     const { theme } = useTheme();
@@ -31,28 +34,44 @@ export const Button = (props: ButtonProps) => {
         size = 'md',
         disabled = false,
         loading = false,
-        fill = false,
+        rounded = false,
         onPress,
     } = props;
-    const styles = getStyles(theme, {
-        color,
-        fill,
-        variant,
-        size,
-        disabled,
-        loading,
-    });
+
+    const primaryColor = getPrimaryColor({ variant, color }, theme);
+    const contrastColor = getContrastTextColor(primaryColor);
+    const textColor = variant === 'contained' ? contrastColor : primaryColor;
+
+    const sizeValue = size === 'sm' ? 32 : 52;
 
     return (
         <RectButton
-            style={[styles.button, getSxStyles(props, theme)]}
-            underlayColor={styles.buttonUnderlay.backgroundColor}
+            style={[
+                {
+                    opacity: props.disabled || props.loading ? 0.5 : 1,
+                    maxHeight: sizeValue,
+                    minHeight: sizeValue,
+                    paddingHorizontal: size === 'sm' ? theme.spacing.lg : theme.spacing.xl,
+                    backgroundColor: variant === 'contained' ? primaryColor : undefined,
+                    borderWidth: variant === 'outlined' ? 2 : 0,
+                    borderColor: primaryColor,
+                    borderStyle: 'solid',
+                    borderRadius: rounded ? sizeValue / 2 : theme.borderRadius.lg,
+                },
+                getSxStyles(props, theme),
+            ]}
+            activeOpacity={0.1}
+            underlayColor={variant === 'contained' ? 'black' : primaryColor}
             enabled={!disabled && !loading}
             onPress={onPress}
         >
             <Stack row center flex={1} spacing="md">
-                {loading && <ActivityIndicator color={styles.text.color} />}
-                <Typography variant="button" style={styles.text} align="center">
+                {loading && <ActivityIndicator color={textColor} size="small" />}
+                <Typography
+                    variant="button"
+                    style={{ color: textColor, fontSize: size === 'sm' ? 12 : undefined }}
+                    align="center"
+                >
                     {props.children}
                 </Typography>
             </Stack>
@@ -60,116 +79,26 @@ export const Button = (props: ButtonProps) => {
     );
 };
 
-const getStyles = (
-    theme: Theme,
-    props: Required<
-        Pick<ButtonProps, 'color' | 'fill' | 'disabled' | 'variant' | 'loading' | 'size'>
-    >
-) => {
-    const primaryColor = (() => {
-        switch (props.color) {
-            case 'primary':
-                return theme.palette.primary.main;
-            case 'secondary':
-                return theme.palette.background.elevation2;
-            case 'error':
-                return theme.palette.error.main;
-        }
-    })();
-    return StyleSheet.create({
-        button: (() => {
-            const baseStyles = {
-                borderRadius: theme.borderRadius.lg,
-                flex: props.fill ? 1 : undefined,
-                opacity: props.disabled || props.loading ? 0.5 : 1,
-            };
+const getPrimaryColor = (
+    args: {
+        color: ButtonColor;
+        variant: ButtonVariant;
+    },
+    theme: Theme
+): string => {
+    switch (args.color) {
+        case 'primary':
+            return args.variant === 'contained'
+                ? theme.palette.primary.main
+                : theme.palette.primary.light;
+        case 'secondary':
+            return args.variant === 'contained'
+                ? theme.palette.background.elevation2
+                : theme.palette.text.hint;
 
-            const sizeStyles = (() => {
-                switch (props.size) {
-                    case 'sm': {
-                        return {
-                            maxHeight: 32,
-                            minHeight: 32,
-                            paddingHorizontal: theme.spacing.lg,
-                        };
-                    }
-                    case 'md': {
-                        return {
-                            maxHeight: 52,
-                            minHeight: 52,
-                            paddingHorizontal: theme.spacing.xl,
-                        };
-                    }
-                }
-            })();
-
-            switch (props.variant) {
-                case 'contained': {
-                    return {
-                        ...baseStyles,
-                        ...sizeStyles,
-                        backgroundColor: primaryColor,
-                    };
-                }
-                case 'outlined': {
-                    return {
-                        ...baseStyles,
-                        ...sizeStyles,
-                        borderColor: primaryColor,
-                        borderWidth: 2,
-                        borderStyle: 'solid',
-                    };
-                }
-                case 'ghost': {
-                    return {
-                        ...baseStyles,
-                        ...sizeStyles,
-                    };
-                }
-            }
-        })(),
-        buttonUnderlay: (() => {
-            switch (props.variant) {
-                case 'contained': {
-                    return {};
-                }
-                case 'outlined':
-                case 'ghost': {
-                    return {
-                        backgroundColor: primaryColor,
-                    };
-                }
-            }
-        })(),
-        text: (() => {
-            const sizeStyles = (() => {
-                switch (props.size) {
-                    case 'sm': {
-                        return {
-                            fontSize: 12,
-                        };
-                    }
-                    case 'md': {
-                        return {};
-                    }
-                }
-            })();
-
-            switch (props.variant) {
-                case 'contained': {
-                    return {
-                        ...sizeStyles,
-                        color: getContrastTextColor(primaryColor),
-                    };
-                }
-                case 'outlined':
-                case 'ghost': {
-                    return {
-                        ...sizeStyles,
-                        color: primaryColor,
-                    };
-                }
-            }
-        })(),
-    });
+        case 'error':
+            return args.variant === 'contained'
+                ? theme.palette.error.main
+                : theme.palette.error.light;
+    }
 };

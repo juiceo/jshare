@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { Stack } from '~/components/atoms/Stack';
+import { Typography } from '~/components/atoms/Typography';
 import { Button } from './Button';
 
 const meta = {
@@ -9,29 +10,50 @@ const meta = {
     component: Button,
     args: {
         variant: 'contained',
-        color: 'primary',
         children: 'Press me',
-        fill: true,
+        size: 'md',
+        rounded: false,
+        disabled: false,
+        loading: false,
+    },
+    argTypes: {
+        size: {
+            type: 'string',
+            options: ['sm', 'md'],
+            control: 'radio',
+        },
+        rounded: {
+            type: 'boolean',
+        },
     },
     decorators: [
         (Story) => (
-            <View style={{ padding: 16, flex: 1 }}>
+            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
                 <Story />
-            </View>
+            </ScrollView>
         ),
     ],
     render: (args) => {
         return (
             <Stack column spacing="md">
-                <Button {...args} color="primary">
-                    Primary
-                </Button>
-                <Button {...args} color="secondary">
-                    Secondary
-                </Button>
-                <Button {...args} color="error">
-                    Error
-                </Button>
+                <Typography py="xl" variant="h4">
+                    Contained
+                </Typography>
+                <Button {...args} variant="contained" color="primary" />
+                <Button {...args} variant="contained" color="secondary" />
+                <Button {...args} variant="contained" color="error" />
+                <Typography py="xl" variant="h4">
+                    Outlined
+                </Typography>
+                <Button {...args} variant="outlined" color="primary" />
+                <Button {...args} variant="outlined" color="secondary" />
+                <Button {...args} variant="outlined" color="error" />
+                <Typography py="xl" variant="h4">
+                    Ghost
+                </Typography>
+                <Button {...args} variant="ghost" color="primary" />
+                <Button {...args} variant="ghost" color="secondary" />
+                <Button {...args} variant="ghost" color="error" />
             </Stack>
         );
     },
@@ -41,20 +63,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Contained: Story = {
-    args: {
-        variant: 'contained',
-    },
-};
-
-export const Outlined: Story = {
-    args: {
-        variant: 'outlined',
-    },
-};
-
-export const Ghost: Story = {
-    args: {
-        variant: 'ghost',
-    },
+export const Buttons: Story = {
+    args: {},
 };

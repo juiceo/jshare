@@ -34,7 +34,7 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
                 <LoadingOverlay visible={imageUpload.isUploading} />
                 <Stack absoluteFill justifyEnd alignEnd>
                     <Button
-                        color="paper"
+                        color="secondary"
                         variant="contained"
                         size="sm"
                         onPress={() => setMenuOpen(true)}
