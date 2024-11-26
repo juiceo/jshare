@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ScrollView } from 'react-native';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
+import { Typography } from '~/components/Typography';
 import { Button } from './Button';
 
 const meta = {
@@ -63,6 +63,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Buttons: Story = {
+export const Showcase: Story = {
     args: {},
 };

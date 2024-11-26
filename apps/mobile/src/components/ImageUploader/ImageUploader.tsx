@@ -4,8 +4,8 @@ import { ActivityIndicator, Pressable } from 'react-native';
 import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
+import { Typography } from '~/components/Typography';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
 import type { DbImage } from '~/types/db';
 

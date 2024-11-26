@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 
 import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
+import { Typography } from '~/components/Typography';
 
 export type ModalHeaderProps = {
     title: string;

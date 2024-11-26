@@ -1,6 +1,6 @@
-import { Typography } from '~/components/atoms/Typography';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
 import { useGroupExpenses } from '~/hooks/useGroupExpenses';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { useCurrentGroup } from '~/wrappers/GroupProvider';

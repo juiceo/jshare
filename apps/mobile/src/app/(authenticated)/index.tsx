@@ -3,11 +3,11 @@ import { useRouter } from 'expo-router';
 
 import { Icon } from '~/components/atoms/Icon';
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
 import { Button } from '~/components/Button';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { ProfileBadge } from '~/components/ProfileBadge/ProfileBadge';
 import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
 import { useGroups } from '~/hooks/useGroups';
 
 export default function HomePage() {

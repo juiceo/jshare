@@ -5,7 +5,7 @@ import { useTheme } from '@jshare/theme';
 import { Icon } from '~/components/atoms/Icon';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
+import { Typography } from '~/components/Typography';
 import { trpc } from '~/services/trpc';
 
 export type ProfileBadgeProps = {

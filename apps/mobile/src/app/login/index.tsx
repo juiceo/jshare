@@ -5,9 +5,9 @@ import isEmail from 'validator/es/lib/isEmail';
 
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
-import { Typography } from '~/components/atoms/Typography';
 import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
 import { supabase } from '~/services/supabase';
 
 export default function LoginScreen() {

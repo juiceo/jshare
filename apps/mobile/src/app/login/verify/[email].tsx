@@ -3,11 +3,11 @@ import { ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
 import { Button } from '~/components/Button';
 import { Header } from '~/components/Header/Header';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
 import { supabase } from '~/services/supabase';
 import { trpcUniversal } from '~/services/trpc';

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { type IconName } from '~/components/atoms/Icon';
 import { IconButton } from '~/components/atoms/IconButton';
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
+import { Typography } from '~/components/Typography';
 
 export type HeaderProps = {
     title: string;

@@ -4,7 +4,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { getSxStyles, useTheme, type SxMarginProps, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/atoms/Typography';
+import { Typography } from '~/components/Typography';
 
 export type FormControlProps = {
     label: string;

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FormControl, type FormControlProps } from '~/components/atoms/FormControl';
 import { Icon } from '~/components/atoms/Icon';
 import { Menu } from '~/components/atoms/Menu';
-import { Typography } from '~/components/atoms/Typography';
+import { Typography } from '~/components/Typography';
 
 export type SelectProps<T extends string> = {
     value: T | undefined;
