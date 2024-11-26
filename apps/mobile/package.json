@@ -7,13 +7,15 @@
     "main": "expo-router/entry",
     "scripts": {
         "dev": "expo run:ios",
+        "dev:storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo run:ios",
         "lint": "eslint --ext js,ts,tsx . --max-warnings=0",
         "build": "expo export --output-dir ./build --platform all",
         "start": "expo start",
         "android": "expo run:android",
         "ios": "expo run:ios",
         "eas-build-post-install": "pnpm run -w build:mobile",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "storybook-generate": "sb-rn-get-stories"
     },
     "dependencies": {
         "@expo/metro-runtime": "catalog:",
@@ -69,12 +71,35 @@
         "@jshare/eslint-config": "workspace:*",
         "@jshare/server": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
+        "@react-native-community/datetimepicker": "^8.2.0",
+        "@react-native-community/slider": "^4.5.5",
+        "@storybook/addon-actions": "^8.4.2",
+        "@storybook/addon-controls": "^8.4.2",
+        "@storybook/addon-essentials": "^8.4.2",
+        "@storybook/addon-links": "^8.4.2",
+        "@storybook/addon-ondevice-actions": "^8.4.2",
+        "@storybook/addon-ondevice-backgrounds": "^8.4.2",
+        "@storybook/addon-ondevice-controls": "^8.4.2",
+        "@storybook/addon-ondevice-notes": "^8.4.2",
+        "@storybook/core": "^8.4.2",
+        "@storybook/react": "^8.4.2",
+        "@storybook/react-native": "^8.4.2",
+        "@storybook/test": "^8.4.2",
         "@types/identicon.js": "catalog:",
         "@types/md5": "catalog:",
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
         "@types/validator": "catalog:",
+        "babel-loader": "^8.4.1",
         "babel-preset-expo": "catalog:"
+    },
+    "expo": {
+        "install": {
+            "exclude": [
+                "@react-native-async-storage/async-storage",
+                "@react-native-community/datetimepicker"
+            ]
+        }
     },
     "eslintConfig": {
         "extends": [

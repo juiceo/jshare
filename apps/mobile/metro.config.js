@@ -1,6 +1,7 @@
 // Learn more https://docs.expo.dev/guides/monorepos
 const { getDefaultConfig } = require('expo/metro-config');
 const { FileStore } = require('metro-cache');
+const withStorybook = require('@storybook/react-native/metro/withStorybook');
 const path = require('path');
 
 const projectRoot = __dirname;
@@ -22,4 +23,7 @@ config.cacheStores = [
     new FileStore({ root: path.join(projectRoot, 'node_modules', '.cache', 'metro') }),
 ];
 
-module.exports = config;
+module.exports = withStorybook(config, {
+    enabled: true,
+    configPath: path.resolve(__dirname, './.storybook'),
+});

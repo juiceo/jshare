@@ -1,15 +1,19 @@
+import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { Stack } from 'expo-router';
 
+import { getEnv } from '@jshare/env';
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
+
+const storybookEnabled = getEnv('STORYBOOK_ENABLED') === 'true';
 
 export default function AppLayout() {
     return (
@@ -22,7 +26,7 @@ export default function AppLayout() {
                                 <SessionProvider>
                                     <QueryProvider>
                                         <BottomSheetModalProvider>
-                                            <RootStack />
+                                            {storybookEnabled ? <StorybookRoot /> : <RootStack />}
                                         </BottomSheetModalProvider>
                                     </QueryProvider>
                                 </SessionProvider>
@@ -33,6 +37,21 @@ export default function AppLayout() {
             </KeyboardProvider>
         </SafeAreaProvider>
     );
+}
+
+let StorybookRoot: () => JSX.Element = () => <></>;
+
+if (storybookEnabled) {
+    const StorybookUI = require('../../.storybook').default;
+
+    //eslint-disable-next-line
+    StorybookRoot = () => {
+        return (
+            <View style={{ flex: 1 }}>
+                <StorybookUI />
+            </View>
+        );
+    };
 }
 
 const RootStack = () => {
