@@ -18,7 +18,8 @@
         "format:check": "prettier './**/*.{js,jsx,ts,tsx,json}' --check",
         "inbox": "open http://127.0.0.1:54324",
         "studio": "open http://127.0.0.1:54323",
-        "create:package": "tsx ./scripts/create-package.ts"
+        "create:package": "tsx ./scripts/create-package.ts",
+        "nuke": "pnpm cache delete && rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf apps/*/node_modules && p i"
     },
     "type": "module",
     "devDependencies": {
