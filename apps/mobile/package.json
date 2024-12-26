@@ -32,6 +32,7 @@
         "@trpc/client": "catalog:",
         "@trpc/react-query": "catalog:",
         "@trpc/server": "catalog:",
+        "dayjs": "^1.11.13",
         "expo": "catalog:",
         "expo-constants": "catalog:",
         "expo-dev-client": "catalog:",

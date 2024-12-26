@@ -1,3 +1,5 @@
+import { Box } from '~/components/atoms/Box';
+import { Stack } from '~/components/atoms/Stack';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
@@ -14,9 +16,14 @@ export default function GroupHome() {
         <Screen>
             <Screen.Content>
                 <Header title={group.name} />
-                <Typography>Group page here</Typography>
-                <Typography>{messages?.length} messages</Typography>
-                <Typography>{expenses?.length} expenses</Typography>
+                <Stack flex={1}>
+                    <Typography>Group page here</Typography>
+                    <Typography>{messages?.length} messages</Typography>
+                    <Typography>{expenses?.length} expenses</Typography>
+                </Stack>
+                <Box>
+                    <Typography>Footer here</Typography>
+                </Box>
             </Screen.Content>
         </Screen>
     );
