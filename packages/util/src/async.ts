@@ -97,13 +97,12 @@ export const asyncMap = async <TData, TResult>(
     return new Promise<TResult[]>(async (resolve) => {
         const pendingData = data.slice();
         const results: TResult[] = new Array(data.length);
-        console.log('PENDING ITEMS', pendingData.length);
         const processNext = async () => {
             const itemIndex = data.length - pendingData.length;
-            const item = pendingData.shift();
-            if (item === undefined) {
+            if (pendingData.length === 0) {
                 return Promise.resolve();
             }
+            const item = pendingData.shift() as TData;
             const result = await mapper(item, {
                 itemNumber: itemIndex + 1,
                 itemCount: data.length,

@@ -7,11 +7,11 @@ import { type Expense, type Group, type PrismaClient } from '../../build';
 export const seedExpenses = async (prisma: PrismaClient, groups: Group[]): Promise<Expense[]> => {
     const seedExpensesForGroup = async (group: Group) => {
         const maxDate = faker.date.between({
-            from: moment().subtract(1, 'month').toDate(),
+            from: moment().subtract(1, 'week').toDate(),
             to: new Date(),
         });
         const minDate = faker.date.between({
-            from: moment(maxDate).subtract(1, 'year').toDate(),
+            from: moment(maxDate).subtract(1, 'month').toDate(),
             to: maxDate,
         });
 

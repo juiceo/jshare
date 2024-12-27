@@ -7,11 +7,11 @@ import { AuthorType, type Group, type Message, type Prisma, type PrismaClient } 
 export const seedMessages = async (prisma: PrismaClient, groups: Group[]): Promise<Message[]> => {
     const seedMessagesForGroup = async (group: Group) => {
         const maxDate = faker.date.between({
-            from: moment().subtract(1, 'month').toDate(),
+            from: moment().subtract(1, 'week').toDate(),
             to: new Date(),
         });
         const minDate = faker.date.between({
-            from: moment(maxDate).subtract(1, 'year').toDate(),
+            from: moment(maxDate).subtract(1, 'month').toDate(),
             to: maxDate,
         });
 

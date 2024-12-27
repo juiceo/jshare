@@ -2,10 +2,10 @@ import { faker } from '@faker-js/faker';
 import { type User } from '@supabase/supabase-js';
 import { random, range, sampleSize } from 'lodash';
 
-import type { Group, PrismaClient } from '../../build';
-import { TEST_USER_EMAIL } from './constants';
+import type { Group, PrismaClient, Profile } from '../../build';
+import { TEST_USER } from './constants';
 
-export const seedGroups = async (prisma: PrismaClient, users: User[]): Promise<Group[]> => {
+export const seedGroups = async (prisma: PrismaClient, users: Profile[]): Promise<Group[]> => {
     const mainGroup = await prisma.group.create({
         data: {
             name: 'Main test group',
@@ -14,9 +14,9 @@ export const seedGroups = async (prisma: PrismaClient, users: User[]): Promise<G
                 createMany: {
                     data: users.map((user) => {
                         return {
-                            userId: user.id,
+                            userId: user.userId,
                             role:
-                                user.email === TEST_USER_EMAIL
+                                user.email === TEST_USER.email
                                     ? 'Owner'
                                     : Math.random() > 0.1
                                       ? 'Admin'
@@ -38,7 +38,7 @@ export const seedGroups = async (prisma: PrismaClient, users: User[]): Promise<G
                         createMany: {
                             data: sampleSize(users, random(3, 8)).map((user, index) => {
                                 return {
-                                    userId: user.id,
+                                    userId: user.userId,
                                     role:
                                         index === 0
                                             ? 'Owner'
