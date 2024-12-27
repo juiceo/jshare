@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { getUserShortName } from '@jshare/common';
+import { getUserDefaultAvatarUrl, getUserShortName } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
 import { DB } from '@jshare/types';
 
@@ -49,7 +49,7 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
                 <Box style={styles.avatar}>
                     <Image
                         image={profile?.avatar}
-                        source={{ uri: 'https://picsum.photos/id/1003/40/40' }}
+                        source={{ uri: profile ? getUserDefaultAvatarUrl(profile) : undefined }}
                         width={40}
                         height={40}
                         br="full"

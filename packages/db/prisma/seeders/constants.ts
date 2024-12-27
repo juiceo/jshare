@@ -40,7 +40,7 @@ export const USERS = [
     {
         firstName: 'Jon',
         lastName: 'Miller',
-        avatar: 'jon.jpeg',
+        avatar: null,
         email: 'jon.miller@example.com',
     },
     {
@@ -64,7 +64,7 @@ export const USERS = [
     {
         firstName: 'Shawn',
         lastName: 'Lewis',
-        avatar: 'shawn.jpeg',
+        avatar: null,
         email: 'shawn.lewis@example.com',
     },
     {

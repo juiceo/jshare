@@ -32,10 +32,15 @@ export const seedUsers = async (prisma: PrismaClient): Promise<Profile[]> => {
         async (user, info) => {
             console.log(`Creating user ${info.itemNumber} of ${info.itemCount}`);
 
-            const avatarFile = await fs.readFileSync(path.join(__dirname, 'avatars', user.avatar));
-            const avatar = await supabase.storage.from('uploads').upload(user.avatar, avatarFile, {
-                contentType: 'image/jpeg',
-            });
+            const avatarFile = user.avatar
+                ? await fs.readFileSync(path.join(__dirname, 'avatars', user.avatar))
+                : null;
+            const avatar =
+                user.avatar && avatarFile
+                    ? await supabase.storage.from('uploads').upload(user.avatar, avatarFile, {
+                          contentType: 'image/jpeg',
+                      })
+                    : null;
 
             const supabaseUser = await supabase.auth.admin.createUser({
                 email: user.email,
@@ -57,7 +62,7 @@ export const seedUsers = async (prisma: PrismaClient): Promise<Profile[]> => {
                     email: user.email!,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    avatar: avatar.data
+                    avatar: avatar?.data
                         ? {
                               create: {
                                   id: avatar.data.id,

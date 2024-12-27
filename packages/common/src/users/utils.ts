@@ -9,3 +9,11 @@ export const getUserShortName = (profile: DB.Profile) => {
         .filter(Boolean)
         .join(' ');
 };
+
+export const getUserDefaultAvatarUrl = (profile: DB.Profile) => {
+    const params = new URLSearchParams({
+        name: getUserFullName(profile),
+        background: 'random',
+    });
+    return `https://ui-avatars.com/api/?${params.toString()}`;
+};
