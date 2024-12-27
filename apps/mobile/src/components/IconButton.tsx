@@ -11,11 +11,20 @@ export type IconButtonProps = {
     variant?: 'contained' | 'ghost';
     color?: 'primary' | 'secondary' | 'error';
     rounded?: boolean;
+    disabled?: boolean;
     onPress?: () => void;
 };
 
 export const IconButton = (props: IconButtonProps) => {
-    const { onPress, icon, color = 'primary', size = 'md', variant = 'contained', rounded } = props;
+    const {
+        onPress,
+        icon,
+        color = 'primary',
+        size = 'md',
+        variant = 'contained',
+        rounded,
+        disabled,
+    } = props;
     const { theme } = useTheme();
     const buttonSize = (() => {
         switch (size) {
@@ -63,7 +72,9 @@ export const IconButton = (props: IconButtonProps) => {
                 width: buttonSize,
                 backgroundColor: variant === 'contained' ? primaryColor : 'transparent',
                 borderRadius: rounded ? buttonSize / 2 : theme.borderRadius.xl,
+                opacity: props.disabled ? 0.5 : 1,
             }}
+            enabled={!disabled}
         >
             <Stack center flex={1}>
                 <Icon name={icon} size={buttonSize / 2} color={iconColor} />

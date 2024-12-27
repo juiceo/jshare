@@ -28,7 +28,7 @@ export const Header = (props: HeaderProps) => {
         }
     })();
     return (
-        <Stack row spacing="xl" width="100%" p="xl">
+        <Stack row spacing="xl" width="100%">
             <IconButton variant="ghost" onPress={() => router.dismiss()} icon={backIcon} />
             <Stack center flex={1}>
                 <Typography variant="h5">{title}</Typography>

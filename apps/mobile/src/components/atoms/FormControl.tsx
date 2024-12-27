@@ -1,18 +1,26 @@
-import { type PropsWithChildren, type ReactNode } from 'react';
+import { useMemo, type PropsWithChildren, type ReactNode } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
-import { getSxStyles, useTheme, type SxMarginProps, type Theme } from '@jshare/theme';
+import {
+    getColorFromPath,
+    getSxStyles,
+    useTheme,
+    type BackgroundColorPath,
+    type SxMarginProps,
+    type Theme,
+} from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/Typography';
 
 export type FormControlProps = {
-    label: string;
+    label?: string;
     error?: string | null;
     helperText?: string | null;
     onPress: () => void;
     focused: boolean;
     endAdornment?: ReactNode;
+    backgroundColor?: 'transparent' | BackgroundColorPath;
 } & SxMarginProps;
 
 export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
@@ -21,13 +29,27 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
 
     const styles = getStyles(theme);
 
+    const backgroundColor = useMemo(() => {
+        switch (props.backgroundColor) {
+            case 'transparent':
+                return 'transparent';
+            default:
+                return getColorFromPath(props.backgroundColor, theme);
+        }
+    }, [props.backgroundColor, theme]);
+
     return (
-        <Pressable style={[styles.wrapper, getSxStyles(props, theme)]} onPress={onPress}>
+        <Pressable
+            style={[styles.wrapper, { backgroundColor }, getSxStyles(props, theme)]}
+            onPress={onPress}
+        >
             <Stack row spacing="md">
                 <Stack column spacing="md" flex={1}>
-                    <Typography variant="caption" color={focused ? 'accent.main' : 'primary'}>
-                        {label}
-                    </Typography>
+                    {!!label && (
+                        <Typography variant="caption" color={focused ? 'accent.main' : 'primary'}>
+                            {label}
+                        </Typography>
+                    )}
                     {props.children}
                     {error && (
                         <Typography variant="caption" color="error.main">
