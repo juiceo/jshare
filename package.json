@@ -20,7 +20,7 @@
         "studio": "open http://127.0.0.1:54323",
         "create:package": "tsx ./scripts/create-package.ts",
         "nuke": "pnpm cache delete && rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf apps/*/node_modules && pnpm i",
-        "db:reset": "pnpm --filter '@jshare/prisma' db:migrate:reset"
+        "db:reset": "pnpm --filter '@jshare/db' db:migrate:reset"
     },
     "type": "module",
     "devDependencies": {
