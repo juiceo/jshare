@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
-import type { ViewStyle } from 'react-native';
-import { KeyboardAvoidingView, KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { View, type ViewStyle } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useScreen } from '~/components/Screen/useScreen';
@@ -39,7 +39,7 @@ export const ScreenContent = (props: PropsWithChildren<ScreenContentProps>) => {
         );
     } else {
         return (
-            <KeyboardAvoidingView
+            <View
                 style={[
                     {
                         flex: 1,
@@ -53,7 +53,7 @@ export const ScreenContent = (props: PropsWithChildren<ScreenContentProps>) => {
                 ]}
             >
                 {props.children}
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 };

@@ -6,7 +6,8 @@ import type { DB } from '@jshare/types';
 export const foo = null;
 
 export const groupMessagesByDate = <TMessage extends DB.Message>(
-    messages: TMessage[]
+    messages: TMessage[],
+    sortOrder: 'asc' | 'desc'
 ): { date: string; messages: TMessage[] }[] => {
     return chain(messages)
         .reduce(
@@ -22,10 +23,12 @@ export const groupMessagesByDate = <TMessage extends DB.Message>(
             {} as Record<string, TMessage[]>
         )
         .entries()
-        .sortBy(([date]) => date)
+        .sortBy(([date]) => (sortOrder === 'asc' ? date : -date))
         .map(([date, messages]) => ({
             date,
-            messages: sortBy(messages, (message) => message.createdAt),
+            messages: sortBy(messages, (message) =>
+                sortOrder === 'asc' ? message.createdAt : -message.createdAt
+            ),
         }))
         .value();
 };
@@ -35,7 +38,7 @@ export const groupConsecutiveMessagesByAuthor = <TMessage extends DB.Message>(
 ): { authorId: string | null; messages: TMessage[] }[] => {
     const groups: { authorId: string | null; messages: TMessage[] }[] = [];
 
-    sortBy(messages, (message) => message.createdAt).forEach((message) => {
+    messages.forEach((message) => {
         if (groups.at(-1)?.authorId === message.authorId) {
             groups.at(-1)?.messages.push(message);
         } else {
