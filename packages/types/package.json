@@ -15,7 +15,7 @@
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
         "@jshare/db": "workspace:*",
-        "tsup": "catalog:"
+        "tsup": "^8.3.0"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

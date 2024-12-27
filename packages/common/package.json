@@ -12,15 +12,15 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "lodash": "catalog:",
-        "dayjs": "catalog:",
+        "lodash": "^4.17.21",
+        "dayjs": "^1.11.13",
         "@jshare/types": "workspace:*"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "@types/lodash": "catalog:",
-        "tsup": "catalog:"
+        "@types/lodash": "^4.17.10",
+        "tsup": "^8.3.0"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

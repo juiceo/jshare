@@ -39,7 +39,7 @@ const packageJson = {
     devDependencies: {
         '@jshare/eslint-config': 'workspace:*',
         '@jshare/tsconfig': 'workspace:*',
-        tsup: 'catalog:',
+        tsup: '^8.3.0',
     },
     eslintConfig: {
         extends: '@jshare/eslint-config',

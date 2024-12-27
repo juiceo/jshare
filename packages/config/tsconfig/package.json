@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@jshare/eslint-config": "workspace:*",
-        "@tsconfig/recommended": "catalog:"
+        "@tsconfig/recommended": "^1.0.6"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

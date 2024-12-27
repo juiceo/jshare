@@ -20,15 +20,16 @@
         "studio": "open http://127.0.0.1:54323",
         "create:package": "tsx ./scripts/create-package.ts",
         "nuke": "pnpm cache delete && rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf apps/*/node_modules && pnpm i",
-        "db:reset": "pnpm --filter '@jshare/db' db:migrate:reset"
+        "db:reset": "pnpm --filter '@jshare/db' db:migrate:reset",
+        "update-deps": "pnpm update --interactive --recursive --latest"
     },
     "type": "module",
     "devDependencies": {
-        "@ianvs/prettier-plugin-sort-imports": "catalog:",
-        "prettier": "catalog:",
+        "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+        "prettier": "^3.3.3",
         "tsx": "^4.19.2",
-        "turbo": "catalog:",
-        "typescript": "catalog:",
+        "turbo": "^2.1.3",
+        "typescript": "^5.6.3",
         "zx": "^8.2.2"
     },
     "pnpm": {
