@@ -52,6 +52,22 @@ export const profilesRouter = router({
 
         return profile;
     }),
+    getById: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
+        const profile = await prisma.profile.findUnique({
+            where: {
+                userId: opts.input.id,
+            },
+            include: {
+                avatar: true,
+            },
+        });
+
+        if (!profile) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Profile not found' });
+        }
+
+        return profile;
+    }),
     update: authProcedure
         .input(
             z

@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
+import type { DB } from '@jshare/types';
+
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import type { DbImage } from '~/types/db';
 
 export type AvatarPickerProps = {
-    value: DbImage | null | undefined;
-    onChange: (value: DbImage | null) => void;
+    value: DB.Image | null | undefined;
+    onChange: (value: DB.Image | null) => void;
 };
 
 export const AvatarPicker = (props: AvatarPickerProps) => {

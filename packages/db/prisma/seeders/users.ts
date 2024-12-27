@@ -3,6 +3,7 @@ import { createClient, type User } from '@supabase/supabase-js';
 import { range } from 'lodash';
 
 import { getEnv } from '@jshare/env';
+import { asyncMap } from '@jshare/util';
 
 import type { PrismaClient } from '../../build';
 import { TEST_USER_EMAIL, TEST_USER_PASSWORD } from './constants';
@@ -18,45 +19,48 @@ const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
 });
 
 export const seedUsers = async (prisma: PrismaClient, count: number = 25): Promise<User[]> => {
+    /**
+     * Delete all current users from supabase
+     */
     const currentUsers = await supabase.auth.admin.listUsers();
     await Promise.all(
         currentUsers.data.users.map((user) => supabase.auth.admin.deleteUser(user.id))
     );
 
-    const users = range(count)
-        .map(() => {
-            const firstName = faker.person.firstName();
-            const lastName = faker.person.lastName();
-            const email = `${firstName}.${lastName}@jshare.me`.toLowerCase();
+    const users = await asyncMap(
+        range(count),
+        async (index, info) => {
+            console.log(`Creating user ${info.itemNumber} of ${info.itemCount}`);
+            const userDetails =
+                index === 0
+                    ? {
+                          firstName: 'Test',
+                          lastName: 'User',
+                          email: TEST_USER_EMAIL,
+                      }
+                    : {
+                          firstName: faker.person.firstName(),
+                          lastName: faker.person.lastName(),
+                          email: `${faker.person.firstName()}.${faker.person.lastName()}@jshare.me`.toLowerCase(),
+                      };
 
-            return {
-                firstName,
-                lastName,
-                email,
-            };
-        })
-        .concat({
-            firstName: 'Test',
-            lastName: 'User',
-            email: TEST_USER_EMAIL,
-        });
-
-    const createdUsers = await Promise.all(
-        users.map((user) => {
             return supabase.auth.admin.createUser({
-                email: user.email,
+                email: userDetails.email,
                 email_confirm: true,
                 password: TEST_USER_PASSWORD,
                 user_metadata: {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
+                    firstName: userDetails.firstName,
+                    lastName: userDetails.lastName,
                 },
             });
-        })
-    ).then((data) => data.map((item) => item.data.user).filter((_) => !!_));
+        },
+        {
+            concurrency: 10,
+        }
+    ).then((res) => res.map((item) => item.data.user).filter((user) => !!user));
 
     await prisma.profile.createMany({
-        data: createdUsers.map((user) => {
+        data: users.map((user) => {
             return {
                 userId: user.id,
                 email: user.email!,
@@ -66,5 +70,5 @@ export const seedUsers = async (prisma: PrismaClient, count: number = 25): Promi
         }),
     });
 
-    return createdUsers;
+    return users;
 };

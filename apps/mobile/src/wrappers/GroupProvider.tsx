@@ -1,14 +1,14 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
 
-import type { Group } from '@jshare/prisma';
+import type { DB } from '@jshare/types';
 
 export type GroupContextType = {
-    group: Group;
+    group: DB.Group;
 };
 
 export const GroupContext = createContext<GroupContextType | null>(null);
 
-export const GroupProvider = (props: PropsWithChildren<{ group: Group }>) => {
+export const GroupProvider = (props: PropsWithChildren<{ group: DB.Group }>) => {
     return (
         <GroupContext.Provider value={{ group: props.group }}>
             {props.children}

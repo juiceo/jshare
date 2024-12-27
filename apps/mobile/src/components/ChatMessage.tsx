@@ -12,6 +12,7 @@ import { Typography } from '~/components/Typography';
 export type ChatMessageProps = {
     text: string;
     timestamp: Date;
+    authorName?: string;
     color: 'primary' | 'secondary';
 };
 
@@ -39,6 +40,11 @@ export const ChatMessage = (props: ChatMessageProps) => {
                     end={{ x: 1, y: 1 }}
                 />
             )}
+            {props.authorName && (
+                <Typography variant="h5" style={styles.authorName}>
+                    {props.authorName}
+                </Typography>
+            )}
             <Stack style={styles.content}>
                 <Typography variant="body1">
                     {props.text}
@@ -63,9 +69,9 @@ const getStyles = (theme: Theme) => {
             fontSize: theme.typography.body1.fontSize,
             position: 'relative',
             minWidth: 40,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
+            flexDirection: 'column',
             paddingBottom: theme.spacing.xs,
+            paddingTop: theme.spacing.xs,
             overflow: 'hidden',
         },
         gradient: {
@@ -75,8 +81,12 @@ const getStyles = (theme: Theme) => {
             right: 0,
             bottom: 0,
         },
+        authorName: {
+            lineHeight: 0,
+            paddingHorizontal: theme.spacing.md,
+            color: theme.palette.text.primary,
+        },
         content: {
-            paddingTop: theme.spacing.sm,
             paddingHorizontal: theme.spacing.md,
         },
         textPadding: {

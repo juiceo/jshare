@@ -1,14 +1,15 @@
 import { Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { DB } from '@jshare/types';
+
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
-import type { GroupWithCoverImage } from '~/types/db';
 
 export type GroupCardProps = {
-    group: GroupWithCoverImage;
+    group: DB.Group<{ coverImage: true }>;
 };
 
 export const GroupCard = (props: GroupCardProps) => {

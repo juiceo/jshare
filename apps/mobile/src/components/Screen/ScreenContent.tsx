@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { KeyboardAvoidingView, KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useScreen } from '~/components/Screen/useScreen';
@@ -19,23 +19,41 @@ export const ScreenContent = (props: PropsWithChildren<ScreenContentProps>) => {
     const bottomInset = hasFooter || disableBottomInset ? 0 : insets.bottom;
     const topInset = !enableTopInset ? 0 : insets.top;
 
-    return (
-        <KeyboardAwareScrollView
-            style={[{ flex: 1 }, style]}
-            scrollEnabled={scrollable}
-            contentContainerStyle={[
-                {
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    paddingBottom: bottomInset,
-                    paddingTop: topInset,
-                },
-                !scrollable && { flex: 1 },
-                contentStyle,
-            ]}
-            extraKeyboardSpace={-1 * bottomInset}
-        >
-            {props.children}
-        </KeyboardAwareScrollView>
-    );
+    if (scrollable) {
+        return (
+            <KeyboardAwareScrollView
+                style={[{ flex: 1 }, style]}
+                contentContainerStyle={[
+                    {
+                        paddingLeft: insets.left,
+                        paddingRight: insets.right,
+                        paddingBottom: bottomInset,
+                        paddingTop: topInset,
+                    },
+                    contentStyle,
+                ]}
+                extraKeyboardSpace={-1 * bottomInset}
+            >
+                {props.children}
+            </KeyboardAwareScrollView>
+        );
+    } else {
+        return (
+            <KeyboardAvoidingView
+                style={[
+                    {
+                        flex: 1,
+                        paddingLeft: insets.left,
+                        paddingRight: insets.right,
+                        paddingBottom: bottomInset,
+                        paddingTop: topInset,
+                    },
+                    style,
+                    contentStyle,
+                ]}
+            >
+                {props.children}
+            </KeyboardAvoidingView>
+        );
+    }
 };

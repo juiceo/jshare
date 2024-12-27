@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import type { DB } from '@jshare/types';
+
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
@@ -8,7 +10,6 @@ import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useProfile } from '~/hooks/useProfile';
-import type { ProfileWithAvatar } from '~/types/db';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export default function ProfilePage() {
@@ -19,7 +20,7 @@ export default function ProfilePage() {
     return <ProfilePageInner profile={profile} />;
 }
 
-const ProfilePageInner = (props: { profile: ProfileWithAvatar }) => {
+const ProfilePageInner = (props: { profile: DB.Profile<{ avatar: true }> }) => {
     const { profile } = props;
     const { signOut } = useSession();
     const { updateProfile } = useProfile();

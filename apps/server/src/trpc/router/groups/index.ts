@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { Currency, Role } from '@jshare/prisma';
+import { Role, zCurrency } from '@jshare/types';
 
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
@@ -12,7 +12,7 @@ export const groupsRouter = router({
         .input(
             z.object({
                 name: z.string(),
-                currency: z.nativeEnum(Currency),
+                currency: zCurrency,
                 coverImageId: z.string().optional(),
             })
         )

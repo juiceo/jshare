@@ -3,6 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { z } from 'zod';
 
+import { zDbImage } from '@jshare/types';
+
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
@@ -12,7 +14,6 @@ import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { useCreateGroup } from '~/hooks/useGroups';
 import { trpc } from '~/services/trpc';
-import { zDbImage } from '~/types/db';
 
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),

@@ -19,7 +19,8 @@
     "keywords": [],
     "dependencies": {
         "@jshare/env": "workspace:*",
-        "@jshare/prisma": "workspace:*",
+        "@jshare/db": "workspace:*",
+        "@jshare/types": "workspace:*",
         "@supabase/supabase-js": "catalog:",
         "@trpc/server": "catalog:",
         "blurhash": "catalog:",

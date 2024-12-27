@@ -6,3 +6,5 @@
 apps/mobile/ios
 .expo
 .expo-shared
+
+packages/db/src/prisma

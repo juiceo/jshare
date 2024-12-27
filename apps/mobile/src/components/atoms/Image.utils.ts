@@ -2,12 +2,13 @@ import type { StyleProp, ViewStyle } from 'react-native';
 import { ImageSource as ExpoImageSource } from 'expo-image';
 
 import type { SxProps } from '@jshare/theme';
+import type { DB } from '@jshare/types';
 
 import { getImageUrl } from '~/services/images';
-import type { DbImage } from '~/types/db';
 
 export type ImageProps = {
-    image: DbImage | null | undefined;
+    image?: DB.Image | null;
+    source?: ExpoImageSource | null;
     fit?: 'cover' | 'contain' | 'fill';
     width?: number;
     height?: number;
@@ -17,15 +18,20 @@ export type ImageProps = {
 } & SxProps;
 
 export const getSourceFromProps = (props: ImageProps): ExpoImageSource => {
-    const { image } = props;
-    if (!image) return { uri: undefined };
-    return {
-        blurhash: image.blurhash ?? undefined,
-        uri: getImageUrl(image, {
-            width: props.width,
-            height: props.height,
-            resize: props.fit,
-            quality: props.quality,
-        }),
-    };
+    const { image, source } = props;
+    if (image) {
+        return {
+            blurhash: image.blurhash ?? undefined,
+            uri: getImageUrl(image, {
+                width: props.width,
+                height: props.height,
+                resize: props.fit,
+                quality: props.quality,
+            }),
+        };
+    }
+
+    if (source) return source;
+
+    return { uri: undefined };
 };

@@ -1,8 +1,8 @@
 {
     "private": true,
-    "name": "@jshare/common",
+    "name": "@jshare/types",
     "version": "1.0.0",
-    "description": "JShare common shared modules",
+    "description": "Various type definitions for JShare",
     "license": "MIT",
     "main": "build/index.js",
     "scripts": {
@@ -11,15 +11,10 @@
         "watch": "tsup-node --watch",
         "typecheck": "tsc --noEmit"
     },
-    "dependencies": {
-        "lodash": "catalog:",
-        "dayjs": "catalog:",
-        "@jshare/types": "workspace:*"
-    },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "@types/lodash": "catalog:",
+        "@jshare/db": "workspace:*",
         "tsup": "catalog:"
     },
     "eslintConfig": {
