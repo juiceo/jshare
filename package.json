@@ -8,6 +8,7 @@
         "dev:server": "turbo watch dev --filter=@jshare/server",
         "dev:storybook": "turbo watch dev:storybook --filter=\"{./apps/mobile}...\"",
         "watch": "turbo watch build",
+        "dev:packages": "turbo watch dev --filter=\"{./packages/*}...\"",
         "lint": "turbo lint",
         "typecheck": "turbo typecheck",
         "test": "turbo test",
