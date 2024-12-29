@@ -1,5 +1,6 @@
 {
     "$schema": "https://turborepo.org/schema.json",
+    "ui": "tui",
     "tasks": {
         "lint": {
             "outputs": []
@@ -17,11 +18,6 @@
             "outputs": [".next/**", "build/**", "node_modules/.cache/metro/**"]
         },
         "dev": {
-            "cache": false,
-            "persistent": true,
-            "dependsOn": ["^build"]
-        },
-        "dev:storybook": {
             "cache": false,
             "persistent": true,
             "dependsOn": ["^build"]

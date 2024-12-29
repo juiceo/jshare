@@ -4,11 +4,8 @@
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "description": "Monorepo for the JShare app",
     "scripts": {
-        "dev:mobile": "turbo watch dev --filter=@jshare/mobile",
-        "dev:server": "turbo watch dev --filter=@jshare/server",
-        "dev:storybook": "turbo watch dev:storybook --filter=\"{./apps/mobile}...\"",
-        "watch": "turbo watch build",
-        "dev:packages": "turbo watch dev --filter=\"{./packages/*}...\"",
+        "dev": "turbo watch dev",
+        "dev:storybook": "turbo run dev:storybook --filter=\"{./apps/mobile}...\"",
         "lint": "turbo lint",
         "typecheck": "turbo typecheck",
         "test": "turbo test",
