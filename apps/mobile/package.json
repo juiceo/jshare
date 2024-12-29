@@ -14,7 +14,7 @@
         "build": "expo export --output-dir ./build --platform all",
         "start": "expo start",
         "typecheck": "tsc --noEmit",
-        "eas-build-post-install": "pnpm build",
+        "eas-build-post-install": "pnpm run -w build:mobile",
         "eas:build:ios:development": "eas build --profile development --platform ios",
         "eas:build:ios:production": "eas build --profile production --platform ios",
         "eas:build:android:development": "eas build --profile production --platform android",

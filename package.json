@@ -15,6 +15,7 @@
         "storybook": "pnpm --filter=@jshare/mobile run:ios:storybook",
         "fullcheck": "turbo typecheck test lint --ui stream",
         "turbo:clean": "turbo daemon clean",
+        "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
         "format:write": "prettier './**/*.{js,jsx,ts,tsx,json}' --write",
         "format:check": "prettier './**/*.{js,jsx,ts,tsx,json}' --check",
         "inbox": "open http://127.0.0.1:54324/monitor",
