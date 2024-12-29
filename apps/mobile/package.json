@@ -15,6 +15,10 @@
         "start": "expo start",
         "typecheck": "tsc --noEmit",
         "eas-build-post-install": "pnpm run -w build:mobile",
+        "eas:build:ios:development": "eas build --profile development --platform ios",
+        "eas:build:ios:production": "eas build --profile production --platform ios",
+        "eas:build:android:development": "eas build --profile production --platform android",
+        "eas:build:android:production": "eas build --profile production --platform android",
         "storybook-generate": "sb-rn-get-stories"
     },
     "dependencies": {
