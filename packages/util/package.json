@@ -13,7 +13,7 @@
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "tsup": "^8.3.0"
+        "tsup": "catalog:"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

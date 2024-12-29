@@ -11,21 +11,21 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@expo-google-fonts/nunito": "^0.2.3",
-        "@expo-google-fonts/poppins": "^0.2.3",
-        "expo-font": "^12.0.10",
-        "lodash": "^4.17.21",
-        "react": "^18.2.0",
-        "react-native": "^0.74.2",
-        "@types/chroma-js": "^2.4.4",
-        "chroma-js": "^3.1.1"
+        "@expo-google-fonts/nunito": "catalog:",
+        "@expo-google-fonts/poppins": "catalog:",
+        "expo-font": "catalog:",
+        "lodash": "catalog:",
+        "react": "catalog:",
+        "react-native": "catalog:",
+        "@types/chroma-js": "catalog:",
+        "chroma-js": "catalog:"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "@types/lodash": "^4.17.10",
-        "@types/chroma-js": "^2.4.4",
-        "tsup": "^8.3.0"
+        "@types/lodash": "catalog:",
+        "@types/chroma-js": "catalog:",
+        "tsup": "catalog:"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",
