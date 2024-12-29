@@ -32,8 +32,7 @@ const packageJson = {
     main: 'build/index.js',
     scripts: {
         lint: 'eslint --ext js,ts,tsx .',
-        build: 'tsup-node',
-        watch: 'tsup-node --watch',
+        build: 'tsup --clean',
         typecheck: 'tsc --noEmit',
     },
     devDependencies: {
