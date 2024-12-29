@@ -7,10 +7,9 @@
     "main": "expo-router/entry",
     "scripts": {
         "dev": "expo start",
+        "dev:storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
         "run:ios": "expo run:ios --device",
         "run:android": "expo run:android --device",
-        "run:ios:storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo run:ios --device",
-        "run:android:storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo run:android --device",
         "lint": "eslint --ext js,ts,tsx . --max-warnings=0",
         "build": "expo export --output-dir ./build --platform all",
         "start": "expo start",
