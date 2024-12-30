@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
-import { SectionList } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { sortBy } from 'lodash';
 
-import { groupConsecutiveMessagesByAuthor, groupMessagesByDate } from '@jshare/common';
 import { useTheme } from '@jshare/theme';
 
-import { Box } from '~/components/atoms/Box';
 import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
@@ -14,6 +12,7 @@ import { ChatMessageGroup } from '~/components/ChatMessageGroup';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
+import { messagesToChatListItems } from '~/util/messages';
 import { useCurrentGroup } from '~/wrappers/GroupProvider';
 
 export default function GroupHome() {
@@ -25,17 +24,21 @@ export default function GroupHome() {
         sendMessage,
     } = useGroupMessages(group.id);
 
-    const sections = useMemo(() => {
-        return groupMessagesByDate(messages ?? []).map(({ date, messages }) => {
-            return {
-                title: date,
-                data: sortBy(
-                    groupConsecutiveMessagesByAuthor(messages),
-                    (group) => -group.timestamp.valueOf()
-                ),
-                key: date,
-            };
-        });
+    // const sections = useMemo(() => {
+    //     return groupMessagesByDate(messages ?? []).map(({ date, messages }) => {
+    //         return {
+    //             title: date,
+    //             data: sortBy(
+    //                 groupConsecutiveMessagesByAuthor(messages),
+    //                 (group) => -group.timestamp.valueOf()
+    //             ),
+    //             key: date,
+    //         };
+    //     });
+    // }, [messages]);
+
+    const chatListItems = useMemo(() => {
+        return messagesToChatListItems(messages ?? []);
     }, [messages]);
 
     return (
@@ -48,31 +51,44 @@ export default function GroupHome() {
                     keyboardVerticalOffset={44}
                 >
                     <ChatBackground flex={1}>
-                        <SectionList
-                            sections={sections}
-                            renderSectionFooter={({ section: { title } }) => (
-                                <ChatDateSeparator date={title} />
+                        <Animated.FlatList
+                            data={chatListItems}
+                            itemLayoutAnimation={LinearTransition.duration(200).easing(
+                                Easing.inOut(Easing.ease)
                             )}
-                            ItemSeparatorComponent={() => <Box height={8} />}
-                            renderItem={(messageGroup) => {
-                                return (
-                                    <ChatMessageGroup
-                                        authorId={messageGroup.item.authorId}
-                                        messages={sortBy(
-                                            messageGroup.item.messages,
-                                            (message) => message.createdAt
-                                        )}
-                                    />
-                                );
+                            keyExtractor={(item) => {
+                                switch (item.type) {
+                                    case 'date':
+                                        return `date_${item.date}`;
+                                    case 'messages':
+                                        return `messages_${item.messages.at(-1)?.id ?? ''}`;
+                                }
                             }}
-                            keyExtractor={(item) => item.messages.at(-1)?.id ?? ''}
-                            onEndReached={() => loadOlderMessages()}
-                            onEndReachedThreshold={0.5}
-                            contentContainerStyle={{
-                                paddingHorizontal: theme.spacing.xs,
-                                paddingVertical: theme.spacing.xl,
+                            renderItem={(chatListItem) => {
+                                switch (chatListItem.item.type) {
+                                    case 'date': {
+                                        return <ChatDateSeparator date={chatListItem.item.date} />;
+                                    }
+                                    case 'messages': {
+                                        return (
+                                            <ChatMessageGroup
+                                                authorId={chatListItem.item.authorId}
+                                                messages={sortBy(
+                                                    chatListItem.item.messages,
+                                                    (message) => message.createdAt
+                                                )}
+                                            />
+                                        );
+                                    }
+                                }
                             }}
                             inverted
+                            contentContainerStyle={{
+                                paddingHorizontal: theme.spacing.xs,
+                                paddingVertical: theme.spacing.lg,
+                            }}
+                            onEndReached={() => loadOlderMessages()}
+                            onEndReachedThreshold={0.5}
                         />
                     </ChatBackground>
                 </KeyboardAvoidingView>
