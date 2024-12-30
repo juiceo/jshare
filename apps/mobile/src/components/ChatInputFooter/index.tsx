@@ -8,23 +8,20 @@ import { useTheme, type Theme } from '@jshare/theme';
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { IconButton } from '~/components/IconButton';
-import { trpc } from '~/services/trpc';
-import { useCurrentGroup } from '~/wrappers/GroupProvider';
 
-export const ChatInputFooter = () => {
+export type ChatInputFooterProps = {
+    onSendMessage: (text: string) => void;
+};
+
+export const ChatInputFooter = (props: ChatInputFooterProps) => {
+    const { onSendMessage } = props;
     const { theme } = useTheme();
-    const { group } = useCurrentGroup();
     const insets = useSafeAreaInsets();
     const styles = getStyles(theme, insets.bottom);
     const [inputValue, setInputValue] = useState<string>('');
 
-    const sendMessageMutation = trpc.messages.create.useMutation();
-
     const handleSendMessage = async () => {
-        await sendMessageMutation.mutateAsync({
-            groupId: group.id,
-            text: inputValue,
-        });
+        onSendMessage(inputValue);
         setInputValue('');
     };
 
