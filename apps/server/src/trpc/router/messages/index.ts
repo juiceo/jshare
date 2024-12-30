@@ -1,6 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
+import { AuthorType } from '@jshare/types';
+
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
 
@@ -12,17 +14,8 @@ export const messagesRouter = router({
             })
         )
         .query(async (opts) => {
-            const group = await prisma.group.findUnique({
-                where: {
-                    id: opts.input.groupId,
-                    participants: {
-                        some: {
-                            userId: opts.ctx.userId,
-                        },
-                    },
-                },
-            });
-            if (!group) {
+            const isInGroup = await opts.ctx.acl.isUserInGroup(opts.input.groupId);
+            if (!isInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -31,13 +24,38 @@ export const messagesRouter = router({
 
             return prisma.message.findMany({
                 where: {
-                    groupId: group.id,
+                    groupId: opts.input.groupId,
                 },
                 include: {
                     author: true,
                 },
                 orderBy: {
                     createdAt: 'desc',
+                },
+            });
+        }),
+    create: authProcedure
+        .input(
+            z.object({
+                text: z.string(),
+                groupId: z.string().uuid(),
+            })
+        )
+        .mutation(async (opts) => {
+            const isInGroup = await opts.ctx.acl.isUserInGroup(opts.input.groupId);
+            if (!isInGroup) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Group with id ${opts.input.groupId} not found`,
+                });
+            }
+
+            return prisma.message.create({
+                data: {
+                    text: opts.input.text,
+                    authorId: opts.ctx.userId,
+                    groupId: opts.input.groupId,
+                    authorType: AuthorType.User,
                 },
             });
         }),

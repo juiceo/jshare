@@ -1,13 +1,12 @@
 import dayjs from 'dayjs';
-import { chain, sortBy } from 'lodash';
+import { chain } from 'lodash';
 
 import type { DB } from '@jshare/types';
 
 export const foo = null;
 
 export const groupMessagesByDate = <TMessage extends DB.Message>(
-    messages: TMessage[],
-    sortOrder: 'asc' | 'desc'
+    messages: TMessage[]
 ): { date: string; messages: TMessage[] }[] => {
     return chain(messages)
         .reduce(
@@ -23,31 +22,30 @@ export const groupMessagesByDate = <TMessage extends DB.Message>(
             {} as Record<string, TMessage[]>
         )
         .entries()
-        .sortBy(([date]) => (sortOrder === 'asc' ? date : -date))
+        .sortBy(([date]) => -date)
         .map(([date, messages]) => ({
             date,
-            messages: sortBy(messages, (message) =>
-                sortOrder === 'asc' ? message.createdAt : -message.createdAt
-            ),
+            messages,
         }))
         .value();
 };
 
 export const groupConsecutiveMessagesByAuthor = <TMessage extends DB.Message>(
     messages: TMessage[]
-): { authorId: string | null; messages: TMessage[] }[] => {
-    const groups: { authorId: string | null; messages: TMessage[] }[] = [];
-
-    messages.forEach((message) => {
-        if (groups.at(-1)?.authorId === message.authorId) {
-            groups.at(-1)?.messages.push(message);
-        } else {
-            groups.push({
-                authorId: message.authorId,
-                messages: [message],
-            });
-        }
-    });
-
-    return groups;
+): { authorId: string | null; timestamp: Date; messages: TMessage[] }[] => {
+    return messages.reduce(
+        (result, message) => {
+            if (result.at(-1)?.authorId === message.authorId) {
+                result.at(-1)?.messages.push(message);
+            } else {
+                result.push({
+                    authorId: message.authorId,
+                    timestamp: message.createdAt,
+                    messages: [message],
+                });
+            }
+            return result;
+        },
+        [] as { authorId: string | null; timestamp: Date; messages: TMessage[] }[]
+    );
 };

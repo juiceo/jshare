@@ -5,6 +5,9 @@ import superjson from 'superjson';
 
 import { getEnv } from '@jshare/env';
 
+import { prisma } from '../services/prisma';
+import { ACL } from './acl';
+
 const jwtSecret = getEnv('JWT_SECRET', { required: true });
 
 export const createContext = async (opts: trpcExpress.CreateExpressContextOptions) => {
@@ -49,6 +52,7 @@ export const authProcedure = t.procedure.use(async function isAuthed(opts) {
         return opts.next({
             ctx: {
                 userId: decoded.sub,
+                acl: new ACL(decoded.sub),
             },
         });
     } catch (err: any) {

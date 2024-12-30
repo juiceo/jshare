@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { SectionList } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { sortBy } from 'lodash';
 
 import { groupConsecutiveMessagesByAuthor, groupMessagesByDate } from '@jshare/common';
 import { useTheme } from '@jshare/theme';
@@ -21,10 +22,13 @@ export default function GroupHome() {
     const { data: messages } = useGroupMessages(group.id);
 
     const sections = useMemo(() => {
-        return groupMessagesByDate(messages ?? [], 'desc').map(({ date, messages }) => {
+        return groupMessagesByDate(messages ?? []).map(({ date, messages }) => {
             return {
                 title: date,
-                data: groupConsecutiveMessagesByAuthor(messages),
+                data: sortBy(
+                    groupConsecutiveMessagesByAuthor(messages),
+                    (group) => -group.timestamp.valueOf()
+                ),
                 key: date,
             };
         });
@@ -50,7 +54,10 @@ export default function GroupHome() {
                                 return (
                                     <ChatMessageGroup
                                         authorId={messageGroup.item.authorId}
-                                        messages={messageGroup.item.messages}
+                                        messages={sortBy(
+                                            messageGroup.item.messages,
+                                            (message) => message.createdAt
+                                        )}
                                     />
                                 );
                             }}

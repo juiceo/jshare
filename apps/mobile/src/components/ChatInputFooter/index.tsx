@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -7,11 +8,26 @@ import { useTheme, type Theme } from '@jshare/theme';
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { IconButton } from '~/components/IconButton';
+import { trpc } from '~/services/trpc';
+import { useCurrentGroup } from '~/wrappers/GroupProvider';
 
 export const ChatInputFooter = () => {
     const { theme } = useTheme();
+    const { group } = useCurrentGroup();
     const insets = useSafeAreaInsets();
     const styles = getStyles(theme, insets.bottom);
+    const [inputValue, setInputValue] = useState<string>('');
+
+    const sendMessageMutation = trpc.messages.create.useMutation();
+
+    const handleSendMessage = async () => {
+        await sendMessageMutation.mutateAsync({
+            groupId: group.id,
+            text: inputValue,
+        });
+        setInputValue('');
+    };
+
     return (
         <Stack>
             <Stack row p="md" center style={styles.buttonsWrapper}>
@@ -24,8 +40,19 @@ export const ChatInputFooter = () => {
             </Stack>
             <KeyboardStickyView style={styles.inputWrapper} offset={{ opened: insets.bottom }}>
                 <Stack row spacing="md" alignCenter>
-                    <TextInput style={styles.input} placeholder="Type a message..." />
-                    <IconButton icon="Send" rounded disabled size="sm" />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Type a message..."
+                        value={inputValue}
+                        onChangeText={setInputValue}
+                    />
+                    <IconButton
+                        icon="Send"
+                        rounded
+                        disabled={!inputValue}
+                        size="sm"
+                        onPress={handleSendMessage}
+                    />
                 </Stack>
             </KeyboardStickyView>
         </Stack>
