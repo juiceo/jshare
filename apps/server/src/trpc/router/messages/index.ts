@@ -10,6 +10,8 @@ export const messagesRouter = router({
     listByGroup: authProcedure
         .input(
             z.object({
+                cursor: z.string().nullish(),
+                limit: z.number().min(10).max(100).default(20),
                 groupId: z.string(),
             })
         )
@@ -22,10 +24,12 @@ export const messagesRouter = router({
                 });
             }
 
-            return prisma.message.findMany({
+            const messages = await prisma.message.findMany({
+                take: opts.input.limit + 1,
                 where: {
                     groupId: opts.input.groupId,
                 },
+                cursor: opts.input.cursor ? { id: opts.input.cursor } : undefined,
                 include: {
                     author: true,
                 },
@@ -33,6 +37,13 @@ export const messagesRouter = router({
                     createdAt: 'desc',
                 },
             });
+
+            const nextCursor = messages.length > opts.input.limit ? messages.pop()!.id : undefined;
+
+            return {
+                messages,
+                nextCursor,
+            };
         }),
     create: authProcedure
         .input(

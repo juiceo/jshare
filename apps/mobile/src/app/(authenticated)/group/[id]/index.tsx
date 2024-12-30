@@ -19,7 +19,7 @@ import { useCurrentGroup } from '~/wrappers/GroupProvider';
 export default function GroupHome() {
     const { group } = useCurrentGroup();
     const { theme } = useTheme();
-    const { data: messages } = useGroupMessages(group.id);
+    const { data: messages, fetchNextPage: loadOlderMessages } = useGroupMessages(group.id);
 
     const sections = useMemo(() => {
         return groupMessagesByDate(messages ?? []).map(({ date, messages }) => {
@@ -61,6 +61,8 @@ export default function GroupHome() {
                                     />
                                 );
                             }}
+                            onEndReached={() => loadOlderMessages()}
+                            onEndReachedThreshold={0.5}
                             contentContainerStyle={{
                                 paddingHorizontal: theme.spacing.xs,
                                 paddingVertical: theme.spacing.xl,
