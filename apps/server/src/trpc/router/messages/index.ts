@@ -1,9 +1,11 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
+import { getGroupBroadcastChannel, GroupBroadcastEvent } from '@jshare/common';
 import { AuthorType } from '@jshare/types';
 
 import { prisma } from '../../../services/prisma';
+import { supabase } from '../../../services/supabase';
 import { authProcedure, router } from '../../trpc';
 
 export const messagesRouter = router({
@@ -62,7 +64,7 @@ export const messagesRouter = router({
                 });
             }
 
-            return prisma.message.create({
+            const message = await prisma.message.create({
                 data: {
                     text: opts.input.text,
                     authorId: opts.ctx.userId,
@@ -71,5 +73,15 @@ export const messagesRouter = router({
                     key: opts.input.key,
                 },
             });
+
+            supabase.channel(getGroupBroadcastChannel(opts.input.groupId)).send({
+                type: 'broadcast',
+                event: GroupBroadcastEvent.Message,
+                payload: {
+                    type: GroupBroadcastEvent.Message,
+                },
+            });
+
+            return message;
         }),
 });

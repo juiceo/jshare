@@ -21,6 +21,7 @@
         "@jshare/env": "workspace:*",
         "@jshare/db": "workspace:*",
         "@jshare/types": "workspace:*",
+        "@jshare/common": "workspace:*",
         "@supabase/supabase-js": "catalog:",
         "@trpc/server": "catalog:",
         "blurhash": "catalog:",

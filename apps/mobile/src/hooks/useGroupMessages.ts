@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { MessageMock, type DB } from '@jshare/types';
 
+import { useGroupBroadcasts } from '~/hooks/useBroadcast';
 import { useProfile } from '~/hooks/useProfile';
 import { trpc } from '~/services/trpc';
 import { useAuthenticatedSession } from '~/wrappers/AuthenticatedContextProvider';
@@ -17,6 +18,12 @@ export const useGroupMessages = (groupId: string) => {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
         select: (data) => data.pages.flatMap((page) => page.messages),
     });
+
+    const invalidateMessages = useCallback(() => {
+        utils.messages.listByGroup.invalidate();
+    }, [utils.messages.listByGroup]);
+
+    useGroupBroadcasts({ groupId, onMessage: invalidateMessages });
 
     const sendMessage = useCallback(
         async (text: string) => {
@@ -50,10 +57,11 @@ export const useGroupMessages = (groupId: string) => {
                 text,
                 key: localMessage.key,
             });
-            utils.messages.listByGroup.invalidate();
+            invalidateMessages();
         },
         [
             groupId,
+            invalidateMessages,
             profile,
             queryInput,
             sendMessageMutation,
@@ -64,6 +72,7 @@ export const useGroupMessages = (groupId: string) => {
 
     return {
         ...messagesQuery,
+        invalidateMessages,
         sendMessage,
     };
 };
