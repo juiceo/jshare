@@ -32,7 +32,7 @@ const ProfilePageInner = (props: { profile: DB.Profile<{ avatar: true }> }) => {
         <Screen>
             <Screen.Content scrollable>
                 <Header title="Profile" />
-                <Stack flex={1} spacing="md">
+                <Stack flex={1} spacing="md" px="xl">
                     <Stack column center p="xl" br="md" spacing="none">
                         <Stack mt="2xl">
                             <AvatarPicker

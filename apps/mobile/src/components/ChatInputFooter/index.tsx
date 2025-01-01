@@ -63,15 +63,13 @@ const getStyles = (theme: Theme, bottomInset: number) => {
         inputWrapper: {
             backgroundColor: theme.palette.background.elevation1,
             padding: theme.spacing.md,
-            borderTopWidth: 1,
-            borderTopColor: theme.palette.border.divider,
             paddingBottom: theme.spacing.md + bottomInset,
         },
         buttonsWrapper: {
             padding: theme.spacing.md,
             borderTopWidth: 1,
             borderTopColor: theme.palette.border.divider,
-            backgroundColor: 'transparent',
+            backgroundColor: theme.palette.background.elevation1,
         },
         input: {
             color: theme.palette.text.primary,

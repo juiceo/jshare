@@ -12,6 +12,7 @@ export type HeaderProps = {
     title: string;
     backButtonStyle?: 'back' | 'close' | 'down';
     bordered?: boolean;
+    modal?: boolean;
 };
 
 export const Header = (props: HeaderProps) => {
@@ -32,9 +33,22 @@ export const Header = (props: HeaderProps) => {
                 return 'ChevronDown';
         }
     })();
+
+    const handleBackPress = () => {
+        router.dismiss();
+    };
     return (
-        <Stack row spacing="xl" width="100%" style={[props.bordered ? styles.bordered : undefined]}>
-            <IconButton variant="ghost" onPress={() => router.dismiss()} icon={backIcon} />
+        <Stack
+            row
+            spacing="xl"
+            width="100%"
+            style={[
+                styles.base,
+                props.bordered ? styles.bordered : undefined,
+                props.modal ? styles.modal : undefined,
+            ]}
+        >
+            <IconButton variant="ghost" onPress={handleBackPress} icon={backIcon} />
             <Stack center flex={1}>
                 <Typography variant="h5">{title}</Typography>
             </Stack>
@@ -47,9 +61,15 @@ export const Header = (props: HeaderProps) => {
 
 const getStyles = (theme: Theme) => {
     return StyleSheet.create({
+        base: {
+            padding: theme.spacing.xs,
+        },
         bordered: {
             borderBottomWidth: 1,
             borderBottomColor: theme.palette.border.divider,
+        },
+        modal: {
+            padding: theme.spacing.xl,
         },
     });
 };

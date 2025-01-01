@@ -66,7 +66,7 @@ export const groupsRouter = router({
 
         return group;
     }),
-    listParticipating: authProcedure.query(async (opts) => {
+    list: authProcedure.query(async (opts) => {
         const groups = await prisma.group.findMany({
             where: {
                 participants: {

@@ -33,6 +33,9 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
         switch (props.backgroundColor) {
             case 'transparent':
                 return 'transparent';
+            case undefined: {
+                return theme.palette.background.elevation1;
+            }
             default:
                 return getColorFromPath(props.backgroundColor, theme);
         }

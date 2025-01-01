@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { trpc, type TrpcInputs } from '~/services/trpc';
 
 export const useGroups = () => {
-    const groupsQuery = trpc.groups.listParticipating.useQuery();
+    const groupsQuery = trpc.groups.list.useQuery();
 
     return { groups: groupsQuery.data, ...groupsQuery };
 };
@@ -16,13 +16,13 @@ export const useCreateGroup = () => {
         (args: TrpcInputs['groups']['create']) => {
             return createGroupMutation.mutateAsync(args, {
                 onSuccess: (data) => {
-                    trpcUtils.groups.listParticipating.setData(undefined, (prev) => {
+                    trpcUtils.groups.list.setData(undefined, (prev) => {
                         return prev ? [...prev, data] : [data];
                     });
                 },
             });
         },
-        [createGroupMutation, trpcUtils.groups.listParticipating]
+        [createGroupMutation, trpcUtils.groups.list]
     );
 
     return { createGroup, ...createGroupMutation };
