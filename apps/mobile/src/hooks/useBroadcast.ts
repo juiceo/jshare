@@ -9,13 +9,7 @@ export const useGroupBroadcasts = (arsg: { groupId: string; onMessage?: () => vo
 
     useEffect(() => {
         const channelId = getGroupBroadcastChannel(groupId);
-        const channel = supabase.channel(channelId, {
-            config: {
-                broadcast: {
-                    self: true,
-                },
-            },
-        });
+        const channel = supabase.channel(channelId);
 
         channel.subscribe();
         channel.on('broadcast', { event: GroupBroadcastEvent.Message }, (payload) => {
