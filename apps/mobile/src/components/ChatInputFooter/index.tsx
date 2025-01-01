@@ -11,10 +11,12 @@ import { IconButton } from '~/components/IconButton';
 
 export type ChatInputFooterProps = {
     onSendMessage: (text: string) => void;
+    onNewExpense: () => void;
+    onNewPayment: () => void;
 };
 
 export const ChatInputFooter = (props: ChatInputFooterProps) => {
-    const { onSendMessage } = props;
+    const { onSendMessage, onNewExpense, onNewPayment } = props;
     const { theme } = useTheme();
     const insets = useSafeAreaInsets();
     const styles = getStyles(theme, insets.bottom);
@@ -28,10 +30,10 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     return (
         <Stack>
             <Stack row p="md" center style={styles.buttonsWrapper}>
-                <Button variant="ghost" color="primary" size="sm">
+                <Button variant="ghost" color="primary" size="sm" onPress={onNewExpense}>
                     New expense
                 </Button>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" onPress={onNewPayment}>
                     New payment
                 </Button>
             </Stack>

@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
+import { router } from 'expo-router';
 import { sortBy } from 'lodash';
 
 import { useTheme } from '@jshare/theme';
@@ -28,6 +29,20 @@ export default function GroupHome() {
     const chatListItems = useMemo(() => {
         return messagesToChatListItems(messages ?? []);
     }, [messages]);
+
+    const handleCreateExpense = useCallback(() => {
+        router.push({
+            pathname: '/group/[id]/create-expense',
+            params: { id: group.id },
+        });
+    }, [group.id]);
+
+    const handleCreatePayment = useCallback(() => {
+        router.push({
+            pathname: '/group/[id]/create-payment',
+            params: { id: group.id },
+        });
+    }, [group.id]);
 
     return (
         <Screen disableBottomInset>
@@ -81,7 +96,11 @@ export default function GroupHome() {
                         />
                     </ChatBackground>
                 </KeyboardAvoidingView>
-                <ChatInputFooter onSendMessage={sendMessage} />
+                <ChatInputFooter
+                    onSendMessage={sendMessage}
+                    onNewExpense={handleCreateExpense}
+                    onNewPayment={handleCreatePayment}
+                />
             </Screen.Content>
         </Screen>
     );

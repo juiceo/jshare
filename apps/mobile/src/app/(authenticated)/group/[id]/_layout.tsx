@@ -33,7 +33,16 @@ export default function GroupLayout() {
                     },
                     headerShown: false,
                 }}
-            />
+            >
+                <Stack.Screen
+                    name="create-expense"
+                    options={{ presentation: 'modal', headerShown: false }}
+                />
+                <Stack.Screen
+                    name="create-payment"
+                    options={{ presentation: 'modal', headerShown: false }}
+                />
+            </Stack>
         </GroupProvider>
     );
 }
