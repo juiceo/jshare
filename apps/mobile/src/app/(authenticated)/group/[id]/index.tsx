@@ -49,7 +49,7 @@ export default function GroupHome() {
                                     case 'date':
                                         return `date_${item.date}`;
                                     case 'messages':
-                                        return `messages_${item.messages.at(-1)?.id ?? ''}`;
+                                        return `messages_${item.messages.at(-1)?.key ?? ''}`;
                                 }
                             }}
                             ItemSeparatorComponent={() => <Box height={8} />}

@@ -1,9 +1,14 @@
 import { useCallback, useMemo } from 'react';
-import { uniqueId } from 'lodash';
 
+import { MessageMock, type DB } from '@jshare/types';
+
+import { useProfile } from '~/hooks/useProfile';
 import { trpc } from '~/services/trpc';
+import { useAuthenticatedSession } from '~/wrappers/AuthenticatedContextProvider';
 
 export const useGroupMessages = (groupId: string) => {
+    const { session } = useAuthenticatedSession();
+    const { profile } = useProfile();
     const utils = trpc.useUtils();
     const sendMessageMutation = trpc.messages.create.useMutation();
 
@@ -15,22 +20,46 @@ export const useGroupMessages = (groupId: string) => {
 
     const sendMessage = useCallback(
         async (text: string) => {
-            const key = uniqueId();
-            // utils.messages.listByGroup.setInfiniteData(queryInput, (data) => {
-            //     if (!data) return data;
-            //     return {
-            //         ...data,
-            //         pages: [],
-            //     };
-            // });
+            if (!profile) return;
+            const localMessage = MessageMock.build({
+                text,
+                authorId: session.user.id,
+                groupId,
+            });
+            const localMessageWithAuthor: DB.Message<{ author: true }> = {
+                ...localMessage,
+                author: profile,
+            };
+            utils.messages.listByGroup.setInfiniteData(queryInput, (data) => {
+                if (!data) return data;
+                return {
+                    ...data,
+                    pages: data.pages.map((page, index) => {
+                        if (index === 0) {
+                            return {
+                                ...page,
+                                messages: [localMessageWithAuthor, ...page.messages],
+                            };
+                        }
+                        return page;
+                    }),
+                };
+            });
             await sendMessageMutation.mutateAsync({
                 groupId,
                 text,
-                key,
+                key: localMessage.key,
             });
             utils.messages.listByGroup.invalidate();
         },
-        [groupId, sendMessageMutation, utils.messages.listByGroup]
+        [
+            groupId,
+            profile,
+            queryInput,
+            sendMessageMutation,
+            session.user.id,
+            utils.messages.listByGroup,
+        ]
     );
 
     return {

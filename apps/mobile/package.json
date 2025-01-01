@@ -59,7 +59,7 @@
         "react-native": "catalog:",
         "react-native-country-flag": "catalog:",
         "react-native-gesture-handler": "catalog:",
-        "react-native-get-random-values": "catalog:",
+        "react-native-get-random-values": "^1.11.0",
         "react-native-keyboard-controller": "catalog:",
         "react-native-reanimated": "catalog:",
         "react-native-safe-area-context": "catalog:",

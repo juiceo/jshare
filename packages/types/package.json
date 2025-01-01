@@ -10,10 +10,13 @@
         "build": "tsup --clean",
         "typecheck": "tsc --noEmit"
     },
+    "dependencies": {
+        "uuid": "^11.0.3"
+    },
     "devDependencies": {
+        "@jshare/db": "workspace:*",
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "@jshare/db": "workspace:*",
         "tsup": "catalog:"
     },
     "eslintConfig": {

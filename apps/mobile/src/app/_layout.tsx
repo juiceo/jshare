@@ -1,3 +1,5 @@
+import 'react-native-get-random-values';
+
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
