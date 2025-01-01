@@ -49,6 +49,7 @@ export const messagesRouter = router({
         .input(
             z.object({
                 text: z.string(),
+                key: z.string(),
                 groupId: z.string().uuid(),
             })
         )
@@ -67,6 +68,7 @@ export const messagesRouter = router({
                     authorId: opts.ctx.userId,
                     groupId: opts.input.groupId,
                     authorType: AuthorType.User,
+                    key: opts.input.key,
                 },
             });
         }),

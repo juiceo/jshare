@@ -71,6 +71,7 @@ model Image {
 
 model Message {
     id   String  @id @default(uuid())
+    key  String
     text String?
 
     authorType AuthorType

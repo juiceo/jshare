@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { uniqueId } from 'lodash';
 
 import { trpc } from '~/services/trpc';
 
@@ -14,9 +15,18 @@ export const useGroupMessages = (groupId: string) => {
 
     const sendMessage = useCallback(
         async (text: string) => {
+            const key = uniqueId();
+            // utils.messages.listByGroup.setInfiniteData(queryInput, (data) => {
+            //     if (!data) return data;
+            //     return {
+            //         ...data,
+            //         pages: [],
+            //     };
+            // });
             await sendMessageMutation.mutateAsync({
                 groupId,
                 text,
+                key,
             });
             utils.messages.listByGroup.invalidate();
         },
