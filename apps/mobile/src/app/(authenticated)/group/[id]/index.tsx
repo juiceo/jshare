@@ -5,6 +5,7 @@ import { sortBy } from 'lodash';
 
 import { useTheme } from '@jshare/theme';
 
+import { Box } from '~/components/atoms/Box';
 import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
@@ -23,19 +24,6 @@ export default function GroupHome() {
         fetchNextPage: loadOlderMessages,
         sendMessage,
     } = useGroupMessages(group.id);
-
-    // const sections = useMemo(() => {
-    //     return groupMessagesByDate(messages ?? []).map(({ date, messages }) => {
-    //         return {
-    //             title: date,
-    //             data: sortBy(
-    //                 groupConsecutiveMessagesByAuthor(messages),
-    //                 (group) => -group.timestamp.valueOf()
-    //             ),
-    //             key: date,
-    //         };
-    //     });
-    // }, [messages]);
 
     const chatListItems = useMemo(() => {
         return messagesToChatListItems(messages ?? []);
@@ -64,6 +52,7 @@ export default function GroupHome() {
                                         return `messages_${item.messages.at(-1)?.id ?? ''}`;
                                 }
                             }}
+                            ItemSeparatorComponent={() => <Box height={8} />}
                             renderItem={(chatListItem) => {
                                 switch (chatListItem.item.type) {
                                     case 'date': {
