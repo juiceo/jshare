@@ -19,10 +19,11 @@ export const Avatar = (props: AvatarProps) => {
         switch (props.size) {
             case 'sm':
                 return 24;
-            case 'md':
-                return 36;
             case 'lg':
                 return 64;
+            case 'md':
+            default:
+                return 36;
         }
     })();
 

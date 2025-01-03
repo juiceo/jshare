@@ -66,7 +66,7 @@ type MenuItemProps = {
     icon?: IconName;
     onSelect: () => void;
 };
-const MenuItem = (props: MenuItemProps) => {
+export const MenuItem = (props: MenuItemProps) => {
     const { theme } = useTheme();
     return (
         <RectButton onPress={props.onSelect}>

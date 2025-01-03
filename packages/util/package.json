@@ -8,12 +8,14 @@
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
         "build": "tsup --clean",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "test": "vitest"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "tsup": "catalog:"
+        "tsup": "catalog:",
+        "vitest": "^2.1.8"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

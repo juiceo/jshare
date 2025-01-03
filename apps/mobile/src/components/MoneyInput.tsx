@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
 import type { CurrencyCode } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
@@ -12,14 +13,17 @@ export type MoneyInputProps = {
     onChange: (value: number) => void;
     currency: CurrencyCode;
     autoFocus?: boolean;
+    bottomSheet?: boolean;
 };
 
 export const MoneyInput = (props: MoneyInputProps) => {
-    const { value, onChange, currency, autoFocus } = props;
+    const { value, onChange, currency, autoFocus, bottomSheet } = props;
     const { theme } = useTheme();
 
-    const majorUnitsInputRef = useRef<TextInput>(null);
-    const minorUnitsInputRef = useRef<TextInput>(null);
+    const InputComponent = bottomSheet ? BottomSheetTextInput : TextInput;
+
+    const majorUnitsInputRef = useRef<any>(null);
+    const minorUnitsInputRef = useRef<any>(null);
 
     const majorUnits = Math.floor(value / 100);
     const minorUnits = value % 100;
@@ -45,42 +49,44 @@ export const MoneyInput = (props: MoneyInputProps) => {
     };
 
     return (
-        <Stack column>
-            <Stack row alignEnd>
-                <TextInput
-                    ref={majorUnitsInputRef}
-                    style={styles.input}
-                    value={majorUnits === 0 ? '' : majorUnits.toString()}
-                    onChangeText={handleMajorUnitsChange}
-                    placeholderTextColor={theme.palette.text.disabled}
-                    placeholder="0"
-                    keyboardType="number-pad"
-                    autoFocus={autoFocus}
-                />
-                <View style={[styles.dot, minorUnits !== 0 ? styles.dotActive : undefined]} />
-                <TextInput
-                    ref={minorUnitsInputRef}
-                    value={minorUnits === 0 ? '' : minorUnits.toString()}
-                    onChangeText={handleMinorUnitsChange}
-                    style={styles.input}
-                    placeholderTextColor={theme.palette.text.disabled}
-                    placeholder="00"
-                    keyboardType="number-pad"
-                    onKeyPress={(e) => {
-                        switch (e.nativeEvent.key) {
-                            case 'Backspace':
-                                if (minorUnits === 0) {
-                                    majorUnitsInputRef.current?.focus();
-                                }
-                                break;
-                        }
-                    }}
-                ></TextInput>
+        <>
+            <Stack column>
+                <Stack row alignEnd>
+                    <InputComponent
+                        ref={majorUnitsInputRef}
+                        style={styles.input}
+                        value={majorUnits === 0 ? '' : majorUnits.toString()}
+                        onChangeText={handleMajorUnitsChange}
+                        placeholderTextColor={theme.palette.text.disabled}
+                        placeholder="0"
+                        keyboardType="number-pad"
+                        autoFocus={autoFocus}
+                    />
+                    <View style={[styles.dot, minorUnits !== 0 ? styles.dotActive : undefined]} />
+                    <InputComponent
+                        ref={minorUnitsInputRef}
+                        value={minorUnits === 0 ? '' : minorUnits.toString()}
+                        onChangeText={handleMinorUnitsChange}
+                        style={styles.input}
+                        placeholderTextColor={theme.palette.text.disabled}
+                        placeholder="00"
+                        keyboardType="number-pad"
+                        onKeyPress={(e) => {
+                            switch (e.nativeEvent.key) {
+                                case 'Backspace':
+                                    if (minorUnits === 0) {
+                                        majorUnitsInputRef.current?.focus();
+                                    }
+                                    break;
+                            }
+                        }}
+                    />
+                </Stack>
+                <Stack center>
+                    <Typography variant="overline">{currency}</Typography>
+                </Stack>
             </Stack>
-            <Stack center>
-                <Typography variant="overline">{currency}</Typography>
-            </Stack>
-        </Stack>
+        </>
     );
 };
 

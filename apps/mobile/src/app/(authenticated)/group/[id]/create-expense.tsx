@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -10,6 +10,8 @@ import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
+import { ExpenseShareList } from '~/components/ExpenseShares/ExpenseShareList';
+import { zExpenseSharesByUser } from '~/components/ExpenseShares/types';
 import { Header } from '~/components/Header/Header';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
@@ -23,6 +25,7 @@ const schema = z.object({
         value: z.number().min(1),
         currency: zCurrency,
     }),
+    shares: zExpenseSharesByUser,
 });
 
 type Schema = z.infer<typeof schema>;
@@ -41,9 +44,12 @@ export default function CreateExpense() {
         resolver: zodResolver(schema),
     });
 
+    const expenseAmount = useWatch({ control: form.control, name: 'amount.value' });
+    const expenseCurrency = useWatch({ control: form.control, name: 'amount.currency' });
+
     return (
         <Screen disableTopInset>
-            <Screen.Content scrollable>
+            <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
                 <Header title="New expense" modal />
                 <Stack column px="xl">
                     <Stack center py="3xl">
@@ -65,10 +71,12 @@ export default function CreateExpense() {
                             <Typography color="hint" variant="overline">
                                 Paid by
                             </Typography>
-                            <Stack row center spacing="md">
-                                <Typography>Juuso L.</Typography>
-                                {profile && <Avatar userId={profile.userId} size="sm" />}
-                            </Stack>
+                            {profile && (
+                                <Stack row center spacing="md">
+                                    <Avatar userId={profile.userId} size="sm" />
+                                    <Typography>{getUserShortName(profile)}</Typography>
+                                </Stack>
+                            )}
                         </Stack>
                         <Divider horizontal color="background.default" />
                         <Stack row justifyBetween alignCenter p="xl">
@@ -83,26 +91,24 @@ export default function CreateExpense() {
                             </Stack>
                         </Stack>
                     </Stack>
-                    <Stack p="xl">
-                        <Typography variant="overline">Shares</Typography>
+                    <Stack p="xl" mt="2xl">
+                        <Typography variant="body1">Who's participating?</Typography>
                     </Stack>
-                    <Stack column bg="background.elevation1" br="xl">
-                        {groupMembers?.map((member, index) => {
+                    <Controller
+                        control={form.control}
+                        name="shares"
+                        render={({ field }) => {
                             return (
-                                <React.Fragment key={member.id}>
-                                    <Stack row justifyBetween alignCenter p="xl">
-                                        <Stack row alignCenter spacing="md">
-                                            <Avatar userId={member.userId} size="sm" />
-                                            <Typography>{getUserShortName(member.user)}</Typography>
-                                        </Stack>
-                                    </Stack>
-                                    {index !== groupMembers.length - 1 && (
-                                        <Divider horizontal color="background.default" />
-                                    )}
-                                </React.Fragment>
+                                <ExpenseShareList
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    groupMembers={groupMembers ?? []}
+                                    expenseAmount={expenseAmount}
+                                    expenseCurrency={expenseCurrency}
+                                />
                             );
-                        })}
-                    </Stack>
+                        }}
+                    />
                 </Stack>
             </Screen.Content>
             <Screen.Footer>

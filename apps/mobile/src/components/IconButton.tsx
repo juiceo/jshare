@@ -4,15 +4,18 @@ import { useTheme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Icon, type IconName } from '~/components/Icon';
+import { Typography } from '~/components/Typography';
 
 export type IconButtonProps = {
     icon: IconName;
     size?: 'sm' | 'md' | 'lg';
     variant?: 'contained' | 'ghost';
-    color?: 'primary' | 'secondary' | 'error';
+    color?: 'primary' | 'secondary' | 'error' | 'success';
     rounded?: boolean;
     disabled?: boolean;
     onPress?: () => void;
+    text?: string;
+    textPos?: 'left' | 'right' | 'top' | 'bottom';
 };
 
 export const IconButton = (props: IconButtonProps) => {
@@ -24,16 +27,18 @@ export const IconButton = (props: IconButtonProps) => {
         variant = 'contained',
         rounded,
         disabled,
+        text,
+        textPos = 'left',
     } = props;
     const { theme } = useTheme();
-    const buttonSize = (() => {
+    const iconSize = (() => {
         switch (size) {
             case 'sm':
-                return 32;
+                return 16;
             case 'md':
-                return 48;
+                return 24;
             case 'lg':
-                return 64;
+                return 32;
         }
     })();
 
@@ -54,6 +59,11 @@ export const IconButton = (props: IconButtonProps) => {
                     ? theme.palette.error.main
                     : theme.palette.error.light;
             }
+            case 'success': {
+                return variant === 'contained'
+                    ? theme.palette.success.main
+                    : theme.palette.success.light;
+            }
         }
     })();
 
@@ -68,16 +78,27 @@ export const IconButton = (props: IconButtonProps) => {
             activeOpacity={0.1}
             underlayColor={variant === 'contained' ? 'white' : primaryColor}
             style={{
-                height: buttonSize,
-                width: buttonSize,
                 backgroundColor: variant === 'contained' ? primaryColor : 'transparent',
-                borderRadius: rounded ? buttonSize / 2 : theme.borderRadius.xl,
+                borderRadius: rounded ? 9999 : theme.borderRadius.xl,
                 opacity: props.disabled ? 0.5 : 1,
+                padding: theme.spacing.sm,
             }}
             enabled={!disabled}
         >
-            <Stack center flex={1}>
-                <Icon name={icon} size={buttonSize / 2} color={iconColor} />
+            <Stack
+                center
+                row={textPos === 'left'}
+                rowReverse={textPos === 'right'}
+                column={textPos === 'top'}
+                columnReverse={textPos === 'bottom'}
+                spacing="sm"
+            >
+                {text && (
+                    <Typography variant="button" style={{ color: iconColor }}>
+                        Reset
+                    </Typography>
+                )}
+                <Icon name={icon} size={iconSize} color={iconColor} />
             </Stack>
         </RectButton>
     );

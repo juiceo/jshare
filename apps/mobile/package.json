@@ -29,6 +29,7 @@
         "@jshare/env": "workspace:*",
         "@jshare/theme": "workspace:*",
         "@jshare/types": "workspace:*",
+        "@jshare/util": "workspace:*",
         "@react-native-async-storage/async-storage": "catalog:",
         "@react-native-community/netinfo": "catalog:",
         "@supabase/supabase-js": "catalog:",
