@@ -8,7 +8,7 @@ import { Avatar } from '~/components/Avatar';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
-export type ExpenseShareItemProps = {
+export type ExpenseSharesEditorItemProps = {
     user: DB.Profile;
     amount: number;
     currency: CurrencyCode;
@@ -17,7 +17,7 @@ export type ExpenseShareItemProps = {
     onLongPress: () => void;
 };
 
-export const ExpenseShareItem = (props: ExpenseShareItemProps) => {
+export const ExpenseSharesEditorItem = (props: ExpenseSharesEditorItemProps) => {
     const { user, amount, currency, status, onPress, onLongPress } = props;
 
     return (

@@ -14,7 +14,7 @@ export type MenuOption<T extends string> = {
     id: T;
     label: string;
     secondary?: string;
-    icon?: IconName;
+    icon?: IconName | JSX.Element;
     hidden?: boolean;
 };
 
@@ -24,10 +24,11 @@ export type MenuProps<T extends string> = {
     onClose: () => void;
     onChange: (value: T) => void;
     options: MenuOption<T>[];
+    title?: string;
 };
 
 export const Menu = <T extends string>(props: MenuProps<T>) => {
-    const { isOpen, value, onChange, onClose, options } = props;
+    const { isOpen, value, onChange, onClose, options, title } = props;
     const insets = useSafeAreaInsets();
 
     const handleSelect = (id: T) => {
@@ -41,6 +42,15 @@ export const Menu = <T extends string>(props: MenuProps<T>) => {
                 data={options}
                 contentContainerStyle={{ paddingBottom: insets.bottom }}
                 keyExtractor={(item) => item.id}
+                ListHeaderComponent={
+                    title
+                        ? () => (
+                              <Stack center p="xl">
+                                  <Typography variant="h5">{title}</Typography>
+                              </Stack>
+                          )
+                        : null
+                }
                 renderItem={({ item }) => {
                     if (item.hidden) return null;
                     return (
@@ -63,7 +73,7 @@ type MenuItemProps = {
     label: string;
     secondary?: string;
     selected: boolean;
-    icon?: IconName;
+    icon?: IconName | JSX.Element;
     onSelect: () => void;
 };
 export const MenuItem = (props: MenuItemProps) => {
@@ -71,7 +81,8 @@ export const MenuItem = (props: MenuItemProps) => {
     return (
         <RectButton onPress={props.onSelect}>
             <Stack row alignCenter p="xl" spacing="xl">
-                {props.icon && <Icon name={props.icon} />}
+                {props.icon && typeof props.icon === 'string' && <Icon name={props.icon} />}
+                {props.icon && typeof props.icon !== 'string' && props.icon}
                 <Stack column flex={1}>
                     <Typography variant="body1">{props.label}</Typography>
                     {props.secondary && (

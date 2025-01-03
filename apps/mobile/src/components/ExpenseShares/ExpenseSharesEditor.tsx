@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
 
-import type { CurrencyCode } from '@jshare/common';
+import { type CurrencyCode } from '@jshare/common';
 import type { DB } from '@jshare/types';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
 import { ExpenseShareEditorSheet } from '~/components/ExpenseShares/ExpenseShareEditorSheet';
-import { ExpenseShareItem } from '~/components/ExpenseShares/ExpenseShareItem';
+import { ExpenseSharesEditorItem } from '~/components/ExpenseShares/ExpenseSharesEditorItem';
 import type { ExpenseSharesByUser } from '~/components/ExpenseShares/types';
 import {
     DEFAULT_SHARE,
@@ -17,7 +17,7 @@ import {
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
-export type ExpenseShareListProps = {
+export type ExpenseSharesEditorProps = {
     value: ExpenseSharesByUser | undefined;
     onChange: (value: ExpenseSharesByUser) => void;
     expenseAmount: number;
@@ -25,19 +25,15 @@ export type ExpenseShareListProps = {
     groupMembers: DB.GroupParticipant<{ user: true }>[];
 };
 
-export const ExpenseShareList = (props: ExpenseShareListProps) => {
+export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const { value, onChange, groupMembers, expenseAmount, expenseCurrency } = props;
     const [editUser, setEditUser] = useState<DB.Profile | null>(null);
 
-    // const handleShareChange = (userId: string, share: ExpenseShare) => {
-    //     onChange({
-    //         ...value,
-    //         [userId]: share,
-    //     });
-    // };
-
     const sharesByUser = useMemo(() => {
-        return value ?? getInitialShares({ groupMembers });
+        return {
+            ...getInitialShares({ groupMembers }),
+            ...value,
+        };
     }, [groupMembers, value]);
 
     const amountByUser = useMemo(() => {
@@ -77,7 +73,7 @@ export const ExpenseShareList = (props: ExpenseShareListProps) => {
                 {groupMembers.map((member, index) => {
                     return (
                         <React.Fragment key={member.id}>
-                            <ExpenseShareItem
+                            <ExpenseSharesEditorItem
                                 user={member.user}
                                 currency={expenseCurrency}
                                 status={getStatusForUser({

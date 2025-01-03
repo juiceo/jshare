@@ -39,6 +39,14 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
         }
     };
 
+    const handleMultiply = (multiplier: number) => {
+        const newAmount = Math.round(amount * multiplier);
+        onShareChange({
+            fixedAmount: newAmount,
+            enabled: true,
+        });
+    };
+
     const handleReset = () => {
         onShareChange({
             fixedAmount: null,
@@ -78,6 +86,40 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                             currency={'USD'}
                             bottomSheet
                         />
+                        <Stack row pt="2xl" spacing="xl">
+                            <Button
+                                size="sm"
+                                color="secondary"
+                                variant="contained"
+                                onPress={() => handleMultiply(0.5)}
+                            >
+                                0.5x
+                            </Button>
+                            <Button
+                                size="sm"
+                                color="secondary"
+                                variant="contained"
+                                onPress={() => handleMultiply(0.9)}
+                            >
+                                -10%
+                            </Button>
+                            <Button
+                                size="sm"
+                                color="secondary"
+                                variant="contained"
+                                onPress={() => handleMultiply(1.1)}
+                            >
+                                +10%
+                            </Button>
+                            <Button
+                                size="sm"
+                                color="secondary"
+                                variant="contained"
+                                onPress={() => handleMultiply(2)}
+                            >
+                                2x
+                            </Button>
+                        </Stack>
                     </Stack>
                     <Stack p="xl">
                         <Button color="secondary" variant="contained" onPress={onClose}>
