@@ -19,7 +19,8 @@
         "eas:build:ios:production": "eas build --profile production --platform ios",
         "eas:build:android:development": "eas build --profile production --platform android",
         "eas:build:android:production": "eas build --profile production --platform android",
-        "storybook-generate": "sb-rn-get-stories"
+        "storybook-generate": "sb-rn-get-stories",
+        "expo:doctor": "npx expo-doctor@latest"
     },
     "dependencies": {
         "@expo/metro-runtime": "catalog:",
