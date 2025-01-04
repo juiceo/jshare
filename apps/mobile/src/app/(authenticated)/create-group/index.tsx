@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { z } from 'zod';
 
-import { zDbImage } from '@jshare/types';
+import { Currency, zCurrency, zDbImage } from '@jshare/types';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -17,7 +17,7 @@ import { trpc } from '~/services/trpc';
 
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
-    currency: z.enum(['USD', 'EUR']),
+    currency: zCurrency,
     coverImage: zDbImage.optional(),
 });
 type Schema = z.infer<typeof schema>;
@@ -32,7 +32,7 @@ export default function CreateGroupPage() {
         resolver: zodResolver(schema),
         defaultValues: {
             name: '',
-            currency: 'USD',
+            currency: Currency.USD,
         },
     });
 

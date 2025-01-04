@@ -121,8 +121,10 @@ model ExpenseShare {
     expenseId String
     expense   Expense @relation(fields: [expenseId], references: [id])
 
-    amount   Int
+    amount   Int?
     currency Currency
+    locked   Boolean  @default(false)
+    enabled  Boolean  @default(true)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt

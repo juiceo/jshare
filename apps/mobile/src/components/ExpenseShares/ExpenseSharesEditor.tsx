@@ -1,63 +1,34 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
-import { type CurrencyCode } from '@jshare/common';
-import type { DB } from '@jshare/types';
+import type { DB, LocalExpenseShare } from '@jshare/types';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
 import { ExpenseShareEditorSheet } from '~/components/ExpenseShares/ExpenseShareEditorSheet';
 import { ExpenseSharesEditorItem } from '~/components/ExpenseShares/ExpenseSharesEditorItem';
-import type { ExpenseSharesByUser } from '~/components/ExpenseShares/types';
-import {
-    DEFAULT_SHARE,
-    getAmountByUser,
-    getInitialShares,
-    getStatusForUser,
-} from '~/components/ExpenseShares/util';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ExpenseSharesEditorProps = {
-    value: ExpenseSharesByUser | undefined;
-    onChange: (value: ExpenseSharesByUser) => void;
-    expenseAmount: number;
-    expenseCurrency: CurrencyCode;
+    value: Record<string, LocalExpenseShare>;
+    onChange: (value: Record<string, LocalExpenseShare>) => void;
+    expense: Pick<DB.Expense, 'amount' | 'currency'>;
     groupMembers: DB.GroupParticipant<{ user: true }>[];
 };
 
 export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
-    const { value, onChange, groupMembers, expenseAmount, expenseCurrency } = props;
+    const { value, onChange, groupMembers, expense } = props;
     const [editUser, setEditUser] = useState<DB.Profile | null>(null);
 
-    const sharesByUser = useMemo(() => {
-        return {
-            ...getInitialShares({ groupMembers }),
-            ...value,
-        };
-    }, [groupMembers, value]);
-
-    const amountByUser = useMemo(() => {
-        return getAmountByUser(sharesByUser, expenseAmount);
-    }, [expenseAmount, sharesByUser]);
-
     const handleToggle = (userId: string) => {
-        if (!sharesByUser[userId]?.enabled) {
-            return onChange({
-                ...sharesByUser,
-                [userId]: {
-                    enabled: true,
-                    fixedAmount: null,
-                },
-            });
-        } else {
-            return onChange({
-                ...sharesByUser,
-                [userId]: {
-                    enabled: false,
-                    fixedAmount: null,
-                },
-            });
-        }
+        onChange({
+            ...value,
+            [userId]: {
+                ...value[userId],
+                locked: false,
+                enabled: !value[userId]?.enabled,
+            },
+        });
     };
 
     return (
@@ -71,16 +42,14 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                 </Stack>
                 <Divider horizontal color="background.default" />
                 {groupMembers.map((member, index) => {
+                    const share = value[member.userId];
+                    if (!share) return null;
                     return (
                         <React.Fragment key={member.id}>
                             <ExpenseSharesEditorItem
                                 user={member.user}
-                                currency={expenseCurrency}
-                                status={getStatusForUser({
-                                    userId: member.userId,
-                                    shares: sharesByUser,
-                                })}
-                                amount={amountByUser[member.userId] ?? 0}
+                                share={share}
+                                currency={expense.currency}
                                 onPress={() => handleToggle(member.userId)}
                                 onLongPress={() => setEditUser(member.user)}
                             />
@@ -95,11 +64,10 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                 <ExpenseShareEditorSheet
                     onClose={() => setEditUser(null)}
                     user={editUser}
-                    amount={amountByUser[editUser.userId] ?? 0}
-                    share={sharesByUser[editUser.userId] ?? DEFAULT_SHARE}
+                    share={value[editUser.userId]}
                     onShareChange={(share) => {
                         onChange({
-                            ...sharesByUser,
+                            ...value,
                             [editUser.userId]: share,
                         });
                     }}

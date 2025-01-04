@@ -24,6 +24,7 @@
     "dependencies": {
         "@expo/metro-runtime": "catalog:",
         "@gorhom/bottom-sheet": "catalog:",
+        "@hookform/error-message": "^2.0.1",
         "@hookform/resolvers": "catalog:",
         "@jshare/common": "workspace:*",
         "@jshare/env": "workspace:*",

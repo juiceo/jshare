@@ -10,29 +10,30 @@ import { Stack } from '~/components/atoms/Stack';
 import { Icon, type IconName } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
-export type MenuOption<T extends string> = {
-    id: T;
+export type MenuOption<ID extends string, TData = undefined> = {
+    id: ID;
+    data?: TData;
     label: string;
     secondary?: string;
     icon?: IconName | JSX.Element;
     hidden?: boolean;
 };
 
-export type MenuProps<T extends string> = {
-    value?: T | undefined;
+export type MenuProps<ID extends string, TData = undefined> = {
+    value?: ID | undefined;
     isOpen: boolean;
     onClose: () => void;
-    onChange: (value: T) => void;
-    options: MenuOption<T>[];
+    onChange: (value: ID, data?: TData) => void;
+    options: MenuOption<ID, TData>[];
     title?: string;
 };
 
-export const Menu = <T extends string>(props: MenuProps<T>) => {
+export const Menu = <T extends string, TData = undefined>(props: MenuProps<T, TData>) => {
     const { isOpen, value, onChange, onClose, options, title } = props;
     const insets = useSafeAreaInsets();
 
-    const handleSelect = (id: T) => {
-        onChange(id);
+    const handleSelect = (id: T, data?: TData) => {
+        onChange(id, data);
         onClose();
     };
 
@@ -59,7 +60,7 @@ export const Menu = <T extends string>(props: MenuProps<T>) => {
                             secondary={item.secondary}
                             selected={item.id === value}
                             icon={item.icon}
-                            onSelect={() => handleSelect(item.id)}
+                            onSelect={() => handleSelect(item.id, item.data)}
                         />
                     );
                 }}

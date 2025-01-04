@@ -1,7 +1,7 @@
 import { RectButton } from 'react-native-gesture-handler';
 
-import { formatAmount, getUserShortName, type CurrencyCode } from '@jshare/common';
-import type { DB } from '@jshare/types';
+import { formatAmount, getUserShortName } from '@jshare/common';
+import type { DB, LocalExpenseShare } from '@jshare/types';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
@@ -10,15 +10,14 @@ import { Typography } from '~/components/Typography';
 
 export type ExpenseSharesEditorItemProps = {
     user: DB.Profile;
-    amount: number;
-    currency: CurrencyCode;
-    status: 'active' | 'inactive' | 'locked';
+    share: LocalExpenseShare;
+    currency: DB.Currency;
     onPress: () => void;
     onLongPress: () => void;
 };
 
 export const ExpenseSharesEditorItem = (props: ExpenseSharesEditorItemProps) => {
-    const { user, amount, currency, status, onPress, onLongPress } = props;
+    const { user, share, currency, onPress, onLongPress } = props;
 
     return (
         <RectButton onPress={onPress} onLongPress={onLongPress}>
@@ -29,7 +28,7 @@ export const ExpenseSharesEditorItem = (props: ExpenseSharesEditorItemProps) => 
                 p="xl"
                 spacing="xl"
                 width="100%"
-                style={{ opacity: status === 'inactive' ? 0.5 : 1 }}
+                style={{ opacity: share.enabled ? 1 : 0.5 }}
             >
                 <Stack row alignCenter spacing="md" flex={1}>
                     <Avatar userId={user.userId} size="sm" />
@@ -39,23 +38,23 @@ export const ExpenseSharesEditorItem = (props: ExpenseSharesEditorItemProps) => 
                 </Stack>
                 <Stack row alignCenter spacing="md" flex={0}>
                     <Typography variant="body1">
-                        {status === 'inactive' ? '-' : formatAmount(amount, currency)}
+                        {!share.enabled ? '-' : formatAmount(share.amount ?? 0, currency)}
                     </Typography>
-                    {status === 'inactive' && (
+                    {!share.enabled && (
                         <Icon
                             name="Circle"
                             size={32}
                             color={(theme) => theme.palette.text.disabled}
                         />
                     )}
-                    {status === 'active' && (
+                    {share.enabled && !share.locked && (
                         <Icon
                             name="CircleCheck"
                             size={32}
                             color={(theme) => theme.palette.primary.light}
                         />
                     )}
-                    {status === 'locked' && (
+                    {share.enabled && share.locked && (
                         <Icon
                             name="Lock"
                             size={32}
