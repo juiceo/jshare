@@ -102,7 +102,6 @@ export const expensesRouter = router({
                                 userId: share.userId,
                                 amount: share.amount,
                                 currency: opts.input.currency,
-                                enabled: share.enabled,
                                 locked: share.locked,
                             })),
                         },

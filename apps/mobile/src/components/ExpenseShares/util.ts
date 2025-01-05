@@ -1,39 +1,44 @@
-import type { DB, LocalExpenseShare } from '@jshare/types';
+import { sumBy } from 'lodash';
+
+import type { DB } from '@jshare/types';
 import { distributeAmountEvenly } from '@jshare/util';
 
-export const getTotalLockedAmount = (args: {
-    sharesByUserId: Record<string, LocalExpenseShare>;
-}) => {
-    return Object.values(args.sharesByUserId).reduce((result, share) => {
-        if (share.amount && share.locked) return result + share.amount;
-        return result;
-    }, 0);
+export const getLockedShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
+    shares: TShare[]
+): TShare[] => {
+    return shares.filter((share) => share.locked);
 };
 
-export const getSharesWithFloatingAmounts = (args: {
-    expenseAmount: number;
-    sharesByUserId: Record<string, LocalExpenseShare>;
-    groupMembers: DB.GroupParticipant<{ user: true }>[];
-}) => {
-    const { expenseAmount, sharesByUserId, groupMembers } = args;
-    const totalLockedAmount = getTotalLockedAmount({ sharesByUserId });
-    const totalFloatingAmount = expenseAmount - totalLockedAmount;
-    const floatingMembers = groupMembers.filter((member) => {
-        const userShare = sharesByUserId[member.userId];
-        return !userShare || (userShare.enabled && !userShare?.locked);
-    });
-    const floatingAmounts = distributeAmountEvenly(totalFloatingAmount, floatingMembers.length);
+export const getFloatingShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
+    shares: TShare[]
+): TShare[] => {
+    return shares.filter((share) => !share.locked);
+};
 
-    return floatingMembers.reduce((result, member, index) => {
-        const userId = member.userId;
-        return {
-            ...result,
-            [member.userId]: {
-                ...sharesByUserId[userId],
-                enabled: true,
-                locked: false,
-                amount: floatingAmounts[index],
-            },
-        };
-    }, sharesByUserId);
+export const getTotalFromShares = (shares: Pick<DB.ExpenseShare, 'amount'>[]) => {
+    return sumBy(shares, (share) => share.amount);
+};
+
+export const getSharesWithFloatingAmounts = <
+    TShare extends Pick<DB.ExpenseShare, 'amount' | 'locked' | 'userId'>,
+>(args: {
+    expenseAmount: number;
+    shares: TShare[];
+}) => {
+    const { expenseAmount, shares } = args;
+    const lockedShares = getLockedShares(shares);
+    const floatingShares = getFloatingShares(shares);
+    const totalLockedAmount = getTotalFromShares(lockedShares);
+    const totalFloatingAmount = expenseAmount - totalLockedAmount;
+    const floatingAmounts = distributeAmountEvenly(totalFloatingAmount, floatingShares.length);
+
+    return floatingShares.reduce((result, share) => {
+        const shareIndex = result.findIndex((item) => item.userId === share.userId);
+        if (shareIndex === -1) {
+            return result;
+        }
+
+        result[shareIndex].amount = floatingAmounts.shift() ?? 0;
+        return result;
+    }, shares);
 };

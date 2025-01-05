@@ -58,10 +58,9 @@ export const zExpenseShare = z.object({
     id: z.string(),
     userId: z.string(),
     expenseId: z.string(),
-    amount: z.number().nullable(),
+    amount: z.number(),
     currency: zCurrency,
     locked: z.boolean(),
-    enabled: z.boolean(),
     updatedAt: z.date(),
     createdAt: z.date(),
 }) satisfies z.ZodType<DB.ExpenseShare>;

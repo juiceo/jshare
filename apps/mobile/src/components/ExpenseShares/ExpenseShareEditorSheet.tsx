@@ -15,7 +15,7 @@ import { Typography } from '~/components/Typography';
 export type ExpenseShareEditorSheetProps = {
     onClose: () => void;
     user: DB.Profile;
-    share: LocalExpenseShare;
+    share: LocalExpenseShare | undefined;
     onShareChange: (share: LocalExpenseShare) => void;
 };
 
@@ -24,25 +24,16 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
     const insets = useSafeAreaInsets();
 
     const handleAmountChange = (value: number) => {
-        if (value === 0) {
-            onShareChange({
-                ...share,
-                amount: null,
-                enabled: false,
-                locked: false,
-            });
-        } else {
-            onShareChange({
-                ...share,
-                amount: value,
-                locked: true,
-                enabled: true,
-            });
-        }
+        onShareChange({
+            ...share,
+            userId: user.userId,
+            amount: value,
+            locked: true,
+        });
     };
 
     const handleMultiply = (multiplier: number) => {
-        if (!share.amount) return;
+        if (!share) return;
         const newAmount = Math.round(share.amount * multiplier);
         onShareChange({
             ...share,
@@ -54,13 +45,11 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
     const handleReset = () => {
         onShareChange({
             ...share,
-            amount: null,
-            enabled: true,
+            userId: user.userId,
+            amount: 0,
             locked: false,
         });
     };
-
-    const isDefaultShare = share.amount === null && share.enabled;
 
     return (
         <BottomSheet isOpen={true} onClose={onClose}>
@@ -74,7 +63,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                             </Typography>
                         </Stack>
                         <Stack center row spacing="md">
-                            {!isDefaultShare && (
+                            {share?.locked && (
                                 <IconButton
                                     icon="RotateCcw"
                                     variant="ghost"
@@ -87,7 +76,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                     </Stack>
                     <Stack center py="3xl" px="xl" mb="2xl">
                         <MoneyInput
-                            value={share.amount ?? 0}
+                            value={share?.amount ?? 0}
                             onChange={handleAmountChange}
                             currency={'USD'}
                             bottomSheet

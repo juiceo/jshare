@@ -10,8 +10,8 @@ import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ExpenseSharesEditorProps = {
-    value: Record<string, LocalExpenseShare>;
-    onChange: (value: Record<string, LocalExpenseShare>) => void;
+    value: LocalExpenseShare[];
+    onChange: (value: LocalExpenseShare[]) => void;
     expense: Pick<DB.Expense, 'amount' | 'currency'>;
     groupMembers: DB.GroupParticipant<{ user: true }>[];
 };
@@ -21,14 +21,12 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const [editUser, setEditUser] = useState<DB.Profile | null>(null);
 
     const handleToggle = (userId: string) => {
-        onChange({
-            ...value,
-            [userId]: {
-                ...value[userId],
-                locked: false,
-                enabled: !value[userId]?.enabled,
-            },
-        });
+        const shareIndex = value.findIndex((item) => item.userId === userId);
+        if (shareIndex === -1) {
+            onChange([...value, { userId, amount: 0, locked: false }]);
+        } else {
+            onChange(value.filter((item) => item.userId !== userId));
+        }
     };
 
     return (
@@ -42,13 +40,13 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                 </Stack>
                 <Divider horizontal color="background.default" />
                 {groupMembers.map((member, index) => {
-                    const share = value[member.userId];
-                    if (!share) return null;
+                    const userShare = value.find((item) => item.userId === member.userId);
+
                     return (
                         <React.Fragment key={member.id}>
                             <ExpenseSharesEditorItem
                                 user={member.user}
-                                share={share}
+                                share={userShare}
                                 currency={expense.currency}
                                 onPress={() => handleToggle(member.userId)}
                                 onLongPress={() => setEditUser(member.user)}
@@ -64,7 +62,7 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                 <ExpenseShareEditorSheet
                     onClose={() => setEditUser(null)}
                     user={editUser}
-                    share={value[editUser.userId]}
+                    share={value.find((item) => item.userId === editUser.userId)}
                     onShareChange={(share) => {
                         onChange({
                             ...value,

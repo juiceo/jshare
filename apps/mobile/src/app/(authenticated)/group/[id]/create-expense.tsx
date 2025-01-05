@@ -29,7 +29,7 @@ const schema = z.object({
         amount: true,
         currency: true,
     }),
-    shares: z.record(z.string(), zLocalExpenseShare),
+    shares: zLocalExpenseShare.array(),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -45,7 +45,7 @@ export default function CreateExpense() {
                 amount: 0,
                 currency: Currency.EUR,
             },
-            shares: {},
+            shares: [],
         },
         resolver: zodResolver(schema),
     });
@@ -176,8 +176,7 @@ export default function CreateExpense() {
                             render={({ field }) => {
                                 const valueWithFloatingAmounts = getSharesWithFloatingAmounts({
                                     expenseAmount: expense.amount,
-                                    sharesByUserId: field.value,
-                                    groupMembers: groupMembers ?? [],
+                                    shares: field.value,
                                 });
                                 return (
                                     <ExpenseSharesEditor
