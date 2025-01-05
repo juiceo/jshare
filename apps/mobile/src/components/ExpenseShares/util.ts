@@ -42,3 +42,46 @@ export const getSharesWithFloatingAmounts = <
         return result;
     }, shares);
 };
+
+export const removeShare = <TShare extends Pick<DB.ExpenseShare, 'amount' | 'locked' | 'userId'>>(
+    shares: TShare[],
+    userId: string
+) => {
+    const userShare = shares.find((share) => share.userId === userId);
+    if (!userShare) return shares;
+    const filteredShares = shares.filter((share) => share.userId !== userId);
+    const floatingShares = getFloatingShares(filteredShares);
+    const amountsToDistribute = distributeAmountEvenly(userShare.amount, floatingShares.length);
+
+    return filteredShares.map((share) => {
+        if (share.locked) return share;
+        return {
+            ...share,
+            amount: share.amount + (amountsToDistribute.shift() ?? 0),
+        };
+    });
+};
+
+export const addShare = <TShare extends Pick<DB.ExpenseShare, 'amount' | 'locked' | 'userId'>>(
+    shares: TShare[],
+    newShare: TShare
+): TShare[] => {
+    const floatingShares = getFloatingShares(shares);
+    const floatingAmount = getTotalFromShares(floatingShares);
+    const amountsToDistribute = distributeAmountEvenly(floatingAmount, floatingShares.length + 1);
+
+    return [
+        ...shares.map((share) => {
+            if (share.locked) return share;
+            return {
+                ...share,
+                amount: amountsToDistribute.shift() ?? 0,
+            };
+        }),
+        {
+            ...newShare,
+            amount: amountsToDistribute.shift() ?? 0,
+            locked: false,
+        },
+    ];
+};

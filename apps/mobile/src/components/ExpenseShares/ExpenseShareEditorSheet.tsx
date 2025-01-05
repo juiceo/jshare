@@ -1,8 +1,8 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
-import { getUserShortName } from '@jshare/common';
-import type { DB, LocalExpenseShare } from '@jshare/types';
+import { getDefaultShare, getUserShortName } from '@jshare/common';
+import type { DB } from '@jshare/types';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
 import { Stack } from '~/components/atoms/Stack';
@@ -15,8 +15,8 @@ import { Typography } from '~/components/Typography';
 export type ExpenseShareEditorSheetProps = {
     onClose: () => void;
     user: DB.Profile;
-    share: LocalExpenseShare | undefined;
-    onShareChange: (share: LocalExpenseShare) => void;
+    share: DB.ExpenseShare | undefined;
+    onShareChange: (share: DB.ExpenseShare) => void;
 };
 
 export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => {
@@ -25,8 +25,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
 
     const handleAmountChange = (value: number) => {
         onShareChange({
-            ...share,
-            userId: user.userId,
+            ...(share ?? getDefaultShare(user.userId)),
             amount: value,
             locked: true,
         });
@@ -44,9 +43,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
 
     const handleReset = () => {
         onShareChange({
-            ...share,
-            userId: user.userId,
-            amount: 0,
+            ...(share ?? getDefaultShare(user.userId)),
             locked: false,
         });
     };

@@ -1,0 +1,113 @@
+import { sumBy } from 'lodash';
+
+import { ExpenseShareMock, type DB } from '@jshare/types';
+import { distributeAmountEvenly } from '@jshare/util';
+
+export const getLockedShares = (shares: DB.ExpenseShare[]): DB.ExpenseShare[] => {
+    return shares.filter((share) => share.locked);
+};
+
+export const getFloatingShares = (shares: DB.ExpenseShare[]): DB.ExpenseShare[] => {
+    return shares.filter((share) => !share.locked);
+};
+
+export const getTotalFromShares = (shares: DB.ExpenseShare[]): number => {
+    return sumBy(shares, (share) => share.amount);
+};
+
+export const getSharesWithUpdatedAmount = (args: {
+    expenseAmount: number;
+    shares: DB.ExpenseShare[];
+}): DB.ExpenseShare[] => {
+    const { expenseAmount, shares } = args;
+    const lockedShares = getLockedShares(shares);
+    const floatingShares = getFloatingShares(shares);
+    const totalLockedAmount = getTotalFromShares(lockedShares);
+    const totalFloatingAmount = expenseAmount - totalLockedAmount;
+    const floatingAmounts = distributeAmountEvenly(totalFloatingAmount, floatingShares.length);
+
+    return floatingShares.reduce((result, share) => {
+        const shareIndex = result.findIndex((item) => item.userId === share.userId);
+        if (shareIndex === -1) {
+            return result;
+        }
+
+        result[shareIndex].amount = floatingAmounts.shift() ?? 0;
+        return result;
+    }, shares);
+};
+
+export const addShare = (shares: DB.ExpenseShare[], userId: string): DB.ExpenseShare[] => {
+    const floatingShares = getFloatingShares(shares);
+    const floatingAmount = getTotalFromShares(floatingShares);
+    const amountsToDistribute = distributeAmountEvenly(floatingAmount, floatingShares.length + 1);
+
+    return [
+        ...shares.map((share) => {
+            if (share.locked) return share;
+            return {
+                ...share,
+                amount: amountsToDistribute.shift() ?? 0,
+            };
+        }),
+        ExpenseShareMock.build({
+            amount: amountsToDistribute.shift() ?? 0,
+            userId,
+            locked: false,
+        }),
+    ];
+};
+
+export const updateShare = (
+    shares: DB.ExpenseShare[],
+    updates: Pick<DB.ExpenseShare, 'amount' | 'userId' | 'locked'>
+): DB.ExpenseShare[] => {
+    let isFound = false;
+    const updatedShares = shares.map((share, index) => {
+        if (share.userId === updates.userId) {
+            isFound = true;
+            return {
+                ...share,
+                ...updates,
+            };
+        }
+        return share;
+    });
+
+    if (!isFound) return shares;
+
+    return getSharesWithUpdatedAmount({
+        expenseAmount: getTotalFromShares(shares),
+        shares: updatedShares,
+    });
+};
+
+export const removeShare = (shares: DB.ExpenseShare[], userId: string): DB.ExpenseShare[] => {
+    const userShare = shares.find((share) => share.userId === userId);
+    if (!userShare) return shares;
+    const filteredShares = shares.filter((share) => share.userId !== userId);
+    const floatingShares = getFloatingShares(filteredShares);
+    const amountsToDistribute = distributeAmountEvenly(userShare.amount, floatingShares.length);
+
+    return filteredShares.map((share) => {
+        if (share.locked) return share;
+        return {
+            ...share,
+            amount: share.amount + (amountsToDistribute.shift() ?? 0),
+        };
+    });
+};
+
+export const getDefaultShares = (groupMembers: DB.GroupParticipant[]): DB.ExpenseShare[] => {
+    return groupMembers.map((member) => {
+        return getDefaultShare(member.userId);
+    });
+};
+
+export const getDefaultShare = (userId: string): DB.ExpenseShare => {
+    return ExpenseShareMock.build({
+        userId,
+        amount: 0,
+        locked: false,
+    });
+};

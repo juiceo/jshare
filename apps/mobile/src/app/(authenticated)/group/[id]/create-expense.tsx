@@ -5,8 +5,8 @@ import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { getUserShortName } from '@jshare/common';
-import { Currency, zExpense, zLocalExpenseShare, zProfile } from '@jshare/types';
+import { getDefaultShares, getSharesWithUpdatedAmount, getUserShortName } from '@jshare/common';
+import { Currency, zExpense, zExpenseShare, zProfile } from '@jshare/types';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Menu } from '~/components/atoms/Menu';
@@ -14,7 +14,6 @@ import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
 import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
-import { getSharesWithFloatingAmounts } from '~/components/ExpenseShares/util';
 import { Header } from '~/components/Header/Header';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
@@ -29,7 +28,7 @@ const schema = z.object({
         amount: true,
         currency: true,
     }),
-    shares: zLocalExpenseShare.array(),
+    shares: zExpenseShare.array(),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -45,13 +44,14 @@ export default function CreateExpense() {
                 amount: 0,
                 currency: Currency.EUR,
             },
-            shares: [],
+            shares: getDefaultShares(groupMembers ?? []),
         },
         resolver: zodResolver(schema),
     });
 
     const [menu, setMenu] = useState<'currency' | 'payer' | null>(null);
     const expense = useWatch({ control: form.control, name: 'expense' });
+    const shares = useWatch({ control: form.control, name: 'shares' });
 
     const handleSubmit = async (data: Schema) => {
         console.log('DATA', data);
@@ -70,9 +70,14 @@ export default function CreateExpense() {
                                 render={({ field }) => (
                                     <MoneyInput
                                         value={field.value.amount}
-                                        onChange={(value) =>
-                                            field.onChange({ ...field.value, amount: value })
-                                        }
+                                        onChange={(value) => {
+                                            field.onChange({ ...field.value, amount: value });
+                                            const updatedShares = getSharesWithUpdatedAmount({
+                                                expenseAmount: value,
+                                                shares,
+                                            });
+                                            form.setValue('shares', updatedShares);
+                                        }}
                                         currency={field.value.currency}
                                         autoFocus
                                     />
@@ -174,13 +179,9 @@ export default function CreateExpense() {
                             control={form.control}
                             name="shares"
                             render={({ field }) => {
-                                const valueWithFloatingAmounts = getSharesWithFloatingAmounts({
-                                    expenseAmount: expense.amount,
-                                    shares: field.value,
-                                });
                                 return (
                                     <ExpenseSharesEditor
-                                        value={valueWithFloatingAmounts}
+                                        value={field.value}
                                         onChange={field.onChange}
                                         groupMembers={groupMembers ?? []}
                                         expense={expense}

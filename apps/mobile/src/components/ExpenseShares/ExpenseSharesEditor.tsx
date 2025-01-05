@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import type { DB, LocalExpenseShare } from '@jshare/types';
+import { addShare, removeShare, updateShare } from '@jshare/common';
+import type { DB } from '@jshare/types';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
@@ -10,8 +11,8 @@ import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ExpenseSharesEditorProps = {
-    value: LocalExpenseShare[];
-    onChange: (value: LocalExpenseShare[]) => void;
+    value: DB.ExpenseShare[];
+    onChange: (value: DB.ExpenseShare[]) => void;
     expense: Pick<DB.Expense, 'amount' | 'currency'>;
     groupMembers: DB.GroupParticipant<{ user: true }>[];
 };
@@ -23,9 +24,9 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const handleToggle = (userId: string) => {
         const shareIndex = value.findIndex((item) => item.userId === userId);
         if (shareIndex === -1) {
-            onChange([...value, { userId, amount: 0, locked: false }]);
+            onChange(addShare(value, userId));
         } else {
-            onChange(value.filter((item) => item.userId !== userId));
+            onChange(removeShare(value, userId));
         }
     };
 
@@ -64,10 +65,7 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                     user={editUser}
                     share={value.find((item) => item.userId === editUser.userId)}
                     onShareChange={(share) => {
-                        onChange({
-                            ...value,
-                            [editUser.userId]: share,
-                        });
+                        onChange(updateShare(value, share));
                     }}
                 />
             )}

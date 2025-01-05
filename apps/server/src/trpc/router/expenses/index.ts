@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { zCurrency, zLocalExpenseShare } from '@jshare/types';
+import { zCurrency, zExpenseShare } from '@jshare/types';
 
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
@@ -67,7 +67,10 @@ export const expensesRouter = router({
                 payerId: z.string(),
                 amount: z.number().min(1),
                 currency: zCurrency,
-                shares: zLocalExpenseShare.array().min(1),
+                shares: zExpenseShare
+                    .pick({ amount: true, userId: true, locked: true })
+                    .array()
+                    .min(1),
             })
         )
         .mutation(async (opts) => {

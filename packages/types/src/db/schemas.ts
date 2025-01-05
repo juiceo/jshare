@@ -6,7 +6,7 @@ export enum Currency {
     USD = 'USD',
     EUR = 'EUR',
 }
-export const zCurrency = z.nativeEnum(Currency) satisfies z.ZodType<DB.Currency>;
+export const zCurrency = z.enum(['USD', 'EUR']) satisfies z.ZodType<DB.Currency>;
 
 export enum Role {
     Owner = 'Owner',
@@ -64,12 +64,3 @@ export const zExpenseShare = z.object({
     updatedAt: z.date(),
     createdAt: z.date(),
 }) satisfies z.ZodType<DB.ExpenseShare>;
-
-export const zLocalExpenseShare = zExpenseShare.omit({
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    expenseId: true,
-    currency: true,
-});
-export type LocalExpenseShare = z.infer<typeof zLocalExpenseShare>;
