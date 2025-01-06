@@ -1,8 +1,11 @@
 import { TRPCError } from '@trpc/server';
+import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { zCurrency, zExpenseShare } from '@jshare/types';
+import { MessageAttachmentType } from '@jshare/db';
+import { AuthorType, zCurrency, zExpenseShare } from '@jshare/types';
 
+import { broadcastNewMessage } from '../../../services/broadcast';
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
 
@@ -92,25 +95,46 @@ export const expensesRouter = router({
                 });
             }
 
-            const expense = await prisma.expense.create({
-                data: {
-                    ownerId: opts.ctx.userId,
-                    groupId: opts.input.groupId,
-                    payerId: opts.input.payerId,
-                    amount: opts.input.amount,
-                    currency: opts.input.currency,
-                    shares: {
-                        createMany: {
-                            data: opts.input.shares.map((share) => ({
-                                userId: share.userId,
-                                amount: share.amount,
-                                currency: opts.input.currency,
-                                locked: share.locked,
-                            })),
+            const expense = await prisma.$transaction(async (tx) => {
+                const expense = await tx.expense.create({
+                    data: {
+                        ownerId: opts.ctx.userId,
+                        groupId: opts.input.groupId,
+                        payerId: opts.input.payerId,
+                        amount: opts.input.amount,
+                        currency: opts.input.currency,
+                        shares: {
+                            createMany: {
+                                data: opts.input.shares.map((share) => ({
+                                    userId: share.userId,
+                                    amount: share.amount,
+                                    currency: opts.input.currency,
+                                    locked: share.locked,
+                                })),
+                            },
                         },
                     },
-                },
+                });
+
+                tx.message.create({
+                    data: {
+                        authorId: opts.ctx.userId,
+                        groupId: opts.input.groupId,
+                        authorType: AuthorType.User,
+                        key: uuidv4(),
+                        attachments: {
+                            create: {
+                                type: MessageAttachmentType.Expense,
+                                expenseId: expense.id,
+                            },
+                        },
+                    },
+                });
+
+                return expense;
             });
+
+            broadcastNewMessage(opts.input.groupId);
 
             return expense;
         }),

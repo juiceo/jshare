@@ -1,11 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { getGroupBroadcastChannel, GroupBroadcastEvent } from '@jshare/common';
 import { AuthorType } from '@jshare/types';
 
+import { broadcastNewMessage } from '../../../services/broadcast';
 import { prisma } from '../../../services/prisma';
-import { supabase } from '../../../services/supabase';
 import { authProcedure, router } from '../../trpc';
 
 export const messagesRouter = router({
@@ -74,13 +73,7 @@ export const messagesRouter = router({
                 },
             });
 
-            supabase.channel(getGroupBroadcastChannel(opts.input.groupId)).send({
-                type: 'broadcast',
-                event: GroupBroadcastEvent.Message,
-                payload: {
-                    type: GroupBroadcastEvent.Message,
-                },
-            });
+            broadcastNewMessage(opts.input.groupId);
 
             return message;
         }),

@@ -18,17 +18,18 @@
     },
     "keywords": [],
     "dependencies": {
-        "@jshare/env": "workspace:*",
-        "@jshare/db": "workspace:*",
-        "@jshare/types": "workspace:*",
         "@jshare/common": "workspace:*",
+        "@jshare/db": "workspace:*",
+        "@jshare/env": "workspace:*",
+        "@jshare/types": "workspace:*",
         "@supabase/supabase-js": "catalog:",
         "@trpc/server": "catalog:",
         "blurhash": "catalog:",
         "express": "catalog:",
         "jsonwebtoken": "catalog:",
         "sharp": "catalog:",
-        "superjson": "catalog:"
+        "superjson": "catalog:",
+        "uuid": "catalog:"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
