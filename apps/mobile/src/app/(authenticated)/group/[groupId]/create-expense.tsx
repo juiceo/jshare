@@ -32,7 +32,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export const foo = screen(
+export default screen(
     {
         route: '/(authenticated)/group/[groupId]/create-expense',
     },

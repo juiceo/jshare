@@ -22,7 +22,7 @@ export default screen(
                 <Screen.Content scrollable contentStyle={{ paddingBottom: 100 }}>
                     <Stack column px="xl" pt="3xl">
                         <Stack row justifyBetween>
-                            <ProfileBadge onPress={() => router.push('/profile')} />
+                            <ProfileBadge onPress={() => router.push('/(authenticated)/profile')} />
                             <Stack row center spacing="xl">
                                 <Icon name="Search" />
                                 <Icon name="Bell" />

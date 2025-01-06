@@ -13,7 +13,8 @@
     "dependencies": {
         "lodash": "catalog:",
         "dayjs": "catalog:",
-        "@jshare/types": "workspace:*"
+        "@jshare/types": "workspace:*",
+        "@jshare/util": "workspace:*"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",

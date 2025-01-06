@@ -11,7 +11,7 @@ import { useUpdateProfile } from '~/hooks/useUpdateProfile';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
-export const foo = screen(
+export default screen(
     {
         route: '/(authenticated)/profile',
         auth: true,
