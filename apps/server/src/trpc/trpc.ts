@@ -5,7 +5,6 @@ import superjson from 'superjson';
 
 import { getEnv } from '@jshare/env';
 
-import { prisma } from '../services/prisma';
 import { ACL } from './acl';
 
 const jwtSecret = getEnv('JWT_SECRET', { required: true });

@@ -23,6 +23,8 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
 
     useGroupBroadcasts({ groupId, onMessage: invalidateMessages });
 
+    console.log('LATEST MESSAGe', messagesQuery.data?.at(0));
+
     const sendMessage = useCallback(
         async (text: string) => {
             if (!profile) return;

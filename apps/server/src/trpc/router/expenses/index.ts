@@ -116,7 +116,7 @@ export const expensesRouter = router({
                     },
                 });
 
-                tx.message.create({
+                await tx.message.create({
                     data: {
                         authorId: opts.ctx.userId,
                         groupId: opts.input.groupId,

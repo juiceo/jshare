@@ -69,6 +69,7 @@ const getStyles = (theme: Theme) => {
             fontSize: theme.typography.body1.fontSize,
             position: 'relative',
             minWidth: 40,
+            minHeight: 24,
             flexDirection: 'column',
             paddingBottom: theme.spacing.xs,
             paddingTop: theme.spacing.xs,
