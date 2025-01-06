@@ -1,5 +1,11 @@
 import { Suspense, type ComponentType } from 'react';
-import { useLocalSearchParams, useRouter, type RouteParams, type Routes } from 'expo-router';
+import {
+    useLocalSearchParams,
+    useRouter,
+    type RouteParams,
+    type Router,
+    type Routes,
+} from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -14,7 +20,10 @@ export const screen = <TRoute extends Routes>(
         route: TRoute;
         loadingMessage?: string;
     },
-    Component: ComponentType<RouteParams<TRoute>>
+    Component: ComponentType<{
+        params: RouteParams<TRoute>;
+        router: Router;
+    }>
 ) => {
     return function SuspenseWrapper() {
         const params = useLocalSearchParams<RouteParams<TRoute>>();
@@ -56,7 +65,7 @@ export const screen = <TRoute extends Routes>(
         return (
             <ErrorBoundary fallback={renderError}>
                 <Suspense fallback={<LoadingState message={args.loadingMessage} />}>
-                    <Component {...(params as any)} />
+                    <Component params={params as RouteParams<TRoute>} router={router} />
                 </Suspense>
             </ErrorBoundary>
         );

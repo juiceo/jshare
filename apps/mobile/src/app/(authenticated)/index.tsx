@@ -1,5 +1,4 @@
 import { Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -15,8 +14,7 @@ export default screen(
     {
         route: '/(authenticated)/',
     },
-    () => {
-        const router = useRouter();
+    ({ router }) => {
         const [groups] = trpc.groups.list.useSuspenseQuery();
 
         return (

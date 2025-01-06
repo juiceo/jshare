@@ -1,5 +1,3 @@
-import { useRouter } from 'expo-router';
-
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
@@ -11,9 +9,7 @@ export default screen(
     {
         route: '/(authenticated)/join-group',
     },
-    () => {
-        const router = useRouter();
-
+    ({ router }) => {
         return (
             <Screen disableTopInset>
                 <Screen.Content>

@@ -1,6 +1,5 @@
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
 import { z } from 'zod';
 
 import { Currency, zCurrency, zDbImage } from '@jshare/types';
@@ -27,8 +26,7 @@ export default screen(
     {
         route: '/(authenticated)/create-group',
     },
-    () => {
-        const router = useRouter();
+    ({ router }) => {
         const { createGroup, isPending } = useCreateGroup();
 
         const trpcUtils = trpc.useUtils();

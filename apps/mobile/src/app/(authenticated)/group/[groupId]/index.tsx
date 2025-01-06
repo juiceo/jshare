@@ -23,7 +23,8 @@ export default screen(
         route: '/group/[groupId]',
         loadingMessage: 'Loading group...',
     },
-    ({ groupId }) => {
+    ({ params }) => {
+        const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
         const {

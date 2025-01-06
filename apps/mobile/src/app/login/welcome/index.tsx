@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Redirect, useRouter } from 'expo-router';
+import { Redirect } from 'expo-router';
 import { z } from 'zod';
 
 import { zDbImage } from '@jshare/types';
@@ -28,9 +28,8 @@ export default screen(
     {
         route: '/login/welcome',
     },
-    () => {
+    ({ router }) => {
         const { session } = useSession();
-        const router = useRouter();
 
         const form = useForm<Schema>({
             defaultValues: {

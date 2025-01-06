@@ -18,7 +18,8 @@ export default screen(
     {
         route: '/login/verify/[email]',
     },
-    ({ email }) => {
+    ({ params }) => {
+        const { email } = params;
         const [code, setCode] = useState<number[]>([]);
         const [loading, setLoading] = useState<boolean>(false);
         const [lastCodeSent, setLastCodeSent] = useState<number>(Date.now());
