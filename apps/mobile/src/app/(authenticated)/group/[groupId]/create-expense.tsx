@@ -63,8 +63,8 @@ export default screen(
 
         return (
             <>
-                <Screen disableTopInset>
-                    <Header title="New expense" modal />
+                <Screen>
+                    <Screen.Header title="New expense" backButton="down" disableInset />
                     <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
                         <Stack column px="xl">
                             <Stack center py="3xl">

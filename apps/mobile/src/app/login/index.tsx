@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { router } from 'expo-router';
 import isEmail from 'validator/es/lib/isEmail';
 
@@ -49,7 +50,7 @@ export default screen(
                     <Stack flex={1} center p="xl">
                         <Typography variant="h1">Welcome to JShare</Typography>
                     </Stack>
-                    <Stack spacing="md" p="xl">
+                    <Stack spacing="md" p="xl" pb="none">
                         <TextField
                             label="Email address"
                             value={email}
@@ -64,11 +65,13 @@ export default screen(
                             inputRef={inputRef}
                             error={error ? 'Please enter a valid email address' : null}
                         />
-                        <Button variant="contained" color="primary" onPress={handleContinue}>
-                            Continue
-                        </Button>
                     </Stack>
                 </Screen.Content>
+                <Screen.Footer padding="xl">
+                    <Button variant="contained" color="primary" onPress={handleContinue}>
+                        Continue
+                    </Button>
+                </Screen.Footer>
             </Screen>
         );
     }

@@ -19,7 +19,7 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     const { onSendMessage, onNewExpense, onNewPayment } = props;
     const { theme } = useTheme();
     const insets = useSafeAreaInsets();
-    const styles = getStyles(theme, insets.bottom);
+    const styles = getStyles(theme);
     const [inputValue, setInputValue] = useState<string>('');
 
     const handleSendMessage = async () => {
@@ -58,23 +58,23 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     );
 };
 
-const getStyles = (theme: Theme, bottomInset: number) => {
+const getStyles = (theme: Theme) => {
     return StyleSheet.create({
         inputWrapper: {
-            backgroundColor: theme.palette.background.elevation1,
             padding: theme.spacing.md,
-            paddingBottom: theme.spacing.md + bottomInset,
+            backgroundColor: theme.palette.background.main,
+            borderTopWidth: 1,
+            borderTopColor: theme.palette.border.divider,
         },
         buttonsWrapper: {
             padding: theme.spacing.md,
             borderTopWidth: 1,
             borderTopColor: theme.palette.border.divider,
-            backgroundColor: theme.palette.background.elevation1,
         },
         input: {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
-            backgroundColor: theme.palette.background.elevation2,
+            backgroundColor: theme.palette.background.elevation1,
             paddingHorizontal: theme.spacing.xl,
             paddingVertical: theme.spacing.md,
             borderRadius: theme.borderRadius['3xl'],

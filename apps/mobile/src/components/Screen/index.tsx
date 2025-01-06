@@ -6,24 +6,12 @@ import { useTheme } from '@jshare/theme';
 
 import { ScreenContent } from '~/components/Screen/ScreenContent';
 import { ScreenFooter } from '~/components/Screen/ScreenFooter';
+import { ScreenHeader } from '~/components/Screen/ScreenHeader';
 import { ScreenProvider } from '~/components/Screen/ScreenProvider';
 import { useHasParentScreen } from '~/components/Screen/useHasParentScreen';
 
 export type ScreenProps = {
     children: ReactElement | ReactElement[];
-
-    /**
-     * Disables the bottom safe area inset for the screen. For most screens this should be enabled, but exceptions
-     * are cases where the system already provides some kind of footer which takes care of the safe area - for example
-     * a bottom tab bar.
-     *
-     * @default false;
-     */
-    disableBottomInset?: boolean;
-    /**
-     * Disables the top safe area inset for the screen
-     */
-    disableTopInset?: boolean;
     /**
      * Options to pass to the underlying Stack.Screen component
      */
@@ -31,7 +19,7 @@ export type ScreenProps = {
 };
 
 export const Screen = (props: ScreenProps) => {
-    const { disableBottomInset, disableTopInset, screenOptions } = props;
+    const { screenOptions } = props;
     const { theme } = useTheme();
     const hasParentScreen = useHasParentScreen();
 
@@ -56,16 +44,11 @@ export const Screen = (props: ScreenProps) => {
                     ...screenOptions,
                 }}
             />
-
-            <ScreenProvider
-                enableTopInset={!disableTopInset}
-                disableBottomInset={disableBottomInset}
-            >
-                {props.children}
-            </ScreenProvider>
+            <ScreenProvider>{props.children}</ScreenProvider>
         </>
     );
 };
 
 Screen.Content = ScreenContent;
 Screen.Footer = ScreenFooter;
+Screen.Header = ScreenHeader;

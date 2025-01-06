@@ -67,8 +67,8 @@ export default screen(
 
         return (
             <Screen>
+                <Screen.Header title="Verify email" />
                 <Screen.Content>
-                    <Header title="Verify email" />
                     <Stack flex={1} center>
                         <Typography variant="body1" align="center">
                             Please enter the 6-digit code sent to

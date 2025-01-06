@@ -11,7 +11,7 @@ export default screen(
     },
     ({ router }) => {
         return (
-            <Screen disableTopInset>
+            <Screen>
                 <Screen.Content>
                     <ModalHeader title="Join group" />
                     <Stack column spacing="md" justifyEnd flex={1}>

@@ -4,17 +4,15 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useTheme, type SpacingUnit } from '@jshare/theme';
 
-import { useScreen } from '~/components/Screen/useScreen';
-
 export type ScreenFooterProps = {
     padding?: SpacingUnit;
     sticky?: boolean;
+    disableBottomInset?: boolean;
 } & ViewProps;
 
 export const ScreenFooter = (props: ScreenFooterProps) => {
-    const { style, padding = 'md', sticky = false, ...rest } = props;
+    const { style, padding = 'md', sticky = false, disableBottomInset = false, ...rest } = props;
     const { theme } = useTheme();
-    const { disableBottomInset } = useScreen();
     const insets = useSafeAreaInsets();
 
     return (

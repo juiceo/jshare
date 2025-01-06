@@ -11,7 +11,6 @@ import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
 import { ChatMessageGroup } from '~/components/ChatMessageGroup';
-import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { trpc } from '~/services/trpc';
@@ -53,9 +52,9 @@ export default screen(
         }, [group.id]);
 
         return (
-            <Screen disableBottomInset>
+            <Screen>
+                <Screen.Header title={group.name} bordered />
                 <Screen.Content>
-                    <Header title={group.name} bordered />
                     <KeyboardAvoidingView
                         style={{ flex: 1 }}
                         behavior="padding"

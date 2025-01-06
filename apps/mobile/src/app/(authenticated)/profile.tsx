@@ -25,8 +25,8 @@ export default screen(
 
         return (
             <Screen>
+                <Screen.Header title="Profile" />
                 <Screen.Content scrollable>
-                    <Header title="Profile" />
                     <Stack flex={1} spacing="md" px="xl">
                         <Stack column center p="xl" br="md" spacing="none">
                             <Stack mt="2xl">
@@ -78,7 +78,7 @@ export default screen(
                     </Stack>
                 </Screen.Content>
                 <Screen.Footer padding="xl">
-                    <Button color="error" variant="ghost" onPress={auth.signOut} mt="3xl">
+                    <Button color="error" variant="ghost" onPress={auth.signOut}>
                         Sign out
                     </Button>
                 </Screen.Footer>

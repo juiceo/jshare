@@ -18,7 +18,7 @@ export default screen(
         const [groups] = trpc.groups.list.useSuspenseQuery();
 
         return (
-            <Screen disableBottomInset>
+            <Screen>
                 <Screen.Content scrollable contentStyle={{ paddingBottom: 100 }}>
                     <Stack column px="xl" pt="3xl">
                         <Stack row justifyBetween>
