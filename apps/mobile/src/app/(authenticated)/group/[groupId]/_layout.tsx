@@ -1,31 +1,15 @@
-import React from 'react';
-import { ActivityIndicator } from 'react-native';
-import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
+import { Suspense } from 'react';
+import { Stack } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
-import { Stack as StackView } from '~/components/atoms/Stack';
-import { useGroup } from '~/hooks/useGroup';
-import { GroupProvider } from '~/wrappers/GroupProvider';
+import { LoadingState } from '~/components/util/LoadingState';
 
 export default function GroupLayout() {
     const { theme } = useTheme();
-    const { id } = useLocalSearchParams<{ id: string }>();
-    const groupQuery = useGroup(id);
-
-    if (groupQuery.isLoading) {
-        return (
-            <StackView center absoluteFill>
-                <ActivityIndicator />
-            </StackView>
-        );
-    }
-    if (!groupQuery.isSuccess) {
-        return <Redirect href="/" />;
-    }
 
     return (
-        <GroupProvider group={groupQuery.data}>
+        <Suspense fallback={<LoadingState message="Loading group..." />}>
             <Stack
                 screenOptions={{
                     contentStyle: {
@@ -43,6 +27,6 @@ export default function GroupLayout() {
                     options={{ presentation: 'modal', headerShown: false }}
                 />
             </Stack>
-        </GroupProvider>
+        </Suspense>
     );
 }

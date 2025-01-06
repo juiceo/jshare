@@ -95,7 +95,7 @@ export const IconButton = (props: IconButtonProps) => {
             >
                 {text && (
                     <Typography variant="button" style={{ color: iconColor }}>
-                        Reset
+                        {text}
                     </Typography>
                 )}
                 <Icon name={icon} size={iconSize} color={iconColor} />

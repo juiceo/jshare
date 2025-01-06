@@ -4,10 +4,13 @@ import { Stack } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
+import { Stack as StackComponent } from '~/components/atoms/Stack';
+import { ErrorBoundary } from '~/components/errors/ErrorBoundary';
 import { ScreenContent } from '~/components/Screen/ScreenContent';
 import { ScreenFooter } from '~/components/Screen/ScreenFooter';
 import { ScreenProvider } from '~/components/Screen/ScreenProvider';
 import { useHasParentScreen } from '~/components/Screen/useHasParentScreen';
+import { Typography } from '~/components/Typography';
 
 export type ScreenProps = {
     children: ReactElement | ReactElement[];
@@ -39,8 +42,16 @@ export const Screen = (props: ScreenProps) => {
         throw new Error('Screen component should not be nested within another Screen component.');
     }
 
+    const renderFallback = (reset: () => void) => {
+        return (
+            <StackComponent flex={1} center bg="background.default" spacing="xl" p="2xl">
+                <Typography>Oops, something went wrong!</Typography>
+            </StackComponent>
+        );
+    };
+
     return (
-        <>
+        <ErrorBoundary fallback={renderFallback}>
             <Stack.Screen
                 options={{
                     contentStyle: {
@@ -63,7 +74,7 @@ export const Screen = (props: ScreenProps) => {
             >
                 {props.children}
             </ScreenProvider>
-        </>
+        </ErrorBoundary>
     );
 };
 

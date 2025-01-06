@@ -10,6 +10,7 @@ import { Stack } from 'expo-router';
 import { getEnv } from '@jshare/env';
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
+import { AppErrorBoundary } from '~/components/errors/AppErrorBoundary';
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
@@ -28,7 +29,13 @@ export default function AppLayout() {
                                 <SessionProvider>
                                     <QueryProvider>
                                         <BottomSheetModalProvider>
-                                            {storybookEnabled ? <StorybookRoot /> : <RootStack />}
+                                            <AppErrorBoundary>
+                                                {storybookEnabled ? (
+                                                    <StorybookRoot />
+                                                ) : (
+                                                    <RootStack />
+                                                )}
+                                            </AppErrorBoundary>
                                         </BottomSheetModalProvider>
                                     </QueryProvider>
                                 </SessionProvider>
@@ -58,6 +65,7 @@ if (storybookEnabled) {
 
 const RootStack = () => {
     const { theme } = useTheme();
+
     return (
         <Stack
             screenOptions={{

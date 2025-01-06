@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { RectButton } from 'react-native-gesture-handler';
 import { ErrorMessage } from '@hookform/error-message';
@@ -18,9 +18,10 @@ import { Header } from '~/components/Header/Header';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { useGroupMembers } from '~/hooks/useGroupMembers';
+import { LoadingState } from '~/components/util/LoadingState';
+import { useGroupId } from '~/hooks/useGroupId';
 import { useProfile } from '~/hooks/useProfile';
-import { useCurrentGroup } from '~/wrappers/GroupProvider';
+import { trpc } from '~/services/trpc';
 
 const schema = z.object({
     payer: zProfile,
@@ -33,10 +34,19 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default function CreateExpense() {
-    const { group } = useCurrentGroup();
+export default function CreateExpensePage() {
+    return (
+        <Suspense fallback={<LoadingState message="Loading group..." />}>
+            <CreateExpense />
+        </Suspense>
+    );
+}
+
+function CreateExpense() {
+    const groupId = useGroupId();
+    const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
+    const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
     const { profile } = useProfile();
-    const { data: groupMembers } = useGroupMembers(group.id);
     const form = useForm<Schema>({
         defaultValues: {
             payer: profile,

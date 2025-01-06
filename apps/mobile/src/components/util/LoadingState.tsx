@@ -9,7 +9,7 @@ export type LoadingStateProps = {
 
 export const LoadingState = (props: LoadingStateProps) => {
     return (
-        <Stack flex={1} center spacing="md">
+        <Stack flex={1} column center spacing="md">
             <ActivityIndicator />
             <Typography variant="caption">{props.message}</Typography>
         </Stack>

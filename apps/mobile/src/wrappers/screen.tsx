@@ -1,0 +1,62 @@
+import { Suspense } from 'react';
+import { useRouter } from 'expo-router';
+
+import { Stack } from '~/components/atoms/Stack';
+import { Button } from '~/components/Button';
+import { ErrorBoundary, type ErrorBoundaryFallbackArgs } from '~/components/errors/ErrorBoundary';
+import { Icon } from '~/components/Icon';
+import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
+import { LoadingState } from '~/components/util/LoadingState';
+
+export const screen = (
+    args: {
+        loadingMessage?: string;
+    },
+    Component: any
+) => {
+    return function SuspenseWrapper() {
+        const router = useRouter();
+        const renderError = (args: ErrorBoundaryFallbackArgs) => {
+            return (
+                <Screen>
+                    <Screen.Content>
+                        <Stack flex={1} center spacing="xl" p="xl">
+                            <Icon
+                                name="ServerCrash"
+                                size={64}
+                                color={(theme) => theme.palette.text.primary}
+                            />
+                            <Typography variant="h1">Oops!</Typography>
+                            <Typography variant="body1" align="center">
+                                Looks like something unexpected happened. We've been notified of the
+                                issue and will look into it as soon as possible.
+                            </Typography>
+                            <Typography variant="caption" align="center" color="error.light">
+                                Error message: {args.error.message}
+                            </Typography>
+                        </Stack>
+                    </Screen.Content>
+                    <Screen.Footer>
+                        <Stack column spacing="md">
+                            <Button color="secondary" onPress={router.back}>
+                                Go back
+                            </Button>
+                            <Button color="primary" onPress={args.reset}>
+                                Retry
+                            </Button>
+                        </Stack>
+                    </Screen.Footer>
+                </Screen>
+            );
+        };
+
+        return (
+            <ErrorBoundary fallback={renderError}>
+                <Suspense fallback={<LoadingState message={args.loadingMessage} />}>
+                    <Component />
+                </Suspense>
+            </ErrorBoundary>
+        );
+    };
+};
