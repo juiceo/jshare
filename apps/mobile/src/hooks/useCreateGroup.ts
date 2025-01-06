@@ -2,12 +2,6 @@ import { useCallback } from 'react';
 
 import { trpc, type TrpcInputs } from '~/services/trpc';
 
-export const useGroups = () => {
-    const groupsQuery = trpc.groups.list.useQuery();
-
-    return { groups: groupsQuery.data, ...groupsQuery };
-};
-
 export const useCreateGroup = () => {
     const trpcUtils = trpc.useUtils();
     const createGroupMutation = trpc.groups.create.useMutation();

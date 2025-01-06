@@ -3,13 +3,12 @@ import { useCallback, useMemo } from 'react';
 import { MessageMock, type DB } from '@jshare/types';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
-import { useProfile } from '~/hooks/useProfile';
 import { trpc } from '~/services/trpc';
 import { useAuthenticatedSession } from '~/wrappers/AuthenticatedContextProvider';
 
 export const useGroupMessages = (groupId: string) => {
     const { session } = useAuthenticatedSession();
-    const { profile } = useProfile();
+    const [profile] = trpc.profiles.get.useSuspenseQuery();
     const utils = trpc.useUtils();
     const sendMessageMutation = trpc.messages.create.useMutation();
 

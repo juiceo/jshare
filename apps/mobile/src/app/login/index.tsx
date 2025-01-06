@@ -9,61 +9,67 @@ import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { supabase } from '~/services/supabase';
+import { screen } from '~/wrappers/screen';
 
-export default function LoginScreen() {
-    const inputRef = useRef<TextInput>(null);
-    const [email, setEmail] = useState<string>('');
-    const [error, setError] = useState<boolean>(false);
+export default screen(
+    {
+        route: '/login',
+    },
+    () => {
+        const inputRef = useRef<TextInput>(null);
+        const [email, setEmail] = useState<string>('');
+        const [error, setError] = useState<boolean>(false);
 
-    const isValid = isEmail(email);
+        const isValid = isEmail(email);
 
-    const handleContinue = () => {
-        if (!isValid || !email) {
-            setError(true);
-            inputRef.current?.focus();
-            return;
-        }
-        supabase.auth.signInWithOtp({
-            email,
-        });
-        router.push({
-            pathname: '/login/verify/[email]',
-            params: { email },
-        });
-    };
+        const handleContinue = () => {
+            if (!isValid || !email) {
+                setError(true);
+                inputRef.current?.focus();
+                return;
+            }
+            supabase.auth.signInWithOtp({
+                email,
+            });
+            router.push({
+                pathname: '/login/verify/[email]',
+                params: { email },
+            });
+        };
 
-    useEffect(() => {
-        if (error && isValid) {
-            setError(false);
-        }
-    }, [error, isValid]);
+        useEffect(() => {
+            if (error && isValid) {
+                setError(false);
+            }
+        }, [error, isValid]);
 
-    return (
-        <Screen>
-            <Screen.Content>
-                <Stack flex={1} center p="xl">
-                    <Typography variant="h1">Welcome to JShare</Typography>
-                </Stack>
-                <Stack spacing="md" p="xl">
-                    <TextField
-                        label="Email address"
-                        value={email}
-                        onChange={setEmail}
-                        TextInputProps={{
-                            placeholder: 'me@example.com',
-                            keyboardType: 'email-address',
-                            autoComplete: 'email',
-                            autoCapitalize: 'none',
-                            autoCorrect: false,
-                        }}
-                        inputRef={inputRef}
-                        error={error ? 'Please enter a valid email address' : null}
-                    />
-                    <Button variant="contained" color="primary" onPress={handleContinue}>
-                        Continue
-                    </Button>
-                </Stack>
-            </Screen.Content>
-        </Screen>
-    );
-}
+        return (
+            <Screen>
+                <Screen.Content>
+                    <Stack flex={1} center p="xl">
+                        <Typography variant="h1">Welcome to JShare</Typography>
+                    </Stack>
+                    <Stack spacing="md" p="xl">
+                        <TextField
+                            label="Email address"
+                            value={email}
+                            onChange={setEmail}
+                            TextInputProps={{
+                                placeholder: 'me@example.com',
+                                keyboardType: 'email-address',
+                                autoComplete: 'email',
+                                autoCapitalize: 'none',
+                                autoCorrect: false,
+                            }}
+                            inputRef={inputRef}
+                            error={error ? 'Please enter a valid email address' : null}
+                        />
+                        <Button variant="contained" color="primary" onPress={handleContinue}>
+                            Continue
+                        </Button>
+                    </Stack>
+                </Screen.Content>
+            </Screen>
+        );
+    }
+);

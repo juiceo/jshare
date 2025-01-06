@@ -13,7 +13,6 @@ import { ChatInputFooter } from '~/components/ChatInputFooter';
 import { ChatMessageGroup } from '~/components/ChatMessageGroup';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
-import { useGroupId } from '~/hooks/useGroupId';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { trpc } from '~/services/trpc';
 import { messagesToChatListItems } from '~/util/messages';
@@ -21,10 +20,10 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
+        route: '/group/[groupId]',
         loadingMessage: 'Loading group...',
     },
-    () => {
-        const groupId = useGroupId();
+    ({ groupId }) => {
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
         const {

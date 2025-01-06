@@ -13,6 +13,7 @@ import { Button } from '~/components/Button';
 import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';
+import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
@@ -23,92 +24,97 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default function LoginWelcomePage() {
-    const { session } = useSession();
-    const router = useRouter();
+export default screen(
+    {
+        route: '/login/welcome',
+    },
+    () => {
+        const { session } = useSession();
+        const router = useRouter();
 
-    const form = useForm<Schema>({
-        defaultValues: {
-            firstName: '',
-            lastName: '',
-        },
-        resolver: zodResolver(schema),
-    });
-
-    const createProfile = trpc.profiles.create.useMutation();
-
-    const handleSubmit = async (data: Schema) => {
-        const email = session?.user.email;
-        if (!email) {
-            Alert.alert('Missing email!');
-            return;
-        }
-        await createProfile.mutateAsync({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            avatarId: data.image?.id,
-            email,
+        const form = useForm<Schema>({
+            defaultValues: {
+                firstName: '',
+                lastName: '',
+            },
+            resolver: zodResolver(schema),
         });
-        router.dismissAll();
-        router.replace('/');
-    };
 
-    if (!session) {
-        return <Redirect href={{ pathname: '/login' }} />;
-    }
+        const createProfile = trpc.profiles.create.useMutation();
 
-    return (
-        <Screen>
-            <Screen.Content scrollable>
-                <Header title="Complete your profile" />
-                <Stack p="xl" flex={1} center spacing="md">
-                    <Stack py="3xl">
+        const handleSubmit = async (data: Schema) => {
+            const email = session?.user.email;
+            if (!email) {
+                Alert.alert('Missing email!');
+                return;
+            }
+            await createProfile.mutateAsync({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                avatarId: data.image?.id,
+                email,
+            });
+            router.dismissAll();
+            router.replace('/');
+        };
+
+        if (!session) {
+            return <Redirect href={{ pathname: '/login' }} />;
+        }
+
+        return (
+            <Screen>
+                <Screen.Content scrollable>
+                    <Header title="Complete your profile" />
+                    <Stack p="xl" flex={1} center spacing="md">
+                        <Stack py="3xl">
+                            <Controller
+                                control={form.control}
+                                name="image"
+                                render={({ field }) => (
+                                    <AvatarPicker value={field.value} onChange={field.onChange} />
+                                )}
+                            />
+                        </Stack>
                         <Controller
                             control={form.control}
-                            name="image"
-                            render={({ field }) => (
-                                <AvatarPicker value={field.value} onChange={field.onChange} />
+                            name="firstName"
+                            render={({ field, fieldState }) => (
+                                <TextField
+                                    label={'First name'}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={fieldState.error?.message}
+                                    placeholder="John"
+                                />
+                            )}
+                        />
+                        <Controller
+                            control={form.control}
+                            name="lastName"
+                            render={({ field, fieldState }) => (
+                                <TextField
+                                    label={'Last name'}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={fieldState.error?.message}
+                                    placeholder="Doe"
+                                />
                             )}
                         />
                     </Stack>
-                    <Controller
-                        control={form.control}
-                        name="firstName"
-                        render={({ field, fieldState }) => (
-                            <TextField
-                                label={'First name'}
-                                value={field.value}
-                                onChange={field.onChange}
-                                error={fieldState.error?.message}
-                                placeholder="John"
-                            />
-                        )}
-                    />
-                    <Controller
-                        control={form.control}
-                        name="lastName"
-                        render={({ field, fieldState }) => (
-                            <TextField
-                                label={'Last name'}
-                                value={field.value}
-                                onChange={field.onChange}
-                                error={fieldState.error?.message}
-                                placeholder="Doe"
-                            />
-                        )}
-                    />
-                </Stack>
-            </Screen.Content>
-            <Screen.Footer padding="xl">
-                <Button
-                    variant={'contained'}
-                    color={'primary'}
-                    onPress={form.handleSubmit(handleSubmit)}
-                    loading={createProfile.isPending}
-                >
-                    Continue
-                </Button>
-            </Screen.Footer>
-        </Screen>
-    );
-}
+                </Screen.Content>
+                <Screen.Footer padding="xl">
+                    <Button
+                        variant={'contained'}
+                        color={'primary'}
+                        onPress={form.handleSubmit(handleSubmit)}
+                        loading={createProfile.isPending}
+                    >
+                        Continue
+                    </Button>
+                </Screen.Footer>
+            </Screen>
+        );
+    }
+);

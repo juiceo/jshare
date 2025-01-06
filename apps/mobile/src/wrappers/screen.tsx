@@ -1,5 +1,12 @@
-import { Suspense } from 'react';
-import { useRouter } from 'expo-router';
+import { Suspense, type ComponentType } from 'react';
+import {
+    useGlobalSearchParams,
+    useLocalSearchParams,
+    useRouter,
+    type RouteParams,
+    type Routes,
+} from 'expo-router';
+import { ZodObject } from 'zod';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -9,13 +16,15 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
 
-export const screen = (
+export const screen = <TRoute extends Routes>(
     args: {
+        route: TRoute;
         loadingMessage?: string;
     },
-    Component: any
+    Component: ComponentType<RouteParams<TRoute>>
 ) => {
     return function SuspenseWrapper() {
+        const params = useLocalSearchParams<RouteParams<TRoute>>();
         const router = useRouter();
         const renderError = (args: ErrorBoundaryFallbackArgs) => {
             return (
@@ -54,7 +63,7 @@ export const screen = (
         return (
             <ErrorBoundary fallback={renderError}>
                 <Suspense fallback={<LoadingState message={args.loadingMessage} />}>
-                    <Component />
+                    <Component {...(params as any)} />
                 </Suspense>
             </ErrorBoundary>
         );
