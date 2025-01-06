@@ -14,7 +14,6 @@ import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
 import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
-import { Header } from '~/components/Header/Header';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';

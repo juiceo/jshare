@@ -8,7 +8,6 @@ import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
-import { Header } from '~/components/Header/Header';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { useCreateGroup } from '~/hooks/useCreateGroup';

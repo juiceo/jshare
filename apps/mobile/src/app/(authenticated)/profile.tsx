@@ -4,7 +4,6 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Button } from '~/components/Button';
-import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useUpdateProfile } from '~/hooks/useUpdateProfile';

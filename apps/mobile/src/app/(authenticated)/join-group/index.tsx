@@ -1,7 +1,6 @@
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
-import { ModalHeader } from '~/components/ModalHeader/ModalHeader';
 import { Screen } from '~/components/Screen';
 import { screen } from '~/wrappers/screen';
 
@@ -12,8 +11,8 @@ export default screen(
     ({ router }) => {
         return (
             <Screen>
+                <Screen.Header title="Join group" backButton="down" disableInset />
                 <Screen.Content>
-                    <ModalHeader title="Join group" />
                     <Stack column spacing="md" justifyEnd flex={1}>
                         <TextField
                             label="Invite code"

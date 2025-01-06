@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { router } from 'expo-router';
 import isEmail from 'validator/es/lib/isEmail';
 

@@ -81,10 +81,24 @@ model Message {
     groupId String
     group   Group  @relation(fields: [groupId], references: [id])
 
+    attachments MessageAttachment[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
 
     @@map("messages")
+    @@schema("public")
+}
+
+model MessageAttachment {
+    id        String  @id @default(uuid())
+    messageId String
+    message   Message @relation(fields: [messageId], references: [id])
+
+    type      MessageAttachmentType
+    expenseId String?
+    expense   Expense?              @relation(fields: [expenseId], references: [id])
+
     @@schema("public")
 }
 
@@ -100,10 +114,11 @@ model Expense {
     groupId String
     group   Group  @relation(fields: [groupId], references: [id])
 
-    amount      Int
-    currency    Currency
-    description String?
-    shares      ExpenseShare[]
+    amount             Int
+    currency           Currency
+    description        String?
+    shares             ExpenseShare[]
+    messageAttachments MessageAttachment[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -150,6 +165,12 @@ enum Currency {
 enum AuthorType {
     User
     System
+
+    @@schema("public")
+}
+
+enum MessageAttachmentType {
+    Expense
 
     @@schema("public")
 }

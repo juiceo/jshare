@@ -4,7 +4,6 @@ import { router } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
-import { Header } from '~/components/Header/Header';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
