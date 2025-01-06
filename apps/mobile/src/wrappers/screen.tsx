@@ -1,12 +1,5 @@
 import { Suspense, type ComponentType } from 'react';
-import {
-    useGlobalSearchParams,
-    useLocalSearchParams,
-    useRouter,
-    type RouteParams,
-    type Routes,
-} from 'expo-router';
-import { ZodObject } from 'zod';
+import { useLocalSearchParams, useRouter, type RouteParams, type Routes } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';

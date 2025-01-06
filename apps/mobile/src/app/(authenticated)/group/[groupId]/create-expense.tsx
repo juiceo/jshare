@@ -37,7 +37,7 @@ export const foo = screen(
         route: '/(authenticated)/group/[groupId]/create-expense',
     },
     ({ groupId }) => {
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
+        // const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
         const [profile] = trpc.profiles.get.useSuspenseQuery();
         const form = useForm<Schema>({
