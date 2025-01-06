@@ -10,15 +10,14 @@ import { Typography } from '~/components/Typography';
 import { useUpdateProfile } from '~/hooks/useUpdateProfile';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
-import { useSession } from '~/wrappers/SessionProvider';
 
 export const foo = screen(
     {
-        route: '/profile',
+        route: '/(authenticated)/profile',
+        auth: true,
     },
-    () => {
+    ({ auth }) => {
         const [profile] = trpc.profiles.get.useSuspenseQuery();
-        const { signOut } = useSession();
         const { updateProfile } = useUpdateProfile();
 
         const [firstName, setFirstName] = useState<string>(profile.firstName);
@@ -79,7 +78,7 @@ export const foo = screen(
                     </Stack>
                 </Screen.Content>
                 <Screen.Footer padding="xl">
-                    <Button color="error" variant="ghost" onPress={signOut} mt="3xl">
+                    <Button color="error" variant="ghost" onPress={auth.signOut} mt="3xl">
                         Sign out
                     </Button>
                 </Screen.Footer>

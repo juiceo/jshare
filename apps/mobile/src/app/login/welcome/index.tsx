@@ -1,7 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Redirect } from 'expo-router';
 import { z } from 'zod';
 
 import { zDbImage } from '@jshare/types';
@@ -14,7 +13,6 @@ import { Header } from '~/components/Header/Header';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
-import { useSession } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     firstName: z.string().min(1),
@@ -27,10 +25,9 @@ type Schema = z.infer<typeof schema>;
 export default screen(
     {
         route: '/login/welcome',
+        auth: true,
     },
-    ({ router }) => {
-        const { session } = useSession();
-
+    ({ router, auth }) => {
         const form = useForm<Schema>({
             defaultValues: {
                 firstName: '',
@@ -42,7 +39,7 @@ export default screen(
         const createProfile = trpc.profiles.create.useMutation();
 
         const handleSubmit = async (data: Schema) => {
-            const email = session?.user.email;
+            const email = auth.session.user.email;
             if (!email) {
                 Alert.alert('Missing email!');
                 return;
@@ -56,10 +53,6 @@ export default screen(
             router.dismissAll();
             router.replace('/');
         };
-
-        if (!session) {
-            return <Redirect href={{ pathname: '/login' }} />;
-        }
 
         return (
             <Screen>

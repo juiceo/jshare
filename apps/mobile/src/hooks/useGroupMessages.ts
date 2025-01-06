@@ -4,10 +4,9 @@ import { MessageMock, type DB } from '@jshare/types';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
 import { trpc } from '~/services/trpc';
-import { useAuthenticatedSession } from '~/wrappers/AuthenticatedContextProvider';
 
-export const useGroupMessages = (groupId: string) => {
-    const { session } = useAuthenticatedSession();
+export const useGroupMessages = (args: { groupId: string; userId: string }) => {
+    const { groupId, userId } = args;
     const [profile] = trpc.profiles.get.useSuspenseQuery();
     const utils = trpc.useUtils();
     const sendMessageMutation = trpc.messages.create.useMutation();
@@ -29,7 +28,7 @@ export const useGroupMessages = (groupId: string) => {
             if (!profile) return;
             const localMessage = MessageMock.build({
                 text,
-                authorId: session.user.id,
+                authorId: userId,
                 groupId,
             });
             const localMessageWithAuthor: DB.Message<{ author: true }> = {
@@ -64,7 +63,7 @@ export const useGroupMessages = (groupId: string) => {
             profile,
             queryInput,
             sendMessageMutation,
-            session.user.id,
+            userId,
             utils.messages.listByGroup,
         ]
     );

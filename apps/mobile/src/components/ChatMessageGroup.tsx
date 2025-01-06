@@ -10,18 +10,17 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessage } from '~/components/ChatMessage';
 import { useProfileById } from '~/hooks/useProfileById';
-import { useAuthenticatedSession } from '~/wrappers/AuthenticatedContextProvider';
 
 export type ChatMessageGroupProps = {
+    userId: string;
     authorId: string | null;
     messages: DB.Message<{ author: true }>[];
 };
 
 export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>) => {
     const { theme } = useTheme();
-    const session = useAuthenticatedSession();
     const { profile } = useProfileById(props.authorId);
-    const isSelf = props.authorId === session.session.user.id;
+    const isSelf = props.authorId === props.userId;
     const styles = getStyles(theme, {
         align: isSelf ? 'right' : 'left',
     });

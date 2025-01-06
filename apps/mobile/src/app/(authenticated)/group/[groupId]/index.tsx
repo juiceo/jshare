@@ -20,10 +20,11 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/group/[groupId]',
+        route: '/(authenticated)/group/[groupId]',
         loadingMessage: 'Loading group...',
+        auth: true,
     },
-    ({ params }) => {
+    ({ params, auth }) => {
         const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
@@ -31,7 +32,7 @@ export default screen(
             data: messages,
             fetchNextPage: loadOlderMessages,
             sendMessage,
-        } = useGroupMessages(group.id);
+        } = useGroupMessages({ groupId, userId: auth.session.user.id });
 
         const chatListItems = useMemo(() => {
             return messagesToChatListItems(messages ?? []);
@@ -85,6 +86,7 @@ export default screen(
                                         case 'messages': {
                                             return (
                                                 <ChatMessageGroup
+                                                    userId={auth.session.user.id}
                                                     authorId={chatListItem.item.authorId}
                                                     messages={sortBy(
                                                         chatListItem.item.messages,

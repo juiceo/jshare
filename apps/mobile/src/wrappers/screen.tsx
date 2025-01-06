@@ -1,5 +1,8 @@
 import { Suspense, type ComponentType } from 'react';
+import { ActivityIndicator } from 'react-native';
+import type { Session } from '@supabase/supabase-js';
 import {
+    Redirect,
     useLocalSearchParams,
     useRouter,
     type RouteParams,
@@ -14,15 +17,18 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
+import { useSession } from '~/wrappers/SessionProvider';
 
-export const screen = <TRoute extends Routes>(
+export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
     args: {
         route: TRoute;
+        auth?: TAuth;
         loadingMessage?: string;
     },
     Component: ComponentType<{
         params: RouteParams<TRoute>;
         router: Router;
+        auth: TAuth extends true ? { session: Session; signOut: () => void } : never;
     }>
 ) => {
     return function SuspenseWrapper() {
@@ -62,12 +68,56 @@ export const screen = <TRoute extends Routes>(
             );
         };
 
+        const renderComponent = () => {
+            if (args.auth) {
+                return (
+                    <AuthWrapper>
+                        {(auth) => (
+                            <Component
+                                params={params as RouteParams<TRoute>}
+                                router={router}
+                                auth={auth as any}
+                            />
+                        )}
+                    </AuthWrapper>
+                );
+            } else {
+                return (
+                    <Component
+                        params={params as RouteParams<TRoute>}
+                        router={router}
+                        auth={null as any}
+                    />
+                );
+            }
+        };
+
         return (
             <ErrorBoundary fallback={renderError}>
                 <Suspense fallback={<LoadingState message={args.loadingMessage} />}>
-                    <Component params={params as RouteParams<TRoute>} router={router} />
+                    {renderComponent()}
                 </Suspense>
             </ErrorBoundary>
         );
     };
+};
+
+const AuthWrapper = (props: {
+    children: (auth: { session: Session; signOut: () => void }) => JSX.Element;
+}) => {
+    const { session, isLoading, signOut } = useSession();
+
+    if (isLoading) {
+        return (
+            <Stack center absoluteFill>
+                <ActivityIndicator />
+            </Stack>
+        );
+    }
+
+    if (!session) {
+        return <Redirect href={{ pathname: '/login' }} />;
+    }
+
+    return props.children({ session, signOut });
 };
