@@ -68,6 +68,7 @@ export const expensesRouter = router({
                 groupId: z.string(),
                 payerId: z.string(),
                 amount: z.number().min(1),
+                description: z.string().min(1).max(100),
                 currency: zCurrency,
                 shares: zExpenseShare
                     .pick({ amount: true, userId: true, locked: true })
@@ -101,6 +102,7 @@ export const expensesRouter = router({
                         groupId: opts.input.groupId,
                         payerId: opts.input.payerId,
                         amount: opts.input.amount,
+                        description: opts.input.description,
                         currency: opts.input.currency,
                         shares: {
                             createMany: {

@@ -98,7 +98,6 @@ const getStyles = (theme: Theme) => {
             borderRadius: theme.borderRadius.lg - 2,
             overflow: 'hidden',
             flex: 0,
-            backgroundColor: 'red',
         },
         text: {
             paddingBottom: theme.spacing.xs,

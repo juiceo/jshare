@@ -49,13 +49,13 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
             <Stack row spacing="md">
                 <Stack column spacing="md" flex={1}>
                     {!!label && (
-                        <Typography variant="caption" color={focused ? 'accent.main' : 'primary'}>
+                        <Typography variant="caption" color={focused ? 'primary' : 'hint'}>
                             {label}
                         </Typography>
                     )}
                     {props.children}
                     {error && (
-                        <Typography variant="caption" color="error.main">
+                        <Typography variant="caption" color="error.light">
                             {error}
                         </Typography>
                     )}

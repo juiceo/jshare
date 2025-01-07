@@ -40,19 +40,21 @@ export const ChatMessageExpenseAttachment = withSuspense(
         if (!expense) return <ExpenseSkeleton />;
         return (
             <Stack bg="background.elevation1">
-                <Stack center spacing="xs" p="3xl">
-                    <Typography variant="caption" color="secondary">
-                        Food for the dog
+                <Stack column center p="xl">
+                    <Typography variant="caption" color="secondary" align="center">
+                        {expense.description}
                     </Typography>
-                    <Typography variant="h1">
+                </Stack>
+                <Stack center p="3xl">
+                    <Typography variant="h1" align="center">
                         {formatAmount(expense.amount, expense.currency)}
                     </Typography>
-                    <Typography variant="h6" color="hint" style={{ lineHeight: 0 }}>
+                    <Typography align="center" variant="h6" color="hint" style={{ lineHeight: 0 }}>
                         Your share: {formatAmount(getOwnShareAmount(), expense.currency)}
                     </Typography>
                 </Stack>
 
-                <Stack column center p="md" br="xl" mb="xl" spacing="md">
+                <Stack column center p="xl" br="xl" mb="md" spacing="md">
                     <Avatar userId={expense.payerId} size="sm" />
                     <Typography variant="caption" color="hint" align="center">
                         Paid by {getUserShortName(payerProfile)}

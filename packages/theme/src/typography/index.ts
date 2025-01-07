@@ -50,7 +50,7 @@ export const typographyVariants: TypographyVariants = {
         letterSpacing: 0.1,
     },
     overline: {
-        fontFamily: 'Nunito_500Medium',
+        fontFamily: 'Poppins_500Medium',
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.5,

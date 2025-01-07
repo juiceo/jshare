@@ -1,16 +1,23 @@
 import { useState } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { RectButton } from 'react-native-gesture-handler';
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { getDefaultShares, getSharesWithUpdatedAmount, getUserShortName } from '@jshare/common';
-import { Currency, zExpense, zExpenseShare, zProfile } from '@jshare/types';
+import {
+    formatAmount,
+    getDefaultShares,
+    getSharesWithUpdatedAmount,
+    getTotalFromShares,
+    getUserShortName,
+} from '@jshare/common';
+import { Currency, zCurrency, zExpenseShare, zProfile } from '@jshare/types';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Menu } from '~/components/atoms/Menu';
 import { Stack } from '~/components/atoms/Stack';
+import { TextField } from '~/components/atoms/TextField';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
 import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
@@ -22,10 +29,12 @@ import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
     payer: zProfile,
-    expense: zExpense.pick({
-        amount: true,
-        currency: true,
-    }),
+    amount: z.number().min(1, 'Please enter an amount'),
+    currency: zCurrency,
+    description: z
+        .string()
+        .min(1, 'Please enter a description')
+        .max(100, 'Description can be at most 100 characters'),
     shares: zExpenseShare.array(),
 });
 
@@ -43,174 +52,223 @@ export default screen(
         const form = useForm<Schema>({
             defaultValues: {
                 payer: profile,
-                expense: {
-                    amount: 0,
-                    currency: Currency.EUR,
-                },
+                amount: 0,
+                currency: Currency.EUR,
+                description: '',
                 shares: getDefaultShares(groupMembers ?? []),
             },
             resolver: zodResolver(schema),
+            mode: 'onSubmit',
         });
 
         const [menu, setMenu] = useState<'currency' | 'payer' | null>(null);
-        const expense = useWatch({ control: form.control, name: 'expense' });
+        const amount = useWatch({ control: form.control, name: 'amount' });
+        const currency = useWatch({ control: form.control, name: 'currency' });
         const shares = useWatch({ control: form.control, name: 'shares' });
+
+        const totalFromShares = getTotalFromShares(shares);
+        const hasAmountMismatch = totalFromShares !== amount;
 
         const handleSubmit = async (data: Schema) => {
             await createExpenseMutation.mutateAsync({
                 groupId,
                 payerId: data.payer.userId,
-                amount: data.expense.amount,
-                currency: data.expense.currency,
+                amount: data.amount,
+                currency: data.currency,
                 shares: data.shares,
+                description: data.description,
             });
             router.back();
         };
 
         return (
-            <Screen>
-                <Screen.Header title="New expense" backButton="down" disableInset />
-                <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
-                    <Stack column px="xl">
-                        <Stack center py="3xl">
-                            <Controller
-                                control={form.control}
-                                name="expense"
-                                render={({ field }) => (
-                                    <MoneyInput
-                                        value={field.value.amount}
-                                        onChange={(value) => {
-                                            field.onChange({ ...field.value, amount: value });
-                                            const updatedShares = getSharesWithUpdatedAmount({
-                                                expenseAmount: value,
-                                                shares,
-                                            });
-                                            form.setValue('shares', updatedShares);
-                                        }}
-                                        currency={field.value.currency}
-                                        autoFocus
-                                    />
-                                )}
-                            />
-                            <ErrorMessage
-                                errors={form.formState.errors}
-                                name={'amount.value'}
-                                render={({ message }) => (
-                                    <Typography variant="caption" color="error.light">
-                                        {message}
-                                    </Typography>
-                                )}
-                            />
-                        </Stack>
-                        <Stack column bg="background.elevation1" br="xl">
-                            <Controller
-                                control={form.control}
-                                name="payer"
-                                render={({ field }) => (
-                                    <RectButton onPress={() => setMenu('payer')}>
-                                        <Stack row justifyBetween alignCenter p="xl">
-                                            <Typography color="hint" variant="overline">
-                                                Paid by
-                                            </Typography>
-                                            {profile && (
-                                                <Stack row center spacing="md">
-                                                    <Avatar userId={field.value.userId} size="sm" />
-                                                    {field.value && (
-                                                        <Typography>
-                                                            {getUserShortName(field.value)}
+            <FormProvider {...form}>
+                <Screen>
+                    <Screen.Header title="New expense" backButton="down" disableInset />
+                    <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
+                        <Stack column px="xl">
+                            <Stack center py="3xl">
+                                <Controller
+                                    control={form.control}
+                                    name="amount"
+                                    render={({ field }) => (
+                                        <MoneyInput
+                                            value={field.value}
+                                            onChange={(value) => {
+                                                field.onChange(value);
+                                                const updatedShares = getSharesWithUpdatedAmount({
+                                                    expenseAmount: value,
+                                                    shares,
+                                                });
+                                                form.setValue('shares', updatedShares);
+                                            }}
+                                            currency={currency}
+                                            autoFocus
+                                        />
+                                    )}
+                                />
+                                <ErrorMessage
+                                    errors={form.formState.errors}
+                                    name={'amount'}
+                                    render={({ message }) => (
+                                        <Typography variant="caption" color="error.light">
+                                            {message}
+                                        </Typography>
+                                    )}
+                                />
+                            </Stack>
+                            <Stack column bg="background.elevation1" br="xl">
+                                <Controller
+                                    control={form.control}
+                                    name="description"
+                                    render={({ field, fieldState }) => (
+                                        <TextField
+                                            label="Description"
+                                            placeholder="Write a brief description"
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            error={fieldState.error?.message}
+                                        />
+                                    )}
+                                />
+                                <Divider horizontal color="background.default" />
+                                <Controller
+                                    control={form.control}
+                                    name="payer"
+                                    render={({ field }) => (
+                                        <RectButton onPress={() => setMenu('payer')}>
+                                            <Stack row justifyBetween alignCenter p="xl">
+                                                <Typography color="hint" variant="overline">
+                                                    Paid by
+                                                </Typography>
+                                                {profile && (
+                                                    <Stack row center spacing="md">
+                                                        <Avatar
+                                                            userId={field.value.userId}
+                                                            size="sm"
+                                                        />
+                                                        {field.value && (
+                                                            <Typography>
+                                                                {getUserShortName(field.value)}
+                                                            </Typography>
+                                                        )}
+                                                    </Stack>
+                                                )}
+                                                <Menu
+                                                    title="Who paid?"
+                                                    value={field.value.userId}
+                                                    onChange={(userId, user) =>
+                                                        field.onChange(user)
+                                                    }
+                                                    isOpen={menu === 'payer'}
+                                                    onClose={() => setMenu(null)}
+                                                    options={(groupMembers ?? []).map((member) => ({
+                                                        id: member.userId,
+                                                        label: getUserShortName(member.user),
+                                                        data: member.user,
+                                                        icon: (
+                                                            <Avatar
+                                                                userId={member.userId}
+                                                                size="sm"
+                                                            />
+                                                        ),
+                                                    }))}
+                                                />
+                                            </Stack>
+                                        </RectButton>
+                                    )}
+                                />
+                                <Divider horizontal color="background.default" />
+                                <Controller
+                                    name="currency"
+                                    control={form.control}
+                                    render={({ field }) => {
+                                        return (
+                                            <>
+                                                <RectButton onPress={() => setMenu('currency')}>
+                                                    <Stack row justifyBetween alignCenter p="xl">
+                                                        <Typography color="hint" variant="overline">
+                                                            Currency
                                                         </Typography>
-                                                    )}
-                                                </Stack>
-                                            )}
-                                            <Menu
-                                                title="Who paid?"
-                                                value={field.value.userId}
-                                                onChange={(userId, user) => field.onChange(user)}
-                                                isOpen={menu === 'payer'}
-                                                onClose={() => setMenu(null)}
-                                                options={(groupMembers ?? []).map((member) => ({
-                                                    id: member.userId,
-                                                    label: getUserShortName(member.user),
-                                                    data: member.user,
-                                                    icon: (
-                                                        <Avatar userId={member.userId} size="sm" />
-                                                    ),
-                                                }))}
-                                            />
-                                        </Stack>
-                                    </RectButton>
-                                )}
-                            />
-
-                            <Divider horizontal color="background.default" />
+                                                        <Stack column alignEnd>
+                                                            <Typography>{field.value}</Typography>
+                                                        </Stack>
+                                                    </Stack>
+                                                </RectButton>
+                                                <Menu
+                                                    title="Select currency"
+                                                    value={field.value}
+                                                    onChange={(currency) =>
+                                                        field.onChange(currency)
+                                                    }
+                                                    isOpen={menu === 'currency'}
+                                                    onClose={() => setMenu(null)}
+                                                    options={[
+                                                        {
+                                                            id: Currency.EUR,
+                                                            label: 'EUR',
+                                                        },
+                                                        {
+                                                            id: Currency.USD,
+                                                            label: 'USD',
+                                                        },
+                                                    ]}
+                                                />
+                                            </>
+                                        );
+                                    }}
+                                />
+                            </Stack>
+                            <Stack p="xl" mt="2xl">
+                                <Typography variant="body1">Who's participating?</Typography>
+                            </Stack>
                             <Controller
-                                name="expense.currency"
                                 control={form.control}
+                                name="shares"
                                 render={({ field }) => {
                                     return (
-                                        <>
-                                            <RectButton onPress={() => setMenu('currency')}>
-                                                <Stack row justifyBetween alignCenter p="xl">
-                                                    <Typography color="hint" variant="overline">
-                                                        Currency
-                                                    </Typography>
-                                                    <Stack column alignEnd>
-                                                        <Typography>{field.value}</Typography>
-                                                    </Stack>
-                                                </Stack>
-                                            </RectButton>
-                                            <Menu
-                                                title="Select currency"
-                                                value={field.value}
-                                                onChange={(currency) => field.onChange(currency)}
-                                                isOpen={menu === 'currency'}
-                                                onClose={() => setMenu(null)}
-                                                options={[
-                                                    {
-                                                        id: Currency.EUR,
-                                                        label: 'EUR',
-                                                    },
-                                                    {
-                                                        id: Currency.USD,
-                                                        label: 'USD',
-                                                    },
-                                                ]}
-                                            />
-                                        </>
+                                        <ExpenseSharesEditor
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            groupMembers={groupMembers ?? []}
+                                            expense={{
+                                                amount,
+                                                currency,
+                                            }}
+                                        />
                                     );
                                 }}
                             />
                         </Stack>
-                        <Stack p="xl" mt="2xl">
-                            <Typography variant="body1">Who's participating?</Typography>
+                    </Screen.Content>
+                    <Screen.Footer>
+                        <Stack column>
+                            {hasAmountMismatch && (
+                                <Typography
+                                    variant="caption"
+                                    color="error.light"
+                                    align="center"
+                                    p="md"
+                                >
+                                    Please make sure the total sum of shares (
+                                    {formatAmount(totalFromShares, currency)}) matches the amount (
+                                    {formatAmount(amount, currency)})
+                                </Typography>
+                            )}
+
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                disabled={hasAmountMismatch}
+                                onPress={form.handleSubmit(handleSubmit)}
+                                loading={form.formState.isSubmitting}
+                            >
+                                Create expense
+                            </Button>
                         </Stack>
-                        <Controller
-                            control={form.control}
-                            name="shares"
-                            render={({ field }) => {
-                                return (
-                                    <ExpenseSharesEditor
-                                        value={field.value}
-                                        onChange={field.onChange}
-                                        groupMembers={groupMembers ?? []}
-                                        expense={expense}
-                                    />
-                                );
-                            }}
-                        />
-                    </Stack>
-                </Screen.Content>
-                <Screen.Footer>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onPress={form.handleSubmit(handleSubmit)}
-                        loading={createExpenseMutation.isPending}
-                    >
-                        Create expense
-                    </Button>
-                </Screen.Footer>
-            </Screen>
+                    </Screen.Footer>
+                </Screen>
+            </FormProvider>
         );
     }
 );

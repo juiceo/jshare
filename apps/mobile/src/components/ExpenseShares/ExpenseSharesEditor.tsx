@@ -24,9 +24,9 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const handleToggle = (userId: string) => {
         const shareIndex = value.findIndex((item) => item.userId === userId);
         if (shareIndex === -1) {
-            onChange(addShare(value, userId));
+            onChange(addShare(value, expense.amount, userId));
         } else {
-            onChange(removeShare(value, userId));
+            onChange(removeShare(value, expense.amount, userId));
         }
     };
 
@@ -65,7 +65,7 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                     user={editUser}
                     share={value.find((item) => item.userId === editUser.userId)}
                     onShareChange={(share) => {
-                        onChange(updateShare(value, share));
+                        onChange(updateShare(value, expense.amount, share));
                     }}
                 />
             )}

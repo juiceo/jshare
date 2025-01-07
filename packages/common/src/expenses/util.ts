@@ -37,9 +37,14 @@ export const getSharesWithUpdatedAmount = (args: {
     }, shares);
 };
 
-export const addShare = (shares: DB.ExpenseShare[], userId: string): DB.ExpenseShare[] => {
+export const addShare = (
+    shares: DB.ExpenseShare[],
+    expenseAmount: number,
+    userId: string
+): DB.ExpenseShare[] => {
+    const lockedShares = getLockedShares(shares);
     const floatingShares = getFloatingShares(shares);
-    const floatingAmount = getTotalFromShares(floatingShares);
+    const floatingAmount = expenseAmount - getTotalFromShares(lockedShares);
     const amountsToDistribute = distributeAmountEvenly(floatingAmount, floatingShares.length + 1);
 
     return [
@@ -60,6 +65,7 @@ export const addShare = (shares: DB.ExpenseShare[], userId: string): DB.ExpenseS
 
 export const updateShare = (
     shares: DB.ExpenseShare[],
+    expenseAmount: number,
     updates: Pick<DB.ExpenseShare, 'amount' | 'userId' | 'locked'>
 ): DB.ExpenseShare[] => {
     let isFound = false;
@@ -74,26 +80,30 @@ export const updateShare = (
         return share;
     });
 
-    if (!isFound) return shares;
+    if (!isFound) return [...shares];
 
     return getSharesWithUpdatedAmount({
-        expenseAmount: getTotalFromShares(shares),
+        expenseAmount,
         shares: updatedShares,
     });
 };
 
-export const removeShare = (shares: DB.ExpenseShare[], userId: string): DB.ExpenseShare[] => {
-    const userShare = shares.find((share) => share.userId === userId);
-    if (!userShare) return shares;
+export const removeShare = (
+    shares: DB.ExpenseShare[],
+    expenseAmount: number,
+    userId: string
+): DB.ExpenseShare[] => {
     const filteredShares = shares.filter((share) => share.userId !== userId);
+    const lockedShares = getLockedShares(filteredShares);
     const floatingShares = getFloatingShares(filteredShares);
-    const amountsToDistribute = distributeAmountEvenly(userShare.amount, floatingShares.length);
+    const floatingAmount = expenseAmount - getTotalFromShares(lockedShares);
+    const amountsToDistribute = distributeAmountEvenly(floatingAmount, floatingShares.length);
 
     return filteredShares.map((share) => {
         if (share.locked) return share;
         return {
             ...share,
-            amount: share.amount + (amountsToDistribute.shift() ?? 0),
+            amount: amountsToDistribute.shift() ?? 0,
         };
     });
 };

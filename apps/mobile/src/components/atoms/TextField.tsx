@@ -41,9 +41,9 @@ export const TextField = (props: TextFieldProps) => {
                 placeholderTextColor={theme.palette.text.disabled}
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
-                cursorColor={theme.palette.accent.main}
-                selectionColor={theme.palette.accent.main}
-                selectionHandleColor={theme.palette.accent.main}
+                cursorColor={theme.palette.primary.light}
+                selectionColor={theme.palette.primary.light}
+                selectionHandleColor={theme.palette.primary.light}
                 placeholder={placeholder}
                 {...TextInputProps}
             />
@@ -56,6 +56,7 @@ const getStyles = (theme: Theme) => {
         input: {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
+            fontFamily: theme.typography.body1.fontFamily,
         },
     });
 };
