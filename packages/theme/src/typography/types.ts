@@ -8,6 +8,7 @@ export type TypographyVariants = {
     h3: TypographyVariantDefinition;
     h4: TypographyVariantDefinition;
     h5: TypographyVariantDefinition;
+    h6: TypographyVariantDefinition;
     body1: TypographyVariantDefinition;
     body2: TypographyVariantDefinition;
     overline: TypographyVariantDefinition;

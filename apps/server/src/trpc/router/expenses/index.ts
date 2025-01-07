@@ -10,26 +10,25 @@ import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
 
 export const expensesRouter = router({
-    get: authProcedure
-        .input(z.object({ id: z.string(), groupId: z.string() }))
-        .query(async (opts) => {
-            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
-                throw new TRPCError({
-                    code: 'NOT_FOUND',
-                    message: `Group with id ${opts.input.groupId} not found`,
-                });
-            }
+    get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
+        const expense = await prisma.expense.findUnique({
+            where: {
+                id: opts.input.id,
+            },
+            include: {
+                shares: true,
+            },
+        });
 
-            return prisma.expense.findUnique({
-                where: {
-                    id: opts.input.id,
-                    groupId: opts.input.groupId,
-                },
-                include: {
-                    shares: true,
-                },
+        if (!expense || !opts.ctx.acl.isUserInGroup(expense.groupId)) {
+            throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `Expense with id ${opts.input.id} not found`,
             });
-        }),
+        }
+
+        return expense;
+    }),
     list: authProcedure
         .input(
             z.object({

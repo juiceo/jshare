@@ -55,6 +55,7 @@
         "lodash": "catalog:",
         "lucide-react-native": "catalog:",
         "md5": "catalog:",
+        "moti": "^0.29.0",
         "react": "catalog:",
         "react-dom": "catalog:",
         "react-hook-form": "catalog:",

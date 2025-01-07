@@ -21,12 +21,19 @@ export namespace DB {
     export type Message<I extends p.Prisma.MessageInclude | undefined = undefined> =
         I extends undefined ? p.Message : p.Prisma.MessageGetPayload<{ include: I }>;
 
+    export type MessageAttachment<
+        I extends p.Prisma.MessageAttachmentInclude | undefined = undefined,
+    > = I extends undefined
+        ? p.MessageAttachment
+        : p.Prisma.MessageAttachmentGetPayload<{ include: I }>;
+
     export type Expense<I extends p.Prisma.ExpenseInclude | undefined = undefined> =
         I extends undefined ? p.Expense : p.Prisma.ExpenseGetPayload<{ include: I }>;
 
     export type ExpenseShare<I extends p.Prisma.ExpenseShareInclude | undefined = undefined> =
         I extends undefined ? p.ExpenseShare : p.Prisma.ExpenseShareGetPayload<{ include: I }>;
 
+    export type MessageAttachmentType = p.MessageAttachmentType;
     export type AuthorType = p.AuthorType;
     export type Currency = p.Currency;
     export type Role = p.Role;

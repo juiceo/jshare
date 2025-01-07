@@ -14,7 +14,7 @@ import { useProfileById } from '~/hooks/useProfileById';
 export type ChatMessageGroupProps = {
     userId: string;
     authorId: string | null;
-    messages: DB.Message<{ author: true }>[];
+    messages: DB.Message<{ author: true; attachments: true }>[];
 };
 
 export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>) => {
@@ -27,19 +27,19 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
     return (
         <Stack style={[styles.wrapper]}>
             <Box style={styles.messages}>
-                {props.messages.map((message, index) => {
-                    const showAuthorName = !isSelf && index === 0;
+                {props.messages.map((message) => {
                     return (
                         <ChatMessage
                             key={message.id}
                             text={message.text ?? ''}
                             timestamp={message.createdAt}
                             authorName={
-                                showAuthorName && message.author
+                                !isSelf && message.author
                                     ? getUserShortName(message.author)
                                     : undefined
                             }
                             color={isSelf ? 'primary' : 'secondary'}
+                            attachments={message.attachments}
                         />
                     );
                 })}

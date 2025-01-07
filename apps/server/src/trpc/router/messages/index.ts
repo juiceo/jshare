@@ -33,6 +33,7 @@ export const messagesRouter = router({
                 cursor: opts.input.cursor ? { id: opts.input.cursor } : undefined,
                 include: {
                     author: true,
+                    attachments: true,
                 },
                 orderBy: {
                     createdAt: 'desc',

@@ -3,9 +3,11 @@ import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { useTheme, type Theme } from '@jshare/theme';
+import type { DB } from '@jshare/types';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
+import { ChatMessageAttachment } from '~/components/ChatMessageAttachment';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
@@ -14,50 +16,62 @@ export type ChatMessageProps = {
     timestamp: Date;
     authorName?: string;
     color: 'primary' | 'secondary';
+    attachments?: DB.MessageAttachment[];
 };
 
 export const ChatMessage = (props: ChatMessageProps) => {
     const { theme } = useTheme();
     const styles = getStyles(theme);
+
+    const gradientColors = (() => {
+        switch (props.color) {
+            case 'primary':
+                return [theme.palette.primary.main, theme.palette.primary.dark];
+            case 'secondary':
+                return [theme.palette.background.elevation2, theme.palette.background.elevation3];
+        }
+    })();
+
     return (
-        <Stack style={styles.wrapper}>
-            {props.color === 'primary' && (
-                <LinearGradient
-                    colors={[theme.palette.primary.main, theme.palette.primary.dark]}
-                    style={styles.gradient}
-                    start={{ x: 0, y: -1 }}
-                    end={{ x: 1, y: 1 }}
-                />
-            )}
-            {props.color === 'secondary' && (
-                <LinearGradient
-                    colors={[
-                        theme.palette.background.elevation2,
-                        theme.palette.background.elevation3,
-                    ]}
-                    style={styles.gradient}
-                    start={{ x: 0, y: -1 }}
-                    end={{ x: 1, y: 1 }}
-                />
-            )}
+        <LinearGradient
+            style={styles.wrapper}
+            colors={gradientColors}
+            start={{ x: 0, y: -1 }}
+            end={{ x: 1, y: 1 }}
+        >
             {props.authorName && (
-                <Typography variant="h5" style={styles.authorName}>
-                    {props.authorName}
-                </Typography>
+                <Stack style={styles.author}>
+                    <Typography variant="h6" style={styles.authorName}>
+                        {props.authorName}
+                    </Typography>
+                </Stack>
             )}
-            <Stack style={styles.content}>
-                <Typography variant="body1">
-                    {props.text}
-                    <Box style={styles.textPadding} />
-                </Typography>
-            </Stack>
+            {props.attachments && (
+                <Stack style={styles.attachments} column justifyStart>
+                    {props.attachments.map((attachment) => (
+                        <ChatMessageAttachment
+                            key={attachment.id}
+                            type={attachment.type}
+                            expenseId={attachment.expenseId ?? ''}
+                        />
+                    ))}
+                </Stack>
+            )}
+            {props.text && (
+                <Stack style={styles.text}>
+                    <Typography variant="body1">
+                        {props.text}
+                        <Box style={styles.textPadding} />
+                    </Typography>
+                </Stack>
+            )}
             <Stack style={styles.footer}>
                 <Typography variant="caption" color="hint">
                     {dayjs(props.timestamp).format('HH:mm')}
                 </Typography>
                 <Icon name="CheckCheck" size={12} color={(theme) => theme.palette.primary.light} />
             </Stack>
-        </Stack>
+        </LinearGradient>
     );
 };
 
@@ -68,26 +82,26 @@ const getStyles = (theme: Theme) => {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
             position: 'relative',
-            minWidth: 40,
-            minHeight: 24,
             flexDirection: 'column',
-            paddingBottom: theme.spacing.xs,
-            paddingTop: theme.spacing.xs,
             overflow: 'hidden',
         },
-        gradient: {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+        author: {
+            paddingHorizontal: theme.spacing.md,
+            paddingTop: theme.spacing.xs,
         },
         authorName: {
             lineHeight: 0,
-            paddingHorizontal: theme.spacing.md,
             color: theme.palette.text.primary,
         },
-        content: {
+        attachments: {
+            margin: 2,
+            borderRadius: theme.borderRadius.lg - 2,
+            overflow: 'hidden',
+            flex: 0,
+            backgroundColor: 'red',
+        },
+        text: {
+            paddingBottom: theme.spacing.xs,
             paddingHorizontal: theme.spacing.md,
         },
         textPadding: {

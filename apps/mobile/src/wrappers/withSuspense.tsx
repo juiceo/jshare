@@ -1,12 +1,13 @@
 import { Suspense } from 'react';
 
-import { LoadingState } from '~/components/util/LoadingState';
-
-export const withSuspense = (Component: any, message?: string) => {
-    return function SuspenseWrapper() {
+export const withSuspense = <TProps extends any>(
+    Component: React.ComponentType<TProps>,
+    fallback?: React.ReactNode
+) => {
+    return function SuspenseWrapper(props: TProps) {
         return (
-            <Suspense fallback={<LoadingState message={message} />}>
-                <Component />
+            <Suspense fallback={fallback}>
+                <Component {...(props as any)} />
             </Suspense>
         );
     };
