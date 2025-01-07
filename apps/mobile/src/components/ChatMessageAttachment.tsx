@@ -1,6 +1,3 @@
-import { StyleSheet } from 'react-native';
-
-import { type Theme } from '@jshare/theme';
 import { MessageAttachmentType, type DB } from '@jshare/types';
 
 import { ChatMessageExpenseAttachment } from '~/components/ChatMessageAttachment.Expense';
@@ -18,8 +15,4 @@ export const ChatMessageAttachment = (props: ChatMessageAttachmentProps) => {
             return <ChatMessageExpenseAttachment expenseId={props.expenseId} />;
         }
     }
-};
-
-const getStyles = (theme: Theme) => {
-    return StyleSheet.create({});
 };

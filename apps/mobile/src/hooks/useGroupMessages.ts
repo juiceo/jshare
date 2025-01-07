@@ -31,8 +31,9 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
                 authorId: userId,
                 groupId,
             });
-            const localMessageWithAuthor: DB.Message<{ author: true }> = {
+            const localMessageWithAuthor: DB.Message<{ author: true; attachments: true }> = {
                 ...localMessage,
+                attachments: [],
                 author: profile,
             };
             utils.messages.listByGroup.setInfiniteData(queryInput, (data) => {

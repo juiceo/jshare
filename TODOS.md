@@ -5,4 +5,6 @@
     [x] Messages you receive should appear in the chat immediately (websockets)
 
 -   Add create expense view
-    -   Created expense should trigger a message in the chat with the expense details
+    [x] Created expense should trigger a message in the chat with the expense details
+    [ ] Add text field for expense description (max chars e.g. 100)
+    [ ] Improve "realtime sync" - broadcast listener should be at root level and just invalidate the appropriate queries
