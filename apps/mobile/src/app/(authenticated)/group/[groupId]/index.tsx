@@ -1,17 +1,22 @@
 import { useCallback, useMemo } from 'react';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { KeyboardAvoidingView, KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import { sortBy } from 'lodash';
 
 import { useTheme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
+import { Stack } from '~/components/atoms/Stack';
 import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
 import { ChatMessageGroup } from '~/components/ChatMessageGroup';
+import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { trpc } from '~/services/trpc';
 import { messagesToChatListItems } from '~/util/messages';
@@ -27,6 +32,8 @@ export default screen(
         const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
+        const insets = useSafeAreaInsets();
+
         const {
             data: messages,
             fetchNextPage: loadOlderMessages,
@@ -44,22 +51,14 @@ export default screen(
             });
         }, [group.id]);
 
-        const handleCreatePayment = useCallback(() => {
-            router.push({
-                pathname: '/group/[groupId]/create-payment',
-                params: { groupId: group.id },
-            });
-        }, [group.id]);
-
         return (
             <Screen>
                 <Screen.Header title={group.name} bordered />
-                <Screen.Content>
-                    <KeyboardAvoidingView
-                        style={{ flex: 1 }}
-                        behavior="padding"
-                        keyboardVerticalOffset={44}
-                    >
+                <KeyboardStickyView
+                    style={{ flex: 1, zIndex: 0 }}
+                    offset={{ opened: insets.bottom }}
+                >
+                    <Screen.Content disableTopInset>
                         <ChatBackground flex={1}>
                             <Animated.FlatList
                                 data={chatListItems}
@@ -98,20 +97,38 @@ export default screen(
                                 }}
                                 inverted
                                 contentContainerStyle={{
+                                    paddingBottom: 100,
                                     paddingHorizontal: theme.spacing.xs,
                                     paddingVertical: theme.spacing.lg,
                                 }}
                                 onEndReached={() => loadOlderMessages()}
                                 onEndReachedThreshold={0.5}
                             />
+                            <BlurView
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    backgroundColor: 'rgba(0,0,0,0.5)',
+                                }}
+                                intensity={50}
+                            >
+                                <Stack row justifyBetween p="md">
+                                    <Typography variant="h6">Status: +$45.50</Typography>
+                                    <IconButton
+                                        icon="ChevronRight"
+                                        size="sm"
+                                        color="primary"
+                                        text="View summary"
+                                        variant="ghost"
+                                    />
+                                </Stack>
+                            </BlurView>
                         </ChatBackground>
-                    </KeyboardAvoidingView>
-                    <ChatInputFooter
-                        onSendMessage={sendMessage}
-                        onNewExpense={handleCreateExpense}
-                        onNewPayment={handleCreatePayment}
-                    />
-                </Screen.Content>
+                        <ChatInputFooter onSendMessage={sendMessage} />
+                    </Screen.Content>
+                </KeyboardStickyView>
             </Screen>
         );
     }

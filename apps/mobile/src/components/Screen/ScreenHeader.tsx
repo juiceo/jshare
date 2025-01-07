@@ -23,7 +23,14 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
     const styles = getStyles(theme);
     const router = useRouter();
     return (
-        <Box style={{ paddingTop: disableInset ? 0 : insets.top }}>
+        <Box
+            style={{
+                paddingTop: disableInset ? 0 : insets.top,
+                position: 'relative',
+                zIndex: 1000,
+            }}
+            bg="background.main"
+        >
             <Stack row p="xl" spacing="xl" style={[bordered ? styles.bordered : undefined]}>
                 <Stack w={40}>
                     {backButton === 'back' && (

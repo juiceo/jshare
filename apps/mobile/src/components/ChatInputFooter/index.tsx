@@ -1,24 +1,18 @@
 import { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Button } from '~/components/Button';
 import { IconButton } from '~/components/IconButton';
 
 export type ChatInputFooterProps = {
     onSendMessage: (text: string) => void;
-    onNewExpense: () => void;
-    onNewPayment: () => void;
 };
 
 export const ChatInputFooter = (props: ChatInputFooterProps) => {
-    const { onSendMessage, onNewExpense, onNewPayment } = props;
+    const { onSendMessage } = props;
     const { theme } = useTheme();
-    const insets = useSafeAreaInsets();
     const styles = getStyles(theme);
     const [inputValue, setInputValue] = useState<string>('');
 
@@ -29,31 +23,22 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
 
     return (
         <Stack>
-            <Stack row p="md" center style={styles.buttonsWrapper}>
-                <Button variant="ghost" color="primary" size="sm" onPress={onNewExpense}>
-                    New expense
-                </Button>
-                <Button variant="ghost" size="sm" onPress={onNewPayment}>
-                    New payment
-                </Button>
+            <Stack row spacing="md" alignCenter p="md">
+                <IconButton icon="Plus" size="sm" color="primary" />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Type a message..."
+                    value={inputValue}
+                    onChangeText={setInputValue}
+                />
+                <IconButton
+                    icon="Send"
+                    rounded
+                    disabled={!inputValue}
+                    size="sm"
+                    onPress={handleSendMessage}
+                />
             </Stack>
-            <KeyboardStickyView style={styles.inputWrapper} offset={{ opened: insets.bottom }}>
-                <Stack row spacing="md" alignCenter>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Type a message..."
-                        value={inputValue}
-                        onChangeText={setInputValue}
-                    />
-                    <IconButton
-                        icon="Send"
-                        rounded
-                        disabled={!inputValue}
-                        size="sm"
-                        onPress={handleSendMessage}
-                    />
-                </Stack>
-            </KeyboardStickyView>
         </Stack>
     );
 };
@@ -66,11 +51,7 @@ const getStyles = (theme: Theme) => {
             borderTopWidth: 1,
             borderTopColor: theme.palette.border.divider,
         },
-        buttonsWrapper: {
-            padding: theme.spacing.md,
-            borderTopWidth: 1,
-            borderTopColor: theme.palette.border.divider,
-        },
+
         input: {
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,

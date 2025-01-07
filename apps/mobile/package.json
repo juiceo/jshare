@@ -41,6 +41,7 @@
         "@trpc/server": "catalog:",
         "dayjs": "catalog:",
         "expo": "catalog:",
+        "expo-blur": "~13.0.2",
         "expo-constants": "catalog:",
         "expo-dev-client": "catalog:",
         "expo-font": "catalog:",
