@@ -34,7 +34,7 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     return (
         <Stack>
             <Stack row spacing="md" alignCenter p="md">
-                <IconButton icon="Plus" size="sm" color="primary" onPress={handleCreateExpense} />_
+                <IconButton icon="Plus" size="sm" color="primary" onPress={handleCreateExpense} />
                 <TextInput
                     style={styles.input}
                     placeholder="Type a message..."
