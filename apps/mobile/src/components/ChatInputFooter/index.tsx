@@ -1,6 +1,5 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import { useRouter } from 'expo-router';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
@@ -8,14 +7,12 @@ import { Stack } from '~/components/atoms/Stack';
 import { IconButton } from '~/components/IconButton';
 
 export type ChatInputFooterProps = {
-    groupId: string;
     onSendMessage: (text: string) => void;
 };
 
 export const ChatInputFooter = (props: ChatInputFooterProps) => {
-    const { onSendMessage, groupId } = props;
+    const { onSendMessage } = props;
     const { theme } = useTheme();
-    const router = useRouter();
     const styles = getStyles(theme);
     const [inputValue, setInputValue] = useState<string>('');
 
@@ -24,17 +21,9 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
         setInputValue('');
     };
 
-    const handleCreateExpense = useCallback(() => {
-        router.push({
-            pathname: '/group/[groupId]/create-expense',
-            params: { groupId },
-        });
-    }, [groupId, router]);
-
     return (
         <Stack>
             <Stack row spacing="md" alignCenter p="md">
-                <IconButton icon="Plus" size="sm" color="primary" onPress={handleCreateExpense} />
                 <TextInput
                     style={styles.input}
                     placeholder="Type a message..."

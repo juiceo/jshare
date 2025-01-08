@@ -3,6 +3,7 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
+import { useRouter } from 'expo-router';
 import { sortBy } from 'lodash';
 
 import { useTheme } from '@jshare/theme';
@@ -31,6 +32,7 @@ export default screen(
         const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
+        const router = useRouter();
         const insets = useSafeAreaInsets();
 
         const {
@@ -87,6 +89,34 @@ export default screen(
                                         }
                                     }
                                 }}
+                                ListHeaderComponent={
+                                    <Stack row center spacing="md" mt="3xl">
+                                        <IconButton
+                                            icon={'CreditCard'}
+                                            text="New expense"
+                                            textPos="right"
+                                            variant="ghost"
+                                            onPress={() => {
+                                                router.push({
+                                                    pathname: '/group/[groupId]/create-expense',
+                                                    params: { groupId: group.id },
+                                                });
+                                            }}
+                                        />
+                                        <IconButton
+                                            icon={'ArrowLeftRight'}
+                                            text="New payment"
+                                            textPos="right"
+                                            variant="ghost"
+                                            onPress={() => {
+                                                router.push({
+                                                    pathname: '/group/[groupId]/create-payment',
+                                                    params: { groupId: group.id },
+                                                });
+                                            }}
+                                        />
+                                    </Stack>
+                                }
                                 inverted
                                 contentContainerStyle={{
                                     paddingBottom: 100,
@@ -118,7 +148,7 @@ export default screen(
                                 </Stack>
                             </BlurView>
                         </ChatBackground>
-                        <ChatInputFooter onSendMessage={sendMessage} groupId={group.id} />
+                        <ChatInputFooter onSendMessage={sendMessage} />
                     </Screen.Content>
                 </KeyboardStickyView>
             </Screen>
