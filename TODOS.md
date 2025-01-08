@@ -13,3 +13,4 @@
 -   Expense summary view
     [ ] Add expense summary view
     [ ] Add tag to chat view header to show current balance for user
+    [ ] Use same tag element in group cards
