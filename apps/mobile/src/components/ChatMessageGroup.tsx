@@ -3,12 +3,13 @@ import { StyleSheet } from 'react-native';
 
 import { getUserDefaultAvatarUrl, getUserShortName } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
-import { DB } from '@jshare/types';
+import { AuthorType, DB } from '@jshare/types';
 
 import { Box } from '~/components/atoms/Box';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessage } from '~/components/ChatMessage';
+import { SystemMessage } from '~/components/SystemMessage';
 import { useProfileById } from '~/hooks/useProfileById';
 
 export type ChatMessageGroupProps = {
@@ -21,27 +22,41 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
     const { theme } = useTheme();
     const { profile } = useProfileById(props.authorId);
     const isSelf = props.authorId === props.userId;
+    const isSystem = props.authorId === null;
     const styles = getStyles(theme, {
-        align: isSelf ? 'right' : 'left',
+        align: isSelf ? 'right' : isSystem ? 'center' : 'left',
     });
     return (
         <Stack style={[styles.wrapper]}>
             <Box style={styles.messages}>
                 {props.messages.map((message) => {
-                    return (
-                        <ChatMessage
-                            key={message.id}
-                            text={message.text ?? ''}
-                            timestamp={message.createdAt}
-                            authorName={
-                                !isSelf && message.author
-                                    ? getUserShortName(message.author)
-                                    : undefined
-                            }
-                            color={isSelf ? 'primary' : 'secondary'}
-                            attachments={message.attachments}
-                        />
-                    );
+                    switch (message.authorType) {
+                        case AuthorType.User: {
+                            return (
+                                <ChatMessage
+                                    key={message.key}
+                                    text={message.text ?? ''}
+                                    timestamp={message.createdAt}
+                                    authorName={
+                                        !isSelf && message.author
+                                            ? getUserShortName(message.author)
+                                            : undefined
+                                    }
+                                    color={isSelf ? 'primary' : 'secondary'}
+                                    attachments={message.attachments}
+                                />
+                            );
+                        }
+                        case AuthorType.System: {
+                            return (
+                                <SystemMessage
+                                    key={message.key}
+                                    text={message.text ?? ''}
+                                    timestamp={message.createdAt}
+                                />
+                            );
+                        }
+                    }
                 })}
             </Box>
             {!isSelf && props.authorId && (
@@ -59,18 +74,25 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
     );
 };
 
-const getStyles = (theme: Theme, opts: { align: 'left' | 'right' }) => {
+const getStyles = (theme: Theme, opts: { align: 'left' | 'right' | 'center' }) => {
     return StyleSheet.create({
         wrapper: {
             flexDirection: opts.align === 'right' ? 'row' : 'row-reverse',
             alignItems: 'flex-end',
             gap: theme.spacing.sm,
-            paddingLeft: opts.align === 'right' ? theme.spacing['3xl'] : 0,
-            paddingRight: opts.align === 'left' ? theme.spacing['3xl'] : 0,
+            paddingLeft:
+                opts.align === 'right' || opts.align === 'center' ? theme.spacing['3xl'] : 0,
+            paddingRight:
+                opts.align === 'left' || opts.align === 'center' ? theme.spacing['3xl'] : 0,
         },
         messages: {
             flexDirection: 'column',
-            alignItems: opts.align === 'right' ? 'flex-end' : 'flex-start',
+            alignItems:
+                opts.align === 'right'
+                    ? 'flex-end'
+                    : opts.align === 'center'
+                      ? 'center'
+                      : 'flex-start',
             gap: 2,
             flex: 1,
         },
