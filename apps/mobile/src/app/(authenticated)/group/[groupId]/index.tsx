@@ -1,9 +1,8 @@
-import { useCallback, useMemo } from 'react';
-import { KeyboardAvoidingView, KeyboardStickyView } from 'react-native-keyboard-controller';
+import { useMemo } from 'react';
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
-import { router } from 'expo-router';
 import { sortBy } from 'lodash';
 
 import { useTheme } from '@jshare/theme';
@@ -43,13 +42,6 @@ export default screen(
         const chatListItems = useMemo(() => {
             return messagesToChatListItems(messages ?? []);
         }, [messages]);
-
-        const handleCreateExpense = useCallback(() => {
-            router.push({
-                pathname: '/group/[groupId]/create-expense',
-                params: { groupId: group.id },
-            });
-        }, [group.id]);
 
         return (
             <Screen>
@@ -126,7 +118,7 @@ export default screen(
                                 </Stack>
                             </BlurView>
                         </ChatBackground>
-                        <ChatInputFooter onSendMessage={sendMessage} />
+                        <ChatInputFooter onSendMessage={sendMessage} groupId={group.id} />
                     </Screen.Content>
                 </KeyboardStickyView>
             </Screen>
