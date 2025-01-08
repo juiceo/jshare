@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Pressable } from 'react-native';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -136,16 +137,25 @@ export default screen(
                                 }}
                                 intensity={50}
                             >
-                                <Stack row justifyBetween p="md">
-                                    <Typography variant="h6">Status: +$45.50</Typography>
-                                    <IconButton
-                                        icon="ChevronRight"
-                                        size="sm"
-                                        color="primary"
-                                        text="View summary"
-                                        variant="ghost"
-                                    />
-                                </Stack>
+                                <Pressable
+                                    onPress={() =>
+                                        router.push({
+                                            pathname: '/group/[groupId]/summary',
+                                            params: { groupId: group.id },
+                                        })
+                                    }
+                                >
+                                    <Stack row justifyBetween p="md">
+                                        <Typography variant="h6">Status: +$45.50</Typography>
+                                        <IconButton
+                                            icon="ChevronRight"
+                                            size="sm"
+                                            color="primary"
+                                            text="View summary"
+                                            variant="ghost"
+                                        />
+                                    </Stack>
+                                </Pressable>
                             </BlurView>
                         </ChatBackground>
                         <ChatInputFooter onSendMessage={sendMessage} />

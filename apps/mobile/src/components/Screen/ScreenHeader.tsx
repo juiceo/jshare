@@ -11,13 +11,14 @@ import { Typography } from '~/components/Typography';
 
 export type ScreenHeaderProps = {
     title: string;
+    subtitle?: string;
     backButton?: 'back' | 'down';
     bordered?: boolean;
     disableInset?: boolean;
 };
 
 export const ScreenHeader = (props: ScreenHeaderProps) => {
-    const { title, backButton = 'back', bordered, disableInset } = props;
+    const { title, subtitle, backButton = 'back', bordered, disableInset } = props;
     const { theme } = useTheme();
     const insets = useSafeAreaInsets();
     const styles = getStyles(theme);
@@ -54,6 +55,11 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                     <Typography variant="h4" align="center">
                         {title.trim()}
                     </Typography>
+                    {subtitle && (
+                        <Typography variant="caption" color="hint" align="center">
+                            {subtitle}
+                        </Typography>
+                    )}
                 </Stack>
                 <Stack w={40}></Stack>
             </Stack>

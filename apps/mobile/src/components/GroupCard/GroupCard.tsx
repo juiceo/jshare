@@ -19,8 +19,6 @@ export const GroupCard = (props: GroupCardProps) => {
 
     const { data: groupTotal } = trpc.expenses.getGroupTotal.useQuery({ groupId: group.id });
 
-    console.log('COVER IMAGE', group.coverImage);
-
     return (
         <Stack
             br="xl"
