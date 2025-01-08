@@ -139,7 +139,7 @@ export const expensesRouter = router({
 
             return expense;
         }),
-    totalByGroup: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
+    getGroupTotal: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
         if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
@@ -158,7 +158,7 @@ export const expensesRouter = router({
 
         return result._sum.amount ?? 0;
     }),
-    getTotalBalance: authProcedure.query(async (opts) => {
+    getOwnSummary: authProcedure.query(async (opts) => {
         const userId = opts.ctx.userId;
 
         const [paid, received] = await Promise.all([

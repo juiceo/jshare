@@ -19,7 +19,7 @@ export default screen(
     },
     ({ router }) => {
         const [groups] = trpc.groups.list.useSuspenseQuery();
-        const { data: totalBalance } = trpc.expenses.getTotalBalance.useQuery();
+        const { data: expenseSummary } = trpc.expenses.getOwnSummary.useQuery();
 
         return (
             <Screen>
@@ -37,9 +37,12 @@ export default screen(
                                 <Typography variant="overline" mb="md">
                                     Your balance
                                 </Typography>
-                                <Skeleton show={!totalBalance} colorMode="dark">
+                                <Skeleton show={!expenseSummary} colorMode="dark">
                                     <Typography variant="h1">
-                                        {formatAmount(totalBalance?.balance ?? 0, 'USD')}
+                                        {/**
+                                         * TODO: Should have default currency for user, and use it here
+                                         */}
+                                        {formatAmount(expenseSummary?.balance ?? 0, 'USD')}
                                     </Typography>
                                 </Skeleton>
                             </Stack>
