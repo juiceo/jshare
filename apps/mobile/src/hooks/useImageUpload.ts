@@ -18,7 +18,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
         ): Promise<{ uploaded: DB.Image[]; failed: number }> => {
             setUploadingCount((prev) => prev + assets.length);
 
-            const imageIds = await Promise.all(
+            const images = await Promise.all(
                 assets.map(async (asset) => {
                     return uploadImage(asset).catch((err: any) => {
                         console.error('Image upload failed: ' + err.message);
@@ -26,7 +26,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
                     });
                 })
             );
-            const [uploaded, failed] = partition(imageIds, (id) => !!id);
+            const [uploaded, failed] = partition(images, (image) => !!image);
             setUploadingCount((prev) => prev - assets.length);
 
             return {

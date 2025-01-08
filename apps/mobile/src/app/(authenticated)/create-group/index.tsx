@@ -39,10 +39,13 @@ export default screen(
         });
 
         const handleSubmit = async (data: Schema) => {
+            console.log('SUBMIT DATA', data);
             await createGroup(data);
             trpcUtils.groups.invalidate();
             router.dismiss();
         };
+
+        console.log('COVER IMAGE NOW', form.getValues('coverImage'));
 
         return (
             <Screen>

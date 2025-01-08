@@ -66,9 +66,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                 onSelect={(option) => {
                     switch (option) {
                         case 'library':
-                            return imageUpload
-                                .uploadFromLibrary()
-                                .then(({ uploaded }) => onChange(uploaded[0] ?? null));
+                            return imageUpload.uploadFromLibrary().then(({ uploaded }) => {
+                                onChange(uploaded[0] ?? null);
+                            });
                         case 'camera':
                             return imageUpload
                                 .uploadFromCamera()

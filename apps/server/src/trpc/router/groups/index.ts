@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { Role, zCurrency } from '@jshare/types';
+import { Role, zCurrency, zDbImage } from '@jshare/types';
 
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
@@ -13,7 +13,7 @@ export const groupsRouter = router({
             z.object({
                 name: z.string(),
                 currency: zCurrency,
-                coverImageId: z.string().optional(),
+                coverImage: zDbImage.optional(),
             })
         )
         .mutation(async (opts) => {
@@ -21,10 +21,10 @@ export const groupsRouter = router({
                 data: {
                     name: opts.input.name,
                     currency: opts.input.currency,
-                    coverImage: opts.input.coverImageId
+                    coverImage: opts.input.coverImage
                         ? {
                               connect: {
-                                  id: opts.input.coverImageId,
+                                  id: opts.input.coverImage.id,
                               },
                           }
                         : undefined,

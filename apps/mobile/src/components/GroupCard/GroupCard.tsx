@@ -15,6 +15,8 @@ export type GroupCardProps = {
 export const GroupCard = (props: GroupCardProps) => {
     const { group } = props;
 
+    console.log('COVER IMAGE', group.coverImage);
+
     return (
         <Stack
             br="xl"

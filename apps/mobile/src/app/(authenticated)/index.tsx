@@ -1,4 +1,7 @@
 import { Pressable } from 'react-native';
+import { Skeleton } from 'moti/skeleton';
+
+import { formatAmount } from '@jshare/common';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -16,6 +19,7 @@ export default screen(
     },
     ({ router }) => {
         const [groups] = trpc.groups.list.useSuspenseQuery();
+        const { data: totalBalance } = trpc.expenses.getTotalBalance.useQuery();
 
         return (
             <Screen>
@@ -29,11 +33,15 @@ export default screen(
                             </Stack>
                         </Stack>
                         <Stack row height={140} mt="3xl">
-                            <Stack column justifyCenter>
+                            <Stack column justifyCenter flex={1}>
                                 <Typography variant="overline" mb="md">
                                     Your balance
                                 </Typography>
-                                <Typography variant="h1">$13,370.86</Typography>
+                                <Skeleton show={!totalBalance} colorMode="dark">
+                                    <Typography variant="h1">
+                                        {formatAmount(totalBalance?.balance ?? 0, 'USD')}
+                                    </Typography>
+                                </Skeleton>
                             </Stack>
                             <Stack
                                 bg="error.light"
@@ -43,7 +51,7 @@ export default screen(
                                 style={{ position: 'relative', right: -50 }}
                             />
                         </Stack>
-                        <Stack mt="3xl" p="xl" br="xl">
+                        <Stack mt="3xl" br="xl" mb="xl">
                             <Stack row alignCenter justifyBetween>
                                 <Typography variant="overline">Your groups</Typography>
                                 <Button
