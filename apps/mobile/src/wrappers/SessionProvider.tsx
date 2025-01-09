@@ -74,3 +74,13 @@ export function useSession() {
 
     return context;
 }
+
+export function useCurrentUser() {
+    const { session } = useSession();
+
+    if (!session) {
+        throw new Error('useCurrentUser can only be used inside an authenticated route');
+    }
+
+    return session.user;
+}

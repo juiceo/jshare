@@ -6,9 +6,10 @@ import { DB } from '@jshare/types';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
-import { Icon } from '~/components/Icon';
+import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/services/trpc';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
     group: DB.Group<{ coverImage: true; participants: true }>;
@@ -16,8 +17,13 @@ export type GroupCardProps = {
 
 export const GroupCard = (props: GroupCardProps) => {
     const { group } = props;
+    const user = useCurrentUser();
 
-    const { data: groupTotal } = trpc.expenses.getGroupTotal.useQuery({ groupId: group.id });
+    const { data: groupTotal } = trpc.expenses.getTotalForGroup.useQuery({ groupId: group.id });
+    const { data: userStatus } = trpc.expenses.getStatusForUserInGroup.useQuery({
+        groupId: group.id,
+        userId: user.id,
+    });
 
     return (
         <Stack
@@ -41,24 +47,13 @@ export const GroupCard = (props: GroupCardProps) => {
                 >
                     <Stack p="xl" row justifyBetween alignCenter>
                         <Typography variant="caption">2 days ago</Typography>
-                        <Stack
-                            bg="background.elevation1"
-                            row
-                            center
-                            spacing="sm"
-                            br="xl"
-                            px="lg"
-                            py="sm"
-                        >
-                            <Icon
-                                name="ArrowDownRight"
-                                size={16}
-                                color={(theme) => theme.palette.error.light}
+                        {userStatus && (
+                            <StatusBadge
+                                amount={userStatus.balance}
+                                currency={group.currency}
+                                prefix="You:"
                             />
-                            <Typography variant="caption" color="error.light">
-                                You owe: 100$
-                            </Typography>
-                        </Stack>
+                        )}
                     </Stack>
                 </LinearGradient>
             </Stack>

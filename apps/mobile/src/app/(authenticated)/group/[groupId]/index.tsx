@@ -1,9 +1,7 @@
 import { useMemo } from 'react';
-import { Pressable } from 'react-native';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import { sortBy } from 'lodash';
 
@@ -15,9 +13,9 @@ import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
 import { ChatMessageGroup } from '~/components/ChatMessageGroup';
+import { ChatStatusHeader } from '~/components/ChatStatusHeader';
 import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
-import { Typography } from '~/components/Typography';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { trpc } from '~/services/trpc';
 import { messagesToChatListItems } from '~/util/messages';
@@ -127,36 +125,7 @@ export default screen(
                                 onEndReached={() => loadOlderMessages()}
                                 onEndReachedThreshold={0.5}
                             />
-                            <BlurView
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    right: 0,
-                                    backgroundColor: 'rgba(0,0,0,0.5)',
-                                }}
-                                intensity={50}
-                            >
-                                <Pressable
-                                    onPress={() =>
-                                        router.push({
-                                            pathname: '/group/[groupId]/summary',
-                                            params: { groupId: group.id },
-                                        })
-                                    }
-                                >
-                                    <Stack row justifyBetween p="md">
-                                        <Typography variant="h6">Status: +$45.50</Typography>
-                                        <IconButton
-                                            icon="ChevronRight"
-                                            size="sm"
-                                            color="primary"
-                                            text="View summary"
-                                            variant="ghost"
-                                        />
-                                    </Stack>
-                                </Pressable>
-                            </BlurView>
+                            <ChatStatusHeader groupId={group.id} currency={group.currency} />
                         </ChatBackground>
                         <ChatInputFooter onSendMessage={sendMessage} />
                     </Screen.Content>

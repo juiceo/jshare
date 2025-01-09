@@ -12,14 +12,18 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     {
         route: '/(authenticated)/',
     },
     ({ router }) => {
+        const user = useCurrentUser();
         const [groups] = trpc.groups.list.useSuspenseQuery();
-        const { data: expenseSummary } = trpc.expenses.getOwnSummary.useQuery();
+        const { data: expenseSummary } = trpc.expenses.getStatusForUser.useQuery({
+            userId: user.id,
+        });
 
         return (
             <Screen>

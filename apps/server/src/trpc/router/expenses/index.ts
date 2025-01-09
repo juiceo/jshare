@@ -1,9 +1,10 @@
 import { TRPCError } from '@trpc/server';
+import { chain, sumBy } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { MessageAttachmentType } from '@jshare/db';
-import { AuthorType, zCurrency, zExpenseShare } from '@jshare/types';
+import { AuthorType, zCurrency, zExpenseShare, type DB } from '@jshare/types';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { prisma } from '../../../services/prisma';
@@ -139,27 +140,117 @@ export const expensesRouter = router({
 
             return expense;
         }),
-    getGroupTotal: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
-        if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+    getStatusByUserInGroup: authProcedure
+        .input(z.object({ groupId: z.string() }))
+        .query(async (opts) => {
+            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Group with id ${opts.input.groupId} not found`,
+                });
+            }
+
+            const [expenses, participants] = await Promise.all([
+                prisma.expense.findMany({
+                    where: {
+                        groupId: opts.input.groupId,
+                    },
+                    include: {
+                        shares: true,
+                    },
+                }),
+                prisma.groupParticipant.findMany({
+                    where: {
+                        groupId: opts.input.groupId,
+                    },
+                    include: {
+                        user: true,
+                    },
+                }),
+            ]);
+
+            const dataByUser = participants.reduce(
+                (result, participant) => {
+                    result[participant.userId] = {
+                        paid: 0,
+                        received: 0,
+                        profile: participant.user,
+                    };
+                    return result;
+                },
+                {} as Record<string, { paid: number; received: number; profile: DB.Profile }>
+            );
+
+            expenses.forEach((expense) => {
+                if (dataByUser[expense.payerId]) {
+                    dataByUser[expense.payerId].paid += expense.amount;
+                }
+
+                expense.shares.forEach((share) => {
+                    if (dataByUser[share.userId]) {
+                        dataByUser[share.userId].received += share.amount;
+                    }
+                });
+
+                return dataByUser;
+            });
+
+            return chain(dataByUser)
+                .entries()
+                .map(([userId, status]) => {
+                    return {
+                        ...status,
+                        userId,
+                        balance: status.paid - status.received,
+                    };
+                })
+                .sortBy((item) => -item.balance)
+                .value();
+        }),
+    getStatusForUserInGroup: authProcedure
+        .input(z.object({ userId: z.string(), groupId: z.string() }))
+        .query(async (opts) => {
+            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Group with id ${opts.input.groupId} not found`,
+                });
+            }
+
+            const [paidExpenses, expenseShares] = await Promise.all([
+                prisma.expense.findMany({
+                    where: {
+                        groupId: opts.input.groupId,
+                        payerId: opts.input.userId,
+                    },
+                }),
+                prisma.expenseShare.findMany({
+                    where: {
+                        userId: opts.input.userId,
+                        expense: {
+                            groupId: opts.input.groupId,
+                        },
+                    },
+                }),
+            ]);
+
+            const paid = sumBy(paidExpenses, 'amount');
+            const received = sumBy(expenseShares, 'amount');
+
+            return {
+                paid,
+                received,
+                balance: paid - received,
+            };
+        }),
+    getStatusForUser: authProcedure.input(z.object({ userId: z.string() })).query(async (opts) => {
+        const userId = opts.ctx.userId;
+        if (opts.input.userId !== userId) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
-                message: `Group with id ${opts.input.groupId} not found`,
+                message: 'Cannot get status for other users',
             });
         }
-
-        const result = await prisma.expense.aggregate({
-            _sum: {
-                amount: true,
-            },
-            where: {
-                groupId: opts.input.groupId,
-            },
-        });
-
-        return result._sum.amount ?? 0;
-    }),
-    getOwnSummary: authProcedure.query(async (opts) => {
-        const userId = opts.ctx.userId;
 
         const [paid, received] = await Promise.all([
             prisma.expense
@@ -189,5 +280,24 @@ export const expensesRouter = router({
             received,
             balance: paid - received,
         };
+    }),
+    getTotalForGroup: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
+        if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+            throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `Group with id ${opts.input.groupId} not found`,
+            });
+        }
+
+        const result = await prisma.expense.aggregate({
+            _sum: {
+                amount: true,
+            },
+            where: {
+                groupId: opts.input.groupId,
+            },
+        });
+
+        return result._sum.amount ?? 0;
     }),
 });

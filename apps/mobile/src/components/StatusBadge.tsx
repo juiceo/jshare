@@ -1,13 +1,13 @@
 import { formatAmount } from '@jshare/common';
 import { useTheme } from '@jshare/theme';
-import type { Currency } from '@jshare/types';
+import type { DB } from '@jshare/types';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/Typography';
 
 export type StatusBadgeProps = {
     amount: number;
-    currency: Currency;
+    currency: DB.Currency;
     prefix?: string;
 };
 
@@ -17,7 +17,7 @@ export const StatusBadge = (props: StatusBadgeProps) => {
     const isNegative = props.amount < 0;
     const isPositive = props.amount > 0;
     return (
-        <Stack row alignCenter bg="background.elevation3" px="md" br="xl" spacing="sm">
+        <Stack row alignCenter bg="background.elevation1" px="md" br="xl" spacing="sm">
             {prefix && <Typography variant="h6">Status: </Typography>}
             <Typography
                 variant="h6"
