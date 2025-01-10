@@ -52,7 +52,8 @@ const isSxKey = (key: string): boolean => {
         case 'borderRadius':
         case 'br':
         case 'border':
-        case 'absoluteFill': {
+        case 'absoluteFill':
+        case 'ar': {
             return true;
         }
         default: {
@@ -194,6 +195,12 @@ const getStylesFromSxProperty = <TKey extends keyof SxProps>(
                 left: 0,
                 right: 0,
                 bottom: 0,
+            };
+        }
+        case 'ar': {
+            const _value = value as SxProps['ar'];
+            return {
+                aspectRatio: _value,
             };
         }
 

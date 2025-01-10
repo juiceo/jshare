@@ -7,6 +7,7 @@ import { ScreenHeader } from '~/components/Screen/ScreenHeader';
 
 export const ScreenProvider = (props: { children: ReactElement | ReactElement[] }) => {
     const childrenArray = Children.toArray(props.children) as ReactElement[];
+    const [headerHeight, setHeaderHeight] = useState<number>(0);
     const hasFooter = childrenArray.some((child) => child.type === ScreenFooter);
     const hasHeader = childrenArray.some((child) => child.type === ScreenHeader);
     const [hasFocus, setHasFocus] = useState<boolean>(false);
@@ -26,6 +27,8 @@ export const ScreenProvider = (props: { children: ReactElement | ReactElement[] 
                 hasFooter,
                 hasHeader,
                 hasFocus,
+                headerHeight,
+                setHeaderHeight,
             }}
         >
             {props.children}

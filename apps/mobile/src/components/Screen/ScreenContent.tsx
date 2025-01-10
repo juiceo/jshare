@@ -1,8 +1,8 @@
-import { type PropsWithChildren } from 'react';
 import { View, type ViewStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import type { ScreenContextType } from '~/components/Screen/ScreenContext';
 import { useScreen } from '~/components/Screen/useScreen';
 
 export type ScreenContentProps = {
@@ -10,34 +10,44 @@ export type ScreenContentProps = {
     contentStyle?: ViewStyle;
     scrollable?: boolean;
     disableTopInset?: boolean;
-    disableBottomInset?: boolean;
+    disableHeaderOffset?: boolean;
+    children: React.ReactNode | ((context: ScreenContextType) => React.ReactNode);
 };
 
-export const ScreenContent = (props: PropsWithChildren<ScreenContentProps>) => {
-    const { style, contentStyle, scrollable = false, disableBottomInset, disableTopInset } = props;
+export const ScreenContent = (props: ScreenContentProps) => {
+    const { style, contentStyle, scrollable = false, disableHeaderOffset, disableTopInset } = props;
     const insets = useSafeAreaInsets();
-    const { hasHeader, hasFooter, hasFocus } = useScreen();
+    const screenContext = useScreen();
+    const { hasFooter, hasFocus } = screenContext;
 
-    const bottomInset = hasFooter || disableBottomInset ? 0 : insets.bottom;
-    const topInset = hasHeader || disableTopInset ? 0 : insets.top;
+    const bottomInset = hasFooter ? 0 : insets.bottom;
+    const topInset = !disableTopInset ? insets.top : 0;
+    const headerOffset = !disableHeaderOffset ? screenContext.headerHeight : 0;
+
+    const renderChildren = () => {
+        if (typeof props.children === 'function') {
+            return props.children(screenContext);
+        }
+        return props.children;
+    };
 
     if (scrollable) {
         return (
             <KeyboardAwareScrollView
-                style={[{ flex: 1 }, style]}
+                style={[{ flex: 1, position: 'relative' }, style]}
                 contentContainerStyle={[
                     {
                         paddingLeft: insets.left,
                         paddingRight: insets.right,
                         paddingBottom: bottomInset,
-                        paddingTop: topInset,
+                        paddingTop: topInset + headerOffset,
                     },
                     contentStyle,
                 ]}
                 extraKeyboardSpace={-1 * bottomInset}
                 enabled={hasFocus}
             >
-                {props.children}
+                {renderChildren()}
             </KeyboardAwareScrollView>
         );
     } else {
@@ -46,16 +56,17 @@ export const ScreenContent = (props: PropsWithChildren<ScreenContentProps>) => {
                 style={[
                     {
                         flex: 1,
+                        position: 'relative',
                         paddingLeft: insets.left,
                         paddingRight: insets.right,
                         paddingBottom: bottomInset,
-                        paddingTop: topInset,
+                        paddingTop: topInset + headerOffset,
                     },
                     style,
                     contentStyle,
                 ]}
             >
-                {props.children}
+                {renderChildren()}
             </View>
         );
     }

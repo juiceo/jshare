@@ -28,6 +28,7 @@ export type SxLayoutProps = {
     maxH?: ViewStyle['maxHeight'];
     flex?: ViewStyle['flex'];
     absoluteFill?: boolean;
+    ar?: ViewStyle['aspectRatio'];
 };
 
 export type SxPaddingProps = {

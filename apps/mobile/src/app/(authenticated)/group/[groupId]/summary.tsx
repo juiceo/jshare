@@ -15,17 +15,22 @@ export default screen(
     },
     ({ params }) => {
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const { data: groupTotal } = trpc.expenses.getTotalForGroup.useQuery({
+            groupId: params.groupId,
+        });
         const [statusByUser] = trpc.expenses.getStatusByUserInGroup.useSuspenseQuery({
             groupId: params.groupId,
         });
 
         return (
             <Screen>
-                <Screen.Header title="Summary" subtitle={group.name} />
-                <Screen.Content scrollable>
-                    <Stack center p="2xl">
+                <Screen.Header title="Summary" subtitle={group.name} blur />
+                <Screen.Content scrollable disableTopInset disableHeaderOffset>
+                    <Stack column justifyEnd alignCenter ar="1/1" p="2xl">
                         <Typography variant="overline">Group total:</Typography>
-                        <Typography variant="h1">$12412.23</Typography>
+                        <Typography variant="h1">
+                            {groupTotal ? formatAmount(groupTotal, group.currency) : ''}
+                        </Typography>
                     </Stack>
                     <Stack mt="2xl" br="2xl">
                         {statusByUser.map((item, index) => {
