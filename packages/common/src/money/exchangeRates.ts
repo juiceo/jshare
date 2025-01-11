@@ -1,6 +1,6 @@
 import type { DB } from '@jshare/types';
 
-export const baseExchangeRates: DB.ExchangeRates = {
+export const BASE_EXCHANGE_RATES: DB.ExchangeRates = {
     id: 'base',
     baseCurrency: 'USD',
     rates: {

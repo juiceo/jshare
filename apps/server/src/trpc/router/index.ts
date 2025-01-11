@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { publicProcedure, router } from '../trpc';
+import { exchangeRatesRouter } from './exchangeRates';
 import { expensesRouter } from './expenses';
 import { groupParticipantsRouter } from './groupParticipants';
 import { groupsRouter } from './groups';
@@ -25,4 +26,5 @@ export const appRouter = router({
     images: imagesRouter,
     messages: messagesRouter,
     expenses: expensesRouter,
+    exchangeRates: exchangeRatesRouter,
 });

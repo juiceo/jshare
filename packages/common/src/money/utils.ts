@@ -29,17 +29,6 @@ export const getCurrencyDetails = (currency: string) => {
     return CURRENCIES[currency];
 };
 
-export const getAmountInCurrency = (
-    amount: number,
-    currency: string,
-    asCurrency: string,
-    rates: DB.ExchangeRates
-): number => {
-    const exchangeRate = getExchangeRate(currency, asCurrency, rates);
-    if (!exchangeRate) return 0;
-    return amount * exchangeRate;
-};
-
 export const getExchangeRate = (
     fromCurrency: string,
     toCurrency: string,
