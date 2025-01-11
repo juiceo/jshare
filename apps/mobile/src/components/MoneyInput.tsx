@@ -2,22 +2,19 @@ import { useRef } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
-import { getCurrencyDetails } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Typography } from '~/components/Typography';
 
 export type MoneyInputProps = {
     value: number;
     onChange: (value: number) => void;
-    currency: string;
     autoFocus?: boolean;
     bottomSheet?: boolean;
 };
 
 export const MoneyInput = (props: MoneyInputProps) => {
-    const { value, onChange, currency, autoFocus, bottomSheet } = props;
+    const { value, onChange, autoFocus, bottomSheet } = props;
     const { theme } = useTheme();
 
     const InputComponent = bottomSheet ? BottomSheetTextInput : TextInput;
@@ -81,11 +78,6 @@ export const MoneyInput = (props: MoneyInputProps) => {
                             }
                         }}
                     />
-                </Stack>
-                <Stack center>
-                    <Typography variant="caption" color="hint">
-                        {getCurrencyDetails(currency).name_plural}
-                    </Typography>
                 </Stack>
             </Stack>
         </>

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { BASE_EXCHANGE_RATES, getExchangeRate } from '@jshare/common';
+import { BASE_EXCHANGE_RATES, convertAmount, getExchangeRate } from '@jshare/common';
 import type { DB } from '@jshare/types';
 
 import { trpc } from '~/services/trpc';
@@ -21,28 +21,32 @@ export const useCurrencyConversion = () => {
     const { exchangeRates } = useExchangeRates();
 
     const getRate = useCallback(
-        (args: { fromCurrency: string; toCurrency: string }) => {
-            const rate = getExchangeRate(args.fromCurrency, args.toCurrency, exchangeRates);
+        (args: { from: string; to: string }) => {
+            const rate = getExchangeRate({
+                from: args.from,
+                to: args.to,
+                exchangeRates,
+            });
             if (!rate) return 0;
-            return Math.round(rate);
+            return rate.toFixed(3);
         },
         [exchangeRates]
     );
 
-    const getAmountInCurrency = useCallback(
-        (args: { amount: number; currency: string; asCurrency: string }) => {
-            const rate = getRate({
-                fromCurrency: args.currency,
-                toCurrency: args.asCurrency,
+    const convert = useCallback(
+        (args: { amount: number; from: string; to: string }) => {
+            return convertAmount({
+                from: args.from,
+                to: args.to,
+                amount: args.amount,
+                exchangeRates,
             });
-            if (!rate) return 0;
-            return Math.round(args.amount * rate);
         },
-        [getRate]
+        [exchangeRates]
     );
 
     return {
         getRate,
-        getAmountInCurrency,
+        convert,
     };
 };

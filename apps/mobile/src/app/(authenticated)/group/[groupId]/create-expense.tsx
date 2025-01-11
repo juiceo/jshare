@@ -26,6 +26,7 @@ import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEdi
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
+import { useCurrencyConversion } from '~/hooks/useExchangeRates';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
@@ -48,8 +49,10 @@ export default screen(
     },
     ({ params, router }) => {
         const { groupId } = params;
+        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
         const [profile] = trpc.profiles.get.useSuspenseQuery();
+        const { convert, getRate } = useCurrencyConversion();
         const createExpenseMutation = trpc.expenses.create.useMutation();
         const form = useForm<Schema>({
             defaultValues: {
@@ -90,6 +93,7 @@ export default screen(
                     <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
                         <Stack column px="xl">
                             <Stack center py="3xl">
+                                <Typography variant="caption">{currency}</Typography>
                                 <Controller
                                     control={form.control}
                                     name="amount"
@@ -104,11 +108,19 @@ export default screen(
                                                 });
                                                 form.setValue('shares', updatedShares);
                                             }}
-                                            currency={currency}
                                             autoFocus
                                         />
                                     )}
                                 />
+                                {currency !== group.currency && (
+                                    <Typography variant="caption" color="hint">
+                                        {`= ${formatAmount(
+                                            convert({ amount, from: currency, to: group.currency }),
+                                            group.currency
+                                        )}`}
+                                    </Typography>
+                                )}
+                                <Typography variant="caption"></Typography>
                                 <ErrorMessage
                                     errors={form.formState.errors}
                                     name={'amount'}
@@ -194,11 +206,22 @@ export default screen(
                                                         </Typography>
                                                         <Stack column alignEnd>
                                                             <Typography>
-                                                                {
+                                                                {`${field.value} (${
                                                                     getCurrencyDetails(field.value)
                                                                         .name
-                                                                }
+                                                                })`}
                                                             </Typography>
+                                                            {field.value !== group.currency && (
+                                                                <Typography
+                                                                    variant="caption"
+                                                                    color="hint"
+                                                                >
+                                                                    {`1 ${field.value} = ${getRate({
+                                                                        from: field.value,
+                                                                        to: group.currency,
+                                                                    })} ${group.currency}`}
+                                                                </Typography>
+                                                            )}
                                                         </Stack>
                                                     </Stack>
                                                 </RectButton>

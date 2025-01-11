@@ -29,29 +29,42 @@ export const getCurrencyDetails = (currency: string) => {
     return CURRENCIES[currency];
 };
 
-export const getExchangeRate = (
-    fromCurrency: string,
-    toCurrency: string,
-    _rates: DB.ExchangeRates
-): number | null => {
-    if (fromCurrency === toCurrency) return 1;
-    const baseCurrency = _rates.baseCurrency;
-    const rates = _rates.rates as Record<string, number>;
-    if (baseCurrency === fromCurrency) {
-        if (!rates[toCurrency]) {
+export const convertAmount = (args: {
+    amount: number;
+    from: string;
+    to: string;
+    exchangeRates: DB.ExchangeRates;
+}): number => {
+    const rate = getExchangeRate(args);
+    if (!rate) return 0;
+    return Math.round(args.amount * rate);
+};
+
+export const getExchangeRate = (args: {
+    from: string;
+    to: string;
+    exchangeRates: DB.ExchangeRates;
+}): number | null => {
+    const { from, to, exchangeRates } = args;
+
+    if (from === to) return 1;
+    const baseCurrency = exchangeRates.baseCurrency;
+    const rates = exchangeRates.rates as Record<string, number>;
+    if (baseCurrency === from) {
+        if (!rates[to]) {
             return null;
         }
-        return rates[toCurrency];
+        return rates[to];
     }
-    if (baseCurrency === toCurrency) {
-        if (!rates[fromCurrency]) {
+    if (baseCurrency === to) {
+        if (!rates[from]) {
             return null;
         }
-        return 1 / rates[fromCurrency];
+        return 1 / rates[from];
     }
 
-    if (rates[fromCurrency] && rates[toCurrency]) {
-        return rates[fromCurrency] / rates[toCurrency];
+    if (rates[from] && rates[to]) {
+        return rates[from] / rates[to];
     }
 
     return null;

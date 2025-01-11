@@ -10,7 +10,6 @@ const meta = {
     args: {
         value: 0,
         onChange: () => {},
-        currency: 'EUR',
     },
     argTypes: {},
     decorators: [

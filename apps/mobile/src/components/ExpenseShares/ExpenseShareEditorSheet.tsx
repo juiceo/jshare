@@ -75,7 +75,6 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                         <MoneyInput
                             value={share?.amount ?? 0}
                             onChange={handleAmountChange}
-                            currency={'USD'}
                             bottomSheet
                         />
                         <Stack row pt="2xl" spacing="xl">
