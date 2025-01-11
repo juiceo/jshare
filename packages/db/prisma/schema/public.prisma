@@ -148,6 +148,18 @@ model ExpenseShare {
     @@schema("public")
 }
 
+model ExchangeRates {
+    id           String @id @default(uuid())
+    baseCurrency String @db.VarChar(3)
+    rates        Json
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    @@map("exchange_rates")
+    @@schema("public")
+}
+
 enum Role {
     Owner
     Admin
