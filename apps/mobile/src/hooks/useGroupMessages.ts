@@ -21,7 +21,10 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
         utils.messages.listByGroup.invalidate();
     }, [utils.messages.listByGroup]);
 
-    useGroupBroadcasts({ groupId, onMessage: invalidateMessages });
+    useGroupBroadcasts({
+        groupId,
+        onMessage: invalidateMessages,
+    });
 
     const sendMessage = useCallback(
         async (text: string) => {
