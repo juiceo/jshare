@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { range } from 'lodash';
+import { range, uniqueId } from 'lodash';
 import moment from 'moment';
 
 import { AuthorType, type Group, type Message, type Prisma, type PrismaClient } from '../../build';
@@ -43,6 +43,7 @@ export const seedMessages = async (prisma: PrismaClient, groups: Group[]): Promi
                 return range(messageCount).map((): Prisma.MessageCreateManyInput => {
                     const messageCreatedAt = faker.date.between({ from: minDate, to: maxDate });
                     return {
+                        key: uniqueId(),
                         text: faker.company.buzzPhrase(),
                         authorType: AuthorType.User,
                         authorId: userId,

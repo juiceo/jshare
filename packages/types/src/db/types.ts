@@ -35,6 +35,5 @@ export namespace DB {
 
     export type MessageAttachmentType = p.MessageAttachmentType;
     export type AuthorType = p.AuthorType;
-    export type Currency = p.Currency;
     export type Role = p.Role;
 }

@@ -14,3 +14,10 @@
     [x] Add expense summary view
     [x] Add tag to chat view header to show current balance for user
     [x] Use same tag element in group cards
+
+-   Exchange rates
+    [ ] Expenses should keep track of which currency they are in, the exchange rate vs. group currency, and the converted amount
+    [ ] Group statuses should always be in the group currency
+    [ ] User should have a preferred currency, which is used by default for all new groups
+    [ ] User should be able to change their preferred currency
+    [ ] The user's own balance should be in the user's preferred currency

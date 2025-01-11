@@ -11,7 +11,7 @@ import { Typography } from '~/components/Typography';
 export type ExpenseSharesEditorItemProps = {
     user: DB.Profile;
     share: Pick<DB.ExpenseShare, 'locked' | 'amount'> | undefined;
-    currency: DB.Currency;
+    currency: string;
     onPress: () => void;
     onLongPress: () => void;
 };

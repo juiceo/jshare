@@ -47,6 +47,7 @@ export default screen(
                 firstName: data.firstName,
                 lastName: data.lastName,
                 avatarId: data.image?.id,
+                currency: 'USD', //TODO: Add input for preferred currency
                 email,
             });
             router.dismissAll();

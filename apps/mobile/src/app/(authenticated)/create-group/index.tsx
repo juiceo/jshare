@@ -2,7 +2,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { Currency, zCurrency, zDbImage } from '@jshare/types';
+import { zCurrencyCode, zDbImage } from '@jshare/types';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -16,7 +16,7 @@ import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
-    currency: zCurrency,
+    currency: zCurrencyCode,
     coverImage: zDbImage.optional(),
 });
 type Schema = z.infer<typeof schema>;
@@ -34,7 +34,7 @@ export default screen(
             resolver: zodResolver(schema),
             defaultValues: {
                 name: '',
-                currency: Currency.USD,
+                currency: 'USD',
             },
         });
 

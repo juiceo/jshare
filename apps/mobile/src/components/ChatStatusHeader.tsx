@@ -2,8 +2,6 @@ import { Pressable } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 
-import type { DB } from '@jshare/types';
-
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { IconButton } from '~/components/IconButton';
@@ -13,7 +11,7 @@ import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type ChatStatusHeaderProps = {
     groupId: string;
-    currency: DB.Currency;
+    currency: string;
 };
 
 export const ChatStatusHeader = (props: ChatStatusHeaderProps) => {

@@ -1,13 +1,12 @@
 import { formatAmount } from '@jshare/common';
 import { useTheme } from '@jshare/theme';
-import type { DB } from '@jshare/types';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/Typography';
 
 export type StatusBadgeProps = {
     amount: number;
-    currency: DB.Currency;
+    currency: string;
     prefix?: string;
 };
 

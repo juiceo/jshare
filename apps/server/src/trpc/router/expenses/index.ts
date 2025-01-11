@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { MessageAttachmentType } from '@jshare/db';
-import { AuthorType, zCurrency, zExpenseShare, type DB } from '@jshare/types';
+import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { prisma } from '../../../services/prisma';
@@ -70,7 +70,7 @@ export const expensesRouter = router({
                 payerId: z.string(),
                 amount: z.number().min(1),
                 description: z.string().min(1).max(100),
-                currency: zCurrency,
+                currency: zCurrencyCode,
                 shares: zExpenseShare
                     .pick({ amount: true, userId: true, locked: true })
                     .array()

@@ -1,6 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
+import { zCurrencyCode } from '@jshare/types';
+
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
 
@@ -11,6 +13,7 @@ export const profilesRouter = router({
                 firstName: z.string(),
                 lastName: z.string(),
                 email: z.string(),
+                currency: zCurrencyCode,
                 avatarId: z.string().optional(),
             })
         )
@@ -21,6 +24,7 @@ export const profilesRouter = router({
                     firstName: opts.input.firstName,
                     lastName: opts.input.lastName,
                     email: opts.input.email,
+                    currency: opts.input.currency,
                     avatar: opts.input.avatarId
                         ? {
                               connect: {

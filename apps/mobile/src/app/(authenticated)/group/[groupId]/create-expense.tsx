@@ -12,7 +12,7 @@ import {
     getTotalFromShares,
     getUserShortName,
 } from '@jshare/common';
-import { Currency, zCurrency, zExpenseShare, zProfile } from '@jshare/types';
+import { zCurrencyCode, zExpenseShare, zProfile } from '@jshare/types';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Menu } from '~/components/atoms/Menu';
@@ -30,7 +30,7 @@ import { screen } from '~/wrappers/screen';
 const schema = z.object({
     payer: zProfile,
     amount: z.number().min(1, 'Please enter an amount'),
-    currency: zCurrency,
+    currency: zCurrencyCode,
     description: z
         .string()
         .min(1, 'Please enter a description')
@@ -53,7 +53,7 @@ export default screen(
             defaultValues: {
                 payer: profile,
                 amount: 0,
-                currency: Currency.EUR,
+                currency: 'USD',
                 description: '',
                 shares: getDefaultShares(groupMembers ?? []),
             },
@@ -205,11 +205,11 @@ export default screen(
                                                     onClose={() => setMenu(null)}
                                                     options={[
                                                         {
-                                                            id: Currency.EUR,
+                                                            id: 'EUR',
                                                             label: 'EUR',
                                                         },
                                                         {
-                                                            id: Currency.USD,
+                                                            id: 'USD',
                                                             label: 'USD',
                                                         },
                                                     ]}

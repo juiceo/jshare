@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Currency } from '@jshare/types';
-
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 
@@ -29,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: {
         amount: 0,
-        currency: Currency.USD,
+        currency: 'USD',
         prefix: 'Status:',
     },
 };
@@ -37,7 +35,7 @@ export const Default: Story = {
 export const NegativeAmount: Story = {
     args: {
         amount: -1120,
-        currency: Currency.USD,
+        currency: 'USD',
         prefix: 'Status:',
     },
 };
@@ -45,7 +43,7 @@ export const NegativeAmount: Story = {
 export const PositiveAmount: Story = {
     args: {
         amount: 2359,
-        currency: Currency.USD,
+        currency: 'USD',
         prefix: 'Status:',
     },
 };
@@ -53,6 +51,6 @@ export const PositiveAmount: Story = {
 export const NoPrefix: Story = {
     args: {
         amount: 2359,
-        currency: Currency.USD,
+        currency: 'USD',
     },
 };

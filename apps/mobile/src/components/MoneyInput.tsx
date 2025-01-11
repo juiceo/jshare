@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
-import type { CurrencyCode } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
@@ -11,7 +10,7 @@ import { Typography } from '~/components/Typography';
 export type MoneyInputProps = {
     value: number;
     onChange: (value: number) => void;
-    currency: CurrencyCode;
+    currency: string;
     autoFocus?: boolean;
     bottomSheet?: boolean;
 };

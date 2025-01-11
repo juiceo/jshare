@@ -62,6 +62,7 @@ export const seedUsers = async (prisma: PrismaClient): Promise<Profile[]> => {
                     email: user.email!,
                     firstName: user.firstName,
                     lastName: user.lastName,
+                    currency: 'USD',
                     avatar: avatar?.data
                         ? {
                               create: {

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { getUserShortName } from '@jshare/common';
-import { AuthorType, Role, zCurrency, zDbImage } from '@jshare/types';
+import { AuthorType, Role, zCurrencyCode, zDbImage } from '@jshare/types';
 
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
@@ -14,7 +14,7 @@ export const groupsRouter = router({
         .input(
             z.object({
                 name: z.string(),
-                currency: zCurrency,
+                currency: zCurrencyCode,
                 coverImage: zDbImage.optional(),
             })
         )

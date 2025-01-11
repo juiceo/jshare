@@ -1,12 +1,7 @@
 import { z } from 'zod';
 
+import { zCurrencyCode } from '../currencies';
 import type { DB } from './types';
-
-export enum Currency {
-    USD = 'USD',
-    EUR = 'EUR',
-}
-export const zCurrency = z.enum(['USD', 'EUR']) satisfies z.ZodType<DB.Currency>;
 
 export enum Role {
     Owner = 'Owner',
@@ -45,6 +40,7 @@ export const zProfile = z.object({
     email: z.string(),
     firstName: z.string(),
     lastName: z.string(),
+    currency: zCurrencyCode,
     avatarId: z.string().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
@@ -76,7 +72,7 @@ export const zExpense = z.object({
     payerId: z.string(),
     groupId: z.string(),
     amount: z.number(),
-    currency: zCurrency,
+    currency: zCurrencyCode,
     description: z.string().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
@@ -87,7 +83,7 @@ export const zExpenseShare = z.object({
     userId: z.string(),
     expenseId: z.string(),
     amount: z.number(),
-    currency: zCurrency,
+    currency: zCurrencyCode,
     locked: z.boolean(),
     updatedAt: z.date(),
     createdAt: z.date(),
