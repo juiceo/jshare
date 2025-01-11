@@ -33,6 +33,7 @@ export namespace DB {
     export type ExpenseShare<I extends p.Prisma.ExpenseShareInclude | undefined = undefined> =
         I extends undefined ? p.ExpenseShare : p.Prisma.ExpenseShareGetPayload<{ include: I }>;
 
+    export type ExchangeRates = p.ExchangeRates;
     export type MessageAttachmentType = p.MessageAttachmentType;
     export type AuthorType = p.AuthorType;
     export type Role = p.Role;

@@ -613,6 +613,9 @@ importers:
       lodash:
         specifier: 'catalog:'
         version: 4.17.21
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@22.10.5)(terser@5.37.0)
     devDependencies:
       '@jshare/eslint-config':
         specifier: workspace:*

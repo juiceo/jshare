@@ -8,13 +8,15 @@
     "scripts": {
         "lint": "eslint --ext js,ts,tsx .",
         "build": "tsup --clean",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "test": "vitest"
     },
     "dependencies": {
-        "lodash": "catalog:",
-        "dayjs": "catalog:",
         "@jshare/types": "workspace:*",
-        "@jshare/util": "workspace:*"
+        "@jshare/util": "workspace:*",
+        "dayjs": "catalog:",
+        "lodash": "catalog:",
+        "vitest": "^2.1.8"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
