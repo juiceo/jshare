@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 import {
     formatAmount,
+    getCurrencyDetails,
     getDefaultShares,
     getSharesWithUpdatedAmount,
     getTotalFromShares,
@@ -20,6 +21,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
+import { CurrencyMenu } from '~/components/CurrencyMenu';
 import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
@@ -191,28 +193,20 @@ export default screen(
                                                             Currency
                                                         </Typography>
                                                         <Stack column alignEnd>
-                                                            <Typography>{field.value}</Typography>
+                                                            <Typography>
+                                                                {
+                                                                    getCurrencyDetails(field.value)
+                                                                        .name
+                                                                }
+                                                            </Typography>
                                                         </Stack>
                                                     </Stack>
                                                 </RectButton>
-                                                <Menu
-                                                    title="Select currency"
+                                                <CurrencyMenu
                                                     value={field.value}
-                                                    onChange={(currency) =>
-                                                        field.onChange(currency)
-                                                    }
+                                                    onChange={field.onChange}
                                                     isOpen={menu === 'currency'}
                                                     onClose={() => setMenu(null)}
-                                                    options={[
-                                                        {
-                                                            id: 'EUR',
-                                                            label: 'EUR',
-                                                        },
-                                                        {
-                                                            id: 'USD',
-                                                            label: 'USD',
-                                                        },
-                                                    ]}
                                                 />
                                             </>
                                         );

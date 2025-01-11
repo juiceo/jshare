@@ -12,6 +12,8 @@ export const OTHER_CURRENCIES = sortBy(
     'name'
 );
 
+export const SORTED_CURRENCIES = [...SUGGESTED_CURRENCIES, ...OTHER_CURRENCIES];
+
 export const formatAmount = (cents: number, currency: string) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(cents / 100);
 };

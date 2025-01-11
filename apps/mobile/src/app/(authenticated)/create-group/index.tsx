@@ -8,6 +8,7 @@ import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
+import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { useCreateGroup } from '~/hooks/useCreateGroup';
@@ -81,19 +82,13 @@ export default screen(
                                 <Select
                                     label="Currency"
                                     placeholder="Select currency"
-                                    options={[
-                                        {
-                                            id: 'USD',
-                                            label: 'United States Dollar',
-                                        },
-                                        {
-                                            id: 'EUR',
-                                            label: 'Euro',
-                                        },
-                                    ]}
+                                    options={CURRENCY_OPTIONS}
                                     value={field.value}
                                     onChange={field.onChange}
                                     error={error?.message}
+                                    MenuProps={{
+                                        title: 'Select group currency',
+                                    }}
                                 />
                             )}
                         />

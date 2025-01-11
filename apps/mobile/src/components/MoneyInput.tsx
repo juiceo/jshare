@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
+import { getCurrencyDetails } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
@@ -49,7 +50,7 @@ export const MoneyInput = (props: MoneyInputProps) => {
 
     return (
         <>
-            <Stack column>
+            <Stack column center>
                 <Stack row alignEnd>
                     <InputComponent
                         ref={majorUnitsInputRef}
@@ -82,7 +83,9 @@ export const MoneyInput = (props: MoneyInputProps) => {
                     />
                 </Stack>
                 <Stack center>
-                    <Typography variant="overline">{currency}</Typography>
+                    <Typography variant="caption" color="hint">
+                        {getCurrencyDetails(currency).name_plural}
+                    </Typography>
                 </Stack>
             </Stack>
         </>

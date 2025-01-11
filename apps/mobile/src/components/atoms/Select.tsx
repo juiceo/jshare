@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { FormControl, type FormControlProps } from '~/components/atoms/FormControl';
-import { Menu } from '~/components/atoms/Menu';
+import { Menu, type MenuProps } from '~/components/atoms/Menu';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
@@ -14,10 +14,11 @@ export type SelectProps<T extends string> = {
         label: string;
         secondary?: string;
     }[];
+    MenuProps?: Pick<MenuProps<any>, 'title'>;
 } & Omit<FormControlProps, 'focused' | 'onPress'>;
 
 export const Select = <T extends string>(props: SelectProps<T>) => {
-    const { value, onChange, placeholder, options, ...formControlProps } = props;
+    const { value, onChange, placeholder, options, MenuProps, ...formControlProps } = props;
     const [isOpen, setOpen] = useState<boolean>(false);
 
     const handleSelect = (id: T) => {
@@ -40,6 +41,7 @@ export const Select = <T extends string>(props: SelectProps<T>) => {
                 </Typography>
             </FormControl>
             <Menu
+                {...MenuProps}
                 isOpen={isOpen}
                 onClose={() => setOpen(false)}
                 options={options}
