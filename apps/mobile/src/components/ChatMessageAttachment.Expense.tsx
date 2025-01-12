@@ -32,33 +32,38 @@ export const ChatMessageExpenseAttachment = withSuspense(
         const [expense] = trpc.expenses.get.useSuspenseQuery({ id: props.expenseId });
         const [payerProfile] = trpc.profiles.getById.useSuspenseQuery({ id: expense.payerId });
 
-        const getOwnShareAmount = () => {
-            const share = expense.shares.find((share) => share.userId === userId);
-            return share?.amount ?? 0;
-        };
-
         if (!expense) return <ExpenseSkeleton />;
-        return (
-            <Stack bg="background.elevation1">
-                <Stack column center p="xl">
-                    <Typography variant="caption" color="secondary" align="center">
-                        {expense.description}
-                    </Typography>
-                </Stack>
-                <Stack center p="3xl">
-                    <Typography variant="h1" align="center">
-                        {formatAmount(expense.amount, expense.currency)}
-                    </Typography>
-                    <Typography align="center" variant="h6" color="hint" style={{ lineHeight: 0 }}>
-                        Your share: {formatAmount(getOwnShareAmount(), expense.currency)}
-                    </Typography>
-                </Stack>
 
-                <Stack column center p="xl" br="xl" mb="md" spacing="md">
-                    <Avatar userId={expense.payerId} size="sm" />
-                    <Typography variant="caption" color="hint" align="center">
-                        Paid by {getUserShortName(payerProfile)}
-                    </Typography>
+        const ownShare = expense.shares.find((share) => share.userId === userId);
+
+        return (
+            <Stack>
+                <Stack bg="background.elevation1" p="2xl">
+                    <Stack column center br="xl" mb="md" spacing="md">
+                        <Avatar userId={expense.payerId} size="sm" />
+                        <Typography variant="caption" color="hint" align="center">
+                            {getUserShortName(payerProfile)} paid
+                        </Typography>
+                    </Stack>
+                    <Stack center p="2xl">
+                        <Typography variant="h1" align="center">
+                            {formatAmount(expense.amount, expense.currency)}
+                        </Typography>
+                        <Typography variant="caption" color="secondary" align="center">
+                            {expense.description}
+                        </Typography>
+                        {/* <Typography align="center" variant="h6" color="hint" style={{ lineHeight: 0 }}>
+                        Your share: {formatAmount(getOwnShareAmount(), expense.currency)}
+                    </Typography> */}
+                    </Stack>
+                    <Stack column center>
+                        <Typography variant="h6">
+                            Your share:{' '}
+                            {ownShare
+                                ? formatAmount(ownShare.amount, ownShare.currency)
+                                : formatAmount(0, expense.currency)}
+                        </Typography>
+                    </Stack>
                 </Stack>
             </Stack>
         );
