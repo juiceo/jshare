@@ -21,7 +21,11 @@ export const OTHER_CURRENCIES = sortBy(
 export const SORTED_CURRENCIES = [...SUGGESTED_CURRENCIES, ...OTHER_CURRENCIES];
 
 export const formatAmount = (cents: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(cents / 100);
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 0,
+    }).format(cents / 100);
 };
 
 export const isCurrencyCode = (currency: string): currency is CurrencyCode => {
