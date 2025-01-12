@@ -52,7 +52,7 @@ export default screen(
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
         const [profile] = trpc.profiles.get.useSuspenseQuery();
-        const { convert, getRate } = useCurrencyConversion();
+        const { convert } = useCurrencyConversion();
         const createExpenseMutation = trpc.expenses.create.useMutation();
         const form = useForm<Schema>({
             defaultValues: {
@@ -93,7 +93,6 @@ export default screen(
                     <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
                         <Stack column px="xl">
                             <Stack center py="3xl">
-                                <Typography variant="caption">{currency}</Typography>
                                 <Controller
                                     control={form.control}
                                     name="amount"
@@ -112,14 +111,22 @@ export default screen(
                                         />
                                     )}
                                 />
+                                <Typography variant="caption">
+                                    {getCurrencyDetails(currency).name_plural}
+                                </Typography>
                                 {currency !== group.currency && (
                                     <Typography variant="caption" color="hint">
                                         {`= ${formatAmount(
-                                            convert({ amount, from: currency, to: group.currency }),
+                                            convert({
+                                                amount,
+                                                from: currency,
+                                                to: group.currency,
+                                            }),
                                             group.currency
                                         )}`}
                                     </Typography>
                                 )}
+
                                 <Typography variant="caption"></Typography>
                                 <ErrorMessage
                                     errors={form.formState.errors}
@@ -211,17 +218,6 @@ export default screen(
                                                                         .name
                                                                 })`}
                                                             </Typography>
-                                                            {field.value !== group.currency && (
-                                                                <Typography
-                                                                    variant="caption"
-                                                                    color="hint"
-                                                                >
-                                                                    {`1 ${field.value} = ${getRate({
-                                                                        from: field.value,
-                                                                        to: group.currency,
-                                                                    })} ${group.currency}`}
-                                                                </Typography>
-                                                            )}
                                                         </Stack>
                                                     </Stack>
                                                 </RectButton>
