@@ -52,9 +52,6 @@ export const ChatMessageExpenseAttachment = withSuspense(
                         <Typography variant="caption" color="secondary" align="center">
                             {expense.description}
                         </Typography>
-                        {/* <Typography align="center" variant="h6" color="hint" style={{ lineHeight: 0 }}>
-                        Your share: {formatAmount(getOwnShareAmount(), expense.currency)}
-                    </Typography> */}
                     </Stack>
                     <Stack column center>
                         <Typography variant="h6">

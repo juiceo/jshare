@@ -62,6 +62,9 @@ export const expensesRouter = router({
                 orderBy: {
                     createdAt: 'desc',
                 },
+                include: {
+                    shares: true,
+                },
             });
         }),
     create: authProcedure

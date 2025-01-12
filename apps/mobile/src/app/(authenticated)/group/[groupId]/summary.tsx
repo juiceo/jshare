@@ -1,4 +1,11 @@
-import { formatAmount, getUserFullName } from '@jshare/common';
+import React, { useMemo } from 'react';
+
+import {
+    formatAmount,
+    getTotalInCurrency,
+    getTotalsByParticipant,
+    getUserFullName,
+} from '@jshare/common';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
@@ -6,6 +13,7 @@ import { Avatar } from '~/components/Avatar';
 import { Screen } from '~/components/Screen';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
+import { useExchangeRates } from '~/hooks/useExchangeRates';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
@@ -15,12 +23,28 @@ export default screen(
     },
     ({ params }) => {
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
-        const { data: groupTotal } = trpc.expenses.getTotalForGroup.useQuery({
+        const [expenses] = trpc.expenses.list.useSuspenseQuery({ groupId: params.groupId });
+        const [participants] = trpc.groupParticipants.list.useSuspenseQuery({
             groupId: params.groupId,
         });
-        const [statusByUser] = trpc.expenses.getStatusByUserInGroup.useSuspenseQuery({
-            groupId: params.groupId,
-        });
+        const { exchangeRates } = useExchangeRates();
+
+        const totalsByParticipant = useMemo(() => {
+            return getTotalsByParticipant({
+                expenses,
+                participants,
+                currency: group.currency,
+                exchangeRates,
+            });
+        }, [exchangeRates, expenses, group.currency, participants]);
+
+        const groupTotal = useMemo(() => {
+            return getTotalInCurrency({
+                expenses,
+                currency: group.currency,
+                exchangeRates,
+            });
+        }, [exchangeRates, expenses, group.currency]);
 
         return (
             <Screen>
@@ -29,18 +53,18 @@ export default screen(
                     <Stack column justifyEnd alignCenter ar="1/1" p="2xl">
                         <Typography variant="overline">Group total:</Typography>
                         <Typography variant="h1">
-                            {groupTotal ? formatAmount(groupTotal, group.currency) : ''}
+                            {formatAmount(groupTotal, group.currency)}
                         </Typography>
                     </Stack>
                     <Stack mt="2xl" br="2xl">
-                        {statusByUser.map((item, index) => {
+                        {totalsByParticipant.map((item, index) => {
                             return (
-                                <>
-                                    <Stack row key={item.userId} p="xl" spacing="xl">
-                                        <Avatar userId={item.userId} size="lg" />
+                                <React.Fragment key={item.participant.userId}>
+                                    <Stack row p="xl" spacing="xl">
+                                        <Avatar userId={item.participant.userId} size="lg" />
                                         <Stack column flex={1}>
                                             <Typography variant="h6">
-                                                {getUserFullName(item.profile)}
+                                                {getUserFullName(item.participant.user)}
                                             </Typography>
                                             <Typography variant="body2" color="hint">
                                                 Paid: {formatAmount(item.paid, group.currency)}
@@ -57,10 +81,10 @@ export default screen(
                                             />
                                         </Stack>
                                     </Stack>
-                                    {index !== statusByUser.length - 1 && (
+                                    {index !== totalsByParticipant.length - 1 && (
                                         <Divider horizontal color="background.elevation1" />
                                     )}
-                                </>
+                                </React.Fragment>
                             );
                         })}
                     </Stack>
