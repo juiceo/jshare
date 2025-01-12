@@ -20,9 +20,11 @@ export default screen(
     },
     ({ router }) => {
         const user = useCurrentUser();
+        const [profile] = trpc.profiles.get.useSuspenseQuery();
         const [groups] = trpc.groups.list.useSuspenseQuery();
-        const { data: expenseSummary } = trpc.expenses.getStatusForUser.useQuery({
+        const { data: expenseSummary } = trpc.expenses.getBalanceForUser.useQuery({
             userId: user.id,
+            currency: profile.currency,
         });
 
         return (
@@ -46,7 +48,10 @@ export default screen(
                                         {/**
                                          * TODO: Should have default currency for user, and use it here
                                          */}
-                                        {formatAmount(expenseSummary?.balance ?? 0, 'USD')}
+                                        {formatAmount(
+                                            expenseSummary?.balance ?? 0,
+                                            profile.currency
+                                        )}
                                     </Typography>
                                 </Skeleton>
                             </Stack>

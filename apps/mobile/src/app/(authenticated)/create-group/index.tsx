@@ -28,6 +28,7 @@ export default screen(
     },
     ({ router }) => {
         const { createGroup, isPending } = useCreateGroup();
+        const [profile] = trpc.profiles.get.useSuspenseQuery();
 
         const trpcUtils = trpc.useUtils();
 
@@ -35,7 +36,7 @@ export default screen(
             resolver: zodResolver(schema),
             defaultValues: {
                 name: '',
-                currency: 'USD',
+                currency: profile.currency,
             },
         });
 
@@ -89,6 +90,9 @@ export default screen(
                                     MenuProps={{
                                         title: 'Select group currency',
                                     }}
+                                    helperText={
+                                        'User balances will be shown in this currency, but you can add expenses in any currency'
+                                    }
                                 />
                             )}
                         />

@@ -20,7 +20,7 @@ export const GroupCard = (props: GroupCardProps) => {
     const user = useCurrentUser();
 
     const { data: groupTotal } = trpc.expenses.getTotalForGroup.useQuery({ groupId: group.id });
-    const { data: userStatus } = trpc.expenses.getStatusForUserInGroup.useQuery({
+    const { data: userStatus } = trpc.expenses.getBalanceForParticipantInGroup.useQuery({
         groupId: group.id,
         userId: user.id,
     });

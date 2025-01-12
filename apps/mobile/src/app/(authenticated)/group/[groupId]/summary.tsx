@@ -1,19 +1,14 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import {
-    formatAmount,
-    getTotalInCurrency,
-    getTotalsByParticipant,
-    getUserFullName,
-} from '@jshare/common';
+import { formatAmount, getUserFullName } from '@jshare/common';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
+import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
-import { useExchangeRates } from '~/hooks/useExchangeRates';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
@@ -23,32 +18,16 @@ export default screen(
     },
     ({ params }) => {
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
-        const [expenses] = trpc.expenses.list.useSuspenseQuery({ groupId: params.groupId });
-        const [participants] = trpc.groupParticipants.list.useSuspenseQuery({
+        const [groupTotal] = trpc.expenses.getTotalForGroup.useSuspenseQuery({
             groupId: params.groupId,
         });
-        const { exchangeRates } = useExchangeRates();
-
-        const totalsByParticipant = useMemo(() => {
-            return getTotalsByParticipant({
-                expenses,
-                participants,
-                currency: group.currency,
-                exchangeRates,
-            });
-        }, [exchangeRates, expenses, group.currency, participants]);
-
-        const groupTotal = useMemo(() => {
-            return getTotalInCurrency({
-                expenses,
-                currency: group.currency,
-                exchangeRates,
-            });
-        }, [exchangeRates, expenses, group.currency]);
+        const [balances] = trpc.expenses.getBalancesByParticipantInGroup.useSuspenseQuery({
+            groupId: params.groupId,
+        });
 
         return (
             <Screen>
-                <Screen.Header title="Summary" subtitle={group.name} blur />
+                <Screen.Header title={group.name} subtitle="Summary" blur />
                 <Screen.Content scrollable disableTopInset disableHeaderOffset>
                     <Stack column justifyEnd alignCenter ar="1/1" p="2xl">
                         <Typography variant="overline">Group total:</Typography>
@@ -57,7 +36,7 @@ export default screen(
                         </Typography>
                     </Stack>
                     <Stack mt="2xl" br="2xl">
-                        {totalsByParticipant.map((item, index) => {
+                        {balances.map((item, index) => {
                             return (
                                 <React.Fragment key={item.participant.userId}>
                                     <Stack row p="xl" spacing="xl">
@@ -81,7 +60,7 @@ export default screen(
                                             />
                                         </Stack>
                                     </Stack>
-                                    {index !== totalsByParticipant.length - 1 && (
+                                    {index !== balances.length - 1 && (
                                         <Divider horizontal color="background.elevation1" />
                                     )}
                                 </React.Fragment>
@@ -89,6 +68,9 @@ export default screen(
                         })}
                     </Stack>
                 </Screen.Content>
+                <Screen.Footer>
+                    <Button color="primary">Settle up</Button>
+                </Screen.Footer>
             </Screen>
         );
     }

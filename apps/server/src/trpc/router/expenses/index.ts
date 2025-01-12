@@ -1,9 +1,14 @@
 import { TRPCError } from '@trpc/server';
-import { chain, sumBy } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { BASE_EXCHANGE_RATES, getConversionDetails } from '@jshare/common';
+import {
+    BASE_EXCHANGE_RATES,
+    getConversionDetails,
+    getTotalFromShares,
+    getTotalInCurrency,
+    getTotalsByParticipant,
+} from '@jshare/common';
 import { MessageAttachmentType } from '@jshare/db';
 import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types';
 
@@ -38,17 +43,7 @@ export const expensesRouter = router({
             })
         )
         .query(async (opts) => {
-            const group = await prisma.group.findUnique({
-                where: {
-                    id: opts.input.groupId,
-                    participants: {
-                        some: {
-                            userId: opts.ctx.userId,
-                        },
-                    },
-                },
-            });
-            if (!group) {
+            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -57,7 +52,7 @@ export const expensesRouter = router({
 
             return prisma.expense.findMany({
                 where: {
-                    groupId: group.id,
+                    groupId: opts.input.groupId,
                 },
                 orderBy: {
                     createdAt: 'desc',
@@ -88,21 +83,22 @@ export const expensesRouter = router({
                     message: `Group with id ${opts.input.groupId} not found`,
                 });
             }
-            const totalAmountFromShares = opts.input.shares.reduce((result, share) => {
-                if (share.amount) return result + share.amount;
-                return result;
-            }, 0);
 
-            if (totalAmountFromShares !== opts.input.amount) {
+            const total = getTotalFromShares(opts.input.shares);
+
+            if (total !== opts.input.amount) {
                 throw new TRPCError({
                     code: 'BAD_REQUEST',
-                    message: `Total amount from shares (${totalAmountFromShares}) does not match the amount (${opts.input.amount})`,
+                    message: `Total amount from shares (${total}) does not match the amount (${opts.input.amount})`,
                 });
             }
 
             const group = await prisma.group.findUnique({
                 where: {
                     id: opts.input.groupId,
+                },
+                select: {
+                    currency: true,
                 },
             });
 
@@ -186,7 +182,7 @@ export const expensesRouter = router({
 
             return expense;
         }),
-    getStatusByUserInGroup: authProcedure
+    getBalancesByParticipantInGroup: authProcedure
         .input(z.object({ groupId: z.string() }))
         .query(async (opts) => {
             if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
@@ -196,7 +192,12 @@ export const expensesRouter = router({
                 });
             }
 
-            const [expenses, participants] = await Promise.all([
+            const [group, expenses, participants, exchangeRates] = await Promise.all([
+                prisma.group.findUniqueOrThrow({
+                    where: {
+                        id: opts.input.groupId,
+                    },
+                }),
                 prisma.expense.findMany({
                     where: {
                         groupId: opts.input.groupId,
@@ -213,47 +214,23 @@ export const expensesRouter = router({
                         user: true,
                     },
                 }),
+                prisma.exchangeRates
+                    .findFirst({
+                        orderBy: {
+                            createdAt: 'desc',
+                        },
+                    })
+                    .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates),
             ]);
 
-            const dataByUser = participants.reduce(
-                (result, participant) => {
-                    result[participant.userId] = {
-                        paid: 0,
-                        received: 0,
-                        profile: participant.user,
-                    };
-                    return result;
-                },
-                {} as Record<string, { paid: number; received: number; profile: DB.Profile }>
-            );
-
-            expenses.forEach((expense) => {
-                if (dataByUser[expense.payerId]) {
-                    dataByUser[expense.payerId].paid += expense.amount;
-                }
-
-                expense.shares.forEach((share) => {
-                    if (dataByUser[share.userId]) {
-                        dataByUser[share.userId].received += share.amount;
-                    }
-                });
-
-                return dataByUser;
+            return getTotalsByParticipant({
+                expenses,
+                participants,
+                currency: group.currency,
+                exchangeRates,
             });
-
-            return chain(dataByUser)
-                .entries()
-                .map(([userId, status]) => {
-                    return {
-                        ...status,
-                        userId,
-                        balance: status.paid - status.received,
-                    };
-                })
-                .sortBy((item) => -item.balance)
-                .value();
         }),
-    getStatusForUserInGroup: authProcedure
+    getBalanceForParticipantInGroup: authProcedure
         .input(z.object({ userId: z.string(), groupId: z.string() }))
         .query(async (opts) => {
             if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
@@ -263,7 +240,12 @@ export const expensesRouter = router({
                 });
             }
 
-            const [paidExpenses, expenseShares] = await Promise.all([
+            const [group, paidExpenses, expenseShares, exchangeRates] = await Promise.all([
+                prisma.group.findUniqueOrThrow({
+                    where: {
+                        id: opts.input.groupId,
+                    },
+                }),
                 prisma.expense.findMany({
                     where: {
                         groupId: opts.input.groupId,
@@ -278,10 +260,26 @@ export const expensesRouter = router({
                         },
                     },
                 }),
+                prisma.exchangeRates
+                    .findFirst({
+                        orderBy: {
+                            createdAt: 'desc',
+                        },
+                    })
+                    .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates),
             ]);
 
-            const paid = sumBy(paidExpenses, 'amount');
-            const received = sumBy(expenseShares, 'amount');
+            const paid = getTotalInCurrency({
+                expenses: paidExpenses,
+                currency: group.currency,
+                exchangeRates,
+            });
+
+            const received = getTotalInCurrency({
+                expenses: expenseShares,
+                currency: group.currency,
+                exchangeRates,
+            });
 
             return {
                 paid,
@@ -289,44 +287,58 @@ export const expensesRouter = router({
                 balance: paid - received,
             };
         }),
-    getStatusForUser: authProcedure.input(z.object({ userId: z.string() })).query(async (opts) => {
-        const userId = opts.ctx.userId;
-        if (opts.input.userId !== userId) {
-            throw new TRPCError({
-                code: 'NOT_FOUND',
-                message: 'Cannot get status for other users',
-            });
-        }
+    /**
+     * TODO: Refactor
+     */
+    getBalanceForUser: authProcedure
+        .input(z.object({ userId: z.string(), currency: zCurrencyCode }))
+        .query(async (opts) => {
+            const userId = opts.ctx.userId;
+            if (opts.input.userId !== userId) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: 'Cannot get balance for other users',
+                });
+            }
 
-        const [paid, received] = await Promise.all([
-            prisma.expense
-                .aggregate({
-                    _sum: {
-                        amount: true,
-                    },
+            const [expensesPaid, expenseShares, exchangeRates] = await Promise.all([
+                prisma.expense.findMany({
                     where: {
                         payerId: userId,
                     },
-                })
-                .then((res) => res._sum.amount ?? 0),
-            prisma.expenseShare
-                .aggregate({
-                    _sum: {
-                        amount: true,
-                    },
+                }),
+                prisma.expenseShare.findMany({
                     where: {
                         userId,
                     },
-                })
-                .then((res) => res._sum.amount ?? 0),
-        ]);
+                }),
+                prisma.exchangeRates
+                    .findFirst({
+                        orderBy: {
+                            createdAt: 'desc',
+                        },
+                    })
+                    .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates),
+            ]);
 
-        return {
-            paid,
-            received,
-            balance: paid - received,
-        };
-    }),
+            const paid = getTotalInCurrency({
+                expenses: expensesPaid,
+                currency: opts.input.currency,
+                exchangeRates,
+            });
+
+            const received = getTotalInCurrency({
+                expenses: expenseShares,
+                currency: opts.input.currency,
+                exchangeRates,
+            });
+
+            return {
+                paid,
+                received,
+                balance: paid - received,
+            };
+        }),
     getTotalForGroup: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
         if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
             throw new TRPCError({
@@ -335,15 +347,34 @@ export const expensesRouter = router({
             });
         }
 
-        const result = await prisma.expense.aggregate({
-            _sum: {
-                amount: true,
-            },
-            where: {
-                groupId: opts.input.groupId,
-            },
-        });
+        const [group, expenses, exchangeRates] = await Promise.all([
+            prisma.group.findUniqueOrThrow({
+                where: {
+                    id: opts.input.groupId,
+                },
+            }),
+            prisma.expense.findMany({
+                where: {
+                    groupId: opts.input.groupId,
+                },
+                include: {
+                    shares: true,
+                },
+            }),
+            prisma.exchangeRates
+                .findFirst({
+                    where: {},
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                })
+                .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates),
+        ]);
 
-        return result._sum.amount ?? 0;
+        return getTotalInCurrency({
+            expenses,
+            currency: group.currency,
+            exchangeRates,
+        });
     }),
 });

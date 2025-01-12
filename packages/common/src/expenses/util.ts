@@ -5,15 +5,19 @@ import { distributeAmountEvenly } from '@jshare/util';
 
 import { convertAmount } from '../money';
 
-export const getLockedShares = (shares: DB.ExpenseShare[]): DB.ExpenseShare[] => {
+export const getLockedShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
+    shares: TShare[]
+): TShare[] => {
     return shares.filter((share) => share.locked);
 };
 
-export const getFloatingShares = (shares: DB.ExpenseShare[]): DB.ExpenseShare[] => {
+export const getFloatingShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
+    shares: TShare[]
+): TShare[] => {
     return shares.filter((share) => !share.locked);
 };
 
-export const getTotalFromShares = (shares: DB.ExpenseShare[]): number => {
+export const getTotalFromShares = (shares: Pick<DB.ExpenseShare, 'amount'>[]): number => {
     return sumBy(shares, (share) => share.amount);
 };
 
@@ -125,7 +129,10 @@ export const getDefaultShare = (userId: string): DB.ExpenseShare => {
 };
 
 export const getTotalInCurrency = (args: {
-    expenses: Pick<DB.Expense<{ shares: true }>, 'currency' | 'amount' | 'payerId' | 'shares'>[];
+    expenses: (
+        | Pick<DB.Expense, 'currency' | 'amount'>
+        | Pick<DB.ExpenseShare, 'currency' | 'amount'>
+    )[];
     currency: string;
     exchangeRates: DB.ExchangeRates;
 }): number => {
@@ -211,5 +218,5 @@ export const getTotalsByParticipant = (args: {
         };
     });
 
-    return sortBy(participantsWithTotals, 'balance');
+    return sortBy(participantsWithTotals, (item) => -item.balance);
 };

@@ -3,12 +3,14 @@ import { Alert } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { zDbImage } from '@jshare/types';
+import { zCurrencyCode, zDbImage } from '@jshare/types';
 
+import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Button } from '~/components/Button';
+import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
@@ -17,6 +19,7 @@ const schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string(),
     image: zDbImage.optional(),
+    currency: zCurrencyCode,
 });
 
 type Schema = z.infer<typeof schema>;
@@ -31,6 +34,7 @@ export default screen(
             defaultValues: {
                 firstName: '',
                 lastName: '',
+                currency: 'EUR',
             },
             resolver: zodResolver(schema),
         });
@@ -91,6 +95,23 @@ export default screen(
                                     onChange={field.onChange}
                                     error={fieldState.error?.message}
                                     placeholder="Doe"
+                                />
+                            )}
+                        />
+                        <Controller
+                            control={form.control}
+                            name="currency"
+                            render={({ field, fieldState: { error } }) => (
+                                <Select
+                                    label="Default currency"
+                                    placeholder="Select currency"
+                                    options={CURRENCY_OPTIONS}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={error?.message}
+                                    MenuProps={{
+                                        title: 'Select default currency',
+                                    }}
                                 />
                             )}
                         />

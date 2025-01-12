@@ -17,7 +17,7 @@ export type ChatStatusHeaderProps = {
 export const ChatStatusHeader = (props: ChatStatusHeaderProps) => {
     const { groupId, currency } = props;
     const user = useCurrentUser();
-    const { data: userStatus } = trpc.expenses.getStatusForUserInGroup.useQuery({
+    const { data: userStatus } = trpc.expenses.getBalanceForParticipantInGroup.useQuery({
         groupId,
         userId: user.id,
     });

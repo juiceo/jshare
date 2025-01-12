@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
+import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
 import { Button } from '~/components/Button';
+import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useUpdateProfile } from '~/hooks/useUpdateProfile';
@@ -21,6 +23,7 @@ export default screen(
 
         const [firstName, setFirstName] = useState<string>(profile.firstName);
         const [lastName, setLastName] = useState<string>(profile.lastName);
+        const [currency, setCurrency] = useState<string>(profile.currency);
 
         return (
             <Screen>
@@ -72,6 +75,23 @@ export default screen(
                                         lastName,
                                     });
                                 },
+                            }}
+                        />
+
+                        <Select
+                            label="Preferred currency"
+                            placeholder="Select currency"
+                            options={CURRENCY_OPTIONS}
+                            value={currency}
+                            onChange={(value) => {
+                                if (!value) return;
+                                setCurrency(value);
+                                updateProfile({
+                                    currency: value,
+                                });
+                            }}
+                            MenuProps={{
+                                title: 'Select currency',
                             }}
                         />
                     </Stack>

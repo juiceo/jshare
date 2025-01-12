@@ -79,6 +79,7 @@ export const profilesRouter = router({
                     firstName: z.string(),
                     lastName: z.string(),
                     email: z.string(),
+                    currency: zCurrencyCode,
                     avatarId: z.string().nullable(),
                 })
                 .partial()
@@ -93,6 +94,7 @@ export const profilesRouter = router({
                         firstName: opts.input.firstName,
                         lastName: opts.input.lastName,
                         email: opts.input.email,
+                        currency: opts.input.currency,
                         avatar: opts.input.avatarId
                             ? {
                                   connect: {
