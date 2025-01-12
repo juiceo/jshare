@@ -1,7 +1,9 @@
 import type { DB } from '@jshare/types';
 
+export const BASE_EXCHANGE_RATES_ID = 'base_exchange_rates';
+
 export const BASE_EXCHANGE_RATES: DB.ExchangeRates = {
-    id: 'base',
+    id: BASE_EXCHANGE_RATES_ID,
     baseCurrency: 'USD',
     rates: {
         AUD: 1.6184215461333,

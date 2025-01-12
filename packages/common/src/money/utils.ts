@@ -1,6 +1,12 @@
 import { sortBy } from 'lodash';
 
-import { CURRENCIES, CURRENCY_CODES, CurrencyCode, type DB } from '@jshare/types';
+import {
+    CURRENCIES,
+    CURRENCY_CODES,
+    CurrencyCode,
+    type ConversionDetails,
+    type DB,
+} from '@jshare/types';
 
 export const SUGGESTED_CURRENCIES = sortBy(
     Object.values(CURRENCIES).filter((currencyDetails) => currencyDetails.ranking !== null),
@@ -44,7 +50,7 @@ export const getExchangeRate = (args: {
     from: string;
     to: string;
     exchangeRates: DB.ExchangeRates;
-}): number | null => {
+}): number => {
     const { from, to, exchangeRates } = args;
 
     if (from === to) return 1;
@@ -52,13 +58,13 @@ export const getExchangeRate = (args: {
     const rates = exchangeRates.rates as Record<string, number>;
     if (baseCurrency === from) {
         if (!rates[to]) {
-            return null;
+            return 0;
         }
         return rates[to];
     }
     if (baseCurrency === to) {
         if (!rates[from]) {
-            return null;
+            return 0;
         }
         return 1 / rates[from];
     }
@@ -67,5 +73,30 @@ export const getExchangeRate = (args: {
         return rates[from] / rates[to];
     }
 
-    return null;
+    return 0;
+};
+
+export const getConversionDetails = (args: {
+    sourceCurrency: string;
+    sourceAmount: number;
+    currency: string;
+    exchangeRates: DB.ExchangeRates;
+}): ConversionDetails => {
+    return {
+        sourceCurrency: args.sourceCurrency,
+        sourceAmount: args.sourceAmount,
+        currency: args.currency,
+        amount: convertAmount({
+            amount: args.sourceAmount,
+            from: args.sourceCurrency,
+            to: args.currency,
+            exchangeRates: args.exchangeRates,
+        }),
+        exchangeRate: getExchangeRate({
+            from: args.sourceCurrency,
+            to: args.currency,
+            exchangeRates: args.exchangeRates,
+        }),
+        exchangeRatesId: args.exchangeRates.id,
+    };
 };

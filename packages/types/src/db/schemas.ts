@@ -25,6 +25,17 @@ export const zMessageAttachmentType = z.nativeEnum(
     MessageAttachmentType
 ) satisfies z.ZodType<DB.MessageAttachmentType>;
 
+export const zConversionDetails = z.object({
+    sourceCurrency: zCurrencyCode,
+    sourceAmount: z.number(),
+    currency: zCurrencyCode,
+    amount: z.number(),
+    exchangeRate: z.number(),
+    exchangeRatesId: z.string(),
+});
+
+export type ConversionDetails = z.infer<typeof zConversionDetails>;
+
 export const zDbImage = z.object({
     id: z.string(),
     path: z.string(),
@@ -73,6 +84,7 @@ export const zExpense = z.object({
     groupId: z.string(),
     amount: z.number(),
     currency: zCurrencyCode,
+    conversion: zConversionDetails.nullable(),
     description: z.string().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
@@ -84,10 +96,7 @@ export const zExpenseShare = z.object({
     expenseId: z.string(),
     amount: z.number(),
     currency: zCurrencyCode,
-    sourceAmount: z.number().nullable(),
-    sourceCurrency: zCurrencyCode.nullable(),
-    exchangeRate: z.number().nullable(),
-    exchangeRatesId: z.string().nullable(),
+    conversion: zConversionDetails.nullable(),
     locked: z.boolean(),
     updatedAt: z.date(),
     createdAt: z.date(),

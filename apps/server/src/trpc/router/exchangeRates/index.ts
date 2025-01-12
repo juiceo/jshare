@@ -1,3 +1,5 @@
+import type { DB } from '@jshare/types';
+
 import { prisma } from '../../../services/prisma';
 import { authProcedure, router } from '../../trpc';
 
@@ -10,6 +12,6 @@ export const exchangeRatesRouter = router({
             },
         });
 
-        return rates;
+        return rates as DB.ExchangeRates;
     }),
 });

@@ -3,6 +3,7 @@ import { chain, sumBy } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
+import { BASE_EXCHANGE_RATES, getConversionDetails } from '@jshare/common';
 import { MessageAttachmentType } from '@jshare/db';
 import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types';
 
@@ -96,6 +97,31 @@ export const expensesRouter = router({
                 });
             }
 
+            const group = await prisma.group.findUnique({
+                where: {
+                    id: opts.input.groupId,
+                },
+            });
+
+            if (!group) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Group with id ${opts.input.groupId} not found`,
+                });
+            }
+
+            const exchangeRates =
+                opts.input.currency === group.currency
+                    ? undefined
+                    : await prisma.exchangeRates
+                          .findFirst({
+                              where: {},
+                              orderBy: {
+                                  createdAt: 'desc',
+                              },
+                          })
+                          .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates);
+
             const expense = await prisma.$transaction(async (tx) => {
                 const expense = await tx.expense.create({
                     data: {
@@ -105,6 +131,15 @@ export const expensesRouter = router({
                         amount: opts.input.amount,
                         description: opts.input.description,
                         currency: opts.input.currency,
+                        conversion: exchangeRates
+                            ? getConversionDetails({
+                                  sourceCurrency: opts.input.currency,
+                                  sourceAmount: opts.input.amount,
+                                  currency: group.currency,
+                                  exchangeRates,
+                              })
+                            : undefined,
+
                         shares: {
                             createMany: {
                                 data: opts.input.shares.map((share) => ({
@@ -112,6 +147,14 @@ export const expensesRouter = router({
                                     amount: share.amount,
                                     currency: opts.input.currency,
                                     locked: share.locked,
+                                    conversion: exchangeRates
+                                        ? getConversionDetails({
+                                              sourceCurrency: opts.input.currency,
+                                              sourceAmount: share.amount,
+                                              currency: group.currency,
+                                              exchangeRates,
+                                          })
+                                        : undefined,
                                 })),
                             },
                         },
