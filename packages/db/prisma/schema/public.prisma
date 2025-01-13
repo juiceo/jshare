@@ -1,16 +1,18 @@
 model Profile {
-    userId        String             @id()
-    email         String
-    firstName     String
-    lastName      String
-    currency      String             @db.VarChar(3)
-    groups        GroupParticipant[]
-    avatarId      String?
-    avatar        Image?             @relation(fields: [avatarId], references: [id])
-    messages      Message[]
-    expensesOwned Expense[]          @relation("expense_owner")
-    expensesPaid  Expense[]          @relation("expense_payer")
-    expenseShares ExpenseShare[]
+    userId           String             @id()
+    email            String
+    firstName        String
+    lastName         String
+    currency         String             @db.VarChar(3)
+    groups           GroupParticipant[]
+    avatarId         String?
+    avatar           Image?             @relation(fields: [avatarId], references: [id])
+    messages         Message[]
+    expensesOwned    Expense[]          @relation("expense_owner")
+    expensesPaid     Expense[]          @relation("expense_payer")
+    expenseShares    ExpenseShare[]
+    paymentsReceived Payment[]          @relation(name: "payment_recipient")
+    paymentsPaid     Payment[]          @relation(name: "payment_payer")
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
@@ -118,8 +120,7 @@ model Expense {
     amount      Int
     currency    String  @db.VarChar(3)
     description String?
-
-    conversion Json?
+    conversion  Json?
 
     shares             ExpenseShare[]
     messageAttachments MessageAttachment[]
@@ -140,16 +141,35 @@ model ExpenseShare {
     expenseId String
     expense   Expense @relation(fields: [expenseId], references: [id])
 
-    amount   Int
-    currency String  @db.VarChar(3)
-    locked   Boolean @default(false)
-
+    amount     Int
+    currency   String  @db.VarChar(3)
+    locked     Boolean @default(false)
     conversion Json?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
 
     @@map("expense_shares")
+    @@schema("public")
+}
+
+model Payment {
+    id String @id @default(uuid())
+
+    amount     Int
+    currency   String @db.VarChar(3)
+    conversion Json?
+
+    recipientId String
+    recipient   Profile @relation(name: "payment_recipient", fields: [recipientId], references: [userId])
+
+    payerId String
+    payer   Profile @relation(name: "payment_payer", fields: [payerId], references: [userId])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    @@map("payments")
     @@schema("public")
 }
 
