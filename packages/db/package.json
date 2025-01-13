@@ -2,11 +2,16 @@
     "name": "@jshare/db",
     "version": "1.0.0",
     "description": "JShare database client",
-    "main": "build/index.js",
+    "exports": {
+        "./prisma": "./build/prisma/index.js",
+        "./zenstack": "./build/zenstack/index.js",
+        "./zod": "./build/zod/index.js",
+        "./models": "./build/zenstack/models.d.ts"
+    },
     "keywords": [],
     "license": "MIT",
     "scripts": {
-        "build": "npx prisma generate",
+        "build": "zenstack generate --output ./build/zenstack",
         "db:migrate:dev": "npx prisma migrate dev",
         "db:migrate:reset": "npx prisma migrate reset",
         "db:migrate:deploy": "npx prisma migrate deploy",
@@ -22,7 +27,7 @@
         "lodash": "catalog:",
         "moment": "catalog:",
         "prisma": "catalog:",
-        "prisma-json-types-generator": "^3.2.2"
+        "zenstack": "^2.11.2"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",
@@ -34,5 +39,8 @@
     },
     "prisma": {
         "seed": "tsx prisma/seed.ts"
+    },
+    "dependencies": {
+        "@zenstackhq/runtime": "^2.11.2"
     }
 }

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { getConversionDetails, getTotalFromShares, sumInCurrency } from '@jshare/common';
-import { MessageAttachmentType } from '@jshare/db';
+import { MessageAttachmentType } from '@jshare/db/prisma';
 import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types';
 
 import { broadcastNewMessage } from '../../../services/broadcast';

@@ -1,0 +1,175 @@
+import "schema.enums"
+import "schema.types"
+import "schema.base"
+
+generator client {
+    provider        = "prisma-client-js"
+    output          = "../build/prisma"
+    previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+    schemas   = ["public"]
+}
+
+plugin prisma {
+    provider = '@core/prisma'
+    output = './prisma/schema.prisma'
+    format = true
+}
+
+plugin zod {
+    provider = '@core/zod'
+    compile = true
+    output = "./build/zod"
+}
+
+model Profile {
+    userId           String             @id()
+    email            String
+    firstName        String
+    lastName         String
+    currency         String             @db.VarChar(3)
+    groups           GroupParticipant[]
+    avatarId         String?
+    avatar           Image?             @relation(fields: [avatarId], references: [id])
+    messages         Message[]
+    expensesOwned    Expense[]          @relation("expense_owner")
+    expensesPaid     Expense[]          @relation("expense_payer")
+    expenseShares    ExpenseShare[]
+    paymentsReceived Payment[]          @relation(name: "payment_recipient")
+    paymentsPaid     Payment[]          @relation(name: "payment_payer")
+
+    createdAt        DateTime           @default(now())
+    updatedAt        DateTime           @default(now()) @updatedAt
+
+    @@map("profiles")
+    @@schema("public")
+}
+
+model Group extends BaseModel {
+    name         String
+    currency     String             @db.VarChar(3)
+    participants GroupParticipant[]
+    coverImageId String?
+    coverImage   Image?             @relation(fields: [coverImageId], references: [id])
+    messages     Message[]
+    expenses     Expense[]
+    payments     Payment[]
+
+    @@map("groups")
+}
+
+model GroupParticipant extends BaseModel {
+    userId  String
+    user    Profile @relation(fields: [userId], references: [userId])
+    groupId String
+    group   Group   @relation(fields: [groupId], references: [id])
+    role    Role
+
+    @@index([groupId])
+    @@index([userId])
+    @@map("group_participants")
+}
+
+model Image extends BaseModel {
+    path         String
+    bucket       String
+    uploadedById String
+    blurhash     String?
+
+    Group        Group[]
+    Profile      Profile[]
+
+    @@map("images")
+}
+
+model Message extends BaseModel {
+    key         String
+    text        String?
+
+    authorType  AuthorType
+    authorId    String?
+    author      Profile?            @relation(fields: [authorId], references: [userId])
+
+    groupId     String
+    group       Group               @relation(fields: [groupId], references: [id])
+
+    attachments MessageAttachment[]
+
+    @@map("messages")
+}
+
+model MessageAttachment extends BaseModel {
+    messageId String
+    message   Message               @relation(fields: [messageId], references: [id])
+    type      MessageAttachmentType
+
+    expenseId String?
+    expense   Expense?              @relation(fields: [expenseId], references: [id])
+
+    @@map("message_attachments")
+}
+
+model Expense extends BaseModel {
+    ownerId            String
+    owner              Profile             @relation(name: "expense_owner", fields: [ownerId], references: [userId])
+
+    payerId            String
+    payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [userId])
+
+    groupId            String
+    group              Group               @relation(fields: [groupId], references: [id])
+
+    amount             Int
+    currency           String              @db.VarChar(3)
+    description        String?
+    conversion         CurrencyConversion? @json
+
+    shares             ExpenseShare[]
+    messageAttachments MessageAttachment[]
+
+    @@map("expenses")
+}
+
+model ExpenseShare extends BaseModel {
+    userId     String
+    user       Profile             @relation(fields: [userId], references: [userId])
+
+    expenseId  String
+    expense    Expense             @relation(fields: [expenseId], references: [id])
+
+    amount     Int
+    currency   String              @db.VarChar(3)
+    locked     Boolean             @default(false)
+    conversion CurrencyConversion? @json
+
+    @@map("expense_shares")
+}
+
+model Payment extends BaseModel {
+    groupId     String
+    group       Group               @relation(fields: [groupId], references: [id])
+
+    amount      Int
+    currency    String              @db.VarChar(3)
+    conversion  CurrencyConversion? @json
+
+    recipientId String
+    recipient   Profile             @relation(name: "payment_recipient", fields: [recipientId], references: [userId])
+
+    payerId     String
+    payer       Profile             @relation(name: "payment_payer", fields: [payerId], references: [userId])
+
+    @@map("payments")
+}
+
+model ExchangeRates extends BaseModel {
+    baseCurrency String @db.VarChar(3)
+    rates        Json
+
+    @@map("exchange_rates")
+}

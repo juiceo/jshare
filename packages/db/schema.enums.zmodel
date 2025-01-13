@@ -1,0 +1,27 @@
+enum Role {
+    Owner
+    Admin
+    Member
+
+    @@schema("public")
+}
+
+enum AuthorType {
+    User
+    System
+
+    @@schema("public")
+}
+
+enum MessageAttachmentType {
+    Expense
+
+    @@schema("public")
+}
+
+enum CurrencyCode {
+    EUR
+    USD
+
+    @@schema("public")
+}

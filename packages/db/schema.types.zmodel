@@ -1,0 +1,10 @@
+import "schema.enums"
+
+type CurrencyConversion {
+    sourceCurrency  CurrencyCode
+    sourceAmount    Int
+    currency        CurrencyCode
+    amount          Int
+    exchangeRate    Float
+    exchangeRatesId String
+}

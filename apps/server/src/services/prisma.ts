@@ -1,3 +1,3 @@
-import { PrismaClient } from '@jshare/db';
+import { PrismaClient } from '@jshare/db/prisma';
 
 export const prisma = new PrismaClient();

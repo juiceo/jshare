@@ -1,4 +1,4 @@
-import type { GroupParticipant } from '@jshare/db';
+import type { GroupParticipant } from '@jshare/db/prisma';
 
 import { InMemoryCache } from '../services/cache';
 import { prisma } from '../services/prisma';
