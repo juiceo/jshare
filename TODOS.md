@@ -22,6 +22,15 @@
     [x] User should be able to change their preferred currency
     [x] The user's own balance should be in the user's preferred currency
 
+-   DEV TODOs:
+
+    [ ] Use zenstack zmodel language for schema definition
+    [ ] Define ConversionDetails and CurrencyCode types in prisma schema
+    [ ] Generate zod types from zmodel schema
+    [ ] Add @anatine/zod-mock to generate mocks instead of @jshare/types/mocks
+    [ ] Remove @jshare/types package
+    [ ] Remove @jshare/util package, move under @jshare/common
+
 -   Add payments feature
     [ ] Create DB model for payments
     [ ] Add screen for creating new payments
