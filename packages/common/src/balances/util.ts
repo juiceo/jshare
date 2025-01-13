@@ -15,10 +15,9 @@ export const getEmptyBalanceObject = (args: { currency: string }): BalanceObject
 };
 
 export const getBalanceByParticipant = (args: {
-    expenses: Pick<DB.Expense, 'currency' | 'amount' | 'payerId' | 'conversion'>[];
-    expenseShares: Pick<DB.ExpenseShare, 'currency' | 'amount' | 'userId' | 'conversion'>[];
-    payments: Pick<DB.Payment, 'currency' | 'amount' | 'payerId' | 'recipientId' | 'conversion'>[];
-    participants: DB.GroupParticipant<{ user: true }>[];
+    expenses: (DB.Expense & { shares: DB.ExpenseShare[] })[];
+    payments: DB.Payment[];
+    participants: DB.GroupParticipant[];
     currency: string;
 }): BalanceObject[] => {
     const balances: Record<string, BalanceObject> = {};
@@ -44,13 +43,13 @@ export const getBalanceByParticipant = (args: {
         if (expenseAmount) {
             addToPaid(expense.payerId, expenseAmount);
         }
-    });
 
-    args.expenseShares.forEach((share) => {
-        const shareAmount = getInCurrency(share, args.currency);
-        if (shareAmount) {
-            addToReceived(share.userId, shareAmount);
-        }
+        expense.shares.forEach((share) => {
+            const shareAmount = getInCurrency(share, args.currency);
+            if (shareAmount) {
+                addToReceived(share.userId, shareAmount);
+            }
+        });
     });
 
     args.payments.forEach((payment) => {

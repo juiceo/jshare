@@ -2,12 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import {
-    BASE_EXCHANGE_RATES,
-    getConversionDetails,
-    getTotalFromShares,
-    getTotalInCurrency,
-} from '@jshare/common';
+import { getConversionDetails, getTotalFromShares, sumInCurrency } from '@jshare/common';
 import { MessageAttachmentType } from '@jshare/db';
 import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types';
 
@@ -187,7 +182,7 @@ export const expensesRouter = router({
             });
         }
 
-        const [group, expenses, exchangeRates] = await Promise.all([
+        const [group, expenses] = await Promise.all([
             prisma.group.findUniqueOrThrow({
                 where: {
                     id: opts.input.groupId,
@@ -200,21 +195,9 @@ export const expensesRouter = router({
                 include: {
                     shares: true,
                 },
-            }),
-            prisma.exchangeRates
-                .findFirst({
-                    where: {},
-                    orderBy: {
-                        createdAt: 'desc',
-                    },
-                })
-                .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates),
+            }) as Promise<DB.Expense[]>,
         ]);
 
-        return getTotalInCurrency({
-            expenses,
-            currency: group.currency,
-            exchangeRates,
-        });
+        return sumInCurrency(expenses, group.currency);
     }),
 });
