@@ -15,20 +15,13 @@ export const paymentsRouter = router({
         const payment = await prisma.payment.findUnique({
             where: {
                 id: opts.input.id,
+                groupId: {
+                    in: await opts.ctx.acl.getGroupIds(),
+                },
             },
         });
 
         if (!payment) {
-            throw new TRPCError({
-                code: 'NOT_FOUND',
-                message: `Payment with id ${opts.input.id} not found`,
-            });
-        }
-
-        const isOwnPayment = opts.ctx.userId === payment.recipientId;
-        const isUserInGroup = await opts.ctx.acl.isUserInGroup(payment.groupId);
-
-        if (!isOwnPayment && !isUserInGroup) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
                 message: `Payment with id ${opts.input.id} not found`,
@@ -44,7 +37,7 @@ export const paymentsRouter = router({
             })
         )
         .query(async (opts) => {
-            const isUserInGroup = await opts.ctx.acl.isUserInGroup(opts.input.groupId);
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
             if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
@@ -72,7 +65,7 @@ export const paymentsRouter = router({
             })
         )
         .mutation(async (opts) => {
-            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+            if (!opts.ctx.acl.isInGroup(opts.input.groupId)) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,

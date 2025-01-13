@@ -6,7 +6,8 @@ import { authProcedure, router } from '../../trpc';
 
 export const groupParticipantsRouter = router({
     list: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
-        if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+        const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+        if (!isUserInGroup) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
                 message: `Group with id ${opts.input.groupId} not found`,

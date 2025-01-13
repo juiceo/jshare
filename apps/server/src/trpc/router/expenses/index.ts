@@ -14,6 +14,7 @@ import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { prisma } from '../../../services/prisma';
+import { getLatestExchangeRates } from '../../../util/exchangeRates';
 import { authProcedure, router } from '../../trpc';
 
 export const expensesRouter = router({
@@ -21,13 +22,16 @@ export const expensesRouter = router({
         const expense = await prisma.expense.findUnique({
             where: {
                 id: opts.input.id,
+                groupId: {
+                    in: await opts.ctx.acl.getGroupIds(),
+                },
             },
             include: {
                 shares: true,
             },
         });
 
-        if (!expense || !opts.ctx.acl.isUserInGroup(expense.groupId)) {
+        if (!expense) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
                 message: `Expense with id ${opts.input.id} not found`,
@@ -43,7 +47,8 @@ export const expensesRouter = router({
             })
         )
         .query(async (opts) => {
-            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -77,7 +82,8 @@ export const expensesRouter = router({
             })
         )
         .mutation(async (opts) => {
-            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -110,16 +116,7 @@ export const expensesRouter = router({
             }
 
             const exchangeRates =
-                opts.input.currency === group.currency
-                    ? undefined
-                    : await prisma.exchangeRates
-                          .findFirst({
-                              where: {},
-                              orderBy: {
-                                  createdAt: 'desc',
-                              },
-                          })
-                          .then((res) => (res ?? BASE_EXCHANGE_RATES) as DB.ExchangeRates);
+                opts.input.currency === group.currency ? undefined : getLatestExchangeRates();
 
             const expense = await prisma.$transaction(async (tx) => {
                 const expense = await tx.expense.create({
@@ -185,7 +182,8 @@ export const expensesRouter = router({
     getBalancesByParticipantInGroup: authProcedure
         .input(z.object({ groupId: z.string() }))
         .query(async (opts) => {
-            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -233,7 +231,8 @@ export const expensesRouter = router({
     getBalanceForParticipantInGroup: authProcedure
         .input(z.object({ userId: z.string(), groupId: z.string() }))
         .query(async (opts) => {
-            if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -340,7 +339,8 @@ export const expensesRouter = router({
             };
         }),
     getTotalForGroup: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
-        if (!opts.ctx.acl.isUserInGroup(opts.input.groupId)) {
+        const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+        if (!isUserInGroup) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
                 message: `Group with id ${opts.input.groupId} not found`,

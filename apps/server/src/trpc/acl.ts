@@ -12,7 +12,7 @@ export class ACL {
         this.userId = userId;
     }
 
-    private async getUserGroups(ignoreCache?: boolean) {
+    private async getGroups(ignoreCache?: boolean) {
         const cached = !ignoreCache ? groupsCache.get(this.userId) : null;
         if (cached) {
             return cached;
@@ -27,14 +27,22 @@ export class ACL {
         return groups;
     }
 
-    async isUserInGroup(groupId: string, ignoreCache?: boolean): Promise<boolean> {
-        const groups = await this.getUserGroups(ignoreCache);
+    async isInGroup(groupId: string, ignoreCache?: boolean): Promise<boolean> {
+        const groups = await this.getGroups(ignoreCache);
         if (groups.some((g) => g.groupId === groupId)) {
             return true;
         }
         if (!ignoreCache) {
-            return this.isUserInGroup(groupId, true);
+            return this.isInGroup(groupId, true);
         }
         return false;
+    }
+
+    async getGroupIds(): Promise<string[]> {
+        let groups = await this.getGroups();
+        if (!groups.length) {
+            groups = await this.getGroups(true);
+        }
+        return groups.map((g) => g.groupId);
     }
 }

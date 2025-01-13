@@ -17,8 +17,8 @@ export const messagesRouter = router({
             })
         )
         .query(async (opts) => {
-            const isInGroup = await opts.ctx.acl.isUserInGroup(opts.input.groupId);
-            if (!isInGroup) {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
@@ -56,8 +56,8 @@ export const messagesRouter = router({
             })
         )
         .mutation(async (opts) => {
-            const isInGroup = await opts.ctx.acl.isUserInGroup(opts.input.groupId);
-            if (!isInGroup) {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,
