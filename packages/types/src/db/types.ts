@@ -39,6 +39,11 @@ export namespace DB {
             ? WithConversionDetails<p.ExpenseShare>
             : WithConversionDetails<p.Prisma.ExpenseShareGetPayload<{ include: I }>>;
 
+    export type Payment<I extends p.Prisma.PaymentInclude | undefined = undefined> =
+        I extends undefined
+            ? WithConversionDetails<p.Payment>
+            : WithConversionDetails<p.Prisma.PaymentGetPayload<{ include: I }>>;
+
     export type ExchangeRates = WithRatesObject<p.ExchangeRates>;
     export type MessageAttachmentType = p.MessageAttachmentType;
     export type AuthorType = p.AuthorType;

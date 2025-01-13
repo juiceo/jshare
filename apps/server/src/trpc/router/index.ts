@@ -7,6 +7,7 @@ import { groupParticipantsRouter } from './groupParticipants';
 import { groupsRouter } from './groups';
 import { imagesRouter } from './images';
 import { messagesRouter } from './messages';
+import { paymentsRouter } from './payments';
 import { profilesRouter } from './profiles';
 
 export const appRouter = router({
@@ -26,5 +27,6 @@ export const appRouter = router({
     images: imagesRouter,
     messages: messagesRouter,
     expenses: expensesRouter,
+    payments: paymentsRouter,
     exchangeRates: exchangeRatesRouter,
 });
