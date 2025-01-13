@@ -11,3 +11,22 @@ export const groupByUnique = <T extends { [key in string]: any }>(
 
     return result;
 };
+
+export const toObject = <
+    T extends { [key in string]: any },
+    TKey extends string | number,
+    TValue extends any,
+>(args: {
+    data: T[];
+    key: (item: T) => TKey;
+    value: (item: T) => TValue;
+}): Record<TKey, TValue> => {
+    return args.data.reduce(
+        (result, item) => {
+            const itemKey = args.key(item);
+            result[itemKey] = args.value(item);
+            return result;
+        },
+        {} as Record<TKey, TValue>
+    );
+};

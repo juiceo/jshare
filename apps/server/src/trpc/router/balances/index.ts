@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { BASE_EXCHANGE_RATES, getTotalInCurrency, getTotalsByParticipant } from '@jshare/common';
+import { BASE_EXCHANGE_RATES, getBalanceByParticipant } from '@jshare/common';
 import { zCurrencyCode, type DB } from '@jshare/types';
 
 import { prisma } from '../../../services/prisma';
@@ -26,14 +26,16 @@ export const balancesRouter = router({
                         id: opts.input.groupId,
                     },
                 }),
-                prisma.expense.findMany({
-                    where: {
-                        groupId: opts.input.groupId,
-                    },
-                    include: {
-                        shares: true,
-                    },
-                }),
+                prisma.expense
+                    .findMany({
+                        where: {
+                            groupId: opts.input.groupId,
+                        },
+                        include: {
+                            shares: true,
+                        },
+                    })
+                    .then((res) => res as DB.Expense[]),
                 prisma.groupParticipant.findMany({
                     where: {
                         groupId: opts.input.groupId,

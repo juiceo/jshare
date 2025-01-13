@@ -104,3 +104,24 @@ export const getConversionDetails = (args: {
         exchangeRatesId: args.exchangeRates.id,
     };
 };
+
+export const getInCurrency = (
+    data: { amount: number; currency: string; conversion: ConversionDetails | null },
+    currency: string
+): number | null => {
+    if (data.currency === currency) return data.amount;
+    if (data.conversion?.currency === currency) return data.conversion.amount;
+
+    return null;
+};
+
+export const sumInCurrency = (
+    data: { amount: number; currency: string; conversion: ConversionDetails | null }[],
+    currency: string
+): number => {
+    return data.reduce((result, item) => {
+        const amount = getInCurrency(item, currency);
+        if (amount === null) return result;
+        return result + amount;
+    }, 0);
+};
