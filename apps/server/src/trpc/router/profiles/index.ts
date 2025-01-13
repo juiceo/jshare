@@ -40,7 +40,7 @@ export const profilesRouter = router({
 
             return profile;
         }),
-    get: authProcedure.query(async (opts) => {
+    me: authProcedure.query(async (opts) => {
         const profile = await prisma.profile.findUnique({
             where: {
                 userId: opts.ctx.userId,
@@ -56,7 +56,7 @@ export const profilesRouter = router({
 
         return profile;
     }),
-    getById: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
+    get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
         const profile = await prisma.profile.findUnique({
             where: {
                 userId: opts.input.id,
@@ -85,40 +85,30 @@ export const profilesRouter = router({
                 .partial()
         )
         .mutation(async (opts) => {
-            const updatedProfile = await prisma.profile
-                .update({
-                    where: {
-                        userId: opts.ctx.userId,
-                    },
-                    data: {
-                        firstName: opts.input.firstName,
-                        lastName: opts.input.lastName,
-                        email: opts.input.email,
-                        currency: opts.input.currency,
-                        avatar: opts.input.avatarId
-                            ? {
-                                  connect: {
-                                      id: opts.input.avatarId,
-                                  },
-                              }
-                            : opts.input.avatarId === null
-                              ? {
-                                    disconnect: true,
-                                }
-                              : undefined,
-                    },
-                    include: {
-                        avatar: true,
-                    },
-                })
-                .catch((err: any) => {
-                    console.error('Error updating profile: ' + err.message);
-                    throw new TRPCError({
-                        code: 'NOT_FOUND',
-                        message: 'Profile not found',
-                    });
-                });
-
-            return updatedProfile;
+            return prisma.profile.update({
+                where: {
+                    userId: opts.ctx.userId,
+                },
+                data: {
+                    firstName: opts.input.firstName,
+                    lastName: opts.input.lastName,
+                    email: opts.input.email,
+                    currency: opts.input.currency,
+                    avatar: opts.input.avatarId
+                        ? {
+                              connect: {
+                                  id: opts.input.avatarId,
+                              },
+                          }
+                        : opts.input.avatarId === null
+                          ? {
+                                disconnect: true,
+                            }
+                          : undefined,
+                },
+                include: {
+                    avatar: true,
+                },
+            });
         }),
 });
