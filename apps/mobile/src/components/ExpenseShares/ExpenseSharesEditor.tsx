@@ -13,7 +13,7 @@ import { Typography } from '~/components/Typography';
 export type ExpenseSharesEditorProps = {
     value: DB.ExpenseShare[];
     onChange: (value: DB.ExpenseShare[]) => void;
-    expense: Pick<DB.Expense, 'amount' | 'currency'>;
+    expense: Pick<DB.Expense<{ shares: true }>, 'amount' | 'currency' | 'conversion' | 'shares'>;
     groupMembers: DB.GroupParticipant<{ user: true }>[];
 };
 

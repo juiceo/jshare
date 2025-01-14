@@ -1,53 +1,51 @@
-import type * as p from '@jshare/db';
+import type * as models from '@jshare/db/models';
 
 import type { ConversionDetails } from './schemas';
 
 export namespace DB {
-    export type Profile<I extends p.Prisma.ProfileInclude | undefined = undefined> =
-        I extends undefined ? p.Profile : p.Prisma.ProfileGetPayload<{ include: I }>;
+    export type Profile<I extends models.Prisma.ProfileInclude | undefined = undefined> =
+        I extends undefined ? models.Profile : models.Prisma.ProfileGetPayload<{ include: I }>;
 
-    export type Group<I extends p.Prisma.GroupInclude | undefined = undefined> = I extends undefined
-        ? p.Group
-        : p.Prisma.GroupGetPayload<{ include: I }>;
+    export type Group<I extends models.Prisma.GroupInclude | undefined = undefined> =
+        I extends undefined ? models.Group : models.Prisma.GroupGetPayload<{ include: I }>;
 
     export type GroupParticipant<
-        I extends p.Prisma.GroupParticipantInclude | undefined = undefined,
+        I extends models.Prisma.GroupParticipantInclude | undefined = undefined,
     > = I extends undefined
-        ? p.GroupParticipant
-        : p.Prisma.GroupParticipantGetPayload<{ include: I }>;
+        ? models.GroupParticipant
+        : models.Prisma.GroupParticipantGetPayload<{ include: I }>;
 
-    export type Image<I extends p.Prisma.ImageInclude | undefined = undefined> = I extends undefined
-        ? p.Image
-        : p.Prisma.ImageGetPayload<{ include: I }>;
+    export type Image<I extends models.Prisma.ImageInclude | undefined = undefined> =
+        I extends undefined ? models.Image : models.Prisma.ImageGetPayload<{ include: I }>;
 
-    export type Message<I extends p.Prisma.MessageInclude | undefined = undefined> =
-        I extends undefined ? p.Message : p.Prisma.MessageGetPayload<{ include: I }>;
+    export type Message<I extends models.Prisma.MessageInclude | undefined = undefined> =
+        I extends undefined ? models.Message : models.Prisma.MessageGetPayload<{ include: I }>;
 
     export type MessageAttachment<
-        I extends p.Prisma.MessageAttachmentInclude | undefined = undefined,
+        I extends models.Prisma.MessageAttachmentInclude | undefined = undefined,
     > = I extends undefined
-        ? p.MessageAttachment
-        : p.Prisma.MessageAttachmentGetPayload<{ include: I }>;
+        ? models.MessageAttachment
+        : models.Prisma.MessageAttachmentGetPayload<{ include: I }>;
 
-    export type Expense<I extends p.Prisma.ExpenseInclude | undefined = undefined> =
+    export type Expense<I extends models.Prisma.ExpenseInclude | undefined = undefined> =
         I extends undefined
-            ? WithConversionDetails<p.Expense>
-            : WithConversionDetails<p.Prisma.ExpenseGetPayload<{ include: I }>>;
+            ? WithConversionDetails<models.Expense>
+            : WithConversionDetails<models.Prisma.ExpenseGetPayload<{ include: I }>>;
 
-    export type ExpenseShare<I extends p.Prisma.ExpenseShareInclude | undefined = undefined> =
+    export type ExpenseShare<I extends models.Prisma.ExpenseShareInclude | undefined = undefined> =
         I extends undefined
-            ? WithConversionDetails<p.ExpenseShare>
-            : WithConversionDetails<p.Prisma.ExpenseShareGetPayload<{ include: I }>>;
+            ? WithConversionDetails<models.ExpenseShare>
+            : WithConversionDetails<models.Prisma.ExpenseShareGetPayload<{ include: I }>>;
 
-    export type Payment<I extends p.Prisma.PaymentInclude | undefined = undefined> =
+    export type Payment<I extends models.Prisma.PaymentInclude | undefined = undefined> =
         I extends undefined
-            ? WithConversionDetails<p.Payment>
-            : WithConversionDetails<p.Prisma.PaymentGetPayload<{ include: I }>>;
+            ? WithConversionDetails<models.Payment>
+            : WithConversionDetails<models.Prisma.PaymentGetPayload<{ include: I }>>;
 
-    export type ExchangeRates = WithRatesObject<p.ExchangeRates>;
-    export type MessageAttachmentType = p.MessageAttachmentType;
-    export type AuthorType = p.AuthorType;
-    export type Role = p.Role;
+    export type ExchangeRates = WithRatesObject<models.ExchangeRates>;
+    export type MessageAttachmentType = models.MessageAttachmentType;
+    export type AuthorType = models.AuthorType;
+    export type Role = models.Role;
 }
 
 type WithConversionDetails<T> = Omit<T, 'conversion'> & { conversion: ConversionDetails | null };

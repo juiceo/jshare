@@ -21,7 +21,6 @@
         "@faker-js/faker": "catalog:",
         "@jshare/env": "workspace:*",
         "@jshare/tsconfig": "workspace:*",
-        "@jshare/util": "workspace:*",
         "@prisma/client": "catalog:",
         "@types/moment": "catalog:",
         "lodash": "catalog:",
