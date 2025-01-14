@@ -3,7 +3,7 @@ import { createTRPCReact } from '@trpc/react-query';
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import superjson from 'superjson';
 
-import { getEnv } from '@jshare/env';
+import { getEnv } from '@jshare/common';
 import type { AppRouter } from '@jshare/server';
 
 import { getAccessToken } from '~/state/auth';

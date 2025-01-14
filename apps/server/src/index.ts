@@ -2,7 +2,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import bodyParser from 'body-parser';
 import express from 'express';
 
-import { getEnv } from '@jshare/env';
+import { getEnv } from '@jshare/common';
 
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';

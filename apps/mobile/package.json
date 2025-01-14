@@ -28,7 +28,6 @@
         "@hookform/error-message": "^2.0.1",
         "@hookform/resolvers": "catalog:",
         "@jshare/common": "workspace:*",
-        "@jshare/env": "workspace:*",
         "@jshare/theme": "workspace:*",
         "@jshare/types": "workspace:*",
         "@react-native-async-storage/async-storage": "catalog:",

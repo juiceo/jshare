@@ -2,10 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { createClient } from '@supabase/supabase-js';
 
-import { getEnv } from '@jshare/env';
-import { asyncMap } from '@jshare/util';
+import { asyncMap, getEnv } from '@jshare/common';
 
-import type { PrismaClient, Profile } from '../../build';
+import type { PrismaClient, Profile } from '../../build/prisma';
 import { DEFAULT_PASSWORD, USERS } from './constants';
 
 const supabaseUrl = getEnv('SUPABASE_API_URL', { required: true });

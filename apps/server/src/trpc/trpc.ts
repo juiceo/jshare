@@ -3,7 +3,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import jwt from 'jsonwebtoken';
 import superjson from 'superjson';
 
-import { getEnv } from '@jshare/env';
+import { getEnv } from '@jshare/common';
 
 import { ACL } from './acl';
 
