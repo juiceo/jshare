@@ -8,7 +8,7 @@ export const useUpdateProfile = () => {
 
     const updateProfile = useCallback(
         async (args: TrpcInputs['profiles']['update']) => {
-            trpcUtils.profiles.get.setData(undefined, (prev) => {
+            trpcUtils.profiles.me.setData(undefined, (prev) => {
                 if (!prev) return;
                 return {
                     ...prev,
@@ -17,11 +17,11 @@ export const useUpdateProfile = () => {
             });
             return updateProfileMutation.mutateAsync(args, {
                 onSuccess: (data) => {
-                    trpcUtils.profiles.get.setData(undefined, () => data);
+                    trpcUtils.profiles.me.setData(undefined, () => data);
                 },
             });
         },
-        [updateProfileMutation, trpcUtils.profiles.get]
+        [updateProfileMutation, trpcUtils.profiles.me]
     );
 
     return {

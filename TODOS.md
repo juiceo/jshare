@@ -29,7 +29,7 @@
     [ ] Generate zod types from zmodel schema
     [ ] Add @anatine/zod-mock to generate mocks instead of @jshare/types/mocks
     [ ] Remove @jshare/types package
-    [ ] Remove @jshare/util package, move under @jshare/common
+    [x] Remove @jshare/util package, move under @jshare/common
 
 -   Add payments feature
     [ ] Create DB model for payments

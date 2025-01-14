@@ -18,7 +18,7 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const [profile] = trpc.profiles.get.useSuspenseQuery();
+        const [profile] = trpc.profiles.me.useSuspenseQuery();
         const { updateProfile } = useUpdateProfile();
 
         const [firstName, setFirstName] = useState<string>(profile.firstName);

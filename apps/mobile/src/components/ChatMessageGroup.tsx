@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
+import { skipToken } from '@tanstack/react-query';
 
 import { getUserDefaultAvatarUrl, getUserShortName } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
@@ -10,7 +11,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessage } from '~/components/ChatMessage';
 import { SystemMessage } from '~/components/SystemMessage';
-import { useProfileById } from '~/hooks/useProfileById';
+import { trpc } from '~/services/trpc';
 
 export type ChatMessageGroupProps = {
     userId: string;
@@ -20,7 +21,9 @@ export type ChatMessageGroupProps = {
 
 export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>) => {
     const { theme } = useTheme();
-    const { profile } = useProfileById(props.authorId);
+    const { data: profile } = trpc.profiles.get.useQuery(
+        props.authorId ? { id: props.authorId } : skipToken
+    );
     const isSelf = props.authorId === props.userId;
     const isSystem = props.authorId === null;
     const styles = getStyles(theme, {

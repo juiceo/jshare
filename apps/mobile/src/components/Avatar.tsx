@@ -2,7 +2,7 @@ import { getUserDefaultAvatarUrl } from '@jshare/common';
 import type { BorderRadiusUnit } from '@jshare/theme';
 
 import { Image } from '~/components/atoms/Image';
-import { useProfileById } from '~/hooks/useProfileById';
+import { trpc } from '~/services/trpc';
 
 export type AvatarProps = {
     userId: string;
@@ -13,7 +13,7 @@ export type AvatarProps = {
 export const Avatar = (props: AvatarProps) => {
     const { userId } = props;
 
-    const { profile } = useProfileById(userId);
+    const [profile] = trpc.profiles.get.useSuspenseQuery({ id: userId });
 
     const dimensions = (() => {
         switch (props.size) {

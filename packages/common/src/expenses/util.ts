@@ -1,7 +1,8 @@
 import { sumBy } from 'lodash';
 
-import { distributeAmountEvenly } from '@jshare/common';
 import { ExpenseShareMock, type DB } from '@jshare/types';
+
+import { distributeAmountEvenly } from '../util';
 
 export const getLockedShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
     shares: TShare[]

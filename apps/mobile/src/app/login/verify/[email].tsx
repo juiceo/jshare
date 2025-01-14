@@ -41,7 +41,7 @@ export default screen(
                         Alert.alert('Invalid code, please try again');
                     } else {
                         setAccessToken(accessToken);
-                        const profile = await trpcUniversal.profiles.get.query().catch(() => null);
+                        const profile = await trpcUniversal.profiles.me.query().catch(() => null);
 
                         if (profile) {
                             router.replace('/');

@@ -30,7 +30,7 @@ export const ChatMessageExpenseAttachment = withSuspense(
         const { session } = useSession();
         const userId = session?.user.id;
         const [expense] = trpc.expenses.get.useSuspenseQuery({ id: props.expenseId });
-        const [payerProfile] = trpc.profiles.getById.useSuspenseQuery({ id: expense.payerId });
+        const [payerProfile] = trpc.profiles.get.useSuspenseQuery({ id: expense.payerId });
 
         if (!expense) return <ExpenseSkeleton />;
 

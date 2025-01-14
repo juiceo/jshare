@@ -14,7 +14,7 @@ export type ProfileBadgeProps = {
 
 export const ProfileBadge = (props: ProfileBadgeProps) => {
     const { theme } = useTheme();
-    const profile = trpc.profiles.get.useQuery();
+    const profile = trpc.profiles.me.useQuery();
 
     const getName = () => {
         if (!profile.data) return '';

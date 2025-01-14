@@ -51,7 +51,7 @@ export default screen(
         const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
-        const [profile] = trpc.profiles.get.useSuspenseQuery();
+        const [profile] = trpc.profiles.me.useSuspenseQuery();
         const { convert } = useCurrencyConversion();
         const createExpenseMutation = trpc.expenses.create.useMutation();
         const form = useForm<Schema>({

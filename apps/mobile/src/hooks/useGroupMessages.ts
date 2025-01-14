@@ -7,7 +7,7 @@ import { trpc } from '~/services/trpc';
 
 export const useGroupMessages = (args: { groupId: string; userId: string }) => {
     const { groupId, userId } = args;
-    const [profile] = trpc.profiles.get.useSuspenseQuery();
+    const [profile] = trpc.profiles.me.useSuspenseQuery();
     const utils = trpc.useUtils();
     const sendMessageMutation = trpc.messages.create.useMutation();
 

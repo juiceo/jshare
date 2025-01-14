@@ -25,7 +25,11 @@ export const balancesRouter = router({
                         id: opts.input.groupId,
                     },
                     include: {
-                        participants: true,
+                        participants: {
+                            include: {
+                                user: true,
+                            },
+                        },
                     },
                 }),
                 prisma.expense.findMany({

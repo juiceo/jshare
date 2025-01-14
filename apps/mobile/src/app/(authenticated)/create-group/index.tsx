@@ -28,7 +28,7 @@ export default screen(
     },
     ({ router }) => {
         const { createGroup, isPending } = useCreateGroup();
-        const [profile] = trpc.profiles.get.useSuspenseQuery();
+        const [profile] = trpc.profiles.me.useSuspenseQuery();
 
         const trpcUtils = trpc.useUtils();
 

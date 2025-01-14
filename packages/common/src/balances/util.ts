@@ -3,10 +3,15 @@ import { sortBy } from 'lodash';
 import { type DB } from '@jshare/types';
 
 import { getInCurrency } from '../money';
+import { toObject } from '../util';
 import type { BalanceObject } from './types';
 
-export const getEmptyBalanceObject = (args: { currency: string }): BalanceObject => {
+export const getEmptyBalanceObject = (args: {
+    currency: string;
+    participant: DB.GroupParticipant<{ user: true }>;
+}): BalanceObject => {
     return {
+        participant: args.participant,
         currency: args.currency,
         paid: 0,
         received: 0,
@@ -17,23 +22,23 @@ export const getEmptyBalanceObject = (args: { currency: string }): BalanceObject
 export const getBalanceByParticipant = (args: {
     expenses: (DB.Expense & { shares: DB.ExpenseShare[] })[];
     payments: DB.Payment[];
-    participants: DB.GroupParticipant[];
+    participants: DB.GroupParticipant<{ user: true }>[];
     currency: string;
 }): BalanceObject[] => {
-    const balances: Record<string, BalanceObject> = {};
+    const balances: Record<string, BalanceObject> = toObject({
+        data: args.participants,
+        key: (item) => item.userId,
+        value: (item) => getEmptyBalanceObject({ currency: args.currency, participant: item }),
+    });
 
     const addToPaid = (userId: string, amount: number) => {
-        if (!balances[userId]) {
-            balances[userId] = getEmptyBalanceObject({ currency: args.currency });
-        }
+        if (!balances[userId]) return;
         balances[userId].paid += amount;
         balances[userId].balance += amount;
     };
 
     const addToReceived = (userId: string, amount: number) => {
-        if (!balances[userId]) {
-            balances[userId] = getEmptyBalanceObject({ currency: args.currency });
-        }
+        if (!balances[userId]) return;
         balances[userId].received += amount;
         balances[userId].balance -= amount;
     };

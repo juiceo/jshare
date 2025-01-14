@@ -21,7 +21,7 @@ export default screen(
         const [groupTotal] = trpc.expenses.getTotalForGroup.useSuspenseQuery({
             groupId: params.groupId,
         });
-        const [balances] = trpc.expenses.getBalancesByParticipantInGroup.useSuspenseQuery({
+        const [balances] = trpc.balances.getByParticipantInGroup.useSuspenseQuery({
             groupId: params.groupId,
         });
 
