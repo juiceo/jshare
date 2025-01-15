@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { uniqueId } from 'lodash';
 
-import type { DB } from '@jshare/db';
-import { enums } from '@jshare/db/zod';
+import { DB } from '@jshare/db';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
 import { trpc } from '~/services/trpc';
@@ -36,7 +35,7 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
                 id: uniqueId(),
                 key: uniqueId(),
                 text,
-                authorType: enums.AuthorTypeSchema.Values.User,
+                authorType: DB.AuthorType.User,
                 authorId: userId,
                 groupId,
                 createdAt: new Date(),

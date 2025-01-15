@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { getBalanceByParticipant, sumInCurrency } from '@jshare/common';
-import { enums } from '@jshare/db/zod';
+import { zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
@@ -97,7 +97,7 @@ export const balancesRouter = router({
             };
         }),
     me: authProcedure
-        .input(z.object({ currency: enums.CurrencyCodeSchema }))
+        .input(z.object({ currency: zDB.enums.CurrencyCodeSchema }))
         .query(async (opts) => {
             const userId = opts.ctx.userId;
 

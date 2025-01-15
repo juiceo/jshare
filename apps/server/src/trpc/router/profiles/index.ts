@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { enums } from '@jshare/db/zod';
+import { zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
@@ -13,7 +13,7 @@ export const profilesRouter = router({
                 firstName: z.string(),
                 lastName: z.string(),
                 email: z.string(),
-                currency: enums.CurrencyCodeSchema,
+                currency: zDB.enums.CurrencyCodeSchema,
                 avatarId: z.string().optional(),
             })
         )
@@ -79,7 +79,7 @@ export const profilesRouter = router({
                     firstName: z.string(),
                     lastName: z.string(),
                     email: z.string(),
-                    currency: enums.CurrencyCodeSchema,
+                    currency: zDB.enums.CurrencyCodeSchema,
                     avatarId: z.string().nullable(),
                 })
                 .partial()

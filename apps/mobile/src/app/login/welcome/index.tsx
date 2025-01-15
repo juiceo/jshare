@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { enums, models } from '@jshare/db/zod';
+import { zDB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -18,10 +18,10 @@ import { screen } from '~/wrappers/screen';
 const schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string(),
-    image: models.ImageSchema.extend({
+    image: zDB.models.ImageSchema.extend({
         blurhash: z.string().nullable(),
     }).optional(),
-    currency: enums.CurrencyCodeSchema,
+    currency: zDB.enums.CurrencyCodeSchema,
 });
 
 type Schema = z.infer<typeof schema>;

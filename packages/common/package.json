@@ -9,7 +9,8 @@
         "lint": "eslint --ext js,ts,tsx .",
         "build": "tsup --clean",
         "typecheck": "tsc --noEmit",
-        "test": "vitest"
+        "test": "vitest run",
+        "test:watch": "vitest watch"
     },
     "dependencies": {
         "dayjs": "catalog:",

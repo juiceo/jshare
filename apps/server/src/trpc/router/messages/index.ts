@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { enums } from '@jshare/db/zod';
+import { DB } from '@jshare/db';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
@@ -69,7 +69,7 @@ export const messagesRouter = router({
                     text: opts.input.text,
                     authorId: opts.ctx.userId,
                     groupId: opts.input.groupId,
-                    authorType: enums.AuthorTypeSchema.Values.User,
+                    authorType: DB.AuthorType.User,
                     key: opts.input.key,
                 },
             });

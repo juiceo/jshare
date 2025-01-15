@@ -2,12 +2,10 @@
     "name": "@jshare/db",
     "version": "1.0.0",
     "description": "JShare database client",
+    "main": "build/index.ts",
     "exports": {
-        ".": "./build/types.ts",
-        "./prisma": "./build/generated/prisma/index.js",
-        "./enhance": "./build/generated/enhance.js",
-        "./zod": "./build/generated/zod/index.js",
-        "./models": "./build/generated/models.d.ts"
+        ".": "./build/index.ts",
+        "./server": "./build/server.ts"
     },
     "keywords": [],
     "license": "MIT",

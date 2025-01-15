@@ -1,5 +1,8 @@
 import type * as models from './generated/models';
 
+export type { Prisma } from './generated/models';
+export * as zDB from './generated/zod/index';
+
 export namespace DB {
     export type Profile<I extends models.Prisma.ProfileInclude | undefined = undefined> =
         I extends undefined ? models.Profile : models.Prisma.ProfileGetPayload<{ include: I }>;
@@ -36,10 +39,56 @@ export namespace DB {
     export type Payment<I extends models.Prisma.PaymentInclude | undefined = undefined> =
         I extends undefined ? models.Payment : models.Prisma.PaymentGetPayload<{ include: I }>;
 
-    export type CurrencyConversion = models.CurrencyConversion;
-    export type MessageAttachmentType = models.MessageAttachmentType;
+    export const CurrencyCode: { [K in CurrencyCode]: K } = {
+        AED: 'AED',
+        ARS: 'ARS',
+        AUD: 'AUD',
+        BRL: 'BRL',
+        CAD: 'CAD',
+        CHF: 'CHF',
+        CLP: 'CLP',
+        COP: 'COP',
+        CZK: 'CZK',
+        DKK: 'DKK',
+        EGP: 'EGP',
+        EUR: 'EUR',
+        GBP: 'GBP',
+        HUF: 'HUF',
+        INR: 'INR',
+        KES: 'KES',
+        MAD: 'MAD',
+        MXN: 'MXN',
+        NOK: 'NOK',
+        PEN: 'PEN',
+        PLN: 'PLN',
+        RON: 'RON',
+        SEK: 'SEK',
+        THB: 'THB',
+        TZS: 'TZS',
+        USD: 'USD',
+        ZAR: 'ZAR',
+    };
     export type CurrencyCode = models.CurrencyCode;
+
+    export const MessageAttachmentType: { [K in MessageAttachmentType]: K } = {
+        Expense: 'Expense',
+    };
+    export type MessageAttachmentType = models.MessageAttachmentType;
+
+    export const Role: { [K in Role]: K } = {
+        Admin: 'Admin',
+        Member: 'Member',
+        Owner: 'Owner',
+    };
     export type Role = models.Role;
+
+    export const AuthorType: { [K in AuthorType]: K } = {
+        System: 'System',
+        User: 'User',
+    };
+    export type AuthorType = models.AuthorType;
+
+    export type CurrencyConversion = models.CurrencyConversion;
     export type ExchangeRatesObject = Record<CurrencyCode, number>;
     export type ExchangeRates = Omit<models.ExchangeRates, 'rates'> & {
         rates: ExchangeRatesObject;

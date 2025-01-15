@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { formatAmount, getConversionDetails, getUserShortName } from '@jshare/common';
-import { enums } from '@jshare/db/zod';
+import { DB, zDB } from '@jshare/db';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
@@ -61,7 +61,7 @@ export const paymentsRouter = router({
                 payerId: z.string(),
                 recipientId: z.string(),
                 amount: z.number().min(1),
-                currency: enums.CurrencyCodeSchema,
+                currency: zDB.enums.CurrencyCodeSchema,
             })
         )
         .mutation(async (opts) => {
@@ -139,7 +139,7 @@ export const paymentsRouter = router({
                 await tx.message.create({
                     data: {
                         groupId: opts.input.groupId,
-                        authorType: enums.AuthorTypeSchema.Values.System,
+                        authorType: DB.AuthorType.System,
                         text: `${getUserShortName(payer)} paid ${formatAmount(opts.input.amount, opts.input.currency)} to ${getUserShortName(recipient)}`,
                         key: uuidv4(),
                     },

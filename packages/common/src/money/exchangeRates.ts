@@ -1,11 +1,10 @@
 import { z } from 'zod';
 
-import type { DB } from '@jshare/db';
-import { enums } from '@jshare/db/zod';
+import { zDB, type DB } from '@jshare/db';
 
 export const BASE_EXCHANGE_RATES_ID = 'base_exchange_rates';
 
-export const zRatesObject = z.record(enums.CurrencyCodeSchema, z.number());
+export const zRatesObject = z.record(zDB.enums.CurrencyCodeSchema, z.number());
 export type RatesObject = z.infer<typeof zRatesObject>;
 
 const BASE_RATES: Record<DB.CurrencyCode, number> = {

@@ -1,12 +1,11 @@
 import { sumBy } from 'lodash';
 import { z } from 'zod';
 
-import type { DB } from '@jshare/db';
-import { models } from '@jshare/db/zod';
+import { zDB, type DB } from '@jshare/db';
 
 import { distributeAmountEvenly } from '../util';
 
-export const zPartialExpenseShare = models.ExpenseShareSchema.pick({
+export const zPartialExpenseShare = zDB.models.ExpenseShareSchema.pick({
     amount: true,
     userId: true,
     locked: true,

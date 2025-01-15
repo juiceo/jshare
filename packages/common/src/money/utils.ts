@@ -1,7 +1,6 @@
 import { sortBy } from 'lodash';
 
-import type { DB } from '@jshare/db';
-import { enums } from '@jshare/db/zod';
+import { zDB, type DB } from '@jshare/db';
 
 import { CURRENCY_DETAILS, type CurrencyDetails } from './currencyDetails';
 
@@ -19,7 +18,7 @@ export const formatAmount = (cents: number, currency: string) => {
 };
 
 export const isCurrencyCode = (currency: string): currency is DB.CurrencyCode => {
-    return enums.CurrencyCodeSchema.safeParse(currency).success;
+    return zDB.enums.CurrencyCodeSchema.safeParse(currency).success;
 };
 
 export const getCurrencyDetails = (currency: DB.CurrencyCode): CurrencyDetails => {

@@ -8,7 +8,7 @@ import {
     sumInCurrency,
     zPartialExpenseShare,
 } from '@jshare/common';
-import { enums } from '@jshare/db/zod';
+import { DB, zDB } from '@jshare/db';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
@@ -72,7 +72,7 @@ export const expensesRouter = router({
                 payerId: z.string(),
                 amount: z.number().min(1),
                 description: z.string().min(1).max(100),
-                currency: enums.CurrencyCodeSchema,
+                currency: zDB.enums.CurrencyCodeSchema,
                 shares: zPartialExpenseShare.array().min(1),
             })
         )
@@ -156,11 +156,11 @@ export const expensesRouter = router({
                     data: {
                         authorId: opts.ctx.userId,
                         groupId: opts.input.groupId,
-                        authorType: enums.AuthorTypeSchema.Values.User,
+                        authorType: DB.AuthorType.User,
                         key: uuidv4(),
                         attachments: {
                             create: {
-                                type: enums.MessageAttachmentTypeSchema.Values.Expense,
+                                type: DB.MessageAttachmentType.Expense,
                                 expenseId: expense.id,
                             },
                         },

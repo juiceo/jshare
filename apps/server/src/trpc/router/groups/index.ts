@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { getUserShortName } from '@jshare/common';
-import { enums } from '@jshare/db/zod';
+import { DB, zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
@@ -14,7 +14,7 @@ export const groupsRouter = router({
         .input(
             z.object({
                 name: z.string(),
-                currency: enums.CurrencyCodeSchema,
+                currency: zDB.enums.CurrencyCodeSchema,
                 coverImageId: z.string().optional(),
             })
         )
@@ -35,7 +35,7 @@ export const groupsRouter = router({
                             participants: {
                                 create: {
                                     userId: opts.ctx.userId,
-                                    role: enums.RoleSchema.Values.Owner,
+                                    role: DB.Role.Owner,
                                 },
                             },
                         },
@@ -54,7 +54,7 @@ export const groupsRouter = router({
                     data: {
                         key: uuidv4(),
                         text: `Group created by ${getUserShortName(profile)}`,
-                        authorType: enums.AuthorTypeSchema.Values.System,
+                        authorType: DB.AuthorType.System,
                         groupId: group.id,
                     },
                 });

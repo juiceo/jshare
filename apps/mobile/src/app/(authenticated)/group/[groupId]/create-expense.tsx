@@ -14,7 +14,7 @@ import {
     getUserShortName,
     zPartialExpenseShare,
 } from '@jshare/common';
-import { enums, models } from '@jshare/db/zod';
+import { zDB } from '@jshare/db';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Menu } from '~/components/atoms/Menu';
@@ -32,9 +32,9 @@ import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
-    payer: models.ProfileScalarSchema,
+    payer: zDB.models.ProfileScalarSchema,
     amount: z.number().min(1, 'Please enter an amount'),
-    currency: enums.CurrencyCodeSchema,
+    currency: zDB.enums.CurrencyCodeSchema,
     description: z
         .string()
         .min(1, 'Please enter a description')
