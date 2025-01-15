@@ -1,9 +1,14 @@
+import { sortBy } from 'lodash';
+
 import { CurrencyConversion, ExchangeRates, type CurrencyCode } from '@jshare/db/models';
 import { enums } from '@jshare/db/zod';
 
 import { CURRENCY_DETAILS, type CurrencyDetails } from './currencyDetails';
 
-export const SORTED_CURRENCIES = [];
+export const SORTED_CURRENCIES: CurrencyDetails[] = sortBy(
+    Object.values(CURRENCY_DETAILS),
+    (item) => item.ranking ?? Infinity
+);
 
 export const formatAmount = (cents: number, currency: string) => {
     return new Intl.NumberFormat('en-US', {

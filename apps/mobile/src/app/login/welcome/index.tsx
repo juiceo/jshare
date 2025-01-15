@@ -18,7 +18,9 @@ import { screen } from '~/wrappers/screen';
 const schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string(),
-    image: models.ImageSchema.optional(),
+    image: models.ImageSchema.extend({
+        blurhash: z.string().nullable(),
+    }).optional(),
     currency: enums.CurrencyCodeSchema,
 });
 

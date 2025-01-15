@@ -18,7 +18,9 @@ import { screen } from '~/wrappers/screen';
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
     currency: enums.CurrencyCodeSchema,
-    coverImage: models.ImageSchema.nullable(),
+    coverImage: models.ImageSchema.extend({
+        blurhash: z.string().nullable(),
+    }).nullable(),
 });
 type Schema = z.infer<typeof schema>;
 

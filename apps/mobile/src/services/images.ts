@@ -33,7 +33,7 @@ export const uploadImage = async (asset: ImagePickerAsset): Promise<ImageType> =
 };
 
 export const getImageUrl = (
-    image: ImageType,
+    image: Pick<ImageType, 'bucket' | 'path'>,
     transform?: {
         width?: number;
         height?: number;

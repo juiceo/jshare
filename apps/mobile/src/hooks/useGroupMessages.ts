@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react';
+import { uniqueId } from 'lodash';
 
-import { getMessageMock } from '@jshare/common';
 import { Message, MessageAttachment, Profile } from '@jshare/db/models';
+import { enums } from '@jshare/db/zod';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
 import { trpc } from '~/services/trpc';
@@ -30,11 +31,18 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
     const sendMessage = useCallback(
         async (text: string) => {
             if (!profile) return;
-            const localMessage = getMessageMock.build({
+
+            const localMessage: Message = {
+                id: uniqueId(),
+                key: uniqueId(),
                 text,
+                authorType: enums.AuthorTypeSchema.Values.User,
                 authorId: userId,
                 groupId,
-            });
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            };
+
             const localMessageWithAuthor: Message & {
                 author: Profile;
                 attachments: MessageAttachment[];

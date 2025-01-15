@@ -1,4 +1,5 @@
 import { SORTED_CURRENCIES } from '@jshare/common';
+import type { CurrencyCode } from 'node_modules/@jshare/db/build/zenstack/.logical-prisma-client/index-fixed';
 
 import { Menu, MenuOption } from '~/components/atoms/Menu';
 
@@ -9,7 +10,7 @@ export type CurrencyMenuProps = {
     onClose: () => void;
 };
 
-export const CURRENCY_OPTIONS: MenuOption<string>[] = SORTED_CURRENCIES.map((currency) => {
+export const CURRENCY_OPTIONS: MenuOption<CurrencyCode>[] = SORTED_CURRENCIES.map((currency) => {
     return {
         id: currency.code,
         label: currency.name,
