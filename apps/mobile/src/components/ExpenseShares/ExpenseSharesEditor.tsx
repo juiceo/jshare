@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { addShare, removeShare, updateShare } from '@jshare/common';
+import { addShare, removeShare, updateShare, type PartialExpenseShare } from '@jshare/common';
 import type { Expense, ExpenseShare, GroupParticipant, Profile } from '@jshare/db/models';
 
 import { Divider } from '~/components/atoms/Divider';
@@ -11,8 +11,8 @@ import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ExpenseSharesEditorProps = {
-    value: ExpenseShare[];
-    onChange: (value: ExpenseShare[]) => void;
+    value: PartialExpenseShare[];
+    onChange: (value: PartialExpenseShare[]) => void;
     expense: Pick<Expense, 'amount' | 'currency'>;
     groupMembers: (GroupParticipant & { user: Profile })[];
 };

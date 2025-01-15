@@ -23,8 +23,6 @@ plugin prisma {
 
 plugin zod {
     provider = '@core/zod'
-    compile = true
-    output = "./build/zod"
 }
 
 model Profile {

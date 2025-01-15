@@ -2,8 +2,13 @@ import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { getConversionDetails, getTotalFromShares, sumInCurrency } from '@jshare/common';
-import { enums, models } from '@jshare/db/zod';
+import {
+    getConversionDetails,
+    getTotalFromShares,
+    sumInCurrency,
+    zPartialExpenseShare,
+} from '@jshare/common';
+import { enums } from '@jshare/db/zod';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
@@ -68,7 +73,7 @@ export const expensesRouter = router({
                 amount: z.number().min(1),
                 description: z.string().min(1).max(100),
                 currency: enums.CurrencyCodeSchema,
-                shares: models.ExpenseShareCreateSchema.array().min(1),
+                shares: zPartialExpenseShare.array().min(1),
             })
         )
         .mutation(async (opts) => {

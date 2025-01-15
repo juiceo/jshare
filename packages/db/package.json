@@ -5,7 +5,7 @@
     "exports": {
         "./prisma": "./build/prisma/index.js",
         "./enhance": "./build/zenstack/enhance.js",
-        "./zod": "./build/zod/index.js",
+        "./zod": "./build/zenstack/zod/index.js",
         "./models": "./build/zenstack/models.d.ts"
     },
     "keywords": [],

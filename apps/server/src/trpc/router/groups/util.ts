@@ -1,4 +1,4 @@
-import type { Prisma } from '@jshare/db/prisma';
+import type { Prisma } from '@jshare/db/models';
 
 export const defaultGroupInclude = {
     coverImage: true,

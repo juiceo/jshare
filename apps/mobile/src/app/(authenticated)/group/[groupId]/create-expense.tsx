@@ -12,6 +12,7 @@ import {
     getSharesWithUpdatedAmount,
     getTotalFromShares,
     getUserShortName,
+    zPartialExpenseShare,
 } from '@jshare/common';
 import { enums, models } from '@jshare/db/zod';
 
@@ -38,7 +39,7 @@ const schema = z.object({
         .string()
         .min(1, 'Please enter a description')
         .max(100, 'Description can be at most 100 characters'),
-    shares: models.ExpenseShareScalarSchema.array(),
+    shares: zPartialExpenseShare.array(),
 });
 
 type Schema = z.infer<typeof schema>;
