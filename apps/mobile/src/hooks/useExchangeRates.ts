@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 
 import { BASE_EXCHANGE_RATES, convertAmount, getExchangeRate } from '@jshare/common';
-import type { ExchangeRates } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 import { trpc } from '~/services/trpc';
 
 export const useExchangeRates = (): {
-    exchangeRates: ExchangeRates;
+    exchangeRates: DB.ExchangeRates;
     refetch: () => void;
 } => {
     const ratesQuery = trpc.exchangeRates.latest.useQuery();

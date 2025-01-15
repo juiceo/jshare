@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { CurrencyCode } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -25,7 +25,7 @@ export default screen(
 
         const [firstName, setFirstName] = useState<string>(profile.firstName);
         const [lastName, setLastName] = useState<string>(profile.lastName);
-        const [currency, setCurrency] = useState<CurrencyCode>(profile.currency);
+        const [currency, setCurrency] = useState<DB.CurrencyCode>(profile.currency);
 
         return (
             <Screen>

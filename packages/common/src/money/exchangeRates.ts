@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { CurrencyCode, ExchangeRates } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 import { enums } from '@jshare/db/zod';
 
 export const BASE_EXCHANGE_RATES_ID = 'base_exchange_rates';
@@ -8,7 +8,7 @@ export const BASE_EXCHANGE_RATES_ID = 'base_exchange_rates';
 export const zRatesObject = z.record(enums.CurrencyCodeSchema, z.number());
 export type RatesObject = z.infer<typeof zRatesObject>;
 
-const BASE_RATES: Record<CurrencyCode, number> = {
+const BASE_RATES: Record<DB.CurrencyCode, number> = {
     AED: 3.6743934438349,
     ARS: 1036.7437416522,
     AUD: 1.6184215461333,
@@ -38,7 +38,7 @@ const BASE_RATES: Record<CurrencyCode, number> = {
     ZAR: 19.067696017005,
 };
 
-export const BASE_EXCHANGE_RATES: ExchangeRates & { rates: RatesObject } = {
+export const BASE_EXCHANGE_RATES: DB.ExchangeRates & { rates: RatesObject } = {
     id: BASE_EXCHANGE_RATES_ID,
     baseCurrency: 'USD',
     rates: BASE_RATES,

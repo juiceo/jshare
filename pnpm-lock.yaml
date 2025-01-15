@@ -317,6 +317,9 @@ importers:
       '@jshare/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@jshare/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@jshare/theme':
         specifier: workspace:*
         version: link:../../packages/theme
@@ -565,6 +568,9 @@ importers:
 
   packages/common:
     dependencies:
+      '@jshare/db':
+        specifier: workspace:*
+        version: link:../db
       dayjs:
         specifier: 'catalog:'
         version: 1.11.13
@@ -643,7 +649,7 @@ importers:
         specifier: ^2.11.2
         version: 2.11.2(@prisma/client@5.21.1(prisma@5.21.1))(prisma@5.21.1)
 
-  packages/db/build/prisma: {}
+  packages/db/src/generated/prisma: {}
 
   packages/theme:
     dependencies:

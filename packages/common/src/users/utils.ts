@@ -1,16 +1,16 @@
-import { Profile } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
-export const getUserFullName = (profile: Pick<Profile, 'firstName' | 'lastName'>) => {
+export const getUserFullName = (profile: Pick<DB.Profile, 'firstName' | 'lastName'>) => {
     return [profile.firstName, profile.lastName].filter(Boolean).join(' ');
 };
 
-export const getUserShortName = (profile: Pick<Profile, 'firstName' | 'lastName'>) => {
+export const getUserShortName = (profile: Pick<DB.Profile, 'firstName' | 'lastName'>) => {
     return [profile.firstName, profile.lastName ? profile.lastName.charAt(0).concat('.') : null]
         .filter(Boolean)
         .join(' ');
 };
 
-export const getUserDefaultAvatarUrl = (profile: Pick<Profile, 'firstName' | 'lastName'>) => {
+export const getUserDefaultAvatarUrl = (profile: Pick<DB.Profile, 'firstName' | 'lastName'>) => {
     const params = new URLSearchParams({
         name: getUserFullName(profile),
         background: 'random',

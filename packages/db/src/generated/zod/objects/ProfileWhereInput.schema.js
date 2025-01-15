@@ -1,0 +1,33 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProfileWhereInputObjectSchema = void 0;
+// @ts-nocheck
+const zod_1 = require("zod");
+const StringFilter_schema_1 = require("./StringFilter.schema");
+const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
+const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
+const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
+const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
+const GroupParticipantListRelationFilter_schema_1 = require("./GroupParticipantListRelationFilter.schema");
+const ImageNullableScalarRelationFilter_schema_1 = require("./ImageNullableScalarRelationFilter.schema");
+const ImageWhereInput_schema_1 = require("./ImageWhereInput.schema");
+const MessageListRelationFilter_schema_1 = require("./MessageListRelationFilter.schema");
+const ExpenseListRelationFilter_schema_1 = require("./ExpenseListRelationFilter.schema");
+const ExpenseShareListRelationFilter_schema_1 = require("./ExpenseShareListRelationFilter.schema");
+const PaymentListRelationFilter_schema_1 = require("./PaymentListRelationFilter.schema");
+exports.ProfileWhereInputObjectSchema = zod_1.z.object({
+    AND: zod_1.z.union([zod_1.z.lazy(() => exports.ProfileWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.ProfileWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ProfileWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ProfileWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.ProfileWhereInputObjectSchema).array()]).optional(), userId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.string()]).optional(), email: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.string()]).optional(), firstName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.string()]).optional(), lastName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.string()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
+        zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), avatarId: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
+        zod_1.z.string(),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), groups: zod_1.z.lazy(() => GroupParticipantListRelationFilter_schema_1.GroupParticipantListRelationFilterObjectSchema).optional(), avatar: zod_1.z.union([zod_1.z.lazy(() => ImageNullableScalarRelationFilter_schema_1.ImageNullableScalarRelationFilterObjectSchema),
+        zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
+        zod_1.z.null()]).optional().nullable(), messages: zod_1.z.lazy(() => MessageListRelationFilter_schema_1.MessageListRelationFilterObjectSchema).optional(), expensesOwned: zod_1.z.lazy(() => ExpenseListRelationFilter_schema_1.ExpenseListRelationFilterObjectSchema).optional(), expensesPaid: zod_1.z.lazy(() => ExpenseListRelationFilter_schema_1.ExpenseListRelationFilterObjectSchema).optional(), expenseShares: zod_1.z.lazy(() => ExpenseShareListRelationFilter_schema_1.ExpenseShareListRelationFilterObjectSchema).optional(), paymentsReceived: zod_1.z.lazy(() => PaymentListRelationFilter_schema_1.PaymentListRelationFilterObjectSchema).optional(), paymentsPaid: zod_1.z.lazy(() => PaymentListRelationFilter_schema_1.PaymentListRelationFilterObjectSchema).optional()
+}).strict();

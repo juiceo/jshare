@@ -1,12 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
+import type { DB } from '@jshare/db';
+
+import { BASE_EXCHANGE_RATES } from './exchangeRates';
 import { convertAmount, getExchangeRate } from './utils';
 
 describe('getExchangeRate', () => {
-    const exchangeRates = {
+    const exchangeRates: DB.ExchangeRates = {
         id: 'base',
         baseCurrency: 'USD',
         rates: {
+            ...BASE_EXCHANGE_RATES.rates,
             AUD: 1.6184215461333,
             CAD: 1.4413181049844,
         },
@@ -35,6 +39,7 @@ describe('convertAmount', () => {
         id: 'base',
         baseCurrency: 'USD',
         rates: {
+            ...BASE_EXCHANGE_RATES.rates,
             AUD: 1.6184215461333,
             CAD: 1.4413181049844,
         },

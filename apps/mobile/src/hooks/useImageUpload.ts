@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { merge, partition } from 'lodash';
 
-import { Image as ImageType } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 import { uploadImage } from '~/services/images';
 
@@ -15,7 +15,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
     const uploadFiles = useCallback(
         async (
             assets: ImagePicker.ImagePickerAsset[]
-        ): Promise<{ uploaded: ImageType[]; failed: number }> => {
+        ): Promise<{ uploaded: DB.Image[]; failed: number }> => {
             setUploadingCount((prev) => prev + assets.length);
 
             const images = await Promise.all(
@@ -40,7 +40,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
     const uploadFromCamera = useCallback(
         async (
             options?: ImagePicker.ImagePickerOptions
-        ): Promise<{ uploaded: ImageType[]; failed: number }> => {
+        ): Promise<{ uploaded: DB.Image[]; failed: number }> => {
             const result = await ImagePicker.launchCameraAsync(
                 merge({}, defaultOptions, options, { base64: true })
             );
@@ -60,7 +60,7 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
     const uploadFromLibrary = useCallback(
         async (
             options?: ImagePicker.ImagePickerOptions
-        ): Promise<{ uploaded: ImageType[]; failed: number }> => {
+        ): Promise<{ uploaded: DB.Image[]; failed: number }> => {
             const result = await ImagePicker.launchImageLibraryAsync(
                 merge({}, defaultOptions, options, { base64: true })
             );

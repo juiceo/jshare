@@ -1,7 +1,7 @@
 import { sumBy } from 'lodash';
 import { z } from 'zod';
 
-import { ExpenseShare, GroupParticipant } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 import { models } from '@jshare/db/zod';
 
 import { distributeAmountEvenly } from '../util';
@@ -13,19 +13,19 @@ export const zPartialExpenseShare = models.ExpenseShareSchema.pick({
 });
 export type PartialExpenseShare = z.infer<typeof zPartialExpenseShare>;
 
-export const getLockedShares = <TShare extends Pick<ExpenseShare, 'locked'>>(
+export const getLockedShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
     shares: TShare[]
 ): TShare[] => {
     return shares.filter((share) => share.locked);
 };
 
-export const getFloatingShares = <TShare extends Pick<ExpenseShare, 'locked'>>(
+export const getFloatingShares = <TShare extends Pick<DB.ExpenseShare, 'locked'>>(
     shares: TShare[]
 ): TShare[] => {
     return shares.filter((share) => !share.locked);
 };
 
-export const getTotalFromShares = (shares: Pick<ExpenseShare, 'amount'>[]): number => {
+export const getTotalFromShares = (shares: Pick<DB.ExpenseShare, 'amount'>[]): number => {
     return sumBy(shares, (share) => share.amount);
 };
 
@@ -122,7 +122,7 @@ export const removeShare = (
     });
 };
 
-export const getDefaultShares = (groupMembers: GroupParticipant[]): PartialExpenseShare[] => {
+export const getDefaultShares = (groupMembers: DB.GroupParticipant[]): PartialExpenseShare[] => {
     return groupMembers.map((member) => {
         return getDefaultShare(member.userId);
     });

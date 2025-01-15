@@ -1,6 +1,6 @@
 import { sortBy } from 'lodash';
 
-import { CurrencyConversion, ExchangeRates, type CurrencyCode } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 import { enums } from '@jshare/db/zod';
 
 import { CURRENCY_DETAILS, type CurrencyDetails } from './currencyDetails';
@@ -18,11 +18,11 @@ export const formatAmount = (cents: number, currency: string) => {
     }).format(cents / 100);
 };
 
-export const isCurrencyCode = (currency: string): currency is CurrencyCode => {
+export const isCurrencyCode = (currency: string): currency is DB.CurrencyCode => {
     return enums.CurrencyCodeSchema.safeParse(currency).success;
 };
 
-export const getCurrencyDetails = (currency: CurrencyCode): CurrencyDetails => {
+export const getCurrencyDetails = (currency: DB.CurrencyCode): CurrencyDetails => {
     return CURRENCY_DETAILS[currency];
 };
 
@@ -30,7 +30,7 @@ export const convertAmount = (args: {
     amount: number;
     from: string;
     to: string;
-    exchangeRates: ExchangeRates;
+    exchangeRates: DB.ExchangeRates;
 }): number => {
     const rate = getExchangeRate(args);
     if (!rate) return 0;
@@ -40,7 +40,7 @@ export const convertAmount = (args: {
 export const getExchangeRate = (args: {
     from: string;
     to: string;
-    exchangeRates: ExchangeRates;
+    exchangeRates: DB.ExchangeRates;
 }): number => {
     const { from, to, exchangeRates } = args;
 
@@ -68,11 +68,11 @@ export const getExchangeRate = (args: {
 };
 
 export const getConversionDetails = (args: {
-    sourceCurrency: CurrencyCode;
+    sourceCurrency: DB.CurrencyCode;
     sourceAmount: number;
-    currency: CurrencyCode;
-    exchangeRates: ExchangeRates;
-}): CurrencyConversion => {
+    currency: DB.CurrencyCode;
+    exchangeRates: DB.ExchangeRates;
+}): DB.CurrencyConversion => {
     return {
         sourceCurrency: args.sourceCurrency,
         sourceAmount: args.sourceAmount,
@@ -93,7 +93,7 @@ export const getConversionDetails = (args: {
 };
 
 export const getInCurrency = (
-    data: { amount: number; currency: CurrencyCode; conversion: CurrencyConversion | null },
+    data: { amount: number; currency: DB.CurrencyCode; conversion: DB.CurrencyConversion | null },
     currency: string
 ): number | null => {
     if (data.currency === currency) return data.amount;
@@ -103,7 +103,7 @@ export const getInCurrency = (
 };
 
 export const sumInCurrency = (
-    data: { amount: number; currency: CurrencyCode; conversion: CurrencyConversion | null }[],
+    data: { amount: number; currency: DB.CurrencyCode; conversion: DB.CurrencyConversion | null }[],
     currency: string
 ): number => {
     return data.reduce((result, item) => {

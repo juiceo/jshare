@@ -15,7 +15,8 @@
         "dayjs": "catalog:",
         "lodash": "catalog:",
         "vitest": "^2.1.8",
-        "zod": "catalog:"
+        "zod": "catalog:",
+        "@jshare/db": "workspace:*"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",

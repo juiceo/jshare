@@ -1,14 +1,14 @@
 import dayjs from 'dayjs';
 
-import { Message } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
-export type MessageGroup<TMessage extends Message> = {
+export type MessageGroup<TMessage extends DB.Message> = {
     authorId: string | null;
     timestamp: Date;
     messages: TMessage[];
 };
 
-export type ChatListItem<TMessage extends Message> =
+export type ChatListItem<TMessage extends DB.Message> =
     | {
           type: 'messages';
           authorId: string | null;
@@ -19,7 +19,7 @@ export type ChatListItem<TMessage extends Message> =
           date: string;
       };
 
-export const messagesToChatListItems = <TMessage extends Message>(
+export const messagesToChatListItems = <TMessage extends DB.Message>(
     messages: TMessage[]
 ): ChatListItem<TMessage>[] => {
     let currentDate: string | null = dayjs(messages.at(0)?.createdAt).startOf('day').toISOString();

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { uniqueId } from 'lodash';
 
-import { Message, MessageAttachment, Profile } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 import { enums } from '@jshare/db/zod';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
@@ -32,7 +32,7 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
         async (text: string) => {
             if (!profile) return;
 
-            const localMessage: Message = {
+            const localMessage: DB.Message = {
                 id: uniqueId(),
                 key: uniqueId(),
                 text,
@@ -43,10 +43,10 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
                 updatedAt: new Date(),
             };
 
-            const localMessageWithAuthor: Message & {
-                author: Profile;
-                attachments: MessageAttachment[];
-            } = {
+            const localMessageWithAuthor: DB.Message<{
+                author: true;
+                attachments: true;
+            }> = {
                 ...localMessage,
                 attachments: [],
                 author: profile,

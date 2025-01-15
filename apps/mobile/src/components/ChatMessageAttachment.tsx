@@ -1,11 +1,11 @@
-import { type MessageAttachmentType } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 import { ChatMessageExpenseAttachment } from '~/components/ChatMessageAttachment.Expense';
 
 export type ChatMessageAttachmentProps = ChatMessageExpenseAttachmentProps;
 
 type ChatMessageExpenseAttachmentProps = {
-    type: MessageAttachmentType;
+    type: DB.MessageAttachmentType;
     expenseId: string;
 };
 

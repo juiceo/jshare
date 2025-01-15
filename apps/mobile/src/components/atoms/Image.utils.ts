@@ -1,13 +1,13 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 import { ImageSource as ExpoImageSource } from 'expo-image';
 
-import { Image as ImageType } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 import type { SxProps } from '@jshare/theme';
 
 import { getImageUrl } from '~/services/images';
 
 export type ImageProps = {
-    image?: ImageType | null;
+    image?: DB.Image | null;
     source?: ExpoImageSource | null;
     fit?: 'cover' | 'contain' | 'fill';
     width?: number;

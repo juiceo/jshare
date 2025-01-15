@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { skipToken } from '@tanstack/react-query';
 
 import { getUserDefaultAvatarUrl, getUserShortName } from '@jshare/common';
-import { Message, Profile, type MessageAttachment } from '@jshare/db/models';
+import { DB } from '@jshare/db';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
@@ -16,7 +16,7 @@ import { trpc } from '~/services/trpc';
 export type ChatMessageGroupProps = {
     userId: string;
     authorId: string | null;
-    messages: (Message & { author: Profile | null; attachments: MessageAttachment[] })[];
+    messages: DB.Message<{ author: true; attachments: true }>[];
 };
 
 export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>) => {
@@ -29,6 +29,7 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
     const styles = getStyles(theme, {
         align: isSelf ? 'right' : isSystem ? 'center' : 'left',
     });
+
     return (
         <Stack style={[styles.wrapper]}>
             <Box style={styles.messages}>

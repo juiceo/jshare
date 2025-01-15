@@ -3,15 +3,17 @@
     "version": "1.0.0",
     "description": "JShare database client",
     "exports": {
-        "./prisma": "./build/prisma/index.js",
-        "./enhance": "./build/zenstack/enhance.js",
-        "./zod": "./build/zenstack/zod/index.js",
-        "./models": "./build/zenstack/models.d.ts"
+        ".": "./build/types.ts",
+        "./prisma": "./build/generated/prisma/index.js",
+        "./enhance": "./build/generated/enhance.js",
+        "./zod": "./build/generated/zod/index.js",
+        "./models": "./build/generated/models.d.ts"
     },
     "keywords": [],
     "license": "MIT",
     "scripts": {
-        "generate": "zenstack generate --output ./build/zenstack",
+        "generate": "zenstack generate --output ./src/generated",
+        "build": "rm -rf ./build && cp -r ./src ./build",
         "db:migrate:dev": "npx prisma migrate dev",
         "db:migrate:reset": "npx prisma migrate reset",
         "db:migrate:deploy": "npx prisma migrate deploy",

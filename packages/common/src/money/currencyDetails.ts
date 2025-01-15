@@ -1,4 +1,4 @@
-import type { CurrencyCode } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 export type CurrencyDetails = {
     symbol: string;
@@ -6,12 +6,12 @@ export type CurrencyDetails = {
     symbol_native: string;
     decimal_digits: number;
     rounding: number;
-    code: CurrencyCode;
+    code: DB.CurrencyCode;
     name_plural: string;
     ranking: number | null;
 };
 
-export const CURRENCY_DETAILS: Record<CurrencyCode, CurrencyDetails> = {
+export const CURRENCY_DETAILS: Record<DB.CurrencyCode, CurrencyDetails> = {
     AED: {
         symbol: 'AED',
         name: 'United Arab Emirates Dirham',

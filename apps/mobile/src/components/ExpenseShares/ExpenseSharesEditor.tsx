@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { addShare, removeShare, updateShare, type PartialExpenseShare } from '@jshare/common';
-import type { Expense, ExpenseShare, GroupParticipant, Profile } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
@@ -13,13 +13,13 @@ import { Typography } from '~/components/Typography';
 export type ExpenseSharesEditorProps = {
     value: PartialExpenseShare[];
     onChange: (value: PartialExpenseShare[]) => void;
-    expense: Pick<Expense, 'amount' | 'currency'>;
-    groupMembers: (GroupParticipant & { user: Profile })[];
+    expense: Pick<DB.Expense, 'amount' | 'currency'>;
+    groupMembers: DB.GroupParticipant<{ user: true }>[];
 };
 
 export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const { value, onChange, groupMembers, expense } = props;
-    const [editUser, setEditUser] = useState<Profile | null>(null);
+    const [editUser, setEditUser] = useState<DB.Profile | null>(null);
 
     const handleToggle = (userId: string) => {
         const shareIndex = value.findIndex((item) => item.userId === userId);

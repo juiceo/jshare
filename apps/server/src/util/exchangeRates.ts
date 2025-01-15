@@ -1,3 +1,5 @@
+import type { DB } from '@jshare/db';
+
 import { db } from '../services/db';
 
 export const getLatestExchangeRates = async () => {
@@ -5,5 +7,5 @@ export const getLatestExchangeRates = async () => {
         orderBy: {
             createdAt: 'desc',
         },
-    });
+    }) as Promise<DB.ExchangeRates>;
 };

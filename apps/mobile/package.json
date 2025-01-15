@@ -29,6 +29,7 @@
         "@hookform/resolvers": "catalog:",
         "@jshare/common": "workspace:*",
         "@jshare/theme": "workspace:*",
+        "@jshare/db": "workspace:*",
         "@react-native-async-storage/async-storage": "catalog:",
         "@react-native-community/netinfo": "catalog:",
         "@supabase/supabase-js": "catalog:",

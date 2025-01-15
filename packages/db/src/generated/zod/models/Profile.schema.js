@@ -1,0 +1,72 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProfileUpdateSchema = exports.ProfileUpdateScalarSchema = exports.ProfileCreateSchema = exports.ProfileCreateScalarSchema = exports.ProfilePrismaUpdateSchema = exports.ProfilePrismaCreateSchema = exports.ProfileSchema = exports.ProfileScalarSchema = void 0;
+// @ts-nocheck
+const zod_1 = require("zod");
+const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
+const baseSchema = zod_1.z.object({
+    userId: zod_1.z.string(),
+    email: zod_1.z.string(),
+    firstName: zod_1.z.string(),
+    lastName: zod_1.z.string(),
+    currency: CurrencyCode_schema_1.CurrencyCodeSchema,
+    createdAt: zod_1.z.coerce.date().default(() => new Date()),
+    updatedAt: zod_1.z.coerce.date().default(() => new Date()),
+}).strict();
+const relationSchema = zod_1.z.object({
+    groups: zod_1.z.array(zod_1.z.unknown()).optional(),
+    avatar: zod_1.z.record(zod_1.z.unknown()).optional(),
+    messages: zod_1.z.array(zod_1.z.unknown()).optional(),
+    expensesOwned: zod_1.z.array(zod_1.z.unknown()).optional(),
+    expensesPaid: zod_1.z.array(zod_1.z.unknown()).optional(),
+    expenseShares: zod_1.z.array(zod_1.z.unknown()).optional(),
+    paymentsReceived: zod_1.z.array(zod_1.z.unknown()).optional(),
+    paymentsPaid: zod_1.z.array(zod_1.z.unknown()).optional(),
+});
+const fkSchema = zod_1.z.object({
+    avatarId: zod_1.z.string().nullish(),
+});
+/**
+ * `Profile` schema excluding foreign keys and relations.
+ */
+exports.ProfileScalarSchema = baseSchema;
+/**
+ * `Profile` schema including all fields (scalar, foreign key, and relations) and validations.
+ */
+exports.ProfileSchema = exports.ProfileScalarSchema.merge(fkSchema).merge(relationSchema.partial());
+/**
+ * Schema used for validating Prisma create input. For internal use only.
+ * @private
+ */
+exports.ProfilePrismaCreateSchema = baseSchema.partial().passthrough();
+/**
+ * Schema used for validating Prisma update input. For internal use only.
+ * @private
+ */
+exports.ProfilePrismaUpdateSchema = zod_1.z.object({
+    userId: zod_1.z.string(),
+    email: zod_1.z.string(),
+    firstName: zod_1.z.string(),
+    lastName: zod_1.z.string(),
+    currency: CurrencyCode_schema_1.CurrencyCodeSchema,
+    createdAt: zod_1.z.coerce.date().default(() => new Date()),
+    updatedAt: zod_1.z.coerce.date().default(() => new Date())
+}).partial().passthrough();
+/**
+ * `Profile` schema for create operations excluding foreign keys and relations.
+ */
+exports.ProfileCreateScalarSchema = baseSchema.partial({
+    createdAt: true, updatedAt: true
+});
+/**
+ * `Profile` schema for create operations including scalar fields, foreign key fields, and validations.
+ */
+exports.ProfileCreateSchema = exports.ProfileCreateScalarSchema.merge(fkSchema);
+/**
+ * `Profile` schema for update operations excluding foreign keys and relations.
+ */
+exports.ProfileUpdateScalarSchema = baseSchema.partial();
+/**
+ * `Profile` schema for update operations including scalar fields, foreign key fields, and validations.
+ */
+exports.ProfileUpdateSchema = exports.ProfileUpdateScalarSchema.merge(fkSchema.partial());

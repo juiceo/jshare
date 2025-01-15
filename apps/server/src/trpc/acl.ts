@@ -1,9 +1,9 @@
-import type { GroupParticipant } from '@jshare/db/models';
+import type { DB } from '@jshare/db';
 
 import { InMemoryCache } from '../services/cache';
 import { db } from '../services/db';
 
-const groupsCache = new InMemoryCache<GroupParticipant[]>({ ttl: 1000 * 60 * 60 });
+const groupsCache = new InMemoryCache<DB.GroupParticipant[]>({ ttl: 1000 * 60 * 60 });
 
 export class ACL {
     private userId: string;
