@@ -99,7 +99,7 @@ const metadata = {
                     fields: ["userId"]
                 },
             },
-            attributes: [{ "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }],
+            attributes: [{ "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }],
         },
         group: {
             name: 'Group', fields: {
@@ -169,7 +169,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "groups" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "groups" }] }],
         },
         groupParticipant: {
             name: 'GroupParticipant', fields: {
@@ -223,7 +223,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@index", "args": [] }, { "name": "@@index", "args": [] }, { "name": "@@map", "args": [{ "value": "group_participants" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@index", "args": [] }, { "name": "@@index", "args": [] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "group_participants" }] }],
         },
         image: {
             name: 'Image', fields: {
@@ -273,7 +273,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
         },
         message: {
             name: 'Message', fields: {
@@ -342,7 +342,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "messages" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "messages" }] }],
         },
         messageAttachment: {
             name: 'MessageAttachment', fields: {
@@ -398,7 +398,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "message_attachments" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "message_attachments" }] }],
         },
         expense: {
             name: 'Expense', fields: {
@@ -490,7 +490,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "expenses" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "expenses" }] }],
         },
         expenseShare: {
             name: 'ExpenseShare', fields: {
@@ -557,7 +557,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "expense_shares" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "expense_shares" }] }],
         },
         payment: {
             name: 'Payment', fields: {
@@ -633,7 +633,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "payments" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "payments" }] }],
         },
         exchangeRates: {
             name: 'ExchangeRates', fields: {
@@ -665,7 +665,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@map", "args": [{ "value": "exchange_rates" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "exchange_rates" }] }],
         },
     },
     typeDefs: {

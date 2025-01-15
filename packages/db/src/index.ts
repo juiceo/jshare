@@ -1,7 +1,8 @@
-import type * as models from './generated/models';
+import * as models from './generated/models';
+
+export * as zDB from './generated/zod';
 
 export type { Prisma } from './generated/models';
-export * as zDB from './generated/zod/index';
 
 export namespace DB {
     export type Profile<I extends models.Prisma.ProfileInclude | undefined = undefined> =

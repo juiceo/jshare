@@ -62,7 +62,7 @@ export default screen(
 
         return (
             <Screen>
-                <Screen.Header title="Complete your profile" backButton="back" disableInset />
+                <Screen.Header title="Complete your profile" backButton="back" />
                 <Screen.Content scrollable>
                     <Stack p="xl" flex={1} center spacing="md">
                         <Stack py="3xl">

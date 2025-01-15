@@ -267,24 +267,33 @@ const policy = {
     },
 };
 function Profile_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Profile_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Profile_create_input(input, context) {
-    return false;
+    return true;
 }
 function Profile_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Profile_postUpdate(context, db) {
@@ -294,30 +303,42 @@ function $check_Profile_postUpdate(input, context) {
     return true;
 }
 function Profile_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Group_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Group_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Group_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Group_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Group_create_input(input, context) {
-    return false;
+    return true;
 }
 function Group_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Group_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Group_postUpdate(context, db) {
@@ -327,30 +348,42 @@ function $check_Group_postUpdate(input, context) {
     return true;
 }
 function Group_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Group_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function GroupParticipant_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_GroupParticipant_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function GroupParticipant_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_GroupParticipant_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function GroupParticipant_create_input(input, context) {
-    return false;
+    return true;
 }
 function GroupParticipant_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_GroupParticipant_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function GroupParticipant_postUpdate(context, db) {
@@ -360,30 +393,42 @@ function $check_GroupParticipant_postUpdate(input, context) {
     return true;
 }
 function GroupParticipant_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_GroupParticipant_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Image_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Image_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Image_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Image_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Image_create_input(input, context) {
-    return false;
+    return true;
 }
 function Image_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Image_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Image_postUpdate(context, db) {
@@ -393,30 +438,42 @@ function $check_Image_postUpdate(input, context) {
     return true;
 }
 function Image_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Image_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Message_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Message_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Message_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Message_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Message_create_input(input, context) {
-    return false;
+    return true;
 }
 function Message_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Message_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Message_postUpdate(context, db) {
@@ -426,30 +483,42 @@ function $check_Message_postUpdate(input, context) {
     return true;
 }
 function Message_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Message_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function MessageAttachment_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_MessageAttachment_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function MessageAttachment_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_MessageAttachment_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function MessageAttachment_create_input(input, context) {
-    return false;
+    return true;
 }
 function MessageAttachment_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_MessageAttachment_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function MessageAttachment_postUpdate(context, db) {
@@ -459,30 +528,42 @@ function $check_MessageAttachment_postUpdate(input, context) {
     return true;
 }
 function MessageAttachment_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_MessageAttachment_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Expense_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Expense_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Expense_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Expense_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Expense_create_input(input, context) {
-    return false;
+    return true;
 }
 function Expense_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Expense_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Expense_postUpdate(context, db) {
@@ -492,30 +573,42 @@ function $check_Expense_postUpdate(input, context) {
     return true;
 }
 function Expense_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Expense_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExpenseShare_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExpenseShare_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExpenseShare_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExpenseShare_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExpenseShare_create_input(input, context) {
-    return false;
+    return true;
 }
 function ExpenseShare_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExpenseShare_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExpenseShare_postUpdate(context, db) {
@@ -525,30 +618,42 @@ function $check_ExpenseShare_postUpdate(input, context) {
     return true;
 }
 function ExpenseShare_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExpenseShare_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Payment_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Payment_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Payment_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Payment_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Payment_create_input(input, context) {
-    return false;
+    return true;
 }
 function Payment_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Payment_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Payment_postUpdate(context, db) {
@@ -558,30 +663,42 @@ function $check_Payment_postUpdate(input, context) {
     return true;
 }
 function Payment_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Payment_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExchangeRates_read(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExchangeRates_read(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExchangeRates_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExchangeRates_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExchangeRates_create_input(input, context) {
-    return false;
+    return true;
 }
 function ExchangeRates_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExchangeRates_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function ExchangeRates_postUpdate(context, db) {
@@ -591,9 +708,12 @@ function $check_ExchangeRates_postUpdate(input, context) {
     return true;
 }
 function ExchangeRates_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_ExchangeRates_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 exports.default = policy;

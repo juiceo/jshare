@@ -23,6 +23,11 @@ config.cacheStores = [
     new FileStore({ root: path.join(projectRoot, 'node_modules', '.cache', 'metro') }),
 ];
 
+config.resolver.requireCycleIgnorePatterns = [
+    ...config.resolver.requireCycleIgnorePatterns,
+    /^(..\/)*packages\/db\/build\/generated(\/.*)?/,
+];
+
 module.exports = withStorybook(config, {
     enabled: true,
     configPath: path.resolve(__dirname, './.storybook'),

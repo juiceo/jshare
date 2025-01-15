@@ -150,9 +150,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         group: {
@@ -250,9 +252,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         groupParticipant: {
@@ -336,9 +340,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         image: {
@@ -409,9 +415,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         message: {
@@ -513,9 +521,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         messageAttachment: {
@@ -601,9 +611,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         expense: {
@@ -746,9 +758,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         expenseShare: {
@@ -856,9 +870,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         payment: {
@@ -982,9 +998,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         exchangeRates: {
@@ -1038,9 +1056,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
     };

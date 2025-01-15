@@ -13,52 +13,62 @@ import $Result = runtime.Types.Result
 export type PrismaPromise<T> = $Public.PrismaPromise<T>;
 /**
  * Model Profile
- *
+ * @
+ * @allow ('all', true)
  */
 export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>;
 /**
  * Model Group
- *
+ * @
+ * @allow ('all', true)
  */
 export type Group = $Result.DefaultSelection<Prisma.$GroupPayload>;
 /**
  * Model GroupParticipant
- *
+ * @
+ * @allow ('all', true)
  */
 export type GroupParticipant = $Result.DefaultSelection<Prisma.$GroupParticipantPayload>;
 /**
  * Model Image
- *
+ * @
+ * @allow ('all', true)
  */
 export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>;
 /**
  * Model Message
- *
+ * @
+ * @allow ('all', true)
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>;
 /**
  * Model MessageAttachment
- *
+ * @
+ * @allow ('all', true)
  */
 export type MessageAttachment = $Result.DefaultSelection<Prisma.$MessageAttachmentPayload>;
 /**
  * Model Expense
- *
+ * @
+ * @allow ('all', true)
  */
 export type Expense = $Result.DefaultSelection<Prisma.$ExpensePayload>;
 /**
  * Model ExpenseShare
- *
+ * @
+ * @allow ('all', true)
  */
 export type ExpenseShare = $Result.DefaultSelection<Prisma.$ExpenseSharePayload>;
 /**
  * Model Payment
- *
+ * @
+ * @allow ('all', true)
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>;
 /**
  * Model ExchangeRates
- *
+ * @
+ * @allow ('all', true)
  */
 export type ExchangeRates = $Result.DefaultSelection<Prisma.$ExchangeRatesPayload>;
 export type CurrencyCode = $Enums.CurrencyCode;
