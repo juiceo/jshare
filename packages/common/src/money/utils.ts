@@ -28,8 +28,8 @@ export const getCurrencyDetails = (currency: DB.CurrencyCode): CurrencyDetails =
 
 export const convertAmount = (args: {
     amount: number;
-    from: string;
-    to: string;
+    from: DB.CurrencyCode;
+    to: DB.CurrencyCode;
     exchangeRates: DB.ExchangeRates;
 }): number => {
     const rate = getExchangeRate(args);
@@ -38,8 +38,8 @@ export const convertAmount = (args: {
 };
 
 export const getExchangeRate = (args: {
-    from: string;
-    to: string;
+    from: DB.CurrencyCode;
+    to: DB.CurrencyCode;
     exchangeRates: DB.ExchangeRates;
 }): number => {
     const { from, to, exchangeRates } = args;

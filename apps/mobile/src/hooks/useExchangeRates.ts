@@ -21,7 +21,7 @@ export const useCurrencyConversion = () => {
     const { exchangeRates } = useExchangeRates();
 
     const getRate = useCallback(
-        (args: { from: string; to: string }) => {
+        (args: { from: DB.CurrencyCode; to: DB.CurrencyCode }) => {
             const rate = getExchangeRate({
                 from: args.from,
                 to: args.to,
@@ -34,7 +34,7 @@ export const useCurrencyConversion = () => {
     );
 
     const convert = useCallback(
-        (args: { amount: number; from: string; to: string }) => {
+        (args: { amount: number; from: DB.CurrencyCode; to: DB.CurrencyCode }) => {
             return convertAmount({
                 from: args.from,
                 to: args.to,

@@ -64,6 +64,8 @@ describe('convertAmount', () => {
     });
 
     it("should return 0 if the exchange rate can't be found", () => {
-        expect(convertAmount({ amount: 100, from: 'EUR', to: 'CAD', exchangeRates })).toBe(0);
+        expect(
+            convertAmount({ amount: 100, from: 'EUR', to: 'asdasd' as any, exchangeRates })
+        ).toBe(0);
     });
 });
