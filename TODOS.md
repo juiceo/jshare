@@ -24,15 +24,14 @@
 
 -   DEV TODOs:
 
-    [ ] Use zenstack zmodel language for schema definition
-    [ ] Define ConversionDetails and CurrencyCode types in prisma schema
-    [ ] Generate zod types from zmodel schema
-    [ ] Add @anatine/zod-mock to generate mocks instead of @jshare/types/mocks
-    [ ] Remove @jshare/types package
+    [x] Use zenstack zmodel language for schema definition
+    [x] Define ConversionDetails and CurrencyCode types in prisma schema
+    [x] Generate zod types from zmodel schema
+    [x] Remove @jshare/types package
     [x] Remove @jshare/util package, move under @jshare/common
 
 -   Add payments feature
-    [ ] Create DB model for payments
+    [x] Create DB model for payments
     [ ] Add screen for creating new payments
     [ ] When new payments are created, a system message should be sent to the group chat
     [ ] Expense calculations should take into account payments

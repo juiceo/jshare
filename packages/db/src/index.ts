@@ -39,6 +39,11 @@ export namespace DB {
     export type Payment<I extends models.Prisma.PaymentInclude | undefined = undefined> =
         I extends undefined ? models.Payment : models.Prisma.PaymentGetPayload<{ include: I }>;
 
+    /**
+     * For now, enums need to be re-defined here. Exporting them directly from the generated Prisma types
+     * isn't working in client-side code, because prisma depends on Node.js modules like `path`.
+     */
+
     export const CurrencyCode: { [K in CurrencyCode]: K } = {
         AED: 'AED',
         ARS: 'ARS',

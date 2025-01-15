@@ -4,7 +4,8 @@
     "author": "Juuso Lappalainen <hello@juiceo.me>",
     "description": "Monorepo for the JShare app",
     "scripts": {
-        "dev": "supabase start && turbo watch dev",
+        "dev": "pnpm dev:kill && supabase start && turbo watch dev",
+        "dev:kill": "npx kill-port-process 3000 8081",
         "dev:storybook": "supabase start && turbo watch dev:storybook",
         "dev:mobile": "supabase start && turbo watch dev --filter=\"{./apps/mobile}...\"",
         "dev:server": "supabase start && turbo watch dev --filter=\"{./apps/server}...\"",
