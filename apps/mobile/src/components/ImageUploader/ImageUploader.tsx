@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ActivityIndicator, Pressable } from 'react-native';
 
-import type { DB } from '@jshare/types';
+import { Image as ImageType } from '@jshare/db/models';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
@@ -11,8 +11,8 @@ import { Typography } from '~/components/Typography';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
 
 export type ImageUploaderProps = {
-    value: DB.Image | null | undefined;
-    onChange: (value: DB.Image | null) => void;
+    value: ImageType | null | undefined;
+    onChange: (value: ImageType | null) => void;
     aspectRatio: [number, number];
     placeholder?: string;
 };

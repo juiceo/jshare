@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { AuthorType } from '@jshare/types';
+import { enums } from '@jshare/db/zod';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
 export const messagesRouter = router({
@@ -25,7 +25,7 @@ export const messagesRouter = router({
                 });
             }
 
-            const messages = await prisma.message.findMany({
+            const messages = await db.message.findMany({
                 take: opts.input.limit + 1,
                 where: {
                     groupId: opts.input.groupId,
@@ -64,12 +64,12 @@ export const messagesRouter = router({
                 });
             }
 
-            const message = await prisma.message.create({
+            const message = await db.message.create({
                 data: {
                     text: opts.input.text,
                     authorId: opts.ctx.userId,
                     groupId: opts.input.groupId,
-                    authorType: AuthorType.User,
+                    authorType: enums.AuthorTypeSchema.Values.User,
                     key: opts.input.key,
                 },
             });

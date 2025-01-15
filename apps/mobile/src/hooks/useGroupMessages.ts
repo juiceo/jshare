@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
-import { MessageMock, type DB } from '@jshare/types';
+import { getMessageMock } from '@jshare/common';
+import { Message, MessageAttachment, Profile } from '@jshare/db/models';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
 import { trpc } from '~/services/trpc';
@@ -29,12 +30,15 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
     const sendMessage = useCallback(
         async (text: string) => {
             if (!profile) return;
-            const localMessage = MessageMock.build({
+            const localMessage = getMessageMock.build({
                 text,
                 authorId: userId,
                 groupId,
             });
-            const localMessageWithAuthor: DB.Message<{ author: true; attachments: true }> = {
+            const localMessageWithAuthor: Message & {
+                author: Profile;
+                attachments: MessageAttachment[];
+            } = {
                 ...localMessage,
                 attachments: [],
                 author: profile,

@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
 export const groupParticipantsRouter = router({
@@ -14,7 +14,7 @@ export const groupParticipantsRouter = router({
             });
         }
 
-        return prisma.groupParticipant.findMany({
+        return db.groupParticipant.findMany({
             where: {
                 groupId: opts.input.groupId,
             },

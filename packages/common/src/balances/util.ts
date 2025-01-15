@@ -1,6 +1,6 @@
 import { sortBy } from 'lodash';
 
-import { type DB } from '@jshare/types';
+import type { Expense, ExpenseShare, GroupParticipant, Payment, Profile } from '@jshare/db/models';
 
 import { getInCurrency } from '../money';
 import { toObject } from '../util';
@@ -8,7 +8,7 @@ import type { BalanceObject } from './types';
 
 export const getEmptyBalanceObject = (args: {
     currency: string;
-    participant: DB.GroupParticipant<{ user: true }>;
+    participant: GroupParticipant & { user: Profile };
 }): BalanceObject => {
     return {
         participant: args.participant,
@@ -20,9 +20,9 @@ export const getEmptyBalanceObject = (args: {
 };
 
 export const getBalanceByParticipant = (args: {
-    expenses: (DB.Expense & { shares: DB.ExpenseShare[] })[];
-    payments: DB.Payment[];
-    participants: DB.GroupParticipant<{ user: true }>[];
+    expenses: (Expense & { shares: ExpenseShare[] })[];
+    payments: Payment[];
+    participants: (GroupParticipant & { user: Profile })[];
     currency: string;
 }): BalanceObject[] => {
     const balances: Record<string, BalanceObject> = toObject({

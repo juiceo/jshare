@@ -2,7 +2,7 @@ import { Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { formatAmount } from '@jshare/common';
-import { DB } from '@jshare/types';
+import type { Group, GroupParticipant, Image as ImageType } from '@jshare/db/models';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
@@ -12,7 +12,7 @@ import { trpc } from '~/services/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
-    group: DB.Group<{ coverImage: true; participants: true }>;
+    group: Group & { coverImage: ImageType | null; participants: GroupParticipant[] };
 };
 
 export const GroupCard = (props: GroupCardProps) => {

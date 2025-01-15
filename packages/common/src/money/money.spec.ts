@@ -1,11 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import type { DB } from '@jshare/types';
-
 import { convertAmount, getExchangeRate } from './utils';
 
 describe('getExchangeRate', () => {
-    const exchangeRates: DB.ExchangeRates = {
+    const exchangeRates = {
         id: 'base',
         baseCurrency: 'USD',
         rates: {
@@ -33,7 +31,7 @@ describe('getExchangeRate', () => {
 });
 
 describe('convertAmount', () => {
-    const exchangeRates: DB.ExchangeRates = {
+    const exchangeRates = {
         id: 'base',
         baseCurrency: 'USD',
         rates: {

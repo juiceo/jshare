@@ -4,14 +4,14 @@
     "description": "JShare database client",
     "exports": {
         "./prisma": "./build/prisma/index.js",
-        "./zenstack": "./build/zenstack/index.js",
+        "./enhance": "./build/zenstack/enhance.js",
         "./zod": "./build/zod/index.js",
         "./models": "./build/zenstack/models.d.ts"
     },
     "keywords": [],
     "license": "MIT",
     "scripts": {
-        "build": "zenstack generate --output ./build/zenstack",
+        "generate": "zenstack generate --output ./build/zenstack",
         "db:migrate:dev": "npx prisma migrate dev",
         "db:migrate:reset": "npx prisma migrate reset",
         "db:migrate:deploy": "npx prisma migrate deploy",
@@ -21,9 +21,7 @@
         "@faker-js/faker": "catalog:",
         "@jshare/tsconfig": "workspace:*",
         "@prisma/client": "catalog:",
-        "@types/moment": "catalog:",
         "lodash": "catalog:",
-        "moment": "catalog:",
         "prisma": "catalog:",
         "zenstack": "^2.11.2"
     },

@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import type { MessageAttachment } from '@jshare/db/models';
 import { useTheme, type Theme } from '@jshare/theme';
-import type { DB } from '@jshare/types';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
@@ -16,7 +16,7 @@ export type ChatMessageProps = {
     timestamp: Date;
     authorName?: string;
     color: 'primary' | 'secondary';
-    attachments?: DB.MessageAttachment[];
+    attachments?: MessageAttachment[];
 };
 
 export const ChatMessage = (props: ChatMessageProps) => {

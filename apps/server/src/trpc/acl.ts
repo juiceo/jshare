@@ -1,7 +1,7 @@
-import type { GroupParticipant } from '@jshare/db/prisma';
+import type { GroupParticipant } from '@jshare/db/models';
 
 import { InMemoryCache } from '../services/cache';
-import { prisma } from '../services/prisma';
+import { db } from '../services/db';
 
 const groupsCache = new InMemoryCache<GroupParticipant[]>({ ttl: 1000 * 60 * 60 });
 
@@ -17,7 +17,7 @@ export class ACL {
         if (cached) {
             return cached;
         }
-        const groups = await prisma.groupParticipant.findMany({
+        const groups = await db.groupParticipant.findMany({
             where: {
                 userId: this.userId,
             },

@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { downloadImage, generateBlurhash } from '../../../services/blurhash';
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
 export const imagesRouter = router({
@@ -24,7 +24,7 @@ export const imagesRouter = router({
             }
             const blurhash = await generateBlurhash(imageThumbnail);
 
-            const image = await prisma.image.create({
+            const image = await db.image.create({
                 data: {
                     path,
                     bucket,

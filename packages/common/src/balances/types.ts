@@ -1,7 +1,7 @@
-import type { DB } from '@jshare/types';
+import type { GroupParticipant, Profile } from '@jshare/db/models';
 
 export type BalanceObject = {
-    participant: DB.GroupParticipant<{ user: true }>;
+    participant: GroupParticipant & { user: Profile };
     currency: string;
     paid: number;
     received: number;

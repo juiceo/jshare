@@ -32,7 +32,7 @@ model Profile {
     email            String
     firstName        String
     lastName         String
-    currency         String             @db.VarChar(3)
+    currency         CurrencyCode
     groups           GroupParticipant[]
     avatarId         String?
     avatar           Image?             @relation(fields: [avatarId], references: [id])
@@ -52,7 +52,7 @@ model Profile {
 
 model Group extends BaseModel {
     name         String
-    currency     String             @db.VarChar(3)
+    currency     CurrencyCode
     participants GroupParticipant[]
     coverImageId String?
     coverImage   Image?             @relation(fields: [coverImageId], references: [id])
@@ -125,7 +125,7 @@ model Expense extends BaseModel {
     group              Group               @relation(fields: [groupId], references: [id])
 
     amount             Int
-    currency           String              @db.VarChar(3)
+    currency           CurrencyCode
     description        String?
     conversion         CurrencyConversion? @json
 
@@ -143,7 +143,7 @@ model ExpenseShare extends BaseModel {
     expense    Expense             @relation(fields: [expenseId], references: [id])
 
     amount     Int
-    currency   String              @db.VarChar(3)
+    currency   CurrencyCode
     locked     Boolean             @default(false)
     conversion CurrencyConversion? @json
 
@@ -155,7 +155,7 @@ model Payment extends BaseModel {
     group       Group               @relation(fields: [groupId], references: [id])
 
     amount      Int
-    currency    String              @db.VarChar(3)
+    currency    CurrencyCode
     conversion  CurrencyConversion? @json
 
     recipientId String

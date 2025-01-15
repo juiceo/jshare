@@ -1,9 +1,9 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { zCurrencyCode } from '@jshare/types';
+import { enums } from '@jshare/db/zod';
 
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
 export const profilesRouter = router({
@@ -13,12 +13,12 @@ export const profilesRouter = router({
                 firstName: z.string(),
                 lastName: z.string(),
                 email: z.string(),
-                currency: zCurrencyCode,
+                currency: enums.CurrencyCodeSchema,
                 avatarId: z.string().optional(),
             })
         )
         .mutation(async (opts) => {
-            const profile = await prisma.profile.create({
+            const profile = await db.profile.create({
                 data: {
                     userId: opts.ctx.userId,
                     firstName: opts.input.firstName,
@@ -41,7 +41,7 @@ export const profilesRouter = router({
             return profile;
         }),
     me: authProcedure.query(async (opts) => {
-        const profile = await prisma.profile.findUnique({
+        const profile = await db.profile.findUnique({
             where: {
                 userId: opts.ctx.userId,
             },
@@ -57,7 +57,7 @@ export const profilesRouter = router({
         return profile;
     }),
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
-        const profile = await prisma.profile.findUnique({
+        const profile = await db.profile.findUnique({
             where: {
                 userId: opts.input.id,
             },
@@ -79,13 +79,13 @@ export const profilesRouter = router({
                     firstName: z.string(),
                     lastName: z.string(),
                     email: z.string(),
-                    currency: zCurrencyCode,
+                    currency: enums.CurrencyCodeSchema,
                     avatarId: z.string().nullable(),
                 })
                 .partial()
         )
         .mutation(async (opts) => {
-            return prisma.profile.update({
+            return db.profile.update({
                 where: {
                     userId: opts.ctx.userId,
                 },

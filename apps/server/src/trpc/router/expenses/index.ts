@@ -3,17 +3,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { getConversionDetails, getTotalFromShares, sumInCurrency } from '@jshare/common';
-import { MessageAttachmentType } from '@jshare/db/prisma';
-import { AuthorType, zCurrencyCode, zExpenseShare, type DB } from '@jshare/types';
+import { enums, models } from '@jshare/db/zod';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { getLatestExchangeRates } from '../../../util/exchangeRates';
 import { authProcedure, router } from '../../trpc';
 
 export const expensesRouter = router({
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
-        const expense = await prisma.expense.findUnique({
+        const expense = await db.expense.findUnique({
             where: {
                 id: opts.input.id,
                 groupId: {
@@ -49,7 +48,7 @@ export const expensesRouter = router({
                 });
             }
 
-            return prisma.expense.findMany({
+            return db.expense.findMany({
                 where: {
                     groupId: opts.input.groupId,
                 },
@@ -68,11 +67,8 @@ export const expensesRouter = router({
                 payerId: z.string(),
                 amount: z.number().min(1),
                 description: z.string().min(1).max(100),
-                currency: zCurrencyCode,
-                shares: zExpenseShare
-                    .pick({ amount: true, userId: true, locked: true })
-                    .array()
-                    .min(1),
+                currency: enums.CurrencyCodeSchema,
+                shares: models.ExpenseShareCreateSchema.array().min(1),
             })
         )
         .mutation(async (opts) => {
@@ -93,7 +89,7 @@ export const expensesRouter = router({
                 });
             }
 
-            const group = await prisma.group.findUnique({
+            const group = await db.group.findUnique({
                 where: {
                     id: opts.input.groupId,
                 },
@@ -112,7 +108,7 @@ export const expensesRouter = router({
             const exchangeRates =
                 opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
 
-            const expense = await prisma.$transaction(async (tx) => {
+            const expense = await db.$transaction(async (tx) => {
                 const expense = await tx.expense.create({
                     data: {
                         ownerId: opts.ctx.userId,
@@ -155,11 +151,11 @@ export const expensesRouter = router({
                     data: {
                         authorId: opts.ctx.userId,
                         groupId: opts.input.groupId,
-                        authorType: AuthorType.User,
+                        authorType: enums.AuthorTypeSchema.Values.User,
                         key: uuidv4(),
                         attachments: {
                             create: {
-                                type: MessageAttachmentType.Expense,
+                                type: enums.MessageAttachmentTypeSchema.Values.Expense,
                                 expenseId: expense.id,
                             },
                         },
@@ -183,19 +179,19 @@ export const expensesRouter = router({
         }
 
         const [group, expenses] = await Promise.all([
-            prisma.group.findUniqueOrThrow({
+            db.group.findUniqueOrThrow({
                 where: {
                     id: opts.input.groupId,
                 },
             }),
-            prisma.expense.findMany({
+            db.expense.findMany({
                 where: {
                     groupId: opts.input.groupId,
                 },
                 include: {
                     shares: true,
                 },
-            }) as Promise<DB.Expense[]>,
+            }),
         ]);
 
         return sumInCurrency(expenses, group.currency);

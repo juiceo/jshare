@@ -2,9 +2,9 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { getBalanceByParticipant, sumInCurrency } from '@jshare/common';
-import { zCurrencyCode, type DB } from '@jshare/types';
+import { enums } from '@jshare/db/zod';
 
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
 export const balancesRouter = router({
@@ -20,7 +20,7 @@ export const balancesRouter = router({
             }
 
             const [group, expenses, payments] = await Promise.all([
-                prisma.group.findUniqueOrThrow({
+                db.group.findUniqueOrThrow({
                     where: {
                         id: opts.input.groupId,
                     },
@@ -32,19 +32,19 @@ export const balancesRouter = router({
                         },
                     },
                 }),
-                prisma.expense.findMany({
+                db.expense.findMany({
                     where: {
                         groupId: opts.input.groupId,
                     },
                     include: {
                         shares: true,
                     },
-                }) as Promise<(DB.Expense & { shares: DB.ExpenseShare[] })[]>,
-                prisma.payment.findMany({
+                }),
+                db.payment.findMany({
                     where: {
                         groupId: opts.input.groupId,
                     },
-                }) as Promise<DB.Payment[]>,
+                }),
             ]);
 
             return getBalanceByParticipant({
@@ -66,25 +66,25 @@ export const balancesRouter = router({
             }
 
             const [group, paidExpenses, expenseShares] = await Promise.all([
-                prisma.group.findUniqueOrThrow({
+                db.group.findUniqueOrThrow({
                     where: {
                         id: opts.input.groupId,
                     },
                 }),
-                prisma.expense.findMany({
+                db.expense.findMany({
                     where: {
                         groupId: opts.input.groupId,
                         payerId: opts.input.userId,
                     },
-                }) as Promise<DB.Expense[]>,
-                prisma.expenseShare.findMany({
+                }),
+                db.expenseShare.findMany({
                     where: {
                         userId: opts.input.userId,
                         expense: {
                             groupId: opts.input.groupId,
                         },
                     },
-                }) as Promise<DB.ExpenseShare[]>,
+                }),
             ]);
 
             const paid = sumInCurrency(paidExpenses, group.currency);
@@ -96,29 +96,31 @@ export const balancesRouter = router({
                 balance: paid - received,
             };
         }),
-    me: authProcedure.input(z.object({ currency: zCurrencyCode })).query(async (opts) => {
-        const userId = opts.ctx.userId;
+    me: authProcedure
+        .input(z.object({ currency: enums.CurrencyCodeSchema }))
+        .query(async (opts) => {
+            const userId = opts.ctx.userId;
 
-        const [expensesPaid, expenseShares] = await Promise.all([
-            prisma.expense.findMany({
-                where: {
-                    payerId: userId,
-                },
-            }) as Promise<DB.Expense[]>,
-            prisma.expenseShare.findMany({
-                where: {
-                    userId,
-                },
-            }) as Promise<DB.ExpenseShare[]>,
-        ]);
+            const [expensesPaid, expenseShares] = await Promise.all([
+                db.expense.findMany({
+                    where: {
+                        payerId: userId,
+                    },
+                }),
+                db.expenseShare.findMany({
+                    where: {
+                        userId,
+                    },
+                }),
+            ]);
 
-        const paid = sumInCurrency(expensesPaid, opts.input.currency);
-        const received = sumInCurrency(expenseShares, opts.input.currency);
+            const paid = sumInCurrency(expensesPaid, opts.input.currency);
+            const received = sumInCurrency(expenseShares, opts.input.currency);
 
-        return {
-            paid,
-            received,
-            balance: paid - received,
-        };
-    }),
+            return {
+                paid,
+                received,
+                balance: paid - received,
+            };
+        }),
 });

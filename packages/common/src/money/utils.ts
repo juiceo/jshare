@@ -1,24 +1,9 @@
-import { sortBy } from 'lodash';
+import { CurrencyConversion, ExchangeRates, type CurrencyCode } from '@jshare/db/models';
+import { enums } from '@jshare/db/zod';
 
-import {
-    CURRENCIES,
-    CURRENCY_CODES,
-    CurrencyCode,
-    type ConversionDetails,
-    type DB,
-} from '@jshare/types';
+import { CURRENCY_DETAILS, type CurrencyDetails } from './currencyDetails';
 
-export const SUGGESTED_CURRENCIES = sortBy(
-    Object.values(CURRENCIES).filter((currencyDetails) => currencyDetails.ranking !== null),
-    'ranking'
-);
-
-export const OTHER_CURRENCIES = sortBy(
-    Object.values(CURRENCIES).filter((currencyDetails) => currencyDetails.ranking === null),
-    'name'
-);
-
-export const SORTED_CURRENCIES = [...SUGGESTED_CURRENCIES, ...OTHER_CURRENCIES];
+export const SORTED_CURRENCIES = [];
 
 export const formatAmount = (cents: number, currency: string) => {
     return new Intl.NumberFormat('en-US', {
@@ -29,21 +14,18 @@ export const formatAmount = (cents: number, currency: string) => {
 };
 
 export const isCurrencyCode = (currency: string): currency is CurrencyCode => {
-    return CURRENCY_CODES.includes(currency as any);
+    return enums.CurrencyCodeSchema.safeParse(currency).success;
 };
 
-export const getCurrencyDetails = (currency: string) => {
-    if (!isCurrencyCode(currency)) {
-        throw new Error(`Invalid currency code: ${currency}`);
-    }
-    return CURRENCIES[currency];
+export const getCurrencyDetails = (currency: CurrencyCode): CurrencyDetails => {
+    return CURRENCY_DETAILS[currency];
 };
 
 export const convertAmount = (args: {
     amount: number;
     from: string;
     to: string;
-    exchangeRates: DB.ExchangeRates;
+    exchangeRates: ExchangeRates;
 }): number => {
     const rate = getExchangeRate(args);
     if (!rate) return 0;
@@ -53,7 +35,7 @@ export const convertAmount = (args: {
 export const getExchangeRate = (args: {
     from: string;
     to: string;
-    exchangeRates: DB.ExchangeRates;
+    exchangeRates: ExchangeRates;
 }): number => {
     const { from, to, exchangeRates } = args;
 
@@ -81,11 +63,11 @@ export const getExchangeRate = (args: {
 };
 
 export const getConversionDetails = (args: {
-    sourceCurrency: string;
+    sourceCurrency: CurrencyCode;
     sourceAmount: number;
-    currency: string;
-    exchangeRates: DB.ExchangeRates;
-}): ConversionDetails => {
+    currency: CurrencyCode;
+    exchangeRates: ExchangeRates;
+}): CurrencyConversion => {
     return {
         sourceCurrency: args.sourceCurrency,
         sourceAmount: args.sourceAmount,
@@ -106,7 +88,7 @@ export const getConversionDetails = (args: {
 };
 
 export const getInCurrency = (
-    data: { amount: number; currency: string; conversion: ConversionDetails | null },
+    data: { amount: number; currency: CurrencyCode; conversion: CurrencyConversion | null },
     currency: string
 ): number | null => {
     if (data.currency === currency) return data.amount;
@@ -116,7 +98,7 @@ export const getInCurrency = (
 };
 
 export const sumInCurrency = (
-    data: { amount: number; currency: string; conversion: ConversionDetails | null }[],
+    data: { amount: number; currency: CurrencyCode; conversion: CurrencyConversion | null }[],
     currency: string
 ): number => {
     return data.reduce((result, item) => {

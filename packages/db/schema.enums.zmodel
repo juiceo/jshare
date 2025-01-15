@@ -20,8 +20,33 @@ enum MessageAttachmentType {
 }
 
 enum CurrencyCode {
+    AED
+    ARS
+    AUD
+    BRL
+    CAD
+    CHF
+    CLP
+    COP
+    CZK
+    DKK
+    EGP
     EUR
+    GBP
+    HUF
+    INR
+    KES
+    MAD
+    MXN
+    NOK
+    PEN
+    PLN
+    RON
+    SEK
+    THB
+    TZS
     USD
+    ZAR
 
     @@schema("public")
 }

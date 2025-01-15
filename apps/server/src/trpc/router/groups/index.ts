@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { getUserShortName } from '@jshare/common';
-import { AuthorType, Role, zCurrencyCode, zDbImage } from '@jshare/types';
+import { enums } from '@jshare/db/zod';
 
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 import { defaultGroupInclude } from './util';
 
@@ -14,28 +14,28 @@ export const groupsRouter = router({
         .input(
             z.object({
                 name: z.string(),
-                currency: zCurrencyCode,
-                coverImage: zDbImage.optional(),
+                currency: enums.CurrencyCodeSchema,
+                coverImageId: z.string().optional(),
             })
         )
         .mutation(async (opts) => {
-            return prisma.$transaction(async (tx) => {
+            return db.$transaction(async (tx) => {
                 const [group, profile] = await Promise.all([
                     tx.group.create({
                         data: {
                             name: opts.input.name,
                             currency: opts.input.currency,
-                            coverImage: opts.input.coverImage
+                            coverImage: opts.input.coverImageId
                                 ? {
                                       connect: {
-                                          id: opts.input.coverImage.id,
+                                          id: opts.input.coverImageId,
                                       },
                                   }
                                 : undefined,
                             participants: {
                                 create: {
                                     userId: opts.ctx.userId,
-                                    role: Role.Owner,
+                                    role: enums.RoleSchema.Values.Owner,
                                 },
                             },
                         },
@@ -54,7 +54,7 @@ export const groupsRouter = router({
                     data: {
                         key: uuidv4(),
                         text: `Group created by ${getUserShortName(profile)}`,
-                        authorType: AuthorType.System,
+                        authorType: enums.AuthorTypeSchema.Values.System,
                         groupId: group.id,
                     },
                 });
@@ -63,7 +63,7 @@ export const groupsRouter = router({
             });
         }),
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
-        const group = await prisma.group.findUnique({
+        const group = await db.group.findUnique({
             where: {
                 id: opts.input.id,
                 participants: {
@@ -87,7 +87,7 @@ export const groupsRouter = router({
         return group;
     }),
     list: authProcedure.query(async (opts) => {
-        const groups = await prisma.group.findMany({
+        const groups = await db.group.findMany({
             where: {
                 participants: {
                     some: {

@@ -3,16 +3,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { formatAmount, getConversionDetails, getUserShortName } from '@jshare/common';
-import { AuthorType, zCurrencyCode } from '@jshare/types';
+import { enums } from '@jshare/db/zod';
 
 import { broadcastNewMessage } from '../../../services/broadcast';
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { getLatestExchangeRates } from '../../../util/exchangeRates';
 import { authProcedure, router } from '../../trpc';
 
 export const paymentsRouter = router({
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
-        const payment = await prisma.payment.findUnique({
+        const payment = await db.payment.findUnique({
             where: {
                 id: opts.input.id,
                 groupId: {
@@ -45,7 +45,7 @@ export const paymentsRouter = router({
                 });
             }
 
-            return prisma.payment.findMany({
+            return db.payment.findMany({
                 where: {
                     groupId: opts.input.groupId,
                 },
@@ -61,7 +61,7 @@ export const paymentsRouter = router({
                 payerId: z.string(),
                 recipientId: z.string(),
                 amount: z.number().min(1),
-                currency: zCurrencyCode,
+                currency: enums.CurrencyCodeSchema,
             })
         )
         .mutation(async (opts) => {
@@ -73,7 +73,7 @@ export const paymentsRouter = router({
             }
 
             const [group, payer, recipient] = await Promise.all([
-                prisma.group.findUnique({
+                db.group.findUnique({
                     where: {
                         id: opts.input.groupId,
                     },
@@ -81,12 +81,12 @@ export const paymentsRouter = router({
                         participants: true,
                     },
                 }),
-                prisma.profile.findUnique({
+                db.profile.findUnique({
                     where: {
                         userId: opts.ctx.userId,
                     },
                 }),
-                prisma.profile.findUnique({
+                db.profile.findUnique({
                     where: {
                         userId: opts.input.recipientId,
                     },
@@ -117,7 +117,7 @@ export const paymentsRouter = router({
             const exchangeRates =
                 opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
 
-            const payment = prisma.$transaction(async (tx) => {
+            const payment = db.$transaction(async (tx) => {
                 const payment = await tx.payment.create({
                     data: {
                         groupId: opts.input.groupId,
@@ -139,7 +139,7 @@ export const paymentsRouter = router({
                 await tx.message.create({
                     data: {
                         groupId: opts.input.groupId,
-                        authorType: AuthorType.System,
+                        authorType: enums.AuthorTypeSchema.Values.System,
                         text: `${getUserShortName(payer)} paid ${formatAmount(opts.input.amount, opts.input.currency)} to ${getUserShortName(recipient)}`,
                         key: uuidv4(),
                     },

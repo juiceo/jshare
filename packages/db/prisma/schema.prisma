@@ -38,8 +38,33 @@ enum MessageAttachmentType {
 }
 
 enum CurrencyCode {
+  AED
+  ARS
+  AUD
+  BRL
+  CAD
+  CHF
+  CLP
+  COP
+  CZK
+  DKK
+  EGP
   EUR
+  GBP
+  HUF
+  INR
+  KES
+  MAD
+  MXN
+  NOK
+  PEN
+  PLN
+  RON
+  SEK
+  THB
+  TZS
   USD
+  ZAR
 
   @@schema("public")
 }
@@ -49,7 +74,7 @@ model Profile {
   email            String
   firstName        String
   lastName         String
-  currency         String             @db.VarChar(3)
+  currency         CurrencyCode
   groups           GroupParticipant[]
   avatarId         String?
   avatar           Image?             @relation(fields: [avatarId], references: [id])
@@ -71,7 +96,7 @@ model Group {
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @default(now()) @updatedAt()
   name         String
-  currency     String             @db.VarChar(3)
+  currency     CurrencyCode
   participants GroupParticipant[]
   coverImageId String?
   coverImage   Image?             @relation(fields: [coverImageId], references: [id])
@@ -156,7 +181,7 @@ model Expense {
   groupId            String
   group              Group               @relation(fields: [groupId], references: [id])
   amount             Int
-  currency           String              @db.VarChar(3)
+  currency           CurrencyCode
   description        String?
   conversion         Json?
   shares             ExpenseShare[]
@@ -167,16 +192,16 @@ model Expense {
 }
 
 model ExpenseShare {
-  id         String   @id() @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt()
+  id         String       @id() @default(uuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now()) @updatedAt()
   userId     String
-  user       Profile  @relation(fields: [userId], references: [userId])
+  user       Profile      @relation(fields: [userId], references: [userId])
   expenseId  String
-  expense    Expense  @relation(fields: [expenseId], references: [id])
+  expense    Expense      @relation(fields: [expenseId], references: [id])
   amount     Int
-  currency   String   @db.VarChar(3)
-  locked     Boolean  @default(false)
+  currency   CurrencyCode
+  locked     Boolean      @default(false)
   conversion Json?
 
   @@map("expense_shares")
@@ -184,18 +209,18 @@ model ExpenseShare {
 }
 
 model Payment {
-  id          String   @id() @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt()
+  id          String       @id() @default(uuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt()
   groupId     String
-  group       Group    @relation(fields: [groupId], references: [id])
+  group       Group        @relation(fields: [groupId], references: [id])
   amount      Int
-  currency    String   @db.VarChar(3)
+  currency    CurrencyCode
   conversion  Json?
   recipientId String
-  recipient   Profile  @relation(name: "payment_recipient", fields: [recipientId], references: [userId])
+  recipient   Profile      @relation(name: "payment_recipient", fields: [recipientId], references: [userId])
   payerId     String
-  payer       Profile  @relation(name: "payment_payer", fields: [payerId], references: [userId])
+  payer       Profile      @relation(name: "payment_payer", fields: [payerId], references: [userId])
 
   @@map("payments")
   @@schema("public")

@@ -2,7 +2,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { getDefaultShare, getUserShortName } from '@jshare/common';
-import type { DB } from '@jshare/types';
+import type { ExpenseShare, Profile } from '@jshare/db/models';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
 import { Stack } from '~/components/atoms/Stack';
@@ -14,9 +14,9 @@ import { Typography } from '~/components/Typography';
 
 export type ExpenseShareEditorSheetProps = {
     onClose: () => void;
-    user: DB.Profile;
-    share: DB.ExpenseShare | undefined;
-    onShareChange: (share: DB.ExpenseShare) => void;
+    user: Profile;
+    share: ExpenseShare | undefined;
+    onShareChange: (share: ExpenseShare) => void;
 };
 
 export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => {

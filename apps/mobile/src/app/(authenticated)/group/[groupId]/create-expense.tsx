@@ -13,7 +13,7 @@ import {
     getTotalFromShares,
     getUserShortName,
 } from '@jshare/common';
-import { zCurrencyCode, zExpenseShare, zProfile } from '@jshare/types';
+import { enums, models } from '@jshare/db/zod';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Menu } from '~/components/atoms/Menu';
@@ -31,14 +31,14 @@ import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
-    payer: zProfile,
+    payer: models.ProfileScalarSchema,
     amount: z.number().min(1, 'Please enter an amount'),
-    currency: zCurrencyCode,
+    currency: enums.CurrencyCodeSchema,
     description: z
         .string()
         .min(1, 'Please enter a description')
         .max(100, 'Description can be at most 100 characters'),
-    shares: zExpenseShare.array(),
+    shares: models.ExpenseShareScalarSchema.array(),
 });
 
 type Schema = z.infer<typeof schema>;

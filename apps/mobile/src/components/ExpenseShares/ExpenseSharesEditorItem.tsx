@@ -1,7 +1,7 @@
 import { RectButton } from 'react-native-gesture-handler';
 
 import { formatAmount, getUserShortName } from '@jshare/common';
-import type { DB } from '@jshare/types';
+import type { ExpenseShare, Profile } from '@jshare/db/models';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
@@ -9,8 +9,8 @@ import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ExpenseSharesEditorItemProps = {
-    user: DB.Profile;
-    share: Pick<DB.ExpenseShare, 'locked' | 'amount'> | undefined;
+    user: Profile;
+    share: Pick<ExpenseShare, 'locked' | 'amount'> | undefined;
     currency: string;
     onPress: () => void;
     onLongPress: () => void;

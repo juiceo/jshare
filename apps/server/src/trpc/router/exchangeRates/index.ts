@@ -1,17 +1,15 @@
-import type { DB } from '@jshare/types';
-
-import { prisma } from '../../../services/prisma';
+import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
 export const exchangeRatesRouter = router({
     latest: authProcedure.query(async () => {
-        const rates = await prisma.exchangeRates.findFirst({
+        const rates = await db.exchangeRates.findFirst({
             where: {},
             orderBy: {
                 createdAt: 'desc',
             },
         });
 
-        return rates as DB.ExchangeRates;
+        return rates;
     }),
 });
