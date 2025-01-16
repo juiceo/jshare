@@ -12,7 +12,7 @@ import { Typography } from '~/components/Typography';
 
 export type MenuOption<ID extends string, TData = undefined> = {
     id: ID;
-    data?: TData;
+    data: TData;
     label: string;
     secondary?: string;
     icon?: IconName | JSX.Element;
@@ -23,7 +23,7 @@ export type MenuProps<ID extends string, TData = undefined> = {
     value?: ID | undefined;
     isOpen: boolean;
     onClose: () => void;
-    onChange: (value: ID, data?: TData) => void;
+    onChange: (value: ID, data: TData) => void;
     options: MenuOption<ID, TData>[];
     title?: string;
 };
@@ -32,7 +32,7 @@ export const Menu = <T extends string, TData = undefined>(props: MenuProps<T, TD
     const { isOpen, value, onChange, onClose, options, title } = props;
     const insets = useSafeAreaInsets();
 
-    const handleSelect = (id: T, data?: TData) => {
+    const handleSelect = (id: T, data: TData) => {
         onChange(id, data);
         onClose();
     };

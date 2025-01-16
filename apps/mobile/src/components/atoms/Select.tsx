@@ -1,24 +1,22 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 
 import { FormControl, type FormControlProps } from '~/components/atoms/FormControl';
-import { Menu, type MenuProps } from '~/components/atoms/Menu';
+import { Menu, type MenuOption, type MenuProps } from '~/components/atoms/Menu';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
-export type SelectProps<T extends string> = {
+export type SelectProps<T extends string, TData = undefined> = {
     value: T | undefined;
     onChange: (value: T | undefined) => void;
     placeholder?: string;
-    options: {
-        id: T;
-        label: string;
-        secondary?: string;
-    }[];
-    MenuProps?: Pick<MenuProps<any>, 'title'>;
+    options: MenuOption<T, TData>[];
+    renderValue?: (value: T, data: TData) => ReactNode;
+    MenuProps?: Pick<MenuProps<T, TData>, 'title'>;
 } & Omit<FormControlProps, 'focused' | 'onPress'>;
 
-export const Select = <T extends string>(props: SelectProps<T>) => {
-    const { value, onChange, placeholder, options, MenuProps, ...formControlProps } = props;
+export const Select = <T extends string, TData = undefined>(props: SelectProps<T, TData>) => {
+    const { value, onChange, placeholder, options, MenuProps, renderValue, ...formControlProps } =
+        props;
     const [isOpen, setOpen] = useState<boolean>(false);
 
     const handleSelect = (id: T) => {
@@ -34,11 +32,17 @@ export const Select = <T extends string>(props: SelectProps<T>) => {
                 {...formControlProps}
                 onPress={() => setOpen(true)}
                 focused={isOpen}
-                endAdornment={<Icon name="ChevronDown" />}
+                endAdornment={
+                    <Icon name="ChevronDown" color={(theme) => theme.palette.text.hint} />
+                }
             >
-                <Typography variant="body1" color={selectedItem ? 'primary' : 'disabled'}>
-                    {selectedItem?.label ?? placeholder}
-                </Typography>
+                {renderValue && selectedItem ? (
+                    renderValue(selectedItem.id, selectedItem.data)
+                ) : (
+                    <Typography variant="body1" color={selectedItem ? 'primary' : 'disabled'}>
+                        {selectedItem?.label ?? placeholder}
+                    </Typography>
+                )}
             </FormControl>
             <Menu
                 {...MenuProps}

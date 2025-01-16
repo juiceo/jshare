@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
-import { RectButton } from 'react-native-gesture-handler';
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -14,15 +13,15 @@ import {
     getUserShortName,
     zPartialExpenseShare,
 } from '@jshare/common';
-import { zDB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 
-import { Divider } from '~/components/atoms/Divider';
-import { Menu } from '~/components/atoms/Menu';
+import type { MenuOption } from '~/components/atoms/Menu';
+import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
-import { CurrencyMenu } from '~/components/CurrencyMenu';
+import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
@@ -67,7 +66,15 @@ export default screen(
             mode: 'onSubmit',
         });
 
-        const [menu, setMenu] = useState<'currency' | 'payer' | null>(null);
+        const userOptions = useMemo((): MenuOption<string, DB.Profile>[] => {
+            return groupMembers?.map((member) => ({
+                id: member.userId,
+                label: getUserShortName(member.user),
+                data: member.user,
+                icon: <Avatar userId={member.userId} size="sm" />,
+            }));
+        }, [groupMembers]);
+
         const amount = useWatch({ control: form.control, name: 'amount' });
         const currency = useWatch({ control: form.control, name: 'currency' });
         const shares = useWatch({ control: form.control, name: 'shares' });
@@ -139,7 +146,7 @@ export default screen(
                                     )}
                                 />
                             </Stack>
-                            <Stack column bg="background.elevation1" br="xl">
+                            <Stack column spacing="md" br="xl">
                                 <Controller
                                     control={form.control}
                                     name="description"
@@ -153,82 +160,49 @@ export default screen(
                                         />
                                     )}
                                 />
-                                <Divider horizontal color="background.default" />
                                 <Controller
                                     control={form.control}
                                     name="payer"
-                                    render={({ field }) => (
-                                        <RectButton onPress={() => setMenu('payer')}>
-                                            <Stack row justifyBetween alignCenter p="xl">
-                                                <Typography color="hint" variant="overline">
-                                                    Paid by
-                                                </Typography>
-                                                {profile && (
-                                                    <Stack row center spacing="md">
-                                                        <Avatar
-                                                            userId={field.value.userId}
-                                                            size="sm"
-                                                        />
-                                                        {field.value && (
-                                                            <Typography>
-                                                                {getUserShortName(field.value)}
-                                                            </Typography>
-                                                        )}
+                                    render={({ field, fieldState: { error } }) => (
+                                        <Select
+                                            label="Paid by"
+                                            placeholder="Select person"
+                                            options={userOptions}
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            error={error?.message}
+                                            renderValue={(userId, profile) => {
+                                                return (
+                                                    <Stack row alignCenter spacing="md">
+                                                        <Avatar userId={userId} size="sm" />
+                                                        <Typography variant="body1" color="primary">
+                                                            {getUserShortName(profile)}
+                                                        </Typography>
                                                     </Stack>
-                                                )}
-                                                <Menu
-                                                    title="Who paid?"
-                                                    value={field.value.userId}
-                                                    onChange={(userId, user) =>
-                                                        field.onChange(user)
-                                                    }
-                                                    isOpen={menu === 'payer'}
-                                                    onClose={() => setMenu(null)}
-                                                    options={(groupMembers ?? []).map((member) => ({
-                                                        id: member.userId,
-                                                        label: getUserShortName(member.user),
-                                                        data: member.user,
-                                                        icon: (
-                                                            <Avatar
-                                                                userId={member.userId}
-                                                                size="sm"
-                                                            />
-                                                        ),
-                                                    }))}
-                                                />
-                                            </Stack>
-                                        </RectButton>
+                                                );
+                                            }}
+                                            MenuProps={{
+                                                title: 'Who paid?',
+                                            }}
+                                        />
                                     )}
                                 />
-                                <Divider horizontal color="background.default" />
                                 <Controller
                                     name="currency"
                                     control={form.control}
-                                    render={({ field }) => {
+                                    render={({ field, fieldState: { error } }) => {
                                         return (
-                                            <>
-                                                <RectButton onPress={() => setMenu('currency')}>
-                                                    <Stack row justifyBetween alignCenter p="xl">
-                                                        <Typography color="hint" variant="overline">
-                                                            Currency
-                                                        </Typography>
-                                                        <Stack column alignEnd>
-                                                            <Typography>
-                                                                {`${field.value} (${
-                                                                    getCurrencyDetails(field.value)
-                                                                        .name
-                                                                })`}
-                                                            </Typography>
-                                                        </Stack>
-                                                    </Stack>
-                                                </RectButton>
-                                                <CurrencyMenu
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                    isOpen={menu === 'currency'}
-                                                    onClose={() => setMenu(null)}
-                                                />
-                                            </>
+                                            <Select
+                                                label="Currency"
+                                                placeholder="Select currency"
+                                                options={CURRENCY_OPTIONS}
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                error={error?.message}
+                                                MenuProps={{
+                                                    title: 'Select currency',
+                                                }}
+                                            />
                                         );
                                     }}
                                 />

@@ -1,3 +1,5 @@
+import { skipToken } from '@tanstack/react-query';
+
 import { getUserDefaultAvatarUrl } from '@jshare/common';
 import type { BorderRadiusUnit } from '@jshare/theme';
 
@@ -5,7 +7,7 @@ import { Image } from '~/components/atoms/Image';
 import { trpc } from '~/services/trpc';
 
 export type AvatarProps = {
-    userId: string;
+    userId?: string;
     variant?: 'circle' | 'rounded' | 'square';
     size?: 'sm' | 'md' | 'lg';
 };
@@ -13,7 +15,7 @@ export type AvatarProps = {
 export const Avatar = (props: AvatarProps) => {
     const { userId } = props;
 
-    const [profile] = trpc.profiles.get.useSuspenseQuery({ id: userId });
+    const { data: profile } = trpc.profiles.get.useQuery(userId ? { id: userId } : skipToken);
 
     const dimensions = (() => {
         switch (props.size) {

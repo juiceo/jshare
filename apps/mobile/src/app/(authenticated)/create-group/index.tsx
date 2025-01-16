@@ -50,8 +50,6 @@ export default screen(
             router.dismiss();
         };
 
-        console.log('ERROR', form.formState.errors);
-
         return (
             <Screen>
                 <Screen.Header title="Create group" backButton="down" disableInset />

@@ -10,13 +10,16 @@ export type CurrencyMenuProps = {
     onClose: () => void;
 };
 
-export const CURRENCY_OPTIONS: MenuOption<DB.CurrencyCode>[] = SORTED_CURRENCIES.map((currency) => {
-    return {
-        id: currency.code,
-        label: currency.name,
-        secondary: currency.symbol,
-    };
-});
+export const CURRENCY_OPTIONS = SORTED_CURRENCIES.map(
+    (currency): MenuOption<DB.CurrencyCode, null> => {
+        return {
+            id: currency.code,
+            label: currency.name,
+            secondary: currency.symbol,
+            data: null,
+        };
+    }
+);
 
 export const CurrencyMenu = (props: CurrencyMenuProps) => {
     const { value, onChange, isOpen, onClose } = props;
