@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { zDB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -18,9 +19,6 @@ import { screen } from '~/wrappers/screen';
 const schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string(),
-    image: zDB.models.ImageSchema.extend({
-        blurhash: z.string().nullable(),
-    }).optional(),
     currency: zDB.enums.CurrencyCodeSchema,
 });
 
@@ -42,6 +40,7 @@ export default screen(
         });
 
         const createProfile = trpc.profiles.create.useMutation();
+        const [image, setImage] = useState<DB.Image | null>(null);
 
         const handleSubmit = async (data: Schema) => {
             const email = auth.session.user.email;
@@ -52,7 +51,7 @@ export default screen(
             await createProfile.mutateAsync({
                 firstName: data.firstName,
                 lastName: data.lastName,
-                avatarId: data.image?.id,
+                avatarId: image?.id,
                 currency: 'USD', //TODO: Add input for preferred currency
                 email,
             });
@@ -66,13 +65,7 @@ export default screen(
                 <Screen.Content scrollable>
                     <Stack p="xl" flex={1} center spacing="md">
                         <Stack py="3xl">
-                            <Controller
-                                control={form.control}
-                                name="image"
-                                render={({ field }) => (
-                                    <AvatarPicker value={field.value} onChange={field.onChange} />
-                                )}
-                            />
+                            <AvatarPicker value={image} onChange={setImage} />
                         </Stack>
                         <Controller
                             control={form.control}

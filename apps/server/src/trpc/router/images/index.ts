@@ -16,8 +16,6 @@ export const imagesRouter = router({
         .mutation(async (opts) => {
             const { path, bucket } = opts.input;
 
-            console.log('DOWNLOADING IMAGE FROM STORAGE', bucket, path);
-
             const imageThumbnail = await downloadImage({ path, bucket });
             if (!imageThumbnail) {
                 throw new TRPCError({ code: 'NOT_FOUND', message: 'Image not found' });

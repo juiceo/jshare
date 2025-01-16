@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { zDB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -18,9 +19,6 @@ import { screen } from '~/wrappers/screen';
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
     currency: zDB.enums.CurrencyCodeSchema,
-    coverImage: zDB.models.ImageSchema.extend({
-        blurhash: z.string().nullable(),
-    }).nullable(),
 });
 type Schema = z.infer<typeof schema>;
 
@@ -31,6 +29,7 @@ export default screen(
     ({ router }) => {
         const { createGroup, isPending } = useCreateGroup();
         const [profile] = trpc.profiles.me.useSuspenseQuery();
+        const [image, setImage] = useState<DB.Image | null>(null);
 
         const trpcUtils = trpc.useUtils();
 
@@ -43,27 +42,26 @@ export default screen(
         });
 
         const handleSubmit = async (data: Schema) => {
-            await createGroup(data);
+            await createGroup({
+                ...data,
+                coverImageId: image?.id,
+            });
             trpcUtils.groups.invalidate();
             router.dismiss();
         };
+
+        console.log('ERROR', form.formState.errors);
 
         return (
             <Screen>
                 <Screen.Header title="Create group" backButton="down" disableInset />
                 <Screen.Content scrollable>
                     <Stack column spacing="md" p="xl">
-                        <Controller
-                            control={form.control}
-                            name="coverImage"
-                            render={({ field }) => (
-                                <ImageUploader
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    aspectRatio={[16, 9]}
-                                    placeholder="Add a cover image"
-                                />
-                            )}
+                        <ImageUploader
+                            value={image}
+                            onChange={setImage}
+                            aspectRatio={[16, 9]}
+                            placeholder="Add a cover image"
                         />
                         <Controller
                             control={form.control}
