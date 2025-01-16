@@ -29,10 +29,12 @@
     [x] Generate zod types from zmodel schema
     [x] Remove @jshare/types package
     [x] Remove @jshare/util package, move under @jshare/common
+    [ ] Use supabase database triggers to implement automated messages etc.
+    [ ] Use zenstack generated API endpoints and hooks for queries
 
 -   Add payments feature
     [x] Create DB model for payments
-    [ ] Add screen for creating new payments
+    [x] Add screen for creating new payments
     [ ] When new payments are created, a system message should be sent to the group chat
     [ ] Expense calculations should take into account payments
 

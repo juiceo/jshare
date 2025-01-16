@@ -11,3 +11,15 @@ export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
         persistSession: false,
     },
 });
+
+supabase
+    .channel('schema-db-changes')
+    .on(
+        'postgres_changes',
+        {
+            event: 'INSERT',
+            schema: 'public',
+        },
+        (payload) => console.log(payload)
+    )
+    .subscribe();
