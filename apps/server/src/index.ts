@@ -1,3 +1,5 @@
+import './triggers';
+
 import * as trpcExpress from '@trpc/server/adapters/express';
 import bodyParser from 'body-parser';
 import express from 'express';

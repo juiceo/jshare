@@ -7,19 +7,21 @@ const supabaseServiceRoleKey = getEnv('SUPABASE_SERVICE_ROLE_KEY', { required: t
 
 export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
     auth: {
-        autoRefreshToken: false,
         persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
     },
 });
 
-supabase
-    .channel('schema-db-changes')
-    .on(
-        'postgres_changes',
-        {
-            event: 'INSERT',
-            schema: 'public',
-        },
-        (payload) => console.log(payload)
-    )
-    .subscribe();
+async function testServiceRoleKey() {
+    console.log('Testing Supabase service role key...');
+    const { error } = await supabase.from('expenses').select('*');
+
+    if (error !== null) {
+        console.error('Supabase service role error: unauthorized!');
+    } else {
+        console.log('Supabase service role works :)');
+    }
+}
+
+testServiceRoleKey();

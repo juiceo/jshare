@@ -1,7 +1,3 @@
-import { PrismaClient } from '../build/prisma';
-
-const prisma = new PrismaClient();
-
 const main = async () => {
     /**
      * TODO: Implement seeding

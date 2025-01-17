@@ -7,7 +7,7 @@ import { Typography } from '~/components/Typography';
 
 export type SelectProps<T extends string, TData = undefined> = {
     value: T | undefined;
-    onChange: (value: T | undefined) => void;
+    onChange: (value: T | undefined, data: TData) => void;
     placeholder?: string;
     options: MenuOption<T, TData>[];
     renderValue?: (value: T, data: TData) => ReactNode;
@@ -19,8 +19,8 @@ export const Select = <T extends string, TData = undefined>(props: SelectProps<T
         props;
     const [isOpen, setOpen] = useState<boolean>(false);
 
-    const handleSelect = (id: T) => {
-        onChange(id);
+    const handleSelect = (id: T, data: TData) => {
+        onChange(id, data);
         setOpen(false);
     };
 

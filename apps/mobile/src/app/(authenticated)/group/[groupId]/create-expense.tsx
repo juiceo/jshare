@@ -31,7 +31,7 @@ import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
-    payer: zDB.models.ProfileScalarSchema,
+    payer: zDB.models.ProfileScalarSchema.passthrough(),
     amount: z.number().min(1, 'Please enter an amount'),
     currency: zDB.enums.CurrencyCodeSchema,
     description: z
@@ -168,8 +168,8 @@ export default screen(
                                             label="Paid by"
                                             placeholder="Select person"
                                             options={userOptions}
-                                            value={field.value}
-                                            onChange={field.onChange}
+                                            value={field.value.userId}
+                                            onChange={(userId, profile) => field.onChange(profile)}
                                             error={error?.message}
                                             renderValue={(userId, profile) => {
                                                 return (
