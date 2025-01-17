@@ -13,9 +13,9 @@
         "generate": "zenstack generate --output ./src/generated",
         "build": "rsync -a --delete ./src/ ./build/",
         "db:migrate:dev": "npx prisma migrate dev",
-        "db:migrate:reset": "npx prisma migrate reset",
         "db:migrate:deploy": "npx prisma migrate deploy",
-        "db:inspect": "npx prisma studio"
+        "db:inspect": "npx prisma studio",
+        "db:reset": "supabase db reset && npx prisma migrate deploy"
     },
     "devDependencies": {
         "@faker-js/faker": "catalog:",
