@@ -1,11 +1,9 @@
 import { TRPCError } from '@trpc/server';
-import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { formatAmount, getConversionDetails, getUserShortName } from '@jshare/common';
-import { DB, zDB } from '@jshare/db';
+import { getConversionDetails } from '@jshare/common';
+import { zDB } from '@jshare/db';
 
-import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
 import { getLatestExchangeRates } from '../../../util/exchangeRates';
 import { authProcedure, router } from '../../trpc';
@@ -117,39 +115,22 @@ export const paymentsRouter = router({
             const exchangeRates =
                 opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
 
-            const payment = db.$transaction(async (tx) => {
-                const payment = await tx.payment.create({
-                    data: {
-                        groupId: opts.input.groupId,
-                        recipientId: opts.input.recipientId,
-                        payerId: opts.ctx.userId,
-                        amount: opts.input.amount,
-                        currency: opts.input.currency,
-                        conversion: exchangeRates
-                            ? getConversionDetails({
-                                  sourceCurrency: opts.input.currency,
-                                  sourceAmount: opts.input.amount,
-                                  currency: group.currency,
-                                  exchangeRates,
-                              })
-                            : undefined,
-                    },
-                });
-
-                await tx.message.create({
-                    data: {
-                        groupId: opts.input.groupId,
-                        authorType: DB.AuthorType.System,
-                        text: `${getUserShortName(payer)} paid ${formatAmount(opts.input.amount, opts.input.currency)} to ${getUserShortName(recipient)}`,
-                        key: uuidv4(),
-                    },
-                });
-
-                return payment;
+            return db.payment.create({
+                data: {
+                    groupId: opts.input.groupId,
+                    recipientId: opts.input.recipientId,
+                    payerId: opts.ctx.userId,
+                    amount: opts.input.amount,
+                    currency: opts.input.currency,
+                    conversion: exchangeRates
+                        ? getConversionDetails({
+                              sourceCurrency: opts.input.currency,
+                              sourceAmount: opts.input.amount,
+                              currency: group.currency,
+                              exchangeRates,
+                          })
+                        : undefined,
+                },
             });
-
-            broadcastNewMessage(opts.input.groupId);
-
-            return payment;
         }),
 });

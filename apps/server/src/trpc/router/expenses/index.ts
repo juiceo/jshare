@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server';
-import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import {
@@ -8,9 +7,8 @@ import {
     sumInCurrency,
     zPartialExpenseShare,
 } from '@jshare/common';
-import { DB, zDB } from '@jshare/db';
+import { zDB } from '@jshare/db';
 
-import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
 import { getLatestExchangeRates } from '../../../util/exchangeRates';
 import { authProcedure, router } from '../../trpc';
@@ -113,64 +111,43 @@ export const expensesRouter = router({
             const exchangeRates =
                 opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
 
-            const expense = await db.$transaction(async (tx) => {
-                const expense = await tx.expense.create({
-                    data: {
-                        ownerId: opts.ctx.userId,
-                        groupId: opts.input.groupId,
-                        payerId: opts.input.payerId,
-                        amount: opts.input.amount,
-                        description: opts.input.description,
-                        currency: opts.input.currency,
-                        conversion: exchangeRates
-                            ? getConversionDetails({
-                                  sourceCurrency: opts.input.currency,
-                                  sourceAmount: opts.input.amount,
-                                  currency: group.currency,
-                                  exchangeRates,
-                              })
-                            : undefined,
+            const expense = await db.expense.create({
+                data: {
+                    ownerId: opts.ctx.userId,
+                    groupId: opts.input.groupId,
+                    payerId: opts.input.payerId,
+                    amount: opts.input.amount,
+                    description: opts.input.description,
+                    currency: opts.input.currency,
+                    conversion: exchangeRates
+                        ? getConversionDetails({
+                              sourceCurrency: opts.input.currency,
+                              sourceAmount: opts.input.amount,
+                              currency: group.currency,
+                              exchangeRates,
+                          })
+                        : undefined,
 
-                        shares: {
-                            createMany: {
-                                data: opts.input.shares.map((share) => ({
-                                    userId: share.userId,
-                                    amount: share.amount,
-                                    currency: opts.input.currency,
-                                    locked: share.locked,
-                                    conversion: exchangeRates
-                                        ? getConversionDetails({
-                                              sourceCurrency: opts.input.currency,
-                                              sourceAmount: share.amount,
-                                              currency: group.currency,
-                                              exchangeRates,
-                                          })
-                                        : undefined,
-                                })),
-                            },
+                    shares: {
+                        createMany: {
+                            data: opts.input.shares.map((share) => ({
+                                userId: share.userId,
+                                amount: share.amount,
+                                currency: opts.input.currency,
+                                locked: share.locked,
+                                conversion: exchangeRates
+                                    ? getConversionDetails({
+                                          sourceCurrency: opts.input.currency,
+                                          sourceAmount: share.amount,
+                                          currency: group.currency,
+                                          exchangeRates,
+                                      })
+                                    : undefined,
+                            })),
                         },
                     },
-                });
-
-                await tx.message.create({
-                    data: {
-                        authorId: opts.ctx.userId,
-                        groupId: opts.input.groupId,
-                        authorType: DB.AuthorType.User,
-                        key: uuidv4(),
-                        attachments: {
-                            create: {
-                                type: DB.MessageAttachmentType.Expense,
-                                expenseId: expense.id,
-                            },
-                        },
-                    },
-                });
-
-                return expense;
+                },
             });
-
-            broadcastNewMessage(opts.input.groupId);
 
             return expense;
         }),

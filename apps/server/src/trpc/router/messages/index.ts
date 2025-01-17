@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 import { DB } from '@jshare/db';
 
-import { broadcastNewMessage } from '../../../services/broadcast';
 import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
 
@@ -64,7 +63,7 @@ export const messagesRouter = router({
                 });
             }
 
-            const message = await db.message.create({
+            return db.message.create({
                 data: {
                     text: opts.input.text,
                     authorId: opts.ctx.userId,
@@ -73,9 +72,5 @@ export const messagesRouter = router({
                     key: opts.input.key,
                 },
             });
-
-            broadcastNewMessage(opts.input.groupId);
-
-            return message;
         }),
 });

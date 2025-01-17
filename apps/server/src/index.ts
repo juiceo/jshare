@@ -1,11 +1,10 @@
-import './triggers';
-
 import * as trpcExpress from '@trpc/server/adapters/express';
 import bodyParser from 'body-parser';
 import express from 'express';
 
 import { getEnv } from '@jshare/common';
 
+import { initTriggers } from './triggers';
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';
 
@@ -26,5 +25,7 @@ app.use(
 app.listen(PORT, () => {
     console.log(`JShare server listening on port ${PORT}`);
 });
+
+initTriggers();
 
 export type AppRouter = typeof appRouter;

@@ -12,16 +12,3 @@ export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
         detectSessionInUrl: false,
     },
 });
-
-async function testServiceRoleKey() {
-    console.log('Testing Supabase service role key...');
-    const { error } = await supabase.from('expenses').select('*');
-
-    if (error !== null) {
-        console.error('Supabase service role error: unauthorized!');
-    } else {
-        console.log('Supabase service role works :)');
-    }
-}
-
-testServiceRoleKey();
