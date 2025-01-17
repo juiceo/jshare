@@ -3,11 +3,12 @@ import type { DB } from '@jshare/db';
 import { supabase } from '../services/supabase';
 import { onExpenseCreated } from './onExpenseCreated';
 import { onGroupCreated } from './onGroupCreated';
+import { onMessageCreated } from './onMessageCreated';
 import { onPaymentCreated } from './onPaymentCreated';
 
 export const initTriggers = () => {
     supabase
-        .channel('realtime')
+        .channel('database_triggers')
         .on(
             'postgres_changes',
             {
@@ -28,6 +29,17 @@ export const initTriggers = () => {
             },
             (payload) => {
                 return onPaymentCreated(payload.new as DB.Payment);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'messages',
+            },
+            (payload) => {
+                return onMessageCreated(payload.new as DB.Message);
             }
         )
         .on(

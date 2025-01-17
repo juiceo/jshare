@@ -1,8 +1,6 @@
 import { TRPCError } from '@trpc/server';
-import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { getUserShortName } from '@jshare/common';
 import { DB, zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
@@ -19,47 +17,27 @@ export const groupsRouter = router({
             })
         )
         .mutation(async (opts) => {
-            return db.$transaction(async (tx) => {
-                const [group, profile] = await Promise.all([
-                    tx.group.create({
-                        data: {
-                            name: opts.input.name,
-                            currency: opts.input.currency,
-                            coverImage: opts.input.coverImageId
-                                ? {
-                                      connect: {
-                                          id: opts.input.coverImageId,
-                                      },
-                                  }
-                                : undefined,
-                            participants: {
-                                create: {
-                                    userId: opts.ctx.userId,
-                                    role: DB.Role.Owner,
-                                },
-                            },
-                        },
-                        include: {
-                            ...defaultGroupInclude,
-                        },
-                    }),
-                    tx.profile.findUniqueOrThrow({
-                        where: {
+            return db.group.create({
+                data: {
+                    name: opts.input.name,
+                    currency: opts.input.currency,
+                    coverImage: opts.input.coverImageId
+                        ? {
+                              connect: {
+                                  id: opts.input.coverImageId,
+                              },
+                          }
+                        : undefined,
+                    participants: {
+                        create: {
                             userId: opts.ctx.userId,
+                            role: DB.Role.Owner,
                         },
-                    }),
-                ]);
-
-                await tx.message.create({
-                    data: {
-                        key: uuidv4(),
-                        text: `Group created by ${getUserShortName(profile)}`,
-                        authorType: DB.AuthorType.System,
-                        groupId: group.id,
                     },
-                });
-
-                return group;
+                },
+                include: {
+                    ...defaultGroupInclude,
+                },
             });
         }),
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {

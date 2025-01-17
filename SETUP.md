@@ -6,12 +6,10 @@ These steps should be automated in the future.
 
 Go to Supabase Dashboard -> Database Tables and enable Realtime for the tables that have listeners.
 
-At the time of writing, these are at least: `expenses`, `payments`
+At the time of writing, these are at least: `expenses`, `payments`, `messages` and `groups`. You can check `apps/server/src/triggers` to find all of the tables that have listeners and should therefore have Realtime enabled.
 
 ##### 2. Enable RLS for all tables
 
-Go to Supabase Dashboard -> Database Tables
+By default all Supabase tables have RLS (Row Level Security) disabled, which means that anyone can read the data if they have the supabase URL. To prevent this, you should enable RLS for all tables.
 
-Enable RLS (Row Level Security) for all tables.
-
-No need to create any policies, this just makes the tables not publicly readable.
+Go to Supabase Dashboard -> Database Tables and enable RLS (Row Level Security) for all tables. There isn't a need to create any policies, the application does not use RLS to restrict access to the tables.
