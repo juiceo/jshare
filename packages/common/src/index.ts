@@ -5,3 +5,4 @@ export * from './broadcasts';
 export * from './expenses';
 export * from './balances';
 export * from './util';
+export * from './storage';

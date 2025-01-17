@@ -8,6 +8,10 @@ Go to Supabase Dashboard -> Database Tables and enable Realtime for the tables t
 
 At the time of writing, these are at least: `expenses`, `payments`
 
-##### 2. Create the `uploads` bucket
+##### 2. Enable RLS for all tables
 
-TODO: Document this
+Go to Supabase Dashboard -> Database Tables
+
+Enable RLS (Row Level Security) for all tables.
+
+No need to create any policies, this just makes the tables not publicly readable.

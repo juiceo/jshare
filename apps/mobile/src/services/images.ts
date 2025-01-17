@@ -2,12 +2,11 @@ import uuid from 'react-native-uuid';
 import type { ImagePickerAsset } from 'expo-image-picker';
 import { clamp } from 'lodash';
 
+import { SupabaseStorageBucket } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
 import { supabase } from '~/services/supabase';
 import { trpcUniversal } from '~/services/trpc';
-
-const SUPABASE_BUCKET_NAME = 'uploads';
 
 export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> => {
     const response = await fetch(asset.uri);
@@ -15,7 +14,7 @@ export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> =>
     const arrayBuffer = await new Response(blob).arrayBuffer();
     const path = uuid.v4();
     const supabaseImage = await supabase.storage
-        .from(SUPABASE_BUCKET_NAME)
+        .from(SupabaseStorageBucket.Public)
         .upload(path, arrayBuffer, {
             contentType: asset.mimeType,
         });
@@ -26,7 +25,7 @@ export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> =>
 
     const dbImage = await trpcUniversal.images.create.mutate({
         path,
-        bucket: SUPABASE_BUCKET_NAME,
+        bucket: SupabaseStorageBucket.Public,
     });
 
     return dbImage;
