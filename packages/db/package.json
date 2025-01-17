@@ -12,18 +12,26 @@
     "scripts": {
         "generate": "zenstack generate --output ./src/generated",
         "build": "rsync -a --delete ./src/ ./build/",
-        "db:migrate:dev": "npx prisma migrate dev",
-        "db:migrate:deploy": "npx prisma migrate deploy",
+        "db:migrate": "npx prisma migrate dev",
         "db:inspect": "npx prisma studio",
-        "db:reset": "supabase db reset && npx prisma migrate deploy"
+        "db:reset": "supabase db reset && npx prisma migrate deploy && pnpm db:enable-realtime && pnpm db:enable-rls && tsx ./prisma/seed.ts",
+        "db:enable-realtime": "echo 'Enabling realtime publications...' && prisma db execute --file ./scripts/enable_realtime.sql --schema ./prisma/schema.prisma",
+        "db:enable-rls": "echo 'Enabling RLS...' && prisma db execute --file ./scripts/enable_rls.sql --schema ./prisma/schema.prisma"
+    },
+    "dependencies": {
+        "@zenstackhq/runtime": "^2.11.2"
     },
     "devDependencies": {
+        "@anatine/zod-mock": "^3.13.4",
         "@faker-js/faker": "catalog:",
         "@jshare/tsconfig": "workspace:*",
         "@prisma/client": "catalog:",
+        "@supabase/supabase-js": "^2.47.16",
         "lodash": "catalog:",
         "prisma": "catalog:",
-        "zenstack": "^2.11.2"
+        "tsx": "^4.19.2",
+        "zenstack": "^2.11.2",
+        "zod": "^3.24.1"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",
@@ -35,8 +43,5 @@
     },
     "prisma": {
         "seed": "tsx prisma/seed.ts"
-    },
-    "dependencies": {
-        "@zenstackhq/runtime": "^2.11.2"
     }
 }
