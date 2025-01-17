@@ -70,6 +70,7 @@ enum CurrencyCode {
 }
 
 /// @@allow('all', true)
+/// @@auth
 model Profile {
   userId           String             @id()
   email            String

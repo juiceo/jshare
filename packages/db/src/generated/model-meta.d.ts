@@ -1096,5 +1096,6 @@ declare const metadata: {
         };
     };
     deleteCascade: {};
+    authModel: string;
 };
 export default metadata;

@@ -48,6 +48,7 @@ model Profile {
     @@allow('all', true)
     @@map("profiles")
     @@schema("public")
+    @@auth
 }
 
 model Group extends BaseModel {

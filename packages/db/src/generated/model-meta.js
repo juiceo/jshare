@@ -99,7 +99,7 @@ const metadata = {
                     fields: ["userId"]
                 },
             },
-            attributes: [{ "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }],
+            attributes: [{ "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
         },
         group: {
             name: 'Group', fields: {
@@ -694,5 +694,6 @@ const metadata = {
         },
     },
     deleteCascade: {},
+    authModel: 'Profile'
 };
 exports.default = metadata;

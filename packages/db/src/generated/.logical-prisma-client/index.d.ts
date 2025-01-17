@@ -16,6 +16,7 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 /**
  * Model Profile
  * @@allow('all', true)
+ * @@auth
  */
 export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
 /**
