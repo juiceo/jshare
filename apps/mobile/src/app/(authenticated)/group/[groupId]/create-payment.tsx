@@ -42,6 +42,7 @@ export default screen(
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
         const [profile] = trpc.profiles.me.useSuspenseQuery();
+        const createPayment = trpc.payments.create.useMutation();
         const { convert } = useCurrencyConversion();
         const form = useForm<Schema>({
             defaultValues: {
@@ -71,9 +72,13 @@ export default screen(
                 return;
             }
 
-            /**
-             * TODO: Create the payment here
-             */
+            await createPayment.mutateAsync({
+                groupId,
+                payerId: data.payer.userId,
+                recipientId: data.recipient?.userId,
+                amount: data.amount,
+                currency: data.currency,
+            });
 
             router.back();
         };
