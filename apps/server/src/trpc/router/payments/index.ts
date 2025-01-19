@@ -119,7 +119,7 @@ export const paymentsRouter = router({
                 data: {
                     groupId: opts.input.groupId,
                     recipientId: opts.input.recipientId,
-                    payerId: opts.ctx.userId,
+                    payerId: opts.input.payerId,
                     amount: opts.input.amount,
                     currency: opts.input.currency,
                     conversion: exchangeRates
