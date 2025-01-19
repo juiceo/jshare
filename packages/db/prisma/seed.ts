@@ -36,10 +36,33 @@ const main = async () => {
             };
         }),
     });
-    console.log('Creating group...');
+
+    console.log('Creating personal groups...');
+    await Promise.all(
+        users.map(async (user) => {
+            return prisma.group.create({
+                data: {
+                    name: `${user.firstName}'s group`,
+                    currency: user.currency,
+                    participants: {
+                        createMany: {
+                            data: [
+                                {
+                                    userId: user.userId,
+                                    role: 'Owner',
+                                },
+                            ],
+                        },
+                    },
+                },
+            });
+        })
+    );
+
+    console.log('Creating shared group...');
     await prisma.group.create({
         data: {
-            name: 'Test group',
+            name: 'Shared group',
             currency: 'USD',
             participants: {
                 createMany: {
@@ -64,7 +87,6 @@ main()
             `- You can access their email inbox to get the login code by running "pnpm inbox"`
         );
 
-        console.log(`- Please see SETUP.md for next setup steps`);
         process.exit(0);
     })
     .catch((error) => {
