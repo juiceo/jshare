@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { formatAmount, getUserFullName } from '@jshare/common';
+import { formatAmount, getUserFullName, toObject } from '@jshare/common';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
@@ -25,6 +25,14 @@ export default screen(
             groupId: params.groupId,
         });
 
+        const profilesById = useMemo(() => {
+            return toObject({
+                data: group.participants,
+                key: (item) => item.userId,
+                value: (item) => item.user,
+            });
+        }, [group.participants]);
+
         return (
             <Screen>
                 <Screen.Header title={group.name} subtitle="Summary" blur />
@@ -38,12 +46,12 @@ export default screen(
                     <Stack mt="2xl" br="2xl">
                         {balances.map((item, index) => {
                             return (
-                                <React.Fragment key={item.participant.userId}>
+                                <React.Fragment key={item.userId}>
                                     <Stack row p="xl" spacing="xl">
-                                        <Avatar userId={item.participant.userId} size="lg" />
+                                        <Avatar userId={item.userId} size="lg" />
                                         <Stack column flex={1}>
                                             <Typography variant="h6">
-                                                {getUserFullName(item.participant.user)}
+                                                {getUserFullName(profilesById[item.userId])}
                                             </Typography>
                                             <Typography variant="body2" color="hint">
                                                 Paid: {formatAmount(item.paid, group.currency)}

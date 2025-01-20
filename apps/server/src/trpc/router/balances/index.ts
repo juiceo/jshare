@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
-import { getBalanceByParticipant, sumInCurrency } from '@jshare/common';
+import { getBalanceByParticipant, getBalanceForParticipant, sumInCurrency } from '@jshare/common';
 import { zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
@@ -65,36 +65,52 @@ export const balancesRouter = router({
                 });
             }
 
-            const [group, paidExpenses, expenseShares] = await Promise.all([
-                db.group.findUniqueOrThrow({
-                    where: {
-                        id: opts.input.groupId,
-                    },
-                }),
-                db.expense.findMany({
-                    where: {
-                        groupId: opts.input.groupId,
-                        payerId: opts.input.userId,
-                    },
-                }),
-                db.expenseShare.findMany({
-                    where: {
-                        userId: opts.input.userId,
-                        expense: {
-                            groupId: opts.input.groupId,
+            const [group, expensesPaid, expenseShares, paymentsPaid, paymentsReceived] =
+                await Promise.all([
+                    db.group.findUniqueOrThrow({
+                        where: {
+                            id: opts.input.groupId,
                         },
-                    },
-                }),
-            ]);
+                        select: {
+                            currency: true,
+                        },
+                    }),
+                    db.expense.findMany({
+                        where: {
+                            groupId: opts.input.groupId,
+                            payerId: opts.input.userId,
+                        },
+                    }),
+                    db.expenseShare.findMany({
+                        where: {
+                            userId: opts.input.userId,
+                            expense: {
+                                groupId: opts.input.groupId,
+                            },
+                        },
+                    }),
+                    db.payment.findMany({
+                        where: {
+                            groupId: opts.input.groupId,
+                            payerId: opts.input.userId,
+                        },
+                    }),
+                    db.payment.findMany({
+                        where: {
+                            groupId: opts.input.groupId,
+                            recipientId: opts.input.userId,
+                        },
+                    }),
+                ]);
 
-            const paid = sumInCurrency(paidExpenses, group.currency);
-            const received = sumInCurrency(expenseShares, group.currency);
-
-            return {
-                paid,
-                received,
-                balance: paid - received,
-            };
+            return getBalanceForParticipant({
+                expensesPaid,
+                expenseShares,
+                paymentsPaid,
+                paymentsReceived,
+                currency: group.currency,
+                userId: opts.input.userId,
+            });
         }),
     me: authProcedure
         .input(z.object({ currency: zDB.enums.CurrencyCodeSchema }))

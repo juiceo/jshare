@@ -2,16 +2,16 @@ import { sortBy } from 'lodash';
 
 import type { DB } from '@jshare/db';
 
-import { getInCurrency } from '../money';
+import { getInCurrency, sumInCurrency } from '../money';
 import { toObject } from '../util';
 import type { BalanceObject } from './types';
 
 export const getEmptyBalanceObject = (args: {
     currency: string;
-    participant: DB.GroupParticipant<{ user: true }>;
+    userId: string;
 }): BalanceObject => {
     return {
-        participant: args.participant,
+        userId: args.userId,
         currency: args.currency,
         paid: 0,
         received: 0,
@@ -28,7 +28,7 @@ export const getBalanceByParticipant = (args: {
     const balances: Record<string, BalanceObject> = toObject({
         data: args.participants,
         key: (item) => item.userId,
-        value: (item) => getEmptyBalanceObject({ currency: args.currency, participant: item }),
+        value: (item) => getEmptyBalanceObject({ currency: args.currency, userId: item.userId }),
     });
 
     const addToPaid = (userId: string, amount: number) => {
@@ -66,4 +66,28 @@ export const getBalanceByParticipant = (args: {
     });
 
     return sortBy(Object.values(balances), (item) => -item.balance);
+};
+
+export const getBalanceForParticipant = (args: {
+    userId: string;
+    expensesPaid: DB.Expense[];
+    expenseShares: DB.ExpenseShare[];
+    paymentsPaid: DB.Payment[];
+    paymentsReceived: DB.Payment[];
+    currency: string;
+}): BalanceObject => {
+    const totalPaid =
+        sumInCurrency(args.expensesPaid, args.currency) +
+        sumInCurrency(args.paymentsPaid, args.currency);
+    const totalReceived =
+        sumInCurrency(args.paymentsReceived, args.currency) +
+        sumInCurrency(args.expenseShares, args.currency);
+
+    return {
+        currency: args.currency,
+        userId: args.userId,
+        paid: totalPaid,
+        received: totalReceived,
+        balance: totalPaid - totalReceived,
+    };
 };
