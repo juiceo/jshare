@@ -7,7 +7,7 @@ import { Typography } from '~/components/Typography';
 
 export type SelectProps<T extends string, TData = undefined> = {
     value: T | undefined;
-    onChange: (value: T | undefined, data: TData) => void;
+    onChange: (value: T, data: TData) => void;
     placeholder?: string;
     options: MenuOption<T, TData>[];
     renderValue?: (value: T, data: TData) => ReactNode;

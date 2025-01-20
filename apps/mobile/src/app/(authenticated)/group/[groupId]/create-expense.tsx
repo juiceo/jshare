@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,22 +9,19 @@ import {
     getDefaultShares,
     getSharesWithUpdatedAmount,
     getTotalFromShares,
-    getUserShortName,
     zPartialExpenseShare,
 } from '@jshare/common';
-import { zDB, type DB } from '@jshare/db';
+import { zDB } from '@jshare/db';
 
-import type { MenuOption } from '~/components/atoms/Menu';
-import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
-import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
-import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
+import { CurrencySelect } from '~/components/CurrencySelect';
 import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
+import { UserSelect } from '~/components/UserSelect';
 import { useCurrencyConversion } from '~/hooks/useExchangeRates';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
@@ -65,15 +61,6 @@ export default screen(
             resolver: zodResolver(schema),
             mode: 'onSubmit',
         });
-
-        const userOptions = useMemo((): MenuOption<string, DB.Profile>[] => {
-            return groupMembers?.map((member) => ({
-                id: member.userId,
-                label: getUserShortName(member.user),
-                data: member.user,
-                icon: <Avatar userId={member.userId} size="sm" />,
-            }));
-        }, [groupMembers]);
 
         const amount = useWatch({ control: form.control, name: 'amount' });
         const currency = useWatch({ control: form.control, name: 'currency' });
@@ -164,23 +151,14 @@ export default screen(
                                     control={form.control}
                                     name="payer"
                                     render={({ field, fieldState: { error } }) => (
-                                        <Select
+                                        <UserSelect
                                             label="Paid by"
                                             placeholder="Select person"
-                                            options={userOptions}
+                                            type="participants"
+                                            users={groupMembers ?? []}
                                             value={field.value.userId}
                                             onChange={(userId, profile) => field.onChange(profile)}
                                             error={error?.message}
-                                            renderValue={(userId, profile) => {
-                                                return (
-                                                    <Stack row alignCenter spacing="md">
-                                                        <Avatar userId={userId} size="sm" />
-                                                        <Typography variant="body1" color="primary">
-                                                            {getUserShortName(profile)}
-                                                        </Typography>
-                                                    </Stack>
-                                                );
-                                            }}
                                             MenuProps={{
                                                 title: 'Who paid?',
                                             }}
@@ -192,10 +170,9 @@ export default screen(
                                     control={form.control}
                                     render={({ field, fieldState: { error } }) => {
                                         return (
-                                            <Select
+                                            <CurrencySelect
                                                 label="Currency"
                                                 placeholder="Select currency"
-                                                options={CURRENCY_OPTIONS}
                                                 value={field.value}
                                                 onChange={field.onChange}
                                                 error={error?.message}
