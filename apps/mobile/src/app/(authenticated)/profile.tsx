@@ -33,9 +33,10 @@ export default screen(
                 <Screen.Content scrollable>
                     <Stack flex={1} spacing="md" px="xl">
                         <Stack column center p="xl" br="md" spacing="none">
-                            <Stack mt="2xl">
+                            <Stack mt="2xl" center>
                                 <AvatarPicker
                                     value={profile.avatar}
+                                    profile={profile}
                                     onChange={(image) => {
                                         updateProfile({
                                             avatarId: image?.id ?? null,

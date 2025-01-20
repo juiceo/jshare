@@ -64,7 +64,7 @@ export default screen(
                 <Screen.Header title="Complete your profile" backButton="back" />
                 <Screen.Content scrollable>
                     <Stack p="xl" flex={1} center spacing="md">
-                        <Stack py="3xl">
+                        <Stack py="3xl" center>
                             <AvatarPicker value={image} onChange={setImage} />
                         </Stack>
                         <Controller

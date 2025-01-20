@@ -15,6 +15,7 @@ export const getUserDefaultAvatarUrl = (profile: Pick<DB.Profile, 'firstName' | 
         name: getUserFullName(profile),
         background: 'random',
         bold: 'true',
+        size: '128',
     });
     return `https://ui-avatars.com/api/?${params.toString()}`;
 };
