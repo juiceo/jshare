@@ -13,10 +13,6 @@ export default screen(
     () => {
         const { theme } = useTheme();
 
-        /**
-         * TODO: If no profile, redirect to login/welcome
-         */
-
         return (
             <Stack
                 screenOptions={{
