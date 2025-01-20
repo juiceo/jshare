@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import { formatAmount, getUserFullName, toObject } from '@jshare/common';
+import { formatAmount } from '@jshare/common';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
@@ -9,6 +9,7 @@ import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
+import { UserName } from '~/components/UserName';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
@@ -25,25 +26,17 @@ export default screen(
             groupId: params.groupId,
         });
 
-        const profilesById = useMemo(() => {
-            return toObject({
-                data: group.participants,
-                key: (item) => item.userId,
-                value: (item) => item.user,
-            });
-        }, [group.participants]);
-
         return (
             <Screen>
                 <Screen.Header title={group.name} subtitle="Summary" blur />
-                <Screen.Content scrollable disableTopInset disableHeaderOffset>
-                    <Stack column justifyEnd alignCenter ar="1/1" p="2xl">
+                <Screen.Content scrollable disableHeaderOffset>
+                    <Stack column center alignCenter ar="1/1" p="2xl">
                         <Typography variant="overline">Group total:</Typography>
                         <Typography variant="h1">
                             {formatAmount(groupTotal, group.currency)}
                         </Typography>
                     </Stack>
-                    <Stack mt="2xl" br="2xl">
+                    <Stack br="2xl">
                         {balances.map((item, index) => {
                             return (
                                 <React.Fragment key={item.userId}>
@@ -51,7 +44,7 @@ export default screen(
                                         <Avatar userId={item.userId} size="lg" />
                                         <Stack column flex={1}>
                                             <Typography variant="h6">
-                                                {getUserFullName(profilesById[item.userId])}
+                                                <UserName userId={item.userId} variant="short" />
                                             </Typography>
                                             <Typography variant="body2" color="hint">
                                                 Paid: {formatAmount(item.paid, group.currency)}
