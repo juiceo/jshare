@@ -1,4 +1,6 @@
 import { Dimensions } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
 import { Skeleton } from 'moti/skeleton';
 
 import { formatAmount, getUserShortName } from '@jshare/common';
@@ -28,6 +30,7 @@ const ExpenseSkeleton = () => {
 export const ChatMessageExpenseAttachment = withSuspense(
     (props: ChatMessageExpenseAttachmentProps) => {
         const { session } = useSession();
+        const router = useRouter();
         const userId = session?.user.id;
         const [expense] = trpc.expenses.get.useSuspenseQuery({ id: props.expenseId });
         const [payerProfile] = trpc.profiles.get.useSuspenseQuery({ id: expense.payerId });
@@ -37,7 +40,15 @@ export const ChatMessageExpenseAttachment = withSuspense(
         const ownShare = expense.shares.find((share) => share.userId === userId);
 
         return (
-            <Stack>
+            <BorderlessButton
+                activeOpacity={0.9}
+                onPress={() => {
+                    router.push({
+                        pathname: '/group/[groupId]/expense/[expenseId]',
+                        params: { groupId: expense.groupId, expenseId: expense.id },
+                    });
+                }}
+            >
                 <Stack bg="background.elevation1" p="2xl">
                     <Stack column center br="xl" mb="md" spacing="md">
                         <Avatar userId={expense.payerId} size="sm" />
@@ -62,7 +73,7 @@ export const ChatMessageExpenseAttachment = withSuspense(
                         </Typography>
                     </Stack>
                 </Stack>
-            </Stack>
+            </BorderlessButton>
         );
     },
     <ExpenseSkeleton />
