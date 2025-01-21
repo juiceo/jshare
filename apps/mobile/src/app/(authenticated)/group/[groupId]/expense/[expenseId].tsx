@@ -1,12 +1,12 @@
+import dayjs from 'dayjs';
+
 import { formatAmount } from '@jshare/common';
 
 import { Stack } from '~/components/atoms/Stack';
-import { TextField } from '~/components/atoms/TextField';
-import { CurrencySelect } from '~/components/CurrencySelect';
-import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
+import { Avatar } from '~/components/Avatar';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { UserSelect } from '~/components/UserSelect';
+import { UserName } from '~/components/UserName';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
@@ -16,68 +16,68 @@ export default screen(
     },
     ({ params }) => {
         const [expense] = trpc.expenses.get.useSuspenseQuery({ id: params.expenseId });
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+
         return (
             <Screen>
                 <Screen.Header title="Expense details" />
                 <Screen.Content disableHeaderOffset scrollable>
-                    <Stack column center ar="1/1" p="2xl">
+                    <Stack column center ar="1/1" p="2xl" spacing="lg">
                         <Typography variant="h6">{expense.description}</Typography>
-                        <Typography variant="h1">
-                            {formatAmount(expense.amount, expense.currency)}
+                        <Stack column center>
+                            <Typography variant="h1">
+                                {formatAmount(expense.amount, expense.currency)}
+                            </Typography>
+                            {expense.conversion && (
+                                <Typography variant="caption" color="hint">
+                                    ={' '}
+                                    {formatAmount(
+                                        expense.conversion.amount,
+                                        expense.conversion.currency
+                                    )}
+                                </Typography>
+                            )}
+                        </Stack>
+                        <Stack row center spacing="md">
+                            <Typography>Paid by</Typography>
+                            <Avatar userId={expense.payerId} size="sm" />
+                            <Typography>
+                                <UserName userId={expense.payerId} variant="short" />
+                            </Typography>
+                        </Stack>
+                    </Stack>
+                    <Stack column bg="background.elevation1" m="xl" br="xl">
+                        {expense.shares.map((share) => (
+                            <Stack key={share.id} row alignCenter spacing="xl" p="xl">
+                                <Avatar userId={share.userId} size="md" />
+                                <Typography flex={1}>
+                                    <UserName userId={share.userId} variant={'short'} />
+                                </Typography>
+                                <Stack column alignEnd>
+                                    <Typography>
+                                        {formatAmount(share.amount, share.currency)}
+                                    </Typography>
+                                    {share.conversion && (
+                                        <Typography variant="caption" color="hint">
+                                            ={' '}
+                                            {formatAmount(
+                                                share.conversion.amount,
+                                                share.conversion.currency
+                                            )}
+                                        </Typography>
+                                    )}
+                                </Stack>
+                            </Stack>
+                        ))}
+                    </Stack>
+                    <Stack column center>
+                        <Typography variant="caption">
+                            Created: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')}
                         </Typography>
-                        {expense.conversion && (
+                        {!dayjs(expense.createdAt).isSame(expense.updatedAt) && (
                             <Typography variant="caption">
-                                ={' '}
-                                {formatAmount(
-                                    expense.conversion.amount,
-                                    expense.conversion.currency
-                                )}
+                                Last updated: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')}
                             </Typography>
                         )}
-                    </Stack>
-                    <Stack column p="xl" spacing="md">
-                        <TextField
-                            label="Description"
-                            placeholder="Write a brief description"
-                            value={expense.description ?? ''}
-                            onChange={() => {}}
-                            error={'' /** TODO: Add error state */}
-                        />
-                        <UserSelect
-                            label="Paid by"
-                            placeholder="Select person"
-                            type="participants"
-                            users={group.participants ?? []}
-                            value={expense.payerId}
-                            onChange={(userId, profile) => {
-                                /** TODO  */
-                            }}
-                            error={'' /** TODO */}
-                            MenuProps={{
-                                title: 'Who paid?',
-                            }}
-                        />
-                        <CurrencySelect
-                            label="Currency"
-                            placeholder="Select currency"
-                            value={expense.currency}
-                            onChange={() => {
-                                /* TODO */
-                            }}
-                            error={'' /** TODO */}
-                            MenuProps={{
-                                title: 'Select currency',
-                            }}
-                        />
-                    </Stack>
-                    <Stack p="xl">
-                        <ExpenseSharesEditor
-                            value={expense.shares}
-                            onChange={() => {}}
-                            expense={expense}
-                            groupMembers={group.participants}
-                        />
                     </Stack>
                 </Screen.Content>
             </Screen>

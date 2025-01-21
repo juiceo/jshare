@@ -4,7 +4,7 @@ import { trpc } from '~/services/trpc';
 
 export type UserNameProps = {
     userId: string;
-    variant?: 'short' | 'full';
+    variant: 'short' | 'full';
 };
 
 export const UserName = (props: UserNameProps) => {

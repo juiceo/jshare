@@ -68,11 +68,11 @@ export const addShare = (
                 amount: amountsToDistribute.shift() ?? 0,
             };
         }),
-        // getExpenseShareMock({
-        //     amount: amountsToDistribute.shift() ?? 0,
-        //     userId,
-        //     locked: false,
-        // }),
+        {
+            amount: amountsToDistribute.shift() ?? 0,
+            userId,
+            locked: false,
+        },
     ];
 };
 
