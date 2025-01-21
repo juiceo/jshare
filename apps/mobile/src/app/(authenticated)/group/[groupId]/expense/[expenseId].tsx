@@ -71,7 +71,8 @@ export default screen(
                     </Stack>
                     <Stack column center>
                         <Typography variant="caption">
-                            Created: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')}
+                            Created: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')} by{' '}
+                            <UserName userId={expense.ownerId} variant="short" />
                         </Typography>
                         {!dayjs(expense.createdAt).isSame(expense.updatedAt) && (
                             <Typography variant="caption">
