@@ -671,6 +671,9 @@ importers:
       '@expo-google-fonts/poppins':
         specifier: 'catalog:'
         version: 0.2.3
+      '@expo-google-fonts/ubuntu':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@types/chroma-js':
         specifier: 'catalog:'
         version: 2.4.4
@@ -1891,6 +1894,9 @@ packages:
 
   '@expo-google-fonts/poppins@0.2.3':
     resolution: {integrity: sha512-PXkur1ZY/puy1PwVFYPJx8qiI3dtBzC2ig1bo53swCt7/sI7krCGYRO6hLBNp15M0kcNh2J4cCR9ZQyFxsving==}
+
+  '@expo-google-fonts/ubuntu@0.2.3':
+    resolution: {integrity: sha512-VN3Dv4cKVsstAFw76x8YWHvAdomvlEWbIKSjWHiFzwdP+DJ/Scodp8M947m8YHHSqGwkXNFZn2fXJGOPhHvPmQ==}
 
   '@expo/bunyan@4.0.0':
     resolution: {integrity: sha512-Ydf4LidRB/EBI+YrB+cVLqIseiRfjUI/AeHBgjGMtq3GroraDu81OV7zqophRgupngoL3iS3JUMDMnxO7g39qA==}
@@ -9082,6 +9088,8 @@ snapshots:
   '@expo-google-fonts/nunito@0.2.3': {}
 
   '@expo-google-fonts/poppins@0.2.3': {}
+
+  '@expo-google-fonts/ubuntu@0.2.3': {}
 
   '@expo/bunyan@4.0.0':
     dependencies:

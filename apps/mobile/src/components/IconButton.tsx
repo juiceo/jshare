@@ -94,7 +94,7 @@ export const IconButton = (props: IconButtonProps) => {
                 spacing="sm"
             >
                 {text && (
-                    <Typography variant="button" style={{ color: iconColor }}>
+                    <Typography variant="buttonSmall" style={{ color: iconColor }}>
                         {text}
                     </Typography>
                 )}

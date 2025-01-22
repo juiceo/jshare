@@ -36,7 +36,7 @@ export const ChatStatusHeader = (props: ChatStatusHeaderProps) => {
                     })
                 }
             >
-                <Stack row justifyBetween p="md">
+                <Stack row alignCenter justifyBetween p="md">
                     <Box>
                         {userStatus && (
                             <StatusBadge amount={userStatus.balance} currency={currency} />

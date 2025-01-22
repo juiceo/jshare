@@ -37,6 +37,18 @@ export const typographyVariants: TypographyVariants = {
         lineHeight: 32,
         letterSpacing: 0,
     },
+    subtitle1: {
+        fontFamily: 'Nunito_700Bold',
+        fontSize: 16,
+        lineHeight: 24,
+        letterSpacing: 0.15,
+    },
+    subtitle2: {
+        fontFamily: 'Nunito_700Bold',
+        fontSize: 14,
+        lineHeight: 20,
+        letterSpacing: 0.1,
+    },
     body1: {
         fontFamily: 'Nunito_400Regular',
         fontSize: 16,
@@ -50,7 +62,7 @@ export const typographyVariants: TypographyVariants = {
         letterSpacing: 0.1,
     },
     overline: {
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Nunito_700Bold',
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.5,
@@ -60,13 +72,19 @@ export const typographyVariants: TypographyVariants = {
         fontFamily: 'Nunito_500Medium',
         fontSize: 12,
         lineHeight: 16,
-        letterSpacing: 0.2,
+        letterSpacing: 0.1,
     },
     button: {
-        fontFamily: 'Nunito_700Bold',
-        fontSize: 16,
+        fontFamily: 'Ubuntu_700Bold',
+        fontSize: 18,
         lineHeight: 20,
-        letterSpacing: 0.5,
+        letterSpacing: 0.1,
+    },
+    buttonSmall: {
+        fontFamily: 'Ubuntu_700Bold',
+        fontSize: 14,
+        lineHeight: 20,
+        letterSpacing: 0.1,
     },
 };
 

@@ -16,7 +16,6 @@ export type ButtonProps = {
     variant?: ButtonVariant;
     color?: ButtonColor;
     size?: 'sm' | 'md';
-    rounded?: boolean;
     disabled?: boolean;
     loading?: boolean;
     children: string;
@@ -34,7 +33,6 @@ export const Button = (props: ButtonProps) => {
         size = 'md',
         disabled = false,
         loading = false,
-        rounded = false,
         onPress,
     } = props;
 
@@ -56,7 +54,7 @@ export const Button = (props: ButtonProps) => {
                     borderWidth: variant === 'outlined' ? 2 : 0,
                     borderColor: primaryColor,
                     borderStyle: 'solid',
-                    borderRadius: rounded ? sizeValue / 2 : theme.borderRadius.lg,
+                    borderRadius: sizeValue / 2,
                 },
                 getSxStyles(props, theme),
             ]}
@@ -68,8 +66,8 @@ export const Button = (props: ButtonProps) => {
             <Stack row center flex={1} spacing="md">
                 {loading && <ActivityIndicator color={textColor} size="small" />}
                 <Typography
-                    variant="button"
-                    style={{ color: textColor, fontSize: size === 'sm' ? 12 : undefined }}
+                    variant={size === 'sm' ? 'buttonSmall' : 'button'}
+                    style={{ color: textColor }}
                     align="center"
                 >
                     {props.children}

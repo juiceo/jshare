@@ -9,11 +9,14 @@ export type TypographyVariants = {
     h4: TypographyVariantDefinition;
     h5: TypographyVariantDefinition;
     h6: TypographyVariantDefinition;
+    subtitle1: TypographyVariantDefinition;
+    subtitle2: TypographyVariantDefinition;
     body1: TypographyVariantDefinition;
     body2: TypographyVariantDefinition;
     overline: TypographyVariantDefinition;
     caption: TypographyVariantDefinition;
     button: TypographyVariantDefinition;
+    buttonSmall: TypographyVariantDefinition;
 };
 
 export type TypographyVariantDefinition = {

@@ -16,12 +16,17 @@ export const StatusBadge = (props: StatusBadgeProps) => {
     const isNegative = props.amount < 0;
     const isPositive = props.amount > 0;
     return (
-        <Stack row alignCenter bg="background.elevation1" px="md" br="xl" spacing="sm">
-            {prefix && <Typography variant="h6">Status: </Typography>}
+        <Stack row alignCenter bg="background.elevation1" px="md" py="xs" br="xl" spacing="sm">
+            {prefix && (
+                <Typography variant="subtitle1" style={{ lineHeight: 0 }}>
+                    Status:{' '}
+                </Typography>
+            )}
             <Typography
-                variant="h6"
+                variant="subtitle1"
                 color="secondary"
                 style={{
+                    lineHeight: 0,
                     color: isPositive
                         ? theme.palette.success.light
                         : isNegative

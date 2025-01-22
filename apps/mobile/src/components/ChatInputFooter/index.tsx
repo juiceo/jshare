@@ -60,7 +60,7 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
                                     color={theme.palette.text.primary}
                                 />
                             </Stack>
-                            <Typography variant="h6" style={{ lineHeight: 0 }}>
+                            <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
                                 Expense
                             </Typography>
                         </Stack>
@@ -74,7 +74,7 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
                                     color={theme.palette.text.primary}
                                 />
                             </Stack>
-                            <Typography variant="h6" style={{ lineHeight: 0 }}>
+                            <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
                                 Pay
                             </Typography>
                         </Stack>

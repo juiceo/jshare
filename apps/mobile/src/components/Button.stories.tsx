@@ -12,7 +12,6 @@ const meta = {
         variant: 'contained',
         children: 'Press me',
         size: 'md',
-        rounded: false,
         disabled: false,
         loading: false,
     },
@@ -21,9 +20,6 @@ const meta = {
             type: 'string',
             options: ['sm', 'md'],
             control: 'radio',
-        },
-        rounded: {
-            type: 'boolean',
         },
     },
     decorators: [
