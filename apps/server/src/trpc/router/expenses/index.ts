@@ -151,6 +151,114 @@ export const expensesRouter = router({
 
             return expense;
         }),
+    update: authProcedure
+        .input(
+            z.object({
+                expenseId: z.string(),
+                groupId: z.string(),
+                payerId: z.string(),
+                amount: z.number().min(1),
+                description: z.string().min(1).max(100),
+                currency: zDB.enums.CurrencyCodeSchema,
+                shares: zPartialExpenseShare.array().min(1),
+            })
+        )
+        .mutation(async (opts) => {
+            const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isUserInGroup) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Group with id ${opts.input.groupId} not found`,
+                });
+            }
+
+            const [expense, group] = await Promise.all([
+                db.expense.findUnique({
+                    where: {
+                        id: opts.input.expenseId,
+                        groupId: opts.input.groupId,
+                    },
+                }),
+                db.group.findUnique({
+                    where: {
+                        id: opts.input.groupId,
+                    },
+                }),
+            ]);
+
+            if (!group) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Group with id ${opts.input.groupId} not found`,
+                });
+            }
+
+            if (!expense) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Expense with id ${opts.input.expenseId} not found`,
+                });
+            }
+
+            if (expense.ownerId !== opts.ctx.userId) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `Only the owner of an expense can update it`,
+                });
+            }
+
+            const exchangeRates =
+                opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
+
+            return db.$transaction(async (tx) => {
+                await tx.expenseShare.deleteMany({
+                    where: {
+                        expenseId: opts.input.expenseId,
+                    },
+                });
+
+                return tx.expense.update({
+                    where: {
+                        id: opts.input.expenseId,
+                    },
+                    data: {
+                        payerId: opts.input.payerId,
+                        amount: opts.input.amount,
+                        description: opts.input.description,
+                        currency: opts.input.currency,
+                        conversion: exchangeRates
+                            ? getConversionDetails({
+                                  sourceCurrency: opts.input.currency,
+                                  sourceAmount: opts.input.amount,
+                                  currency: group.currency,
+                                  exchangeRates,
+                              })
+                            : undefined,
+                        shares: {
+                            createMany: {
+                                data: opts.input.shares.map((share) => ({
+                                    userId: share.userId,
+                                    amount: share.amount,
+                                    currency: opts.input.currency,
+                                    locked: share.locked,
+                                    conversion: exchangeRates
+                                        ? getConversionDetails({
+                                              sourceCurrency: opts.input.currency,
+                                              sourceAmount: share.amount,
+                                              currency: group.currency,
+                                              exchangeRates,
+                                          })
+                                        : undefined,
+                                })),
+                            },
+                        },
+                    },
+                    include: {
+                        shares: true,
+                    },
+                });
+            });
+        }),
     getTotalForGroup: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
         const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
         if (!isUserInGroup) {

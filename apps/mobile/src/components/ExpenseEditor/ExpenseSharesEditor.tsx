@@ -5,8 +5,8 @@ import type { DB } from '@jshare/db';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
-import { ExpenseShareEditorSheet } from '~/components/ExpenseShares/ExpenseShareEditorSheet';
-import { ExpenseSharesEditorItem } from '~/components/ExpenseShares/ExpenseSharesEditorItem';
+import { ExpenseShareEditorSheet } from '~/components/ExpenseEditor/ExpenseShareEditorSheet';
+import { ExpenseSharesEditorItem } from '~/components/ExpenseEditor/ExpenseSharesEditorItem';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 

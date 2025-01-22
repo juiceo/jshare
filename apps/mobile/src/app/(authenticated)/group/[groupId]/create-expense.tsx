@@ -1,64 +1,39 @@
-import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 
-import {
-    formatAmount,
-    getCurrencyDetails,
-    getDefaultShares,
-    getSharesWithUpdatedAmount,
-    getTotalFromShares,
-    zPartialExpenseShare,
-} from '@jshare/common';
-import { zDB } from '@jshare/db';
+import { formatAmount, getDefaultShares, getTotalFromShares } from '@jshare/common';
 
 import { Stack } from '~/components/atoms/Stack';
-import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
-import { CurrencySelect } from '~/components/CurrencySelect';
-import { ExpenseSharesEditor } from '~/components/ExpenseShares/ExpenseSharesEditor';
-import { MoneyInput } from '~/components/MoneyInput';
+import {
+    ExpenseEditor,
+    expenseEditorSchema,
+    ExpenseEditorSchema,
+} from '~/components/ExpenseEditor';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { UserSelect } from '~/components/UserSelect';
-import { useCurrencyConversion } from '~/hooks/useExchangeRates';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
-
-const schema = z.object({
-    payer: zDB.models.ProfileScalarSchema.passthrough(),
-    amount: z.number().min(1, 'Please enter an amount'),
-    currency: zDB.enums.CurrencyCodeSchema,
-    description: z
-        .string()
-        .min(1, 'Please enter a description')
-        .max(100, 'Description can be at most 100 characters'),
-    shares: zPartialExpenseShare.array(),
-});
-
-type Schema = z.infer<typeof schema>;
 
 export default screen(
     {
         route: '/(authenticated)/group/[groupId]/create-expense',
+        auth: true,
     },
-    ({ params, router }) => {
+    ({ params, router, auth }) => {
         const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
-        const [profile] = trpc.profiles.me.useSuspenseQuery();
-        const { convert } = useCurrencyConversion();
         const createExpenseMutation = trpc.expenses.create.useMutation();
-        const form = useForm<Schema>({
+        const form = useForm<ExpenseEditorSchema>({
             defaultValues: {
-                payer: profile,
+                payerId: auth.session.user.id,
                 amount: 0,
                 currency: 'USD',
                 description: '',
                 shares: getDefaultShares(groupMembers ?? []),
             },
-            resolver: zodResolver(schema),
+            resolver: zodResolver(expenseEditorSchema),
             mode: 'onSubmit',
         });
 
@@ -69,14 +44,10 @@ export default screen(
         const totalFromShares = getTotalFromShares(shares);
         const hasAmountMismatch = totalFromShares !== amount;
 
-        const handleSubmit = async (data: Schema) => {
+        const handleSubmit = async (data: ExpenseEditorSchema) => {
             await createExpenseMutation.mutateAsync({
                 groupId,
-                payerId: data.payer.userId,
-                amount: data.amount,
-                currency: data.currency,
-                shares: data.shares,
-                description: data.description,
+                ...data,
             });
             router.back();
         };
@@ -86,125 +57,11 @@ export default screen(
                 <Screen>
                     <Screen.Header title="New expense" backButton="down" disableInset />
                     <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
-                        <Stack column px="xl">
-                            <Stack center py="3xl">
-                                <Controller
-                                    control={form.control}
-                                    name="amount"
-                                    render={({ field }) => (
-                                        <MoneyInput
-                                            value={field.value}
-                                            onChange={(value) => {
-                                                field.onChange(value);
-                                                const updatedShares = getSharesWithUpdatedAmount({
-                                                    expenseAmount: value,
-                                                    shares,
-                                                });
-                                                form.setValue('shares', updatedShares);
-                                            }}
-                                            autoFocus
-                                        />
-                                    )}
-                                />
-                                <Typography variant="caption">
-                                    {getCurrencyDetails(currency).name_plural}
-                                </Typography>
-                                {currency !== group.currency && (
-                                    <Typography variant="caption" color="hint">
-                                        {`= ${formatAmount(
-                                            convert({
-                                                amount,
-                                                from: currency,
-                                                to: group.currency,
-                                            }),
-                                            group.currency
-                                        )}`}
-                                    </Typography>
-                                )}
-
-                                <Typography variant="caption"></Typography>
-                                <ErrorMessage
-                                    errors={form.formState.errors}
-                                    name={'amount'}
-                                    render={({ message }) => (
-                                        <Typography variant="caption" color="error.light">
-                                            {message}
-                                        </Typography>
-                                    )}
-                                />
-                            </Stack>
-                            <Stack column spacing="md" br="xl">
-                                <Controller
-                                    control={form.control}
-                                    name="description"
-                                    render={({ field, fieldState }) => (
-                                        <TextField
-                                            label="Description"
-                                            placeholder="Write a brief description"
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            error={fieldState.error?.message}
-                                        />
-                                    )}
-                                />
-                                <Controller
-                                    control={form.control}
-                                    name="payer"
-                                    render={({ field, fieldState: { error } }) => (
-                                        <UserSelect
-                                            label="Paid by"
-                                            placeholder="Select person"
-                                            type="participants"
-                                            users={groupMembers ?? []}
-                                            value={field.value.userId}
-                                            onChange={(userId, profile) => field.onChange(profile)}
-                                            error={error?.message}
-                                            MenuProps={{
-                                                title: 'Who paid?',
-                                            }}
-                                        />
-                                    )}
-                                />
-                                <Controller
-                                    name="currency"
-                                    control={form.control}
-                                    render={({ field, fieldState: { error } }) => {
-                                        return (
-                                            <CurrencySelect
-                                                label="Currency"
-                                                placeholder="Select currency"
-                                                value={field.value}
-                                                onChange={field.onChange}
-                                                error={error?.message}
-                                                MenuProps={{
-                                                    title: 'Select currency',
-                                                }}
-                                            />
-                                        );
-                                    }}
-                                />
-                            </Stack>
-                            <Stack p="xl" mt="2xl">
-                                <Typography variant="body1">Who's participating?</Typography>
-                            </Stack>
-                            <Controller
-                                control={form.control}
-                                name="shares"
-                                render={({ field }) => {
-                                    return (
-                                        <ExpenseSharesEditor
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            groupMembers={groupMembers ?? []}
-                                            expense={{
-                                                amount,
-                                                currency,
-                                            }}
-                                        />
-                                    );
-                                }}
-                            />
-                        </Stack>
+                        <ExpenseEditor
+                            form={form}
+                            groupCurrency={group.currency}
+                            groupMembers={groupMembers}
+                        />
                     </Screen.Content>
                     <Screen.Footer>
                         <Stack column>

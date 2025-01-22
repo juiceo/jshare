@@ -2,6 +2,7 @@ import type { DB } from '@jshare/db';
 
 import { supabase } from '../services/supabase';
 import { onExpenseCreated } from './onExpenseCreated';
+import { onExpenseUpdated } from './onExpenseUpdated';
 import { onGroupCreated } from './onGroupCreated';
 import { onMessageCreated } from './onMessageCreated';
 import { onPaymentCreated } from './onPaymentCreated';
@@ -18,6 +19,17 @@ export const initTriggers = () => {
             },
             (payload) => {
                 return onExpenseCreated(payload.new as DB.Expense);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'expenses',
+            },
+            (payload) => {
+                return onExpenseUpdated(payload.new as DB.Expense);
             }
         )
         .on(

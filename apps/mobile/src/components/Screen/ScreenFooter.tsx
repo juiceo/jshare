@@ -27,7 +27,14 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
         >
             {sticky ? (
                 <KeyboardStickyView
-                    style={[{ padding: theme.spacing[padding] }, style]}
+                    style={[
+                        {
+                            padding: theme.spacing[padding],
+                            borderTopWidth: 1,
+                            borderTopColor: theme.palette.background.elevation1,
+                        },
+                        style,
+                    ]}
                     offset={{
                         closed: 0,
                         opened: insets.bottom,
@@ -36,7 +43,18 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                     {props.children}
                 </KeyboardStickyView>
             ) : (
-                <View style={[{ padding: theme.spacing[padding] }, style]}>{props.children}</View>
+                <View
+                    style={[
+                        {
+                            padding: theme.spacing[padding],
+                            borderTopWidth: 1,
+                            borderTopColor: theme.palette.background.elevation1,
+                        },
+                        style,
+                    ]}
+                >
+                    {props.children}
+                </View>
             )}
         </SafeAreaView>
     );

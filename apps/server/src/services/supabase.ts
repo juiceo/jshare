@@ -12,15 +12,3 @@ export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
         detectSessionInUrl: false,
     },
 });
-
-const testSupabaseClient = async () => {
-    const { error } = await supabase.from('expenses').select('*').limit(1);
-
-    if (error !== null) {
-        throw new Error(
-            `Supabase client was unable to read the database, please check your supabase URL and service role key: ${error.message}`
-        );
-    }
-};
-
-testSupabaseClient();

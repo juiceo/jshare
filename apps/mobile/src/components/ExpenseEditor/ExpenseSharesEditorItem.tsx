@@ -31,7 +31,7 @@ export const ExpenseSharesEditorItem = (props: ExpenseSharesEditorItemProps) => 
                 style={{ opacity: share ? 1 : 0.5 }}
             >
                 <Stack row alignCenter spacing="md" flex={1}>
-                    <Avatar userId={user.userId} size="sm" />
+                    <Avatar userId={user.userId} size="md" />
                     <Typography ellipsizeMode="tail" numberOfLines={1} flex={1}>
                         {getUserShortName(user)}
                     </Typography>

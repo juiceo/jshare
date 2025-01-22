@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { getUserShortName } from '@jshare/common';
 import { DB } from '@jshare/db';
 
 import { db } from '../services/db';
@@ -20,7 +19,7 @@ export const onGroupCreated = async (group: DB.Group) => {
         data: {
             groupId: group.id,
             authorType: DB.AuthorType.System,
-            text: `${getUserShortName(createdBy.user)} created the group ${group.name}`,
+            text: `@user=${createdBy.user.userId} created the group "${group.name}"`,
             key: uuidv4(),
         },
     });
