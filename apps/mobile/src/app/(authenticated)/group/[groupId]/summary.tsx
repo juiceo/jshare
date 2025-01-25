@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'expo-router';
 
 import { formatAmount } from '@jshare/common';
 
@@ -18,6 +19,7 @@ export default screen(
         route: '/(authenticated)/group/[groupId]/summary',
     },
     ({ params }) => {
+        const router = useRouter();
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
         const [groupTotal] = trpc.expenses.getTotalForGroup.useSuspenseQuery({
             groupId: params.groupId,
@@ -70,7 +72,17 @@ export default screen(
                     </Stack>
                 </Screen.Content>
                 <Screen.Footer>
-                    <Button color="primary">Settle up</Button>
+                    <Button
+                        color="primary"
+                        onPress={() =>
+                            router.push({
+                                pathname: '/(authenticated)/group/[groupId]/settle',
+                                params: { groupId: group.id },
+                            })
+                        }
+                    >
+                        Settle up
+                    </Button>
                 </Screen.Footer>
             </Screen>
         );

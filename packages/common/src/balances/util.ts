@@ -1,10 +1,10 @@
-import { sortBy } from 'lodash';
+import { chain, countBy, sortBy, sumBy, uniqBy } from 'lodash';
 
 import type { DB } from '@jshare/db';
 
 import { getInCurrency, sumInCurrency } from '../money';
 import { toObject } from '../util';
-import type { BalanceObject } from './types';
+import type { BalanceObject, PaymentObject } from './types';
 
 export const getEmptyBalanceObject = (args: {
     currency: string;
@@ -90,4 +90,67 @@ export const getBalanceForParticipant = (args: {
         received: totalReceived,
         balance: totalPaid - totalReceived,
     };
+};
+
+export const getPaymentsFromBalances = (balances: BalanceObject[]): PaymentObject[] => {
+    const payments: PaymentObject[] = [];
+
+    const debtors = sortBy(
+        balances.filter((b) => b.balance < 0),
+        (b) => b.balance
+    );
+    const creditors = sortBy(
+        balances.filter((b) => b.balance > 0),
+        (b) => -b.balance
+    );
+
+    const totalDebt = sumBy(debtors, (b) => b.balance);
+    const totalCredit = sumBy(creditors, (b) => b.balance);
+
+    if (Math.abs(totalDebt) !== totalCredit) {
+        throw new Error(
+            `The total balance is not zero: ${totalDebt} debt vs ${totalCredit} credit`
+        );
+    }
+
+    const duplicateUserIds = chain(balances)
+        .countBy('userId')
+        .pickBy((count) => count > 1)
+        .entries()
+        .map(([userId, count]) => ({ userId, count }))
+        .value();
+
+    if (duplicateUserIds.length > 0) {
+        throw new Error(
+            `Cannot have duplicate userIds in balances: ${duplicateUserIds.map((u) => 'user ' + u.userId + ' appears ' + u.count + ' times')}`
+        );
+    }
+
+    let i = 0; // Pointer for debtors
+    let j = 0; // Pointer for creditors
+
+    // Match debtors to creditors
+    while (i < debtors.length && j < creditors.length) {
+        const debtor = debtors[i];
+        const creditor = creditors[j];
+
+        const paymentAmount = Math.min(Math.abs(debtor.balance), creditor.balance);
+
+        payments.push({
+            fromUserId: debtor.userId,
+            toUserId: creditor.userId,
+            currency: debtor.currency, // Assuming all balances are in the same currency
+            amount: paymentAmount,
+        });
+
+        // Reduce the balances
+        debtor.balance += paymentAmount;
+        creditor.balance -= paymentAmount;
+
+        // Move to the next debtor or creditor if their balance is zero
+        if (debtor.balance === 0) i++;
+        if (creditor.balance === 0) j++;
+    }
+
+    return sortBy(payments, (p) => -p.amount);
 };

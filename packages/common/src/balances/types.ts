@@ -5,3 +5,10 @@ export type BalanceObject = {
     received: number;
     balance: number;
 };
+
+export type PaymentObject = {
+    fromUserId: string;
+    toUserId: string;
+    currency: string;
+    amount: number;
+};
