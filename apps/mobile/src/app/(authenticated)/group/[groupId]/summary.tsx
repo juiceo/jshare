@@ -30,7 +30,7 @@ export default screen(
 
         return (
             <Screen>
-                <Screen.Header title={group.name} subtitle="Summary" blur />
+                <Screen.Header title="Summary" subtitle={group.name} blur />
                 <Screen.Content scrollable disableHeaderOffset>
                     <Stack column center alignCenter ar="1/1" p="2xl">
                         <Typography variant="overline">Group total:</Typography>

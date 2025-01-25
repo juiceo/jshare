@@ -1,4 +1,4 @@
-import { chain, countBy, sortBy, sumBy, uniqBy } from 'lodash';
+import { chain, cloneDeep, sortBy, sumBy } from 'lodash';
 
 import type { DB } from '@jshare/db';
 
@@ -92,7 +92,8 @@ export const getBalanceForParticipant = (args: {
     };
 };
 
-export const getPaymentsFromBalances = (balances: BalanceObject[]): PaymentObject[] => {
+export const getPaymentsFromBalances = (_balances: BalanceObject[]): PaymentObject[] => {
+    const balances = cloneDeep(_balances);
     const payments: PaymentObject[] = [];
 
     const debtors = sortBy(
