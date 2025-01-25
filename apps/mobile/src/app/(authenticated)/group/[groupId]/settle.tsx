@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { formatAmount, getPaymentsFromBalances } from '@jshare/common';
+
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
@@ -17,12 +19,28 @@ export default screen(
             groupId: params.groupId,
         });
 
+        const payments = getPaymentsFromBalances(balances);
+
+        console.log('PAYMENTS', payments);
+
         return (
             <Screen>
                 <Screen.Header title={group.name} subtitle="Settle up" blur />
                 <Screen.Content scrollable disableHeaderOffset>
                     <Stack column center alignCenter ar="1/1" p="2xl">
                         <Typography variant="overline">Settle up</Typography>
+                    </Stack>
+                    <Stack column>
+                        {/* {payments.map((payment) => (
+                            <Stack key={payment.fromUserId} p="xl">
+                                <Typography variant="h6">
+                                    {payment.fromUserId} to {payment.toUserId}
+                                </Typography>
+                                <Typography variant="body1">
+                                    {formatAmount(payment.amount, payment.currency)}
+                                </Typography>
+                            </Stack>
+                        ))} */}
                     </Stack>
                 </Screen.Content>
                 <Screen.Footer>

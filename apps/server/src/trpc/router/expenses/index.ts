@@ -2,8 +2,9 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import {
-    getConversionDetails,
+    convertExpense,
     getTotalFromShares,
+    isValidExpense,
     sumInCurrency,
     zPartialExpenseShare,
 } from '@jshare/common';
@@ -83,9 +84,14 @@ export const expensesRouter = router({
                 });
             }
 
-            const total = getTotalFromShares(opts.input.shares);
-
-            if (total !== opts.input.amount) {
+            if (
+                !isValidExpense({
+                    amount: opts.input.amount,
+                    currency: opts.input.currency,
+                    shares: opts.input.shares,
+                })
+            ) {
+                const total = getTotalFromShares(opts.input.shares);
                 throw new TRPCError({
                     code: 'BAD_REQUEST',
                     message: `Total amount from shares (${total}) does not match the amount (${opts.input.amount})`,
@@ -108,8 +114,20 @@ export const expensesRouter = router({
                 });
             }
 
-            const exchangeRates =
-                opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
+            const convertedExpense = convertExpense({
+                expense: {
+                    amount: opts.input.amount,
+                    currency: opts.input.currency,
+                    shares: opts.input.shares,
+                },
+                conversion:
+                    opts.input.currency === group.currency
+                        ? null
+                        : {
+                              to: group.currency,
+                              exchangeRates: await getLatestExchangeRates(),
+                          },
+            });
 
             const expense = await db.expense.create({
                 data: {
@@ -119,30 +137,15 @@ export const expensesRouter = router({
                     amount: opts.input.amount,
                     description: opts.input.description,
                     currency: opts.input.currency,
-                    conversion: exchangeRates
-                        ? getConversionDetails({
-                              sourceCurrency: opts.input.currency,
-                              sourceAmount: opts.input.amount,
-                              currency: group.currency,
-                              exchangeRates,
-                          })
-                        : undefined,
-
+                    conversion: convertedExpense.conversion,
                     shares: {
                         createMany: {
-                            data: opts.input.shares.map((share) => ({
+                            data: convertedExpense.shares.map((share) => ({
                                 userId: share.userId,
                                 amount: share.amount,
                                 currency: opts.input.currency,
                                 locked: share.locked,
-                                conversion: exchangeRates
-                                    ? getConversionDetails({
-                                          sourceCurrency: opts.input.currency,
-                                          sourceAmount: share.amount,
-                                          currency: group.currency,
-                                          exchangeRates,
-                                      })
-                                    : undefined,
+                                conversion: share.conversion,
                             })),
                         },
                     },
@@ -207,8 +210,34 @@ export const expensesRouter = router({
                 });
             }
 
-            const exchangeRates =
-                opts.input.currency === group.currency ? undefined : await getLatestExchangeRates();
+            if (
+                !isValidExpense({
+                    amount: opts.input.amount,
+                    currency: opts.input.currency,
+                    shares: opts.input.shares,
+                })
+            ) {
+                const total = getTotalFromShares(opts.input.shares);
+                throw new TRPCError({
+                    code: 'BAD_REQUEST',
+                    message: `Total amount from shares (${total}) does not match the amount (${opts.input.amount})`,
+                });
+            }
+
+            const convertedExpense = convertExpense({
+                expense: {
+                    amount: opts.input.amount,
+                    currency: opts.input.currency,
+                    shares: opts.input.shares,
+                },
+                conversion:
+                    opts.input.currency === group.currency
+                        ? null
+                        : {
+                              to: group.currency,
+                              exchangeRates: await getLatestExchangeRates(),
+                          },
+            });
 
             return db.$transaction(async (tx) => {
                 await tx.expenseShare.deleteMany({
@@ -226,29 +255,15 @@ export const expensesRouter = router({
                         amount: opts.input.amount,
                         description: opts.input.description,
                         currency: opts.input.currency,
-                        conversion: exchangeRates
-                            ? getConversionDetails({
-                                  sourceCurrency: opts.input.currency,
-                                  sourceAmount: opts.input.amount,
-                                  currency: group.currency,
-                                  exchangeRates,
-                              })
-                            : undefined,
+                        conversion: convertedExpense.conversion,
                         shares: {
                             createMany: {
-                                data: opts.input.shares.map((share) => ({
+                                data: convertedExpense.shares.map((share) => ({
                                     userId: share.userId,
                                     amount: share.amount,
                                     currency: opts.input.currency,
                                     locked: share.locked,
-                                    conversion: exchangeRates
-                                        ? getConversionDetails({
-                                              sourceCurrency: opts.input.currency,
-                                              sourceAmount: share.amount,
-                                              currency: group.currency,
-                                              exchangeRates,
-                                          })
-                                        : undefined,
+                                    conversion: share.conversion,
                                 })),
                             },
                         },

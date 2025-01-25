@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 import { zDB, type DB } from '@jshare/db';
 
+import { getConversionDetails, getExchangeRate } from '../money';
 import { distributeAmountEvenly } from '../util';
 
 export const zPartialExpenseShare = zDB.models.ExpenseShareSchema.pick({
@@ -132,5 +133,65 @@ export const getDefaultShare = (userId: string): PartialExpenseShare => {
         userId,
         amount: 0,
         locked: false,
+    };
+};
+
+export const isValidExpense = (args: {
+    amount: number;
+    currency: DB.CurrencyCode;
+    shares: PartialExpenseShare[];
+}): boolean => {
+    return args.amount === getTotalFromShares(args.shares);
+};
+
+export const convertExpense = (args: {
+    expense: {
+        amount: number;
+        currency: DB.CurrencyCode;
+        shares: PartialExpenseShare[];
+    };
+    conversion: {
+        to: DB.CurrencyCode;
+        exchangeRates: DB.ExchangeRates;
+    } | null;
+}): {
+    amount: number;
+    currency: DB.CurrencyCode;
+    conversion?: DB.CurrencyConversion;
+    shares: (PartialExpenseShare & { conversion?: DB.CurrencyConversion })[];
+} => {
+    const { conversion } = args;
+    if (!conversion || conversion.to === args.expense.currency) return args.expense;
+    const convertedShares = args.expense.shares.map((share) => {
+        return {
+            ...share,
+            conversion: getConversionDetails({
+                sourceCurrency: args.expense.currency,
+                sourceAmount: share.amount,
+                currency: conversion.to,
+                exchangeRates: conversion.exchangeRates,
+            }),
+        };
+    });
+
+    const rate = getExchangeRate({
+        from: args.expense.currency,
+        to: conversion.to,
+        exchangeRates: conversion.exchangeRates,
+    });
+    const convertedTotal = sumBy(convertedShares, (share) => share.conversion.amount);
+
+    return {
+        amount: args.expense.amount,
+        currency: args.expense.currency,
+        conversion: {
+            sourceCurrency: args.expense.currency,
+            sourceAmount: args.expense.amount,
+            currency: conversion.to,
+            amount: convertedTotal,
+            exchangeRate: rate,
+            exchangeRatesId: conversion.exchangeRates.id,
+        },
+        shares: convertedShares,
     };
 };
