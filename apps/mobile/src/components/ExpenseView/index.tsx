@@ -37,6 +37,17 @@ export const ExpenseView = (props: ExpenseViewProps) => {
                     </Typography>
                 </Stack>
             </Stack>
+            <Stack column center>
+                <Typography variant="caption">
+                    Created: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')} by{' '}
+                    <UserName userId={expense.ownerId} variant="short" />
+                </Typography>
+                {!dayjs(expense.createdAt).isSame(expense.updatedAt) && (
+                    <Typography variant="caption">
+                        Last updated: {dayjs(expense.updatedAt).format('MMM D, YYYY HH:mm')}
+                    </Typography>
+                )}
+            </Stack>
             <Stack column bg="background.elevation1" m="xl" br="xl">
                 {expense.shares.map((share) => (
                     <Stack key={share.id} row alignCenter spacing="xl" p="xl">
@@ -58,17 +69,6 @@ export const ExpenseView = (props: ExpenseViewProps) => {
                         </Stack>
                     </Stack>
                 ))}
-            </Stack>
-            <Stack column center>
-                <Typography variant="caption">
-                    Created: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')} by{' '}
-                    <UserName userId={expense.ownerId} variant="short" />
-                </Typography>
-                {!dayjs(expense.createdAt).isSame(expense.updatedAt) && (
-                    <Typography variant="caption">
-                        Last updated: {dayjs(expense.updatedAt).format('MMM D, YYYY HH:mm')}
-                    </Typography>
-                )}
             </Stack>
         </Stack>
     );
