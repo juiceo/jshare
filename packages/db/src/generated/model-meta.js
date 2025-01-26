@@ -223,6 +223,14 @@ const metadata = {
                 }, role: {
                     name: "role",
                     type: "Role",
+                }, invitedById: {
+                    name: "invitedById",
+                    type: "String",
+                    isOptional: true,
+                }, inviteType: {
+                    name: "inviteType",
+                    type: "InviteType",
+                    isOptional: true,
                 },
             },
             uniqueConstraints: {

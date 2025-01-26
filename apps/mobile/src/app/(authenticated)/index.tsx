@@ -1,12 +1,15 @@
 import { Pressable } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
 import { Skeleton } from 'moti/skeleton';
 
 import { formatAmount } from '@jshare/common';
+import { useTheme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { Icon } from '~/components/Icon';
+import { IconButton } from '~/components/IconButton';
 import { ProfileBadge } from '~/components/ProfileBadge/ProfileBadge';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
@@ -18,6 +21,7 @@ export default screen(
         route: '/(authenticated)/',
     },
     ({ router }) => {
+        const { theme } = useTheme();
         const [profile] = trpc.profiles.me.useSuspenseQuery();
         const [groups] = trpc.groups.list.useSuspenseQuery();
 
@@ -25,45 +29,9 @@ export default screen(
             <Screen>
                 <Screen.Content scrollable contentStyle={{ paddingBottom: 100 }}>
                     <Stack column px="xl" pt="3xl">
-                        <Stack row justifyBetween>
-                            <ProfileBadge onPress={() => router.push('/(authenticated)/profile')} />
-                            <Stack row center spacing="xl">
-                                <Icon name="Search" />
-                                <Icon name="Bell" />
-                            </Stack>
-                        </Stack>
-                        <Stack row height={140} mt="3xl">
-                            <Stack column justifyCenter flex={1}>
-                                <Typography variant="overline" mb="md">
-                                    Your balance
-                                </Typography>
-                                <Skeleton show={true} colorMode="dark">
-                                    <Typography variant="h1">
-                                        {/**
-                                         * TODO: Implement endpoint to get user balance
-                                         */}
-                                        {formatAmount(0, profile.currency)}
-                                    </Typography>
-                                </Skeleton>
-                            </Stack>
-                            <Stack
-                                bg="error.light"
-                                br="2xl"
-                                height="100%"
-                                width={200}
-                                style={{ position: 'relative', right: -50 }}
-                            />
-                        </Stack>
                         <Stack mt="3xl" br="xl" mb="xl">
-                            <Stack row alignCenter justifyBetween>
-                                <Typography variant="overline">Your groups</Typography>
-                                <Button
-                                    size="sm"
-                                    color="primary"
-                                    onPress={() => router.push('/create-group')}
-                                >
-                                    New group
-                                </Button>
+                            <Stack column spacing="md">
+                                <Typography variant="h1">Your groups</Typography>
                             </Stack>
                         </Stack>
                         <Stack column spacing="xl">
@@ -83,6 +51,44 @@ export default screen(
                         </Stack>
                     </Stack>
                 </Screen.Content>
+                <Screen.Footer>
+                    <Stack row center spacing="xl" p="xl">
+                        <BorderlessButton
+                            onPress={() => router.push('/create-group')}
+                            style={{ flex: 1 }}
+                        >
+                            <Stack column center spacing="md">
+                                <Stack center w={24} ar="1/1" br="full" bg="primary.light">
+                                    <Icon
+                                        name="Plus"
+                                        size={16}
+                                        color={theme.palette.text.primary}
+                                    />
+                                </Stack>
+                                <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
+                                    Create group
+                                </Typography>
+                            </Stack>
+                        </BorderlessButton>
+                        <BorderlessButton
+                            onPress={() => router.push('/join-group')}
+                            style={{ flex: 1 }}
+                        >
+                            <Stack column center spacing="md">
+                                <Stack center w={24} ar="1/1" br="full" bg="primary.light">
+                                    <Icon
+                                        name="CaseSensitive"
+                                        size={16}
+                                        color={theme.palette.text.primary}
+                                    />
+                                </Stack>
+                                <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
+                                    Join with code
+                                </Typography>
+                            </Stack>
+                        </BorderlessButton>
+                    </Stack>
+                </Screen.Footer>
             </Screen>
         );
     }

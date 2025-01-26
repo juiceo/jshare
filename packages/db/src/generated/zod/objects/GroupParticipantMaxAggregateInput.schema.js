@@ -4,5 +4,5 @@ exports.GroupParticipantMaxAggregateInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 exports.GroupParticipantMaxAggregateInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.literal(true).optional(), createdAt: zod_1.z.literal(true).optional(), updatedAt: zod_1.z.literal(true).optional(), userId: zod_1.z.literal(true).optional(), groupId: zod_1.z.literal(true).optional(), role: zod_1.z.literal(true).optional()
+    id: zod_1.z.literal(true).optional(), createdAt: zod_1.z.literal(true).optional(), updatedAt: zod_1.z.literal(true).optional(), userId: zod_1.z.literal(true).optional(), groupId: zod_1.z.literal(true).optional(), role: zod_1.z.literal(true).optional(), invitedById: zod_1.z.literal(true).optional(), inviteType: zod_1.z.literal(true).optional()
 }).strict();

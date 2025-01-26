@@ -37,6 +37,13 @@ enum MessageAttachmentType {
   @@schema("public")
 }
 
+enum InviteType {
+  Code
+  Invite
+
+  @@schema("public")
+}
+
 enum CurrencyCode {
   AED
   ARS
@@ -110,14 +117,16 @@ model Group {
 }
 
 model GroupParticipant {
-  id        String   @id() @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt()
-  userId    String
-  user      Profile  @relation(fields: [userId], references: [userId])
-  groupId   String
-  group     Group    @relation(fields: [groupId], references: [id])
-  role      Role
+  id          String      @id() @default(uuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt()
+  userId      String
+  user        Profile     @relation(fields: [userId], references: [userId])
+  groupId     String
+  group       Group       @relation(fields: [groupId], references: [id])
+  role        Role
+  invitedById String?
+  inviteType  InviteType?
 
   @@index([groupId])
   @@index([userId])

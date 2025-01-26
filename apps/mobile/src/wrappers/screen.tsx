@@ -17,6 +17,7 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
+import { supabase } from '~/services/supabase';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
@@ -37,6 +38,7 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
         const renderError = (args: ErrorBoundaryFallbackArgs) => {
             return (
                 <Screen>
+                    <Screen.Header title="Something went wrong" backButton="back" />
                     <Screen.Content>
                         <Stack flex={1} center spacing="xl" p="xl">
                             <Icon
@@ -56,8 +58,15 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
                     </Screen.Content>
                     <Screen.Footer>
                         <Stack column spacing="md">
-                            <Button color="secondary" onPress={router.back}>
-                                Go back
+                            <Button
+                                color="secondary"
+                                onPress={() => {
+                                    supabase.auth.signOut();
+                                    router.dismissAll();
+                                    router.replace('/login');
+                                }}
+                            >
+                                Clear local data
                             </Button>
                             <Button color="primary" onPress={args.reset}>
                                 Retry

@@ -111,6 +111,14 @@ export const Role: {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const InviteType: {
+  Code: 'Code',
+  Invite: 'Invite'
+};
+
+export type InviteType = (typeof InviteType)[keyof typeof InviteType]
+
+
 export const AuthorType: {
   User: 'User',
   System: 'System'
@@ -134,6 +142,10 @@ export const CurrencyCode: typeof $Enums.CurrencyCode
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type InviteType = $Enums.InviteType
+
+export const InviteType: typeof $Enums.InviteType
 
 export type AuthorType = $Enums.AuthorType
 
@@ -4190,6 +4202,8 @@ export namespace Prisma {
     userId: string | null
     groupId: string | null
     role: $Enums.Role | null
+    invitedById: string | null
+    inviteType: $Enums.InviteType | null
   }
 
   export type GroupParticipantMaxAggregateOutputType = {
@@ -4199,6 +4213,8 @@ export namespace Prisma {
     userId: string | null
     groupId: string | null
     role: $Enums.Role | null
+    invitedById: string | null
+    inviteType: $Enums.InviteType | null
   }
 
   export type GroupParticipantCountAggregateOutputType = {
@@ -4208,6 +4224,8 @@ export namespace Prisma {
     userId: number
     groupId: number
     role: number
+    invitedById: number
+    inviteType: number
     _all: number
   }
 
@@ -4219,6 +4237,8 @@ export namespace Prisma {
     userId?: true
     groupId?: true
     role?: true
+    invitedById?: true
+    inviteType?: true
   }
 
   export type GroupParticipantMaxAggregateInputType = {
@@ -4228,6 +4248,8 @@ export namespace Prisma {
     userId?: true
     groupId?: true
     role?: true
+    invitedById?: true
+    inviteType?: true
   }
 
   export type GroupParticipantCountAggregateInputType = {
@@ -4237,6 +4259,8 @@ export namespace Prisma {
     userId?: true
     groupId?: true
     role?: true
+    invitedById?: true
+    inviteType?: true
     _all?: true
   }
 
@@ -4319,6 +4343,8 @@ export namespace Prisma {
     userId: string
     groupId: string
     role: $Enums.Role
+    invitedById: string | null
+    inviteType: $Enums.InviteType | null
     _count: GroupParticipantCountAggregateOutputType | null
     _min: GroupParticipantMinAggregateOutputType | null
     _max: GroupParticipantMaxAggregateOutputType | null
@@ -4345,6 +4371,8 @@ export namespace Prisma {
     userId?: boolean
     groupId?: boolean
     role?: boolean
+    invitedById?: boolean
+    inviteType?: boolean
     user?: boolean | ProfileDefaultArgs<ExtArgs>
     group?: boolean | GroupDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["groupParticipant"]>
@@ -4356,6 +4384,8 @@ export namespace Prisma {
     userId?: boolean
     groupId?: boolean
     role?: boolean
+    invitedById?: boolean
+    inviteType?: boolean
     user?: boolean | ProfileDefaultArgs<ExtArgs>
     group?: boolean | GroupDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["groupParticipant"]>
@@ -4367,6 +4397,8 @@ export namespace Prisma {
     userId?: boolean
     groupId?: boolean
     role?: boolean
+    invitedById?: boolean
+    inviteType?: boolean
   }
 
   export type GroupParticipantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4391,6 +4423,8 @@ export namespace Prisma {
       userId: string
       groupId: string
       role: $Enums.Role
+      invitedById: string | null
+      inviteType: $Enums.InviteType | null
     }, ExtArgs["result"]["groupParticipant"]>
     composites: {}
   }
@@ -4792,6 +4826,8 @@ export namespace Prisma {
     readonly userId: FieldRef<"GroupParticipant", 'String'>
     readonly groupId: FieldRef<"GroupParticipant", 'String'>
     readonly role: FieldRef<"GroupParticipant", 'Role'>
+    readonly invitedById: FieldRef<"GroupParticipant", 'String'>
+    readonly inviteType: FieldRef<"GroupParticipant", 'InviteType'>
   }
     
 
@@ -12157,7 +12193,9 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     userId: 'userId',
     groupId: 'groupId',
-    role: 'role'
+    role: 'role',
+    invitedById: 'invitedById',
+    inviteType: 'inviteType'
   };
 
   export type GroupParticipantScalarFieldEnum = (typeof GroupParticipantScalarFieldEnum)[keyof typeof GroupParticipantScalarFieldEnum]
@@ -12365,6 +12403,20 @@ export namespace Prisma {
    * Reference to a field of type 'Role[]'
    */
   export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'InviteType'
+   */
+  export type EnumInviteTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InviteType'>
+    
+
+
+  /**
+   * Reference to a field of type 'InviteType[]'
+   */
+  export type ListEnumInviteTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InviteType[]'>
     
 
 
@@ -12619,6 +12671,8 @@ export namespace Prisma {
     userId?: StringFilter<"GroupParticipant"> | string
     groupId?: StringFilter<"GroupParticipant"> | string
     role?: EnumRoleFilter<"GroupParticipant"> | $Enums.Role
+    invitedById?: StringNullableFilter<"GroupParticipant"> | string | null
+    inviteType?: EnumInviteTypeNullableFilter<"GroupParticipant"> | $Enums.InviteType | null
     user?: XOR<ProfileRelationFilter, ProfileWhereInput>
     group?: XOR<GroupRelationFilter, GroupWhereInput>
   }
@@ -12630,6 +12684,8 @@ export namespace Prisma {
     userId?: SortOrder
     groupId?: SortOrder
     role?: SortOrder
+    invitedById?: SortOrderInput | SortOrder
+    inviteType?: SortOrderInput | SortOrder
     user?: ProfileOrderByWithRelationInput
     group?: GroupOrderByWithRelationInput
   }
@@ -12644,6 +12700,8 @@ export namespace Prisma {
     userId?: StringFilter<"GroupParticipant"> | string
     groupId?: StringFilter<"GroupParticipant"> | string
     role?: EnumRoleFilter<"GroupParticipant"> | $Enums.Role
+    invitedById?: StringNullableFilter<"GroupParticipant"> | string | null
+    inviteType?: EnumInviteTypeNullableFilter<"GroupParticipant"> | $Enums.InviteType | null
     user?: XOR<ProfileRelationFilter, ProfileWhereInput>
     group?: XOR<GroupRelationFilter, GroupWhereInput>
   }, "id">
@@ -12655,6 +12713,8 @@ export namespace Prisma {
     userId?: SortOrder
     groupId?: SortOrder
     role?: SortOrder
+    invitedById?: SortOrderInput | SortOrder
+    inviteType?: SortOrderInput | SortOrder
     _count?: GroupParticipantCountOrderByAggregateInput
     _max?: GroupParticipantMaxOrderByAggregateInput
     _min?: GroupParticipantMinOrderByAggregateInput
@@ -12670,6 +12730,8 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"GroupParticipant"> | string
     groupId?: StringWithAggregatesFilter<"GroupParticipant"> | string
     role?: EnumRoleWithAggregatesFilter<"GroupParticipant"> | $Enums.Role
+    invitedById?: StringNullableWithAggregatesFilter<"GroupParticipant"> | string | null
+    inviteType?: EnumInviteTypeNullableWithAggregatesFilter<"GroupParticipant"> | $Enums.InviteType | null
   }
 
   export type ImageWhereInput = {
@@ -13382,6 +13444,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
     user: ProfileCreateNestedOneWithoutGroupsInput
     group: GroupCreateNestedOneWithoutParticipantsInput
   }
@@ -13393,6 +13457,8 @@ export namespace Prisma {
     userId: string
     groupId: string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
   }
 
   export type GroupParticipantUpdateInput = {
@@ -13400,6 +13466,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
     user?: ProfileUpdateOneRequiredWithoutGroupsNestedInput
     group?: GroupUpdateOneRequiredWithoutParticipantsNestedInput
   }
@@ -13411,6 +13479,8 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     groupId?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type GroupParticipantCreateManyInput = {
@@ -13420,6 +13490,8 @@ export namespace Prisma {
     userId: string
     groupId: string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
   }
 
   export type GroupParticipantUpdateManyMutationInput = {
@@ -13427,6 +13499,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type GroupParticipantUncheckedUpdateManyInput = {
@@ -13436,6 +13510,8 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     groupId?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type ImageCreateInput = {
@@ -14209,6 +14285,13 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type EnumInviteTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.InviteType | EnumInviteTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumInviteTypeNullableFilter<$PrismaModel> | $Enums.InviteType | null
+  }
+
   export type ProfileRelationFilter = {
     is?: ProfileWhereInput
     isNot?: ProfileWhereInput
@@ -14226,6 +14309,8 @@ export namespace Prisma {
     userId?: SortOrder
     groupId?: SortOrder
     role?: SortOrder
+    invitedById?: SortOrder
+    inviteType?: SortOrder
   }
 
   export type GroupParticipantMaxOrderByAggregateInput = {
@@ -14235,6 +14320,8 @@ export namespace Prisma {
     userId?: SortOrder
     groupId?: SortOrder
     role?: SortOrder
+    invitedById?: SortOrder
+    inviteType?: SortOrder
   }
 
   export type GroupParticipantMinOrderByAggregateInput = {
@@ -14244,6 +14331,8 @@ export namespace Prisma {
     userId?: SortOrder
     groupId?: SortOrder
     role?: SortOrder
+    invitedById?: SortOrder
+    inviteType?: SortOrder
   }
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -14254,6 +14343,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type EnumInviteTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InviteType | EnumInviteTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumInviteTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.InviteType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumInviteTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumInviteTypeNullableFilter<$PrismaModel>
   }
 
   export type GroupListRelationFilter = {
@@ -15241,6 +15340,10 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
+  export type NullableEnumInviteTypeFieldUpdateOperationsInput = {
+    set?: $Enums.InviteType | null
+  }
+
   export type ProfileUpdateOneRequiredWithoutGroupsNestedInput = {
     create?: XOR<ProfileCreateWithoutGroupsInput, ProfileUncheckedCreateWithoutGroupsInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutGroupsInput
@@ -15792,6 +15895,13 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type NestedEnumInviteTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.InviteType | EnumInviteTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumInviteTypeNullableFilter<$PrismaModel> | $Enums.InviteType | null
+  }
+
   export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -15800,6 +15910,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumInviteTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InviteType | EnumInviteTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.InviteType[] | ListEnumInviteTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumInviteTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.InviteType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumInviteTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumInviteTypeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumAuthorTypeFilter<$PrismaModel = never> = {
@@ -15925,6 +16045,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
     group: GroupCreateNestedOneWithoutParticipantsInput
   }
 
@@ -15934,6 +16056,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     groupId: string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
   }
 
   export type GroupParticipantCreateOrConnectWithoutUserInput = {
@@ -16203,6 +16327,8 @@ export namespace Prisma {
     userId?: StringFilter<"GroupParticipant"> | string
     groupId?: StringFilter<"GroupParticipant"> | string
     role?: EnumRoleFilter<"GroupParticipant"> | $Enums.Role
+    invitedById?: StringNullableFilter<"GroupParticipant"> | string | null
+    inviteType?: EnumInviteTypeNullableFilter<"GroupParticipant"> | $Enums.InviteType | null
   }
 
   export type ImageUpsertWithoutProfileInput = {
@@ -16399,6 +16525,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
     user: ProfileCreateNestedOneWithoutGroupsInput
   }
 
@@ -16408,6 +16536,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
   }
 
   export type GroupParticipantCreateOrConnectWithoutGroupInput = {
@@ -17999,6 +18129,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     groupId: string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
   }
 
   export type MessageCreateManyAuthorInput = {
@@ -18073,6 +18205,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
     group?: GroupUpdateOneRequiredWithoutParticipantsNestedInput
   }
 
@@ -18082,6 +18216,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type GroupParticipantUncheckedUpdateManyWithoutUserInput = {
@@ -18090,6 +18226,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groupId?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type MessageUpdateWithoutAuthorInput = {
@@ -18309,6 +18447,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     role: $Enums.Role
+    invitedById?: string | null
+    inviteType?: $Enums.InviteType | null
   }
 
   export type MessageCreateManyGroupInput = {
@@ -18349,6 +18489,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
     user?: ProfileUpdateOneRequiredWithoutGroupsNestedInput
   }
 
@@ -18358,6 +18500,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type GroupParticipantUncheckedUpdateManyWithoutGroupInput = {
@@ -18366,6 +18510,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    inviteType?: NullableEnumInviteTypeFieldUpdateOperationsInput | $Enums.InviteType | null
   }
 
   export type MessageUpdateWithoutGroupInput = {

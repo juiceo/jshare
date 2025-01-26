@@ -657,12 +657,18 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.47.16
         version: 2.47.16
+      '@types/shortid':
+        specifier: ^2.2.0
+        version: 2.2.0
       lodash:
         specifier: 'catalog:'
         version: 4.17.21
       prisma:
         specifier: 'catalog:'
         version: 5.21.1
+      shortid:
+        specifier: ^2.2.17
+        version: 2.2.17
       tsx:
         specifier: ^4.19.2
         version: 4.19.2

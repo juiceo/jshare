@@ -19,6 +19,13 @@ enum MessageAttachmentType {
     @@schema("public")
 }
 
+enum InviteType {
+    Code
+    Invite
+
+    @@schema("public")
+}
+
 enum CurrencyCode {
     AED
     ARS

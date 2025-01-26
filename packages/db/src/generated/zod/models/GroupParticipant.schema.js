@@ -4,11 +4,14 @@ exports.GroupParticipantUpdateSchema = exports.GroupParticipantUpdateScalarSchem
 // @ts-nocheck
 const zod_1 = require("zod");
 const Role_schema_1 = require("../enums/Role.schema");
+const InviteType_schema_1 = require("../enums/InviteType.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     role: Role_schema_1.RoleSchema,
+    invitedById: zod_1.z.string().nullish(),
+    inviteType: InviteType_schema_1.InviteTypeSchema.nullish(),
 }).strict();
 const relationSchema = zod_1.z.object({
     user: zod_1.z.record(zod_1.z.unknown()),
@@ -39,7 +42,9 @@ exports.GroupParticipantPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
-    role: Role_schema_1.RoleSchema
+    role: Role_schema_1.RoleSchema,
+    invitedById: zod_1.z.string().nullish(),
+    inviteType: InviteType_schema_1.InviteTypeSchema.nullish()
 }).partial().passthrough();
 /**
  * `GroupParticipant` schema for create operations excluding foreign keys and relations.

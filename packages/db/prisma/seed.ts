@@ -2,6 +2,7 @@ import { generateMock } from '@anatine/zod-mock';
 import { faker } from '@faker-js/faker';
 import { createClient } from '@supabase/supabase-js';
 import { range } from 'lodash';
+import shortid from 'shortid';
 
 import { PrismaClient } from '../src/generated/prisma';
 import { models } from '../src/generated/zod';
@@ -44,6 +45,7 @@ const main = async () => {
                 data: {
                     name: `${user.firstName}'s group`,
                     currency: user.currency,
+                    inviteCode: shortid.generate(),
                     participants: {
                         createMany: {
                             data: [
@@ -64,6 +66,7 @@ const main = async () => {
         data: {
             name: 'Shared group',
             currency: 'USD',
+            inviteCode: shortid.generate(),
             participants: {
                 createMany: {
                     data: supabaseUsers.map((user, index) => ({

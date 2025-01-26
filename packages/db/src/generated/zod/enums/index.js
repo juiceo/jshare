@@ -34,5 +34,6 @@ __exportStar(require("./NullsOrder.schema"), exports);
 __exportStar(require("./JsonNullValueFilter.schema"), exports);
 __exportStar(require("./CurrencyCode.schema"), exports);
 __exportStar(require("./Role.schema"), exports);
+__exportStar(require("./InviteType.schema"), exports);
 __exportStar(require("./AuthorType.schema"), exports);
 __exportStar(require("./MessageAttachmentType.schema"), exports);

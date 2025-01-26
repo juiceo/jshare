@@ -67,11 +67,14 @@ model Group extends BaseModel {
 }
 
 model GroupParticipant extends BaseModel {
-    userId  String
-    user    Profile @relation(fields: [userId], references: [userId])
-    groupId String
-    group   Group   @relation(fields: [groupId], references: [id])
-    role    Role
+    userId      String
+    user        Profile     @relation(fields: [userId], references: [userId])
+    groupId     String
+    group       Group       @relation(fields: [groupId], references: [id])
+    role        Role
+    invitedById String?
+    inviteType  InviteType?
+
 
     @@index([groupId])
     @@index([userId])

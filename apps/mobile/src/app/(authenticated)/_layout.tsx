@@ -27,7 +27,7 @@ export default screen(
                     options={{ presentation: 'modal', headerShown: false }}
                 />
                 <Stack.Screen
-                    name="join-group/index"
+                    name="join-group"
                     options={{ presentation: 'modal', headerShown: false }}
                 />
             </Stack>

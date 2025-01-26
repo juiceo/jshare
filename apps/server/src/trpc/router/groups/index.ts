@@ -76,14 +76,29 @@ export const groupsRouter = router({
             },
         });
 
+        return group;
+    }),
+    joinByCode: authProcedure.input(z.object({ code: z.string() })).mutation(async (opts) => {
+        const group = await db.group.findUnique({
+            where: {
+                inviteCode: opts.input.code,
+            },
+        });
+
         if (!group) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
-                message: `Invalid invite code ${opts.input.code} - no matching group found`,
+                message: `Invalid invite code ${opts.input.code}`,
             });
         }
 
-        return group;
+        return db.groupParticipant.create({
+            data: {
+                groupId: group.id,
+                userId: opts.ctx.userId,
+                role: DB.Role.Member,
+            },
+        });
     }),
     refreshCode: authProcedure.input(z.object({ groupId: z.string() })).mutation(async (opts) => {
         /**

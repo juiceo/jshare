@@ -7,10 +7,17 @@ const StringFieldUpdateOperationsInput_schema_1 = require("./StringFieldUpdateOp
 const DateTimeFieldUpdateOperationsInput_schema_1 = require("./DateTimeFieldUpdateOperationsInput.schema");
 const Role_schema_1 = require("../enums/Role.schema");
 const EnumRoleFieldUpdateOperationsInput_schema_1 = require("./EnumRoleFieldUpdateOperationsInput.schema");
+const NullableStringFieldUpdateOperationsInput_schema_1 = require("./NullableStringFieldUpdateOperationsInput.schema");
+const InviteType_schema_1 = require("../enums/InviteType.schema");
+const NullableEnumInviteTypeFieldUpdateOperationsInput_schema_1 = require("./NullableEnumInviteTypeFieldUpdateOperationsInput.schema");
 exports.GroupParticipantUpdateManyMutationInputObjectSchema = zod_1.z.object({
     id: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), createdAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), updatedAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), role: zod_1.z.union([zod_1.z.lazy(() => Role_schema_1.RoleSchema),
-        zod_1.z.lazy(() => EnumRoleFieldUpdateOperationsInput_schema_1.EnumRoleFieldUpdateOperationsInputObjectSchema)]).optional()
+        zod_1.z.lazy(() => EnumRoleFieldUpdateOperationsInput_schema_1.EnumRoleFieldUpdateOperationsInputObjectSchema)]).optional(), invitedById: zod_1.z.union([zod_1.z.string(),
+        zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
+        zod_1.z.null()]).optional().nullable(), inviteType: zod_1.z.union([zod_1.z.lazy(() => InviteType_schema_1.InviteTypeSchema),
+        zod_1.z.lazy(() => NullableEnumInviteTypeFieldUpdateOperationsInput_schema_1.NullableEnumInviteTypeFieldUpdateOperationsInputObjectSchema),
+        zod_1.z.null()]).optional().nullable()
 }).strict();

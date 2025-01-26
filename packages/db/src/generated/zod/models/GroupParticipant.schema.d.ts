@@ -7,16 +7,22 @@ export declare const GroupParticipantScalarSchema: z.ZodObject<{
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
+    invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
 }, "strict", z.ZodTypeAny, {
     createdAt: Date;
     updatedAt: Date;
     id: string;
     role: "Owner" | "Admin" | "Member";
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     id: string;
     role: "Owner" | "Admin" | "Member";
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }>;
 /**
  * `GroupParticipant` schema including all fields (scalar, foreign key, and relations) and validations.
@@ -26,6 +32,8 @@ export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShap
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
+    invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
 }, {
     userId: z.ZodString;
     groupId: z.ZodString;
@@ -41,6 +49,8 @@ export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShap
     role: "Owner" | "Admin" | "Member";
     user?: Record<string, unknown> | undefined;
     group?: Record<string, unknown> | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     userId: string;
     id: string;
@@ -50,6 +60,8 @@ export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShap
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     group?: Record<string, unknown> | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }>;
 /**
  * Schema used for validating Prisma create input. For internal use only.
@@ -60,16 +72,22 @@ export declare const GroupParticipantPrismaCreateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, z.ZodTypeAny, "passthrough">>;
 /**
  * Schema used for validating Prisma update input. For internal use only.
@@ -80,16 +98,22 @@ export declare const GroupParticipantPrismaUpdateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, z.ZodTypeAny, "passthrough">>;
 /**
  * `GroupParticipant` schema for create operations excluding foreign keys and relations.
@@ -99,16 +123,22 @@ export declare const GroupParticipantCreateScalarSchema: z.ZodObject<{
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
+    invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
 }, "strict", z.ZodTypeAny, {
     role: "Owner" | "Admin" | "Member";
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     role: "Owner" | "Admin" | "Member";
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }>;
 /**
  * `GroupParticipant` schema for create operations including scalar fields, foreign key fields, and validations.
@@ -118,6 +148,8 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
+    invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
 }, {
     userId: z.ZodString;
     groupId: z.ZodString;
@@ -128,6 +160,8 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     userId: string;
     groupId: string;
@@ -135,6 +169,8 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }>;
 /**
  * `GroupParticipant` schema for update operations excluding foreign keys and relations.
@@ -144,16 +180,22 @@ export declare const GroupParticipantUpdateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, "strict", z.ZodTypeAny, {
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }>;
 /**
  * `GroupParticipant` schema for update operations including scalar fields, foreign key fields, and validations.
@@ -163,6 +205,8 @@ export declare const GroupParticipantUpdateSchema: z.ZodObject<z.objectUtil.exte
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
+    invitedById: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, {
     userId: z.ZodOptional<z.ZodString>;
     groupId: z.ZodOptional<z.ZodString>;
@@ -173,6 +217,8 @@ export declare const GroupParticipantUpdateSchema: z.ZodObject<z.objectUtil.exte
     id?: string | undefined;
     groupId?: string | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     userId?: string | undefined;
     createdAt?: Date | undefined;
@@ -180,4 +226,6 @@ export declare const GroupParticipantUpdateSchema: z.ZodObject<z.objectUtil.exte
     id?: string | undefined;
     groupId?: string | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
+    invitedById?: string | null | undefined;
+    inviteType?: "Code" | "Invite" | null | undefined;
 }>;

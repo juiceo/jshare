@@ -17,5 +17,6 @@ export * from './NullsOrder.schema';
 export * from './JsonNullValueFilter.schema';
 export * from './CurrencyCode.schema';
 export * from './Role.schema';
+export * from './InviteType.schema';
 export * from './AuthorType.schema';
 export * from './MessageAttachmentType.schema';

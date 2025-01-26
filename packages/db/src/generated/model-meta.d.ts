@@ -344,6 +344,16 @@ declare const metadata: {
                     name: string;
                     type: string;
                 };
+                invitedById: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
+                inviteType: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
             };
             uniqueConstraints: {
                 id: {

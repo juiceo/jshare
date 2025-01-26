@@ -149,7 +149,9 @@ exports.Prisma.GroupParticipantScalarFieldEnum = {
   updatedAt: 'updatedAt',
   userId: 'userId',
   groupId: 'groupId',
-  role: 'role'
+  role: 'role',
+  invitedById: 'invitedById',
+  inviteType: 'inviteType'
 };
 
 exports.Prisma.ImageScalarFieldEnum = {
@@ -290,6 +292,11 @@ exports.Role = exports.$Enums.Role = {
   Owner: 'Owner',
   Admin: 'Admin',
   Member: 'Member'
+};
+
+exports.InviteType = exports.$Enums.InviteType = {
+  Code: 'Code',
+  Invite: 'Invite'
 };
 
 exports.AuthorType = exports.$Enums.AuthorType = {
