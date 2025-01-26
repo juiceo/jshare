@@ -55,7 +55,7 @@ export default screen(
             for (const payment of checked) {
                 await createPayment.mutateAsync({
                     groupId: params.groupId,
-                    payerId: userId,
+                    payerId: payment.fromUserId,
                     recipientId: payment.toUserId,
                     amount: payment.amount,
                     currency: payment.currency,
@@ -117,7 +117,7 @@ export default screen(
                     <Stack column p="xl">
                         {ownPayments.map((payment) => (
                             <Stack
-                                key={payment.toUserId}
+                                key={`${payment.fromUserId}-${payment.toUserId}`}
                                 row
                                 alignCenter
                                 justifyBetween
@@ -130,13 +130,29 @@ export default screen(
                                     <Typography variant="h3">
                                         {formatAmount(payment.amount, payment.currency)}
                                     </Typography>
-                                    <Stack row alignCenter spacing="md">
-                                        <Avatar userId={payment.toUserId} size="sm" />
-                                        <Typography variant="h6">
-                                            {payment.fromUserId === userId ? 'To ' : 'From '}
-                                            <UserName userId={payment.toUserId} variant={'short'} />
-                                        </Typography>
-                                    </Stack>
+                                    {payment.fromUserId === userId ? (
+                                        <Stack row alignCenter spacing="md">
+                                            <Avatar userId={payment.toUserId} size="sm" />
+                                            <Typography variant="h6">
+                                                <UserName
+                                                    prefix="To"
+                                                    userId={payment.toUserId}
+                                                    variant={'short'}
+                                                />
+                                            </Typography>
+                                        </Stack>
+                                    ) : (
+                                        <Stack row alignCenter spacing="md">
+                                            <Avatar userId={payment.fromUserId} size="sm" />
+                                            <Typography variant="h6">
+                                                <UserName
+                                                    prefix="From"
+                                                    userId={payment.fromUserId}
+                                                    variant={'short'}
+                                                />
+                                            </Typography>
+                                        </Stack>
+                                    )}
                                 </Stack>
                                 <Stack column center>
                                     <Checkbox
