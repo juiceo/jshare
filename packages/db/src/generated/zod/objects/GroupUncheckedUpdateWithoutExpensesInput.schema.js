@@ -19,5 +19,7 @@ exports.GroupUncheckedUpdateWithoutExpensesInputObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema),
         zod_1.z.lazy(() => EnumCurrencyCodeFieldUpdateOperationsInput_schema_1.EnumCurrencyCodeFieldUpdateOperationsInputObjectSchema)]).optional(), coverImageId: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
+        zod_1.z.null()]).optional().nullable(), inviteCode: zod_1.z.union([zod_1.z.string(),
+        zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), participants: zod_1.z.lazy(() => GroupParticipantUncheckedUpdateManyWithoutGroupNestedInput_schema_1.GroupParticipantUncheckedUpdateManyWithoutGroupNestedInputObjectSchema).optional(), messages: zod_1.z.lazy(() => MessageUncheckedUpdateManyWithoutGroupNestedInput_schema_1.MessageUncheckedUpdateManyWithoutGroupNestedInputObjectSchema).optional(), payments: zod_1.z.lazy(() => PaymentUncheckedUpdateManyWithoutGroupNestedInput_schema_1.PaymentUncheckedUpdateManyWithoutGroupNestedInputObjectSchema).optional()
 }).strict();

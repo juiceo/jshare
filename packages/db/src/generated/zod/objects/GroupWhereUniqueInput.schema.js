@@ -16,7 +16,7 @@ const MessageListRelationFilter_schema_1 = require("./MessageListRelationFilter.
 const ExpenseListRelationFilter_schema_1 = require("./ExpenseListRelationFilter.schema");
 const PaymentListRelationFilter_schema_1 = require("./PaymentListRelationFilter.schema");
 exports.GroupWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
+    id: zod_1.z.string().optional(), inviteCode: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
         zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
         zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),

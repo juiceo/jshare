@@ -143,6 +143,11 @@ const metadata = {
                     backLink: 'Group',
                     isRelationOwner: true,
                     foreignKeyMapping: { "id": "coverImageId" },
+                }, inviteCode: {
+                    name: "inviteCode",
+                    type: "String",
+                    isOptional: true,
+                    attributes: [{ "name": "@unique", "args": [] }],
                 }, messages: {
                     name: "messages",
                     type: "Message",
@@ -167,6 +172,9 @@ const metadata = {
                 id: {
                     name: "id",
                     fields: ["id"]
+                }, inviteCode: {
+                    name: "inviteCode",
+                    fields: ["inviteCode"]
                 },
             },
             attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "groups" }] }],

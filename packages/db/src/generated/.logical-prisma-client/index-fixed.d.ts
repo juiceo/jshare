@@ -514,7 +514,8 @@ export namespace Prisma {
         updatedAt: 'updatedAt',
         name: 'name',
         currency: 'currency',
-        coverImageId: 'coverImageId'
+        coverImageId: 'coverImageId',
+        inviteCode: 'inviteCode'
     };
     export const GroupParticipantScalarFieldEnum: {
         id: 'id',
@@ -1376,6 +1377,7 @@ export namespace Prisma {
         readonly name: FieldRef<"Group", 'String'>;
         readonly currency: FieldRef<"Group", 'CurrencyCode'>;
         readonly coverImageId: FieldRef<"Group", 'String'>;
+        readonly inviteCode: FieldRef<"Group", 'String'>;
     }
 
     export interface GroupParticipantDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
@@ -6166,6 +6168,7 @@ export namespace Prisma {
         name: string | null
         currency: $Enums.CurrencyCode | null
         coverImageId: string | null
+        inviteCode: string | null
     };
     export type GroupMaxAggregateOutputType = {
         id: string | null
@@ -6174,6 +6177,7 @@ export namespace Prisma {
         name: string | null
         currency: $Enums.CurrencyCode | null
         coverImageId: string | null
+        inviteCode: string | null
     };
     export type GroupCountAggregateOutputType = {
         id: number
@@ -6182,6 +6186,7 @@ export namespace Prisma {
         name: number
         currency: number
         coverImageId: number
+        inviteCode: number
         _all: number
     };
     export type GroupMinAggregateInputType = {
@@ -6191,6 +6196,7 @@ export namespace Prisma {
         name?: true
         currency?: true
         coverImageId?: true
+        inviteCode?: true
     };
     export type GroupMaxAggregateInputType = {
         id?: true
@@ -6199,6 +6205,7 @@ export namespace Prisma {
         name?: true
         currency?: true
         coverImageId?: true
+        inviteCode?: true
     };
     export type GroupCountAggregateInputType = {
         id?: true
@@ -6207,6 +6214,7 @@ export namespace Prisma {
         name?: true
         currency?: true
         coverImageId?: true
+        inviteCode?: true
         _all?: true
     };
     export type GroupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6282,6 +6290,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId: string | null
+        inviteCode: string | null
         _count: GroupCountAggregateOutputType | null
         _min: GroupMinAggregateOutputType | null
         _max: GroupMaxAggregateOutputType | null
@@ -6305,6 +6314,7 @@ export namespace Prisma {
         name?: boolean
         currency?: boolean
         coverImageId?: boolean
+        inviteCode?: boolean
         participants?: boolean | Group$participantsArgs<ExtArgs>
         coverImage?: boolean | Group$coverImageArgs<ExtArgs>
         messages?: boolean | Group$messagesArgs<ExtArgs>
@@ -6319,6 +6329,7 @@ export namespace Prisma {
         name?: boolean
         currency?: boolean
         coverImageId?: boolean
+        inviteCode?: boolean
         coverImage?: boolean | Group$coverImageArgs<ExtArgs>
     }, ExtArgs["result"]["group"]>;
     export type GroupSelectScalar = {
@@ -6328,6 +6339,7 @@ export namespace Prisma {
         name?: boolean
         currency?: boolean
         coverImageId?: boolean
+        inviteCode?: boolean
     };
     export type GroupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         participants?: boolean | Group$participantsArgs<ExtArgs>
@@ -6356,6 +6368,7 @@ export namespace Prisma {
             name: string
             currency: $Enums.CurrencyCode
             coverImageId: string | null
+            inviteCode: string | null
         }, ExtArgs["result"]["group"]>
         composites: {}
     };
@@ -11380,6 +11393,7 @@ export namespace Prisma {
         name?: StringFilter<"Group"> | string
         currency?: EnumCurrencyCodeFilter<"Group"> | $Enums.CurrencyCode
         coverImageId?: StringNullableFilter<"Group"> | string | null
+        inviteCode?: StringNullableFilter<"Group"> | string | null
         participants?: GroupParticipantListRelationFilter
         coverImage?: XOR<ImageNullableRelationFilter, ImageWhereInput> | null
         messages?: MessageListRelationFilter
@@ -11393,6 +11407,7 @@ export namespace Prisma {
         name?: SortOrder
         currency?: SortOrder
         coverImageId?: SortOrderInput | SortOrder
+        inviteCode?: SortOrderInput | SortOrder
         participants?: GroupParticipantOrderByRelationAggregateInput
         coverImage?: ImageOrderByWithRelationInput
         messages?: MessageOrderByRelationAggregateInput
@@ -11401,6 +11416,7 @@ export namespace Prisma {
     };
     export type GroupWhereUniqueInput = Prisma.AtLeast<{
         id?: string
+        inviteCode?: string
         AND?: GroupWhereInput | GroupWhereInput[]
         OR?: GroupWhereInput[]
         NOT?: GroupWhereInput | GroupWhereInput[]
@@ -11414,7 +11430,7 @@ export namespace Prisma {
         messages?: MessageListRelationFilter
         expenses?: ExpenseListRelationFilter
         payments?: PaymentListRelationFilter
-    }, "id">;
+    }, "id" | "inviteCode">;
     export type GroupOrderByWithAggregationInput = {
         id?: SortOrder
         createdAt?: SortOrder
@@ -11422,6 +11438,7 @@ export namespace Prisma {
         name?: SortOrder
         currency?: SortOrder
         coverImageId?: SortOrderInput | SortOrder
+        inviteCode?: SortOrderInput | SortOrder
         _count?: GroupCountOrderByAggregateInput
         _max?: GroupMaxOrderByAggregateInput
         _min?: GroupMinOrderByAggregateInput
@@ -11436,6 +11453,7 @@ export namespace Prisma {
         name?: StringWithAggregatesFilter<"Group"> | string
         currency?: EnumCurrencyCodeWithAggregatesFilter<"Group"> | $Enums.CurrencyCode
         coverImageId?: StringNullableWithAggregatesFilter<"Group"> | string | null
+        inviteCode?: StringNullableWithAggregatesFilter<"Group"> | string | null
     };
     export type GroupParticipantWhereInput = {
         AND?: GroupParticipantWhereInput | GroupParticipantWhereInput[]
@@ -12079,6 +12097,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         participants?: GroupParticipantCreateNestedManyWithoutGroupInput
         coverImage?: ImageCreateNestedOneWithoutGroupInput
         messages?: MessageCreateNestedManyWithoutGroupInput
@@ -12092,6 +12111,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId?: string | null
+        inviteCode?: string | null
         participants?: GroupParticipantUncheckedCreateNestedManyWithoutGroupInput
         messages?: MessageUncheckedCreateNestedManyWithoutGroupInput
         expenses?: ExpenseUncheckedCreateNestedManyWithoutGroupInput
@@ -12103,6 +12123,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUpdateManyWithoutGroupNestedInput
         coverImage?: ImageUpdateOneWithoutGroupNestedInput
         messages?: MessageUpdateManyWithoutGroupNestedInput
@@ -12116,6 +12137,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
         coverImageId?: NullableStringFieldUpdateOperationsInput | string | null
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUncheckedUpdateManyWithoutGroupNestedInput
         messages?: MessageUncheckedUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUncheckedUpdateManyWithoutGroupNestedInput
@@ -12128,6 +12150,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId?: string | null
+        inviteCode?: string | null
     };
     export type GroupUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
@@ -12135,6 +12158,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
     };
     export type GroupUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
@@ -12143,6 +12167,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
         coverImageId?: NullableStringFieldUpdateOperationsInput | string | null
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
     };
     export type GroupParticipantCreateInput = {
         id?: string
@@ -12867,6 +12892,7 @@ export namespace Prisma {
         name?: SortOrder
         currency?: SortOrder
         coverImageId?: SortOrder
+        inviteCode?: SortOrder
     };
     export type GroupMaxOrderByAggregateInput = {
         id?: SortOrder
@@ -12875,6 +12901,7 @@ export namespace Prisma {
         name?: SortOrder
         currency?: SortOrder
         coverImageId?: SortOrder
+        inviteCode?: SortOrder
     };
     export type GroupMinOrderByAggregateInput = {
         id?: SortOrder
@@ -12883,6 +12910,7 @@ export namespace Prisma {
         name?: SortOrder
         currency?: SortOrder
         coverImageId?: SortOrder
+        inviteCode?: SortOrder
     };
     export type EnumRoleFilter<$PrismaModel = never> = {
         equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
@@ -15085,6 +15113,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         coverImage?: ImageCreateNestedOneWithoutGroupInput
         messages?: MessageCreateNestedManyWithoutGroupInput
         expenses?: ExpenseCreateNestedManyWithoutGroupInput
@@ -15097,6 +15126,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId?: string | null
+        inviteCode?: string | null
         messages?: MessageUncheckedCreateNestedManyWithoutGroupInput
         expenses?: ExpenseUncheckedCreateNestedManyWithoutGroupInput
         payments?: PaymentUncheckedCreateNestedManyWithoutGroupInput
@@ -15161,6 +15191,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         coverImage?: ImageUpdateOneWithoutGroupNestedInput
         messages?: MessageUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUpdateManyWithoutGroupNestedInput
@@ -15173,6 +15204,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
         coverImageId?: NullableStringFieldUpdateOperationsInput | string | null
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         messages?: MessageUncheckedUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUncheckedUpdateManyWithoutGroupNestedInput
         payments?: PaymentUncheckedUpdateManyWithoutGroupNestedInput
@@ -15183,6 +15215,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         participants?: GroupParticipantCreateNestedManyWithoutGroupInput
         messages?: MessageCreateNestedManyWithoutGroupInput
         expenses?: ExpenseCreateNestedManyWithoutGroupInput
@@ -15194,6 +15227,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         participants?: GroupParticipantUncheckedCreateNestedManyWithoutGroupInput
         messages?: MessageUncheckedCreateNestedManyWithoutGroupInput
         expenses?: ExpenseUncheckedCreateNestedManyWithoutGroupInput
@@ -15270,6 +15304,7 @@ export namespace Prisma {
         name?: StringFilter<"Group"> | string
         currency?: EnumCurrencyCodeFilter<"Group"> | $Enums.CurrencyCode
         coverImageId?: StringNullableFilter<"Group"> | string | null
+        inviteCode?: StringNullableFilter<"Group"> | string | null
     };
     export type ProfileUpsertWithWhereUniqueWithoutAvatarInput = {
         where: ProfileWhereUniqueInput
@@ -15339,6 +15374,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         participants?: GroupParticipantCreateNestedManyWithoutGroupInput
         coverImage?: ImageCreateNestedOneWithoutGroupInput
         expenses?: ExpenseCreateNestedManyWithoutGroupInput
@@ -15351,6 +15387,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId?: string | null
+        inviteCode?: string | null
         participants?: GroupParticipantUncheckedCreateNestedManyWithoutGroupInput
         expenses?: ExpenseUncheckedCreateNestedManyWithoutGroupInput
         payments?: PaymentUncheckedCreateNestedManyWithoutGroupInput
@@ -15437,6 +15474,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUpdateManyWithoutGroupNestedInput
         coverImage?: ImageUpdateOneWithoutGroupNestedInput
         expenses?: ExpenseUpdateManyWithoutGroupNestedInput
@@ -15449,6 +15487,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
         coverImageId?: NullableStringFieldUpdateOperationsInput | string | null
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUncheckedUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUncheckedUpdateManyWithoutGroupNestedInput
         payments?: PaymentUncheckedUpdateManyWithoutGroupNestedInput
@@ -15673,6 +15712,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         participants?: GroupParticipantCreateNestedManyWithoutGroupInput
         coverImage?: ImageCreateNestedOneWithoutGroupInput
         messages?: MessageCreateNestedManyWithoutGroupInput
@@ -15685,6 +15725,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId?: string | null
+        inviteCode?: string | null
         participants?: GroupParticipantUncheckedCreateNestedManyWithoutGroupInput
         messages?: MessageUncheckedCreateNestedManyWithoutGroupInput
         payments?: PaymentUncheckedCreateNestedManyWithoutGroupInput
@@ -15840,6 +15881,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUpdateManyWithoutGroupNestedInput
         coverImage?: ImageUpdateOneWithoutGroupNestedInput
         messages?: MessageUpdateManyWithoutGroupNestedInput
@@ -15852,6 +15894,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
         coverImageId?: NullableStringFieldUpdateOperationsInput | string | null
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUncheckedUpdateManyWithoutGroupNestedInput
         messages?: MessageUncheckedUpdateManyWithoutGroupNestedInput
         payments?: PaymentUncheckedUpdateManyWithoutGroupNestedInput
@@ -16030,6 +16073,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
         participants?: GroupParticipantCreateNestedManyWithoutGroupInput
         coverImage?: ImageCreateNestedOneWithoutGroupInput
         messages?: MessageCreateNestedManyWithoutGroupInput
@@ -16042,6 +16086,7 @@ export namespace Prisma {
         name: string
         currency: $Enums.CurrencyCode
         coverImageId?: string | null
+        inviteCode?: string | null
         participants?: GroupParticipantUncheckedCreateNestedManyWithoutGroupInput
         messages?: MessageUncheckedCreateNestedManyWithoutGroupInput
         expenses?: ExpenseUncheckedCreateNestedManyWithoutGroupInput
@@ -16137,6 +16182,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUpdateManyWithoutGroupNestedInput
         coverImage?: ImageUpdateOneWithoutGroupNestedInput
         messages?: MessageUpdateManyWithoutGroupNestedInput
@@ -16149,6 +16195,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
         coverImageId?: NullableStringFieldUpdateOperationsInput | string | null
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUncheckedUpdateManyWithoutGroupNestedInput
         messages?: MessageUncheckedUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUncheckedUpdateManyWithoutGroupNestedInput
@@ -16677,6 +16724,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         name: string
         currency: $Enums.CurrencyCode
+        inviteCode?: string | null
     };
     export type ProfileCreateManyAvatarInput = {
         userId: string
@@ -16693,6 +16741,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUpdateManyWithoutGroupNestedInput
         messages?: MessageUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUpdateManyWithoutGroupNestedInput
@@ -16704,6 +16753,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
         participants?: GroupParticipantUncheckedUpdateManyWithoutGroupNestedInput
         messages?: MessageUncheckedUpdateManyWithoutGroupNestedInput
         expenses?: ExpenseUncheckedUpdateManyWithoutGroupNestedInput
@@ -16715,6 +16765,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
         currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+        inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
     };
     export type ProfileUpdateWithoutAvatarInput = {
         userId?: StringFieldUpdateOperationsInput | string

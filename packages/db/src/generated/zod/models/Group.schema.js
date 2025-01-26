@@ -10,6 +10,7 @@ const baseSchema = zod_1.z.object({
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     name: zod_1.z.string(),
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
+    inviteCode: zod_1.z.string().nullish(),
 }).strict();
 const relationSchema = zod_1.z.object({
     participants: zod_1.z.array(zod_1.z.unknown()).optional(),
@@ -43,7 +44,8 @@ exports.GroupPrismaUpdateSchema = zod_1.z.object({
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     name: zod_1.z.string(),
-    currency: CurrencyCode_schema_1.CurrencyCodeSchema
+    currency: CurrencyCode_schema_1.CurrencyCodeSchema,
+    inviteCode: zod_1.z.string().nullish()
 }).partial().passthrough();
 /**
  * `Group` schema for create operations excluding foreign keys and relations.

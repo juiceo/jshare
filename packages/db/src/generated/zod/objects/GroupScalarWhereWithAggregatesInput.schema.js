@@ -18,5 +18,7 @@ exports.GroupScalarWhereWithAggregatesInputObjectSchema = zod_1.z.object({
         zod_1.z.string()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeWithAggregatesFilter_schema_1.EnumCurrencyCodeWithAggregatesFilterObjectSchema),
         zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), coverImageId: zod_1.z.union([zod_1.z.lazy(() => StringNullableWithAggregatesFilter_schema_1.StringNullableWithAggregatesFilterObjectSchema),
         zod_1.z.string(),
+        zod_1.z.null()]).optional().nullable(), inviteCode: zod_1.z.union([zod_1.z.lazy(() => StringNullableWithAggregatesFilter_schema_1.StringNullableWithAggregatesFilterObjectSchema),
+        zod_1.z.string(),
         zod_1.z.null()]).optional().nullable()
 }).strict();

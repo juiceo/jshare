@@ -57,6 +57,7 @@ model Group extends BaseModel {
     participants GroupParticipant[]
     coverImageId String?
     coverImage   Image?             @relation(fields: [coverImageId], references: [id])
+    inviteCode   String?            @unique
     messages     Message[]
     expenses     Expense[]
     payments     Payment[]

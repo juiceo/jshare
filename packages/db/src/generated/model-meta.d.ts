@@ -222,6 +222,15 @@ declare const metadata: {
                         id: string;
                     };
                 };
+                inviteCode: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
+                };
                 messages: {
                     name: string;
                     type: string;
@@ -246,6 +255,10 @@ declare const metadata: {
             };
             uniqueConstraints: {
                 id: {
+                    name: string;
+                    fields: string[];
+                };
+                inviteCode: {
                     name: string;
                     fields: string[];
                 };

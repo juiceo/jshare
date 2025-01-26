@@ -12,7 +12,7 @@ const GroupCountOutputTypeArgs_schema_1 = require("./GroupCountOutputTypeArgs.sc
 exports.GroupSelectObjectSchema = zod_1.z.object({
     id: zod_1.z.boolean().optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), name: zod_1.z.boolean().optional(), currency: zod_1.z.boolean().optional(), participants: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => GroupParticipantInput_schema_1.GroupParticipantInputSchema.findMany)]).optional(), coverImageId: zod_1.z.boolean().optional(), coverImage: zod_1.z.union([zod_1.z.boolean(),
-        zod_1.z.lazy(() => ImageArgs_schema_1.ImageArgsObjectSchema)]).optional(), messages: zod_1.z.union([zod_1.z.boolean(),
+        zod_1.z.lazy(() => ImageArgs_schema_1.ImageArgsObjectSchema)]).optional(), inviteCode: zod_1.z.boolean().optional(), messages: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => MessageInput_schema_1.MessageInputSchema.findMany)]).optional(), expenses: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ExpenseInput_schema_1.ExpenseInputSchema.findMany)]).optional(), payments: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => PaymentInput_schema_1.PaymentInputSchema.findMany)]).optional(), _count: zod_1.z.union([zod_1.z.boolean(),

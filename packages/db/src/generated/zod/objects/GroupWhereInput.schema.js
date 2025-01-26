@@ -24,6 +24,8 @@ exports.GroupWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
         zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), coverImageId: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
         zod_1.z.string(),
+        zod_1.z.null()]).optional().nullable(), inviteCode: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
+        zod_1.z.string(),
         zod_1.z.null()]).optional().nullable(), participants: zod_1.z.lazy(() => GroupParticipantListRelationFilter_schema_1.GroupParticipantListRelationFilterObjectSchema).optional(), coverImage: zod_1.z.union([zod_1.z.lazy(() => ImageNullableScalarRelationFilter_schema_1.ImageNullableScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), messages: zod_1.z.lazy(() => MessageListRelationFilter_schema_1.MessageListRelationFilterObjectSchema).optional(), expenses: zod_1.z.lazy(() => ExpenseListRelationFilter_schema_1.ExpenseListRelationFilterObjectSchema).optional(), payments: zod_1.z.lazy(() => PaymentListRelationFilter_schema_1.PaymentListRelationFilterObjectSchema).optional()
