@@ -26,6 +26,7 @@
         "express": "catalog:",
         "jsonwebtoken": "catalog:",
         "sharp": "catalog:",
+        "shortid": "^2.2.17",
         "superjson": "catalog:",
         "uuid": "catalog:"
     },
@@ -34,6 +35,7 @@
         "@jshare/tsconfig": "workspace:*",
         "@types/express": "catalog:",
         "@types/jsonwebtoken": "catalog:",
+        "@types/shortid": "^2.2.0",
         "tsx": "catalog:"
     },
     "eslintConfig": {

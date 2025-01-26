@@ -1,10 +1,11 @@
 import { TRPCError } from '@trpc/server';
+import shortid from 'shortid';
 import { z } from 'zod';
 
 import { DB, zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
-import { authProcedure, router } from '../../trpc';
+import { authProcedure, publicProcedure, router } from '../../trpc';
 import { defaultGroupInclude } from './util';
 
 export const groupsRouter = router({
@@ -21,6 +22,7 @@ export const groupsRouter = router({
                 data: {
                     name: opts.input.name,
                     currency: opts.input.currency,
+                    inviteCode: shortid.generate(),
                     coverImage: opts.input.coverImageId
                         ? {
                               connect: {
@@ -63,6 +65,50 @@ export const groupsRouter = router({
         }
 
         return group;
+    }),
+    getByCode: publicProcedure.input(z.object({ code: z.string() })).query(async (opts) => {
+        const group = await db.group.findUnique({
+            where: {
+                inviteCode: opts.input.code,
+            },
+            include: {
+                ...defaultGroupInclude,
+            },
+        });
+
+        if (!group) {
+            throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `Invalid invite code ${opts.input.code} - no matching group found`,
+            });
+        }
+
+        return group;
+    }),
+    refreshCode: authProcedure.input(z.object({ groupId: z.string() })).mutation(async (opts) => {
+        /**
+         * TODO: Should check if user is group admin
+         */
+        if (!opts.ctx.acl.isInGroup(opts.input.groupId)) {
+            throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `Group with id ${opts.input.groupId} not found`,
+            });
+        }
+
+        const updatedGroup = await db.group.update({
+            where: {
+                id: opts.input.groupId,
+            },
+            data: {
+                inviteCode: shortid.generate(),
+            },
+            include: {
+                ...defaultGroupInclude,
+            },
+        });
+
+        return updatedGroup;
     }),
     list: authProcedure.query(async (opts) => {
         const groups = await db.group.findMany({
