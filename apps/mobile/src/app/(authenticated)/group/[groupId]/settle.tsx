@@ -18,12 +18,14 @@ export default screen(
         route: '/(authenticated)/group/[groupId]/settle',
         auth: true,
     },
-    ({ params, auth }) => {
+    ({ params, auth, router }) => {
+        const userId = auth.session.user.id;
         const [checked, setChecked] = useState<PaymentObject[]>([]);
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
         const [balances] = trpc.balances.getByParticipantInGroup.useSuspenseQuery({
             groupId: params.groupId,
         });
+        const createPayment = trpc.payments.create.useMutation();
 
         const payments = useMemo(() => {
             return getPaymentsFromBalances(balances);
@@ -31,14 +33,11 @@ export default screen(
 
         const ownPayments = useMemo(() => {
             return payments.filter(
-                (payment) =>
-                    payment.fromUserId === auth.session.user.id ||
-                    payment.toUserId === auth.session.user.id
+                (payment) => payment.fromUserId === userId || payment.toUserId === userId
             );
-        }, [auth.session.user.id, payments]);
+        }, [userId, payments]);
 
-        const balance = balances.find((b) => b.userId === auth.session.user.id)?.balance ?? 0;
-        const checkedCount = checked.length;
+        const balance = balances.find((b) => b.userId === userId)?.balance ?? 0;
 
         const isPaymentChecked = (payment: PaymentObject) => {
             return checked.some((p) => isEqual(p, payment));
@@ -50,6 +49,20 @@ export default screen(
             } else {
                 setChecked([...checked, payment]);
             }
+        };
+
+        const handleSubmit = async () => {
+            for (const payment of checked) {
+                await createPayment.mutateAsync({
+                    groupId: params.groupId,
+                    payerId: userId,
+                    recipientId: payment.toUserId,
+                    amount: payment.amount,
+                    currency: payment.currency,
+                });
+            }
+
+            router.back();
         };
 
         return (
@@ -94,11 +107,13 @@ export default screen(
                             </Stack>
                         )}
                     </Stack>
-                    <Stack p="xl">
-                        <Typography variant="h5" align="center">
-                            You should pay:
-                        </Typography>
-                    </Stack>
+                    {balance !== 0 && (
+                        <Stack p="xl">
+                            <Typography variant="h5" align="center">
+                                {balance < 0 ? 'You should pay:' : 'You should receive:'}
+                            </Typography>
+                        </Stack>
+                    )}
                     <Stack column p="xl">
                         {ownPayments.map((payment) => (
                             <Stack
@@ -118,7 +133,7 @@ export default screen(
                                     <Stack row alignCenter spacing="md">
                                         <Avatar userId={payment.toUserId} size="sm" />
                                         <Typography variant="h6">
-                                            {'To '}
+                                            {payment.fromUserId === userId ? 'To ' : 'From '}
                                             <UserName userId={payment.toUserId} variant={'short'} />
                                         </Typography>
                                     </Stack>
@@ -134,12 +149,20 @@ export default screen(
                     </Stack>
                 </Screen.Content>
                 <>
-                    {ownPayments.length > 0 && (
+                    {ownPayments.length > 0 ? (
                         <Screen.Footer>
                             <Button
                                 color="primary"
-                                disabled={checkedCount === 0}
-                            >{`Mark ${checkedCount}/${ownPayments.length} as ${balance > 0 ? 'received' : 'paid'}`}</Button>
+                                disabled={checked.length === 0}
+                                loading={createPayment.isPending}
+                                onPress={handleSubmit}
+                            >{`Mark ${checked.length}/${ownPayments.length} as ${balance > 0 ? 'received' : 'paid'}`}</Button>
+                        </Screen.Footer>
+                    ) : (
+                        <Screen.Footer>
+                            <Button color="secondary" onPress={router.back}>
+                                Go back
+                            </Button>
                         </Screen.Footer>
                     )}
                 </>

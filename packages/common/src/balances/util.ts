@@ -7,7 +7,7 @@ import { toObject } from '../util';
 import type { BalanceObject, PaymentObject } from './types';
 
 export const getEmptyBalanceObject = (args: {
-    currency: string;
+    currency: DB.CurrencyCode;
     userId: string;
 }): BalanceObject => {
     return {
@@ -23,7 +23,7 @@ export const getBalanceByParticipant = (args: {
     expenses: DB.Expense<{ shares: true }>[];
     payments: DB.Payment[];
     participants: DB.GroupParticipant<{ user: true }>[];
-    currency: string;
+    currency: DB.CurrencyCode;
 }): BalanceObject[] => {
     const balances: Record<string, BalanceObject> = toObject({
         data: args.participants,
@@ -74,7 +74,7 @@ export const getBalanceForParticipant = (args: {
     expenseShares: DB.ExpenseShare[];
     paymentsPaid: DB.Payment[];
     paymentsReceived: DB.Payment[];
-    currency: string;
+    currency: DB.CurrencyCode;
 }): BalanceObject => {
     const totalPaid =
         sumInCurrency(args.expensesPaid, args.currency) +
