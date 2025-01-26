@@ -42,9 +42,9 @@
 
 -   Expense settlement
     [x] Add settle up button to expense summary view
-    [ ] Add settle up view which shows who should pay what to whom
-    [ ] Add possibility to mark payments as paid in settle up view
-    [ ] When payments are marked as paid, a corresponding Payment should be created in the database
+    [x] Add settle up view which shows who should pay what to whom
+    [x] Add possibility to mark payments as paid in settle up view
+    [x] When payments are marked as paid, a corresponding Payment should be created in the database
 
 -   Group summary
     [ ] Add react-native-collapsible-tab-view to summary screen

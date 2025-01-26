@@ -19,7 +19,7 @@ export const StatusBadge = (props: StatusBadgeProps) => {
         <Stack row alignCenter bg="background.elevation1" px="md" py="xs" br="xl" spacing="sm">
             {prefix && (
                 <Typography variant="subtitle1" style={{ lineHeight: 0 }}>
-                    Status:{' '}
+                    {prefix}{' '}
                 </Typography>
             )}
             <Typography
