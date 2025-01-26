@@ -94,6 +94,12 @@ export namespace DB {
     };
     export type AuthorType = models.AuthorType;
 
+    export const InviteType: { [K in InviteType]: K } = {
+        Code: 'Code',
+        Invite: 'Invite',
+    };
+    export type InviteType = models.InviteType;
+
     export type CurrencyConversion = models.CurrencyConversion;
     export type ExchangeRatesObject = Record<CurrencyCode, number>;
     export type ExchangeRates = Omit<models.ExchangeRates, 'rates'> & {
