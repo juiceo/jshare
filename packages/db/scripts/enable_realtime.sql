@@ -36,5 +36,14 @@ BEGIN
   ) THEN
     ALTER PUBLICATION supabase_realtime ADD TABLE public.groups;
   END IF;
+
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_publication p
+    JOIN pg_publication_tables pt ON p.pubname = pt.pubname
+    WHERE p.pubname = 'supabase_realtime' AND pt.schemaname = 'public' AND pt.tablename = 'group_participants'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.group_participants;
+  END IF;
 END $$;
 
