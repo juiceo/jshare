@@ -1,6 +1,6 @@
 import { BorderlessButton } from 'react-native-gesture-handler';
 import Animated, {
-    Extrapolate,
+    Extrapolation,
     interpolate,
     useAnimatedStyle,
     type SharedValue,
@@ -26,7 +26,7 @@ export const AnimatedTabBarTab = (props: AnimatedTabBarTabProps) => {
                 props.activeIndex.value,
                 [props.index - 1, props.index, props.index + 1],
                 [0.5, 1, 0.5],
-                Extrapolate.CLAMP
+                Extrapolation.CLAMP
             ),
         };
     });
@@ -36,7 +36,7 @@ export const AnimatedTabBarTab = (props: AnimatedTabBarTabProps) => {
             <Animated.View style={animatedStyles}>
                 <Stack row center flex={1} p="md" spacing="md">
                     <Typography variant="h6">{name}</Typography>
-                    {props.badge && (
+                    {!!props.badge && (
                         <Stack
                             center
                             style={{ width: 18, height: 18, borderRadius: 8 }}

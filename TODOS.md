@@ -38,7 +38,7 @@
     [x] Expense calculations should take into account payments
 
 -   Group balances
-    [ ] Payments and expenses made in other currencies should show up in the summaries
+    [x] Payments and expenses made in other currencies should show up in the summaries
 
 -   Expense settlement
     [x] Add settle up button to expense summary view
@@ -47,9 +47,9 @@
     [x] When payments are marked as paid, a corresponding Payment should be created in the database
 
 -   Group summary
-    [ ] Add react-native-collapsible-tab-view to summary screen
-    [ ] Add tab for expenses
-    [ ] Add tab for payments
+    [x] Add react-native-collapsible-tab-view to summary screen
+    [x] Add tab for expenses
+    [x] Add tab for payments
 
 -   Group settings
     [ ] Settings only accessible to group admins
@@ -59,7 +59,7 @@
     [ ] Allow assigning expenses from temporary users to group members
 
 -   Join group
-    [ ] Implement "join with code" flow
+    [x] Implement "join with code" flow
 
 -   Temporary users
     [ ] Add ability to create temporary users in group

@@ -13,6 +13,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { BalanceListItem } from '~/components/BalanceListItem';
 import { Button } from '~/components/Button';
 import { ExpenseListItem } from '~/components/ExpenseListItem';
+import { Icon } from '~/components/Icon';
 import { PaymentListItem } from '~/components/PaymentListItem';
 import { Screen } from '~/components/Screen';
 import { StatusBadge } from '~/components/StatusBadge';
@@ -146,6 +147,12 @@ export default screen(
                                 ItemSeparatorComponent={() => (
                                     <Divider horizontal color="background.elevation1" />
                                 )}
+                                ListEmptyComponent={
+                                    <Stack center p="2xl">
+                                        <Icon name="CreditCard" size={48} />
+                                        <Typography variant="h4">No expenses yet</Typography>
+                                    </Stack>
+                                }
                             />
                         </Tabs.Tab>
                         <Tabs.Tab name="Payments">
@@ -158,6 +165,12 @@ export default screen(
                                 ItemSeparatorComponent={() => (
                                     <Divider horizontal color="background.elevation1" />
                                 )}
+                                ListEmptyComponent={
+                                    <Stack center p="2xl">
+                                        <Icon name="ArrowDownUp" size={48} />
+                                        <Typography variant="h4">No payments yet</Typography>
+                                    </Stack>
+                                }
                             />
                         </Tabs.Tab>
                     </Tabs.Container>
