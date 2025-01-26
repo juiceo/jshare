@@ -4,6 +4,7 @@ import { supabase } from '../services/supabase';
 import { onExpenseCreated } from './onExpenseCreated';
 import { onExpenseUpdated } from './onExpenseUpdated';
 import { onGroupCreated } from './onGroupCreated';
+import { onGroupParticipantCreated } from './onGroupParticipantCreated';
 import { onMessageCreated } from './onMessageCreated';
 import { onPaymentCreated } from './onPaymentCreated';
 
@@ -63,6 +64,17 @@ export const initTriggers = () => {
             },
             (payload) => {
                 return onGroupCreated(payload.new as DB.Group);
+            }
+        )
+        .on(
+            'postgres_changes',
+            {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'group_participants',
+            },
+            (payload) => {
+                return onGroupParticipantCreated(payload.new as DB.GroupParticipant);
             }
         )
         .subscribe();

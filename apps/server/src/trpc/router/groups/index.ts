@@ -97,6 +97,7 @@ export const groupsRouter = router({
                 groupId: group.id,
                 userId: opts.ctx.userId,
                 role: DB.Role.Member,
+                inviteType: DB.InviteType.Code,
             },
         });
     }),

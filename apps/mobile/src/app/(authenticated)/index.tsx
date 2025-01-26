@@ -1,16 +1,11 @@
 import { Pressable } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { Skeleton } from 'moti/skeleton';
 
-import { formatAmount } from '@jshare/common';
 import { useTheme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Button } from '~/components/Button';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { Icon } from '~/components/Icon';
-import { IconButton } from '~/components/IconButton';
-import { ProfileBadge } from '~/components/ProfileBadge/ProfileBadge';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/services/trpc';
@@ -22,7 +17,6 @@ export default screen(
     },
     ({ router }) => {
         const { theme } = useTheme();
-        const [profile] = trpc.profiles.me.useSuspenseQuery();
         const [groups] = trpc.groups.list.useSuspenseQuery();
 
         return (
