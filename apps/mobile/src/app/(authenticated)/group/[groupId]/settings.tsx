@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs, type TabBarProps } from 'react-native-collapsible-tab-view';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import * as Clipboard from 'expo-clipboard';
 
+import { DB } from '@jshare/db';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { AnimatedTabBarIndicator } from '~/components/AnimatedTabBar/AnimatedTabBarIndicator';
@@ -10,11 +12,13 @@ import { AnimatedTabBarTab } from '~/components/AnimatedTabBar/AnimatedTabBarTab
 import { Divider } from '~/components/atoms/Divider';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
+import { TextField } from '~/components/atoms/TextField';
 import { Avatar } from '~/components/Avatar';
 import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
+import { EmptyState } from '~/components/util/EmptyState';
 import { trpc } from '~/services/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
@@ -24,12 +28,18 @@ export default screen(
         route: '/(authenticated)/group/[groupId]/settings',
         auth: true,
     },
-    ({ params, auth, router }) => {
+    ({ params, auth }) => {
         const { theme } = useTheme();
         const styles = getStyles(theme);
         const trpcUtils = trpc.useUtils();
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const updateGroup = trpc.groups.update.useMutation();
         const refreshInviteCode = trpc.groups.refreshCode.useMutation();
+
+        const role = group.participants.find((p) => p.userId === auth.session.user.id)?.role;
+        const isAdmin = role === DB.Role.Admin || role === DB.Role.Owner;
+
+        const [groupName, setGroupName] = useState<string>(group.name);
 
         const handleRefreshInviteCode = async () => {
             const updatedGroup = await refreshInviteCode.mutateAsync({ groupId: params.groupId });
@@ -42,6 +52,21 @@ export default screen(
             toast.info('Invite code copied!');
         };
 
+        const handleGroupUpdate = async (args: Pick<DB.Group, 'name'>) => {
+            trpcUtils.groups.get.setData({ id: params.groupId }, (prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    ...args,
+                };
+            });
+            await updateGroup.mutateAsync({
+                groupId: params.groupId,
+                updates: args,
+            });
+            trpcUtils.groups.get.invalidate();
+        };
+
         const renderHeader = () => {
             return (
                 <Stack center ar="1/1">
@@ -51,7 +76,6 @@ export default screen(
                         height={140}
                         br="full"
                         bg="background.elevation1"
-                        mb="2xl"
                     />
                     <Typography variant="h4">{group.name}</Typography>
                     <Typography variant="body1" color="hint">
@@ -145,9 +169,25 @@ export default screen(
                         </Tabs.Tab>
                         <Tabs.Tab name="Settings">
                             <Tabs.ScrollView>
-                                <Stack ar="1/1">
-                                    <Typography variant="h4">Settings here</Typography>
-                                </Stack>
+                                {!isAdmin ? (
+                                    <EmptyState
+                                        icon="Lock"
+                                        title="Access denied"
+                                        message="Only group admins can edit the group settings"
+                                    />
+                                ) : (
+                                    <Stack column p="xl">
+                                        <TextField
+                                            label="Group name"
+                                            value={groupName}
+                                            onChange={setGroupName}
+                                            TextInputProps={{
+                                                onBlur: () =>
+                                                    handleGroupUpdate({ name: groupName }),
+                                            }}
+                                        />
+                                    </Stack>
+                                )}
                             </Tabs.ScrollView>
                         </Tabs.Tab>
                     </Tabs.Container>

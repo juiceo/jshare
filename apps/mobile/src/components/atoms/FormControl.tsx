@@ -49,7 +49,7 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
             <Stack row spacing="md">
                 <Stack column spacing="md" flex={1}>
                     {!!label && (
-                        <Typography variant="caption" color={focused ? 'primary' : 'hint'}>
+                        <Typography variant="caption" color={focused ? 'accent.main' : 'hint'}>
                             {label}
                         </Typography>
                     )}

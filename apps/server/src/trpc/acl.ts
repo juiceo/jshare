@@ -1,4 +1,4 @@
-import type { DB } from '@jshare/db';
+import { DB } from '@jshare/db';
 
 import { InMemoryCache } from '../services/cache';
 import { db } from '../services/db';
@@ -12,8 +12,8 @@ export class ACL {
         this.userId = userId;
     }
 
-    private async getGroups(ignoreCache?: boolean) {
-        const cached = !ignoreCache ? groupsCache.get(this.userId) : null;
+    private async getGroups(): Promise<DB.GroupParticipant[]> {
+        const cached = groupsCache.get(this.userId);
         if (cached) {
             return cached;
         }
@@ -27,22 +27,23 @@ export class ACL {
         return groups;
     }
 
+    private async getGroup(id: string): Promise<DB.GroupParticipant | null> {
+        const groups = await this.getGroups();
+        return groups.find((g) => g.groupId === id) ?? null;
+    }
+
     async isInGroup(groupId: string, ignoreCache?: boolean): Promise<boolean> {
-        const groups = await this.getGroups(ignoreCache);
-        if (groups.some((g) => g.groupId === groupId)) {
-            return true;
-        }
-        if (!ignoreCache) {
-            return this.isInGroup(groupId, true);
-        }
-        return false;
+        const group = await this.getGroup(groupId);
+        return !!group;
+    }
+
+    async isGroupAdmin(groupId: string): Promise<boolean> {
+        const group = await this.getGroup(groupId);
+        return group?.role === DB.Role.Admin || group?.role === DB.Role.Owner;
     }
 
     async getGroupIds(): Promise<string[]> {
-        let groups = await this.getGroups();
-        if (!groups.length) {
-            groups = await this.getGroups(true);
-        }
+        const groups = await this.getGroups();
         return groups.map((g) => g.groupId);
     }
 }

@@ -42,6 +42,36 @@ export const groupsRouter = router({
                 },
             });
         }),
+    update: authProcedure
+        .input(
+            z.object({
+                groupId: z.string(),
+                updates: z
+                    .object({
+                        name: z.string(),
+                    })
+                    .partial(),
+            })
+        )
+        .mutation(async (opts) => {
+            const isAdmin = await opts.ctx.acl.isGroupAdmin(opts.input.groupId);
+            if (!isAdmin) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: `The group was not found or you are missing the required role to update the group`,
+                });
+            }
+
+            return db.group.update({
+                where: {
+                    id: opts.input.groupId,
+                },
+                data: opts.input.updates,
+                include: {
+                    ...defaultGroupInclude,
+                },
+            });
+        }),
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
         const group = await db.group.findUnique({
             where: {

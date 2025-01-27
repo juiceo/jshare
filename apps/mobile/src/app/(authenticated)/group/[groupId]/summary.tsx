@@ -18,6 +18,7 @@ import { PaymentListItem } from '~/components/PaymentListItem';
 import { Screen } from '~/components/Screen';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
+import { EmptyState } from '~/components/util/EmptyState';
 import { useThrottledLoading } from '~/hooks/useThrottledLoading';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
@@ -148,10 +149,7 @@ export default screen(
                                     <Divider horizontal color="background.elevation1" />
                                 )}
                                 ListEmptyComponent={
-                                    <Stack center p="2xl">
-                                        <Icon name="CreditCard" size={48} />
-                                        <Typography variant="h4">No expenses yet</Typography>
-                                    </Stack>
+                                    <EmptyState icon="CreditCard" title="No expenses yet" />
                                 }
                             />
                         </Tabs.Tab>
@@ -166,10 +164,7 @@ export default screen(
                                     <Divider horizontal color="background.elevation1" />
                                 )}
                                 ListEmptyComponent={
-                                    <Stack center p="2xl">
-                                        <Icon name="ArrowDownUp" size={48} />
-                                        <Typography variant="h4">No payments yet</Typography>
-                                    </Stack>
+                                    <EmptyState icon="ArrowDownUp" title="No payments yet" />
                                 }
                             />
                         </Tabs.Tab>
