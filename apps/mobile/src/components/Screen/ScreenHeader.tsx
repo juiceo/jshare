@@ -16,12 +16,13 @@ export type ScreenHeaderProps = {
     subtitle?: string;
     backButton?: 'back' | 'down';
     disableInset?: boolean;
-    extra?: React.ReactNode;
+    right?: React.ReactNode;
+    footer?: React.ReactNode;
     blur?: boolean;
 };
 
 export const ScreenHeader = (props: ScreenHeaderProps) => {
-    const { title, subtitle, backButton = 'back', disableInset, blur, extra } = props;
+    const { title, subtitle, backButton = 'back', disableInset, blur, footer, right } = props;
     const { theme } = useTheme();
     const { setHeaderHeight } = useScreen();
     const insets = useSafeAreaInsets();
@@ -65,7 +66,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                         </Typography>
                     )}
                 </Stack>
-                <Stack w={40}></Stack>
+                <Stack w={40}>{right}</Stack>
             </Stack>
         </View>
     );
@@ -104,7 +105,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                     {content}
                 </Box>
             )}
-            {extra}
+            {footer}
         </View>
     );
 };

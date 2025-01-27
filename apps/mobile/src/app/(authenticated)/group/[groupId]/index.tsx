@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,6 +9,7 @@ import { sortBy } from 'lodash';
 import { useTheme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
+import { Image } from '~/components/atoms/Image';
 import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
@@ -46,7 +48,26 @@ export default screen(
             <Screen>
                 <Screen.Header
                     title={group.name}
-                    extra={<ChatStatusHeader groupId={group.id} currency={group.currency} />}
+                    footer={<ChatStatusHeader groupId={group.id} currency={group.currency} />}
+                    right={
+                        <BorderlessButton
+                            activeOpacity={0.8}
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/group/[groupId]/settings',
+                                    params: { groupId: group.id },
+                                })
+                            }
+                        >
+                            <Image
+                                image={group.coverImage}
+                                width={40}
+                                height={40}
+                                br="full"
+                                bg="background.elevation1"
+                            />
+                        </BorderlessButton>
+                    }
                 />
                 <KeyboardStickyView
                     style={{ flex: 1, zIndex: 0 }}
