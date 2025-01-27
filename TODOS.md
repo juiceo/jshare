@@ -75,3 +75,8 @@
 -   Temporary users
     [ ] Add ability to create temporary users in group
     [ ] When joining a group, allow the user to claim expenses from temporary users
+
+-   RELEASE BLOCKERS
+
+    [ ] Keyboard avoiding views not working correctly
+    [ ] Audit all cases where we mutate data -> should have appropriate optimistic updates / query invalidation

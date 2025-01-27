@@ -13,7 +13,6 @@ import { Stack } from '~/components/atoms/Stack';
 import { BalanceListItem } from '~/components/BalanceListItem';
 import { Button } from '~/components/Button';
 import { ExpenseListItem } from '~/components/ExpenseListItem';
-import { Icon } from '~/components/Icon';
 import { PaymentListItem } from '~/components/PaymentListItem';
 import { Screen } from '~/components/Screen';
 import { StatusBadge } from '~/components/StatusBadge';
