@@ -11,6 +11,7 @@ import { getEnv } from '@jshare/common';
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { AppErrorBoundary } from '~/components/errors/AppErrorBoundary';
+import { ToastManager } from '~/components/Toast/ToastManager';
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
@@ -35,6 +36,7 @@ export default function AppLayout() {
                                                 ) : (
                                                     <RootStack />
                                                 )}
+                                                <ToastManager />
                                             </AppErrorBoundary>
                                         </BottomSheetModalProvider>
                                     </QueryProvider>

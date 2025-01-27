@@ -16,6 +16,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { trpc } from '~/services/trpc';
+import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -36,8 +37,9 @@ export default screen(
             trpcUtils.groups.get.invalidate();
         };
 
-        const handleCopyInviteCode = (code: string) => {
-            Clipboard.setStringAsync(code);
+        const handleCopyInviteCode = async (code: string) => {
+            await Clipboard.setStringAsync(code);
+            toast.info('Invite code copied!');
         };
 
         const renderHeader = () => {
@@ -82,7 +84,7 @@ export default screen(
             const code = group.inviteCode;
             if (!code) return null;
             return (
-                <BorderlessButton onPress={() => handleCopyInviteCode(code)}>
+                <BorderlessButton onPress={() => handleCopyInviteCode(code)} activeOpacity={0.8}>
                     <Stack alignCenter row bg="background.elevation1" p="xl" spacing="xl">
                         <Stack column flex={1}>
                             <Typography variant="caption">Tap to copy invite code</Typography>
