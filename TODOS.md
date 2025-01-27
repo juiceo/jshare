@@ -51,9 +51,20 @@
     [x] Add tab for expenses
     [x] Add tab for payments
 
+-   Your groups
+    [x] Show list of groups you are a member of
+    [ ] Show empty state when no groups
+
+-   Group home page
+    [ ] If no other members, show empty state (invite code). Could make sense that this is always rendered at the top of the messages list, so you can find it when scrolling up
+
+-   Profile page
+    [ ] Implement bottom tab navigation
+    [ ] Implement simple profile page
+
 -   Group settings
-    [ ] Settings only accessible to group admins
-    [ ] Show invite code / invite link in group settings
+    [x] Settings only accessible to group admins
+    [x] Show invite code / invite link in group settings
     [ ] Allow changing user roles
     [ ] Allow removing users from group
     [ ] Allow assigning expenses from temporary users to group members
