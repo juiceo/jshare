@@ -16,7 +16,7 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/profile',
+        route: '/(authenticated)/(tabs)/profile',
         auth: true,
     },
     ({ auth }) => {
@@ -29,7 +29,6 @@ export default screen(
 
         return (
             <Screen>
-                <Screen.Header title="Profile" />
                 <Screen.Content scrollable>
                     <Stack flex={1} spacing="md" px="xl">
                         <Stack column center p="xl" br="md" spacing="none">
@@ -97,13 +96,11 @@ export default screen(
                                 title: 'Select currency',
                             }}
                         />
+                        <Button color="error" variant="ghost" onPress={auth.signOut}>
+                            Sign out
+                        </Button>
                     </Stack>
                 </Screen.Content>
-                <Screen.Footer padding="xl">
-                    <Button color="error" variant="ghost" onPress={auth.signOut}>
-                        Sign out
-                    </Button>
-                </Screen.Footer>
             </Screen>
         );
     }
