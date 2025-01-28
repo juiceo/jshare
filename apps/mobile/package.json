@@ -16,7 +16,7 @@
         "start:staging": "env-cmd -f .env.staging expo start",
         "typecheck": "tsc --noEmit",
         "eas-build-post-install": "pnpm run -w build:mobile",
-        "eas:build:ios:staging": "eas build --profile staging --platform ios",
+        "eas:build:ios:staging": "env-cmd -f .env.staging eas build --profile staging --platform ios",
         "eas:build:ios:development": "eas build --profile development --platform ios",
         "eas:build:ios:production": "eas build --profile production --platform ios",
         "eas:build:android:staging": "eas build --profile staging --platform android",

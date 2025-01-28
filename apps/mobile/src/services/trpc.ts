@@ -3,12 +3,14 @@ import { createTRPCReact } from '@trpc/react-query';
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import superjson from 'superjson';
 
-import { getEnv } from '@jshare/common';
 import type { AppRouter } from '@jshare/server';
 
 import { getAccessToken } from '~/state/auth';
 
-const apiBaseUrl = getEnv('JSHARE_API_URL', { required: true });
+const apiBaseUrl = process.env.JSHARE_API_URL;
+if (!apiBaseUrl) {
+    throw new Error('Missing JSHARE_API_URL env variable');
+}
 
 export type TrpcInputs = inferRouterInputs<AppRouter>;
 export type TrpcOutputs = inferRouterOutputs<AppRouter>;

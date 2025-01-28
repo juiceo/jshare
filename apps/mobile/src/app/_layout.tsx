@@ -7,7 +7,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { Stack } from 'expo-router';
 
-import { getEnv } from '@jshare/common';
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { AppErrorBoundary } from '~/components/errors/AppErrorBoundary';
@@ -17,7 +16,7 @@ import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
 
-const storybookEnabled = getEnv('STORYBOOK_ENABLED') === 'true';
+const storybookEnabled = process.env.STORYBOOK_ENABLED === 'true';
 
 export default function AppLayout() {
     return (
