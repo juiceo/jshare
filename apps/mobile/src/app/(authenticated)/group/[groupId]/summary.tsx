@@ -60,7 +60,7 @@ export default screen(
 
         const renderHeader = () => {
             return (
-                <Stack center ar="1/1" spacing="xl">
+                <Stack center ar="4/3" spacing="xl">
                     <Typography variant="h5">Group total</Typography>
                     <Typography variant="h1" align="center">
                         {formatAmount(groupTotal, group.currency)}

@@ -42,7 +42,7 @@ export default screen(
                                         });
                                     }}
                                 />
-                                <Typography variant="body2" align="center" mt="xl">
+                                <Typography variant="h6" align="center" mt="xl">
                                     {profile?.firstName} {profile?.lastName}
                                 </Typography>
                                 <Typography variant="body2" color="secondary" align="center">

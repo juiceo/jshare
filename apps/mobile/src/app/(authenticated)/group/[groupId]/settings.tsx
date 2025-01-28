@@ -1,15 +1,9 @@
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Tabs, type TabBarProps } from 'react-native-collapsible-tab-view';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import * as Clipboard from 'expo-clipboard';
 
 import { DB } from '@jshare/db';
-import { useTheme, type Theme } from '@jshare/theme';
 
-import { AnimatedTabBarIndicator } from '~/components/AnimatedTabBar/AnimatedTabBarIndicator';
-import { AnimatedTabBarTab } from '~/components/AnimatedTabBar/AnimatedTabBarTab';
-import { Divider } from '~/components/atoms/Divider';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
@@ -18,7 +12,6 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { EmptyState } from '~/components/util/EmptyState';
 import { trpc } from '~/services/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
@@ -29,8 +22,6 @@ export default screen(
         auth: true,
     },
     ({ params, auth }) => {
-        const { theme } = useTheme();
-        const styles = getStyles(theme);
         const trpcUtils = trpc.useUtils();
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
         const updateGroup = trpc.groups.update.useMutation();
@@ -47,8 +38,10 @@ export default screen(
             trpcUtils.groups.get.invalidate();
         };
 
-        const handleCopyInviteCode = async (code: string) => {
-            await Clipboard.setStringAsync(code);
+        const handleCopyInviteCode = async () => {
+            const inviteCode = group.inviteCode;
+            if (!inviteCode) return;
+            await Clipboard.setStringAsync(inviteCode);
             toast.info('Invite code copied!');
         };
 
@@ -67,144 +60,97 @@ export default screen(
             trpcUtils.groups.get.invalidate();
         };
 
-        const renderHeader = () => {
-            return (
-                <Stack center ar="1/1">
-                    <Image
-                        image={group.coverImage}
-                        width={140}
-                        height={140}
-                        br="full"
-                        bg="background.elevation1"
-                    />
-                    <Typography variant="h4">{group.name}</Typography>
-                    <Typography variant="body1" color="hint">
-                        {group.participants.length} members
-                    </Typography>
-                </Stack>
-            );
-        };
-
-        const renderTabBar = (props: TabBarProps) => {
-            return (
-                <Stack column style={styles.tabBar}>
-                    <Stack row>
-                        {props.tabNames.map((name, index) => (
-                            <AnimatedTabBarTab
-                                key={name}
-                                name={name}
-                                index={index}
-                                activeIndex={props.indexDecimal}
-                                onPress={() => props.onTabPress(name)}
-                            />
-                        ))}
-                    </Stack>
-                    <AnimatedTabBarIndicator {...props} />
-                </Stack>
-            );
-        };
-
-        const renderMembersHeader = () => {
-            const code = group.inviteCode;
-            if (!code) return null;
-            return (
-                <BorderlessButton onPress={() => handleCopyInviteCode(code)} activeOpacity={0.8}>
-                    <Stack alignCenter row bg="background.elevation1" p="xl" spacing="xl">
-                        <Stack column flex={1}>
-                            <Typography variant="caption">Tap to copy invite code</Typography>
-                            <Typography variant="subtitle1" color="primary.light">
-                                {group.inviteCode}
-                            </Typography>
-                        </Stack>
-                        <Stack center>
-                            <IconButton
-                                icon="RefreshCcw"
-                                disabled={refreshInviteCode.isPending}
-                                onPress={handleRefreshInviteCode}
-                                variant="ghost"
-                            />
-                        </Stack>
-                    </Stack>
-                </BorderlessButton>
-            );
-        };
-
         return (
             <Screen>
                 <Screen.Header title="Manage group" blur />
-                <Screen.Content disableTopInset>
-                    <Tabs.Container
-                        renderHeader={renderHeader}
-                        renderTabBar={renderTabBar}
-                        headerContainerStyle={styles.header}
-                    >
-                        <Tabs.Tab name="Members">
-                            <Tabs.FlatList
-                                data={group.participants}
-                                renderItem={({ item }) => (
-                                    <Stack row p="xl" spacing="xl">
-                                        <Avatar userId={item.userId} size="md" />
-                                        <Stack column flex={1}>
-                                            <Typography variant="subtitle1">
-                                                <UserName userId={item.userId} variant="full" />
-                                            </Typography>
-                                            <Typography variant="caption" color="hint">
-                                                Last seen 2 minutes ago
-                                            </Typography>
-                                        </Stack>
-                                        <Stack column center>
-                                            <Typography variant="subtitle2" color="hint">
-                                                {item.role === 'Owner' && 'Owner'}
-                                                {item.role === 'Admin' && 'Admin'}
-                                            </Typography>
-                                        </Stack>
+                <Screen.Content scrollable disableTopInset>
+                    <Stack center ar="1/1">
+                        <Image
+                            image={group.coverImage}
+                            width={140}
+                            height={140}
+                            br="full"
+                            bg="background.elevation1"
+                        />
+                        <Typography variant="h4">{group.name}</Typography>
+                    </Stack>
+                    <Stack column p="xl">
+                        <Typography variant="h6" mb="xl">
+                            Members ({group.participants.length})
+                        </Typography>
+                        {group.inviteCode && (
+                            <BorderlessButton
+                                onPress={() => handleCopyInviteCode()}
+                                activeOpacity={0.8}
+                            >
+                                <Stack
+                                    alignCenter
+                                    row
+                                    bg="background.elevation1"
+                                    p="xl"
+                                    spacing="xl"
+                                    br="xl"
+                                    mb="xl"
+                                >
+                                    <Stack column flex={1}>
+                                        <Typography variant="caption">
+                                            Tap to copy invite code
+                                        </Typography>
+                                        <Typography variant="subtitle1" color="primary.light">
+                                            {group.inviteCode}
+                                        </Typography>
                                     </Stack>
-                                )}
-                                keyExtractor={(item) => item.userId}
-                                ListHeaderComponent={renderMembersHeader}
-                                ItemSeparatorComponent={() => (
-                                    <Divider horizontal color="background.elevation1" />
-                                )}
-                            />
-                        </Tabs.Tab>
-                        <Tabs.Tab name="Settings">
-                            <Tabs.ScrollView>
-                                {!isAdmin ? (
-                                    <EmptyState
-                                        icon="Lock"
-                                        title="Access denied"
-                                        message="Only group admins can edit the group settings"
-                                    />
-                                ) : (
-                                    <Stack column p="xl">
-                                        <TextField
-                                            label="Group name"
-                                            value={groupName}
-                                            onChange={setGroupName}
-                                            TextInputProps={{
-                                                onBlur: () =>
-                                                    handleGroupUpdate({ name: groupName }),
-                                            }}
+                                    <Stack center>
+                                        <IconButton
+                                            icon="RefreshCcw"
+                                            disabled={refreshInviteCode.isPending}
+                                            onPress={handleRefreshInviteCode}
+                                            variant="ghost"
                                         />
                                     </Stack>
-                                )}
-                            </Tabs.ScrollView>
-                        </Tabs.Tab>
-                    </Tabs.Container>
+                                </Stack>
+                            </BorderlessButton>
+                        )}
+
+                        <Stack column spacing="xl" bg="background.elevation1" br="xl">
+                            {group.participants.map((participant) => (
+                                <Stack row p="xl" spacing="xl" key={participant.id}>
+                                    <Avatar userId={participant.userId} size="lg" />
+                                    <Stack column flex={1}>
+                                        <Typography variant="subtitle1">
+                                            <UserName userId={participant.userId} variant="full" />
+                                        </Typography>
+                                        <Typography variant="caption" color="hint">
+                                            Last seen 2 minutes ago
+                                        </Typography>
+                                    </Stack>
+                                    <Stack column center>
+                                        <Typography variant="subtitle2" color="hint">
+                                            {participant.role === 'Owner' && 'Owner'}
+                                            {participant.role === 'Admin' && 'Admin'}
+                                        </Typography>
+                                    </Stack>
+                                </Stack>
+                            ))}
+                        </Stack>
+                        {isAdmin && (
+                            <>
+                                <Typography variant="h6" mt="3xl" mb="xl">
+                                    Settings
+                                </Typography>
+                                <TextField
+                                    label="Group name"
+                                    value={groupName}
+                                    onChange={setGroupName}
+                                    TextInputProps={{
+                                        onBlur: () => handleGroupUpdate({ name: groupName }),
+                                    }}
+                                />
+                            </>
+                        )}
+                    </Stack>
                 </Screen.Content>
             </Screen>
         );
     }
 );
-
-const getStyles = (theme: Theme) => {
-    return StyleSheet.create({
-        header: {
-            backgroundColor: theme.palette.background.main,
-        },
-        tabBar: {
-            borderBottomWidth: 1,
-            borderBottomColor: theme.palette.background.elevation1,
-        },
-    });
-};
