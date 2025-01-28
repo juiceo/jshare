@@ -14,7 +14,7 @@
         "test": "turbo test --ui stream",
         "build": "turbo build --ui stream",
         "build:server": "turbo build --filter=\"{./apps/server}...\" --ui stream",
-        "start:server": "pnpm --filter=@jshare/server start",
+        "start:server": "pnpm --filter=@jshare/server start:production",
         "storybook": "pnpm --filter=@jshare/mobile run:ios:storybook",
         "fullcheck": "turbo typecheck test lint --ui stream",
         "turbo:clean": "turbo daemon clean",

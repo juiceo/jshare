@@ -14,6 +14,7 @@ generator client {
   provider        = "prisma-client-js"
   output          = "src/generated/.logical-prisma-client"
   previewFeatures = ["multiSchema"]
+  binaryTargets   = ["native", "debian-openssl-3.0.x"]
 }
 
 enum Role {

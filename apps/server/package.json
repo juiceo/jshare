@@ -14,7 +14,8 @@
     "scripts": {
         "dev": "tsx watch --env-file=.env  --clear-screen=false ./src/index.ts",
         "build": "esbuild src/index.ts --bundle --outfile=build/index.js --platform=node",
-        "start": "node ./build/index.js",
+        "start": "env-cmd -f .env node ./build/index.js",
+        "start:production": "node ./build/index.js",
         "typecheck": "tsc --noEmit"
     },
     "keywords": [],
@@ -29,8 +30,8 @@
         "sharp": "catalog:",
         "shortid": "^2.2.17",
         "superjson": "catalog:",
-        "uuid": "catalog:",
-        "tsup": "catalog:"
+        "tsup": "catalog:",
+        "uuid": "catalog:"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
@@ -38,6 +39,7 @@
         "@types/express": "catalog:",
         "@types/jsonwebtoken": "catalog:",
         "@types/shortid": "^2.2.0",
+        "env-cmd": "^10.1.0",
         "tsx": "catalog:"
     },
     "eslintConfig": {
