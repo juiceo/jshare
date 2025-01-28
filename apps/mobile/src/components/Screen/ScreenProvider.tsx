@@ -5,7 +5,9 @@ import { ScreenContext } from '~/components/Screen/ScreenContext';
 import { ScreenFooter } from '~/components/Screen/ScreenFooter';
 import { ScreenHeader } from '~/components/Screen/ScreenHeader';
 
-export const ScreenProvider = (props: { children: ReactElement | ReactElement[] }) => {
+export const ScreenProvider = (props: {
+    children: (ReactElement | null | undefined) | (ReactElement | null | undefined)[];
+}) => {
     const childrenArray = Children.toArray(props.children) as ReactElement[];
     const [headerHeight, setHeaderHeight] = useState<number>(0);
     const hasFooter = childrenArray.some((child) => child.type === ScreenFooter);

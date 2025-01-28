@@ -7,7 +7,7 @@ import { ScreenProvider } from '~/components/Screen/ScreenProvider';
 import { useHasParentScreen } from '~/components/Screen/useHasParentScreen';
 
 export type ScreenProps = {
-    children: ReactElement | ReactElement[];
+    children: (ReactElement | null | undefined) | (ReactElement | null | undefined)[];
 };
 
 export const Screen = (props: ScreenProps) => {

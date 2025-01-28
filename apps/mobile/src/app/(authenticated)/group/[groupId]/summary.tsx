@@ -60,7 +60,7 @@ export default screen(
 
         const renderHeader = () => {
             return (
-                <Stack center ar="16/9">
+                <Stack center ar="1/1" spacing="xl">
                     <Typography variant="h5">Group total</Typography>
                     <Typography variant="h1" align="center">
                         {formatAmount(groupTotal, group.currency)}
@@ -169,8 +169,8 @@ export default screen(
                         </Tabs.Tab>
                     </Tabs.Container>
                 </Screen.Content>
-                <Screen.Footer>
-                    {ownBalance && ownBalance.balance !== 0 && (
+                {ownBalance && ownBalance.balance !== 0 ? (
+                    <Screen.Footer>
                         <Button
                             color="primary"
                             variant="contained"
@@ -183,8 +183,8 @@ export default screen(
                         >
                             Settle up
                         </Button>
-                    )}
-                </Screen.Footer>
+                    </Screen.Footer>
+                ) : null}
             </Screen>
         );
     }
