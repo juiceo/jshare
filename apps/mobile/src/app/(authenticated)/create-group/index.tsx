@@ -53,7 +53,7 @@ export default screen(
         return (
             <Screen>
                 <Screen.Header title="Create group" backButton="down" disableInset />
-                <Screen.Content scrollable>
+                <Screen.Content scrollable disableTopInset>
                     <Stack column spacing="md" p="xl">
                         <ImageUploader
                             value={image}

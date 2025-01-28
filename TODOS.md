@@ -59,8 +59,8 @@
     [ ] If no other members, show empty state (invite code). Could make sense that this is always rendered at the top of the messages list, so you can find it when scrolling up
 
 -   Profile page
-    [ ] Implement bottom tab navigation
-    [ ] Implement simple profile page
+    [x] Implement bottom tab navigation
+    [x] Implement simple profile page
 
 -   Group settings
     [x] Settings only accessible to group admins

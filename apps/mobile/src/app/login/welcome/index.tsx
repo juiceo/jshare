@@ -56,7 +56,7 @@ export default screen(
                 email,
             });
             router.dismissAll();
-            router.replace('/');
+            router.replace('/(authenticated)/(tabs)/groups');
         };
 
         return (

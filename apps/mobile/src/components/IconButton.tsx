@@ -31,14 +31,14 @@ export const IconButton = (props: IconButtonProps) => {
         textPos = 'left',
     } = props;
     const { theme } = useTheme();
-    const iconSize = (() => {
+    const buttonSize = (() => {
         switch (size) {
             case 'sm':
-                return 16;
+                return 28;
             case 'md':
-                return 24;
+                return 36;
             case 'lg':
-                return 32;
+                return 44;
         }
     })();
 
@@ -79,7 +79,7 @@ export const IconButton = (props: IconButtonProps) => {
             underlayColor={variant === 'contained' ? 'white' : primaryColor}
             style={{
                 backgroundColor: variant === 'contained' ? primaryColor : 'transparent',
-                borderRadius: rounded ? 9999 : theme.borderRadius.xl,
+                borderRadius: rounded ? buttonSize / 2 : theme.borderRadius.xl,
                 opacity: props.disabled ? 0.5 : 1,
                 padding: theme.spacing.sm,
             }}
@@ -98,7 +98,7 @@ export const IconButton = (props: IconButtonProps) => {
                         {text}
                     </Typography>
                 )}
-                <Icon name={icon} size={iconSize} color={iconColor} />
+                <Icon name={icon} size={buttonSize / 1.5} color={iconColor} />
             </Stack>
         </RectButton>
     );
