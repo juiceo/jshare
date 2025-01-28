@@ -4,6 +4,7 @@ import express from 'express';
 
 import { getEnv } from '@jshare/common';
 
+import { db } from './services/db';
 import { initTriggers } from './triggers';
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';
@@ -22,8 +23,13 @@ app.use(
     })
 );
 
-app.get('/health-check', (_, res) => {
-    res.status(200).send('OK');
+app.get('/health-check', async (_, res) => {
+    try {
+        const profileCount = await db.profile.count();
+        res.status(200).send('OK: ' + profileCount);
+    } catch (err: any) {
+        res.status(500).send('Error: ' + err.message);
+    }
 });
 
 app.listen(PORT, () => {
