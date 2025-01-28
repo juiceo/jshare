@@ -12,6 +12,20 @@ export class ACL {
         this.userId = userId;
     }
 
+    private async checkGroups(check: (groups: DB.GroupParticipant[]) => boolean) {
+        let groups = groupsCache.get(this.userId);
+        if (!groups || !check(groups)) {
+            groups = await db.groupParticipant.findMany({
+                where: {
+                    userId: this.userId,
+                },
+            });
+            groupsCache.set(this.userId, groups);
+        }
+
+        return check(groups);
+    }
+
     private async getGroups(): Promise<DB.GroupParticipant[]> {
         const cached = groupsCache.get(this.userId);
         if (cached) {
@@ -27,23 +41,16 @@ export class ACL {
         return groups;
     }
 
-    private async getGroup(id: string): Promise<DB.GroupParticipant | null> {
-        const groups = await this.getGroups();
-        return groups.find((g) => g.groupId === id) ?? null;
-    }
-
-    async isInGroup(groupId: string, ignoreCache?: boolean): Promise<boolean> {
-        const group = await this.getGroup(groupId);
-        return !!group;
+    async isInGroup(groupId: string): Promise<boolean> {
+        return this.checkGroups((groups) => groups.some((g) => g.groupId === groupId));
     }
 
     async isGroupAdmin(groupId: string): Promise<boolean> {
-        const group = await this.getGroup(groupId);
-        return group?.role === DB.Role.Admin || group?.role === DB.Role.Owner;
-    }
-
-    async getGroupIds(): Promise<string[]> {
-        const groups = await this.getGroups();
-        return groups.map((g) => g.groupId);
+        return this.checkGroups((groups) =>
+            groups.some(
+                (g) =>
+                    g.groupId === groupId && (g.role === DB.Role.Admin || g.role === DB.Role.Owner)
+            )
+        );
     }
 }

@@ -3,6 +3,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import { sortBy } from 'lodash';
 
@@ -10,12 +11,17 @@ import { useTheme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
 import { Image } from '~/components/atoms/Image';
+import { Stack } from '~/components/atoms/Stack';
+import { Button } from '~/components/Button';
 import { ChatBackground } from '~/components/ChatBackground';
 import { ChatDateSeparator } from '~/components/ChatDateSeparator';
 import { ChatInputFooter } from '~/components/ChatInputFooter';
 import { ChatMessageGroup } from '~/components/ChatMessageGroup';
 import { ChatStatusHeader } from '~/components/ChatStatusHeader';
+import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
+import { Typography } from '~/components/Typography';
+import { EmptyState } from '~/components/util/EmptyState';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { trpc } from '~/services/trpc';
 import { messagesToChatListItems } from '~/util/messages';
@@ -114,6 +120,11 @@ export default screen(
                                                 }
                                             }
                                         }}
+                                        ListFooterComponent={
+                                            group.inviteCode && group.participants.length === 1 ? (
+                                                <CopyInviteCodeBlock code={group.inviteCode} />
+                                            ) : null
+                                        }
                                         inverted
                                         contentContainerStyle={{
                                             paddingBottom: context.headerHeight + 100,

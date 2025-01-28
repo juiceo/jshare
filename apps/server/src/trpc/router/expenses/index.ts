@@ -19,16 +19,13 @@ export const expensesRouter = router({
         const expense = await db.expense.findUnique({
             where: {
                 id: opts.input.id,
-                groupId: {
-                    in: await opts.ctx.acl.getGroupIds(),
-                },
             },
             include: {
                 shares: true,
             },
         });
 
-        if (!expense) {
+        if (!expense || !opts.ctx.acl.isInGroup(expense.groupId)) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
                 message: `Expense with id ${opts.input.id} not found`,

@@ -13,13 +13,10 @@ export const paymentsRouter = router({
         const payment = await db.payment.findUnique({
             where: {
                 id: opts.input.id,
-                groupId: {
-                    in: await opts.ctx.acl.getGroupIds(),
-                },
             },
         });
 
-        if (!payment) {
+        if (!payment || !opts.ctx.acl.isInGroup(payment.groupId)) {
             throw new TRPCError({
                 code: 'NOT_FOUND',
                 message: `Payment with id ${opts.input.id} not found`,

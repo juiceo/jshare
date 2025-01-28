@@ -42,12 +42,16 @@ export default screen(
         });
 
         const handleSubmit = async (data: Schema) => {
-            await createGroup({
+            const group = await createGroup({
                 ...data,
                 coverImageId: image?.id,
             });
             trpcUtils.groups.invalidate();
             router.dismiss();
+            router.push({
+                pathname: '/(authenticated)/group/[groupId]',
+                params: { groupId: group.id },
+            });
         };
 
         return (

@@ -48,7 +48,7 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     };
 
     return (
-        <Stack row alignCenter p="md">
+        <Stack row alignCenter p="md" spacing="md">
             {!inputFocused && (
                 <Stack row center spacing="md" pr="md">
                     <Pressable onPress={onExpense}>
@@ -98,7 +98,7 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
                     size="sm"
                     onPress={handleSendMessage}
                     variant="contained"
-                    color="error"
+                    color="primary"
                 />
             )}
         </Stack>
