@@ -6,8 +6,8 @@
     "version": "1.0.0",
     "main": "expo-router/entry",
     "scripts": {
-        "dev": "expo start",
-        "dev:storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
+        "dev": "env-cmd -f .env.dev expo start",
+        "dev:storybook": "env-cmd -f .env.storybook expo start",
         "run:ios": "expo run:ios --device",
         "run:android": "expo run:android --device",
         "lint": "eslint --ext js,ts,tsx . --max-warnings=0",
