@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import { Pressable } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
-
-import { useTheme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
-import { Icon } from '~/components/Icon';
 import { IconButton } from '~/components/IconButton';
 import { NewGroupMenu } from '~/components/NewGroupMenu/ImageUploadMenu';
 import { Screen } from '~/components/Screen';
@@ -20,7 +16,6 @@ export default screen(
         route: '/(authenticated)/(tabs)/groups',
     },
     ({ router }) => {
-        const { theme } = useTheme();
         const [groups] = trpc.groups.list.useSuspenseQuery();
         const [menuOpen, setMenuOpen] = useState<boolean>(false);
 

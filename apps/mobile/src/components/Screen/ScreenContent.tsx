@@ -1,4 +1,4 @@
-import { View, type ViewStyle } from 'react-native';
+import { type ViewStyle } from 'react-native';
 import { KeyboardAvoidingView, KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
