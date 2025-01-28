@@ -24,6 +24,10 @@ app.use(
 );
 
 app.get('/health-check', async (_, res) => {
+    res.status(200).send('OK');
+});
+
+app.get('/health-check/db', async (_, res) => {
     try {
         const profileCount = await db.profile.count();
         res.status(200).send('OK: ' + profileCount);
