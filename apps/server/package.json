@@ -7,13 +7,14 @@
     "main": "src/index.ts",
     "exports": {
         ".": {
-            "types": "./build/index.d.ts",
+            "types": "./src/trpc/types.ts",
             "default": null
         }
     },
     "scripts": {
         "dev": "tsx watch --env-file=.env  --clear-screen=false ./src/index.ts",
-        "build": "tsup-node",
+        "build": "esbuild src/index.ts --bundle --outfile=build/index.js --platform=node",
+        "start": "node ./build/index.js",
         "typecheck": "tsc --noEmit"
     },
     "keywords": [],
