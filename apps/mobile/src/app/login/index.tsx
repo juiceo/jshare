@@ -3,6 +3,8 @@ import type { TextInput } from 'react-native';
 import { router } from 'expo-router';
 import isEmail from 'validator/es/lib/isEmail';
 
+import { getEnv } from '@jshare/common';
+
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';

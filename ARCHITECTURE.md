@@ -38,6 +38,8 @@ The latest code is always automatically deployed to the staging environment when
 -   Backend hosted on Render
 -   Expo development build of the mobile app
 
+To run the app locally against the staging environment (remote server and database), run `pnpm start:staging`
+
 #### Production
 
 To-be-determined
