@@ -23,6 +23,19 @@
                 "resourceClass": "m1-medium"
             }
         },
+        "staging": {
+            "extends": "monorepo",
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk"
+            },
+            "ios": {
+                "resourceClass": "m1-medium"
+            },
+            "cache": {
+                "disabled": true
+            }
+        },
         "production": {
             "extends": "monorepo",
             "distribution": "store",
