@@ -36,7 +36,8 @@
         "@types/express": "catalog:",
         "@types/jsonwebtoken": "catalog:",
         "@types/shortid": "^2.2.0",
-        "tsx": "catalog:"
+        "tsx": "catalog:",
+        "tsup": "catalog:"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

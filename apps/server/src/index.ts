@@ -22,6 +22,10 @@ app.use(
     })
 );
 
+app.get('/health-check', (_, res) => {
+    res.status(200).send('OK');
+});
+
 app.listen(PORT, () => {
     console.log(`JShare server listening on port ${PORT}`);
 });
