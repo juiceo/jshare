@@ -13,6 +13,8 @@
         "typecheck": "turbo typecheck --ui stream",
         "test": "turbo test --ui stream",
         "build": "turbo build --ui stream",
+        "build:server": "turbo build --filter=\"{./apps/server}...\" --ui stream",
+        "start:server": "Echo 'starting server...'",
         "storybook": "pnpm --filter=@jshare/mobile run:ios:storybook",
         "fullcheck": "turbo typecheck test lint --ui stream",
         "turbo:clean": "turbo daemon clean",
