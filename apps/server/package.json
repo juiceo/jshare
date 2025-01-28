@@ -28,7 +28,8 @@
         "sharp": "catalog:",
         "shortid": "^2.2.17",
         "superjson": "catalog:",
-        "uuid": "catalog:"
+        "uuid": "catalog:",
+        "tsup": "catalog:"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",
@@ -36,8 +37,7 @@
         "@types/express": "catalog:",
         "@types/jsonwebtoken": "catalog:",
         "@types/shortid": "^2.2.0",
-        "tsx": "catalog:",
-        "tsup": "catalog:"
+        "tsx": "catalog:"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",
