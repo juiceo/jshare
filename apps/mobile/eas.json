@@ -20,17 +20,22 @@
                 "buildType": "apk"
             },
             "ios": {
-                "resourceClass": "m1-medium"
+                "resourceClass": "m-medium"
             }
         },
         "staging": {
             "extends": "monorepo",
             "distribution": "internal",
+            "env": {
+                "EXPO_PUBLIC_SUPABASE_API_URL": "https://ykhrnkimwecoagtidwzy.supabase.co",
+                "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
+                "EXPO_PUBLIC_JSHARE_API_URL": "https://api-staging.jshare.me"
+            },
             "android": {
                 "buildType": "apk"
             },
             "ios": {
-                "resourceClass": "m1-medium"
+                "resourceClass": "m-medium"
             },
             "cache": {
                 "disabled": true
@@ -43,7 +48,7 @@
                 "buildType": "app-bundle"
             },
             "ios": {
-                "resourceClass": "m1-medium"
+                "resourceClass": "m-medium"
             }
         }
     }
