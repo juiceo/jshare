@@ -8,7 +8,8 @@
             "cache": {
                 "key": "turbo",
                 "paths": ["../../node_modules/.cache/turbo"]
-            }
+            },
+            "channel": "monorepo"
         },
         "development": {
             "extends": "monorepo",
@@ -21,18 +22,13 @@
             },
             "env": {
                 "EXPO_USE_FAST_RESOLVER": "true"
-            }
+            },
+            "channel": "development"
         },
         "staging": {
             "extends": "monorepo",
             "distribution": "internal",
             "environment": "preview",
-            "env": {
-                "EXPO_USE_FAST_RESOLVER": "true",
-                "EXPO_PUBLIC_SUPABASE_API_URL": "https://ykhrnkimwecoagtidwzy.supabase.co",
-                "EXPO_PUBLIC_SUPABASE_ACCESS_TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHJua2ltd2Vjb2FndGlkd3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgwODI1NDIsImV4cCI6MjA1MzY1ODU0Mn0.Gidzik1wefcip22mbrE7mUtU9DdIq-Tl7NFOVyZ-fw0",
-                "EXPO_PUBLIC_JSHARE_API_URL": "https://api-staging.jshare.me"
-            },
             "android": {
                 "buildType": "apk"
             },
@@ -41,7 +37,8 @@
             },
             "cache": {
                 "disabled": true
-            }
+            },
+            "channel": "staging"
         },
         "production": {
             "extends": "monorepo",
@@ -54,7 +51,8 @@
             },
             "env": {
                 "EXPO_USE_FAST_RESOLVER": "true"
-            }
+            },
+            "channel": "production"
         }
     }
 }
