@@ -60,7 +60,7 @@ export const getExchangeRate = (args: {
     }
 
     if (rates[from] && rates[to]) {
-        return rates[from] / rates[to];
+        return rates[to] / rates[from];
     }
 
     return 0;
