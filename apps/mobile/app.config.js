@@ -1,8 +1,14 @@
 import 'dotenv/config';
 
 export default ({ config }) => {
-    console.log('Setting dynamic variables to App config...');
-    console.log('ENV VARS: ', process.env);
+    const environmentConfig = {
+        supabaseApiUrl: process.env.EXPO_PUBLIC_SUPABASE_API_URL,
+        supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+        jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
+    };
+
+    console.log('Setting environment config...');
+    console.log(environmentConfig);
     return {
         ...config,
         expo: {
@@ -40,12 +46,10 @@ export default ({ config }) => {
                 eas: {
                     projectId: '2ea87411-854e-47b5-8d23-f03472ae81fd',
                 },
-                supabaseApiUrl: process.env.EXPO_PUBLIC_SUPABASE_API_URL,
-                supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
-                jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
                 router: {
                     origin: false,
                 },
+                ...environmentConfig,
             },
             plugins: ['expo-router', 'expo-image-picker'],
             experiments: {
