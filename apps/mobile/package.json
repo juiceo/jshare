@@ -105,6 +105,7 @@
         "@types/validator": "catalog:",
         "babel-loader": "catalog:",
         "babel-preset-expo": "catalog:",
+        "dotenv": "^16.4.7",
         "env-cmd": "^10.1.0"
     },
     "expo": {
