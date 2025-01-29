@@ -128,7 +128,7 @@ export default screen(
                                   : 'Check for updates'}
                         </Button>
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
-                            Sign out
+                            Sign outie
                         </Button>
                     </Stack>
                 </Screen.Content>
