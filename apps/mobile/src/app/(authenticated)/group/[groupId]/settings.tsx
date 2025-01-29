@@ -74,6 +74,7 @@ export default screen(
                         />
                         <Typography variant="h4">{group.name}</Typography>
                     </Stack>
+                    <Typography variant="caption">Testing testing</Typography>
                     <Stack column p="xl">
                         <Typography variant="h6" mb="xl">
                             Members ({group.participants.length})
@@ -148,6 +149,7 @@ export default screen(
                                 />
                             </>
                         )}
+                        <Typography variant="caption">Testing testing</Typography>
                     </Stack>
                 </Screen.Content>
             </Screen>
