@@ -546,6 +546,9 @@ importers:
       blurhash:
         specifier: 'catalog:'
         version: 2.0.5
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       express:
         specifier: 'catalog:'
         version: 4.21.0

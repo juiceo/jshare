@@ -25,6 +25,7 @@
         "@supabase/supabase-js": "catalog:",
         "@trpc/server": "catalog:",
         "blurhash": "catalog:",
+        "dayjs": "^1.11.13",
         "express": "catalog:",
         "jsonwebtoken": "catalog:",
         "sharp": "catalog:",
