@@ -1,6 +1,7 @@
 import { LayoutAnimation } from 'react-native';
 import { atom, useAtomValue } from 'jotai';
-import { uniqueId } from 'lodash';
+
+import { getRandomKey } from '@jshare/common';
 
 import { jotaiStore } from '~/wrappers/JotaiProvider';
 
@@ -57,7 +58,7 @@ export const toast = {
             variant: 'info',
             title,
             message,
-            key: uniqueId(),
+            key: getRandomKey(),
         });
     },
     warn: (title: string, message?: string) => {
@@ -65,7 +66,7 @@ export const toast = {
             variant: 'warning',
             title,
             message,
-            key: uniqueId(),
+            key: getRandomKey(),
         });
     },
     error: (title: string, message?: string) => {
@@ -73,7 +74,7 @@ export const toast = {
             variant: 'error',
             title,
             message,
-            key: uniqueId(),
+            key: getRandomKey(),
         });
     },
     success: (title: string, message?: string) => {
@@ -81,7 +82,7 @@ export const toast = {
             variant: 'success',
             title,
             message,
-            key: uniqueId(),
+            key: getRandomKey(),
         });
     },
     update: (key: string, args: Pick<ToastObject, 'variant' | 'title' | 'message'>) => {

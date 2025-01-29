@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { uniqueId } from 'lodash';
 
+import { getRandomKey } from '@jshare/common';
 import { DB } from '@jshare/db';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
@@ -32,8 +32,8 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
             if (!profile) return;
 
             const localMessage: DB.Message = {
-                id: uniqueId(),
-                key: uniqueId(),
+                id: getRandomKey(),
+                key: getRandomKey(),
                 text,
                 authorType: DB.AuthorType.User,
                 authorId: userId,

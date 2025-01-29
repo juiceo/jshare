@@ -86,8 +86,17 @@ export default screen(
                                         keyExtractor={(item) => {
                                             switch (item.type) {
                                                 case 'date':
+                                                    console.log(
+                                                        'KEY EXTRACTOR date',
+                                                        `date_${item.date}`
+                                                    );
                                                     return `date_${item.date}`;
                                                 case 'messages':
+                                                    console.log(
+                                                        `KEY EXTRACTOR messages`,
+                                                        `messages_${item.messages.at(-1)?.key ?? ''}`,
+                                                        item.messages.at(-1)
+                                                    );
                                                     return `messages_${item.messages.at(-1)?.key ?? ''}`;
                                             }
                                         }}
