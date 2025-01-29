@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import dayjs from 'dayjs';
+import * as Updates from 'expo-updates';
 
 import type { DB } from '@jshare/db';
 
@@ -12,6 +14,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useUpdateProfile } from '~/hooks/useUpdateProfile';
 import { trpc } from '~/services/trpc';
+import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -22,10 +25,22 @@ export default screen(
     ({ auth }) => {
         const [profile] = trpc.profiles.me.useSuspenseQuery();
         const { updateProfile } = useUpdateProfile();
+        const updates = Updates.useUpdates();
 
         const [firstName, setFirstName] = useState<string>(profile.firstName);
         const [lastName, setLastName] = useState<string>(profile.lastName);
         const [currency, setCurrency] = useState<DB.CurrencyCode>(profile.currency);
+
+        const checkForUpdates = () => {
+            Updates.checkForUpdateAsync().then((result) => {
+                if (result.isAvailable) {
+                    Updates.fetchUpdateAsync();
+                    Updates.reloadAsync();
+                } else {
+                    toast.info('Your app version is up to date!');
+                }
+            });
+        };
 
         return (
             <Screen>
@@ -96,6 +111,22 @@ export default screen(
                                 title: 'Select currency',
                             }}
                         />
+                        <Typography variant="caption" align="center">
+                            App version: {JSON.stringify(updates.currentlyRunning.updateId)} (
+                            {dayjs(updates.currentlyRunning.createdAt).format('DD/MM/YYYY HH:mm')})
+                        </Typography>
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            onPress={checkForUpdates}
+                            loading={updates.isChecking || updates.isDownloading}
+                        >
+                            {updates.isChecking
+                                ? 'Checking for updates...'
+                                : updates.isDownloading
+                                  ? 'Downloading update...'
+                                  : 'Check for updates'}
+                        </Button>
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
                             Sign out
                         </Button>

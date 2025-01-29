@@ -58,7 +58,7 @@
         "expo-linking": "catalog:",
         "expo-router": "catalog:",
         "expo-status-bar": "catalog:",
-        "expo-updates": "catalog:",
+        "expo-updates": "^0.25.27",
         "jotai": "catalog:",
         "lodash": "catalog:",
         "lucide-react-native": "catalog:",

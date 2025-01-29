@@ -23,6 +23,7 @@ export default ({ config }) => {
                 backgroundColor: '#ffffff',
             },
             updates: {
+                enabled: true,
                 fallbackToCacheTimeout: 0,
                 url: 'https://u.expo.dev/2ea87411-854e-47b5-8d23-f03472ae81fd',
             },
