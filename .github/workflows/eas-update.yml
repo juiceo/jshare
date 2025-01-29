@@ -33,4 +33,4 @@ jobs:
               uses: expo/expo-github-action/preview@v8
               with:
                   working-directory: apps/mobile
-                  command: env-cmd -f .env.staging eas update --auto --non-interactive --branch=main
+                  command: env-cmd -f .env.staging eas update --auto --non-interactive --branch=staging
