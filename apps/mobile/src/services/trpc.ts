@@ -1,15 +1,16 @@
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
+import Constants from 'expo-constants';
 import superjson from 'superjson';
 
 import type { AppRouter } from '@jshare/server';
 
 import { getAccessToken } from '~/state/auth';
 
-const apiBaseUrl = process.env.JSHARE_API_URL;
+const apiBaseUrl = Constants.expoConfig?.extra?.jshareApiUrl;
 if (!apiBaseUrl) {
-    throw new Error('Missing JSHARE_API_URL env variable');
+    throw new Error('Missing "jshareApiUrl" config variable');
 }
 
 export type TrpcInputs = inferRouterInputs<AppRouter>;
