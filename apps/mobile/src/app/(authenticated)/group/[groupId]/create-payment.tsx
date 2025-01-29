@@ -49,7 +49,7 @@ export default screen(
                 payer: profile,
                 recipient: null,
                 amount: 0,
-                currency: 'USD',
+                currency: group.currency,
                 description: '',
             },
             resolver: zodResolver(schema.passthrough()),

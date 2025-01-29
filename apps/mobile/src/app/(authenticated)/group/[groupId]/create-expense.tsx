@@ -29,7 +29,7 @@ export default screen(
             defaultValues: {
                 payerId: auth.session.user.id,
                 amount: 0,
-                currency: 'USD',
+                currency: group.currency,
                 description: '',
                 shares: getDefaultShares(groupMembers ?? []),
             },

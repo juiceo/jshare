@@ -1,5 +1,11 @@
-import { useRef } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { useRef, useState } from 'react';
+import {
+    StyleSheet,
+    TextInput,
+    View,
+    type NativeSyntheticEvent,
+    type TextInputChangeEventData,
+} from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
 import { useTheme, type Theme } from '@jshare/theme';
@@ -25,9 +31,18 @@ export const MoneyInput = (props: MoneyInputProps) => {
     const majorUnits = Math.floor(value / 100);
     const minorUnits = value % 100;
 
+    const [minorUnitsValue, setMinorUnitsValue] = useState<string>(
+        minorUnits === 0 ? '' : minorUnits.toString()
+    );
+
     const styles = getStyles(theme);
 
-    const handleMajorUnitsChange = (value: string) => {
+    const handleMajorUnitsChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+        const value = e.nativeEvent.text;
+        if (value.length > 7) {
+            e.preventDefault();
+            return;
+        }
         let units = value ? parseInt(value, 10) : 0;
         if (isNaN(units)) {
             units = 0;
@@ -36,12 +51,29 @@ export const MoneyInput = (props: MoneyInputProps) => {
         onChange(units * 100 + minorUnits);
     };
 
-    const handleMinorUnitsChange = (value: string) => {
-        let units = value ? parseInt(value, 10) : 0;
+    const handleMinorUnitsChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+        const value = e.nativeEvent.text;
+        if (value.length > 2) return;
+        setMinorUnitsValue(value);
+    };
+
+    const handleMinorUnitsBlur = () => {
+        let units =
+            minorUnitsValue.length === 0
+                ? 0
+                : minorUnitsValue.length === 1
+                  ? 10 * parseInt(minorUnitsValue, 10)
+                  : parseInt(minorUnitsValue, 10);
         if (isNaN(units)) {
             units = 0;
         }
         if (units > 99) return;
+        if (units === 0) {
+            setMinorUnitsValue('');
+        }
+        if (units >= 10 && minorUnitsValue.length === 1) {
+            setMinorUnitsValue(units.toString());
+        }
         onChange(majorUnits * 100 + units);
     };
 
@@ -53,17 +85,28 @@ export const MoneyInput = (props: MoneyInputProps) => {
                         ref={majorUnitsInputRef}
                         style={styles.input}
                         value={majorUnits === 0 ? '' : majorUnits.toString()}
-                        onChangeText={handleMajorUnitsChange}
+                        onChange={handleMajorUnitsChange}
                         placeholderTextColor={theme.palette.text.disabled}
                         placeholder="0"
                         keyboardType="number-pad"
                         autoFocus={autoFocus}
+                        onKeyPress={(e) => {
+                            switch (e.nativeEvent.key) {
+                                case ',':
+                                case '.': {
+                                    minorUnitsInputRef.current?.focus();
+                                    break;
+                                }
+                            }
+                        }}
+                        maxLength={7}
                     />
                     <View style={[styles.dot, minorUnits !== 0 ? styles.dotActive : undefined]} />
                     <InputComponent
                         ref={minorUnitsInputRef}
-                        value={minorUnits === 0 ? '' : minorUnits.toString()}
-                        onChangeText={handleMinorUnitsChange}
+                        value={minorUnitsValue}
+                        onChange={handleMinorUnitsChange}
+                        onBlur={handleMinorUnitsBlur}
                         style={styles.input}
                         placeholderTextColor={theme.palette.text.disabled}
                         placeholder="00"
@@ -71,12 +114,13 @@ export const MoneyInput = (props: MoneyInputProps) => {
                         onKeyPress={(e) => {
                             switch (e.nativeEvent.key) {
                                 case 'Backspace':
-                                    if (minorUnits === 0) {
+                                    if (minorUnitsValue.length === 0) {
                                         majorUnitsInputRef.current?.focus();
                                     }
                                     break;
                             }
                         }}
+                        maxLength={2}
                     />
                 </Stack>
             </Stack>
