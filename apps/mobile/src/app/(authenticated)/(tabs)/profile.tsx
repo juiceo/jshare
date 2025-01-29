@@ -114,7 +114,7 @@ export default screen(
                         <Typography variant="caption" align="center">
                             App version {JSON.stringify(updates.currentlyRunning.updateId)} (
                             {dayjs(updates.currentlyRunning.createdAt).format('DD/MM/YYYY HH:mm')})
-                            ({JSON.stringify(updates.currentlyRunning)})
+                            ({JSON.stringify(updates.currentlyRunning.updateId)})
                         </Typography>
                         <Typography variant="caption" align="center">
                             Init error: {JSON.stringify(updates.initializationError?.message)}
