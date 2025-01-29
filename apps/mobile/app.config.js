@@ -12,7 +12,7 @@ export default ({ config }) => {
             name: 'jshare',
             slug: 'jshare',
             owner: 'juiceo',
-            version: '1.0.0',
+            version: '1.0.1',
             orientation: 'portrait',
             icon: './assets/icon.png',
             userInterfaceStyle: 'dark',
@@ -34,7 +34,7 @@ export default ({ config }) => {
             assetBundlePatterns: ['**/*'],
             ios: {
                 bundleIdentifier: 'com.juiceo.jshare',
-                buildNumber: '1.0.0',
+                buildNumber: '1.0.1',
                 supportsTablet: true,
             },
             android: {
