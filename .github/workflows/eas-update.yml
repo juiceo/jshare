@@ -30,4 +30,7 @@ jobs:
               run: pnpm run -w build:mobile
 
             - name: 🚀 Update staging EAS build
-              run: eas update --auto --non-interactive --branch=main
+              working-directory: apps/mobile
+              with:
+                  working-directory: apps/mobile
+                  command: eas update --auto --non-interactive --branch=main
