@@ -14,11 +14,12 @@
         "build": "rsync -a --delete ./src/ ./build/",
         "db:migrate": "npx prisma migrate dev",
         "db:migrate:deploy": "prisma migrate deploy && pnpm db:post-migrate",
-        "db:post-migrate": "pnpm db:enable-realtime && pnpm db:enable-rls",
+        "db:post-migrate": "pnpm db:enable-realtime && pnpm db:enable-rls && pnpm db:create-buckets",
         "db:inspect": "npx prisma studio",
         "db:reset": "supabase db reset && npx prisma migrate deploy && pnpm db:post-migrate",
         "db:enable-realtime": "echo 'Enabling realtime publications...' && prisma db execute --file ./scripts/enable_realtime.sql --schema ./prisma/schema.prisma",
-        "db:enable-rls": "echo 'Enabling RLS...' && prisma db execute --file ./scripts/enable_rls.sql --schema ./prisma/schema.prisma"
+        "db:enable-rls": "echo 'Enabling RLS...' && prisma db execute --file ./scripts/enable_rls.sql --schema ./prisma/schema.prisma",
+        "db:create-buckets": "echo 'Creating buckets...' && prisma db execute --file ./scripts/create_buckets.sql --schema ./prisma/schema.prisma"
     },
     "dependencies": {
         "@zenstackhq/runtime": "^2.11.2"
