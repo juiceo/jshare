@@ -61,7 +61,7 @@ export default screen(
                                     {profile?.firstName} {profile?.lastName}
                                 </Typography>
                                 <Typography variant="body2" color="secondary" align="center">
-                                    Joined Oct 24, 2024
+                                    Joined {dayjs(profile.createdAt).format('MMM D, YYYY')}
                                 </Typography>
                             </Stack>
                         </Stack>
@@ -128,7 +128,7 @@ export default screen(
                                   : 'Check for updates'}
                         </Button>
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
-                            Sign outie
+                            Sign out
                         </Button>
                     </Stack>
                 </Screen.Content>
