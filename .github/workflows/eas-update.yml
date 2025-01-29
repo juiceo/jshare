@@ -30,4 +30,4 @@ jobs:
               run: pnpm run -w build:mobile
 
             - name: 🚀 Update staging EAS build
-              run: echo 'run the update script here'
+              run: eas update --auto --non-interactive --branch=main
