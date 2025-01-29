@@ -4,5 +4,5 @@ export enum SupabaseStorageBucket {
      * - Authenticated users can upload files
      * - No one can update or delete files
      */
-    Public = 'public',
+    Public = 'public_uploads',
 }

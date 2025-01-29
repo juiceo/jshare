@@ -6,9 +6,6 @@ export default ({ config }) => {
         supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
         jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
     };
-
-    console.log('Setting environment config...');
-    console.log(environmentConfig);
     return {
         ...config,
         expo: {
