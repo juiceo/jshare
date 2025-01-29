@@ -54,6 +54,7 @@ enum CurrencyCode {
     TZS
     USD
     ZAR
+    KZT
 
     @@schema("public")
 }

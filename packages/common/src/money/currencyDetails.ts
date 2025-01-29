@@ -11,6 +11,11 @@ export type CurrencyDetails = {
     ranking: number | null;
 };
 
+/**
+ * All currencies here when more need to be added:
+ *
+ * https://gist.github.com/juiceo/d1adc00b9888394dcfb0927363af1918
+ */
 export const CURRENCY_DETAILS: Record<DB.CurrencyCode, CurrencyDetails> = {
     AED: {
         symbol: 'AED',
@@ -170,6 +175,16 @@ export const CURRENCY_DETAILS: Record<DB.CurrencyCode, CurrencyDetails> = {
         rounding: 0,
         code: 'KES',
         name_plural: 'Kenyan shillings',
+        ranking: null,
+    },
+    KZT: {
+        symbol: 'KZT',
+        name: 'Kazakhstani Tenge',
+        symbol_native: 'тңг.',
+        decimal_digits: 2,
+        rounding: 0,
+        code: 'KZT',
+        name_plural: 'Kazakhstani tenges',
         ranking: null,
     },
     MAD: {

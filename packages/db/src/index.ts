@@ -62,6 +62,7 @@ export namespace DB {
         HUF: 'HUF',
         INR: 'INR',
         KES: 'KES',
+        KZT: 'KZT',
         MAD: 'MAD',
         MXN: 'MXN',
         NOK: 'NOK',

@@ -285,7 +285,8 @@ exports.CurrencyCode = exports.$Enums.CurrencyCode = {
   THB: 'THB',
   TZS: 'TZS',
   USD: 'USD',
-  ZAR: 'ZAR'
+  ZAR: 'ZAR',
+  KZT: 'KZT'
 };
 
 exports.Role = exports.$Enums.Role = {
