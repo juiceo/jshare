@@ -83,3 +83,4 @@
     [ ] Add "lastActivity" to groups, use it to sort groups on the home page
     [ ] Add "lastActive" to users, use it sort users on the group settings page
     [ ] Add Kazakhstan to the list of supported currencies, update exchange rates
+    [ ] Fix issue with cents field in the expense form
