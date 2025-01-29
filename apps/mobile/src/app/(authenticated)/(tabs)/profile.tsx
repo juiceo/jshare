@@ -114,8 +114,19 @@ export default screen(
                         <Typography variant="caption" align="center">
                             App version {JSON.stringify(updates.currentlyRunning.updateId)} (
                             {dayjs(updates.currentlyRunning.createdAt).format('DD/MM/YYYY HH:mm')})
-                            (embededded = {updates.currentlyRunning.isEmbeddedLaunch})(channel ={' '}
-                            {updates.currentlyRunning.channel})
+                            ({JSON.stringify(updates.currentlyRunning)})
+                        </Typography>
+                        <Typography variant="caption" align="center">
+                            Init error: {JSON.stringify(updates.initializationError?.message)}
+                        </Typography>
+                        <Typography variant="caption" align="center">
+                            Check error: {JSON.stringify(updates.checkError?.message)}
+                        </Typography>
+                        <Typography variant="caption" align="center">
+                            Download error: {JSON.stringify(updates.downloadError?.message)}
+                        </Typography>
+                        <Typography variant="caption" align="center">
+                            Downloaded update: {JSON.stringify(updates.downloadedUpdate)}
                         </Typography>
                         <Button
                             color="secondary"
