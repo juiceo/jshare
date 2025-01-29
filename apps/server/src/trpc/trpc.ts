@@ -3,11 +3,13 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import jwt from 'jsonwebtoken';
 import superjson from 'superjson';
 
-import { getEnv } from '@jshare/common';
-
 import { ACL } from './acl';
 
-const jwtSecret = getEnv('JWT_SECRET', { required: true });
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is missing');
+}
 
 export const createContext = async (opts: trpcExpress.CreateExpressContextOptions) => {
     return {
@@ -40,7 +42,7 @@ export const authProcedure = t.procedure.use(async function isAuthed(opts) {
     }
 
     try {
-        const decoded = jwt.verify(header, jwtSecret);
+        const decoded = jwt.verify(header, JWT_SECRET);
         if (typeof decoded === 'string') {
             throw new Error('Decoded JWT type was string, aborting...');
         }

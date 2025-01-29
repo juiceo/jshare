@@ -1,9 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-import { getEnv } from '@jshare/common';
+const supabaseUrl = process.env.SUPABASE_API_URL;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabaseUrl = getEnv('SUPABASE_API_URL', { required: true });
-const supabaseServiceRoleKey = getEnv('SUPABASE_SERVICE_ROLE_KEY', { required: true });
+if (!supabaseUrl) {
+    throw new Error('SUPABASE_API_URL environment variable is missing');
+}
+
+if (!supabaseServiceRoleKey) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY environment variable is missing');
+}
 
 export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
     auth: {
