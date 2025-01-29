@@ -114,6 +114,8 @@ export default screen(
                         <Typography variant="caption" align="center">
                             App version: {JSON.stringify(updates.currentlyRunning.updateId)} (
                             {dayjs(updates.currentlyRunning.createdAt).format('DD/MM/YYYY HH:mm')})
+                            (embededded = {updates.currentlyRunning.isEmbeddedLaunch})(channel ={' '}
+                            {updates.currentlyRunning.channel})
                         </Typography>
                         <Button
                             color="secondary"
