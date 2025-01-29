@@ -20,6 +20,7 @@ export default screen(
     },
     ({ params, auth, router }) => {
         const userId = auth.session.user.id;
+        const trpcUtils = trpc.useUtils();
         const [checked, setChecked] = useState<PaymentObject[]>([]);
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
         const [balances] = trpc.balances.getByParticipantInGroup.useSuspenseQuery({
@@ -61,6 +62,9 @@ export default screen(
                     currency: payment.currency,
                 });
             }
+
+            trpcUtils.balances.invalidate();
+            trpcUtils.payments.invalidate();
 
             router.back();
         };

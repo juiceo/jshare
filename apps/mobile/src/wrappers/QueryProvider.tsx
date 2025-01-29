@@ -7,7 +7,18 @@ import { useSession } from '~/wrappers/SessionProvider';
 export const QueryProvider = (props: PropsWithChildren) => {
     const { session } = useSession();
     const accessToken = session?.access_token;
-    const [queryClient] = useState(() => new QueryClient());
+    const [queryClient] = useState(
+        () =>
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        networkMode: 'offlineFirst',
+                        refetchOnReconnect: 'always',
+                        staleTime: 60_000,
+                    },
+                },
+            })
+    );
     const [trpcClient] = useState(() =>
         trpc.createClient({
             links: [trpcHttpLink],

@@ -14,6 +14,7 @@ export default screen(
         auth: true,
     },
     ({ router, params, auth }) => {
+        const trpcUtils = trpc.useUtils();
         const [group] = trpc.groups.getByCode.useSuspenseQuery({ code: params.code });
         const joinGroup = trpc.groups.joinByCode.useMutation();
 
@@ -24,6 +25,7 @@ export default screen(
             if (!isMember) {
                 await joinGroup.mutateAsync({ code: params.code });
             }
+            trpcUtils.groups.invalidate();
             router.dismiss();
             router.dismiss();
             router.push({

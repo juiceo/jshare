@@ -57,7 +57,7 @@ export default screen(
                 groupId: params.groupId,
                 updates: args,
             });
-            trpcUtils.groups.get.invalidate();
+            trpcUtils.groups.invalidate();
         };
 
         return (

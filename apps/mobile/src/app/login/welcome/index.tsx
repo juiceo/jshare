@@ -39,6 +39,7 @@ export default screen(
             resolver: zodResolver(schema),
         });
 
+        const trpcUtils = trpc.useUtils();
         const createProfile = trpc.profiles.create.useMutation();
         const [image, setImage] = useState<DB.Image | null>(null);
 
@@ -52,9 +53,10 @@ export default screen(
                 firstName: data.firstName,
                 lastName: data.lastName,
                 avatarId: image?.id,
-                currency: 'USD', //TODO: Add input for preferred currency
+                currency: data.currency,
                 email,
             });
+            trpcUtils.profiles.invalidate();
             router.dismissAll();
             router.replace('/(authenticated)/(tabs)/groups');
         };

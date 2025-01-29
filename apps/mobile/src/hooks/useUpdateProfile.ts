@@ -18,6 +18,7 @@ export const useUpdateProfile = () => {
             return updateProfileMutation.mutateAsync(args, {
                 onSuccess: (data) => {
                     trpcUtils.profiles.me.setData(undefined, () => data);
+                    trpcUtils.profiles.me.invalidate();
                 },
             });
         },

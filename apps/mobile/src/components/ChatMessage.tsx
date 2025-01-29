@@ -8,7 +8,6 @@ import { useTheme, type Theme } from '@jshare/theme';
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessageAttachment } from '~/components/ChatMessageAttachment';
-import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
 
 export type ChatMessageProps = {
@@ -69,7 +68,6 @@ export const ChatMessage = (props: ChatMessageProps) => {
                 <Typography variant="caption" color="hint">
                     {dayjs(props.timestamp).format('HH:mm')}
                 </Typography>
-                <Icon name="CheckCheck" size={12} color={(theme) => theme.palette.primary.light} />
             </Stack>
         </LinearGradient>
     );
