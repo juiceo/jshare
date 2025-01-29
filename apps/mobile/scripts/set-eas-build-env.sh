@@ -23,3 +23,6 @@ case "$EAS_BUILD_PROFILE" in
     exit 1
     ;;
 esac
+
+echo ".env file now"
+cat .env
