@@ -23,6 +23,7 @@
         "eas:build:android:development": "eas build --profile production --platform android",
         "eas:build:android:production": "eas build --profile production --platform android",
         "eas:update:staging": "env-cmd -f .env.staging eas update --branch=staging",
+        "eas:update:staging:ci": "env-cmd -f .env.staging eas update --auto --non-interactive --branch=staging",
         "eas:update:production": "env-cmd -f .env.production eas update --branch=production",
         "eas-build-pre-install": "./scripts/set-eas-build-env.sh",
         "storybook-generate": "sb-rn-get-stories",

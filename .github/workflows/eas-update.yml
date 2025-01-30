@@ -30,7 +30,5 @@ jobs:
               run: pnpm run -w build:mobile
 
             - name: 🚀 Update EAS main branch
-              uses: expo/expo-github-action/preview@v8
-              with:
-                  working-directory: apps/mobile
-                  command: env-cmd -f .env.staging eas update --auto --non-interactive --branch=staging
+              working-directory: apps/mobile
+              run: pnpm eas:update:staging:ci
