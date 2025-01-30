@@ -11,7 +11,7 @@ const baseSchema = zod_1.z.object({
     name: zod_1.z.string(),
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
     inviteCode: zod_1.z.string().nullish(),
-    lastActivity: zod_1.z.coerce.date().default(() => new Date()).nullish(),
+    lastActivity: zod_1.z.coerce.date().default(() => new Date()),
 }).strict();
 const relationSchema = zod_1.z.object({
     participants: zod_1.z.array(zod_1.z.unknown()).optional(),
@@ -47,7 +47,7 @@ exports.GroupPrismaUpdateSchema = zod_1.z.object({
     name: zod_1.z.string(),
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
     inviteCode: zod_1.z.string().nullish(),
-    lastActivity: zod_1.z.coerce.date().default(() => new Date()).nullish()
+    lastActivity: zod_1.z.coerce.date().default(() => new Date())
 }).partial().passthrough();
 /**
  * `Group` schema for create operations excluding foreign keys and relations.

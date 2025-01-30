@@ -4,9 +4,9 @@ exports.ProfileUpdateWithoutExpenseSharesInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 const StringFieldUpdateOperationsInput_schema_1 = require("./StringFieldUpdateOperationsInput.schema");
+const DateTimeFieldUpdateOperationsInput_schema_1 = require("./DateTimeFieldUpdateOperationsInput.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const EnumCurrencyCodeFieldUpdateOperationsInput_schema_1 = require("./EnumCurrencyCodeFieldUpdateOperationsInput.schema");
-const DateTimeFieldUpdateOperationsInput_schema_1 = require("./DateTimeFieldUpdateOperationsInput.schema");
 const GroupParticipantUpdateManyWithoutUserNestedInput_schema_1 = require("./GroupParticipantUpdateManyWithoutUserNestedInput.schema");
 const ImageUpdateOneWithoutProfileNestedInput_schema_1 = require("./ImageUpdateOneWithoutProfileNestedInput.schema");
 const MessageUpdateManyWithoutAuthorNestedInput_schema_1 = require("./MessageUpdateManyWithoutAuthorNestedInput.schema");
@@ -19,7 +19,8 @@ exports.ProfileUpdateWithoutExpenseSharesInputObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), email: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), firstName: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), lastName: zod_1.z.union([zod_1.z.string(),
-        zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema),
+        zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), lastActivity: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema),
         zod_1.z.lazy(() => EnumCurrencyCodeFieldUpdateOperationsInput_schema_1.EnumCurrencyCodeFieldUpdateOperationsInputObjectSchema)]).optional(), createdAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), updatedAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), groups: zod_1.z.lazy(() => GroupParticipantUpdateManyWithoutUserNestedInput_schema_1.GroupParticipantUpdateManyWithoutUserNestedInputObjectSchema).optional(), avatar: zod_1.z.lazy(() => ImageUpdateOneWithoutProfileNestedInput_schema_1.ImageUpdateOneWithoutProfileNestedInputObjectSchema).optional(), messages: zod_1.z.lazy(() => MessageUpdateManyWithoutAuthorNestedInput_schema_1.MessageUpdateManyWithoutAuthorNestedInputObjectSchema).optional(), expensesOwned: zod_1.z.lazy(() => ExpenseUpdateManyWithoutOwnerNestedInput_schema_1.ExpenseUpdateManyWithoutOwnerNestedInputObjectSchema).optional(), expensesPaid: zod_1.z.lazy(() => ExpenseUpdateManyWithoutPayerNestedInput_schema_1.ExpenseUpdateManyWithoutPayerNestedInputObjectSchema).optional(), paymentsReceived: zod_1.z.lazy(() => PaymentUpdateManyWithoutRecipientNestedInput_schema_1.PaymentUpdateManyWithoutRecipientNestedInputObjectSchema).optional(), paymentsPaid: zod_1.z.lazy(() => PaymentUpdateManyWithoutPayerNestedInput_schema_1.PaymentUpdateManyWithoutPayerNestedInputObjectSchema).optional()

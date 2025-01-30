@@ -24,6 +24,14 @@ declare const metadata: {
                     name: string;
                     type: string;
                 };
+                lastActivity: {
+                    name: string;
+                    type: string;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
+                };
                 currency: {
                     name: string;
                     type: string;
@@ -255,7 +263,6 @@ declare const metadata: {
                 lastActivity: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: never[];

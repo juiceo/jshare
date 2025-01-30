@@ -7,6 +7,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
+    lastActivity: z.ZodDefault<z.ZodDate>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
@@ -15,6 +16,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     email: string;
     firstName: string;
     lastName: string;
+    lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
     createdAt: Date;
     updatedAt: Date;
@@ -24,6 +26,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
+    lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -35,6 +38,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
+    lastActivity: z.ZodDefault<z.ZodDate>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
@@ -54,6 +58,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     email: string;
     firstName: string;
     lastName: string;
+    lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
     createdAt: Date;
     updatedAt: Date;
@@ -72,6 +77,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
+    lastActivity?: Date | undefined;
     groups?: unknown[] | undefined;
     avatarId?: string | null | undefined;
     avatar?: Record<string, unknown> | undefined;
@@ -93,6 +99,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -101,6 +108,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -109,6 +117,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -122,6 +131,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -130,6 +140,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -138,6 +149,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -150,6 +162,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -159,6 +172,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
+    lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
@@ -167,6 +181,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
+    lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -178,6 +193,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -189,6 +205,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
+    lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -198,6 +215,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT";
+    lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -210,6 +228,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -218,6 +237,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -226,6 +246,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -238,6 +259,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
+    lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT"]>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -248,6 +270,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | undefined;
     avatarId?: string | null | undefined;
     createdAt?: Date | undefined;
@@ -257,6 +280,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | undefined;
     avatarId?: string | null | undefined;
     createdAt?: Date | undefined;

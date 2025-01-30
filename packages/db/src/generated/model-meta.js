@@ -19,6 +19,10 @@ const metadata = {
                 }, lastName: {
                     name: "lastName",
                     type: "String",
+                }, lastActivity: {
+                    name: "lastActivity",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [] }],
                 }, currency: {
                     name: "currency",
                     type: "CurrencyCode",
@@ -169,7 +173,6 @@ const metadata = {
                 }, lastActivity: {
                     name: "lastActivity",
                     type: "DateTime",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [] }],
                 },
             },

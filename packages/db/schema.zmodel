@@ -31,6 +31,7 @@ model Profile {
     email            String
     firstName        String
     lastName         String
+    lastActivity     DateTime           @default(now())
     currency         CurrencyCode
     groups           GroupParticipant[]
     avatarId         String?
@@ -62,7 +63,7 @@ model Group extends BaseModel {
     messages     Message[]
     expenses     Expense[]
     payments     Payment[]
-    lastActivity DateTime?          @default(now())
+    lastActivity DateTime           @default(now())
 
     @@allow('all', true)
     @@map("groups")

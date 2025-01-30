@@ -4,10 +4,10 @@ exports.ProfileWhereInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 const StringFilter_schema_1 = require("./StringFilter.schema");
+const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
-const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const GroupParticipantListRelationFilter_schema_1 = require("./GroupParticipantListRelationFilter.schema");
 const ImageNullableScalarRelationFilter_schema_1 = require("./ImageNullableScalarRelationFilter.schema");
 const ImageWhereInput_schema_1 = require("./ImageWhereInput.schema");
@@ -22,7 +22,8 @@ exports.ProfileWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string()]).optional(), email: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), firstName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), lastName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
-        zod_1.z.string()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
+        zod_1.z.string()]).optional(), lastActivity: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
         zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), avatarId: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
         zod_1.z.string(),
         zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
