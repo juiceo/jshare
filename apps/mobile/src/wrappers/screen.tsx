@@ -9,6 +9,7 @@ import {
     type Router,
     type Routes,
 } from 'expo-router';
+import * as Updates from 'expo-updates';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -17,7 +18,6 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
-import { supabase } from '~/services/supabase';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
@@ -35,6 +35,15 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
     return function SuspenseWrapper() {
         const params = useLocalSearchParams<RouteParams<TRoute>>();
         const router = useRouter();
+
+        const updates = Updates.useUpdates();
+
+        const handleReload = () => {
+            Updates.fetchUpdateAsync().then(() => {
+                Updates.reloadAsync();
+            });
+        };
+
         const renderError = (args: ErrorBoundaryFallbackArgs) => {
             return (
                 <Screen>
@@ -60,13 +69,10 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
                         <Stack column spacing="md">
                             <Button
                                 color="secondary"
-                                onPress={() => {
-                                    supabase.auth.signOut();
-                                    router.dismissAll();
-                                    router.replace('/login');
-                                }}
+                                onPress={handleReload}
+                                loading={updates.isChecking || updates.isDownloading}
                             >
-                                Clear local data
+                                Reload app
                             </Button>
                             <Button color="primary" onPress={args.reset}>
                                 Retry

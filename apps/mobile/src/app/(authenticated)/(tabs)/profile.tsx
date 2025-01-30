@@ -112,9 +112,8 @@ export default screen(
                             }}
                         />
                         <Typography variant="caption" align="center">
-                            App version {JSON.stringify(updates.currentlyRunning.updateId)} (
+                            App version {updates.currentlyRunning.runtimeVersion} (
                             {dayjs(updates.currentlyRunning.createdAt).format('DD/MM/YYYY HH:mm')})
-                            ({JSON.stringify(updates.currentlyRunning.updateId)})
                         </Typography>
                         <Button
                             color="secondary"

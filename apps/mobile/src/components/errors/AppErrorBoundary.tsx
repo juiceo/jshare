@@ -1,5 +1,6 @@
 import { type PropsWithChildren } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Updates from 'expo-updates';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -9,6 +10,15 @@ import { Typography } from '~/components/Typography';
 
 export const AppErrorBoundary = (props: PropsWithChildren) => {
     const insets = useSafeAreaInsets();
+
+    const updates = Updates.useUpdates();
+
+    const handleReload = () => {
+        Updates.fetchUpdateAsync().then(() => {
+            Updates.reloadAsync();
+        });
+    };
+
     const renderFallback = (args: ErrorBoundaryFallbackArgs) => {
         return (
             <Stack bg="background.main" flex={1}>
@@ -28,13 +38,13 @@ export const AppErrorBoundary = (props: PropsWithChildren) => {
                     <Typography variant="caption" align="center" color="error.light">
                         Error message: {args.error.message}
                     </Typography>
-                    <Typography variant="body1">
-                        If the error persists, please try to close and restart the app. If that
-                        doesn't help, you may need to uninstall and reinstall JShare.
-                    </Typography>
                 </Stack>
                 <Stack p="xl" style={{ marginBottom: insets.bottom }}>
-                    <Button color="primary" onPress={args.reset}>
+                    <Button
+                        color="primary"
+                        onPress={handleReload}
+                        loading={updates.isChecking || updates.isDownloading}
+                    >
                         Reload app
                     </Button>
                 </Stack>
