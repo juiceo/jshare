@@ -113,6 +113,7 @@ model Group {
   messages     Message[]
   expenses     Expense[]
   payments     Payment[]
+  lastActivity DateTime?          @default(now())
 
   @@map("groups")
   @@schema("public")

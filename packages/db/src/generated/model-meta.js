@@ -166,6 +166,11 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'group',
+                }, lastActivity: {
+                    name: "lastActivity",
+                    type: "DateTime",
+                    isOptional: true,
+                    attributes: [{ "name": "@default", "args": [] }],
                 },
             },
             uniqueConstraints: {

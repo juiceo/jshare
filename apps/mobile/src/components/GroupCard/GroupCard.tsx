@@ -1,4 +1,5 @@
 import { Dimensions } from 'react-native';
+import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { formatAmount } from '@jshare/common';
@@ -46,7 +47,9 @@ export const GroupCard = (props: GroupCardProps) => {
                     style={{ position: 'absolute', top: 0, left: 0, right: 0, paddingBottom: 50 }}
                 >
                     <Stack p="xl" row justifyBetween alignCenter>
-                        <Typography variant="caption">2 days ago</Typography>
+                        <Typography variant="caption">
+                            {dayjs(group.lastActivity).fromNow()}
+                        </Typography>
                         {userStatus && (
                             <StatusBadge
                                 amount={userStatus.balance}

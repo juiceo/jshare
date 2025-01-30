@@ -252,6 +252,15 @@ declare const metadata: {
                     isArray: boolean;
                     backLink: string;
                 };
+                lastActivity: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
+                };
             };
             uniqueConstraints: {
                 id: {

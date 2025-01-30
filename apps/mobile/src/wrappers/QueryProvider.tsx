@@ -14,7 +14,6 @@ export const QueryProvider = (props: PropsWithChildren) => {
                     queries: {
                         networkMode: 'offlineFirst',
                         refetchOnReconnect: 'always',
-                        staleTime: 60_000,
                     },
                 },
             })

@@ -8,6 +8,7 @@ const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
+const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 exports.GroupScalarWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.GroupScalarWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.GroupScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupScalarWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupScalarWhereInputObjectSchema),
@@ -20,5 +21,7 @@ exports.GroupScalarWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string(),
         zod_1.z.null()]).optional().nullable(), inviteCode: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
         zod_1.z.string(),
+        zod_1.z.null()]).optional().nullable(), lastActivity: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.null()]).optional().nullable()
 }).strict();

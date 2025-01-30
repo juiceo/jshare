@@ -62,6 +62,7 @@ model Group extends BaseModel {
     messages     Message[]
     expenses     Expense[]
     payments     Payment[]
+    lastActivity DateTime?          @default(now())
 
     @@allow('all', true)
     @@map("groups")

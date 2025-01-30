@@ -166,7 +166,7 @@ export const groupsRouter = router({
                 },
             },
             orderBy: {
-                updatedAt: 'desc',
+                lastActivity: 'desc',
             },
             include: {
                 ...defaultGroupInclude,

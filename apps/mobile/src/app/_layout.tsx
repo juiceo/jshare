@@ -5,6 +5,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { Stack } from 'expo-router';
 
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
@@ -15,6 +17,8 @@ import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
+
+dayjs.extend(relativeTime);
 
 const storybookEnabled = process.env.STORYBOOK_ENABLED === 'true';
 

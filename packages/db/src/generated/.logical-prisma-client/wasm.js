@@ -140,7 +140,8 @@ exports.Prisma.GroupScalarFieldEnum = {
   name: 'name',
   currency: 'currency',
   coverImageId: 'coverImageId',
-  inviteCode: 'inviteCode'
+  inviteCode: 'inviteCode',
+  lastActivity: 'lastActivity'
 };
 
 exports.Prisma.GroupParticipantScalarFieldEnum = {

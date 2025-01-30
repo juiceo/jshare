@@ -15,6 +15,6 @@ exports.GroupSelectObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => ImageArgs_schema_1.ImageArgsObjectSchema)]).optional(), inviteCode: zod_1.z.boolean().optional(), messages: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => MessageInput_schema_1.MessageInputSchema.findMany)]).optional(), expenses: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ExpenseInput_schema_1.ExpenseInputSchema.findMany)]).optional(), payments: zod_1.z.union([zod_1.z.boolean(),
-        zod_1.z.lazy(() => PaymentInput_schema_1.PaymentInputSchema.findMany)]).optional(), _count: zod_1.z.union([zod_1.z.boolean(),
+        zod_1.z.lazy(() => PaymentInput_schema_1.PaymentInputSchema.findMany)]).optional(), lastActivity: zod_1.z.boolean().optional(), _count: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => GroupCountOutputTypeArgs_schema_1.GroupCountOutputTypeArgsObjectSchema)]).optional()
 }).strict();

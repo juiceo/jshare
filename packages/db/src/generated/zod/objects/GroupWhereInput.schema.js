@@ -8,6 +8,7 @@ const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
+const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const GroupParticipantListRelationFilter_schema_1 = require("./GroupParticipantListRelationFilter.schema");
 const ImageNullableScalarRelationFilter_schema_1 = require("./ImageNullableScalarRelationFilter.schema");
 const ImageWhereInput_schema_1 = require("./ImageWhereInput.schema");
@@ -26,6 +27,8 @@ exports.GroupWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string(),
         zod_1.z.null()]).optional().nullable(), inviteCode: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
         zod_1.z.string(),
+        zod_1.z.null()]).optional().nullable(), lastActivity: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.null()]).optional().nullable(), participants: zod_1.z.lazy(() => GroupParticipantListRelationFilter_schema_1.GroupParticipantListRelationFilterObjectSchema).optional(), coverImage: zod_1.z.union([zod_1.z.lazy(() => ImageNullableScalarRelationFilter_schema_1.ImageNullableScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), messages: zod_1.z.lazy(() => MessageListRelationFilter_schema_1.MessageListRelationFilterObjectSchema).optional(), expenses: zod_1.z.lazy(() => ExpenseListRelationFilter_schema_1.ExpenseListRelationFilterObjectSchema).optional(), payments: zod_1.z.lazy(() => PaymentListRelationFilter_schema_1.PaymentListRelationFilterObjectSchema).optional()
