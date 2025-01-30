@@ -65,6 +65,11 @@ declare const metadata: {
                         id: string;
                     };
                 };
+                temporary: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 messages: {
                     name: string;
                     type: string;

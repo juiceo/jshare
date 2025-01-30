@@ -88,6 +88,7 @@ model Profile {
   groups           GroupParticipant[]
   avatarId         String?
   avatar           Image?             @relation(fields: [avatarId], references: [id])
+  temporary        Boolean?
   messages         Message[]
   expensesOwned    Expense[]          @relation("expense_owner")
   expensesPaid     Expense[]          @relation("expense_payer")

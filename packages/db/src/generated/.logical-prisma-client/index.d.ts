@@ -1980,6 +1980,7 @@ export namespace Prisma {
     lastActivity: Date | null
     currency: $Enums.CurrencyCode | null
     avatarId: string | null
+    temporary: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1992,6 +1993,7 @@ export namespace Prisma {
     lastActivity: Date | null
     currency: $Enums.CurrencyCode | null
     avatarId: string | null
+    temporary: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2004,6 +2006,7 @@ export namespace Prisma {
     lastActivity: number
     currency: number
     avatarId: number
+    temporary: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2018,6 +2021,7 @@ export namespace Prisma {
     lastActivity?: true
     currency?: true
     avatarId?: true
+    temporary?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2030,6 +2034,7 @@ export namespace Prisma {
     lastActivity?: true
     currency?: true
     avatarId?: true
+    temporary?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2042,6 +2047,7 @@ export namespace Prisma {
     lastActivity?: true
     currency?: true
     avatarId?: true
+    temporary?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2127,6 +2133,7 @@ export namespace Prisma {
     lastActivity: Date
     currency: $Enums.CurrencyCode
     avatarId: string | null
+    temporary: boolean | null
     createdAt: Date
     updatedAt: Date
     _count: ProfileCountAggregateOutputType | null
@@ -2156,6 +2163,7 @@ export namespace Prisma {
     lastActivity?: boolean
     currency?: boolean
     avatarId?: boolean
+    temporary?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     groups?: boolean | Profile$groupsArgs<ExtArgs>
@@ -2177,6 +2185,7 @@ export namespace Prisma {
     lastActivity?: boolean
     currency?: boolean
     avatarId?: boolean
+    temporary?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     avatar?: boolean | Profile$avatarArgs<ExtArgs>
@@ -2190,6 +2199,7 @@ export namespace Prisma {
     lastActivity?: boolean
     currency?: boolean
     avatarId?: boolean
+    temporary?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -2229,6 +2239,7 @@ export namespace Prisma {
       lastActivity: Date
       currency: $Enums.CurrencyCode
       avatarId: string | null
+      temporary: boolean | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["profile"]>
@@ -2639,6 +2650,7 @@ export namespace Prisma {
     readonly lastActivity: FieldRef<"Profile", 'DateTime'>
     readonly currency: FieldRef<"Profile", 'CurrencyCode'>
     readonly avatarId: FieldRef<"Profile", 'String'>
+    readonly temporary: FieldRef<"Profile", 'Boolean'>
     readonly createdAt: FieldRef<"Profile", 'DateTime'>
     readonly updatedAt: FieldRef<"Profile", 'DateTime'>
   }
@@ -12193,6 +12205,7 @@ export namespace Prisma {
     lastActivity: 'lastActivity',
     currency: 'currency',
     avatarId: 'avatarId',
+    temporary: 'temporary',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12420,6 +12433,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Role'
    */
   export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -12497,13 +12517,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -12531,6 +12544,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFilter<"Profile"> | Date | string
     currency?: EnumCurrencyCodeFilter<"Profile"> | $Enums.CurrencyCode
     avatarId?: StringNullableFilter<"Profile"> | string | null
+    temporary?: BoolNullableFilter<"Profile"> | boolean | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     groups?: GroupParticipantListRelationFilter
@@ -12551,6 +12565,7 @@ export namespace Prisma {
     lastActivity?: SortOrder
     currency?: SortOrder
     avatarId?: SortOrderInput | SortOrder
+    temporary?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     groups?: GroupParticipantOrderByRelationAggregateInput
@@ -12574,6 +12589,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFilter<"Profile"> | Date | string
     currency?: EnumCurrencyCodeFilter<"Profile"> | $Enums.CurrencyCode
     avatarId?: StringNullableFilter<"Profile"> | string | null
+    temporary?: BoolNullableFilter<"Profile"> | boolean | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     groups?: GroupParticipantListRelationFilter
@@ -12594,6 +12610,7 @@ export namespace Prisma {
     lastActivity?: SortOrder
     currency?: SortOrder
     avatarId?: SortOrderInput | SortOrder
+    temporary?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
@@ -12612,6 +12629,7 @@ export namespace Prisma {
     lastActivity?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     currency?: EnumCurrencyCodeWithAggregatesFilter<"Profile"> | $Enums.CurrencyCode
     avatarId?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    temporary?: BoolNullableWithAggregatesFilter<"Profile"> | boolean | null
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
   }
@@ -13294,6 +13312,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -13314,6 +13333,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -13332,6 +13352,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -13352,6 +13373,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -13371,6 +13393,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13382,6 +13405,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13394,6 +13418,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14146,6 +14171,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type GroupParticipantListRelationFilter = {
     every?: GroupParticipantWhereInput
     some?: GroupParticipantWhereInput
@@ -14214,6 +14244,7 @@ export namespace Prisma {
     lastActivity?: SortOrder
     currency?: SortOrder
     avatarId?: SortOrder
+    temporary?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14226,6 +14257,7 @@ export namespace Prisma {
     lastActivity?: SortOrder
     currency?: SortOrder
     avatarId?: SortOrder
+    temporary?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14238,6 +14270,7 @@ export namespace Prisma {
     lastActivity?: SortOrder
     currency?: SortOrder
     avatarId?: SortOrder
+    temporary?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14300,6 +14333,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type GroupCountOrderByAggregateInput = {
@@ -14985,6 +15026,10 @@ export namespace Prisma {
 
   export type EnumCurrencyCodeFieldUpdateOperationsInput = {
     set?: $Enums.CurrencyCode
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
   }
 
   export type GroupParticipantUpdateManyWithoutUserNestedInput = {
@@ -15865,6 +15910,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15943,6 +15993,14 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
@@ -16840,6 +16898,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: ImageCreateNestedOneWithoutProfileInput
@@ -16859,6 +16918,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
@@ -16925,6 +16985,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: ImageUpdateOneWithoutProfileNestedInput
@@ -16944,6 +17005,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
@@ -17038,6 +17100,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17056,6 +17119,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17134,6 +17198,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFilter<"Profile"> | Date | string
     currency?: EnumCurrencyCodeFilter<"Profile"> | $Enums.CurrencyCode
     avatarId?: StringNullableFilter<"Profile"> | string | null
+    temporary?: BoolNullableFilter<"Profile"> | boolean | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
   }
@@ -17145,6 +17210,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17164,6 +17230,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17256,6 +17323,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -17275,6 +17343,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -17491,6 +17560,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17510,6 +17580,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17532,6 +17603,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17551,6 +17623,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17675,6 +17748,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -17694,6 +17768,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -17722,6 +17797,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -17741,6 +17817,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -17829,6 +17906,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17848,6 +17926,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17914,6 +17993,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -17933,6 +18013,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18022,6 +18103,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -18041,6 +18123,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18063,6 +18146,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -18082,6 +18166,7 @@ export namespace Prisma {
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
     avatarId?: string | null
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18154,6 +18239,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18173,6 +18259,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18201,6 +18288,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18220,6 +18308,7 @@ export namespace Prisma {
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18743,6 +18832,7 @@ export namespace Prisma {
     lastName: string
     lastActivity?: Date | string
     currency: $Enums.CurrencyCode
+    temporary?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18792,6 +18882,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18810,6 +18901,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18828,6 +18920,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     lastActivity?: DateTimeFieldUpdateOperationsInput | Date | string
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
+    temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

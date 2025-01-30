@@ -11,6 +11,7 @@ const baseSchema = zod_1.z.object({
     lastName: zod_1.z.string(),
     lastActivity: zod_1.z.coerce.date().default(() => new Date()),
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
+    temporary: zod_1.z.boolean().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
 }).strict();
@@ -51,6 +52,7 @@ exports.ProfilePrismaUpdateSchema = zod_1.z.object({
     lastName: zod_1.z.string(),
     lastActivity: zod_1.z.coerce.date().default(() => new Date()),
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
+    temporary: zod_1.z.boolean().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date())
 }).partial().passthrough();

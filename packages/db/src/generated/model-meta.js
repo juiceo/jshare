@@ -47,6 +47,10 @@ const metadata = {
                     backLink: 'Profile',
                     isRelationOwner: true,
                     foreignKeyMapping: { "id": "avatarId" },
+                }, temporary: {
+                    name: "temporary",
+                    type: "Boolean",
+                    isOptional: true,
                 }, messages: {
                     name: "messages",
                     type: "Message",
