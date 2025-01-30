@@ -57,8 +57,14 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                     )}
                 </Stack>
                 <Stack column flex={1} center>
-                    <Typography variant="h4" align="center">
-                        {title.trim()}
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        style={{ lineHeight: 0 }}
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                    >
+                        {title}
                     </Typography>
                     {subtitle && (
                         <Typography variant="caption" color="hint" align="center">

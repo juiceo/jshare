@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import dayjs from 'dayjs';
 import * as Clipboard from 'expo-clipboard';
+import { sortBy } from 'lodash';
 
 import { DB } from '@jshare/db';
 
+import { Divider } from '~/components/atoms/Divider';
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
@@ -16,6 +19,7 @@ import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { trpc } from '~/services/trpc';
 import { toast } from '~/state/toast';
+import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -26,6 +30,7 @@ export default screen(
     ({ params, auth, router }) => {
         const trpcUtils = trpc.useUtils();
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const { presentUserIds } = useGroupContext();
         const updateGroup = trpc.groups.update.useMutation();
         const refreshInviteCode = trpc.groups.refreshCode.useMutation();
         const deleteGroup = trpc.groups.delete.useMutation();
@@ -66,18 +71,24 @@ export default screen(
             trpcUtils.groups.invalidate();
         };
 
-        const handleDelete = async () => {
+        const handleGroupDelete = async () => {
             try {
                 await deleteGroup.mutateAsync({ groupId: params.groupId });
                 trpcUtils.groups.invalidate();
                 router.replace('/(authenticated)/(tabs)/groups');
                 toast.info(`Success`, `${group.name} was deleted`);
-            } catch (err) {
-                console.log('ERROR', err);
+            } catch {
                 toast.error('Something went wrong');
             }
             setDeleting(false);
         };
+
+        const sortedParticipants = useMemo(() => {
+            return sortBy(group.participants, (participant) => {
+                if (presentUserIds.includes(participant.userId)) return -Infinity;
+                return -1 * new Date(participant.user.lastActivity).valueOf();
+            });
+        }, [group.participants, presentUserIds]);
 
         return (
             <Screen>
@@ -131,25 +142,39 @@ export default screen(
                             </BorderlessButton>
                         )}
 
-                        <Stack column spacing="xl" bg="background.elevation1" br="xl">
-                            {group.participants.map((participant) => (
-                                <Stack row p="xl" spacing="xl" key={participant.id}>
-                                    <Avatar userId={participant.userId} size="lg" />
-                                    <Stack column flex={1}>
-                                        <Typography variant="subtitle1">
-                                            <UserName userId={participant.userId} variant="full" />
-                                        </Typography>
-                                        <Typography variant="caption" color="hint">
-                                            Last seen 2 minutes ago
-                                        </Typography>
+                        <Stack column bg="background.elevation1" br="xl">
+                            {sortedParticipants.map((participant, index) => (
+                                <>
+                                    <Stack row alignCenter p="xl" spacing="xl" key={participant.id}>
+                                        <Avatar userId={participant.userId} size="lg" />
+                                        <Stack column flex={1}>
+                                            <Typography variant="subtitle1">
+                                                <UserName
+                                                    userId={participant.userId}
+                                                    variant="full"
+                                                />
+                                            </Typography>
+                                            {presentUserIds.includes(participant.userId) ? (
+                                                <Typography variant="caption" color="primary.light">
+                                                    Online
+                                                </Typography>
+                                            ) : (
+                                                <Typography variant="caption" color="hint">
+                                                    {`Last seen ${dayjs(participant.user.lastActivity).fromNow()}`}
+                                                </Typography>
+                                            )}
+                                        </Stack>
+                                        <Stack column center>
+                                            <Typography variant="subtitle2" color="hint">
+                                                {participant.role === 'Owner' && 'Owner'}
+                                                {participant.role === 'Admin' && 'Admin'}
+                                            </Typography>
+                                        </Stack>
                                     </Stack>
-                                    <Stack column center>
-                                        <Typography variant="subtitle2" color="hint">
-                                            {participant.role === 'Owner' && 'Owner'}
-                                            {participant.role === 'Admin' && 'Admin'}
-                                        </Typography>
-                                    </Stack>
-                                </Stack>
+                                    {index !== group.participants.length - 1 && (
+                                        <Divider horizontal color="background.main" />
+                                    )}
+                                </>
                             ))}
                         </Stack>
                         {isAdmin && (
@@ -175,7 +200,7 @@ export default screen(
                                         <DeleteConfirmation
                                             isOpen={isDeleting}
                                             onClose={() => setDeleting(false)}
-                                            onConfirm={handleDelete}
+                                            onConfirm={handleGroupDelete}
                                             title="Delete group?"
                                             description="All data related to this group will be deleted. This action cannot be undone."
                                             confirmPhrase={group.name}

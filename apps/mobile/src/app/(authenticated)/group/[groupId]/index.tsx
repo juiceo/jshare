@@ -19,7 +19,9 @@ import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
 import { trpc } from '~/services/trpc';
+import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
+import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -32,6 +34,7 @@ export default screen(
         const { groupId } = params;
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
+        const { presentUserIds } = useGroupContext();
         const router = useRouter();
         const insets = useSafeAreaInsets();
 
@@ -49,6 +52,10 @@ export default screen(
             <Screen>
                 <Screen.Header
                     title={group.name}
+                    subtitle={getGroupSubheader(
+                        group.participants.length,
+                        presentUserIds.length - 1 // Subtract the current user
+                    )}
                     footer={<ChatStatusHeader groupId={group.id} currency={group.currency} />}
                     right={
                         <BorderlessButton
