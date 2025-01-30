@@ -130,7 +130,7 @@ model GroupParticipant {
   userId      String
   user        Profile     @relation(fields: [userId], references: [userId])
   groupId     String
-  group       Group       @relation(fields: [groupId], references: [id])
+  group       Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
   role        Role
   invitedById String?
   inviteType  InviteType?
@@ -168,7 +168,7 @@ model Message {
   authorId    String?
   author      Profile?            @relation(fields: [authorId], references: [userId])
   groupId     String
-  group       Group               @relation(fields: [groupId], references: [id])
+  group       Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
   attachments MessageAttachment[]
 
   @@map("messages")
@@ -181,10 +181,10 @@ model MessageAttachment {
   createdAt DateTime              @default(now())
   updatedAt DateTime              @default(now()) @updatedAt()
   messageId String
-  message   Message               @relation(fields: [messageId], references: [id])
+  message   Message               @relation(fields: [messageId], references: [id], onDelete: Cascade)
   type      MessageAttachmentType
   expenseId String?
-  expense   Expense?              @relation(fields: [expenseId], references: [id])
+  expense   Expense?              @relation(fields: [expenseId], references: [id], onDelete: SetNull)
 
   @@map("message_attachments")
   @@schema("public")
@@ -200,7 +200,7 @@ model Expense {
   payerId            String
   payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [userId])
   groupId            String
-  group              Group               @relation(fields: [groupId], references: [id])
+  group              Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
   amount             Int
   currency           CurrencyCode
   description        String?
@@ -221,7 +221,7 @@ model ExpenseShare {
   userId     String
   user       Profile      @relation(fields: [userId], references: [userId])
   expenseId  String
-  expense    Expense      @relation(fields: [expenseId], references: [id])
+  expense    Expense      @relation(fields: [expenseId], references: [id], onDelete: Cascade)
   amount     Int
   currency   CurrencyCode
   locked     Boolean      @default(false)
@@ -238,7 +238,7 @@ model Payment {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now()) @updatedAt()
   groupId     String
-  group       Group        @relation(fields: [groupId], references: [id])
+  group       Group        @relation(fields: [groupId], references: [id], onDelete: Cascade)
   amount      Int
   currency    CurrencyCode
   /// @json

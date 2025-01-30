@@ -60,7 +60,8 @@ export const paymentsRouter = router({
             })
         )
         .mutation(async (opts) => {
-            if (!opts.ctx.acl.isInGroup(opts.input.groupId)) {
+            const isInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
+            if (!isInGroup) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `Group with id ${opts.input.groupId} not found`,

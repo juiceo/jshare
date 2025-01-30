@@ -175,4 +175,25 @@ export const groupsRouter = router({
 
         return groups;
     }),
+    delete: authProcedure
+        .input(
+            z.object({
+                groupId: z.string(),
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const isOwner = await ctx.acl.isGroupOwner(input.groupId);
+            if (!isOwner) {
+                throw new TRPCError({
+                    code: 'UNAUTHORIZED',
+                    message: 'Only the group owner can delete a group',
+                });
+            }
+
+            await db.group.delete({
+                where: {
+                    id: input.groupId,
+                },
+            });
+        }),
 });

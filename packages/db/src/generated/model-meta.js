@@ -714,7 +714,11 @@ const metadata = {
             },
         },
     },
-    deleteCascade: {},
+    deleteCascade: {
+        group: ['GroupParticipant', 'Message', 'Expense', 'Payment'],
+        message: ['MessageAttachment'],
+        expense: ['ExpenseShare'],
+    },
     authModel: 'Profile'
 };
 exports.default = metadata;

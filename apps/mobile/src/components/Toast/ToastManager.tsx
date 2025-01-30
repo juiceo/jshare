@@ -70,6 +70,7 @@ export const ToastManager = () => {
                                 key={item.key}
                                 variant={item.variant}
                                 title={item.title}
+                                message={item.message}
                                 onDismiss={() => toast.dismiss(item.key)}
                             />
                         );

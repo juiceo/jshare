@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { StyleSheet, TextInput, type TextInputProps } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
@@ -10,7 +11,8 @@ export type TextFieldProps = {
     onChange: (value: string) => void;
     placeholder?: string;
     TextInputProps?: TextInputProps;
-    inputRef?: React.RefObject<TextInput>;
+    inputRef?: React.RefObject<any>;
+    bottomSheet?: boolean;
 } & Omit<FormControlProps, 'focused' | 'onPress'>;
 
 export const TextField = (props: TextFieldProps) => {
@@ -20,20 +22,24 @@ export const TextField = (props: TextFieldProps) => {
         onChange,
         inputRef: _inputRef,
         placeholder,
+        bottomSheet,
         TextInputProps,
         ...formControlProps
     } = props;
-    const innerInputRef = useRef<TextInput>(null);
+    const innerInputRef = useRef<any>(null);
     const inputRef = props.inputRef ?? innerInputRef;
     const [focused, setFocused] = useState<boolean>(false);
     const styles = getStyles(theme);
+
+    const InputComponent = bottomSheet ? BottomSheetTextInput : TextInput;
+
     return (
         <FormControl
             {...formControlProps}
             onPress={() => inputRef.current?.focus()}
             focused={focused}
         >
-            <TextInput
+            <InputComponent
                 value={value}
                 onChangeText={onChange}
                 ref={inputRef}

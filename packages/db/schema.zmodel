@@ -72,7 +72,7 @@ model GroupParticipant extends BaseModel {
     userId      String
     user        Profile     @relation(fields: [userId], references: [userId])
     groupId     String
-    group       Group       @relation(fields: [groupId], references: [id])
+    group       Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
     role        Role
     invitedById String?
     inviteType  InviteType?
@@ -106,7 +106,7 @@ model Message extends BaseModel {
     author      Profile?            @relation(fields: [authorId], references: [userId])
 
     groupId     String
-    group       Group               @relation(fields: [groupId], references: [id])
+    group       Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
     attachments MessageAttachment[]
 
@@ -116,11 +116,11 @@ model Message extends BaseModel {
 
 model MessageAttachment extends BaseModel {
     messageId String
-    message   Message               @relation(fields: [messageId], references: [id])
+    message   Message               @relation(fields: [messageId], references: [id], onDelete: Cascade)
     type      MessageAttachmentType
 
     expenseId String?
-    expense   Expense?              @relation(fields: [expenseId], references: [id])
+    expense   Expense?              @relation(fields: [expenseId], references: [id], onDelete: SetNull)
 
     @@allow('all', true)
     @@map("message_attachments")
@@ -134,7 +134,7 @@ model Expense extends BaseModel {
     payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [userId])
 
     groupId            String
-    group              Group               @relation(fields: [groupId], references: [id])
+    group              Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
     amount             Int
     currency           CurrencyCode
@@ -153,7 +153,7 @@ model ExpenseShare extends BaseModel {
     user       Profile             @relation(fields: [userId], references: [userId])
 
     expenseId  String
-    expense    Expense             @relation(fields: [expenseId], references: [id])
+    expense    Expense             @relation(fields: [expenseId], references: [id], onDelete: Cascade)
 
     amount     Int
     currency   CurrencyCode
@@ -166,7 +166,7 @@ model ExpenseShare extends BaseModel {
 
 model Payment extends BaseModel {
     groupId     String
-    group       Group               @relation(fields: [groupId], references: [id])
+    group       Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
     amount      Int
     currency    CurrencyCode

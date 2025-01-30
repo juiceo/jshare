@@ -53,4 +53,10 @@ export class ACL {
             )
         );
     }
+
+    async isGroupOwner(groupId: string): Promise<boolean> {
+        return this.checkGroups((groups) =>
+            groups.some((g) => g.groupId === groupId && g.role === DB.Role.Owner)
+        );
+    }
 }

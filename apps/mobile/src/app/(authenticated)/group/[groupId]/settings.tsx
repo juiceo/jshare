@@ -8,6 +8,8 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Avatar } from '~/components/Avatar';
+import { Button } from '~/components/Button';
+import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
@@ -21,14 +23,18 @@ export default screen(
         route: '/(authenticated)/group/[groupId]/settings',
         auth: true,
     },
-    ({ params, auth }) => {
+    ({ params, auth, router }) => {
         const trpcUtils = trpc.useUtils();
         const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
         const updateGroup = trpc.groups.update.useMutation();
         const refreshInviteCode = trpc.groups.refreshCode.useMutation();
+        const deleteGroup = trpc.groups.delete.useMutation();
+
+        const [isDeleting, setDeleting] = useState<boolean>(false);
 
         const role = group.participants.find((p) => p.userId === auth.session.user.id)?.role;
         const isAdmin = role === DB.Role.Admin || role === DB.Role.Owner;
+        const isOwner = role === DB.Role.Owner;
 
         const [groupName, setGroupName] = useState<string>(group.name);
 
@@ -58,6 +64,19 @@ export default screen(
                 updates: args,
             });
             trpcUtils.groups.invalidate();
+        };
+
+        const handleDelete = async () => {
+            try {
+                await deleteGroup.mutateAsync({ groupId: params.groupId });
+                trpcUtils.groups.invalidate();
+                router.replace('/(authenticated)/(tabs)/groups');
+                toast.info(`Success`, `${group.name} was deleted`);
+            } catch (err) {
+                console.log('ERROR', err);
+                toast.error('Something went wrong');
+            }
+            setDeleting(false);
         };
 
         return (
@@ -134,10 +153,8 @@ export default screen(
                             ))}
                         </Stack>
                         {isAdmin && (
-                            <>
-                                <Typography variant="h6" mt="3xl" mb="xl">
-                                    Settings
-                                </Typography>
+                            <Stack mt="3xl" spacing="xl">
+                                <Typography variant="h6">Settings</Typography>
                                 <TextField
                                     label="Group name"
                                     value={groupName}
@@ -146,7 +163,27 @@ export default screen(
                                         onBlur: () => handleGroupUpdate({ name: groupName }),
                                     }}
                                 />
-                            </>
+                                {isOwner && (
+                                    <>
+                                        <Button
+                                            color="error"
+                                            variant="outlined"
+                                            onPress={() => setDeleting(true)}
+                                        >
+                                            Delete group
+                                        </Button>
+                                        <DeleteConfirmation
+                                            isOpen={isDeleting}
+                                            onClose={() => setDeleting(false)}
+                                            onConfirm={handleDelete}
+                                            title="Delete group?"
+                                            description="All data related to this group will be deleted. This action cannot be undone."
+                                            confirmPhrase={group.name}
+                                            loading={deleteGroup.isPending}
+                                        />
+                                    </>
+                                )}
+                            </Stack>
                         )}
                     </Stack>
                 </Screen.Content>

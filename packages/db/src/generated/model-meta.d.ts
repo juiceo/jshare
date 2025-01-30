@@ -1127,7 +1127,11 @@ declare const metadata: {
             };
         };
     };
-    deleteCascade: {};
+    deleteCascade: {
+        group: string[];
+        message: string[];
+        expense: string[];
+    };
     authModel: string;
 };
 export default metadata;
