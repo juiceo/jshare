@@ -4,12 +4,31 @@ import { InMemoryCache } from '../services/cache';
 import { db } from '../services/db';
 
 const groupsCache = new InMemoryCache<DB.GroupParticipant[]>({ ttl: 1000 * 60 * 60 });
+const presenceCache = new InMemoryCache<string>({ ttl: 1000 * 60 * 60 });
 
 export class ACL {
     private userId: string;
 
     constructor(userId: string) {
         this.userId = userId;
+        this.updatePresence();
+    }
+
+    private async updatePresence() {
+        if (presenceCache.get(this.userId)) {
+            return;
+        }
+        try {
+            await db.profile.update({
+                where: {
+                    userId: this.userId,
+                },
+                data: {
+                    lastActivity: new Date(),
+                },
+            });
+            presenceCache.set(this.userId, this.userId);
+        } catch {}
     }
 
     private async checkGroups(check: (groups: DB.GroupParticipant[]) => boolean) {
