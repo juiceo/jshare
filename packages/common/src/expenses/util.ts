@@ -1,4 +1,4 @@
-import { sumBy } from 'lodash';
+import { cloneDeep, sumBy } from 'lodash';
 import { z } from 'zod';
 
 import { zDB, type DB } from '@jshare/db';
@@ -29,9 +29,9 @@ export const getTotalFromShares = (shares: Pick<DB.ExpenseShare, 'amount'>[]): n
     return sumBy(shares, (share) => share.amount);
 };
 
-export const getSharesWithUpdatedAmount = (args: {
-    expenseAmount: number;
+export const recalculateShares = (args: {
     shares: PartialExpenseShare[];
+    expenseAmount: number;
 }): PartialExpenseShare[] => {
     const { expenseAmount, shares } = args;
     const lockedShares = getLockedShares(shares);
@@ -48,78 +48,101 @@ export const getSharesWithUpdatedAmount = (args: {
 
         result[shareIndex].amount = floatingAmounts.shift() ?? 0;
         return result;
-    }, shares);
+    }, cloneDeep(shares));
 };
 
-export const addShare = (
-    shares: PartialExpenseShare[],
-    expenseAmount: number,
-    userId: string
-): PartialExpenseShare[] => {
-    const lockedShares = getLockedShares(shares);
-    const floatingShares = getFloatingShares(shares);
-    const floatingAmount = expenseAmount - getTotalFromShares(lockedShares);
-    const amountsToDistribute = distributeAmountEvenly(floatingAmount, floatingShares.length + 1);
+export const addShare = (args: {
+    shares: PartialExpenseShare[];
+    share: PartialExpenseShare;
+    expenseAmount: number;
+}): PartialExpenseShare[] => {
+    const { shares, share, expenseAmount } = args;
 
-    return [
-        ...shares.map((share) => {
-            if (share.locked) return share;
-            return {
-                ...share,
-                amount: amountsToDistribute.shift() ?? 0,
-            };
-        }),
-        {
-            amount: amountsToDistribute.shift() ?? 0,
-            userId,
-            locked: false,
-        },
-    ];
+    if (shares.some((s) => s.userId === share.userId)) return shares;
+
+    return recalculateShares({
+        shares: [...shares, share],
+        expenseAmount,
+    });
 };
 
-export const updateShare = (
-    shares: PartialExpenseShare[],
-    expenseAmount: number,
-    updates: Pick<PartialExpenseShare, 'amount' | 'userId' | 'locked'>
-): PartialExpenseShare[] => {
+export const updateShare = (args: {
+    shares: PartialExpenseShare[];
+    share: PartialExpenseShare;
+    expenseAmount: number;
+}): PartialExpenseShare[] => {
+    const { shares, share, expenseAmount } = args;
+
     let isFound = false;
-    const updatedShares = shares.map((share, index) => {
-        if (share.userId === updates.userId) {
+    const updatedShares = shares.map((_share, index) => {
+        if (_share.userId === share.userId) {
             isFound = true;
-            return {
-                ...share,
-                ...updates,
-            };
+            return share;
         }
-        return share;
+        return _share;
     });
 
     if (!isFound) return [...shares];
 
-    return getSharesWithUpdatedAmount({
+    return recalculateShares({
         expenseAmount,
         shares: updatedShares,
     });
 };
 
-export const removeShare = (
-    shares: PartialExpenseShare[],
-    expenseAmount: number,
-    userId: string
-): PartialExpenseShare[] => {
-    const filteredShares = shares.filter((share) => share.userId !== userId);
-    const lockedShares = getLockedShares(filteredShares);
-    const floatingShares = getFloatingShares(filteredShares);
-    const floatingAmount = expenseAmount - getTotalFromShares(lockedShares);
-    const amountsToDistribute = distributeAmountEvenly(floatingAmount, floatingShares.length);
+export const removeShare = (args: {
+    shares: PartialExpenseShare[];
+    userId: string;
+    expenseAmount: number;
+}): PartialExpenseShare[] => {
+    const { shares, userId, expenseAmount } = args;
 
-    return filteredShares.map((share) => {
-        if (share.locked) return share;
-        return {
-            ...share,
-            amount: amountsToDistribute.shift() ?? 0,
-        };
+    return recalculateShares({
+        shares: shares.filter((share) => share.userId !== userId),
+        expenseAmount,
     });
+};
+
+export const transferShare = (args: {
+    shares: PartialExpenseShare[];
+    fromUserId: string;
+    toUserId: string;
+}): PartialExpenseShare[] => {
+    const { shares, fromUserId, toUserId } = args;
+    const expenseAmount = getTotalFromShares(shares);
+    const fromShare = shares.find((share) => share.userId === fromUserId);
+    const toShare = shares.find((share) => share.userId === toUserId);
+
+    if (!fromShare) return shares;
+
+    let updatedShares = removeShare({ shares, userId: fromUserId, expenseAmount });
+
+    if (fromShare.amount === 0) {
+        return updatedShares;
+    }
+
+    if (toShare) {
+        updatedShares = updateShare({
+            shares: updatedShares,
+            share: {
+                ...toShare,
+                amount: fromShare.amount + toShare.amount,
+                locked: true,
+            },
+            expenseAmount,
+        });
+    } else {
+        updatedShares = addShare({
+            shares: updatedShares,
+            share: {
+                ...fromShare,
+                userId: toUserId,
+            },
+            expenseAmount,
+        });
+    }
+
+    return updatedShares;
 };
 
 export const getDefaultShares = (groupMembers: DB.GroupParticipant[]): PartialExpenseShare[] => {

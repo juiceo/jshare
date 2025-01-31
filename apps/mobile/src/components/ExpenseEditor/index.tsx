@@ -5,7 +5,7 @@ import { z } from 'zod';
 import {
     formatAmount,
     getCurrencyDetails,
-    getSharesWithUpdatedAmount,
+    recalculateShares,
     zPartialExpenseShare,
 } from '@jshare/common';
 import { zDB, type DB } from '@jshare/db';
@@ -59,7 +59,7 @@ export const ExpenseEditor = (props: ExpenseEditorProps) => {
                             value={field.value}
                             onChange={(value) => {
                                 field.onChange(value);
-                                const updatedShares = getSharesWithUpdatedAmount({
+                                const updatedShares = recalculateShares({
                                     expenseAmount: value,
                                     shares,
                                 });

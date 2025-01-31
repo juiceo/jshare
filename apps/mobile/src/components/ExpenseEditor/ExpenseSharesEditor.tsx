@@ -28,9 +28,25 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const handleToggle = (userId: string) => {
         const shareIndex = value.findIndex((item) => item.userId === userId);
         if (shareIndex === -1) {
-            onChange(addShare(value, expense.amount, userId));
+            onChange(
+                addShare({
+                    shares: value,
+                    share: {
+                        userId,
+                        amount: 0,
+                        locked: false,
+                    },
+                    expenseAmount: expense.amount,
+                })
+            );
         } else {
-            onChange(removeShare(value, expense.amount, userId));
+            onChange(
+                removeShare({
+                    shares: value,
+                    userId,
+                    expenseAmount: expense.amount,
+                })
+            );
         }
     };
 
@@ -83,7 +99,13 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                     user={editUser}
                     share={value.find((item) => item.userId === editUser.userId)}
                     onShareChange={(share) => {
-                        onChange(updateShare(value, expense.amount, share));
+                        onChange(
+                            updateShare({
+                                shares: value,
+                                share,
+                                expenseAmount: expense.amount,
+                            })
+                        );
                     }}
                 />
             )}
