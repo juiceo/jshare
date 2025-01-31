@@ -55,6 +55,7 @@ export const groupParticipantsRouter = router({
                     firstName: opts.input.firstName,
                     lastName: opts.input.lastName,
                     currency: DB.CurrencyCode.USD,
+                    temporary: true,
                 },
             });
 

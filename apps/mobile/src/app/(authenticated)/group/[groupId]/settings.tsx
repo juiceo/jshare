@@ -158,9 +158,13 @@ export default screen(
                                                 <Typography variant="caption" color="primary.light">
                                                     Online
                                                 </Typography>
-                                            ) : (
+                                            ) : !participant.user.temporary ? (
                                                 <Typography variant="caption" color="hint">
                                                     {`Last seen ${dayjs(participant.user.lastActivity).fromNow()}`}
+                                                </Typography>
+                                            ) : (
+                                                <Typography variant="caption" color="hint">
+                                                    Temporary user
                                                 </Typography>
                                             )}
                                         </Stack>

@@ -36,10 +36,11 @@ export type ExpenseEditorProps = {
     form: UseFormReturn<ExpenseEditorSchema>;
     groupCurrency: DB.CurrencyCode;
     groupMembers: DB.GroupParticipant<{ user: true }>[];
+    groupId: string;
 };
 
 export const ExpenseEditor = (props: ExpenseEditorProps) => {
-    const { form, groupCurrency, groupMembers } = props;
+    const { form, groupCurrency, groupMembers, groupId } = props;
 
     const amount = useWatch({ control: form.control, name: 'amount' });
     const currency = useWatch({ control: form.control, name: 'currency' });
@@ -162,6 +163,7 @@ export const ExpenseEditor = (props: ExpenseEditorProps) => {
                                 amount,
                                 currency,
                             }}
+                            groupId={groupId}
                         />
                     );
                 }}

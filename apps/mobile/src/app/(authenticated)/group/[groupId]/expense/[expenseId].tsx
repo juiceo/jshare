@@ -69,6 +69,7 @@ export default screen(
                             form={form}
                             groupCurrency={group.currency}
                             groupMembers={group.participants}
+                            groupId={group.id}
                         />
                     )}
                 </Screen.Content>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { RectButton } from 'react-native-gesture-handler';
 
 import { addShare, removeShare, updateShare, type PartialExpenseShare } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
+import { AddUserSheet } from '~/components/ExpenseEditor/AddUserSheet';
 import { ExpenseShareEditorSheet } from '~/components/ExpenseEditor/ExpenseShareEditorSheet';
 import { ExpenseSharesEditorItem } from '~/components/ExpenseEditor/ExpenseSharesEditorItem';
 import { Icon } from '~/components/Icon';
@@ -15,11 +17,13 @@ export type ExpenseSharesEditorProps = {
     onChange: (value: PartialExpenseShare[]) => void;
     expense: Pick<DB.Expense, 'amount' | 'currency'>;
     groupMembers: DB.GroupParticipant<{ user: true }>[];
+    groupId: string;
 };
 
 export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
-    const { value, onChange, groupMembers, expense } = props;
+    const { value, onChange, groupMembers, expense, groupId } = props;
     const [editUser, setEditUser] = useState<DB.Profile | null>(null);
+    const [addingUser, setAddingUser] = useState<boolean>(false);
 
     const handleToggle = (userId: string) => {
         const shareIndex = value.findIndex((item) => item.userId === userId);
@@ -58,6 +62,20 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                         </React.Fragment>
                     );
                 })}
+                <Divider horizontal color="background.default" />
+                <RectButton onPress={() => setAddingUser(true)}>
+                    <Stack row alignCenter spacing="md" p="xl">
+                        <Stack center bg="background.elevation2" h={36} w={36} br="full">
+                            <Icon name="Plus" size={18} />
+                        </Stack>
+                        <Stack column>
+                            <Typography variant="buttonSmall">Add person</Typography>
+                            <Typography variant="caption" color="hint">
+                                Add someone who is not in the group yet
+                            </Typography>
+                        </Stack>
+                    </Stack>
+                </RectButton>
             </Stack>
             {!!editUser && (
                 <ExpenseShareEditorSheet
@@ -68,6 +86,9 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                         onChange(updateShare(value, expense.amount, share));
                     }}
                 />
+            )}
+            {!!addingUser && (
+                <AddUserSheet groupId={groupId} onClose={() => setAddingUser(false)} />
             )}
         </>
     );
