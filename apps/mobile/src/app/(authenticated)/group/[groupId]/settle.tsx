@@ -118,7 +118,7 @@ export default screen(
                             </Typography>
                         </Stack>
                     )}
-                    <Stack column p="xl">
+                    <Stack column p="xl" spacing="md">
                         {ownPayments.map((payment) => (
                             <Stack
                                 key={`${payment.fromUserId}-${payment.toUserId}`}
