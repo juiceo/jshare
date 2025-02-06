@@ -4,7 +4,7 @@ import { z } from 'zod';
  */
 export declare const ImageScalarSchema: z.ZodObject<{
     id: z.ZodString;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     path: z.ZodString;
@@ -35,7 +35,7 @@ export declare const ImageScalarSchema: z.ZodObject<{
  */
 export declare const ImageSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodString;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     path: z.ZodString;
@@ -74,7 +74,7 @@ export declare const ImageSchema: z.ZodObject<z.objectUtil.extendShape<{
  */
 export declare const ImagePrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -83,7 +83,7 @@ export declare const ImagePrismaCreateSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -92,7 +92,7 @@ export declare const ImagePrismaCreateSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -106,7 +106,7 @@ export declare const ImagePrismaCreateSchema: z.ZodObject<{
  */
 export declare const ImagePrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -115,7 +115,7 @@ export declare const ImagePrismaUpdateSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -124,7 +124,7 @@ export declare const ImagePrismaUpdateSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -139,7 +139,7 @@ export declare const ImageCreateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     path: z.ZodString;
     bucket: z.ZodString;
     uploadedById: z.ZodString;
@@ -170,7 +170,7 @@ export declare const ImageCreateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     path: z.ZodString;
     bucket: z.ZodString;
     uploadedById: z.ZodString;
@@ -199,7 +199,7 @@ export declare const ImageCreateSchema: z.ZodObject<{
  */
 export declare const ImageUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;
@@ -230,7 +230,7 @@ export declare const ImageUpdateScalarSchema: z.ZodObject<{
  */
 export declare const ImageUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     path: z.ZodOptional<z.ZodString>;

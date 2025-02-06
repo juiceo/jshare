@@ -4,7 +4,7 @@ import { z } from 'zod';
  */
 export declare const GroupParticipantScalarSchema: z.ZodObject<{
     id: z.ZodString;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
@@ -32,7 +32,7 @@ export declare const GroupParticipantScalarSchema: z.ZodObject<{
  */
 export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
     id: z.ZodString;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
@@ -75,7 +75,7 @@ export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShap
  */
 export declare const GroupParticipantPrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -83,7 +83,7 @@ export declare const GroupParticipantPrismaCreateSchema: z.ZodObject<{
     inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -91,7 +91,7 @@ export declare const GroupParticipantPrismaCreateSchema: z.ZodObject<{
     inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -104,7 +104,7 @@ export declare const GroupParticipantPrismaCreateSchema: z.ZodObject<{
  */
 export declare const GroupParticipantPrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -112,7 +112,7 @@ export declare const GroupParticipantPrismaUpdateSchema: z.ZodObject<{
     inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -120,7 +120,7 @@ export declare const GroupParticipantPrismaUpdateSchema: z.ZodObject<{
     inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -134,7 +134,7 @@ export declare const GroupParticipantCreateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
     invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
@@ -162,7 +162,7 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
     invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
@@ -195,7 +195,7 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
  */
 export declare const GroupParticipantUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;
@@ -223,7 +223,7 @@ export declare const GroupParticipantUpdateScalarSchema: z.ZodObject<{
  */
 export declare const GroupParticipantUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     role: z.ZodOptional<z.ZodEnum<["Owner", "Admin", "Member"]>>;

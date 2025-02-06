@@ -186,6 +186,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -314,6 +320,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -417,6 +429,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -497,6 +515,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -608,6 +632,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -703,6 +733,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -855,6 +891,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -972,6 +1014,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;
@@ -1105,6 +1153,12 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
                 };
                 createdAt: {
                     name: string;

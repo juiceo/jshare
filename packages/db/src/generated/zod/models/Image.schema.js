@@ -5,7 +5,7 @@ exports.ImageUpdateSchema = exports.ImageUpdateScalarSchema = exports.ImageCreat
 const zod_1 = require("zod");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     path: zod_1.z.string(),
@@ -36,7 +36,7 @@ exports.ImagePrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.ImagePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     path: zod_1.z.string(),
@@ -48,13 +48,13 @@ exports.ImagePrismaUpdateSchema = zod_1.z.object({
  * `Image` schema for create operations excluding foreign keys and relations.
  */
 exports.ImageCreateScalarSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `Image` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 exports.ImageCreateSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `Image` schema for update operations excluding foreign keys and relations.

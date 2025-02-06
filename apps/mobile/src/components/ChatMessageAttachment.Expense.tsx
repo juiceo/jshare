@@ -32,7 +32,7 @@ const ExpenseNotFound = () => {
         <Box br="xl" style={{ overflow: 'hidden' }} bg="background.main">
             <Stack width={screenW * 0.6} height={screenW * 0.6} center>
                 <Typography variant="subtitle1" color="hint">
-                    Deleted
+                    Expense not found
                 </Typography>
             </Stack>
         </Box>

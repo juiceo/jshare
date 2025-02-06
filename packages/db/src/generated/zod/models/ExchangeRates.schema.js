@@ -5,7 +5,7 @@ exports.ExchangeRatesUpdateSchema = exports.ExchangeRatesUpdateScalarSchema = ex
 const zod_1 = require("zod");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     baseCurrency: zod_1.z.string(),
@@ -30,7 +30,7 @@ exports.ExchangeRatesPrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.ExchangeRatesPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     baseCurrency: zod_1.z.string(),
@@ -40,13 +40,13 @@ exports.ExchangeRatesPrismaUpdateSchema = zod_1.z.object({
  * `ExchangeRates` schema for create operations excluding foreign keys and relations.
  */
 exports.ExchangeRatesCreateScalarSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `ExchangeRates` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 exports.ExchangeRatesCreateSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `ExchangeRates` schema for update operations excluding foreign keys and relations.

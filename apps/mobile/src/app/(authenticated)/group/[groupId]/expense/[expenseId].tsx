@@ -35,7 +35,7 @@ export default screen(
         const isOwner = expense.ownerId === auth.session.user.id;
 
         const updateExpense = trpc.expenses.update.useMutation();
-        const deleteExpense = trpc.expenses.delete.useMutation();
+        const archiveExpense = trpc.expenses.archive.useMutation();
 
         const form = useForm<ExpenseEditorSchema>({
             resolver: zodResolver(expenseEditorSchema),
@@ -66,11 +66,10 @@ export default screen(
         };
 
         const handleDelete = async () => {
-            await deleteExpense.mutateAsync({
+            await archiveExpense.mutateAsync({
                 expenseId: expense.id,
             });
 
-            trpcUtils.messages.invalidate();
             trpcUtils.expenses.invalidate();
             trpcUtils.balances.invalidate();
 

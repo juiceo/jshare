@@ -7,7 +7,7 @@ const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const CurrencyConversion_schema_1 = require("./CurrencyConversion.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     amount: zod_1.z.number(),
@@ -43,7 +43,7 @@ exports.PaymentPrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.PaymentPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     amount: zod_1.z.union([zod_1.z.number(), zod_1.z.record(zod_1.z.unknown())]),
@@ -54,7 +54,7 @@ exports.PaymentPrismaUpdateSchema = zod_1.z.object({
  * `Payment` schema for create operations excluding foreign keys and relations.
  */
 exports.PaymentCreateScalarSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `Payment` schema for create operations including scalar fields, foreign key fields, and validations.

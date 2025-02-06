@@ -6,7 +6,7 @@ const zod_1 = require("zod");
 const AuthorType_schema_1 = require("../enums/AuthorType.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     key: zod_1.z.string(),
@@ -41,7 +41,7 @@ exports.MessagePrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.MessagePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     key: zod_1.z.string(),
@@ -52,7 +52,7 @@ exports.MessagePrismaUpdateSchema = zod_1.z.object({
  * `Message` schema for create operations excluding foreign keys and relations.
  */
 exports.MessageCreateScalarSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `Message` schema for create operations including scalar fields, foreign key fields, and validations.

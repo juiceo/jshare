@@ -271,7 +271,7 @@ export const expensesRouter = router({
                 });
             });
         }),
-    delete: authProcedure.input(z.object({ expenseId: z.string() })).mutation(async (opts) => {
+    archive: authProcedure.input(z.object({ expenseId: z.string() })).mutation(async (opts) => {
         const expense = await db.expense.findUnique({
             where: {
                 id: opts.input.expenseId,
@@ -295,9 +295,12 @@ export const expensesRouter = router({
             });
         }
 
-        return db.expense.delete({
+        return db.expense.update({
             where: {
                 id: opts.input.expenseId,
+            },
+            data: {
+                archived: true,
             },
         });
     }),

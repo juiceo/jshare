@@ -6,7 +6,7 @@ const zod_1 = require("zod");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     name: zod_1.z.string(),
@@ -43,7 +43,7 @@ exports.GroupPrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.GroupPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     name: zod_1.z.string(),
@@ -55,7 +55,7 @@ exports.GroupPrismaUpdateSchema = zod_1.z.object({
  * `Group` schema for create operations excluding foreign keys and relations.
  */
 exports.GroupCreateScalarSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true, lastActivity: true
+    id: true, archived: true, createdAt: true, updatedAt: true, lastActivity: true
 });
 /**
  * `Group` schema for create operations including scalar fields, foreign key fields, and validations.

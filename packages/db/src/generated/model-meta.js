@@ -120,6 +120,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -206,6 +207,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -272,6 +274,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -326,6 +329,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -399,6 +403,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -459,6 +464,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -555,6 +561,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -626,6 +633,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -706,6 +714,7 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     isOptional: true,
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",

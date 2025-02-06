@@ -6,7 +6,7 @@ const zod_1 = require("zod");
 const MessageAttachmentType_schema_1 = require("../enums/MessageAttachmentType.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     type: MessageAttachmentType_schema_1.MessageAttachmentTypeSchema,
@@ -38,7 +38,7 @@ exports.MessageAttachmentPrismaCreateSchema = baseSchema.partial().passthrough()
  */
 exports.MessageAttachmentPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().nullish(),
+    archived: zod_1.z.boolean().default(false).nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     type: MessageAttachmentType_schema_1.MessageAttachmentTypeSchema
@@ -47,7 +47,7 @@ exports.MessageAttachmentPrismaUpdateSchema = zod_1.z.object({
  * `MessageAttachment` schema for create operations excluding foreign keys and relations.
  */
 exports.MessageAttachmentCreateScalarSchema = baseSchema.partial({
-    id: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true
 });
 /**
  * `MessageAttachment` schema for create operations including scalar fields, foreign key fields, and validations.
