@@ -47,3 +47,6 @@ BEGIN
   END IF;
 END $$;
 
+
+-- Enable realtime publications
+SET session_replication_role = 'origin';
