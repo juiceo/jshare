@@ -55,6 +55,7 @@ enum CurrencyCode {
     USD
     ZAR
     KZT
+    KGS
 
     @@schema("public")
 }

@@ -63,6 +63,7 @@ export namespace DB {
         INR: 'INR',
         KES: 'KES',
         KZT: 'KZT',
+        KGS: 'KGS',
         MAD: 'MAD',
         MXN: 'MXN',
         NOK: 'NOK',

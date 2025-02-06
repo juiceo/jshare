@@ -46,6 +46,7 @@ describe('convertAmount', () => {
             EUR: 0.9,
             AUD: 1.6184215461333,
             CAD: 1.4413181049844,
+            KZT: 517.39,
         },
         createdAt: new Date('2025-01-11T10:55:01+0000'),
         updatedAt: new Date('2025-01-11T10:55:01+0000'),

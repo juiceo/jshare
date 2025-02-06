@@ -312,7 +312,8 @@ export namespace $Enums {
         TZS: 'TZS',
         USD: 'USD',
         ZAR: 'ZAR',
-        KZT: 'KZT'
+        KZT: 'KZT',
+        KGS: 'KGS'
     };
     export type CurrencyCode = (typeof CurrencyCode)[keyof typeof CurrencyCode];
     export const Role: {

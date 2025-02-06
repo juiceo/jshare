@@ -177,6 +177,16 @@ export const CURRENCY_DETAILS: Record<DB.CurrencyCode, CurrencyDetails> = {
         name_plural: 'Kenyan shillings',
         ranking: null,
     },
+    KGS: {
+        symbol: 'KGS',
+        name: 'Kyrgyzstani Som',
+        symbol_native: 'лв',
+        decimal_digits: 2,
+        rounding: 0,
+        code: 'KGS',
+        name_plural: 'Kyrgyzstani som',
+        ranking: null,
+    },
     KZT: {
         symbol: 'KZT',
         name: 'Kazakhstani Tenge',
