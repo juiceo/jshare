@@ -153,6 +153,7 @@ export default screen(
                     isOpen={isDeleting}
                     onClose={() => setDeleting(false)}
                     onConfirm={handleDelete}
+                    title="Delete expense?"
                 />
             </Screen>
         );
