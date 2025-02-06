@@ -4,6 +4,7 @@ import { z } from 'zod';
  */
 export declare const PaymentScalarSchema: z.ZodObject<{
     id: z.ZodString;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     amount: z.ZodNumber;
@@ -36,6 +37,7 @@ export declare const PaymentScalarSchema: z.ZodObject<{
     updatedAt: Date;
     id: string;
     amount: number;
+    archived?: boolean | null | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
         amount: number;
@@ -50,6 +52,7 @@ export declare const PaymentScalarSchema: z.ZodObject<{
     amount: number;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
+    archived?: boolean | null | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
         amount: number;
@@ -64,6 +67,7 @@ export declare const PaymentScalarSchema: z.ZodObject<{
  */
 export declare const PaymentSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
     id: z.ZodString;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     amount: z.ZodNumber;
@@ -109,6 +113,7 @@ export declare const PaymentSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     recipientId: string;
     payer?: Record<string, unknown> | undefined;
     recipient?: Record<string, unknown> | undefined;
+    archived?: boolean | null | undefined;
     group?: Record<string, unknown> | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -129,6 +134,7 @@ export declare const PaymentSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     recipient?: Record<string, unknown> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
+    archived?: boolean | null | undefined;
     group?: Record<string, unknown> | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -145,6 +151,7 @@ export declare const PaymentSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
  */
 export declare const PaymentPrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodNumber>;
@@ -173,6 +180,7 @@ export declare const PaymentPrismaCreateSchema: z.ZodObject<{
     }>>>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodNumber>;
@@ -201,6 +209,7 @@ export declare const PaymentPrismaCreateSchema: z.ZodObject<{
     }>>>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodNumber>;
@@ -234,6 +243,7 @@ export declare const PaymentPrismaCreateSchema: z.ZodObject<{
  */
 export declare const PaymentPrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodUnion<[z.ZodNumber, z.ZodRecord<z.ZodString, z.ZodUnknown>]>>;
@@ -262,6 +272,7 @@ export declare const PaymentPrismaUpdateSchema: z.ZodObject<{
     }>>>>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodUnion<[z.ZodNumber, z.ZodRecord<z.ZodString, z.ZodUnknown>]>>;
@@ -290,6 +301,7 @@ export declare const PaymentPrismaUpdateSchema: z.ZodObject<{
     }>>>>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodUnion<[z.ZodNumber, z.ZodRecord<z.ZodString, z.ZodUnknown>]>>;
@@ -325,6 +337,7 @@ export declare const PaymentCreateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     amount: z.ZodNumber;
     conversion: z.ZodOptional<z.ZodNullable<z.ZodLazy<z.ZodObject<{
         sourceCurrency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
@@ -354,6 +367,7 @@ export declare const PaymentCreateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
         amount: number;
@@ -368,6 +382,7 @@ export declare const PaymentCreateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
         amount: number;
@@ -385,6 +400,7 @@ export declare const PaymentCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     amount: z.ZodNumber;
     conversion: z.ZodOptional<z.ZodNullable<z.ZodLazy<z.ZodObject<{
         sourceCurrency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
@@ -421,6 +437,7 @@ export declare const PaymentCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
         amount: number;
@@ -438,6 +455,7 @@ export declare const PaymentCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
         amount: number;
@@ -452,6 +470,7 @@ export declare const PaymentCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
  */
 export declare const PaymentUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodNumber>;
@@ -483,6 +502,7 @@ export declare const PaymentUpdateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     amount?: number | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -497,6 +517,7 @@ export declare const PaymentUpdateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     amount?: number | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -512,6 +533,7 @@ export declare const PaymentUpdateScalarSchema: z.ZodObject<{
  */
 export declare const PaymentUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     amount: z.ZodOptional<z.ZodNumber>;
@@ -547,6 +569,7 @@ export declare const PaymentUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     groupId?: string | undefined;
     payerId?: string | undefined;
     amount?: number | undefined;
@@ -564,6 +587,7 @@ export declare const PaymentUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
+    archived?: boolean | null | undefined;
     groupId?: string | undefined;
     payerId?: string | undefined;
     amount?: number | undefined;

@@ -108,6 +108,7 @@ model Profile {
 /// @@allow('all', true)
 model Group {
   id           String             @id() @default(uuid())
+  archived     Boolean?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @default(now()) @updatedAt()
   name         String
@@ -128,6 +129,7 @@ model Group {
 /// @@allow('all', true)
 model GroupParticipant {
   id          String      @id() @default(uuid())
+  archived    Boolean?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @default(now()) @updatedAt()
   userId      String
@@ -147,6 +149,7 @@ model GroupParticipant {
 /// @@allow('all', true)
 model Image {
   id           String    @id() @default(uuid())
+  archived     Boolean?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @default(now()) @updatedAt()
   path         String
@@ -163,6 +166,7 @@ model Image {
 /// @@allow('all', true)
 model Message {
   id          String              @id() @default(uuid())
+  archived    Boolean?
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @default(now()) @updatedAt()
   key         String
@@ -181,6 +185,7 @@ model Message {
 /// @@allow('all', true)
 model MessageAttachment {
   id        String                @id() @default(uuid())
+  archived  Boolean?
   createdAt DateTime              @default(now())
   updatedAt DateTime              @default(now()) @updatedAt()
   messageId String
@@ -196,6 +201,7 @@ model MessageAttachment {
 /// @@allow('all', true)
 model Expense {
   id                 String              @id() @default(uuid())
+  archived           Boolean?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @default(now()) @updatedAt()
   ownerId            String
@@ -219,6 +225,7 @@ model Expense {
 /// @@allow('all', true)
 model ExpenseShare {
   id         String       @id() @default(uuid())
+  archived   Boolean?
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt()
   userId     String
@@ -238,6 +245,7 @@ model ExpenseShare {
 /// @@allow('all', true)
 model Payment {
   id          String       @id() @default(uuid())
+  archived    Boolean?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now()) @updatedAt()
   groupId     String
@@ -258,6 +266,7 @@ model Payment {
 /// @@allow('all', true)
 model ExchangeRates {
   id           String   @id() @default(uuid())
+  archived     Boolean?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt()
   baseCurrency String   @db.VarChar(3)

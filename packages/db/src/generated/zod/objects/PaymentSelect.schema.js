@@ -6,7 +6,7 @@ const zod_1 = require("zod");
 const GroupArgs_schema_1 = require("./GroupArgs.schema");
 const ProfileArgs_schema_1 = require("./ProfileArgs.schema");
 exports.PaymentSelectObjectSchema = zod_1.z.object({
-    id: zod_1.z.boolean().optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), groupId: zod_1.z.boolean().optional(), group: zod_1.z.union([zod_1.z.boolean(),
+    id: zod_1.z.boolean().optional(), archived: zod_1.z.boolean().optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), groupId: zod_1.z.boolean().optional(), group: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => GroupArgs_schema_1.GroupArgsObjectSchema)]).optional(), amount: zod_1.z.boolean().optional(), currency: zod_1.z.boolean().optional(), conversion: zod_1.z.boolean().optional(), recipientId: zod_1.z.boolean().optional(), recipient: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ProfileArgs_schema_1.ProfileArgsObjectSchema)]).optional(), payerId: zod_1.z.boolean().optional(), payer: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ProfileArgs_schema_1.ProfileArgsObjectSchema)]).optional()

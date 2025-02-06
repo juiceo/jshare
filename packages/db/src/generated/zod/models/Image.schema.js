@@ -5,6 +5,7 @@ exports.ImageUpdateSchema = exports.ImageUpdateScalarSchema = exports.ImageCreat
 const zod_1 = require("zod");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
+    archived: zod_1.z.boolean().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     path: zod_1.z.string(),
@@ -35,6 +36,7 @@ exports.ImagePrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.ImagePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
+    archived: zod_1.z.boolean().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     path: zod_1.z.string(),

@@ -4,6 +4,7 @@ exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 const StringWithAggregatesFilter_schema_1 = require("./StringWithAggregatesFilter.schema");
+const BoolNullableWithAggregatesFilter_schema_1 = require("./BoolNullableWithAggregatesFilter.schema");
 const DateTimeWithAggregatesFilter_schema_1 = require("./DateTimeWithAggregatesFilter.schema");
 const IntWithAggregatesFilter_schema_1 = require("./IntWithAggregatesFilter.schema");
 const EnumCurrencyCodeWithAggregatesFilter_schema_1 = require("./EnumCurrencyCodeWithAggregatesFilter.schema");
@@ -14,7 +15,9 @@ exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema = zod_1.z.object(
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema),
         zod_1.z.lazy(() => exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema),
         zod_1.z.lazy(() => exports.ExpenseShareScalarWhereWithAggregatesInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringWithAggregatesFilter_schema_1.StringWithAggregatesFilterObjectSchema),
-        zod_1.z.string()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeWithAggregatesFilter_schema_1.DateTimeWithAggregatesFilterObjectSchema),
+        zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolNullableWithAggregatesFilter_schema_1.BoolNullableWithAggregatesFilterObjectSchema),
+        zod_1.z.boolean(),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeWithAggregatesFilter_schema_1.DateTimeWithAggregatesFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeWithAggregatesFilter_schema_1.DateTimeWithAggregatesFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), userId: zod_1.z.union([zod_1.z.lazy(() => StringWithAggregatesFilter_schema_1.StringWithAggregatesFilterObjectSchema),
         zod_1.z.string()]).optional(), expenseId: zod_1.z.union([zod_1.z.lazy(() => StringWithAggregatesFilter_schema_1.StringWithAggregatesFilterObjectSchema),

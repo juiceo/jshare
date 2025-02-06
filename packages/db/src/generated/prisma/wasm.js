@@ -137,6 +137,7 @@ exports.Prisma.ProfileScalarFieldEnum = {
 
 exports.Prisma.GroupScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   name: 'name',
@@ -148,6 +149,7 @@ exports.Prisma.GroupScalarFieldEnum = {
 
 exports.Prisma.GroupParticipantScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
@@ -159,6 +161,7 @@ exports.Prisma.GroupParticipantScalarFieldEnum = {
 
 exports.Prisma.ImageScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   path: 'path',
@@ -169,6 +172,7 @@ exports.Prisma.ImageScalarFieldEnum = {
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   key: 'key',
@@ -180,6 +184,7 @@ exports.Prisma.MessageScalarFieldEnum = {
 
 exports.Prisma.MessageAttachmentScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   messageId: 'messageId',
@@ -189,6 +194,7 @@ exports.Prisma.MessageAttachmentScalarFieldEnum = {
 
 exports.Prisma.ExpenseScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   ownerId: 'ownerId',
@@ -202,6 +208,7 @@ exports.Prisma.ExpenseScalarFieldEnum = {
 
 exports.Prisma.ExpenseShareScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
@@ -214,6 +221,7 @@ exports.Prisma.ExpenseShareScalarFieldEnum = {
 
 exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   groupId: 'groupId',
@@ -226,6 +234,7 @@ exports.Prisma.PaymentScalarFieldEnum = {
 
 exports.Prisma.ExchangeRatesScalarFieldEnum = {
   id: 'id',
+  archived: 'archived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   baseCurrency: 'baseCurrency',

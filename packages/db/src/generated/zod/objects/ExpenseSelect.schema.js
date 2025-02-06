@@ -9,7 +9,7 @@ const ExpenseShareInput_schema_1 = require("../input/ExpenseShareInput.schema");
 const MessageAttachmentInput_schema_1 = require("../input/MessageAttachmentInput.schema");
 const ExpenseCountOutputTypeArgs_schema_1 = require("./ExpenseCountOutputTypeArgs.schema");
 exports.ExpenseSelectObjectSchema = zod_1.z.object({
-    id: zod_1.z.boolean().optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), ownerId: zod_1.z.boolean().optional(), owner: zod_1.z.union([zod_1.z.boolean(),
+    id: zod_1.z.boolean().optional(), archived: zod_1.z.boolean().optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), ownerId: zod_1.z.boolean().optional(), owner: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ProfileArgs_schema_1.ProfileArgsObjectSchema)]).optional(), payerId: zod_1.z.boolean().optional(), payer: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ProfileArgs_schema_1.ProfileArgsObjectSchema)]).optional(), groupId: zod_1.z.boolean().optional(), group: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => GroupArgs_schema_1.GroupArgsObjectSchema)]).optional(), amount: zod_1.z.boolean().optional(), currency: zod_1.z.boolean().optional(), description: zod_1.z.boolean().optional(), conversion: zod_1.z.boolean().optional(), shares: zod_1.z.union([zod_1.z.boolean(),

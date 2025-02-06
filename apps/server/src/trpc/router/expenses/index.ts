@@ -271,6 +271,36 @@ export const expensesRouter = router({
                 });
             });
         }),
+    delete: authProcedure.input(z.object({ expenseId: z.string() })).mutation(async (opts) => {
+        const expense = await db.expense.findUnique({
+            where: {
+                id: opts.input.expenseId,
+            },
+        });
+
+        if (!expense || !(await opts.ctx.acl.isInGroup(expense.groupId))) {
+            throw new TRPCError({
+                code: 'NOT_FOUND',
+                message: `Expense with id ${opts.input.expenseId} not found`,
+            });
+        }
+
+        if (
+            expense.ownerId !== opts.ctx.userId &&
+            !(await opts.ctx.acl.isGroupAdmin(expense.groupId))
+        ) {
+            throw new TRPCError({
+                code: 'UNAUTHORIZED',
+                message: `The expense can only be deleted by its owner (${expense.ownerId}) or group admins`,
+            });
+        }
+
+        return db.expense.delete({
+            where: {
+                id: opts.input.expenseId,
+            },
+        });
+    }),
     getTotalForGroup: authProcedure.input(z.object({ groupId: z.string() })).query(async (opts) => {
         const isUserInGroup = await opts.ctx.acl.isInGroup(opts.input.groupId);
         if (!isUserInGroup) {

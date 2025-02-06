@@ -6,6 +6,7 @@ const zod_1 = require("zod");
 const AuthorType_schema_1 = require("../enums/AuthorType.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
+    archived: zod_1.z.boolean().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     key: zod_1.z.string(),
@@ -40,6 +41,7 @@ exports.MessagePrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.MessagePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
+    archived: zod_1.z.boolean().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     key: zod_1.z.string(),

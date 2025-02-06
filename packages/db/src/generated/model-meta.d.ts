@@ -182,6 +182,11 @@ declare const metadata: {
                         args: never[];
                     }[];
                 };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -305,6 +310,11 @@ declare const metadata: {
                         args: never[];
                     }[];
                 };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -403,6 +413,11 @@ declare const metadata: {
                         args: never[];
                     }[];
                 };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -477,6 +492,11 @@ declare const metadata: {
                         name: string;
                         args: never[];
                     }[];
+                };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -584,6 +604,11 @@ declare const metadata: {
                         args: never[];
                     }[];
                 };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -673,6 +698,11 @@ declare const metadata: {
                         name: string;
                         args: never[];
                     }[];
+                };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -821,6 +851,11 @@ declare const metadata: {
                         args: never[];
                     }[];
                 };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -932,6 +967,11 @@ declare const metadata: {
                         name: string;
                         args: never[];
                     }[];
+                };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -1060,6 +1100,11 @@ declare const metadata: {
                         name: string;
                         args: never[];
                     }[];
+                };
+                archived: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;

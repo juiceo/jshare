@@ -116,6 +116,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -198,6 +202,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -260,6 +268,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -310,6 +322,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -379,6 +395,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -435,6 +455,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -527,6 +551,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -594,6 +622,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -670,6 +702,10 @@ const metadata = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",

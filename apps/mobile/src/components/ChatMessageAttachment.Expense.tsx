@@ -21,8 +21,20 @@ export type ChatMessageExpenseAttachmentProps = {
 
 const ExpenseSkeleton = () => {
     return (
-        <Box br="2xl" style={{ overflow: 'hidden' }}>
+        <Box br="xl" style={{ overflow: 'hidden' }}>
             <Skeleton radius="square" width={screenW * 0.6} height={screenW * 0.6}></Skeleton>
+        </Box>
+    );
+};
+
+const ExpenseNotFound = () => {
+    return (
+        <Box br="xl" style={{ overflow: 'hidden' }} bg="background.main">
+            <Stack width={screenW * 0.6} height={screenW * 0.6} center>
+                <Typography variant="subtitle1" color="hint">
+                    Deleted
+                </Typography>
+            </Stack>
         </Box>
     );
 };
@@ -76,5 +88,8 @@ export const ChatMessageExpenseAttachment = withSuspense(
             </BorderlessButton>
         );
     },
-    <ExpenseSkeleton />
+    {
+        loader: <ExpenseSkeleton />,
+        fallback: <ExpenseNotFound />,
+    }
 );

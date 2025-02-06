@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
+import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import {
     ExpenseEditor,
     expenseEditorSchema,
@@ -11,6 +12,7 @@ import {
 } from '~/components/ExpenseEditor';
 import { ExpenseView } from '~/components/ExpenseView';
 import { Icon } from '~/components/Icon';
+import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
@@ -22,9 +24,10 @@ export default screen(
         route: '/(authenticated)/group/[groupId]/expense/[expenseId]',
         auth: true,
     },
-    ({ params, auth }) => {
+    ({ params, auth, router }) => {
         const trpcUtils = trpc.useUtils();
         const [mode, setMode] = useState<'edit' | 'view'>('view');
+        const [isDeleting, setDeleting] = useState<boolean>(false);
         const [expense, expenseQuery] = trpc.expenses.get.useSuspenseQuery({
             id: params.expenseId,
         });
@@ -32,6 +35,7 @@ export default screen(
         const isOwner = expense.ownerId === auth.session.user.id;
 
         const updateExpense = trpc.expenses.update.useMutation();
+        const deleteExpense = trpc.expenses.delete.useMutation();
 
         const form = useForm<ExpenseEditorSchema>({
             resolver: zodResolver(expenseEditorSchema),
@@ -54,14 +58,40 @@ export default screen(
             trpcUtils.expenses.get.setData({ id: expense.id }, () => {
                 return updatedExpense;
             });
+            trpcUtils.expenses.invalidate();
+            trpcUtils.balances.invalidate();
             expenseQuery.refetch();
 
             setMode('view');
         };
 
+        const handleDelete = async () => {
+            await deleteExpense.mutateAsync({
+                expenseId: expense.id,
+            });
+
+            trpcUtils.messages.invalidate();
+            trpcUtils.expenses.invalidate();
+            trpcUtils.balances.invalidate();
+
+            router.back();
+        };
+
         return (
             <Screen>
-                <Screen.Header title="Expense details" />
+                <Screen.Header
+                    title="Expense details"
+                    right={
+                        mode === 'edit' ? (
+                            <IconButton
+                                icon="Trash2"
+                                variant="ghost"
+                                color="error"
+                                onPress={() => setDeleting(true)}
+                            />
+                        ) : null
+                    }
+                />
                 <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
                     {mode === 'view' && <ExpenseView expense={expense} />}
                     {mode === 'edit' && (
@@ -76,9 +106,11 @@ export default screen(
                 <Screen.Footer>
                     <Stack column spacing="md">
                         {mode === 'view' && isOwner && (
-                            <Button color="secondary" onPress={() => setMode('edit')}>
-                                Edit expense
-                            </Button>
+                            <>
+                                <Button color="secondary" onPress={() => setMode('edit')}>
+                                    Edit expense
+                                </Button>
+                            </>
                         )}
                         {mode === 'view' && !isOwner && (
                             <Stack center column spacing="md" px="xl">
@@ -110,6 +142,11 @@ export default screen(
                         )}
                     </Stack>
                 </Screen.Footer>
+                <DeleteConfirmation
+                    isOpen={isDeleting}
+                    onClose={() => setDeleting(false)}
+                    onConfirm={handleDelete}
+                />
             </Screen>
         );
     }

@@ -521,6 +521,7 @@ export namespace Prisma {
     };
     export const GroupScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         name: 'name',
@@ -531,6 +532,7 @@ export namespace Prisma {
     };
     export const GroupParticipantScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         userId: 'userId',
@@ -541,6 +543,7 @@ export namespace Prisma {
     };
     export const ImageScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         path: 'path',
@@ -550,6 +553,7 @@ export namespace Prisma {
     };
     export const MessageScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         key: 'key',
@@ -560,6 +564,7 @@ export namespace Prisma {
     };
     export const MessageAttachmentScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         messageId: 'messageId',
@@ -568,6 +573,7 @@ export namespace Prisma {
     };
     export const ExpenseScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         ownerId: 'ownerId',
@@ -580,6 +586,7 @@ export namespace Prisma {
     };
     export const ExpenseShareScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         userId: 'userId',
@@ -591,6 +598,7 @@ export namespace Prisma {
     };
     export const PaymentScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         groupId: 'groupId',
@@ -602,6 +610,7 @@ export namespace Prisma {
     };
     export const ExchangeRatesScalarFieldEnum: {
         id: 'id',
+        archived: 'archived',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
         baseCurrency: 'baseCurrency',
@@ -1388,6 +1397,7 @@ export namespace Prisma {
      */
     interface GroupFieldRefs {
         readonly id: FieldRef<"Group", 'String'>;
+        readonly archived: FieldRef<"Group", 'Boolean'>;
         readonly createdAt: FieldRef<"Group", 'DateTime'>;
         readonly updatedAt: FieldRef<"Group", 'DateTime'>;
         readonly name: FieldRef<"Group", 'String'>;
@@ -1741,6 +1751,7 @@ export namespace Prisma {
      */
     interface GroupParticipantFieldRefs {
         readonly id: FieldRef<"GroupParticipant", 'String'>;
+        readonly archived: FieldRef<"GroupParticipant", 'Boolean'>;
         readonly createdAt: FieldRef<"GroupParticipant", 'DateTime'>;
         readonly updatedAt: FieldRef<"GroupParticipant", 'DateTime'>;
         readonly userId: FieldRef<"GroupParticipant", 'String'>;
@@ -2094,6 +2105,7 @@ export namespace Prisma {
      */
     interface ImageFieldRefs {
         readonly id: FieldRef<"Image", 'String'>;
+        readonly archived: FieldRef<"Image", 'Boolean'>;
         readonly createdAt: FieldRef<"Image", 'DateTime'>;
         readonly updatedAt: FieldRef<"Image", 'DateTime'>;
         readonly path: FieldRef<"Image", 'String'>;
@@ -2447,6 +2459,7 @@ export namespace Prisma {
      */
     interface MessageFieldRefs {
         readonly id: FieldRef<"Message", 'String'>;
+        readonly archived: FieldRef<"Message", 'Boolean'>;
         readonly createdAt: FieldRef<"Message", 'DateTime'>;
         readonly updatedAt: FieldRef<"Message", 'DateTime'>;
         readonly key: FieldRef<"Message", 'String'>;
@@ -2800,6 +2813,7 @@ export namespace Prisma {
      */
     interface MessageAttachmentFieldRefs {
         readonly id: FieldRef<"MessageAttachment", 'String'>;
+        readonly archived: FieldRef<"MessageAttachment", 'Boolean'>;
         readonly createdAt: FieldRef<"MessageAttachment", 'DateTime'>;
         readonly updatedAt: FieldRef<"MessageAttachment", 'DateTime'>;
         readonly messageId: FieldRef<"MessageAttachment", 'String'>;
@@ -3154,6 +3168,7 @@ export namespace Prisma {
      */
     interface ExpenseFieldRefs {
         readonly id: FieldRef<"Expense", 'String'>;
+        readonly archived: FieldRef<"Expense", 'Boolean'>;
         readonly createdAt: FieldRef<"Expense", 'DateTime'>;
         readonly updatedAt: FieldRef<"Expense", 'DateTime'>;
         readonly ownerId: FieldRef<"Expense", 'String'>;
@@ -3509,6 +3524,7 @@ export namespace Prisma {
      */
     interface ExpenseShareFieldRefs {
         readonly id: FieldRef<"ExpenseShare", 'String'>;
+        readonly archived: FieldRef<"ExpenseShare", 'Boolean'>;
         readonly createdAt: FieldRef<"ExpenseShare", 'DateTime'>;
         readonly updatedAt: FieldRef<"ExpenseShare", 'DateTime'>;
         readonly userId: FieldRef<"ExpenseShare", 'String'>;
@@ -3864,6 +3880,7 @@ export namespace Prisma {
      */
     interface PaymentFieldRefs {
         readonly id: FieldRef<"Payment", 'String'>;
+        readonly archived: FieldRef<"Payment", 'Boolean'>;
         readonly createdAt: FieldRef<"Payment", 'DateTime'>;
         readonly updatedAt: FieldRef<"Payment", 'DateTime'>;
         readonly groupId: FieldRef<"Payment", 'String'>;
@@ -4216,6 +4233,7 @@ export namespace Prisma {
      */
     interface ExchangeRatesFieldRefs {
         readonly id: FieldRef<"ExchangeRates", 'String'>;
+        readonly archived: FieldRef<"ExchangeRates", 'Boolean'>;
         readonly createdAt: FieldRef<"ExchangeRates", 'DateTime'>;
         readonly updatedAt: FieldRef<"ExchangeRates", 'DateTime'>;
         readonly baseCurrency: FieldRef<"ExchangeRates", 'String'>;
@@ -6204,6 +6222,7 @@ export namespace Prisma {
     };
     export type GroupMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         name: string | null
@@ -6214,6 +6233,7 @@ export namespace Prisma {
     };
     export type GroupMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         name: string | null
@@ -6224,6 +6244,7 @@ export namespace Prisma {
     };
     export type GroupCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         name: number
@@ -6235,6 +6256,7 @@ export namespace Prisma {
     };
     export type GroupMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         name?: true
@@ -6245,6 +6267,7 @@ export namespace Prisma {
     };
     export type GroupMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         name?: true
@@ -6255,6 +6278,7 @@ export namespace Prisma {
     };
     export type GroupCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         name?: true
@@ -6332,6 +6356,7 @@ export namespace Prisma {
     };
     export type GroupGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         name: string
@@ -6357,6 +6382,7 @@ export namespace Prisma {
     >;
     export type GroupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         name?: boolean
@@ -6373,6 +6399,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["group"]>;
     export type GroupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         name?: boolean
@@ -6384,6 +6411,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["group"]>;
     export type GroupSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         name?: boolean
@@ -6414,6 +6442,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             name: string
@@ -6841,6 +6870,7 @@ export namespace Prisma {
     };
     export type GroupParticipantMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         userId: string | null
@@ -6851,6 +6881,7 @@ export namespace Prisma {
     };
     export type GroupParticipantMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         userId: string | null
@@ -6861,6 +6892,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         userId: number
@@ -6872,6 +6904,7 @@ export namespace Prisma {
     };
     export type GroupParticipantMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         userId?: true
@@ -6882,6 +6915,7 @@ export namespace Prisma {
     };
     export type GroupParticipantMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         userId?: true
@@ -6892,6 +6926,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         userId?: true
@@ -6969,6 +7004,7 @@ export namespace Prisma {
     };
     export type GroupParticipantGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         userId: string
@@ -6994,6 +7030,7 @@ export namespace Prisma {
     >;
     export type GroupParticipantSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         userId?: boolean
@@ -7006,6 +7043,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["groupParticipant"]>;
     export type GroupParticipantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         userId?: boolean
@@ -7018,6 +7056,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["groupParticipant"]>;
     export type GroupParticipantSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         userId?: boolean
@@ -7042,6 +7081,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             userId: string
@@ -7379,6 +7419,7 @@ export namespace Prisma {
     };
     export type ImageMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         path: string | null
@@ -7388,6 +7429,7 @@ export namespace Prisma {
     };
     export type ImageMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         path: string | null
@@ -7397,6 +7439,7 @@ export namespace Prisma {
     };
     export type ImageCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         path: number
@@ -7407,6 +7450,7 @@ export namespace Prisma {
     };
     export type ImageMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         path?: true
@@ -7416,6 +7460,7 @@ export namespace Prisma {
     };
     export type ImageMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         path?: true
@@ -7425,6 +7470,7 @@ export namespace Prisma {
     };
     export type ImageCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         path?: true
@@ -7501,6 +7547,7 @@ export namespace Prisma {
     };
     export type ImageGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         path: string
@@ -7525,6 +7572,7 @@ export namespace Prisma {
     >;
     export type ImageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         path?: boolean
@@ -7537,6 +7585,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["image"]>;
     export type ImageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         path?: boolean
@@ -7546,6 +7595,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["image"]>;
     export type ImageSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         path?: boolean
@@ -7567,6 +7617,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             path: string
@@ -7937,6 +7988,7 @@ export namespace Prisma {
     };
     export type MessageMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         key: string | null
@@ -7947,6 +7999,7 @@ export namespace Prisma {
     };
     export type MessageMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         key: string | null
@@ -7957,6 +8010,7 @@ export namespace Prisma {
     };
     export type MessageCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         key: number
@@ -7968,6 +8022,7 @@ export namespace Prisma {
     };
     export type MessageMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         key?: true
@@ -7978,6 +8033,7 @@ export namespace Prisma {
     };
     export type MessageMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         key?: true
@@ -7988,6 +8044,7 @@ export namespace Prisma {
     };
     export type MessageCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         key?: true
@@ -8065,6 +8122,7 @@ export namespace Prisma {
     };
     export type MessageGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         key: string
@@ -8090,6 +8148,7 @@ export namespace Prisma {
     >;
     export type MessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         key?: boolean
@@ -8104,6 +8163,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["message"]>;
     export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         key?: boolean
@@ -8116,6 +8176,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["message"]>;
     export type MessageSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         key?: boolean
@@ -8143,6 +8204,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             key: string
@@ -8513,6 +8575,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         messageId: string | null
@@ -8521,6 +8584,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         messageId: string | null
@@ -8529,6 +8593,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         messageId: number
@@ -8538,6 +8603,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         messageId?: true
@@ -8546,6 +8612,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         messageId?: true
@@ -8554,6 +8621,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         messageId?: true
@@ -8629,6 +8697,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         messageId: string
@@ -8652,6 +8721,7 @@ export namespace Prisma {
     >;
     export type MessageAttachmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         messageId?: boolean
@@ -8662,6 +8732,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["messageAttachment"]>;
     export type MessageAttachmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         messageId?: boolean
@@ -8672,6 +8743,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["messageAttachment"]>;
     export type MessageAttachmentSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         messageId?: boolean
@@ -8694,6 +8766,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             messageId: string
@@ -9051,6 +9124,7 @@ export namespace Prisma {
     };
     export type ExpenseMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         ownerId: string | null
@@ -9062,6 +9136,7 @@ export namespace Prisma {
     };
     export type ExpenseMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         ownerId: string | null
@@ -9073,6 +9148,7 @@ export namespace Prisma {
     };
     export type ExpenseCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         ownerId: number
@@ -9092,6 +9168,7 @@ export namespace Prisma {
     };
     export type ExpenseMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         ownerId?: true
@@ -9103,6 +9180,7 @@ export namespace Prisma {
     };
     export type ExpenseMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         ownerId?: true
@@ -9114,6 +9192,7 @@ export namespace Prisma {
     };
     export type ExpenseCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         ownerId?: true
@@ -9207,6 +9286,7 @@ export namespace Prisma {
     };
     export type ExpenseGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         ownerId: string
@@ -9236,6 +9316,7 @@ export namespace Prisma {
     >;
     export type ExpenseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         ownerId?: boolean
@@ -9254,6 +9335,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["expense"]>;
     export type ExpenseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         ownerId?: boolean
@@ -9269,6 +9351,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["expense"]>;
     export type ExpenseSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         ownerId?: boolean
@@ -9303,6 +9386,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             ownerId: string
@@ -9691,6 +9775,7 @@ export namespace Prisma {
     };
     export type ExpenseShareMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         userId: string | null
@@ -9701,6 +9786,7 @@ export namespace Prisma {
     };
     export type ExpenseShareMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         userId: string | null
@@ -9711,6 +9797,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         userId: number
@@ -9729,6 +9816,7 @@ export namespace Prisma {
     };
     export type ExpenseShareMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         userId?: true
@@ -9739,6 +9827,7 @@ export namespace Prisma {
     };
     export type ExpenseShareMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         userId?: true
@@ -9749,6 +9838,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         userId?: true
@@ -9841,6 +9931,7 @@ export namespace Prisma {
     };
     export type ExpenseShareGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         userId: string
@@ -9869,6 +9960,7 @@ export namespace Prisma {
     >;
     export type ExpenseShareSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         userId?: boolean
@@ -9882,6 +9974,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["expenseShare"]>;
     export type ExpenseShareSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         userId?: boolean
@@ -9895,6 +9988,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["expenseShare"]>;
     export type ExpenseShareSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         userId?: boolean
@@ -9920,6 +10014,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             userId: string
@@ -10269,6 +10364,7 @@ export namespace Prisma {
     };
     export type PaymentMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         groupId: string | null
@@ -10279,6 +10375,7 @@ export namespace Prisma {
     };
     export type PaymentMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         groupId: string | null
@@ -10289,6 +10386,7 @@ export namespace Prisma {
     };
     export type PaymentCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         groupId: number
@@ -10307,6 +10405,7 @@ export namespace Prisma {
     };
     export type PaymentMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         groupId?: true
@@ -10317,6 +10416,7 @@ export namespace Prisma {
     };
     export type PaymentMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         groupId?: true
@@ -10327,6 +10427,7 @@ export namespace Prisma {
     };
     export type PaymentCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         groupId?: true
@@ -10419,6 +10520,7 @@ export namespace Prisma {
     };
     export type PaymentGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         groupId: string
@@ -10447,6 +10549,7 @@ export namespace Prisma {
     >;
     export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         groupId?: boolean
@@ -10461,6 +10564,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["payment"]>;
     export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         groupId?: boolean
@@ -10475,6 +10579,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["payment"]>;
     export type PaymentSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         groupId?: boolean
@@ -10503,6 +10608,7 @@ export namespace Prisma {
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             groupId: string
@@ -10844,18 +10950,21 @@ export namespace Prisma {
     };
     export type ExchangeRatesMinAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         baseCurrency: string | null
     };
     export type ExchangeRatesMaxAggregateOutputType = {
         id: string | null
+        archived: boolean | null
         createdAt: Date | null
         updatedAt: Date | null
         baseCurrency: string | null
     };
     export type ExchangeRatesCountAggregateOutputType = {
         id: number
+        archived: number
         createdAt: number
         updatedAt: number
         baseCurrency: number
@@ -10864,18 +10973,21 @@ export namespace Prisma {
     };
     export type ExchangeRatesMinAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         baseCurrency?: true
     };
     export type ExchangeRatesMaxAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         baseCurrency?: true
     };
     export type ExchangeRatesCountAggregateInputType = {
         id?: true
+        archived?: true
         createdAt?: true
         updatedAt?: true
         baseCurrency?: true
@@ -10950,6 +11062,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesGroupByOutputType = {
         id: string
+        archived: boolean | null
         createdAt: Date
         updatedAt: Date
         baseCurrency: string
@@ -10972,6 +11085,7 @@ export namespace Prisma {
     >;
     export type ExchangeRatesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         baseCurrency?: boolean
@@ -10979,6 +11093,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["exchangeRates"]>;
     export type ExchangeRatesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         baseCurrency?: boolean
@@ -10986,6 +11101,7 @@ export namespace Prisma {
     }, ExtArgs["result"]["exchangeRates"]>;
     export type ExchangeRatesSelectScalar = {
         id?: boolean
+        archived?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         baseCurrency?: boolean
@@ -10996,6 +11112,7 @@ export namespace Prisma {
         objects: {}
         scalars: $Extensions.GetPayloadResult<{
             id: string
+            archived: boolean | null
             createdAt: Date
             updatedAt: Date
             baseCurrency: string
@@ -11480,6 +11597,7 @@ export namespace Prisma {
         OR?: GroupWhereInput[]
         NOT?: GroupWhereInput | GroupWhereInput[]
         id?: StringFilter<"Group"> | string
+        archived?: BoolNullableFilter<"Group"> | boolean | null
         createdAt?: DateTimeFilter<"Group"> | Date | string
         updatedAt?: DateTimeFilter<"Group"> | Date | string
         name?: StringFilter<"Group"> | string
@@ -11495,6 +11613,7 @@ export namespace Prisma {
     };
     export type GroupOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         name?: SortOrder
@@ -11514,6 +11633,7 @@ export namespace Prisma {
         AND?: GroupWhereInput | GroupWhereInput[]
         OR?: GroupWhereInput[]
         NOT?: GroupWhereInput | GroupWhereInput[]
+        archived?: BoolNullableFilter<"Group"> | boolean | null
         createdAt?: DateTimeFilter<"Group"> | Date | string
         updatedAt?: DateTimeFilter<"Group"> | Date | string
         name?: StringFilter<"Group"> | string
@@ -11528,6 +11648,7 @@ export namespace Prisma {
     }, "id" | "inviteCode">;
     export type GroupOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         name?: SortOrder
@@ -11544,6 +11665,7 @@ export namespace Prisma {
         OR?: GroupScalarWhereWithAggregatesInput[]
         NOT?: GroupScalarWhereWithAggregatesInput | GroupScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"Group"> | string
+        archived?: BoolNullableWithAggregatesFilter<"Group"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"Group"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Group"> | Date | string
         name?: StringWithAggregatesFilter<"Group"> | string
@@ -11557,6 +11679,7 @@ export namespace Prisma {
         OR?: GroupParticipantWhereInput[]
         NOT?: GroupParticipantWhereInput | GroupParticipantWhereInput[]
         id?: StringFilter<"GroupParticipant"> | string
+        archived?: BoolNullableFilter<"GroupParticipant"> | boolean | null
         createdAt?: DateTimeFilter<"GroupParticipant"> | Date | string
         updatedAt?: DateTimeFilter<"GroupParticipant"> | Date | string
         userId?: StringFilter<"GroupParticipant"> | string
@@ -11569,6 +11692,7 @@ export namespace Prisma {
     };
     export type GroupParticipantOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -11584,6 +11708,7 @@ export namespace Prisma {
         AND?: GroupParticipantWhereInput | GroupParticipantWhereInput[]
         OR?: GroupParticipantWhereInput[]
         NOT?: GroupParticipantWhereInput | GroupParticipantWhereInput[]
+        archived?: BoolNullableFilter<"GroupParticipant"> | boolean | null
         createdAt?: DateTimeFilter<"GroupParticipant"> | Date | string
         updatedAt?: DateTimeFilter<"GroupParticipant"> | Date | string
         userId?: StringFilter<"GroupParticipant"> | string
@@ -11596,6 +11721,7 @@ export namespace Prisma {
     }, "id">;
     export type GroupParticipantOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -11612,6 +11738,7 @@ export namespace Prisma {
         OR?: GroupParticipantScalarWhereWithAggregatesInput[]
         NOT?: GroupParticipantScalarWhereWithAggregatesInput | GroupParticipantScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"GroupParticipant"> | string
+        archived?: BoolNullableWithAggregatesFilter<"GroupParticipant"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"GroupParticipant"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"GroupParticipant"> | Date | string
         userId?: StringWithAggregatesFilter<"GroupParticipant"> | string
@@ -11625,6 +11752,7 @@ export namespace Prisma {
         OR?: ImageWhereInput[]
         NOT?: ImageWhereInput | ImageWhereInput[]
         id?: StringFilter<"Image"> | string
+        archived?: BoolNullableFilter<"Image"> | boolean | null
         createdAt?: DateTimeFilter<"Image"> | Date | string
         updatedAt?: DateTimeFilter<"Image"> | Date | string
         path?: StringFilter<"Image"> | string
@@ -11636,6 +11764,7 @@ export namespace Prisma {
     };
     export type ImageOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         path?: SortOrder
@@ -11650,6 +11779,7 @@ export namespace Prisma {
         AND?: ImageWhereInput | ImageWhereInput[]
         OR?: ImageWhereInput[]
         NOT?: ImageWhereInput | ImageWhereInput[]
+        archived?: BoolNullableFilter<"Image"> | boolean | null
         createdAt?: DateTimeFilter<"Image"> | Date | string
         updatedAt?: DateTimeFilter<"Image"> | Date | string
         path?: StringFilter<"Image"> | string
@@ -11661,6 +11791,7 @@ export namespace Prisma {
     }, "id">;
     export type ImageOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         path?: SortOrder
@@ -11676,6 +11807,7 @@ export namespace Prisma {
         OR?: ImageScalarWhereWithAggregatesInput[]
         NOT?: ImageScalarWhereWithAggregatesInput | ImageScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"Image"> | string
+        archived?: BoolNullableWithAggregatesFilter<"Image"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"Image"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Image"> | Date | string
         path?: StringWithAggregatesFilter<"Image"> | string
@@ -11688,6 +11820,7 @@ export namespace Prisma {
         OR?: MessageWhereInput[]
         NOT?: MessageWhereInput | MessageWhereInput[]
         id?: StringFilter<"Message"> | string
+        archived?: BoolNullableFilter<"Message"> | boolean | null
         createdAt?: DateTimeFilter<"Message"> | Date | string
         updatedAt?: DateTimeFilter<"Message"> | Date | string
         key?: StringFilter<"Message"> | string
@@ -11701,6 +11834,7 @@ export namespace Prisma {
     };
     export type MessageOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         key?: SortOrder
@@ -11717,6 +11851,7 @@ export namespace Prisma {
         AND?: MessageWhereInput | MessageWhereInput[]
         OR?: MessageWhereInput[]
         NOT?: MessageWhereInput | MessageWhereInput[]
+        archived?: BoolNullableFilter<"Message"> | boolean | null
         createdAt?: DateTimeFilter<"Message"> | Date | string
         updatedAt?: DateTimeFilter<"Message"> | Date | string
         key?: StringFilter<"Message"> | string
@@ -11730,6 +11865,7 @@ export namespace Prisma {
     }, "id">;
     export type MessageOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         key?: SortOrder
@@ -11746,6 +11882,7 @@ export namespace Prisma {
         OR?: MessageScalarWhereWithAggregatesInput[]
         NOT?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"Message"> | string
+        archived?: BoolNullableWithAggregatesFilter<"Message"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
         key?: StringWithAggregatesFilter<"Message"> | string
@@ -11759,6 +11896,7 @@ export namespace Prisma {
         OR?: MessageAttachmentWhereInput[]
         NOT?: MessageAttachmentWhereInput | MessageAttachmentWhereInput[]
         id?: StringFilter<"MessageAttachment"> | string
+        archived?: BoolNullableFilter<"MessageAttachment"> | boolean | null
         createdAt?: DateTimeFilter<"MessageAttachment"> | Date | string
         updatedAt?: DateTimeFilter<"MessageAttachment"> | Date | string
         messageId?: StringFilter<"MessageAttachment"> | string
@@ -11769,6 +11907,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         messageId?: SortOrder
@@ -11782,6 +11921,7 @@ export namespace Prisma {
         AND?: MessageAttachmentWhereInput | MessageAttachmentWhereInput[]
         OR?: MessageAttachmentWhereInput[]
         NOT?: MessageAttachmentWhereInput | MessageAttachmentWhereInput[]
+        archived?: BoolNullableFilter<"MessageAttachment"> | boolean | null
         createdAt?: DateTimeFilter<"MessageAttachment"> | Date | string
         updatedAt?: DateTimeFilter<"MessageAttachment"> | Date | string
         messageId?: StringFilter<"MessageAttachment"> | string
@@ -11792,6 +11932,7 @@ export namespace Prisma {
     }, "id">;
     export type MessageAttachmentOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         messageId?: SortOrder
@@ -11806,6 +11947,7 @@ export namespace Prisma {
         OR?: MessageAttachmentScalarWhereWithAggregatesInput[]
         NOT?: MessageAttachmentScalarWhereWithAggregatesInput | MessageAttachmentScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"MessageAttachment"> | string
+        archived?: BoolNullableWithAggregatesFilter<"MessageAttachment"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"MessageAttachment"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"MessageAttachment"> | Date | string
         messageId?: StringWithAggregatesFilter<"MessageAttachment"> | string
@@ -11817,6 +11959,7 @@ export namespace Prisma {
         OR?: ExpenseWhereInput[]
         NOT?: ExpenseWhereInput | ExpenseWhereInput[]
         id?: StringFilter<"Expense"> | string
+        archived?: BoolNullableFilter<"Expense"> | boolean | null
         createdAt?: DateTimeFilter<"Expense"> | Date | string
         updatedAt?: DateTimeFilter<"Expense"> | Date | string
         ownerId?: StringFilter<"Expense"> | string
@@ -11834,6 +11977,7 @@ export namespace Prisma {
     };
     export type ExpenseOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         ownerId?: SortOrder
@@ -11854,6 +11998,7 @@ export namespace Prisma {
         AND?: ExpenseWhereInput | ExpenseWhereInput[]
         OR?: ExpenseWhereInput[]
         NOT?: ExpenseWhereInput | ExpenseWhereInput[]
+        archived?: BoolNullableFilter<"Expense"> | boolean | null
         createdAt?: DateTimeFilter<"Expense"> | Date | string
         updatedAt?: DateTimeFilter<"Expense"> | Date | string
         ownerId?: StringFilter<"Expense"> | string
@@ -11871,6 +12016,7 @@ export namespace Prisma {
     }, "id">;
     export type ExpenseOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         ownerId?: SortOrder
@@ -11891,6 +12037,7 @@ export namespace Prisma {
         OR?: ExpenseScalarWhereWithAggregatesInput[]
         NOT?: ExpenseScalarWhereWithAggregatesInput | ExpenseScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"Expense"> | string
+        archived?: BoolNullableWithAggregatesFilter<"Expense"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"Expense"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Expense"> | Date | string
         ownerId?: StringWithAggregatesFilter<"Expense"> | string
@@ -11906,6 +12053,7 @@ export namespace Prisma {
         OR?: ExpenseShareWhereInput[]
         NOT?: ExpenseShareWhereInput | ExpenseShareWhereInput[]
         id?: StringFilter<"ExpenseShare"> | string
+        archived?: BoolNullableFilter<"ExpenseShare"> | boolean | null
         createdAt?: DateTimeFilter<"ExpenseShare"> | Date | string
         updatedAt?: DateTimeFilter<"ExpenseShare"> | Date | string
         userId?: StringFilter<"ExpenseShare"> | string
@@ -11919,6 +12067,7 @@ export namespace Prisma {
     };
     export type ExpenseShareOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -11935,6 +12084,7 @@ export namespace Prisma {
         AND?: ExpenseShareWhereInput | ExpenseShareWhereInput[]
         OR?: ExpenseShareWhereInput[]
         NOT?: ExpenseShareWhereInput | ExpenseShareWhereInput[]
+        archived?: BoolNullableFilter<"ExpenseShare"> | boolean | null
         createdAt?: DateTimeFilter<"ExpenseShare"> | Date | string
         updatedAt?: DateTimeFilter<"ExpenseShare"> | Date | string
         userId?: StringFilter<"ExpenseShare"> | string
@@ -11948,6 +12098,7 @@ export namespace Prisma {
     }, "id">;
     export type ExpenseShareOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -11967,6 +12118,7 @@ export namespace Prisma {
         OR?: ExpenseShareScalarWhereWithAggregatesInput[]
         NOT?: ExpenseShareScalarWhereWithAggregatesInput | ExpenseShareScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"ExpenseShare"> | string
+        archived?: BoolNullableWithAggregatesFilter<"ExpenseShare"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"ExpenseShare"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"ExpenseShare"> | Date | string
         userId?: StringWithAggregatesFilter<"ExpenseShare"> | string
@@ -11981,6 +12133,7 @@ export namespace Prisma {
         OR?: PaymentWhereInput[]
         NOT?: PaymentWhereInput | PaymentWhereInput[]
         id?: StringFilter<"Payment"> | string
+        archived?: BoolNullableFilter<"Payment"> | boolean | null
         createdAt?: DateTimeFilter<"Payment"> | Date | string
         updatedAt?: DateTimeFilter<"Payment"> | Date | string
         groupId?: StringFilter<"Payment"> | string
@@ -11995,6 +12148,7 @@ export namespace Prisma {
     };
     export type PaymentOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         groupId?: SortOrder
@@ -12012,6 +12166,7 @@ export namespace Prisma {
         AND?: PaymentWhereInput | PaymentWhereInput[]
         OR?: PaymentWhereInput[]
         NOT?: PaymentWhereInput | PaymentWhereInput[]
+        archived?: BoolNullableFilter<"Payment"> | boolean | null
         createdAt?: DateTimeFilter<"Payment"> | Date | string
         updatedAt?: DateTimeFilter<"Payment"> | Date | string
         groupId?: StringFilter<"Payment"> | string
@@ -12026,6 +12181,7 @@ export namespace Prisma {
     }, "id">;
     export type PaymentOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         groupId?: SortOrder
@@ -12045,6 +12201,7 @@ export namespace Prisma {
         OR?: PaymentScalarWhereWithAggregatesInput[]
         NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"Payment"> | string
+        archived?: BoolNullableWithAggregatesFilter<"Payment"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
         groupId?: StringWithAggregatesFilter<"Payment"> | string
@@ -12059,6 +12216,7 @@ export namespace Prisma {
         OR?: ExchangeRatesWhereInput[]
         NOT?: ExchangeRatesWhereInput | ExchangeRatesWhereInput[]
         id?: StringFilter<"ExchangeRates"> | string
+        archived?: BoolNullableFilter<"ExchangeRates"> | boolean | null
         createdAt?: DateTimeFilter<"ExchangeRates"> | Date | string
         updatedAt?: DateTimeFilter<"ExchangeRates"> | Date | string
         baseCurrency?: StringFilter<"ExchangeRates"> | string
@@ -12066,6 +12224,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesOrderByWithRelationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         baseCurrency?: SortOrder
@@ -12076,6 +12235,7 @@ export namespace Prisma {
         AND?: ExchangeRatesWhereInput | ExchangeRatesWhereInput[]
         OR?: ExchangeRatesWhereInput[]
         NOT?: ExchangeRatesWhereInput | ExchangeRatesWhereInput[]
+        archived?: BoolNullableFilter<"ExchangeRates"> | boolean | null
         createdAt?: DateTimeFilter<"ExchangeRates"> | Date | string
         updatedAt?: DateTimeFilter<"ExchangeRates"> | Date | string
         baseCurrency?: StringFilter<"ExchangeRates"> | string
@@ -12083,6 +12243,7 @@ export namespace Prisma {
     }, "id">;
     export type ExchangeRatesOrderByWithAggregationInput = {
         id?: SortOrder
+        archived?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         baseCurrency?: SortOrder
@@ -12096,6 +12257,7 @@ export namespace Prisma {
         OR?: ExchangeRatesScalarWhereWithAggregatesInput[]
         NOT?: ExchangeRatesScalarWhereWithAggregatesInput | ExchangeRatesScalarWhereWithAggregatesInput[]
         id?: StringWithAggregatesFilter<"ExchangeRates"> | string
+        archived?: BoolNullableWithAggregatesFilter<"ExchangeRates"> | boolean | null
         createdAt?: DateTimeWithAggregatesFilter<"ExchangeRates"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"ExchangeRates"> | Date | string
         baseCurrency?: StringWithAggregatesFilter<"ExchangeRates"> | string
@@ -12214,6 +12376,7 @@ export namespace Prisma {
     };
     export type GroupCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -12228,6 +12391,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -12242,6 +12406,7 @@ export namespace Prisma {
     };
     export type GroupUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -12256,6 +12421,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -12270,6 +12436,7 @@ export namespace Prisma {
     };
     export type GroupCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -12280,6 +12447,7 @@ export namespace Prisma {
     };
     export type GroupUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -12289,6 +12457,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -12299,6 +12468,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         role: $Enums.Role
@@ -12309,6 +12479,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -12319,6 +12490,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -12329,6 +12501,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -12339,6 +12512,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -12349,6 +12523,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -12357,6 +12532,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -12367,6 +12543,7 @@ export namespace Prisma {
     };
     export type ImageCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -12378,6 +12555,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -12389,6 +12567,7 @@ export namespace Prisma {
     };
     export type ImageUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -12400,6 +12579,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -12411,6 +12591,7 @@ export namespace Prisma {
     };
     export type ImageCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -12420,6 +12601,7 @@ export namespace Prisma {
     };
     export type ImageUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -12429,6 +12611,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -12438,6 +12621,7 @@ export namespace Prisma {
     };
     export type MessageCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -12449,6 +12633,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -12460,6 +12645,7 @@ export namespace Prisma {
     };
     export type MessageUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -12471,6 +12657,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -12482,6 +12669,7 @@ export namespace Prisma {
     };
     export type MessageCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -12492,6 +12680,7 @@ export namespace Prisma {
     };
     export type MessageUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -12500,6 +12689,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -12510,6 +12700,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         type: $Enums.MessageAttachmentType
@@ -12518,6 +12709,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         messageId: string
@@ -12526,6 +12718,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         type?: EnumMessageAttachmentTypeFieldUpdateOperationsInput | $Enums.MessageAttachmentType
@@ -12534,6 +12727,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         messageId?: StringFieldUpdateOperationsInput | string
@@ -12542,6 +12736,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         messageId: string
@@ -12550,12 +12745,14 @@ export namespace Prisma {
     };
     export type MessageAttachmentUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         type?: EnumMessageAttachmentTypeFieldUpdateOperationsInput | $Enums.MessageAttachmentType
     };
     export type MessageAttachmentUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         messageId?: StringFieldUpdateOperationsInput | string
@@ -12564,6 +12761,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -12578,6 +12776,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -12592,6 +12791,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -12606,6 +12806,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -12620,6 +12821,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -12632,6 +12834,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -12641,6 +12844,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -12653,6 +12857,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -12664,6 +12869,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -12675,6 +12881,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -12686,6 +12893,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -12697,6 +12905,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -12708,6 +12917,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -12717,6 +12927,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -12728,6 +12939,7 @@ export namespace Prisma {
     };
     export type PaymentCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -12739,6 +12951,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -12750,6 +12963,7 @@ export namespace Prisma {
     };
     export type PaymentUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -12761,6 +12975,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -12772,6 +12987,7 @@ export namespace Prisma {
     };
     export type PaymentCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -12783,6 +12999,7 @@ export namespace Prisma {
     };
     export type PaymentUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -12791,6 +13008,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -12802,6 +13020,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         baseCurrency: string
@@ -12809,6 +13028,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesUncheckedCreateInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         baseCurrency: string
@@ -12816,6 +13036,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         baseCurrency?: StringFieldUpdateOperationsInput | string
@@ -12823,6 +13044,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesUncheckedUpdateInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         baseCurrency?: StringFieldUpdateOperationsInput | string
@@ -12830,6 +13052,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesCreateManyInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         baseCurrency: string
@@ -12837,6 +13060,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesUpdateManyMutationInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         baseCurrency?: StringFieldUpdateOperationsInput | string
@@ -12844,6 +13068,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesUncheckedUpdateManyInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         baseCurrency?: StringFieldUpdateOperationsInput | string
@@ -13046,6 +13271,7 @@ export namespace Prisma {
     };
     export type GroupCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         name?: SortOrder
@@ -13056,6 +13282,7 @@ export namespace Prisma {
     };
     export type GroupMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         name?: SortOrder
@@ -13066,6 +13293,7 @@ export namespace Prisma {
     };
     export type GroupMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         name?: SortOrder
@@ -13096,6 +13324,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -13106,6 +13335,7 @@ export namespace Prisma {
     };
     export type GroupParticipantMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -13116,6 +13346,7 @@ export namespace Prisma {
     };
     export type GroupParticipantMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -13160,6 +13391,7 @@ export namespace Prisma {
     };
     export type ImageCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         path?: SortOrder
@@ -13169,6 +13401,7 @@ export namespace Prisma {
     };
     export type ImageMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         path?: SortOrder
@@ -13178,6 +13411,7 @@ export namespace Prisma {
     };
     export type ImageMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         path?: SortOrder
@@ -13205,6 +13439,7 @@ export namespace Prisma {
     };
     export type MessageCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         key?: SortOrder
@@ -13215,6 +13450,7 @@ export namespace Prisma {
     };
     export type MessageMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         key?: SortOrder
@@ -13225,6 +13461,7 @@ export namespace Prisma {
     };
     export type MessageMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         key?: SortOrder
@@ -13258,6 +13495,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         messageId?: SortOrder
@@ -13266,6 +13504,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         messageId?: SortOrder
@@ -13274,6 +13513,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         messageId?: SortOrder
@@ -13321,6 +13561,7 @@ export namespace Prisma {
     };
     export type ExpenseCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         ownerId?: SortOrder
@@ -13336,6 +13577,7 @@ export namespace Prisma {
     };
     export type ExpenseMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         ownerId?: SortOrder
@@ -13347,6 +13589,7 @@ export namespace Prisma {
     };
     export type ExpenseMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         ownerId?: SortOrder
@@ -13407,6 +13650,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -13421,6 +13665,7 @@ export namespace Prisma {
     };
     export type ExpenseShareMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -13431,6 +13676,7 @@ export namespace Prisma {
     };
     export type ExpenseShareMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         userId?: SortOrder
@@ -13451,6 +13697,7 @@ export namespace Prisma {
     };
     export type PaymentCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         groupId?: SortOrder
@@ -13465,6 +13712,7 @@ export namespace Prisma {
     };
     export type PaymentMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         groupId?: SortOrder
@@ -13475,6 +13723,7 @@ export namespace Prisma {
     };
     export type PaymentMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         groupId?: SortOrder
@@ -13508,6 +13757,7 @@ export namespace Prisma {
     };
     export type ExchangeRatesCountOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         baseCurrency?: SortOrder
@@ -13515,12 +13765,14 @@ export namespace Prisma {
     };
     export type ExchangeRatesMaxOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         baseCurrency?: SortOrder
     };
     export type ExchangeRatesMinOrderByAggregateInput = {
         id?: SortOrder
+        archived?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         baseCurrency?: SortOrder
@@ -14658,6 +14910,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCreateWithoutUserInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         role: $Enums.Role
@@ -14667,6 +14920,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedCreateWithoutUserInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -14684,6 +14938,7 @@ export namespace Prisma {
     };
     export type ImageCreateWithoutProfileInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -14694,6 +14949,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedCreateWithoutProfileInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -14708,6 +14964,7 @@ export namespace Prisma {
     };
     export type MessageCreateWithoutAuthorInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -14718,6 +14975,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedCreateWithoutAuthorInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -14736,6 +14994,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateWithoutOwnerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -14749,6 +15008,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedCreateWithoutOwnerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         payerId: string
@@ -14770,6 +15030,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateWithoutPayerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -14783,6 +15044,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedCreateWithoutPayerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -14804,6 +15066,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCreateWithoutUserInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -14814,6 +15077,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedCreateWithoutUserInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         expenseId: string
@@ -14832,6 +15096,7 @@ export namespace Prisma {
     };
     export type PaymentCreateWithoutRecipientInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -14842,6 +15107,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedCreateWithoutRecipientInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -14860,6 +15126,7 @@ export namespace Prisma {
     };
     export type PaymentCreateWithoutPayerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -14870,6 +15137,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedCreateWithoutPayerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -14904,6 +15172,7 @@ export namespace Prisma {
         OR?: GroupParticipantScalarWhereInput[]
         NOT?: GroupParticipantScalarWhereInput | GroupParticipantScalarWhereInput[]
         id?: StringFilter<"GroupParticipant"> | string
+        archived?: BoolNullableFilter<"GroupParticipant"> | boolean | null
         createdAt?: DateTimeFilter<"GroupParticipant"> | Date | string
         updatedAt?: DateTimeFilter<"GroupParticipant"> | Date | string
         userId?: StringFilter<"GroupParticipant"> | string
@@ -14923,6 +15192,7 @@ export namespace Prisma {
     };
     export type ImageUpdateWithoutProfileInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -14933,6 +15203,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedUpdateWithoutProfileInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -14959,6 +15230,7 @@ export namespace Prisma {
         OR?: MessageScalarWhereInput[]
         NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
         id?: StringFilter<"Message"> | string
+        archived?: BoolNullableFilter<"Message"> | boolean | null
         createdAt?: DateTimeFilter<"Message"> | Date | string
         updatedAt?: DateTimeFilter<"Message"> | Date | string
         key?: StringFilter<"Message"> | string
@@ -14985,6 +15257,7 @@ export namespace Prisma {
         OR?: ExpenseScalarWhereInput[]
         NOT?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
         id?: StringFilter<"Expense"> | string
+        archived?: BoolNullableFilter<"Expense"> | boolean | null
         createdAt?: DateTimeFilter<"Expense"> | Date | string
         updatedAt?: DateTimeFilter<"Expense"> | Date | string
         ownerId?: StringFilter<"Expense"> | string
@@ -15026,6 +15299,7 @@ export namespace Prisma {
         OR?: ExpenseShareScalarWhereInput[]
         NOT?: ExpenseShareScalarWhereInput | ExpenseShareScalarWhereInput[]
         id?: StringFilter<"ExpenseShare"> | string
+        archived?: BoolNullableFilter<"ExpenseShare"> | boolean | null
         createdAt?: DateTimeFilter<"ExpenseShare"> | Date | string
         updatedAt?: DateTimeFilter<"ExpenseShare"> | Date | string
         userId?: StringFilter<"ExpenseShare"> | string
@@ -15053,6 +15327,7 @@ export namespace Prisma {
         OR?: PaymentScalarWhereInput[]
         NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
         id?: StringFilter<"Payment"> | string
+        archived?: BoolNullableFilter<"Payment"> | boolean | null
         createdAt?: DateTimeFilter<"Payment"> | Date | string
         updatedAt?: DateTimeFilter<"Payment"> | Date | string
         groupId?: StringFilter<"Payment"> | string
@@ -15077,6 +15352,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         role: $Enums.Role
@@ -15086,6 +15362,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -15103,6 +15380,7 @@ export namespace Prisma {
     };
     export type ImageCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -15113,6 +15391,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         path: string
@@ -15127,6 +15406,7 @@ export namespace Prisma {
     };
     export type MessageCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -15137,6 +15417,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -15155,6 +15436,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -15168,6 +15450,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -15189,6 +15472,7 @@ export namespace Prisma {
     };
     export type PaymentCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -15199,6 +15483,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedCreateWithoutGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -15239,6 +15524,7 @@ export namespace Prisma {
     };
     export type ImageUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -15249,6 +15535,7 @@ export namespace Prisma {
     };
     export type ImageUncheckedUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         path?: StringFieldUpdateOperationsInput | string
@@ -15338,6 +15625,7 @@ export namespace Prisma {
     };
     export type GroupCreateWithoutParticipantsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15351,6 +15639,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedCreateWithoutParticipantsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15422,6 +15711,7 @@ export namespace Prisma {
     };
     export type GroupUpdateWithoutParticipantsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -15435,6 +15725,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateWithoutParticipantsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -15448,6 +15739,7 @@ export namespace Prisma {
     };
     export type GroupCreateWithoutCoverImageInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15461,6 +15753,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedCreateWithoutCoverImageInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15542,6 +15835,7 @@ export namespace Prisma {
         OR?: GroupScalarWhereInput[]
         NOT?: GroupScalarWhereInput | GroupScalarWhereInput[]
         id?: StringFilter<"Group"> | string
+        archived?: BoolNullableFilter<"Group"> | boolean | null
         createdAt?: DateTimeFilter<"Group"> | Date | string
         updatedAt?: DateTimeFilter<"Group"> | Date | string
         name?: StringFilter<"Group"> | string
@@ -15620,6 +15914,7 @@ export namespace Prisma {
     };
     export type GroupCreateWithoutMessagesInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15633,6 +15928,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedCreateWithoutMessagesInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15650,6 +15946,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCreateWithoutMessageInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         type: $Enums.MessageAttachmentType
@@ -15657,6 +15954,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedCreateWithoutMessageInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         type: $Enums.MessageAttachmentType
@@ -15726,6 +16024,7 @@ export namespace Prisma {
     };
     export type GroupUpdateWithoutMessagesInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -15739,6 +16038,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateWithoutMessagesInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -15768,6 +16068,7 @@ export namespace Prisma {
         OR?: MessageAttachmentScalarWhereInput[]
         NOT?: MessageAttachmentScalarWhereInput | MessageAttachmentScalarWhereInput[]
         id?: StringFilter<"MessageAttachment"> | string
+        archived?: BoolNullableFilter<"MessageAttachment"> | boolean | null
         createdAt?: DateTimeFilter<"MessageAttachment"> | Date | string
         updatedAt?: DateTimeFilter<"MessageAttachment"> | Date | string
         messageId?: StringFilter<"MessageAttachment"> | string
@@ -15776,6 +16077,7 @@ export namespace Prisma {
     };
     export type MessageCreateWithoutAttachmentsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -15786,6 +16088,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedCreateWithoutAttachmentsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -15800,6 +16103,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateWithoutMessageAttachmentsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -15813,6 +16117,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedCreateWithoutMessageAttachmentsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -15839,6 +16144,7 @@ export namespace Prisma {
     };
     export type MessageUpdateWithoutAttachmentsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -15849,6 +16155,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateWithoutAttachmentsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -15868,6 +16175,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateWithoutMessageAttachmentsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -15881,6 +16189,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateWithoutMessageAttachmentsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -15974,6 +16283,7 @@ export namespace Prisma {
     };
     export type GroupCreateWithoutExpensesInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -15987,6 +16297,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedCreateWithoutExpensesInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -16004,6 +16315,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCreateWithoutExpenseInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -16014,6 +16326,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedCreateWithoutExpenseInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -16032,6 +16345,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCreateWithoutExpenseInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         type: $Enums.MessageAttachmentType
@@ -16039,6 +16353,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedCreateWithoutExpenseInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         messageId: string
@@ -16153,6 +16468,7 @@ export namespace Prisma {
     };
     export type GroupUpdateWithoutExpensesInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -16166,6 +16482,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateWithoutExpensesInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -16245,6 +16562,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateWithoutSharesInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -16258,6 +16576,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedCreateWithoutSharesInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -16329,6 +16648,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateWithoutSharesInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16342,6 +16662,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateWithoutSharesInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -16355,6 +16676,7 @@ export namespace Prisma {
     };
     export type GroupCreateWithoutPaymentsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -16368,6 +16690,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedCreateWithoutPaymentsInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -16474,6 +16797,7 @@ export namespace Prisma {
     };
     export type GroupUpdateWithoutPaymentsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -16487,6 +16811,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateWithoutPaymentsInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -16590,6 +16915,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCreateManyUserInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -16599,6 +16925,7 @@ export namespace Prisma {
     };
     export type MessageCreateManyAuthorInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -16608,6 +16935,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateManyOwnerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         payerId: string
@@ -16619,6 +16947,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateManyPayerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -16630,6 +16959,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCreateManyUserInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         expenseId: string
@@ -16640,6 +16970,7 @@ export namespace Prisma {
     };
     export type PaymentCreateManyRecipientInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -16650,6 +16981,7 @@ export namespace Prisma {
     };
     export type PaymentCreateManyPayerInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         groupId: string
@@ -16660,6 +16992,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUpdateWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -16669,6 +17002,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedUpdateWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -16678,6 +17012,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedUpdateManyWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -16687,6 +17022,7 @@ export namespace Prisma {
     };
     export type MessageUpdateWithoutAuthorInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -16697,6 +17033,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateWithoutAuthorInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -16707,6 +17044,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateManyWithoutAuthorInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -16716,6 +17054,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateWithoutOwnerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16729,6 +17068,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateWithoutOwnerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         payerId?: StringFieldUpdateOperationsInput | string
@@ -16742,6 +17082,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateManyWithoutOwnerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         payerId?: StringFieldUpdateOperationsInput | string
@@ -16753,6 +17094,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateWithoutPayerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16766,6 +17108,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateWithoutPayerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -16779,6 +17122,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateManyWithoutPayerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -16790,6 +17134,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUpdateWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16800,6 +17145,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedUpdateWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         expenseId?: StringFieldUpdateOperationsInput | string
@@ -16810,6 +17156,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedUpdateManyWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         expenseId?: StringFieldUpdateOperationsInput | string
@@ -16820,6 +17167,7 @@ export namespace Prisma {
     };
     export type PaymentUpdateWithoutRecipientInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16830,6 +17178,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateWithoutRecipientInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -16840,6 +17189,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateManyWithoutRecipientInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -16850,6 +17200,7 @@ export namespace Prisma {
     };
     export type PaymentUpdateWithoutPayerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16860,6 +17211,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateWithoutPayerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -16870,6 +17222,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateManyWithoutPayerInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         groupId?: StringFieldUpdateOperationsInput | string
@@ -16880,6 +17233,7 @@ export namespace Prisma {
     };
     export type GroupParticipantCreateManyGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -16889,6 +17243,7 @@ export namespace Prisma {
     };
     export type MessageCreateManyGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         key: string
@@ -16898,6 +17253,7 @@ export namespace Prisma {
     };
     export type ExpenseCreateManyGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         ownerId: string
@@ -16909,6 +17265,7 @@ export namespace Prisma {
     };
     export type PaymentCreateManyGroupInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         amount: number
@@ -16919,6 +17276,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -16928,6 +17286,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -16937,6 +17296,7 @@ export namespace Prisma {
     };
     export type GroupParticipantUncheckedUpdateManyWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -16946,6 +17306,7 @@ export namespace Prisma {
     };
     export type MessageUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -16956,6 +17317,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -16966,6 +17328,7 @@ export namespace Prisma {
     };
     export type MessageUncheckedUpdateManyWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         key?: StringFieldUpdateOperationsInput | string
@@ -16975,6 +17338,7 @@ export namespace Prisma {
     };
     export type ExpenseUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -16988,6 +17352,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -17001,6 +17366,7 @@ export namespace Prisma {
     };
     export type ExpenseUncheckedUpdateManyWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         ownerId?: StringFieldUpdateOperationsInput | string
@@ -17012,6 +17378,7 @@ export namespace Prisma {
     };
     export type PaymentUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -17022,6 +17389,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -17032,6 +17400,7 @@ export namespace Prisma {
     };
     export type PaymentUncheckedUpdateManyWithoutGroupInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -17042,6 +17411,7 @@ export namespace Prisma {
     };
     export type GroupCreateManyCoverImageInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         name: string
@@ -17062,6 +17432,7 @@ export namespace Prisma {
     };
     export type GroupUpdateWithoutCoverImageInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -17075,6 +17446,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateWithoutCoverImageInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -17088,6 +17460,7 @@ export namespace Prisma {
     };
     export type GroupUncheckedUpdateManyWithoutCoverImageInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         name?: StringFieldUpdateOperationsInput | string
@@ -17144,6 +17517,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCreateManyMessageInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         type: $Enums.MessageAttachmentType
@@ -17151,6 +17525,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUpdateWithoutMessageInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         type?: EnumMessageAttachmentTypeFieldUpdateOperationsInput | $Enums.MessageAttachmentType
@@ -17158,6 +17533,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedUpdateWithoutMessageInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         type?: EnumMessageAttachmentTypeFieldUpdateOperationsInput | $Enums.MessageAttachmentType
@@ -17165,6 +17541,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedUpdateManyWithoutMessageInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         type?: EnumMessageAttachmentTypeFieldUpdateOperationsInput | $Enums.MessageAttachmentType
@@ -17172,6 +17549,7 @@ export namespace Prisma {
     };
     export type ExpenseShareCreateManyExpenseInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         userId: string
@@ -17182,6 +17560,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentCreateManyExpenseInput = {
         id?: string
+        archived?: boolean | null
         createdAt?: Date | string
         updatedAt?: Date | string
         messageId: string
@@ -17189,6 +17568,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUpdateWithoutExpenseInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         amount?: IntFieldUpdateOperationsInput | number
@@ -17199,6 +17579,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedUpdateWithoutExpenseInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -17209,6 +17590,7 @@ export namespace Prisma {
     };
     export type ExpenseShareUncheckedUpdateManyWithoutExpenseInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         userId?: StringFieldUpdateOperationsInput | string
@@ -17219,6 +17601,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUpdateWithoutExpenseInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         type?: EnumMessageAttachmentTypeFieldUpdateOperationsInput | $Enums.MessageAttachmentType
@@ -17226,6 +17609,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedUpdateWithoutExpenseInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         messageId?: StringFieldUpdateOperationsInput | string
@@ -17233,6 +17617,7 @@ export namespace Prisma {
     };
     export type MessageAttachmentUncheckedUpdateManyWithoutExpenseInput = {
         id?: StringFieldUpdateOperationsInput | string
+        archived?: NullableBoolFieldUpdateOperationsInput | boolean | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         messageId?: StringFieldUpdateOperationsInput | string
