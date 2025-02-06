@@ -7,7 +7,7 @@ const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const CurrencyConversion_schema_1 = require("./CurrencyConversion.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().default(false).nullish(),
+    archived: zod_1.z.boolean().default(false),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     amount: zod_1.z.number(),
@@ -46,7 +46,7 @@ exports.ExpensePrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.ExpensePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    archived: zod_1.z.boolean().default(false).nullish(),
+    archived: zod_1.z.boolean().default(false),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     amount: zod_1.z.union([zod_1.z.number(), zod_1.z.record(zod_1.z.unknown())]),

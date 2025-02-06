@@ -105,7 +105,7 @@ model Profile {
 
 model Group {
   id           String             @id() @default(uuid())
-  archived     Boolean?           @default(false)
+  archived     Boolean            @default(false)
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @default(now()) @updatedAt()
   name         String
@@ -125,7 +125,7 @@ model Group {
 
 model GroupParticipant {
   id          String      @id() @default(uuid())
-  archived    Boolean?    @default(false)
+  archived    Boolean     @default(false)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @default(now()) @updatedAt()
   userId      String
@@ -144,7 +144,7 @@ model GroupParticipant {
 
 model Image {
   id           String    @id() @default(uuid())
-  archived     Boolean?  @default(false)
+  archived     Boolean   @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @default(now()) @updatedAt()
   path         String
@@ -160,7 +160,7 @@ model Image {
 
 model Message {
   id          String              @id() @default(uuid())
-  archived    Boolean?            @default(false)
+  archived    Boolean             @default(false)
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @default(now()) @updatedAt()
   key         String
@@ -178,7 +178,7 @@ model Message {
 
 model MessageAttachment {
   id        String                @id() @default(uuid())
-  archived  Boolean?              @default(false)
+  archived  Boolean               @default(false)
   createdAt DateTime              @default(now())
   updatedAt DateTime              @default(now()) @updatedAt()
   messageId String
@@ -193,7 +193,7 @@ model MessageAttachment {
 
 model Expense {
   id                 String              @id() @default(uuid())
-  archived           Boolean?            @default(false)
+  archived           Boolean             @default(false)
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @default(now()) @updatedAt()
   ownerId            String
@@ -215,7 +215,7 @@ model Expense {
 
 model ExpenseShare {
   id         String       @id() @default(uuid())
-  archived   Boolean?     @default(false)
+  archived   Boolean      @default(false)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt()
   userId     String
@@ -233,7 +233,7 @@ model ExpenseShare {
 
 model Payment {
   id          String       @id() @default(uuid())
-  archived    Boolean?     @default(false)
+  archived    Boolean      @default(false)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now()) @updatedAt()
   groupId     String
@@ -252,7 +252,7 @@ model Payment {
 
 model ExchangeRates {
   id           String   @id() @default(uuid())
-  archived     Boolean? @default(false)
+  archived     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt()
   baseCurrency String   @db.VarChar(3)

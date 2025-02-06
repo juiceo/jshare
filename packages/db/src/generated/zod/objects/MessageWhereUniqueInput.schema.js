@@ -4,7 +4,7 @@ exports.MessageWhereUniqueInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 const MessageWhereInput_schema_1 = require("./MessageWhereInput.schema");
-const BoolNullableFilter_schema_1 = require("./BoolNullableFilter.schema");
+const BoolFilter_schema_1 = require("./BoolFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
@@ -18,9 +18,8 @@ const MessageAttachmentListRelationFilter_schema_1 = require("./MessageAttachmen
 exports.MessageWhereUniqueInputObjectSchema = zod_1.z.object({
     id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema),
         zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema),
-        zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolNullableFilter_schema_1.BoolNullableFilterObjectSchema),
-        zod_1.z.boolean(),
-        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), key: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), text: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),

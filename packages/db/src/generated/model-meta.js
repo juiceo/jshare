@@ -119,7 +119,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -206,7 +205,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -273,7 +271,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -328,7 +325,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -402,7 +398,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -463,7 +458,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -560,7 +554,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -632,7 +625,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",
@@ -713,7 +705,6 @@ const metadata = {
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
-                    isOptional: true,
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
                 }, createdAt: {
                     name: "createdAt",

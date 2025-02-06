@@ -4,7 +4,7 @@ import { z } from 'zod';
  */
 export declare const MessageScalarSchema: z.ZodObject<{
     id: z.ZodString;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>;
+    archived: z.ZodDefault<z.ZodBoolean>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     key: z.ZodString;
@@ -14,9 +14,9 @@ export declare const MessageScalarSchema: z.ZodObject<{
     createdAt: Date;
     updatedAt: Date;
     id: string;
+    archived: boolean;
     key: string;
     authorType: "User" | "System";
-    archived?: boolean | null | undefined;
     text?: string | null | undefined;
 }, {
     id: string;
@@ -24,7 +24,7 @@ export declare const MessageScalarSchema: z.ZodObject<{
     authorType: "User" | "System";
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     text?: string | null | undefined;
 }>;
 /**
@@ -32,7 +32,7 @@ export declare const MessageScalarSchema: z.ZodObject<{
  */
 export declare const MessageSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
     id: z.ZodString;
-    archived: z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>;
+    archived: z.ZodDefault<z.ZodBoolean>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     key: z.ZodString;
@@ -49,11 +49,11 @@ export declare const MessageSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     createdAt: Date;
     updatedAt: Date;
     id: string;
+    archived: boolean;
     groupId: string;
     key: string;
     authorType: "User" | "System";
     author?: Record<string, unknown> | undefined;
-    archived?: boolean | null | undefined;
     group?: Record<string, unknown> | undefined;
     text?: string | null | undefined;
     authorId?: string | null | undefined;
@@ -66,7 +66,7 @@ export declare const MessageSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     author?: Record<string, unknown> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     group?: Record<string, unknown> | undefined;
     text?: string | null | undefined;
     authorId?: string | null | undefined;
@@ -78,7 +78,7 @@ export declare const MessageSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
  */
 export declare const MessagePrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -86,7 +86,7 @@ export declare const MessagePrismaCreateSchema: z.ZodObject<{
     authorType: z.ZodOptional<z.ZodEnum<["User", "System"]>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -94,7 +94,7 @@ export declare const MessagePrismaCreateSchema: z.ZodObject<{
     authorType: z.ZodOptional<z.ZodEnum<["User", "System"]>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -107,7 +107,7 @@ export declare const MessagePrismaCreateSchema: z.ZodObject<{
  */
 export declare const MessagePrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -115,7 +115,7 @@ export declare const MessagePrismaUpdateSchema: z.ZodObject<{
     authorType: z.ZodOptional<z.ZodEnum<["User", "System"]>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -123,7 +123,7 @@ export declare const MessagePrismaUpdateSchema: z.ZodObject<{
     authorType: z.ZodOptional<z.ZodEnum<["User", "System"]>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -137,7 +137,7 @@ export declare const MessageCreateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     key: z.ZodString;
     text: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     authorType: z.ZodEnum<["User", "System"]>;
@@ -147,7 +147,7 @@ export declare const MessageCreateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     text?: string | null | undefined;
 }, {
     key: string;
@@ -155,7 +155,7 @@ export declare const MessageCreateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     text?: string | null | undefined;
 }>;
 /**
@@ -165,7 +165,7 @@ export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     key: z.ZodString;
     text: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     authorType: z.ZodEnum<["User", "System"]>;
@@ -179,7 +179,7 @@ export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     text?: string | null | undefined;
     authorId?: string | null | undefined;
 }, {
@@ -189,7 +189,7 @@ export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     text?: string | null | undefined;
     authorId?: string | null | undefined;
 }>;
@@ -198,7 +198,7 @@ export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
  */
 export declare const MessageUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -208,7 +208,7 @@ export declare const MessageUpdateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     key?: string | undefined;
     text?: string | null | undefined;
     authorType?: "User" | "System" | undefined;
@@ -216,7 +216,7 @@ export declare const MessageUpdateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     key?: string | undefined;
     text?: string | null | undefined;
     authorType?: "User" | "System" | undefined;
@@ -226,7 +226,7 @@ export declare const MessageUpdateScalarSchema: z.ZodObject<{
  */
 export declare const MessageUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
-    archived: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDefault<z.ZodBoolean>>>>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     key: z.ZodOptional<z.ZodString>;
@@ -239,7 +239,7 @@ export declare const MessageUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     groupId?: string | undefined;
     key?: string | undefined;
     text?: string | null | undefined;
@@ -249,7 +249,7 @@ export declare const MessageUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     id?: string | undefined;
-    archived?: boolean | null | undefined;
+    archived?: boolean | undefined;
     groupId?: string | undefined;
     key?: string | undefined;
     text?: string | null | undefined;

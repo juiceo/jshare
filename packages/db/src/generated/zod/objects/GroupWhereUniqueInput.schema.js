@@ -4,7 +4,7 @@ exports.GroupWhereUniqueInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
-const BoolNullableFilter_schema_1 = require("./BoolNullableFilter.schema");
+const BoolFilter_schema_1 = require("./BoolFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
@@ -19,9 +19,8 @@ const PaymentListRelationFilter_schema_1 = require("./PaymentListRelationFilter.
 exports.GroupWhereUniqueInputObjectSchema = zod_1.z.object({
     id: zod_1.z.string().optional(), inviteCode: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
         zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
-        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolNullableFilter_schema_1.BoolNullableFilterObjectSchema),
-        zod_1.z.boolean(),
-        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), name: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),

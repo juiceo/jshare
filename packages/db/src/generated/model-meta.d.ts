@@ -185,7 +185,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -319,7 +318,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -428,7 +426,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -514,7 +511,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -631,7 +627,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -732,7 +727,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -890,7 +884,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -1013,7 +1006,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
@@ -1152,7 +1144,6 @@ declare const metadata: {
                 archived: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                     attributes: {
                         name: string;
                         args: {
