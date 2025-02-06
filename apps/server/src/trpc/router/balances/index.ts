@@ -35,6 +35,7 @@ export const balancesRouter = router({
                 db.expense.findMany({
                     where: {
                         groupId: opts.input.groupId,
+                        archived: false,
                     },
                     include: {
                         shares: true,
@@ -43,6 +44,7 @@ export const balancesRouter = router({
                 db.payment.findMany({
                     where: {
                         groupId: opts.input.groupId,
+                        archived: false,
                     },
                 }),
             ]);
@@ -79,6 +81,7 @@ export const balancesRouter = router({
                         where: {
                             groupId: opts.input.groupId,
                             payerId: opts.input.userId,
+                            archived: false,
                         },
                     }),
                     db.expenseShare.findMany({
@@ -86,6 +89,7 @@ export const balancesRouter = router({
                             userId: opts.input.userId,
                             expense: {
                                 groupId: opts.input.groupId,
+                                archived: false,
                             },
                         },
                     }),
@@ -93,12 +97,14 @@ export const balancesRouter = router({
                         where: {
                             groupId: opts.input.groupId,
                             payerId: opts.input.userId,
+                            archived: false,
                         },
                     }),
                     db.payment.findMany({
                         where: {
                             groupId: opts.input.groupId,
                             recipientId: opts.input.userId,
+                            archived: false,
                         },
                     }),
                 ]);
@@ -121,6 +127,7 @@ export const balancesRouter = router({
                 db.expense.findMany({
                     where: {
                         payerId: userId,
+                        archived: false,
                     },
                 }),
                 db.expenseShare.findMany({

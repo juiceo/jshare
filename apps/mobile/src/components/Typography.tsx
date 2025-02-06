@@ -14,11 +14,12 @@ export type TypographyProps = {
     variant?: TypographyVariant;
     color?: TextColorVariant | PrimaryColorPath;
     align?: TextStyle['textAlign'];
+    strikeThrough?: boolean;
 } & TextProps &
     SxProps;
 
 export const Typography = (props: TypographyProps) => {
-    const { variant = 'body1', color = 'primary', align, style, ...rest } = props;
+    const { variant = 'body1', color = 'primary', align, style, strikeThrough, ...rest } = props;
     const { theme } = useTheme();
     return (
         <Text
@@ -27,6 +28,7 @@ export const Typography = (props: TypographyProps) => {
                     ...theme.typography[variant],
                     color: getTextColorFromPath(color, theme),
                     textAlign: align,
+                    textDecorationLine: strikeThrough ? 'line-through' : undefined,
                 },
                 getSxStyles(rest, theme),
                 style,

@@ -50,10 +50,14 @@ export const ExpenseListItem = (props: ExpenseListItemProps) => {
                     </Stack>
                 </Stack>
                 <Stack column alignEnd justifyCenter>
-                    <Typography variant="subtitle1">
+                    <Typography
+                        variant="subtitle1"
+                        strikeThrough={!!data.archived}
+                        color={data.archived ? 'hint' : 'primary'}
+                    >
                         {formatAmount(data.amount, data.currency)}
                     </Typography>
-                    {ownShare && (
+                    {ownShare && !data.archived && (
                         <Typography variant="subtitle2" color="hint">
                             You: {formatAmount(ownShare.amount, ownShare.currency)}
                         </Typography>

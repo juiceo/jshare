@@ -20,7 +20,11 @@ export const ExpenseView = (props: ExpenseViewProps) => {
             <Stack column center ar="16/9" p="2xl" spacing="lg">
                 <Typography variant="h6">{expense.description}</Typography>
                 <Stack column center>
-                    <Typography variant="h1">
+                    <Typography
+                        variant="h1"
+                        strikeThrough={!!expense.archived}
+                        color={expense.archived ? 'hint' : 'primary'}
+                    >
                         {formatAmount(expense.amount, expense.currency)}
                     </Typography>
                     {expense.conversion && (

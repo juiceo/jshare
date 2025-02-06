@@ -47,8 +47,6 @@ export const ChatMessageExpenseAttachment = withSuspense(
         const [expense] = trpc.expenses.get.useSuspenseQuery({ id: props.expenseId });
         const [payerProfile] = trpc.profiles.get.useSuspenseQuery({ id: expense.payerId });
 
-        if (!expense) return <ExpenseSkeleton />;
-
         const ownShare = expense.shares.find((share) => share.userId === userId);
 
         return (
@@ -69,21 +67,28 @@ export const ChatMessageExpenseAttachment = withSuspense(
                         </Typography>
                     </Stack>
                     <Stack center p="2xl">
-                        <Typography variant="h1" align="center">
+                        <Typography
+                            variant="h1"
+                            align="center"
+                            strikeThrough={!!expense.archived}
+                            color={expense.archived ? 'hint' : 'primary'}
+                        >
                             {formatAmount(expense.amount, expense.currency)}
                         </Typography>
                         <Typography variant="caption" color="secondary" align="center">
                             {expense.description}
                         </Typography>
                     </Stack>
-                    <Stack column center>
-                        <Typography variant="h6">
-                            Your share:{' '}
-                            {ownShare
-                                ? formatAmount(ownShare.amount, ownShare.currency)
-                                : formatAmount(0, expense.currency)}
-                        </Typography>
-                    </Stack>
+                    {!expense.archived && (
+                        <Stack column center>
+                            <Typography variant="h6">
+                                Your share:{' '}
+                                {ownShare
+                                    ? formatAmount(ownShare.amount, ownShare.currency)
+                                    : formatAmount(0, expense.currency)}
+                            </Typography>
+                        </Stack>
+                    )}
                 </Stack>
             </BorderlessButton>
         );

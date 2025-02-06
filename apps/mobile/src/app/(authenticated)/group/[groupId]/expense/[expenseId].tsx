@@ -103,43 +103,51 @@ export default screen(
                     )}
                 </Screen.Content>
                 <Screen.Footer>
-                    <Stack column spacing="md">
-                        {mode === 'view' && isOwner && (
-                            <>
-                                <Button color="secondary" onPress={() => setMode('edit')}>
-                                    Edit expense
-                                </Button>
-                            </>
-                        )}
-                        {mode === 'view' && !isOwner && (
-                            <Stack center column spacing="md" px="xl">
-                                <Icon name="Lock" />
-                                <Typography variant="caption" color="hint" align="center">
-                                    This expense can only be edited by{' '}
-                                    <UserName userId={expense.ownerId} variant="short" /> or group
-                                    admins
-                                </Typography>
-                            </Stack>
-                        )}
-                        {mode === 'edit' && (
-                            <>
-                                <Button
-                                    color="secondary"
-                                    variant="ghost"
-                                    onPress={() => setMode('view')}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button
-                                    color="primary"
-                                    onPress={form.handleSubmit(handleSubmit)}
-                                    loading={updateExpense.isPending}
-                                >
-                                    Save changes
-                                </Button>
-                            </>
-                        )}
-                    </Stack>
+                    {!expense.archived ? (
+                        <Stack column spacing="md">
+                            {mode === 'view' && isOwner && (
+                                <>
+                                    <Button color="secondary" onPress={() => setMode('edit')}>
+                                        Edit expense
+                                    </Button>
+                                </>
+                            )}
+                            {mode === 'view' && !isOwner && (
+                                <Stack center column spacing="md" px="xl">
+                                    <Icon name="Lock" />
+                                    <Typography variant="caption" color="hint" align="center">
+                                        This expense can only be edited by{' '}
+                                        <UserName userId={expense.ownerId} variant="short" /> or
+                                        group admins
+                                    </Typography>
+                                </Stack>
+                            )}
+                            {mode === 'edit' && (
+                                <>
+                                    <Button
+                                        color="secondary"
+                                        variant="ghost"
+                                        onPress={() => setMode('view')}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        color="primary"
+                                        onPress={form.handleSubmit(handleSubmit)}
+                                        loading={updateExpense.isPending}
+                                    >
+                                        Save changes
+                                    </Button>
+                                </>
+                            )}
+                        </Stack>
+                    ) : (
+                        <Stack center column spacing="md" px="xl">
+                            <Typography variant="caption" color="hint" align="center">
+                                This expense has been archived
+                            </Typography>
+                        </Stack>
+                    )}
                 </Screen.Footer>
                 <DeleteConfirmation
                     isOpen={isDeleting}

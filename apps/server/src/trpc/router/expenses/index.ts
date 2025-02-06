@@ -322,6 +322,7 @@ export const expensesRouter = router({
             db.expense.findMany({
                 where: {
                     groupId: opts.input.groupId,
+                    archived: false,
                 },
                 include: {
                     shares: true,
