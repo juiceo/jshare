@@ -6,7 +6,9 @@ import { DB, zDB } from '@jshare/db';
 
 import { db } from '../services/db';
 
-export const getLatestExchangeRates = async (): Promise<DB.ExchangeRates> => {
+export const getLatestExchangeRates = async (args: {
+    requiredCurrencies?: DB.CurrencyCode[];
+}): Promise<DB.ExchangeRates> => {
     /**
      * TODO: Caching for the database call - no need to always query the database since this data never changes
      */
@@ -19,7 +21,13 @@ export const getLatestExchangeRates = async (): Promise<DB.ExchangeRates> => {
         .then((res) => res as DB.ExchangeRates | null);
 
     if (latestRates && dayjs(latestRates.createdAt).isAfter(dayjs().subtract(1, 'day')))
-        return latestRates;
+        return {
+            ...latestRates,
+            rates: {
+                ...BASE_EXCHANGE_RATES.rates,
+                ...latestRates.rates,
+            },
+        };
 
     const newRates = await fetchExchangeRates();
     return db.exchangeRates
