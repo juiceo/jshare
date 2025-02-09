@@ -88,7 +88,7 @@ export const MoneyInput = (props: MoneyInputProps) => {
                         onChange={handleMajorUnitsChange}
                         placeholderTextColor={theme.palette.text.disabled}
                         placeholder="0"
-                        keyboardType="number-pad"
+                        keyboardType="numeric"
                         autoFocus={autoFocus}
                         onKeyPress={(e) => {
                             switch (e.nativeEvent.key) {
@@ -101,7 +101,7 @@ export const MoneyInput = (props: MoneyInputProps) => {
                         }}
                         maxLength={7}
                     />
-                    <View style={[styles.dot, minorUnits !== 0 ? styles.dotActive : undefined]} />
+                    <View style={[styles.dot, minorUnitsValue ? styles.dotActive : undefined]} />
                     <InputComponent
                         ref={minorUnitsInputRef}
                         value={minorUnitsValue}
@@ -110,7 +110,7 @@ export const MoneyInput = (props: MoneyInputProps) => {
                         style={styles.input}
                         placeholderTextColor={theme.palette.text.disabled}
                         placeholder="00"
-                        keyboardType="number-pad"
+                        keyboardType="numeric"
                         onKeyPress={(e) => {
                             switch (e.nativeEvent.key) {
                                 case 'Backspace':
