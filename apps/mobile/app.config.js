@@ -12,7 +12,7 @@ export default ({ config }) => {
             name: 'JShare',
             slug: 'jshare',
             owner: 'juiceo',
-            version: '1.0.1',
+            version: '1.0.2',
             orientation: 'portrait',
             icon: './assets/icon.png',
             userInterfaceStyle: 'dark',
@@ -20,7 +20,7 @@ export default ({ config }) => {
             splash: {
                 image: './assets/splash.png',
                 resizeMode: 'contain',
-                backgroundColor: '#15171C',
+                backgroundColor: '#ffa5a5',
             },
             updates: {
                 enabled: true,
@@ -34,14 +34,14 @@ export default ({ config }) => {
             assetBundlePatterns: ['**/*'],
             ios: {
                 bundleIdentifier: 'com.juiceo.jshare',
-                buildNumber: '1.0.1',
+                buildNumber: '1.0.2',
                 supportsTablet: true,
             },
             android: {
                 package: 'com.juiceo.jshare',
                 adaptiveIcon: {
                     foregroundImage: './assets/adaptive-icon.png',
-                    backgroundColor: '#15171C',
+                    backgroundColor: '#ffa5a5',
                 },
             },
             extra: {
@@ -59,7 +59,7 @@ export default ({ config }) => {
                 [
                     'expo-splash-screen',
                     {
-                        backgroundColor: '#15171C',
+                        backgroundColor: '#ffa5a5',
                         image: './assets/splash.png',
                         imageWidth: 200,
                     },

@@ -50,7 +50,7 @@ export default screen(
                 <Screen.Content>
                     <Stack flex={1} center p="xl">
                         <ExpoImage
-                            source={require('../../../assets/logo_accent.png')}
+                            source={require('../../../assets/logomark_accent.png')}
                             style={{
                                 width: screenW * 0.5,
                                 aspectRatio: '16/9',
