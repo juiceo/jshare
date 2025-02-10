@@ -20,7 +20,7 @@ import { SessionProvider } from '~/wrappers/SessionProvider';
 
 dayjs.extend(relativeTime);
 
-const storybookEnabled = process.env.STORYBOOK_ENABLED === 'true';
+const storybookEnabled = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
 
 export default function AppLayout() {
     return (
