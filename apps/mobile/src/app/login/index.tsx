@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import type { TextInput } from 'react-native';
+import { Dimensions, type TextInput } from 'react-native';
+import { Image as ExpoImage } from 'expo-image';
 import { router } from 'expo-router';
 import isEmail from 'validator/es/lib/isEmail';
 
@@ -7,9 +8,10 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
-import { Typography } from '~/components/Typography';
 import { supabase } from '~/services/supabase';
 import { screen } from '~/wrappers/screen';
+
+const screenW = Dimensions.get('screen').width;
 
 export default screen(
     {
@@ -47,7 +49,14 @@ export default screen(
             <Screen>
                 <Screen.Content>
                     <Stack flex={1} center p="xl">
-                        <Typography variant="h1">Welcome to JShare</Typography>
+                        <ExpoImage
+                            source={require('../../../assets/logo_accent.png')}
+                            style={{
+                                width: screenW * 0.5,
+                                aspectRatio: '16/9',
+                            }}
+                            contentFit="contain"
+                        />
                     </Stack>
                 </Screen.Content>
                 <Screen.Footer padding="xl" sticky>

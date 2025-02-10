@@ -58,6 +58,7 @@
         "expo-linear-gradient": "catalog:",
         "expo-linking": "catalog:",
         "expo-router": "catalog:",
+        "expo-splash-screen": "~0.27.7",
         "expo-status-bar": "catalog:",
         "expo-updates": "^0.25.27",
         "jotai": "catalog:",

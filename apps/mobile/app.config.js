@@ -9,7 +9,7 @@ export default ({ config }) => {
     return {
         ...config,
         expo: {
-            name: 'jshare',
+            name: 'JShare',
             slug: 'jshare',
             owner: 'juiceo',
             version: '1.0.1',
@@ -20,7 +20,7 @@ export default ({ config }) => {
             splash: {
                 image: './assets/splash.png',
                 resizeMode: 'contain',
-                backgroundColor: '#ffffff',
+                backgroundColor: '#15171C',
             },
             updates: {
                 enabled: true,
@@ -41,7 +41,7 @@ export default ({ config }) => {
                 package: 'com.juiceo.jshare',
                 adaptiveIcon: {
                     foregroundImage: './assets/adaptive-icon.png',
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#15171C',
                 },
             },
             extra: {
@@ -53,7 +53,18 @@ export default ({ config }) => {
                 },
                 ...environmentConfig,
             },
-            plugins: ['expo-router', 'expo-image-picker'],
+            plugins: [
+                'expo-router',
+                'expo-image-picker',
+                [
+                    'expo-splash-screen',
+                    {
+                        backgroundColor: '#15171C',
+                        image: './assets/splash.png',
+                        imageWidth: 200,
+                    },
+                ],
+            ],
             experiments: {
                 typedRoutes: true,
             },
