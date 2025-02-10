@@ -2,7 +2,7 @@ import { Dimensions } from 'react-native';
 import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { formatAmount } from '@jshare/common';
+import { formatAmount, plural } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
 import { Image } from '~/components/atoms/Image';
@@ -63,11 +63,11 @@ export const GroupCard = (props: GroupCardProps) => {
             <Stack column p="xl" br="2xl" style={{ position: 'relative' }}>
                 <Typography variant="h4">{group.name}</Typography>
                 <Typography variant="caption" color="secondary">
-                    {/**
-                     * TODO: Should pluralize based on number of members
-                     */}
-                    {formatAmount(groupTotal ?? 0, group.currency)} | {group.participants.length}{' '}
-                    members
+                    {`${formatAmount(groupTotal ?? 0, group.currency)} | ${plural({
+                        plural: 'members',
+                        singular: 'member',
+                        count: group.participants.length,
+                    })}`}
                 </Typography>
             </Stack>
         </Stack>

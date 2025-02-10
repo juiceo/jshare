@@ -1,3 +1,5 @@
+import { plural } from '@jshare/common';
+
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -52,7 +54,11 @@ export default screen(
                                 <Typography variant="subtitle1">You're already a member</Typography>
                             ) : (
                                 <Typography variant="caption" color="hint" align="center">
-                                    {group.participants.length} members
+                                    {plural({
+                                        singular: 'member',
+                                        plural: 'members',
+                                        count: group.participants.length,
+                                    })}
                                 </Typography>
                             )}
                         </Stack>
