@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import dayjs from 'dayjs';
 import * as Clipboard from 'expo-clipboard';
@@ -144,8 +144,8 @@ export default screen(
 
                         <Stack column bg="background.elevation1" br="xl">
                             {sortedParticipants.map((participant, index) => (
-                                <>
-                                    <Stack row alignCenter p="xl" spacing="xl" key={participant.id}>
+                                <React.Fragment key={participant.id}>
+                                    <Stack row alignCenter p="xl" spacing="xl">
                                         <Avatar userId={participant.userId} size="lg" />
                                         <Stack column flex={1}>
                                             <Typography variant="subtitle1">
@@ -178,7 +178,7 @@ export default screen(
                                     {index !== group.participants.length - 1 && (
                                         <Divider horizontal color="background.main" />
                                     )}
-                                </>
+                                </React.Fragment>
                             ))}
                         </Stack>
                         {isAdmin && (

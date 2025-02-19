@@ -9,7 +9,6 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/(tabs)',
         auth: true,
     },
     ({ auth }) => {
@@ -24,9 +23,9 @@ export default screen(
                         borderTopWidth: 0,
                     },
                     tabBarActiveTintColor: theme.palette.accent.main,
-                }}
-                sceneContainerStyle={{
-                    backgroundColor: theme.palette.background.main,
+                    sceneStyle: {
+                        backgroundColor: theme.palette.background.main,
+                    },
                 }}
             >
                 <Tabs.Screen

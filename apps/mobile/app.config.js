@@ -12,7 +12,7 @@ export default ({ config }) => {
             name: 'JShare',
             slug: 'jshare',
             owner: 'juiceo',
-            version: '1.0.2',
+            version: '1.0.3',
             orientation: 'portrait',
             icon: './assets/icon.png',
             userInterfaceStyle: 'dark',
@@ -34,7 +34,7 @@ export default ({ config }) => {
             assetBundlePatterns: ['**/*'],
             ios: {
                 bundleIdentifier: 'com.juiceo.jshare',
-                buildNumber: '1.0.2',
+                buildNumber: '1.0.3',
                 supportsTablet: true,
             },
             android: {
@@ -56,6 +56,7 @@ export default ({ config }) => {
             plugins: [
                 'expo-router',
                 'expo-image-picker',
+                'expo-font',
                 [
                     'expo-splash-screen',
                     {
