@@ -22,10 +22,6 @@ runs:
           with:
               version: ${{ inputs.pnpm-version }}
 
-        - name: Clear pnpm cache
-          run: pnpm store prune
-          shell: bash
-
         - name: 🏗 Setup Node
           uses: actions/setup-node@v4
           with:
