@@ -22,11 +22,14 @@ runs:
           with:
               version: ${{ inputs.pnpm-version }}
 
+        - name: Clear pnpm cache
+          run: pnpm store prune
+
         - name: 🏗 Setup Node
           uses: actions/setup-node@v4
           with:
               node-version: ${{ inputs.node-version }}
-              # cache: pnpm
+              cache: pnpm
 
         - name: 🏗 Setup Expo
           uses: expo/expo-github-action@v8
@@ -38,13 +41,13 @@ runs:
           run: pnpm install
           shell: bash
 
-        # - name: ♻️ Restore cache
-        #   uses: actions/cache@v4
-        #   with:
-        #       key: turbo-${{ runner.os }}-${{ github.sha }}
-        #       restore-keys: |
-        #           turbo-${{ runner.os }}
-        #       path: |
-        #           node_modules/.cache/turbo
-        #           apps/*/.turbo
-        #           packages/*/.turbo
+        - name: ♻️ Restore cache
+          uses: actions/cache@v4
+          with:
+              key: turbo-${{ runner.os }}-${{ github.sha }}
+              restore-keys: |
+                  turbo-${{ runner.os }}
+              path: |
+                  node_modules/.cache/turbo
+                  apps/*/.turbo
+                  packages/*/.turbo
