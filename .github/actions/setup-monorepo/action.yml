@@ -26,8 +26,7 @@ runs:
           uses: actions/setup-node@v4
           with:
               node-version: ${{ inputs.node-version }}
-              # 🚨 Remove the cache option to disable caching
-              # cache: pnpm
+              cache: pnpm
 
         - name: 🏗 Setup Expo
           uses: expo/expo-github-action@v8
@@ -35,26 +34,17 @@ runs:
               eas-version: ${{ inputs.eas-version }}
               token: ${{ inputs.expo-token }}
 
-        - name: 🚨 Ensure a fresh install (Remove Cache)
-          run: |
-              rm -rf node_modules pnpm-lock.yaml
-              rm -rf ~/.cache/pnpm
-              rm -rf apps/*/.turbo packages/*/.turbo
-              rm -rf .turbo
-          shell: bash
-
         - name: 📦 Install dependencies
-          run: pnpm install --prefer-offline
+          run: pnpm install
           shell: bash
 
-        # 🚨 Remove the Turbo Cache Step
-        # - name: ♻️ Restore cache
-        #   uses: actions/cache@v4
-        #   with:
-        #       key: turbo-${{ runner.os }}-${{ github.sha }}
-        #       restore-keys: |
-        #           turbo-${{ runner.os }}
-        #       path: |
-        #           node_modules/.cache/turbo
-        #           apps/*/.turbo
-        #           packages/*/.turbo
+        - name: ♻️ Restore cache
+          uses: actions/cache@v4
+          with:
+              key: turbo-${{ runner.os }}-${{ github.sha }}
+              restore-keys: |
+                  turbo-${{ runner.os }}
+              path: |
+                  node_modules/.cache/turbo
+                  apps/*/.turbo
+                  packages/*/.turbo
