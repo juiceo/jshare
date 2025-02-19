@@ -6,7 +6,7 @@ import {
     useLocalSearchParams,
     useRouter,
     type Route,
-    type RouteParams,
+    type RouteOutputParams,
     type Router,
 } from 'expo-router';
 import * as Updates from 'expo-updates';
@@ -27,7 +27,7 @@ export const screen = <TRoute extends Route = Route, TAuth extends boolean = fal
         loadingMessage?: string;
     },
     Component: ComponentType<{
-        params: RouteParams<TRoute>;
+        params: RouteOutputParams<TRoute>;
         router: Router;
         auth: TAuth extends true ? { session: Session; signOut: () => void } : never;
     }>
@@ -89,7 +89,7 @@ export const screen = <TRoute extends Route = Route, TAuth extends boolean = fal
                     <AuthWrapper>
                         {(auth) => (
                             <Component
-                                params={params as RouteParams<TRoute>}
+                                params={params as RouteOutputParams<TRoute>}
                                 router={router}
                                 auth={auth as any}
                             />
@@ -99,7 +99,7 @@ export const screen = <TRoute extends Route = Route, TAuth extends boolean = fal
             } else {
                 return (
                     <Component
-                        params={params as RouteParams<TRoute>}
+                        params={params as RouteOutputParams<TRoute>}
                         router={router}
                         auth={null as any}
                     />
