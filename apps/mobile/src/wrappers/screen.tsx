@@ -20,7 +20,7 @@ import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
 import { useSession } from '~/wrappers/SessionProvider';
 
-export const screen = <TRoute extends Route, TAuth extends boolean = false>(
+export const screen = <TRoute extends Route = Route, TAuth extends boolean = false>(
     args: {
         route?: TRoute;
         auth?: TAuth;
