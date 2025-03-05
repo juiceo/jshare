@@ -35,14 +35,15 @@
             "ios": {
                 "resourceClass": "m-medium"
             },
-            "cache": {
-                "disabled": true
+            "env": {
+                "EXPO_USE_FAST_RESOLVER": "true"
             },
             "channel": "staging"
         },
         "production": {
             "extends": "monorepo",
             "distribution": "store",
+            "environment": "production",
             "android": {
                 "buildType": "app-bundle"
             },
