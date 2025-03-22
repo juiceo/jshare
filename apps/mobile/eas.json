@@ -8,7 +8,7 @@
             "pnpm": "9.10.0",
             "cache": {
                 "key": "turbo",
-                "paths": ["../../.cache/turbo"]
+                "paths": ["./.turbo", "../../.turbo"]
             },
             "channel": "monorepo"
         },

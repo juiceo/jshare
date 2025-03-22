@@ -7,10 +7,43 @@ export default ({ config }) => {
         jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
     };
 
+    const name = (() => {
+        switch (process.env.EXPO_PUBLIC_ENVIRONMENT) {
+            case 'local':
+                return `JShare (dev)`;
+            case 'staging':
+                return `JShare (staging)`;
+            default:
+                return 'JShare';
+        }
+    })();
+
+    const bundleIdentifier = (() => {
+        switch (process.env.EXPO_PUBLIC_ENVIRONMENT) {
+            case 'local':
+                return 'com.juiceo.jshare.dev';
+            case 'staging':
+                return 'com.juiceo.jshare.staging';
+            default:
+                return 'com.juiceo.jshare';
+        }
+    })();
+
+    const packageName = (() => {
+        switch (process.env.EXPO_PUBLIC_ENVIRONMENT) {
+            case 'local':
+                return 'com.juiceo.jshare.dev';
+            case 'staging':
+                return 'com.juiceo.jshare.staging';
+            default:
+                return 'com.juiceo.jshare';
+        }
+    })();
+
     return {
         ...config,
         expo: {
-            name: 'JShare',
+            name,
             slug: 'jshare',
             owner: 'juiceo',
             version: '1.0.2',
@@ -34,12 +67,12 @@ export default ({ config }) => {
             platforms: ['ios', 'android'],
             assetBundlePatterns: ['**/*'],
             ios: {
-                bundleIdentifier: 'com.juiceo.jshare',
+                bundleIdentifier,
                 buildNumber: '1.0.2',
                 supportsTablet: true,
             },
             android: {
-                package: 'com.juiceo.jshare',
+                package: packageName,
                 adaptiveIcon: {
                     foregroundImage: './assets/adaptive-icon.png',
                     backgroundColor: '#ffa5a5',
