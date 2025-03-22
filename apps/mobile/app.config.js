@@ -6,11 +6,15 @@ export default ({ config }) => {
         supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
         jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
     };
+
+    const environment = process.env.EXPO_PUBLIC_ENVIRONMENT;
+    const isProduction = environment === 'production';
+
     return {
         ...config,
         expo: {
-            name: 'JShare',
-            slug: 'jshare',
+            name: isProduction ? 'JShare' : `JShare (${environment})`,
+            slug: isProduction ? 'jshare' : `jshare-${environment}`,
             owner: 'juiceo',
             version: '1.0.2',
             orientation: 'portrait',
@@ -33,12 +37,14 @@ export default ({ config }) => {
             platforms: ['ios', 'android'],
             assetBundlePatterns: ['**/*'],
             ios: {
-                bundleIdentifier: 'com.juiceo.jshare',
+                bundleIdentifier: isProduction
+                    ? 'com.juiceo.jshare'
+                    : `com.juiceo.jshare.${environment}`,
                 buildNumber: '1.0.2',
                 supportsTablet: true,
             },
             android: {
-                package: 'com.juiceo.jshare',
+                package: isProduction ? 'com.juiceo.jshare' : `com.juiceo.jshare.${environment}`,
                 adaptiveIcon: {
                     foregroundImage: './assets/adaptive-icon.png',
                     backgroundColor: '#ffa5a5',

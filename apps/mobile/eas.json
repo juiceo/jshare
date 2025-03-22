@@ -1,13 +1,14 @@
 {
     "cli": {
-        "promptToConfigurePushNotifications": false
+        "promptToConfigurePushNotifications": false,
+        "appVersionSource": "remote"
     },
     "build": {
         "monorepo": {
             "pnpm": "9.10.0",
             "cache": {
                 "key": "turbo",
-                "paths": ["../../node_modules/.cache/turbo"]
+                "paths": ["../../.cache/turbo"]
             },
             "channel": "monorepo"
         },
@@ -38,7 +39,8 @@
             "env": {
                 "EXPO_USE_FAST_RESOLVER": "true"
             },
-            "channel": "staging"
+            "channel": "staging",
+            "autoIncrement": true
         },
         "production": {
             "extends": "monorepo",
@@ -53,7 +55,8 @@
             "env": {
                 "EXPO_USE_FAST_RESOLVER": "true"
             },
-            "channel": "production"
+            "channel": "production",
+            "autoIncrement": true
         }
     }
 }
