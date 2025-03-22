@@ -37,14 +37,12 @@ export default ({ config }) => {
             platforms: ['ios', 'android'],
             assetBundlePatterns: ['**/*'],
             ios: {
-                bundleIdentifier: isProduction
-                    ? 'com.juiceo.jshare'
-                    : `com.juiceo.jshare.${environment}`,
+                bundleIdentifier: 'com.juiceo.jshare',
                 buildNumber: '1.0.2',
                 supportsTablet: true,
             },
             android: {
-                package: isProduction ? 'com.juiceo.jshare' : `com.juiceo.jshare.${environment}`,
+                package: 'com.juiceo.jshare',
                 adaptiveIcon: {
                     foregroundImage: './assets/adaptive-icon.png',
                     backgroundColor: '#ffa5a5',
