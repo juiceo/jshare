@@ -14,7 +14,7 @@ export default ({ config }) => {
         ...config,
         expo: {
             name: isProduction ? 'JShare' : `JShare (${environment})`,
-            slug: isProduction ? 'jshare' : `jshare-${environment}`,
+            slug: 'jshare',
             owner: 'juiceo',
             version: '1.0.2',
             orientation: 'portrait',
