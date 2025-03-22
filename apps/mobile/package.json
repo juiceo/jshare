@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "main": "expo-router/entry",
     "scripts": {
-        "dev": "env-cmd -f .env.local expo start",
+        "dev": "env-cmd -f .env.dev expo start",
         "start": "expo start",
         "dev:storybook": "env-cmd -f .env.storybook expo start",
         "typecheck": "tsc --noEmit",
@@ -19,6 +19,9 @@
         "start:staging": "env-cmd -f .env.staging expo start",
         "start:production": "env-cmd -f .env.production expo start",
         "eas-build-post-install": "pnpm run -w build:mobile",
+        "eas:credentials:dev": "env-cmd -f .env.dev eas credentials",
+        "eas:credentials:staging": "env-cmd -f .env.staging eas credentials",
+        "eas:credentials:production": "env-cmd -f .env.production eas credentials",
         "eas:build:ios:staging": "env-cmd -f .env.staging eas build --profile staging --platform ios",
         "eas:build:ios:production": "env-cmd -f .env.production eas build --profile production --platform ios",
         "eas:build:android:staging": "env-cmd -f env.staging eas build --profile staging --platform android",
