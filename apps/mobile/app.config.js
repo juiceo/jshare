@@ -7,13 +7,10 @@ export default ({ config }) => {
         jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
     };
 
-    const environment = process.env.EXPO_PUBLIC_ENVIRONMENT;
-    const isProduction = environment === 'production';
-
     return {
         ...config,
         expo: {
-            name: isProduction ? 'JShare' : `JShare (${environment})`,
+            name: 'JShare',
             slug: 'jshare',
             owner: 'juiceo',
             version: '1.0.2',
