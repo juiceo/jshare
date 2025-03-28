@@ -12,7 +12,7 @@
         "typecheck": "tsc --noEmit",
         "build": "expo export --output-dir ./build --platform all",
         "lint": "eslint --ext js,ts,tsx . --max-warnings=0",
-        "run:ios": "expo run:ios --device",
+        "run:ios": "env-cmd -f .env.dev expo run:ios --device",
         "run:ios:staging": "env-cmd -f .env.staging expo run:ios --device",
         "run:ios:production": "env-cmd -f .env.production expo run:ios --device",
         "run:android": "expo run:android --device",

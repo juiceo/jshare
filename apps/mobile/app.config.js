@@ -69,7 +69,7 @@ export default ({ config }) => {
             ios: {
                 bundleIdentifier,
                 buildNumber: '1.0.2',
-                supportsTablet: true,
+                supportsTablet: false,
             },
             android: {
                 package: packageName,
