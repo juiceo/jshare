@@ -56,8 +56,12 @@
                 "EXPO_USE_FAST_RESOLVER": "true"
             },
             "channel": "production",
-            "autoIncrement": true,
-            "submit": {
+            "autoIncrement": true
+        }
+    },
+    "submit": {
+        "production": {
+            "ios": {
                 "appleId": "juuso.u.lappalainen@gmail.com",
                 "ascAppId": "6743673035",
                 "appleTeamId": "RN7TJRGG33",
