@@ -29,6 +29,10 @@ jobs:
             - name: 👷 Build packages
               run: pnpm run -w build:mobile
 
-            - name: 🚀 Update EAS main branch
+            - name: 🚀 Update EAS staging branch
               working-directory: apps/mobile
               run: pnpm eas:update:staging:ci
+
+            - name: 🚀 Update EAS production branch
+              working-directory: apps/mobile
+              run: pnpm eas:update:production:ci
