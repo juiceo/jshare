@@ -56,7 +56,13 @@
                 "EXPO_USE_FAST_RESOLVER": "true"
             },
             "channel": "production",
-            "autoIncrement": true
+            "autoIncrement": true,
+            "submit": {
+                "appleId": "juuso.u.lappalainen@gmail.com",
+                "ascAppId": "6743673035",
+                "appleTeamId": "RN7TJRGG33",
+                "sku": "com.juiceo.jshare"
+            }
         }
     }
 }
