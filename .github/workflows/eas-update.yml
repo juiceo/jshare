@@ -31,10 +31,11 @@ jobs:
 
             - name: 🧐 Compare version with EAS build
               id: compare_versions
+              working-directory: apps/mobile
               run: |
                   # Run the comparison script
                   ./scripts/compare-eas-build-number.sh
-              continue-on-error: true
+              continue-on-error: false
 
             - name: 🚀 Run EAS build (if version is greater)
               if: steps.compare_versions.outputs.result == 'true'
