@@ -5,6 +5,7 @@ import { merge, partition } from 'lodash';
 import type { DB } from '@jshare/db';
 
 import { uploadImage } from '~/services/images';
+import { toast } from '~/state/toast';
 
 export const MediaTypeOptions = ImagePicker.MediaTypeOptions;
 
@@ -41,6 +42,11 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
         async (
             options?: ImagePicker.ImagePickerOptions
         ): Promise<{ uploaded: DB.Image[]; failed: number }> => {
+            const permissions = await ImagePicker.requestCameraPermissionsAsync();
+            if (!permissions.granted) {
+                toast.error('Unable to open camera', 'Permission not granted');
+                return { uploaded: [], failed: 0 };
+            }
             const result = await ImagePicker.launchCameraAsync(
                 merge({}, defaultOptions, options, { base64: true })
             );
@@ -61,6 +67,11 @@ export const useImageUpload = (defaultOptions?: ImagePicker.ImagePickerOptions) 
         async (
             options?: ImagePicker.ImagePickerOptions
         ): Promise<{ uploaded: DB.Image[]; failed: number }> => {
+            const permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (!permissions.granted) {
+                toast.error('Unable to open media library', 'Permission not granted');
+                return { uploaded: [], failed: 0 };
+            }
             const result = await ImagePicker.launchImageLibraryAsync(
                 merge({}, defaultOptions, options, { base64: true })
             );
