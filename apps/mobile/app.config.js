@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import packageJson from '../package.json';
+import packageJson from './package.json';
 
 export default ({ config }) => {
     const environmentConfig = {
@@ -72,7 +72,6 @@ export default ({ config }) => {
             assetBundlePatterns: ['**/*'],
             ios: {
                 bundleIdentifier,
-                buildNumber: packageJson.version,
                 supportsTablet: false,
                 config: {
                     usesNonExemptEncryption: false,
