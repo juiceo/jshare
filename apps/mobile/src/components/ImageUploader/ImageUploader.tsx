@@ -9,7 +9,6 @@ import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { Typography } from '~/components/Typography';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { toast } from '~/state/toast';
 
 export type ImageUploaderProps = {
     value: DB.Image | null | undefined;
