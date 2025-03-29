@@ -45,7 +45,7 @@ version_comparison() {
 
 # Run the comparison and output the result
 if version_comparison; then
-  echo "true"
+  echo "::set-output name=result::true"
 else
-  echo "false"
+  echo "::set-output name=result::false"
 fi
