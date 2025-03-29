@@ -70,6 +70,9 @@ export default ({ config }) => {
                 bundleIdentifier,
                 buildNumber: '1.0.3',
                 supportsTablet: false,
+                config: {
+                    usesNonExemptEncryption: false,
+                },
             },
             android: {
                 package: packageName,
