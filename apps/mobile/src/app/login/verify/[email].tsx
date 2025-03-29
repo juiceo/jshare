@@ -86,7 +86,7 @@ export default screen(
                         </Stack>
                     </Stack>
                 </Screen.Content>
-                <Screen.Footer sticky>
+                <Screen.Footer>
                     <Stack spacing="md">
                         {timer.isDone ? (
                             <Button variant="ghost" color={'secondary'} onPress={handleResend}>

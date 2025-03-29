@@ -1,5 +1,5 @@
-import { type ViewStyle } from 'react-native';
-import { KeyboardAvoidingView, KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { View, type ViewStyle } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { ScreenContextType } from '~/components/Screen/ScreenContext';
@@ -52,11 +52,10 @@ export const ScreenContent = (props: ScreenContentProps) => {
         );
     } else {
         return (
-            <KeyboardAvoidingView
+            <View
                 style={[
                     {
                         flex: 1,
-                        position: 'relative',
                         paddingLeft: insets.left,
                         paddingRight: insets.right,
                         paddingBottom: bottomInset,
@@ -67,7 +66,7 @@ export const ScreenContent = (props: ScreenContentProps) => {
                 ]}
             >
                 {renderChildren()}
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 };

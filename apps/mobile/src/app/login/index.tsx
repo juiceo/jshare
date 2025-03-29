@@ -46,7 +46,7 @@ export default screen(
         }, [error, isValid]);
 
         return (
-            <Screen>
+            <Screen avoidKeyboard>
                 <Screen.Content>
                     <Stack flex={1} center p="xl">
                         <ExpoImage
@@ -59,7 +59,7 @@ export default screen(
                         />
                     </Stack>
                 </Screen.Content>
-                <Screen.Footer padding="xl" sticky>
+                <Screen.Footer padding="xl">
                     <Stack spacing="md">
                         <TextField
                             label="Email address"
