@@ -1,5 +1,7 @@
 import 'dotenv/config';
 
+import packageJson from '../package.json';
+
 export default ({ config }) => {
     const environmentConfig = {
         supabaseApiUrl: process.env.EXPO_PUBLIC_SUPABASE_API_URL,
@@ -48,7 +50,7 @@ export default ({ config }) => {
             name,
             slug: 'jshare',
             owner: 'juiceo',
-            version: '1.0.3',
+            version: packageJson.version,
             orientation: 'portrait',
             icon: './assets/icon.png',
             userInterfaceStyle: 'dark',
@@ -70,7 +72,7 @@ export default ({ config }) => {
             assetBundlePatterns: ['**/*'],
             ios: {
                 bundleIdentifier,
-                buildNumber: '1.0.3',
+                buildNumber: packageJson.version,
                 supportsTablet: false,
                 config: {
                     usesNonExemptEncryption: false,
