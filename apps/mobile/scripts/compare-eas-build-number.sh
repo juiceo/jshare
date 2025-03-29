@@ -1,14 +1,19 @@
 #!/bin/bash
 
 # Get the build number from the EAS build system
-build_number=$(eas build:version:get --platform ios --profile production --non-interactive --json | grep '"buildNumber"' | sed 's/.*"buildNumber": "\(.*\)"/\1/')
+build_number=$(eas branch:view production --json --non-interactive --limit 1 | grep '"runtimeVersion"' | sed 's/.*"runtimeVersion": "\(.*\)"/\1/')
+
 
 # Get the version number from package.json
+
 package_version=$(grep '"version"' package.json | sed 's/.*"version": "\(.*\)"/\1/')
 
 # Strip any spaces or non-numeric characters that might have been accidentally included
 build_number=$(echo "$build_number" | tr -d '[:space:]')
 package_version=$(echo "$package_version" | tr -d '[:space:]')
+
+echo "remote EAS build version: $build_number"
+echo "package.json build version: $package_version"
 
 # Compare version numbers
 version_comparison() {
@@ -45,7 +50,9 @@ version_comparison() {
 
 # Run the comparison and output the result
 if version_comparison; then
-  echo "::set-output name=result::true"
+  echo "local version $package_version is greater than remote version $build_number"
+  echo "{result}={true}" >> $GITHUB_OUTPUT
 else
-  echo "::set-output name=result::false"
+  echo "remote version $build_number is greater than or equal to local version $package_version"
+  echo "{result}={false}" >> $GITHUB_OUTPUT
 fi

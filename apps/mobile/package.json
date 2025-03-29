@@ -33,6 +33,7 @@
         "eas:update:production:ci": "env-cmd -f .env.production eas update --auto --non-interactive --branch=production",
         "eas:submit:production:ci": "env-cmd -f .env.production eas submit --platform ios --profile production --non-interactive --latest",
         "eas-build-pre-install": "./scripts/set-eas-build-env.sh",
+        "compare-eas-build-number": "./scripts/compare-eas-build-number.sh",
         "storybook-generate": "sb-rn-get-stories",
         "expo:doctor": "npx expo-doctor@latest",
         "android": "expo run:android",
