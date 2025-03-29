@@ -7,6 +7,8 @@ export default ({ config }) => {
         jshareApiUrl: process.env.EXPO_PUBLIC_JSHARE_API_URL,
     };
 
+    console.log('app.config.js config', process.env.EXPO_PUBLIC_ENVIRONMENT, environmentConfig);
+
     const name = (() => {
         switch (process.env.EXPO_PUBLIC_ENVIRONMENT) {
             case 'local':
