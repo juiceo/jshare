@@ -217,8 +217,8 @@ catalogs:
       specifier: ^2.16.1
       version: 2.16.2
     react-native-keyboard-controller:
-      specifier: ^1.14.1
-      version: 1.14.1
+      specifier: ^1.16.0
+      version: 1.16.8
     react-native-reanimated:
       specifier: ^3.10.1
       version: 3.10.1
@@ -421,7 +421,7 @@ importers:
         version: 1.11.0(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))
       react-native-keyboard-controller:
         specifier: 'catalog:'
-        version: 1.14.1(react-native-reanimated@3.10.1(@babel/core@7.26.0)(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
+        version: 1.16.8(react-native-reanimated@3.10.1(@babel/core@7.26.0)(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
       react-native-pager-view:
         specifier: ^6.3.0
         version: 6.3.0(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
@@ -2014,6 +2014,7 @@ packages:
   '@faker-js/faker@9.2.0':
     resolution: {integrity: sha512-ulqQu4KMr1/sTFIYvqSdegHT8NIkt66tFAkugGnHA+1WAfEn6hMzNR+svjXGFRVLnapxvej67Z/LwchFrnLBUg==}
     engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+    deprecated: Please update to a newer version
 
   '@gorhom/bottom-sheet@5.0.4':
     resolution: {integrity: sha512-DTKFE+KwcS4Du5hbzTzh3r9hdfEfYmChcRi6hSeiDPGiCMq8GQ7VD5VE1WaFRrEbcc0+Seu1ZEjsf+JMcFM4vg==}
@@ -6521,8 +6522,14 @@ packages:
     peerDependencies:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
 
-  react-native-keyboard-controller@1.14.1:
-    resolution: {integrity: sha512-HUrZTaaDPxm94EVXlguwJB2gm6mc+VRTTzR66luFGZJZnL2SJoxN+dwsNW3twkwUVDrCPPA3U21q9YWUKVmwvg==}
+  react-native-is-edge-to-edge@1.1.6:
+    resolution: {integrity: sha512-1pHnFTlBahins6UAajXUqeCOHew9l9C2C8tErnpGC3IyLJzvxD+TpYAixnCbrVS52f7+NvMttbiSI290XfwN0w==}
+    peerDependencies:
+      react: '>=18.2.0'
+      react-native: '>=0.73.0'
+
+  react-native-keyboard-controller@1.16.8:
+    resolution: {integrity: sha512-Ua6S4+ooMqNW3dFQ7/S/fhzgumAuOk0eUkYmNRyjg3ezYdOjwQNl7QiVQg6cxZkpPmeIkgHdmeOR1HZ45S2h4Q==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -14996,10 +15003,16 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
-  react-native-keyboard-controller@1.14.1(react-native-reanimated@3.10.1(@babel/core@7.26.0)(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
+  react-native-is-edge-to-edge@1.1.6(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
     dependencies:
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0)
+
+  react-native-keyboard-controller@1.16.8(react-native-reanimated@3.10.1(@babel/core@7.26.0)(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0)
+      react-native-is-edge-to-edge: 1.1.6(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
       react-native-reanimated: 3.10.1(@babel/core@7.26.0)(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
 
   react-native-markdown-display@7.0.2(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):

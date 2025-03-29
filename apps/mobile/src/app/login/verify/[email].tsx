@@ -65,7 +65,7 @@ export default screen(
         };
 
         return (
-            <Screen>
+            <Screen avoidKeyboard>
                 <Screen.Header title="Verify email" />
                 <Screen.Content>
                     <Stack flex={1} center>
