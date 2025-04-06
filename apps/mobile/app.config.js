@@ -53,11 +53,6 @@ export default ({ config }) => {
             icon: './assets/icon.png',
             userInterfaceStyle: 'dark',
             scheme: 'jshare',
-            splash: {
-                image: './assets/splash.png',
-                resizeMode: 'contain',
-                backgroundColor: '#ffa5a5',
-            },
             updates: {
                 enabled: true,
                 fallbackToCacheTimeout: 0,
@@ -99,7 +94,8 @@ export default ({ config }) => {
                     {
                         backgroundColor: '#ffa5a5',
                         image: './assets/splash.png',
-                        imageWidth: 200,
+                        resizeMode: 'contain',
+                        imageWidth: 140,
                     },
                 ],
                 'expo-font',
