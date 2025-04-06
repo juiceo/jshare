@@ -51,7 +51,7 @@ From the start, the goal with building JShare has been to improve on all aspects
 
 ## How is it built?
 
-At the core of JShare is a React Native application built with [Expo](https://expo.dev/), a Node.js server and [InstantDB](https://www.instantdb.com/) as the database. All of this lives in a PNPM / Turborepo monorepo. Strict-mode TypeScript everywhere!
+At the core of JShare is a React Native application built with [Expo](https://expo.dev/), a Node.js server and [Supabase](https://www.supabase.com/) as the database layer. All of this lives in a PNPM / Turborepo monorepo. Strict-mode TypeScript everywhere!
 
 ### Monorepo structure
 
