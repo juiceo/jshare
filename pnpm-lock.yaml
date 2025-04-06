@@ -381,8 +381,8 @@ importers:
         specifier: 'catalog:'
         version: 1.12.1
       expo-updates:
-        specifier: ^0.25.27
-        version: 0.25.27(expo@51.0.39(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0)))
+        specifier: ^0.25.28
+        version: 0.25.28(expo@51.0.39(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0)))
       jotai:
         specifier: 'catalog:'
         version: 2.10.1(@types/react@18.2.79)(react@18.2.0)
@@ -4684,8 +4684,8 @@ packages:
     peerDependencies:
       expo: '*'
 
-  expo-updates@0.25.27:
-    resolution: {integrity: sha512-1hyYZqBEXcAiEuSRPJ6dINTndGlWi6/bwlyYGjSnyoYfu/vzZQrJ+XA8JUP4EvJ3b0g8a0UOIjlDJ9ke9kMcfg==}
+  expo-updates@0.25.28:
+    resolution: {integrity: sha512-NTI1r7wvXel36qCzKwCjCJ9HExBo6GX9wkA9WzaNsysmg+eEd5BCmcaxvQGZUQkfDocEfI78N5vRBSuMi0iS1w==}
     hasBin: true
     peerDependencies:
       expo: '*'
@@ -12976,7 +12976,7 @@ snapshots:
     dependencies:
       expo: 51.0.39(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))
 
-  expo-updates@0.25.27(expo@51.0.39(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))):
+  expo-updates@0.25.28(expo@51.0.39(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))):
     dependencies:
       '@expo/code-signing-certificates': 0.0.5
       '@expo/config': 9.0.4
