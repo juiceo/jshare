@@ -9,7 +9,6 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/(tabs)' as Route,
         auth: true,
     },
     ({ auth }) => {

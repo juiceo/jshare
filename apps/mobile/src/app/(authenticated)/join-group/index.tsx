@@ -9,7 +9,7 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/join-group',
+        route: '/join-group',
     },
     ({ router }) => {
         const [code, setCode] = useState<string>('');
