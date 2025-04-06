@@ -3,7 +3,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { sortBy } from 'lodash';
 
 import { useTheme } from '@jshare/theme';
@@ -26,12 +26,11 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/group/[groupId]',
         loadingMessage: 'Loading group...',
         auth: true,
     },
-    ({ params, auth }) => {
-        const { groupId } = params;
+    ({ auth }) => {
+        const { groupId } = useLocalSearchParams<{ groupId: string }>();
         const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { theme } = useTheme();
         const { presentUserIds } = useGroupContext();

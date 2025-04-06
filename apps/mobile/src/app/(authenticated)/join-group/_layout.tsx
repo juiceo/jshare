@@ -7,7 +7,6 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/join-group',
         auth: true,
     },
     () => {

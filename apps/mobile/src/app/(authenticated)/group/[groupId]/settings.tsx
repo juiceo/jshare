@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import dayjs from 'dayjs';
 import * as Clipboard from 'expo-clipboard';
+import { useLocalSearchParams } from 'expo-router';
 import { sortBy } from 'lodash';
 
 import { DB } from '@jshare/db';
@@ -24,12 +25,12 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/group/[groupId]/settings',
         auth: true,
     },
-    ({ params, auth, router }) => {
+    ({ auth, router }) => {
         const trpcUtils = trpc.useUtils();
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const { groupId } = useLocalSearchParams<{ groupId: string }>();
+        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const { presentUserIds } = useGroupContext();
         const updateGroup = trpc.groups.update.useMutation();
         const refreshInviteCode = trpc.groups.refreshCode.useMutation();
@@ -44,8 +45,8 @@ export default screen(
         const [groupName, setGroupName] = useState<string>(group.name);
 
         const handleRefreshInviteCode = async () => {
-            const updatedGroup = await refreshInviteCode.mutateAsync({ groupId: params.groupId });
-            trpcUtils.groups.get.setData({ id: params.groupId }, updatedGroup);
+            const updatedGroup = await refreshInviteCode.mutateAsync({ groupId });
+            trpcUtils.groups.get.setData({ id: groupId }, updatedGroup);
             trpcUtils.groups.get.invalidate();
         };
 
@@ -57,7 +58,7 @@ export default screen(
         };
 
         const handleGroupUpdate = async (args: Pick<DB.Group, 'name'>) => {
-            trpcUtils.groups.get.setData({ id: params.groupId }, (prev) => {
+            trpcUtils.groups.get.setData({ id: groupId }, (prev) => {
                 if (!prev) return prev;
                 return {
                     ...prev,
@@ -65,7 +66,7 @@ export default screen(
                 };
             });
             await updateGroup.mutateAsync({
-                groupId: params.groupId,
+                groupId,
                 updates: args,
             });
             trpcUtils.groups.invalidate();
@@ -73,7 +74,7 @@ export default screen(
 
         const handleGroupDelete = async () => {
             try {
-                await deleteGroup.mutateAsync({ groupId: params.groupId });
+                await deleteGroup.mutateAsync({ groupId });
                 trpcUtils.groups.invalidate();
                 router.replace('/(authenticated)/(tabs)/groups');
                 toast.info(`Success`, `${group.name} was deleted`);

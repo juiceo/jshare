@@ -1,14 +1,7 @@
 import { Suspense, type ComponentType } from 'react';
 import { ActivityIndicator, Linking, Text } from 'react-native';
 import type { Session } from '@supabase/supabase-js';
-import {
-    Redirect,
-    useLocalSearchParams,
-    useRouter,
-    type Route,
-    type RouteParams,
-    type Router,
-} from 'expo-router';
+import { Redirect, useRouter, type Router } from 'expo-router';
 import * as Updates from 'expo-updates';
 
 import {
@@ -29,20 +22,17 @@ import { LoadingState } from '~/components/util/LoadingState';
 import { trpc } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
-export const screen = <TRoute extends Route, TAuth extends boolean = false>(
+export const screen = <TAuth extends boolean = false>(
     args: {
-        route?: TRoute;
         auth?: TAuth;
         loadingMessage?: string;
     },
     Component: ComponentType<{
-        params: RouteParams<TRoute>;
         router: Router;
         auth: TAuth extends true ? { session: Session; signOut: () => void } : never;
     }>
 ) => {
     return function SuspenseWrapper() {
-        const params = useLocalSearchParams();
         const router = useRouter();
         const { signOut } = useSession();
 
@@ -108,23 +98,11 @@ export const screen = <TRoute extends Route, TAuth extends boolean = false>(
             if (args.auth) {
                 return (
                     <AuthWrapper>
-                        {(auth) => (
-                            <Component
-                                params={params as RouteParams<TRoute>}
-                                router={router}
-                                auth={auth as any}
-                            />
-                        )}
+                        {(auth) => <Component router={router} auth={auth as any} />}
                     </AuthWrapper>
                 );
             } else {
-                return (
-                    <Component
-                        params={params as RouteParams<TRoute>}
-                        router={router}
-                        auth={null as any}
-                    />
-                );
+                return <Component router={router} auth={null as any} />;
             }
         };
 

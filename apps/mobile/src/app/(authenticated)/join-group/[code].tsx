@@ -1,3 +1,5 @@
+import { useLocalSearchParams } from 'expo-router';
+
 import { plural } from '@jshare/common';
 
 import { Image } from '~/components/atoms/Image';
@@ -11,13 +13,13 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/join-group/[code]',
         loadingMessage: 'Checking code...',
         auth: true,
     },
-    ({ router, params, auth }) => {
+    ({ router, auth }) => {
         const trpcUtils = trpc.useUtils();
-        const [group] = trpc.groups.getByCode.useSuspenseQuery({ code: params.code });
+        const { code } = useLocalSearchParams<{ code: string }>();
+        const [group] = trpc.groups.getByCode.useSuspenseQuery({ code });
         const joinGroup = trpc.groups.joinByCode.useMutation();
 
         const isMember = group?.participants.some((p) => p.userId === auth.session.user.id);
@@ -25,7 +27,7 @@ export default screen(
         const handleJoin = async () => {
             if (!group) return;
             if (!isMember) {
-                await joinGroup.mutateAsync({ code: params.code });
+                await joinGroup.mutateAsync({ code });
             }
             trpcUtils.groups.invalidate();
             router.dismiss();
@@ -74,7 +76,7 @@ export default screen(
                                 <Typography variant="body1" align="center" color="primary">
                                     No group was found with the code{' '}
                                     <Typography variant="subtitle1" color="primary.light">
-                                        {params.code}
+                                        {code}
                                     </Typography>
                                 </Typography>
                                 <Typography variant="caption" align="center" color="hint">

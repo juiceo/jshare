@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocalSearchParams } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -21,17 +22,20 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/group/[groupId]/expense/[expenseId]',
         auth: true,
     },
-    ({ params, auth, router }) => {
+    ({ auth, router }) => {
         const trpcUtils = trpc.useUtils();
         const [mode, setMode] = useState<'edit' | 'view'>('view');
         const [isDeleting, setDeleting] = useState<boolean>(false);
+        const { expenseId, groupId } = useLocalSearchParams<{
+            expenseId: string;
+            groupId: string;
+        }>();
         const [expense, expenseQuery] = trpc.expenses.get.useSuspenseQuery({
-            id: params.expenseId,
+            id: expenseId,
         });
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const isOwner = expense.ownerId === auth.session.user.id;
 
         const updateExpense = trpc.expenses.update.useMutation();

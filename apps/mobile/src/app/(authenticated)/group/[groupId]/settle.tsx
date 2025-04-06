@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
 import { isEqual } from 'lodash';
 
 import { formatAmount, getPaymentsFromBalances, type PaymentObject } from '@jshare/common';
@@ -15,16 +16,16 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/group/[groupId]/settle',
         auth: true,
     },
-    ({ params, auth, router }) => {
+    ({ auth, router }) => {
         const userId = auth.session.user.id;
         const trpcUtils = trpc.useUtils();
+        const { groupId } = useLocalSearchParams<{ groupId: string }>();
         const [checked, setChecked] = useState<PaymentObject[]>([]);
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [balances] = trpc.balances.getByParticipantInGroup.useSuspenseQuery({
-            groupId: params.groupId,
+            groupId,
         });
         const createPayment = trpc.payments.create.useMutation();
 
@@ -55,7 +56,7 @@ export default screen(
         const handleSubmit = async () => {
             for (const payment of checked) {
                 await createPayment.mutateAsync({
-                    groupId: params.groupId,
+                    groupId,
                     payerId: payment.fromUserId,
                     recipientId: payment.toUserId,
                     amount: payment.amount,

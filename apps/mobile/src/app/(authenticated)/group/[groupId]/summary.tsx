@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs, type TabBarProps } from 'react-native-collapsible-tab-view';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { formatAmount } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
@@ -24,30 +24,30 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/group/[groupId]/summary',
         auth: true,
     },
-    ({ params, auth }) => {
+    ({ auth }) => {
         const router = useRouter();
         const userId = auth.session.user.id;
         const { theme } = useTheme();
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: params.groupId });
+        const { groupId } = useLocalSearchParams<{ groupId: string }>();
+        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
         const [groupTotal] = trpc.expenses.getTotalForGroup.useSuspenseQuery({
-            groupId: params.groupId,
+            groupId,
         });
         const [balances, { refetch: refetchBalances, isRefetching: isRefetchingBalances }] =
             trpc.balances.getByParticipantInGroup.useSuspenseQuery({
-                groupId: params.groupId,
+                groupId,
             });
 
         const [expenses, { refetch: refetchExpenses, isRefetching: isRefetchingExpenses }] =
             trpc.expenses.list.useSuspenseQuery({
-                groupId: params.groupId,
+                groupId,
             });
 
         const [payments, { refetch: refetchPayments, isRefetching: isRefetchingPayments }] =
             trpc.payments.list.useSuspenseQuery({
-                groupId: params.groupId,
+                groupId,
             });
 
         const ownBalance = balances.find((b) => b.userId === userId);
@@ -177,7 +177,7 @@ export default screen(
                             onPress={() =>
                                 router.push({
                                     pathname: '/(authenticated)/group/[groupId]/settle',
-                                    params: { groupId: params.groupId },
+                                    params: { groupId },
                                 })
                             }
                         >
