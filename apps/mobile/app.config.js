@@ -103,6 +103,7 @@ export default ({ config }) => {
             experiments: {
                 typedRoutes: true,
             },
+            newArchEnabled: true,
         },
     };
 };

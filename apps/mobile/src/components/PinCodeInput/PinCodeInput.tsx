@@ -62,7 +62,7 @@ export const PinCodeInput = (props: PinCodeInputProps) => {
             <TextInput
                 readOnly={disabled}
                 pointerEvents="none"
-                style={{ display: 'none' }}
+                style={{ opacity: 0 }}
                 ref={inputRef}
                 keyboardType="number-pad"
                 autoComplete="one-time-code"

@@ -17,7 +17,7 @@ export default screen(
         return (
             <Screen>
                 <Screen.Header title="Join group" backButton="down" disableInset />
-                <Screen.Content>
+                <Screen.Content scrollable>
                     <Stack column center spacing="2xl" flex={1} p="2xl">
                         <Typography variant="h4">Join group with invite code</Typography>
                         <TextField
@@ -33,7 +33,7 @@ export default screen(
                         </Typography>
                     </Stack>
                 </Screen.Content>
-                <Screen.Footer>
+                <Screen.Footer padding="xl">
                     <Button
                         color="primary"
                         variant="contained"

@@ -276,7 +276,7 @@ export default screen(
                             </Stack>
                         </Stack>
                     </Screen.Content>
-                    <Screen.Footer>
+                    <Screen.Footer padding="xl">
                         <Stack column>
                             <Button
                                 color="primary"

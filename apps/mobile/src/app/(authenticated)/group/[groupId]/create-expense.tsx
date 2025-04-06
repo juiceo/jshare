@@ -64,7 +64,7 @@ export default screen(
                             groupId={group.id}
                         />
                     </Screen.Content>
-                    <Screen.Footer>
+                    <Screen.Footer padding="xl">
                         <Stack column>
                             {hasAmountMismatch && (
                                 <Typography
