@@ -13,7 +13,7 @@
     "dependencies": {
         "@expo-google-fonts/nunito": "catalog:",
         "@expo-google-fonts/poppins": "catalog:",
-        "@expo-google-fonts/ubuntu": "^0.2.3",
+        "@expo-google-fonts/ubuntu": "catalog:",
         "@types/chroma-js": "catalog:",
         "chroma-js": "catalog:",
         "expo-font": "catalog:",

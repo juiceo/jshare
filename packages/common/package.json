@@ -15,7 +15,7 @@
     "dependencies": {
         "dayjs": "catalog:",
         "lodash": "catalog:",
-        "vitest": "^2.1.8",
+        "vitest": "catalog:",
         "zod": "catalog:",
         "@jshare/db": "workspace:*"
     },

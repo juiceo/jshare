@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from 'expo-router';
+import { Stack, type Route } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
@@ -7,7 +7,7 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)',
+        route: '/(authenticated)' as Route,
         auth: true,
     },
     () => {

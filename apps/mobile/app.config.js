@@ -102,6 +102,7 @@ export default ({ config }) => {
                         imageWidth: 200,
                     },
                 ],
+                'expo-font',
             ],
             experiments: {
                 typedRoutes: true,

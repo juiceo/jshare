@@ -22,7 +22,7 @@ export const ChatMessage = (props: ChatMessageProps) => {
     const { theme } = useTheme();
     const styles = getStyles(theme);
 
-    const gradientColors = (() => {
+    const gradientColors = ((): [string, string] => {
         switch (props.color) {
             case 'primary':
                 return [theme.palette.primary.main, theme.palette.primary.dark];

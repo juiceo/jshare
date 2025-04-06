@@ -5,9 +5,9 @@ import {
     Redirect,
     useLocalSearchParams,
     useRouter,
+    type Route,
     type RouteParams,
     type Router,
-    type Routes,
 } from 'expo-router';
 import * as Updates from 'expo-updates';
 
@@ -29,7 +29,7 @@ import { LoadingState } from '~/components/util/LoadingState';
 import { trpc } from '~/services/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
-export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
+export const screen = <TRoute extends Route, TAuth extends boolean = false>(
     args: {
         route: TRoute;
         auth?: TAuth;
@@ -42,7 +42,7 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
     }>
 ) => {
     return function SuspenseWrapper() {
-        const params = useLocalSearchParams<RouteParams<TRoute>>();
+        const params = useLocalSearchParams();
         const router = useRouter();
         const { signOut } = useSession();
 

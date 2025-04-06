@@ -9,7 +9,7 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/group/[groupId]/',
+        route: '/(authenticated)/group/[groupId]',
     },
     ({ params }) => {
         const { theme } = useTheme();

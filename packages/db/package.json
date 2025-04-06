@@ -24,21 +24,21 @@
         "db:create-buckets": "echo 'Creating buckets...' && prisma db execute --file ./scripts/create_buckets.sql --schema ./prisma/schema.prisma"
     },
     "dependencies": {
-        "@zenstackhq/runtime": "^2.11.2"
+        "@zenstackhq/runtime": "catalog:"
     },
     "devDependencies": {
-        "@anatine/zod-mock": "^3.13.4",
+        "@anatine/zod-mock": "catalog:",
         "@faker-js/faker": "catalog:",
         "@jshare/tsconfig": "workspace:*",
         "@prisma/client": "catalog:",
-        "@supabase/supabase-js": "^2.47.16",
-        "@types/shortid": "^2.2.0",
+        "@supabase/supabase-js": "catalog:",
+        "@types/shortid": "catalog:",
         "lodash": "catalog:",
         "prisma": "catalog:",
-        "shortid": "^2.2.17",
-        "tsx": "^4.19.2",
-        "zenstack": "^2.11.2",
-        "zod": "^3.24.1"
+        "shortid": "catalog:",
+        "tsx": "catalog:",
+        "zenstack": "catalog:",
+        "zod": "catalog:"
     },
     "eslintConfig": {
         "extends": "@jshare/eslint-config",

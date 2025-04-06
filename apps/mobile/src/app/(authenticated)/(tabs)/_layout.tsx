@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Tabs, type Route } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
@@ -9,7 +9,7 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     {
-        route: '/(authenticated)/(tabs)',
+        route: '/(authenticated)/(tabs)' as Route,
         auth: true,
     },
     ({ auth }) => {
@@ -24,9 +24,9 @@ export default screen(
                         borderTopWidth: 0,
                     },
                     tabBarActiveTintColor: theme.palette.accent.main,
-                }}
-                sceneContainerStyle={{
-                    backgroundColor: theme.palette.background.main,
+                    sceneStyle: {
+                        backgroundColor: theme.palette.background.main,
+                    },
                 }}
             >
                 <Tabs.Screen
