@@ -7,6 +7,7 @@
     "main": "expo-router/entry",
     "scripts": {
         "dev": "env-cmd -f .env.dev expo start",
+        "dev:production": "env-cmd -f .env.production expo start",
         "start": "expo start",
         "dev:storybook": "env-cmd -f .env.storybook expo start",
         "typecheck": "tsc --noEmit",

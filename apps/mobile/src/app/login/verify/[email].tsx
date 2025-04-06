@@ -32,6 +32,7 @@ export default screen(
                 Keyboard.dismiss();
                 setLoading(true);
                 try {
+                    console.log('verifying otp', isDemoUserEmail(email), value.join(''));
                     const authResult = !isDemoUserEmail(email)
                         ? await supabase.auth.verifyOtp({
                               email,
@@ -43,6 +44,7 @@ export default screen(
                               password: value.join(''),
                           });
 
+                    console.log('auth result', authResult);
                     if (authResult.error) {
                         Alert.alert(authResult.error.message);
                     }

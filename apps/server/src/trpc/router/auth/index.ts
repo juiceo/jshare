@@ -10,6 +10,10 @@ export const authRouter = router({
         console.log('createDemoUser');
         const existingDemoUser = await supabase.auth.admin.getUserById(DEMO_USER_ID);
         if (existingDemoUser.data.user) {
+            await supabase.auth.admin.updateUserById(DEMO_USER_ID, {
+                email: DEMO_USER_EMAIL,
+                password: DEMO_USER_PASSWORD,
+            });
             console.log('createDemoUser: user exists', existingDemoUser.data.user);
             return existingDemoUser.data.user;
         }
