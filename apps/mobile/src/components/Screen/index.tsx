@@ -1,6 +1,5 @@
 import type { ReactElement } from 'react';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme } from '@jshare/theme';
 
@@ -17,7 +16,6 @@ export type ScreenProps = {
 
 export const Screen = (props: ScreenProps) => {
     const hasParentScreen = useHasParentScreen();
-    const safeAreaInsets = useSafeAreaInsets();
     const { theme } = useTheme();
 
     if (hasParentScreen) {

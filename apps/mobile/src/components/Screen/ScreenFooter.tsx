@@ -2,7 +2,7 @@ import { View, type ViewProps } from 'react-native';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useTheme, type SpacingUnit } from '@jshare/theme';
+import { useTheme } from '@jshare/theme';
 
 export type ScreenFooterProps = {
     sticky?: boolean;
