@@ -35,6 +35,7 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
     return function SuspenseWrapper() {
         const params = useLocalSearchParams<RouteParams<TRoute>>();
         const router = useRouter();
+        const { signOut } = useSession();
 
         const updates = Updates.useUpdates();
 
@@ -44,10 +45,13 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
             });
         };
 
+        const handleClear = () => {
+            signOut();
+        };
+
         const renderError = (args: ErrorBoundaryFallbackArgs) => {
             return (
                 <Screen>
-                    <Screen.Header title="Something went wrong" backButton="back" />
                     <Screen.Content>
                         <Stack flex={1} center spacing="xl" p="xl">
                             <Icon
@@ -67,12 +71,20 @@ export const screen = <TRoute extends Routes, TAuth extends boolean = false>(
                     </Screen.Content>
                     <Screen.Footer>
                         <Stack column spacing="md">
+                            {router.canGoBack() && (
+                                <Button color="secondary" onPress={router.back}>
+                                    Go back
+                                </Button>
+                            )}
                             <Button
                                 color="secondary"
                                 onPress={handleReload}
                                 loading={updates.isChecking || updates.isDownloading}
                             >
-                                Reload app
+                                Check for updates
+                            </Button>
+                            <Button color="secondary" onPress={handleClear}>
+                                Log out and clear data
                             </Button>
                             <Button color="primary" onPress={args.reset}>
                                 Retry

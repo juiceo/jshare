@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { router } from 'expo-router';
 
+import { isDemoUserEmail } from '@jshare/common';
+
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
@@ -30,11 +32,16 @@ export default screen(
                 Keyboard.dismiss();
                 setLoading(true);
                 try {
-                    const authResult = await supabase.auth.verifyOtp({
-                        email,
-                        token: value.join(''),
-                        type: 'email',
-                    });
+                    const authResult = !isDemoUserEmail(email)
+                        ? await supabase.auth.verifyOtp({
+                              email,
+                              token: value.join(''),
+                              type: 'email',
+                          })
+                        : await supabase.auth.signInWithPassword({
+                              email,
+                              password: value.join(''),
+                          });
                     const accessToken = authResult.data.session?.access_token;
 
                     if (!accessToken) {
@@ -59,6 +66,7 @@ export default screen(
 
         const handleResend = () => {
             setLastCodeSent(Date.now());
+            if (isDemoUserEmail(email)) return;
             supabase.auth.signInWithOtp({
                 email,
             });

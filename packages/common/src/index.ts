@@ -6,3 +6,4 @@ export * from './expenses';
 export * from './balances';
 export * from './util';
 export * from './storage';
+export * from './demo';

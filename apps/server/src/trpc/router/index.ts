@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { publicProcedure, router } from '../trpc';
+import { authRouter } from './auth';
 import { balancesRouter } from './balances';
 import { exchangeRatesRouter } from './exchangeRates';
 import { expensesRouter } from './expenses';
@@ -31,4 +32,5 @@ export const appRouter = router({
     payments: paymentsRouter,
     balances: balancesRouter,
     exchangeRates: exchangeRatesRouter,
+    auth: authRouter,
 });
