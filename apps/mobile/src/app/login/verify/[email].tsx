@@ -42,22 +42,28 @@ export default screen(
                               email,
                               password: value.join(''),
                           });
+
+                    if (authResult.error) {
+                        Alert.alert(authResult.error.message);
+                    }
+
                     const accessToken = authResult.data.session?.access_token;
 
                     if (!accessToken) {
                         Alert.alert('Invalid code, please try again');
-                    } else {
-                        setAccessToken(accessToken);
-                        const profile = await trpcUniversal.profiles.me.query().catch(() => null);
+                        return;
+                    }
 
-                        if (profile) {
-                            router.replace('/');
-                        } else {
-                            router.replace('/login/welcome');
-                        }
+                    setAccessToken(accessToken);
+                    const profile = await trpcUniversal.profiles.me.query().catch(() => null);
+
+                    if (profile) {
+                        router.replace('/');
+                    } else {
+                        router.replace('/login/welcome');
                     }
                 } catch {
-                    Alert.alert('Invalid code, please try again');
+                    Alert.alert('Something went wrong, please try again');
                     setCode([]);
                 }
                 setLoading(false);
