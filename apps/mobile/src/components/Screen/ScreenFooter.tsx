@@ -6,11 +6,10 @@ import { useTheme, type SpacingUnit } from '@jshare/theme';
 
 export type ScreenFooterProps = {
     sticky?: boolean;
-    disableBottomInset?: boolean;
 } & ViewProps;
 
 export const ScreenFooter = (props: ScreenFooterProps) => {
-    const { style, sticky = false, disableBottomInset = false, ...rest } = props;
+    const { style, sticky = false, ...rest } = props;
     const { theme } = useTheme();
     const insets = useSafeAreaInsets();
 
@@ -19,7 +18,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
             edges={{
                 left: 'additive',
                 right: 'additive',
-                bottom: disableBottomInset ? 'off' : 'additive',
+                bottom: 'additive',
                 top: 'off',
             }}
             {...rest}
@@ -29,6 +28,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                     style={[
                         {
                             padding: theme.spacing.xl,
+                            paddingBottom: 0,
                             borderTopWidth: 1,
                             borderTopColor: theme.palette.background.elevation1,
                         },
@@ -46,7 +46,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                     style={[
                         {
                             padding: theme.spacing.xl,
-                            paddingBottom: theme.spacing['2xl'],
+                            paddingBottom: 0,
                             borderTopWidth: 1,
                             borderTopColor: theme.palette.background.elevation1,
                         },
