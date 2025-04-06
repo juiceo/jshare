@@ -1,5 +1,6 @@
 import 'react-native-get-random-values';
 
+import { useEffect } from 'react';
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -8,6 +9,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 
 import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
@@ -19,6 +21,12 @@ import { QueryProvider } from '~/wrappers/QueryProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
 
 dayjs.extend(relativeTime);
+
+SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({
+    fade: true,
+    duration: 300,
+});
 
 const storybookEnabled = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
 
@@ -70,6 +78,10 @@ if (storybookEnabled) {
 
 const RootStack = () => {
     const { theme } = useTheme();
+
+    useEffect(() => {
+        SplashScreen.hide();
+    });
 
     return (
         <Stack
