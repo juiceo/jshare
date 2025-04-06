@@ -10,6 +10,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     lastActivity: z.ZodDefault<z.ZodDate>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
 }, "strict", z.ZodTypeAny, {
@@ -22,6 +23,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     createdAt: Date;
     updatedAt: Date;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
 }, {
     userId: string;
     email: string;
@@ -30,6 +32,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -44,6 +47,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     lastActivity: z.ZodDefault<z.ZodDate>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
 }, {
@@ -70,6 +74,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     avatarId?: string | null | undefined;
     avatar?: Record<string, unknown> | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     messages?: unknown[] | undefined;
     expensesOwned?: unknown[] | undefined;
     expensesPaid?: unknown[] | undefined;
@@ -87,6 +92,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     avatarId?: string | null | undefined;
     avatar?: Record<string, unknown> | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     messages?: unknown[] | undefined;
     expensesOwned?: unknown[] | undefined;
     expensesPaid?: unknown[] | undefined;
@@ -108,6 +114,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
@@ -118,6 +125,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
@@ -128,6 +136,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">>;
@@ -143,6 +152,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
@@ -153,6 +163,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
@@ -163,6 +174,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">>;
@@ -177,6 +189,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
@@ -187,6 +200,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
@@ -197,6 +211,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -211,6 +226,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, {
@@ -224,6 +240,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
@@ -235,6 +252,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -249,6 +267,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
@@ -259,6 +278,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
@@ -269,6 +289,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -283,6 +304,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodOptional<z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>>;
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
+    privacyPolicyAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, {
@@ -296,6 +318,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
@@ -307,6 +330,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
+    privacyPolicyAcceptedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;

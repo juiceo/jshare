@@ -13,7 +13,7 @@ const ProfileCountOutputTypeArgs_schema_1 = require("./ProfileCountOutputTypeArg
 exports.ProfileSelectObjectSchema = zod_1.z.object({
     userId: zod_1.z.boolean().optional(), email: zod_1.z.boolean().optional(), firstName: zod_1.z.boolean().optional(), lastName: zod_1.z.boolean().optional(), lastActivity: zod_1.z.boolean().optional(), currency: zod_1.z.boolean().optional(), groups: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => GroupParticipantInput_schema_1.GroupParticipantInputSchema.findMany)]).optional(), avatarId: zod_1.z.boolean().optional(), avatar: zod_1.z.union([zod_1.z.boolean(),
-        zod_1.z.lazy(() => ImageArgs_schema_1.ImageArgsObjectSchema)]).optional(), temporary: zod_1.z.boolean().optional(), messages: zod_1.z.union([zod_1.z.boolean(),
+        zod_1.z.lazy(() => ImageArgs_schema_1.ImageArgsObjectSchema)]).optional(), temporary: zod_1.z.boolean().optional(), privacyPolicyAcceptedAt: zod_1.z.boolean().optional(), messages: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => MessageInput_schema_1.MessageInputSchema.findMany)]).optional(), expensesOwned: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ExpenseInput_schema_1.ExpenseInputSchema.findMany)]).optional(), expensesPaid: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ExpenseInput_schema_1.ExpenseInputSchema.findMany)]).optional(), expenseShares: zod_1.z.union([zod_1.z.boolean(),

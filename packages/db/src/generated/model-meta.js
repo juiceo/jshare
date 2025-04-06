@@ -51,6 +51,10 @@ const metadata = {
                     name: "temporary",
                     type: "Boolean",
                     isOptional: true,
+                }, privacyPolicyAcceptedAt: {
+                    name: "privacyPolicyAcceptedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, messages: {
                     name: "messages",
                     type: "Message",

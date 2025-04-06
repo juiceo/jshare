@@ -70,6 +70,11 @@ declare const metadata: {
                     type: string;
                     isOptional: boolean;
                 };
+                privacyPolicyAcceptedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 messages: {
                     name: string;
                     type: string;
