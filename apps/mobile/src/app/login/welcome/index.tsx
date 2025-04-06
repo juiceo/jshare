@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, Linking, Text } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,6 +20,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
+import { useSession } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     firstName: z.string().min(1, 'First name is required'),
@@ -35,9 +36,8 @@ type Schema = z.infer<typeof schema>;
 export default screen(
     {
         route: '/login/welcome',
-        auth: true,
     },
-    ({ router, auth }) => {
+    ({ router }) => {
         const { theme } = useTheme();
         const form = useForm<Schema>({
             defaultValues: {
@@ -51,10 +51,17 @@ export default screen(
 
         const trpcUtils = trpc.useUtils();
         const createProfile = trpc.profiles.create.useMutation();
+        const { session } = useSession();
         const [image, setImage] = useState<DB.Image | null>(null);
 
+        useEffect(() => {
+            if (!session) {
+                router.replace('/login');
+            }
+        }, [router, session]);
+
         const handleSubmit = async (data: Schema) => {
-            const email = auth.session.user.email;
+            const email = session?.user.email;
             if (!email) {
                 Alert.alert('Missing email!');
                 return;

@@ -25,6 +25,7 @@ export const profilesRouter = router({
                     lastName: opts.input.lastName,
                     email: opts.input.email,
                     currency: opts.input.currency,
+                    termsAcceptedAt: new Date(),
                     avatar: opts.input.avatarId
                         ? {
                               connect: {
@@ -111,4 +112,17 @@ export const profilesRouter = router({
                 },
             });
         }),
+    acceptTerms: authProcedure.mutation(async (opts) => {
+        return db.profile.update({
+            where: {
+                userId: opts.ctx.userId,
+            },
+            data: {
+                termsAcceptedAt: new Date(),
+            },
+            include: {
+                avatar: true,
+            },
+        });
+    }),
 });
