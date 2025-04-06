@@ -1,6 +1,6 @@
 # Terms of Service
 
-Effective Date: May 28th, 2025
+Effective Date: March 28, 2025
 
 ## 1. Acceptance of Terms
 
