@@ -4,11 +4,12 @@ import { Alert, Linking, Text } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { PRIVACY_POLICY_URL } from '@jshare/common';
+import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '@jshare/common';
 import { zDB, type DB } from '@jshare/db';
 import { useTheme } from '@jshare/theme';
 
 import { Checkbox } from '~/components/atoms/Checkbox';
+import { FormControl } from '~/components/atoms/FormControl';
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
@@ -21,10 +22,12 @@ import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
-    firstName: z.string().min(1),
+    firstName: z.string().min(1, 'First name is required'),
     lastName: z.string(),
     currency: zDB.enums.CurrencyCodeSchema,
-    privacyPolicyAccepted: z.boolean(),
+    termsAccepted: z
+        .boolean()
+        .refine((value) => value === true, 'Please accept the Privacy Policy and Terms of Service'),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -41,7 +44,7 @@ export default screen(
                 firstName: '',
                 lastName: '',
                 currency: 'EUR',
-                privacyPolicyAccepted: false,
+                termsAccepted: false,
             },
             resolver: zodResolver(schema),
         });
@@ -72,7 +75,9 @@ export default screen(
             Linking.openURL(PRIVACY_POLICY_URL);
         };
 
-        const openTermsOfService = () => {};
+        const openTermsOfService = () => {
+            Linking.openURL(TERMS_OF_SERVICE_URL);
+        };
 
         return (
             <Screen>
@@ -127,37 +132,43 @@ export default screen(
                         />
                         <Controller
                             control={form.control}
-                            name="privacyPolicyAccepted"
-                            render={({ field }) => (
-                                <Stack row justifyStart spacing="xl" alignCenter mt="xl">
-                                    <Checkbox
-                                        variant="square"
-                                        checked={field.value}
-                                        onChange={field.onChange}
-                                    />
-                                    <Typography variant="caption" flex={1}>
-                                        I have read and agree to the JShare{' '}
-                                        <Text
-                                            style={{
-                                                textDecorationLine: 'underline',
-                                                color: theme.palette.accent.light,
-                                            }}
-                                            onPress={openPrivacyPolicy}
-                                        >
-                                            Privacy Policy
-                                        </Text>{' '}
-                                        and{' '}
-                                        <Text
-                                            style={{
-                                                textDecorationLine: 'underline',
-                                                color: theme.palette.accent.light,
-                                            }}
-                                            onPress={openTermsOfService}
-                                        >
-                                            Terms of Service
-                                        </Text>
-                                    </Typography>
-                                </Stack>
+                            name="termsAccepted"
+                            render={({ field, fieldState }) => (
+                                <FormControl
+                                    focused={false}
+                                    error={fieldState.error?.message}
+                                    backgroundColor="transparent"
+                                >
+                                    <Stack row justifyStart spacing="xl" alignCenter>
+                                        <Checkbox
+                                            variant="square"
+                                            checked={field.value}
+                                            onChange={field.onChange}
+                                        />
+                                        <Typography variant="caption" flex={1}>
+                                            I have read and agree to the JShare{' '}
+                                            <Text
+                                                style={{
+                                                    textDecorationLine: 'underline',
+                                                    color: theme.palette.accent.light,
+                                                }}
+                                                onPress={openPrivacyPolicy}
+                                            >
+                                                Privacy Policy
+                                            </Text>{' '}
+                                            and{' '}
+                                            <Text
+                                                style={{
+                                                    textDecorationLine: 'underline',
+                                                    color: theme.palette.accent.light,
+                                                }}
+                                                onPress={openTermsOfService}
+                                            >
+                                                Terms of Service
+                                            </Text>
+                                        </Typography>
+                                    </Stack>
+                                </FormControl>
                             )}
                         />
                     </Stack>

@@ -11,7 +11,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
 import { supabase } from '~/services/supabase';
-import { trpcUniversal } from '~/services/trpc';
+import { trpc, trpcUniversal } from '~/services/trpc';
 import { setAccessToken } from '~/state/auth';
 import { screen } from '~/wrappers/screen';
 
@@ -25,6 +25,7 @@ export default screen(
         const [loading, setLoading] = useState<boolean>(false);
         const [lastCodeSent, setLastCodeSent] = useState<number>(Date.now());
         const timer = useTimer({ to: lastCodeSent + 60_000 });
+        const createDemoUser = trpc.auth.createDemoUser.useMutation();
 
         const handleChange = async (value: number[], done: boolean) => {
             setCode(value);
@@ -32,19 +33,24 @@ export default screen(
                 Keyboard.dismiss();
                 setLoading(true);
                 try {
-                    console.log('verifying otp', isDemoUserEmail(email), value.join(''));
-                    const authResult = !isDemoUserEmail(email)
-                        ? await supabase.auth.verifyOtp({
-                              email,
-                              token: value.join(''),
-                              type: 'email',
-                          })
-                        : await supabase.auth.signInWithPassword({
-                              email,
-                              password: value.join(''),
-                          });
+                    let authResult;
 
-                    console.log('auth result', authResult);
+                    if (isDemoUserEmail(email)) {
+                        await createDemoUser.mutateAsync({
+                            email,
+                        });
+                        authResult = await supabase.auth.signInWithPassword({
+                            email,
+                            password: value.join(''),
+                        });
+                    } else {
+                        authResult = await supabase.auth.verifyOtp({
+                            email,
+                            token: value.join(''),
+                            type: 'email',
+                        });
+                    }
+
                     if (authResult.error) {
                         Alert.alert(authResult.error.message);
                     }

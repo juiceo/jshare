@@ -17,7 +17,7 @@ export type FormControlProps = {
     label?: string;
     error?: string | null;
     helperText?: string | null;
-    onPress: () => void;
+    onPress?: () => void;
     focused: boolean;
     endAdornment?: ReactNode;
     backgroundColor?: 'transparent' | BackgroundColorPath;

@@ -11,7 +11,6 @@ import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
 import { supabase } from '~/services/supabase';
-import { trpc } from '~/services/trpc';
 import { screen } from '~/wrappers/screen';
 
 const screenW = Dimensions.get('screen').width;
@@ -24,7 +23,6 @@ export default screen(
         const inputRef = useRef<TextInput>(null);
         const [email, setEmail] = useState<string>('');
         const [error, setError] = useState<boolean>(false);
-        const createDemoUser = trpc.auth.createDemoUser.useMutation();
 
         const isValid = isEmail(email);
 
@@ -38,8 +36,6 @@ export default screen(
                 supabase.auth.signInWithOtp({
                     email,
                 });
-            } else {
-                createDemoUser.mutateAsync();
             }
             router.push({
                 pathname: '/login/verify/[email]',
