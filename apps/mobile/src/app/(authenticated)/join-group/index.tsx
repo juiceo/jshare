@@ -29,7 +29,7 @@ export default screen({}, ({ router }) => {
                     </Typography>
                 </Stack>
             </Screen.Content>
-            <Screen.Footer padding="xl">
+            <Screen.Footer>
                 <Button
                     color="primary"
                     variant="contained"

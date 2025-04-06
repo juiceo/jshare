@@ -1,4 +1,5 @@
 import { Children, useCallback, useState, type ReactElement } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
 
 import { ScreenContext } from '~/components/Screen/ScreenContext';
@@ -24,16 +25,18 @@ export const ScreenProvider = (props: {
     );
 
     return (
-        <ScreenContext.Provider
-            value={{
-                hasFooter,
-                hasHeader,
-                hasFocus,
-                headerHeight,
-                setHeaderHeight,
-            }}
-        >
-            {props.children}
-        </ScreenContext.Provider>
+        <SafeAreaProvider>
+            <ScreenContext.Provider
+                value={{
+                    hasFooter,
+                    hasHeader,
+                    hasFocus,
+                    headerHeight,
+                    setHeaderHeight,
+                }}
+            >
+                {props.children}
+            </ScreenContext.Provider>
+        </SafeAreaProvider>
     );
 };

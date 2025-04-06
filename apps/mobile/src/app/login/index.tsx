@@ -59,7 +59,7 @@ export default screen({}, () => {
                     />
                 </Stack>
             </Screen.Content>
-            <Screen.Footer padding="xl">
+            <Screen.Footer>
                 <Stack spacing="md">
                     <TextField
                         label="Email address"

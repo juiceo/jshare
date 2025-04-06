@@ -5,13 +5,12 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTheme, type SpacingUnit } from '@jshare/theme';
 
 export type ScreenFooterProps = {
-    padding?: SpacingUnit;
     sticky?: boolean;
     disableBottomInset?: boolean;
 } & ViewProps;
 
 export const ScreenFooter = (props: ScreenFooterProps) => {
-    const { style, padding = 'md', sticky = false, disableBottomInset = false, ...rest } = props;
+    const { style, sticky = false, disableBottomInset = false, ...rest } = props;
     const { theme } = useTheme();
     const insets = useSafeAreaInsets();
 
@@ -29,7 +28,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                 <KeyboardStickyView
                     style={[
                         {
-                            padding: theme.spacing[padding],
+                            padding: theme.spacing.xl,
                             borderTopWidth: 1,
                             borderTopColor: theme.palette.background.elevation1,
                         },
@@ -46,7 +45,8 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                 <View
                     style={[
                         {
-                            padding: theme.spacing[padding],
+                            padding: theme.spacing.xl,
+                            paddingBottom: theme.spacing['2xl'],
                             borderTopWidth: 1,
                             borderTopColor: theme.palette.background.elevation1,
                         },

@@ -265,7 +265,7 @@ export default screen({}, ({ router }) => {
                         </Stack>
                     </Stack>
                 </Screen.Content>
-                <Screen.Footer padding="xl">
+                <Screen.Footer>
                     <Stack column>
                         <Button
                             color="primary"
