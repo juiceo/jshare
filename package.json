@@ -40,14 +40,5 @@
         "typescript": "catalog:",
         "zx": "catalog:"
     },
-    "pnpm": {
-        "peerDependencyRules": {
-            "ignoreMissing": [
-                "@babel/*",
-                "expo-modules-*",
-                "typescript"
-            ]
-        }
-    },
     "packageManager": "pnpm@9.12.1"
 }
