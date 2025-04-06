@@ -40,23 +40,27 @@ You are solely responsible for any content you post and must ensure that it does
 
 We reserve the right to suspend or terminate your account at any time, without notice, if we believe you have violated these Terms. You may also terminate your account by contacting us at support@jshare.me.
 
-## 8. Disclaimer of Warranties
+## 8. Software License
+
+The software used in JShare is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms of the MIT License. Please refer to the [full text of the associated MIT License](https://github.com/juiceo/jshare-monorepo/tree/main?tab=MIT-1-ov-file#readme) for additional details.
+
+## 9. Disclaimer of Warranties
 
 The App is provided "as is" without warranties of any kind, express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee that the App will be error-free, secure, or uninterrupted.
 
-## 9. Limitation of Liability
+## 10. Limitation of Liability
 
 To the fullest extent permitted by law, Juuso Lappalainen shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the App.
 
-## 10. Modifications to the Terms
+## 11. Modifications to the Terms
 
 We may update or modify these Terms at any time. Any changes will be posted on this page, and the "Effective Date" will be updated. You will also receive a notice about this within the App and will be required to accept the new Terms to continue usage. Your continued use of the App after the changes are posted constitutes your acceptance of the revised Terms.
 
-## 11. Governing Law
+## 12. Governing Law
 
 These Terms will be governed by and construed in accordance with the laws of Finland. Any legal action or proceeding related to the App shall be exclusively brought in the courts located in Finland.
 
-## 12. Contact Information
+## 13. Contact Information
 
 If you have any questions about these Terms, please contact me at:
 
