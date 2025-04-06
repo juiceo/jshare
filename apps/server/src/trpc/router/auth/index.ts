@@ -32,6 +32,7 @@ export const authRouter = router({
         });
 
         if (newDemoUser.error) {
+            console.log('createDemoUser: failed to create demo user', newDemoUser.error);
             throw new TRPCError({
                 code: 'INTERNAL_SERVER_ERROR',
                 message: 'Failed to create demo user',
