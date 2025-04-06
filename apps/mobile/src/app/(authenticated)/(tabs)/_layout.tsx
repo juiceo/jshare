@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, type Route } from 'expo-router';
+import { Tabs } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
