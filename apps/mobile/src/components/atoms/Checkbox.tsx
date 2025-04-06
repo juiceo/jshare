@@ -16,10 +16,12 @@ import { Icon } from '~/components/Icon';
 export type CheckboxProps = {
     checked?: boolean;
     onChange?: (checked: boolean) => void;
+    variant?: 'rounded' | 'square';
 };
 
 export const Checkbox = (props: CheckboxProps) => {
     const { theme } = useTheme();
+    const { variant = 'rounded' } = props;
     const checkedSv = useSharedValue(props.checked ? 1 : 0);
 
     useEffect(() => {
@@ -54,7 +56,7 @@ export const Checkbox = (props: CheckboxProps) => {
                     {
                         width: 32,
                         height: 32,
-                        borderRadius: 16,
+                        borderRadius: variant === 'rounded' ? 16 : 8,
                         borderColor: theme.palette.primary.light,
                         borderWidth: 2,
                     },

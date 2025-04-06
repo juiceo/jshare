@@ -12,7 +12,7 @@ export const getPrivacyPolicyStatus = (user: DB.Profile): PrivacyPolicyAcceptanc
     const acceptedDate = user.privacyPolicyAcceptedAt;
     if (!acceptedDate) return PrivacyPolicyAcceptanceStatus.NONE;
 
-    if (acceptedDate < PRIVACY_POLICY_UPDATED_YYYYMMDD) {
+    if (acceptedDate.toISOString() < PRIVACY_POLICY_UPDATED_YYYYMMDD) {
         return PrivacyPolicyAcceptanceStatus.OUTDATED;
     }
 
