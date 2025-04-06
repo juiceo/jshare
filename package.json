@@ -40,5 +40,5 @@
         "typescript": "catalog:",
         "zx": "catalog:"
     },
-    "packageManager": "pnpm@9.12.1"
+    "packageManager": "pnpm@10.7.1"
 }
