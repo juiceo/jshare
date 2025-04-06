@@ -70,7 +70,7 @@ declare const metadata: {
                     type: string;
                     isOptional: boolean;
                 };
-                privacyPolicyAcceptedAt: {
+                termsAcceptedAt: {
                     name: string;
                     type: string;
                     isOptional: boolean;

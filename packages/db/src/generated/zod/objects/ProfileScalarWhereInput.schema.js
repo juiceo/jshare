@@ -23,7 +23,7 @@ exports.ProfileScalarWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string(),
         zod_1.z.null()]).optional().nullable(), temporary: zod_1.z.union([zod_1.z.lazy(() => BoolNullableFilter_schema_1.BoolNullableFilterObjectSchema),
         zod_1.z.boolean(),
-        zod_1.z.null()]).optional().nullable(), privacyPolicyAcceptedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.null()]).optional().nullable(), termsAcceptedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),

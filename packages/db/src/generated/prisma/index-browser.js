@@ -131,7 +131,7 @@ exports.Prisma.ProfileScalarFieldEnum = {
   currency: 'currency',
   avatarId: 'avatarId',
   temporary: 'temporary',
-  privacyPolicyAcceptedAt: 'privacyPolicyAcceptedAt',
+  termsAcceptedAt: 'termsAcceptedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
