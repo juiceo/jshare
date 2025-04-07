@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigation } from 'expo-router';
 import { z } from 'zod';
 
 import { zDB } from '@jshare/db';
@@ -23,7 +22,7 @@ type Schema = z.infer<typeof schema>;
 
 export default screen({}, ({ router }) => {
     const trpcUtils = trpc.useUtils();
-    const [profile, query] = trpc.profiles.me.useSuspenseQuery();
+    const [profile] = trpc.profiles.me.useSuspenseQuery();
     const updateProfile = trpc.profiles.update.useMutation();
     const form = useForm<Schema>({
         defaultValues: {

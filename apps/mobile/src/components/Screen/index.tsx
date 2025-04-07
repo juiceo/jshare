@@ -26,6 +26,7 @@ export const Screen = (props: ScreenProps) => {
             return () => {
                 onBlur?.();
             };
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
     );
 
