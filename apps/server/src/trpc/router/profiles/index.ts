@@ -141,6 +141,10 @@ export const profilesRouter = router({
                 firstName: 'Deleted',
                 lastName: 'User',
                 currency: DB.CurrencyCode.USD,
+                showInSearch: false,
+                termsAcceptedAt: null,
+                createdAt: new Date(),
+                lastActivity: new Date(),
             },
         });
         await supabase.auth.admin.deleteUser(opts.ctx.userId);
