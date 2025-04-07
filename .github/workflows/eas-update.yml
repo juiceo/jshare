@@ -41,7 +41,6 @@ jobs:
               if: "${{ steps.compare_versions.outputs.result == 'true' }}"
               working-directory: apps/mobile
               run: |
-                  echo "Output of compare_versions: ${{steps.compare_versions.outputs.result}}"
                   echo "Version in package.json is greater than latest EAS version. Running EAS build..."
                   pnpm eas:build:production:ci
 
@@ -49,7 +48,6 @@ jobs:
               if: "${{ steps.compare_versions.outputs.result == 'true' }}"
               working-directory: apps/mobile
               run: |
-                  echo "Output of compare_versions: ${{steps.compare_versions.outputs.result}}"
                   echo "Version in package.json is greater than latest EAS version. Running EAS submit..."
                   pnpm eas:submit:production:ci
 
@@ -57,6 +55,5 @@ jobs:
               if: "${{ steps.compare_versions.outputs.result != 'true' }}"
               working-directory: apps/mobile
               run: |
-                  echo "Output of compare_versions: ${{steps.compare_versions.outputs.result}}"
                   echo "Version in package.json is not greater than latest EAS version. Running EAS update..."
                   pnpm eas:update:production:ci
