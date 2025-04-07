@@ -38,21 +38,24 @@ jobs:
               continue-on-error: false
 
             - name: 🚀 Version number increased - Run EAS build
-              if: steps.compare_versions.outputs.result == 'true'
+              needs: compare_versions
+              if: "${{ steps.compare_versions.outputs.result == 'true' }}"
               working-directory: apps/mobile
               run: |
                   echo "Version in package.json is greater than latest EAS version. Running EAS build..."
                   pnpm eas:build:production:ci
 
             - name: 🚀 Version number increased - Run EAS submit
-              if: steps.compare_versions.outputs.result == 'true'
+              needs: compare_versions
+              if: "${{ steps.compare_versions.outputs.result == 'true' }}"
               working-directory: apps/mobile
               run: |
                   echo "Version in package.json is greater than latest EAS version. Running EAS submit..."
                   pnpm eas:submit:production:ci
 
             - name: 🚀 Version number not increased - Update EAS production branch
-              if: steps.compare_versions.outputs.result != 'true'
+              needs: compare_versions
+              if: "${{ steps.compare_versions.outputs.result != 'true' }}"
               working-directory: apps/mobile
               run: |
                   echo "Version in package.json is not greater than latest EAS version. Running EAS update..."

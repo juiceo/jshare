@@ -51,8 +51,8 @@ version_comparison() {
 # Run the comparison and output the result
 if version_comparison; then
   echo "local version $package_version is greater than remote version $build_number"
-  echo "result=true" >> $GITHUB_OUTPUT
+  echo "result=true" >> "$GITHUB_OUTPUT"
 else
   echo "remote version $build_number is greater than or equal to local version $package_version"
-  echo "result=false" >> $GITHUB_OUTPUT
+  echo "result=false" >> "$GITHUB_OUTPUT"
 fi

@@ -88,7 +88,17 @@ export default ({ config }) => {
             },
             plugins: [
                 'expo-router',
-                'expo-image-picker',
+                [
+                    'expo-image-picker',
+                    {
+                        photosPermission:
+                            'The app can accesses your photo library to allow you to upload images to your profile and groups',
+                        cameraPermission:
+                            'The app accesses your camera to allow you to capture images and upload them to your profile and groups',
+                        microphonePermission:
+                            'The app accesses your microphone to record videos and upload them to your profile and groups',
+                    },
+                ],
                 [
                     'expo-splash-screen',
                     {
