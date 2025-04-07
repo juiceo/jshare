@@ -13,6 +13,7 @@ const baseSchema = zod_1.z.object({
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
     temporary: zod_1.z.boolean().nullish(),
     termsAcceptedAt: zod_1.z.coerce.date().nullish(),
+    showInSearch: zod_1.z.boolean().default(true),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
 }).strict();
@@ -55,6 +56,7 @@ exports.ProfilePrismaUpdateSchema = zod_1.z.object({
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
     temporary: zod_1.z.boolean().nullish(),
     termsAcceptedAt: zod_1.z.coerce.date().nullish(),
+    showInSearch: zod_1.z.boolean().default(true),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date())
 }).partial().passthrough();
@@ -62,7 +64,7 @@ exports.ProfilePrismaUpdateSchema = zod_1.z.object({
  * `Profile` schema for create operations excluding foreign keys and relations.
  */
 exports.ProfileCreateScalarSchema = baseSchema.partial({
-    lastActivity: true, createdAt: true, updatedAt: true
+    lastActivity: true, showInSearch: true, createdAt: true, updatedAt: true
 });
 /**
  * `Profile` schema for create operations including scalar fields, foreign key fields, and validations.

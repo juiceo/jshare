@@ -97,6 +97,7 @@ model Profile {
   expenseShares    ExpenseShare[]
   paymentsReceived Payment[]          @relation(name: "payment_recipient")
   paymentsPaid     Payment[]          @relation(name: "payment_payer")
+  showInSearch     Boolean            @default(true)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt()
 

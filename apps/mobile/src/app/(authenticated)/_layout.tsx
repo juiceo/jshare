@@ -39,6 +39,8 @@ export default screen(
                     name="join-group"
                     options={{ presentation: 'modal', headerShown: false }}
                 />
+                <Stack.Screen name="profile/index" options={{ headerShown: false }} />
+                <Stack.Screen name="settings/index" options={{ headerShown: false }} />
             </Stack>
         );
     }

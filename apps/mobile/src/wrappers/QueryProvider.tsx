@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type PropsWithChildren } from 'react';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { trpc, trpcHttpLink } from '~/services/trpc';
@@ -25,7 +25,9 @@ export const QueryProvider = (props: PropsWithChildren) => {
     );
 
     useEffect(() => {
-        queryClient.clear();
+        return () => {
+            queryClient.clear();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken]);
 

@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { getDefaultShare, getUserShortName, type PartialExpenseShare } from '@jshare/common';
@@ -21,7 +20,6 @@ export type ExpenseShareEditorSheetProps = {
 
 export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => {
     const { onClose, user, share, onShareChange } = props;
-    const insets = useSafeAreaInsets();
 
     const handleAmountChange = (value: number) => {
         onShareChange({
@@ -50,9 +48,9 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
 
     return (
         <BottomSheet isOpen={true} onClose={onClose}>
-            <BottomSheetView style={{ paddingBottom: insets.bottom }}>
-                <Stack column>
-                    <Stack row alignCenter justifyBetween p="xl">
+            <BottomSheetView>
+                <Stack column p="xl" pb="3xl" pt="none">
+                    <Stack row alignCenter justifyBetween>
                         <Stack center row spacing="md">
                             <Avatar userId={user.userId} />
                             <Typography variant="body1" color="primary">
@@ -112,11 +110,9 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                             </Button>
                         </Stack>
                     </Stack>
-                    <Stack p="xl">
-                        <Button color="secondary" variant="contained" onPress={onClose}>
-                            Done
-                        </Button>
-                    </Stack>
+                    <Button color="secondary" variant="contained" onPress={onClose}>
+                        Done
+                    </Button>
                 </Stack>
             </BottomSheetView>
         </BottomSheet>

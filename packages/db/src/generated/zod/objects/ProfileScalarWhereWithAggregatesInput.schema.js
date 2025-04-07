@@ -10,6 +10,7 @@ const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const StringNullableWithAggregatesFilter_schema_1 = require("./StringNullableWithAggregatesFilter.schema");
 const BoolNullableWithAggregatesFilter_schema_1 = require("./BoolNullableWithAggregatesFilter.schema");
 const DateTimeNullableWithAggregatesFilter_schema_1 = require("./DateTimeNullableWithAggregatesFilter.schema");
+const BoolWithAggregatesFilter_schema_1 = require("./BoolWithAggregatesFilter.schema");
 exports.ProfileScalarWhereWithAggregatesInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.ProfileScalarWhereWithAggregatesInputObjectSchema),
         zod_1.z.lazy(() => exports.ProfileScalarWhereWithAggregatesInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ProfileScalarWhereWithAggregatesInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ProfileScalarWhereWithAggregatesInputObjectSchema),
@@ -25,7 +26,8 @@ exports.ProfileScalarWhereWithAggregatesInputObjectSchema = zod_1.z.object({
         zod_1.z.boolean(),
         zod_1.z.null()]).optional().nullable(), termsAcceptedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableWithAggregatesFilter_schema_1.DateTimeNullableWithAggregatesFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
-        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeWithAggregatesFilter_schema_1.DateTimeWithAggregatesFilterObjectSchema),
+        zod_1.z.null()]).optional().nullable(), showInSearch: zod_1.z.union([zod_1.z.lazy(() => BoolWithAggregatesFilter_schema_1.BoolWithAggregatesFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeWithAggregatesFilter_schema_1.DateTimeWithAggregatesFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeWithAggregatesFilter_schema_1.DateTimeWithAggregatesFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional()
 }).strict();

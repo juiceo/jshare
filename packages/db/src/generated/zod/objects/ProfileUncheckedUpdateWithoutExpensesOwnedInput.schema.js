@@ -10,6 +10,7 @@ const EnumCurrencyCodeFieldUpdateOperationsInput_schema_1 = require("./EnumCurre
 const NullableStringFieldUpdateOperationsInput_schema_1 = require("./NullableStringFieldUpdateOperationsInput.schema");
 const NullableBoolFieldUpdateOperationsInput_schema_1 = require("./NullableBoolFieldUpdateOperationsInput.schema");
 const NullableDateTimeFieldUpdateOperationsInput_schema_1 = require("./NullableDateTimeFieldUpdateOperationsInput.schema");
+const BoolFieldUpdateOperationsInput_schema_1 = require("./BoolFieldUpdateOperationsInput.schema");
 const GroupParticipantUncheckedUpdateManyWithoutUserNestedInput_schema_1 = require("./GroupParticipantUncheckedUpdateManyWithoutUserNestedInput.schema");
 const MessageUncheckedUpdateManyWithoutAuthorNestedInput_schema_1 = require("./MessageUncheckedUpdateManyWithoutAuthorNestedInput.schema");
 const ExpenseUncheckedUpdateManyWithoutPayerNestedInput_schema_1 = require("./ExpenseUncheckedUpdateManyWithoutPayerNestedInput.schema");
@@ -29,7 +30,8 @@ exports.ProfileUncheckedUpdateWithoutExpensesOwnedInputObjectSchema = zod_1.z.ob
         zod_1.z.lazy(() => NullableBoolFieldUpdateOperationsInput_schema_1.NullableBoolFieldUpdateOperationsInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), termsAcceptedAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => NullableDateTimeFieldUpdateOperationsInput_schema_1.NullableDateTimeFieldUpdateOperationsInputObjectSchema),
-        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.null()]).optional().nullable(), showInSearch: zod_1.z.union([zod_1.z.boolean(),
+        zod_1.z.lazy(() => BoolFieldUpdateOperationsInput_schema_1.BoolFieldUpdateOperationsInputObjectSchema)]).optional(), createdAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), updatedAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
         zod_1.z.lazy(() => DateTimeFieldUpdateOperationsInput_schema_1.DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(), groups: zod_1.z.lazy(() => GroupParticipantUncheckedUpdateManyWithoutUserNestedInput_schema_1.GroupParticipantUncheckedUpdateManyWithoutUserNestedInputObjectSchema).optional(), messages: zod_1.z.lazy(() => MessageUncheckedUpdateManyWithoutAuthorNestedInput_schema_1.MessageUncheckedUpdateManyWithoutAuthorNestedInputObjectSchema).optional(), expensesPaid: zod_1.z.lazy(() => ExpenseUncheckedUpdateManyWithoutPayerNestedInput_schema_1.ExpenseUncheckedUpdateManyWithoutPayerNestedInputObjectSchema).optional(), expenseShares: zod_1.z.lazy(() => ExpenseShareUncheckedUpdateManyWithoutUserNestedInput_schema_1.ExpenseShareUncheckedUpdateManyWithoutUserNestedInputObjectSchema).optional(), paymentsReceived: zod_1.z.lazy(() => PaymentUncheckedUpdateManyWithoutRecipientNestedInput_schema_1.PaymentUncheckedUpdateManyWithoutRecipientNestedInputObjectSchema).optional(), paymentsPaid: zod_1.z.lazy(() => PaymentUncheckedUpdateManyWithoutPayerNestedInput_schema_1.PaymentUncheckedUpdateManyWithoutPayerNestedInputObjectSchema).optional()
 }).strict();

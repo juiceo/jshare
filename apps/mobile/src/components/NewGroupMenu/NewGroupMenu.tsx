@@ -1,5 +1,4 @@
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
@@ -16,7 +15,6 @@ export type NewGroupMenuProps = {
 
 export const NewGroupMenu = (props: NewGroupMenuProps) => {
     const { isOpen, onClose, onSelect } = props;
-    const insets = useSafeAreaInsets();
 
     const handleSelect = (value: 'create' | 'join') => {
         onSelect(value);
@@ -26,8 +24,8 @@ export const NewGroupMenu = (props: NewGroupMenuProps) => {
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
             <BottomSheetView>
-                <Stack column style={{ paddingBottom: insets.bottom }}>
-                    <Stack row p="xl">
+                <Stack column p="xl" pb="3xl">
+                    <Stack row>
                         <BorderlessButton
                             style={{ flex: 1 }}
                             onPress={() => handleSelect('create')}

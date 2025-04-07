@@ -1,9 +1,11 @@
 import { TRPCError } from '@trpc/server';
+import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { zDB } from '@jshare/db';
+import { DB, zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
+import { supabase } from '../../../services/supabase';
 import { authProcedure, router } from '../../trpc';
 
 export const profilesRouter = router({
@@ -82,6 +84,7 @@ export const profilesRouter = router({
                     email: z.string(),
                     currency: zDB.enums.CurrencyCodeSchema,
                     avatarId: z.string().nullable(),
+                    showInSearch: z.boolean(),
                 })
                 .partial()
         )
@@ -106,6 +109,7 @@ export const profilesRouter = router({
                                 disconnect: true,
                             }
                           : undefined,
+                    showInSearch: opts.input.showInSearch,
                 },
                 include: {
                     avatar: true,
@@ -124,5 +128,21 @@ export const profilesRouter = router({
                 avatar: true,
             },
         });
+    }),
+    delete: authProcedure.mutation(async (opts) => {
+        await db.profile.update({
+            where: {
+                userId: opts.ctx.userId,
+            },
+            data: {
+                email: '',
+                userId: uuidv4(),
+                temporary: true,
+                firstName: 'Deleted',
+                lastName: 'User',
+                currency: DB.CurrencyCode.USD,
+            },
+        });
+        await supabase.auth.admin.deleteUser(opts.ctx.userId);
     }),
 });

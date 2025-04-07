@@ -1,5 +1,4 @@
 import { Controller, useForm } from 'react-hook-form';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -25,7 +24,6 @@ type Schema = z.infer<typeof schema>;
 
 export const AddUserSheet = (props: AddUserSheetProps) => {
     const { onClose, groupId } = props;
-    const insets = useSafeAreaInsets();
     const trpcUtils = trpc.useUtils();
     const createTemporaryParticipant =
         trpc.groupParticipants.createTemporaryParticipant.useMutation();
@@ -46,8 +44,8 @@ export const AddUserSheet = (props: AddUserSheetProps) => {
 
     return (
         <BottomSheet isOpen={true} onClose={onClose}>
-            <BottomSheetView style={{ paddingBottom: insets.bottom }}>
-                <Stack column p="xl">
+            <BottomSheetView>
+                <Stack column p="xl" pb="3xl">
                     <Typography variant="h3" align="center" mb="xl">
                         Add person
                     </Typography>

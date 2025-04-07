@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useRef, type PropsWithChildren } from 'react';
 import { Dimensions, Platform, Pressable, StyleSheet } from 'react-native';
 import Animated, { Extrapolation, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FullWindowOverlay } from 'react-native-screens';
 import {
     BottomSheetModal,
@@ -20,6 +21,7 @@ export const BottomSheet = (props: PropsWithChildren<BottomSheetProps>) => {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const { theme } = useTheme();
     const styles = getStyles(theme);
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         if (isOpen) {
@@ -45,6 +47,7 @@ export const BottomSheet = (props: PropsWithChildren<BottomSheetProps>) => {
                 handleIndicatorStyle={styles.handleIndicator}
                 backdropComponent={Backdrop}
                 maxDynamicContentSize={Dimensions.get('window').height * 0.8}
+                style={{ paddingBottom: insets.bottom }}
             >
                 {props.children}
             </BottomSheetModal>

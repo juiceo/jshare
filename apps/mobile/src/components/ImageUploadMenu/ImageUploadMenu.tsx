@@ -1,5 +1,4 @@
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
@@ -17,7 +16,6 @@ export type ImageUploadMenuProps = {
 
 export const ImageUploadMenu = (props: ImageUploadMenuProps) => {
     const { isOpen, onClose, canRemove, onSelect } = props;
-    const insets = useSafeAreaInsets();
 
     const handleSelect = (value: 'library' | 'camera' | 'remove') => {
         onSelect(value);
@@ -27,8 +25,8 @@ export const ImageUploadMenu = (props: ImageUploadMenuProps) => {
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
             <BottomSheetView>
-                <Stack column style={{ paddingBottom: insets.bottom }}>
-                    <Stack row p="xl">
+                <Stack column>
+                    <Stack row p="xl" pb="3xl">
                         <BorderlessButton
                             style={{ flex: 1 }}
                             onPress={() => handleSelect('camera')}

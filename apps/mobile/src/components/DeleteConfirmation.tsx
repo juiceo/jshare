@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
@@ -30,13 +29,12 @@ export const DeleteConfirmation = (props: DeleteConfirmationProps) => {
         onConfirm,
         loading,
     } = props;
-    const insets = useSafeAreaInsets();
     const [inputValue, setInputValue] = useState<string>('');
 
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
             <BottomSheetView>
-                <Stack column p="xl" style={{ paddingBottom: insets.bottom }}>
+                <Stack column p="xl" pb="3xl">
                     <Typography variant="h3" align="center">
                         {title}
                     </Typography>

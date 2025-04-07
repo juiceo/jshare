@@ -45,13 +45,19 @@ export const TextField = (props: TextFieldProps) => {
                 ref={inputRef}
                 style={styles.input}
                 placeholderTextColor={theme.palette.text.disabled}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
                 cursorColor={theme.palette.primary.light}
                 selectionColor={theme.palette.primary.light}
                 selectionHandleColor={theme.palette.primary.light}
                 placeholder={placeholder}
                 {...TextInputProps}
+                onFocus={(e) => {
+                    setFocused(true);
+                    TextInputProps?.onFocus?.(e);
+                }}
+                onBlur={(e) => {
+                    setFocused(false);
+                    TextInputProps?.onBlur?.(e);
+                }}
             />
         </FormControl>
     );

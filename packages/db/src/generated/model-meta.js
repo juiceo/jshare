@@ -95,6 +95,10 @@ const metadata = {
                     isArray: true,
                     attributes: [{ "name": "@relation", "args": [{ "name": "name", "value": "payment_payer" }] }],
                     backLink: 'payer',
+                }, showInSearch: {
+                    name: "showInSearch",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "value": true }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",

@@ -132,6 +132,7 @@ exports.Prisma.ProfileScalarFieldEnum = {
   avatarId: 'avatarId',
   temporary: 'temporary',
   termsAcceptedAt: 'termsAcceptedAt',
+  showInSearch: 'showInSearch',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

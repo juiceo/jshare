@@ -19,6 +19,6 @@ exports.ProfileSelectObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => ExpenseInput_schema_1.ExpenseInputSchema.findMany)]).optional(), expenseShares: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ExpenseShareInput_schema_1.ExpenseShareInputSchema.findMany)]).optional(), paymentsReceived: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => PaymentInput_schema_1.PaymentInputSchema.findMany)]).optional(), paymentsPaid: zod_1.z.union([zod_1.z.boolean(),
-        zod_1.z.lazy(() => PaymentInput_schema_1.PaymentInputSchema.findMany)]).optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), _count: zod_1.z.union([zod_1.z.boolean(),
+        zod_1.z.lazy(() => PaymentInput_schema_1.PaymentInputSchema.findMany)]).optional(), showInSearch: zod_1.z.boolean().optional(), createdAt: zod_1.z.boolean().optional(), updatedAt: zod_1.z.boolean().optional(), _count: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => ProfileCountOutputTypeArgs_schema_1.ProfileCountOutputTypeArgsObjectSchema)]).optional()
 }).strict();

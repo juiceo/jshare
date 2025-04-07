@@ -143,6 +143,16 @@ declare const metadata: {
                     }[];
                     backLink: string;
                 };
+                showInSearch: {
+                    name: string;
+                    type: string;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
+                };
                 createdAt: {
                     name: string;
                     type: string;

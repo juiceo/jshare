@@ -36,7 +36,7 @@ export default screen(
                     }}
                 />
                 <Tabs.Screen
-                    name="profile"
+                    name="you"
                     options={{
                         title: 'You',
                         tabBarIcon: () => <Avatar userId={auth.session.user.id} size="sm" />,

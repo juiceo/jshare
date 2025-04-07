@@ -1,5 +1,6 @@
-import type { ReactElement } from 'react';
+import { useCallback, type ReactElement } from 'react';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { useFocusEffect } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
@@ -12,11 +13,21 @@ import { useHasParentScreen } from '~/components/Screen/useHasParentScreen';
 export type ScreenProps = {
     children: (ReactElement | null | undefined) | (ReactElement | null | undefined)[];
     avoidKeyboard?: boolean;
+    onBlur?: () => void;
 };
 
 export const Screen = (props: ScreenProps) => {
+    const { onBlur } = props;
     const hasParentScreen = useHasParentScreen();
     const { theme } = useTheme();
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                onBlur?.();
+            };
+        }, [])
+    );
 
     if (hasParentScreen) {
         throw new Error('Screen component should not be nested within another Screen component.');

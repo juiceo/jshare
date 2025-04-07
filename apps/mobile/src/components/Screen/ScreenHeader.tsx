@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
@@ -28,6 +28,13 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
     const insets = useSafeAreaInsets();
     const router = useRouter();
 
+    const handleBack = () => {
+        Keyboard.dismiss();
+        setTimeout(() => {
+            router.back();
+        }, 50);
+    };
+
     const content = (
         <View
             style={{
@@ -44,7 +51,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                             icon="ChevronLeft"
                             size="md"
                             variant="ghost"
-                            onPress={router.back}
+                            onPress={handleBack}
                         />
                     )}
                     {backButton === 'down' && (
@@ -52,7 +59,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                             icon="ChevronDown"
                             size="md"
                             variant="ghost"
-                            onPress={router.back}
+                            onPress={handleBack}
                         />
                     )}
                 </Stack>

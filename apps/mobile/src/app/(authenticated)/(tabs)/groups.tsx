@@ -4,7 +4,7 @@ import { Pressable } from 'react-native';
 import { Stack } from '~/components/atoms/Stack';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { IconButton } from '~/components/IconButton';
-import { NewGroupMenu } from '~/components/NewGroupMenu/ImageUploadMenu';
+import { NewGroupMenu } from '~/components/NewGroupMenu/NewGroupMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';

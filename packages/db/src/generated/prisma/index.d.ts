@@ -1982,6 +1982,7 @@ export namespace Prisma {
     avatarId: string | null
     temporary: boolean | null
     termsAcceptedAt: Date | null
+    showInSearch: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1996,6 +1997,7 @@ export namespace Prisma {
     avatarId: string | null
     temporary: boolean | null
     termsAcceptedAt: Date | null
+    showInSearch: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2010,6 +2012,7 @@ export namespace Prisma {
     avatarId: number
     temporary: number
     termsAcceptedAt: number
+    showInSearch: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2026,6 +2029,7 @@ export namespace Prisma {
     avatarId?: true
     temporary?: true
     termsAcceptedAt?: true
+    showInSearch?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2040,6 +2044,7 @@ export namespace Prisma {
     avatarId?: true
     temporary?: true
     termsAcceptedAt?: true
+    showInSearch?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2054,6 +2059,7 @@ export namespace Prisma {
     avatarId?: true
     temporary?: true
     termsAcceptedAt?: true
+    showInSearch?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2141,6 +2147,7 @@ export namespace Prisma {
     avatarId: string | null
     temporary: boolean | null
     termsAcceptedAt: Date | null
+    showInSearch: boolean
     createdAt: Date
     updatedAt: Date
     _count: ProfileCountAggregateOutputType | null
@@ -2172,6 +2179,7 @@ export namespace Prisma {
     avatarId?: boolean
     temporary?: boolean
     termsAcceptedAt?: boolean
+    showInSearch?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     groups?: boolean | Profile$groupsArgs<ExtArgs>
@@ -2195,6 +2203,7 @@ export namespace Prisma {
     avatarId?: boolean
     temporary?: boolean
     termsAcceptedAt?: boolean
+    showInSearch?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     avatar?: boolean | Profile$avatarArgs<ExtArgs>
@@ -2210,6 +2219,7 @@ export namespace Prisma {
     avatarId?: boolean
     temporary?: boolean
     termsAcceptedAt?: boolean
+    showInSearch?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -2251,6 +2261,7 @@ export namespace Prisma {
       avatarId: string | null
       temporary: boolean | null
       termsAcceptedAt: Date | null
+      showInSearch: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["profile"]>
@@ -2663,6 +2674,7 @@ export namespace Prisma {
     readonly avatarId: FieldRef<"Profile", 'String'>
     readonly temporary: FieldRef<"Profile", 'Boolean'>
     readonly termsAcceptedAt: FieldRef<"Profile", 'DateTime'>
+    readonly showInSearch: FieldRef<"Profile", 'Boolean'>
     readonly createdAt: FieldRef<"Profile", 'DateTime'>
     readonly updatedAt: FieldRef<"Profile", 'DateTime'>
   }
@@ -12318,6 +12330,7 @@ export namespace Prisma {
     avatarId: 'avatarId',
     temporary: 'temporary',
     termsAcceptedAt: 'termsAcceptedAt',
+    showInSearch: 'showInSearch',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12667,6 +12680,7 @@ export namespace Prisma {
     avatarId?: StringNullableFilter<"Profile"> | string | null
     temporary?: BoolNullableFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    showInSearch?: BoolFilter<"Profile"> | boolean
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     groups?: GroupParticipantListRelationFilter
@@ -12689,6 +12703,7 @@ export namespace Prisma {
     avatarId?: SortOrderInput | SortOrder
     temporary?: SortOrderInput | SortOrder
     termsAcceptedAt?: SortOrderInput | SortOrder
+    showInSearch?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     groups?: GroupParticipantOrderByRelationAggregateInput
@@ -12714,6 +12729,7 @@ export namespace Prisma {
     avatarId?: StringNullableFilter<"Profile"> | string | null
     temporary?: BoolNullableFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    showInSearch?: BoolFilter<"Profile"> | boolean
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     groups?: GroupParticipantListRelationFilter
@@ -12736,6 +12752,7 @@ export namespace Prisma {
     avatarId?: SortOrderInput | SortOrder
     temporary?: SortOrderInput | SortOrder
     termsAcceptedAt?: SortOrderInput | SortOrder
+    showInSearch?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
@@ -12756,6 +12773,7 @@ export namespace Prisma {
     avatarId?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     temporary?: BoolNullableWithAggregatesFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
+    showInSearch?: BoolWithAggregatesFilter<"Profile"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
   }
@@ -13485,6 +13503,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -13507,6 +13526,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -13527,6 +13547,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -13549,6 +13570,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -13570,6 +13592,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13583,6 +13606,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13597,6 +13621,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14428,6 +14453,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type GroupParticipantListRelationFilter = {
     every?: GroupParticipantWhereInput
     some?: GroupParticipantWhereInput
@@ -14498,6 +14528,7 @@ export namespace Prisma {
     avatarId?: SortOrder
     temporary?: SortOrder
     termsAcceptedAt?: SortOrder
+    showInSearch?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14512,6 +14543,7 @@ export namespace Prisma {
     avatarId?: SortOrder
     temporary?: SortOrder
     termsAcceptedAt?: SortOrder
+    showInSearch?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14526,6 +14558,7 @@ export namespace Prisma {
     avatarId?: SortOrder
     temporary?: SortOrder
     termsAcceptedAt?: SortOrder
+    showInSearch?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14612,9 +14645,12 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type GroupCountOrderByAggregateInput = {
@@ -14651,14 +14687,6 @@ export namespace Prisma {
     coverImageId?: SortOrder
     inviteCode?: SortOrder
     lastActivity?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumRoleFilter<$PrismaModel = never> = {
@@ -15332,6 +15360,10 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type GroupParticipantUpdateManyWithoutUserNestedInput = {
     create?: XOR<GroupParticipantCreateWithoutUserInput, GroupParticipantUncheckedCreateWithoutUserInput> | GroupParticipantCreateWithoutUserInput[] | GroupParticipantUncheckedCreateWithoutUserInput[]
     connectOrCreate?: GroupParticipantCreateOrConnectWithoutUserInput | GroupParticipantCreateOrConnectWithoutUserInput[]
@@ -15602,10 +15634,6 @@ export namespace Prisma {
     connectOrCreate?: PaymentCreateOrConnectWithoutGroupInput | PaymentCreateOrConnectWithoutGroupInput[]
     createMany?: PaymentCreateManyGroupInputEnvelope
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type GroupParticipantUpdateManyWithoutGroupNestedInput = {
@@ -16226,6 +16254,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16326,11 +16359,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -17260,6 +17288,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: ImageCreateNestedOneWithoutProfileInput
@@ -17281,6 +17310,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
@@ -17351,6 +17381,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: ImageUpdateOneWithoutProfileNestedInput
@@ -17372,6 +17403,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
@@ -17472,6 +17504,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17492,6 +17525,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17573,6 +17607,7 @@ export namespace Prisma {
     avatarId?: StringNullableFilter<"Profile"> | string | null
     temporary?: BoolNullableFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    showInSearch?: BoolFilter<"Profile"> | boolean
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
   }
@@ -17586,6 +17621,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17607,6 +17643,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -17705,6 +17742,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -17726,6 +17764,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -17955,6 +17994,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -17976,6 +18016,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18000,6 +18041,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -18021,6 +18063,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18153,6 +18196,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18174,6 +18218,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18204,6 +18249,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18225,6 +18271,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18317,6 +18364,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -18338,6 +18386,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18408,6 +18457,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18429,6 +18479,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18524,6 +18575,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -18545,6 +18597,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18569,6 +18622,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
@@ -18590,6 +18644,7 @@ export namespace Prisma {
     avatarId?: string | null
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -18666,6 +18721,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18687,6 +18743,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -18717,6 +18774,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -18738,6 +18796,7 @@ export namespace Prisma {
     avatarId?: NullableStringFieldUpdateOperationsInput | string | null
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -19308,6 +19367,7 @@ export namespace Prisma {
     currency: $Enums.CurrencyCode
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
+    showInSearch?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19362,6 +19422,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
@@ -19382,6 +19443,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -19402,6 +19464,7 @@ export namespace Prisma {
     currency?: EnumCurrencyCodeFieldUpdateOperationsInput | $Enums.CurrencyCode
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    showInSearch?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
