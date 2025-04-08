@@ -5,6 +5,7 @@ exports.ProfileUpdateSchema = exports.ProfileUpdateScalarSchema = exports.Profil
 const zod_1 = require("zod");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const baseSchema = zod_1.z.object({
+    id: zod_1.z.string().nullish(),
     userId: zod_1.z.string(),
     email: zod_1.z.string(),
     firstName: zod_1.z.string(),
@@ -48,6 +49,7 @@ exports.ProfilePrismaCreateSchema = baseSchema.partial().passthrough();
  * @private
  */
 exports.ProfilePrismaUpdateSchema = zod_1.z.object({
+    id: zod_1.z.string().nullish(),
     userId: zod_1.z.string(),
     email: zod_1.z.string(),
     firstName: zod_1.z.string(),

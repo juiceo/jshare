@@ -5,7 +5,11 @@ const metadata = {
     models: {
         profile: {
             name: 'Profile', fields: {
-                userId: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isOptional: true,
+                }, userId: {
                     name: "userId",
                     type: "String",
                     isId: true,

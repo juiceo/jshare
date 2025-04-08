@@ -33,10 +33,10 @@ export declare const ExpenseShareScalarSchema: z.ZodObject<{
         exchangeRatesId: string;
     }>>>>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     amount: number;
     locked: boolean;
@@ -49,8 +49,8 @@ export declare const ExpenseShareScalarSchema: z.ZodObject<{
         exchangeRatesId: string;
     } | null | undefined;
 }, {
-    currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     id: string;
+    currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     amount: number;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -105,11 +105,11 @@ export declare const ExpenseShareSchema: z.ZodObject<z.objectUtil.extendShape<z.
     user: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     expense: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     userId: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     expenseId: string;
     amount: number;
@@ -125,9 +125,9 @@ export declare const ExpenseShareSchema: z.ZodObject<z.objectUtil.extendShape<z.
         exchangeRatesId: string;
     } | null | undefined;
 }, {
+    id: string;
     userId: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id: string;
     expenseId: string;
     amount: number;
     user?: Record<string, unknown> | undefined;
@@ -339,10 +339,10 @@ export declare const ExpenseSharePrismaUpdateSchema: z.ZodObject<{
  * `ExpenseShare` schema for create operations excluding foreign keys and relations.
  */
 export declare const ExpenseShareCreateScalarSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     amount: z.ZodNumber;
     conversion: z.ZodOptional<z.ZodNullable<z.ZodLazy<z.ZodObject<{
@@ -371,9 +371,9 @@ export declare const ExpenseShareCreateScalarSchema: z.ZodObject<{
 }, "strict", z.ZodTypeAny, {
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     amount: number;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -387,9 +387,9 @@ export declare const ExpenseShareCreateScalarSchema: z.ZodObject<{
 }, {
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     amount: number;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -405,10 +405,10 @@ export declare const ExpenseShareCreateScalarSchema: z.ZodObject<{
  * `ExpenseShare` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ExpenseShareCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
+    id: z.ZodOptional<z.ZodString>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     amount: z.ZodNumber;
     conversion: z.ZodOptional<z.ZodNullable<z.ZodLazy<z.ZodObject<{
@@ -442,9 +442,9 @@ export declare const ExpenseShareCreateSchema: z.ZodObject<z.objectUtil.extendSh
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     expenseId: string;
     amount: number;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -460,9 +460,9 @@ export declare const ExpenseShareCreateSchema: z.ZodObject<z.objectUtil.extendSh
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     expenseId: string;
     amount: number;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     conversion?: {
         currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
@@ -508,10 +508,10 @@ export declare const ExpenseShareUpdateScalarSchema: z.ZodObject<{
         exchangeRatesId: string;
     }>>>>>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     amount?: number | undefined;
     conversion?: {
@@ -524,10 +524,10 @@ export declare const ExpenseShareUpdateScalarSchema: z.ZodObject<{
     } | null | undefined;
     locked?: boolean | undefined;
 }, {
+    id?: string | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     amount?: number | undefined;
     conversion?: {
@@ -577,11 +577,11 @@ export declare const ExpenseShareUpdateSchema: z.ZodObject<z.objectUtil.extendSh
     userId: z.ZodOptional<z.ZodString>;
     expenseId: z.ZodOptional<z.ZodString>;
 }>, "strip", z.ZodTypeAny, {
+    id?: string | undefined;
     userId?: string | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     expenseId?: string | undefined;
     amount?: number | undefined;
@@ -595,11 +595,11 @@ export declare const ExpenseShareUpdateSchema: z.ZodObject<z.objectUtil.extendSh
     } | null | undefined;
     locked?: boolean | undefined;
 }, {
+    id?: string | undefined;
     userId?: string | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     expenseId?: string | undefined;
     amount?: number | undefined;

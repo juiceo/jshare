@@ -12,18 +12,18 @@ export declare const GroupScalarSchema: z.ZodObject<{
     inviteCode: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     lastActivity: z.ZodDefault<z.ZodDate>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     inviteCode?: string | null | undefined;
 }, {
+    id: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
-    id: string;
     lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -51,12 +51,12 @@ export declare const GroupSchema: z.ZodObject<z.objectUtil.extendShape<z.objectU
     expenses: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
     payments: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     messages?: unknown[] | undefined;
     participants?: unknown[] | undefined;
@@ -66,9 +66,9 @@ export declare const GroupSchema: z.ZodObject<z.objectUtil.extendShape<z.objectU
     expenses?: unknown[] | undefined;
     payments?: unknown[] | undefined;
 }, {
+    id: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
-    id: string;
     lastActivity?: Date | undefined;
     messages?: unknown[] | undefined;
     createdAt?: Date | undefined;
@@ -149,30 +149,30 @@ export declare const GroupPrismaUpdateSchema: z.ZodObject<{
  * `Group` schema for create operations excluding foreign keys and relations.
  */
 export declare const GroupCreateScalarSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     name: z.ZodString;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     inviteCode: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, "strict", z.ZodTypeAny, {
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     inviteCode?: string | null | undefined;
 }, {
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     inviteCode?: string | null | undefined;
 }>;
@@ -180,12 +180,12 @@ export declare const GroupCreateScalarSchema: z.ZodObject<{
  * `Group` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const GroupCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
+    id: z.ZodOptional<z.ZodString>;
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     currency: z.ZodEnum<["AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "COP", "CZK", "DKK", "EGP", "EUR", "GBP", "HUF", "INR", "KES", "MAD", "MXN", "NOK", "PEN", "PLN", "RON", "SEK", "THB", "TZS", "USD", "ZAR", "KZT", "KGS"]>;
     name: z.ZodString;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     inviteCode: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, {
@@ -193,20 +193,20 @@ export declare const GroupCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
 }>, "strip", z.ZodTypeAny, {
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     coverImageId?: string | null | undefined;
     inviteCode?: string | null | undefined;
 }, {
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     coverImageId?: string | null | undefined;
     inviteCode?: string | null | undefined;
@@ -224,21 +224,21 @@ export declare const GroupUpdateScalarSchema: z.ZodObject<{
     inviteCode: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     name?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     inviteCode?: string | null | undefined;
 }, {
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     name?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     inviteCode?: string | null | undefined;
 }>;
@@ -257,22 +257,22 @@ export declare const GroupUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
 }, {
     coverImageId: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }>, "strip", z.ZodTypeAny, {
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     name?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     coverImageId?: string | null | undefined;
     inviteCode?: string | null | undefined;
 }, {
+    id?: string | undefined;
     lastActivity?: Date | undefined;
     currency?: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS" | undefined;
     name?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     coverImageId?: string | null | undefined;
     inviteCode?: string | null | undefined;

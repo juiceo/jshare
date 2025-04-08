@@ -80,6 +80,7 @@ enum CurrencyCode {
 }
 
 model Profile {
+  id               String?
   userId           String             @id()
   email            String
   firstName        String

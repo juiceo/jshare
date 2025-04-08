@@ -10,9 +10,9 @@ export declare const ExchangeRatesScalarSchema: z.ZodObject<{
     baseCurrency: z.ZodString;
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     baseCurrency: string;
     rates?: any;
@@ -35,9 +35,9 @@ export declare const ExchangeRatesSchema: z.ZodObject<{
     baseCurrency: z.ZodString;
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     baseCurrency: string;
     rates?: any;
@@ -105,24 +105,24 @@ export declare const ExchangeRatesPrismaUpdateSchema: z.ZodObject<{
  * `ExchangeRates` schema for create operations excluding foreign keys and relations.
  */
 export declare const ExchangeRatesCreateScalarSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     baseCurrency: z.ZodString;
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
     baseCurrency: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     rates?: any;
 }, {
     baseCurrency: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     rates?: any;
 }>;
@@ -130,24 +130,24 @@ export declare const ExchangeRatesCreateScalarSchema: z.ZodObject<{
  * `ExchangeRates` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ExchangeRatesCreateSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     baseCurrency: z.ZodString;
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
     baseCurrency: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     rates?: any;
 }, {
     baseCurrency: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     rates?: any;
 }>;
@@ -162,16 +162,16 @@ export declare const ExchangeRatesUpdateScalarSchema: z.ZodObject<{
     baseCurrency: z.ZodOptional<z.ZodString>;
     rates: z.ZodOptional<z.ZodAny>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
@@ -187,16 +187,16 @@ export declare const ExchangeRatesUpdateSchema: z.ZodObject<{
     baseCurrency: z.ZodOptional<z.ZodString>;
     rates: z.ZodOptional<z.ZodAny>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;

@@ -3,6 +3,11 @@ declare const metadata: {
         profile: {
             name: string;
             fields: {
+                id: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 userId: {
                     name: string;
                     type: string;

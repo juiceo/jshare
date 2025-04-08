@@ -12,9 +12,9 @@ export declare const ImageScalarSchema: z.ZodObject<{
     uploadedById: z.ZodString;
     blurhash: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     path: string;
     bucket: string;
@@ -46,9 +46,9 @@ export declare const ImageSchema: z.ZodObject<z.objectUtil.extendShape<{
     Group: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
     Profile: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     path: string;
     bucket: string;
@@ -136,9 +136,9 @@ export declare const ImagePrismaUpdateSchema: z.ZodObject<{
  * `Image` schema for create operations excluding foreign keys and relations.
  */
 export declare const ImageCreateScalarSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     path: z.ZodString;
     bucket: z.ZodString;
@@ -148,18 +148,18 @@ export declare const ImageCreateScalarSchema: z.ZodObject<{
     path: string;
     bucket: string;
     uploadedById: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }, {
     path: string;
     bucket: string;
     uploadedById: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }>;
@@ -167,9 +167,9 @@ export declare const ImageCreateScalarSchema: z.ZodObject<{
  * `Image` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ImageCreateSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     path: z.ZodString;
     bucket: z.ZodString;
@@ -179,18 +179,18 @@ export declare const ImageCreateSchema: z.ZodObject<{
     path: string;
     bucket: string;
     uploadedById: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }, {
     path: string;
     bucket: string;
     uploadedById: string;
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }>;
@@ -207,18 +207,18 @@ export declare const ImageUpdateScalarSchema: z.ZodObject<{
     uploadedById: z.ZodOptional<z.ZodString>;
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
     uploadedById?: string | undefined;
     blurhash?: string | null | undefined;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
@@ -238,18 +238,18 @@ export declare const ImageUpdateSchema: z.ZodObject<{
     uploadedById: z.ZodOptional<z.ZodString>;
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
     uploadedById?: string | undefined;
     blurhash?: string | null | undefined;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;

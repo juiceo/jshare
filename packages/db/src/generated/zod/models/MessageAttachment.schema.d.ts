@@ -9,9 +9,9 @@ export declare const MessageAttachmentScalarSchema: z.ZodObject<{
     updatedAt: z.ZodDefault<z.ZodDate>;
     type: z.ZodEnum<["Expense"]>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     type: "Expense";
 }, {
@@ -37,9 +37,9 @@ export declare const MessageAttachmentSchema: z.ZodObject<z.objectUtil.extendSha
     message: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     expense: z.ZodOptional<z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     messageId: string;
     type: "Expense";
@@ -107,31 +107,31 @@ export declare const MessageAttachmentPrismaUpdateSchema: z.ZodObject<{
  * `MessageAttachment` schema for create operations excluding foreign keys and relations.
  */
 export declare const MessageAttachmentCreateScalarSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     type: z.ZodEnum<["Expense"]>;
 }, "strict", z.ZodTypeAny, {
     type: "Expense";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
 }, {
     type: "Expense";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
 }>;
 /**
  * `MessageAttachment` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const MessageAttachmentCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     type: z.ZodEnum<["Expense"]>;
 }, {
@@ -140,17 +140,17 @@ export declare const MessageAttachmentCreateSchema: z.ZodObject<z.objectUtil.ext
 }>, "strip", z.ZodTypeAny, {
     messageId: string;
     type: "Expense";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     expenseId?: string | null | undefined;
 }, {
     messageId: string;
     type: "Expense";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     expenseId?: string | null | undefined;
 }>;
@@ -164,15 +164,15 @@ export declare const MessageAttachmentUpdateScalarSchema: z.ZodObject<{
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     type?: "Expense" | undefined;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     type?: "Expense" | undefined;
 }>;
@@ -189,17 +189,17 @@ export declare const MessageAttachmentUpdateSchema: z.ZodObject<z.objectUtil.ext
     messageId: z.ZodOptional<z.ZodString>;
     expenseId: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }>, "strip", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     messageId?: string | undefined;
     type?: "Expense" | undefined;
     expenseId?: string | null | undefined;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     messageId?: string | undefined;
     type?: "Expense" | undefined;

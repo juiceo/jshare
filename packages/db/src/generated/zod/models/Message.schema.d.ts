@@ -11,9 +11,9 @@ export declare const MessageScalarSchema: z.ZodObject<{
     text: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     authorType: z.ZodEnum<["User", "System"]>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     key: string;
     authorType: "User" | "System";
@@ -46,9 +46,9 @@ export declare const MessageSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     group: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     attachments: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    id: string;
     archived: boolean;
     groupId: string;
     key: string;
@@ -134,9 +134,9 @@ export declare const MessagePrismaUpdateSchema: z.ZodObject<{
  * `Message` schema for create operations excluding foreign keys and relations.
  */
 export declare const MessageCreateScalarSchema: z.ZodObject<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     key: z.ZodString;
     text: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -144,17 +144,17 @@ export declare const MessageCreateScalarSchema: z.ZodObject<{
 }, "strict", z.ZodTypeAny, {
     key: string;
     authorType: "User" | "System";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     text?: string | null | undefined;
 }, {
     key: string;
     authorType: "User" | "System";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     text?: string | null | undefined;
 }>;
@@ -162,9 +162,9 @@ export declare const MessageCreateScalarSchema: z.ZodObject<{
  * `Message` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
+    id: z.ZodOptional<z.ZodString>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     key: z.ZodString;
     text: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -176,9 +176,9 @@ export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     groupId: string;
     key: string;
     authorType: "User" | "System";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     text?: string | null | undefined;
     authorId?: string | null | undefined;
@@ -186,9 +186,9 @@ export declare const MessageCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     groupId: string;
     key: string;
     authorType: "User" | "System";
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     text?: string | null | undefined;
     authorId?: string | null | undefined;
@@ -205,17 +205,17 @@ export declare const MessageUpdateScalarSchema: z.ZodObject<{
     text: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
     authorType: z.ZodOptional<z.ZodEnum<["User", "System"]>>;
 }, "strict", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     key?: string | undefined;
     text?: string | null | undefined;
     authorType?: "User" | "System" | undefined;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     key?: string | undefined;
     text?: string | null | undefined;
@@ -236,9 +236,9 @@ export declare const MessageUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     authorId: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
     groupId: z.ZodOptional<z.ZodString>;
 }>, "strip", z.ZodTypeAny, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     groupId?: string | undefined;
     key?: string | undefined;
@@ -246,9 +246,9 @@ export declare const MessageUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     authorType?: "User" | "System" | undefined;
     authorId?: string | null | undefined;
 }, {
+    id?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    id?: string | undefined;
     archived?: boolean | undefined;
     groupId?: string | undefined;
     key?: string | undefined;
