@@ -336,7 +336,7 @@ const config = {
     "previewFeatures": [
       "multiSchema"
     ],
-    "sourceFilePath": "/Users/Juuso/code/jshare-monorepo/packages/db/logical-1744123124321.prisma",
+    "sourceFilePath": "/Users/Juuso/code/jshare-monorepo/packages/db/logical-1744125000842.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

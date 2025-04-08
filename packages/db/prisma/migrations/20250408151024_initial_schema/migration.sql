@@ -1,16 +1,21 @@
 -- CreateEnum
+DROP TYPE IF EXISTS "public"."Role";
 CREATE TYPE "public"."Role" AS ENUM ('Owner', 'Admin', 'Member');
 
 -- CreateEnum
+DROP TYPE IF EXISTS "public"."AuthorType";
 CREATE TYPE "public"."AuthorType" AS ENUM ('User', 'System');
 
 -- CreateEnum
+DROP TYPE IF EXISTS "public"."MessageAttachmentType";
 CREATE TYPE "public"."MessageAttachmentType" AS ENUM ('Expense');
 
 -- CreateEnum
+DROP TYPE IF EXISTS "public"."InviteType";
 CREATE TYPE "public"."InviteType" AS ENUM ('Code', 'Invite');
 
 -- CreateEnum
+DROP TYPE IF EXISTS "public"."CurrencyCode";
 CREATE TYPE "public"."CurrencyCode" AS ENUM ('AED', 'ARS', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'COP', 'CZK', 'DKK', 'EGP', 'EUR', 'GBP', 'HUF', 'INR', 'KES', 'MAD', 'MXN', 'NOK', 'PEN', 'PLN', 'RON', 'SEK', 'THB', 'TZS', 'USD', 'ZAR', 'KZT', 'KGS');
 
 -- CreateTable
