@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { getGroupBroadcastChannel, GroupBroadcastEvent } from '@jshare/common';
 
-import { supabase } from '~/services/supabase';
+import { supabase } from '~/lib/supabase';
 
 export const useGroupBroadcasts = (arsg: { groupId: string; onMessage?: () => void }) => {
     const { groupId, onMessage } = arsg;

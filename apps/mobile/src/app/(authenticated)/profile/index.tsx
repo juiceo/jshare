@@ -9,7 +9,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({

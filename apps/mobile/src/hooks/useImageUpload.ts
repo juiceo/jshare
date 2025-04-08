@@ -4,7 +4,7 @@ import { merge, partition } from 'lodash';
 
 import type { DB } from '@jshare/db';
 
-import { uploadImage } from '~/services/images';
+import { uploadImage } from '~/lib/images';
 import { toast } from '~/state/toast';
 
 export const MediaTypeOptions = ImagePicker.MediaTypeOptions;

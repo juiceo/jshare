@@ -6,7 +6,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type ProfileBadgeProps = {
     onPress: () => void;

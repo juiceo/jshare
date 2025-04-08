@@ -11,7 +11,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessage } from '~/components/ChatMessage';
 import { SystemMessage } from '~/components/SystemMessage';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type ChatMessageGroupProps = {
     userId: string;

@@ -13,7 +13,7 @@ import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { useCreateGroup } from '~/hooks/useCreateGroup';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({

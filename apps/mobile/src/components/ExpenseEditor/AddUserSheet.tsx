@@ -8,7 +8,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type AddUserSheetProps = {
     onClose: () => void;

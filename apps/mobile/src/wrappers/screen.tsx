@@ -19,7 +19,7 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export const screen = <TAuth extends boolean = false>(

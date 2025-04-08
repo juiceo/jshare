@@ -4,7 +4,7 @@ import { getUserDefaultAvatarUrl } from '@jshare/common';
 import type { BorderRadiusUnit } from '@jshare/theme';
 
 import { Image } from '~/components/atoms/Image';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type AvatarProps = {
     userId?: string;

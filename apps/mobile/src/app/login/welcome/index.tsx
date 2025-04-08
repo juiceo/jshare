@@ -18,7 +18,8 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/services/trpc';
+import { signalDB } from '~/lib/signaldb';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { trpc, trpcHttpLink } from '~/services/trpc';
+import { trpc, trpcHttpLink } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export const QueryProvider = (props: PropsWithChildren) => {

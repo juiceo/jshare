@@ -4,7 +4,7 @@ import { ImageSource as ExpoImageSource } from 'expo-image';
 import type { DB } from '@jshare/db';
 import type { SxProps } from '@jshare/theme';
 
-import { getImageUrl } from '~/services/images';
+import { getImageUrl } from '~/lib/images';
 
 export type ImageProps = {
     image?: DB.Image | null;

@@ -374,6 +374,9 @@ importers:
       '@react-native-community/netinfo':
         specifier: 'catalog:'
         version: 11.4.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))
+      '@signaldb/core':
+        specifier: ^1.5.2
+        version: 1.5.2
       '@supabase/supabase-js':
         specifier: 'catalog:'
         version: 2.47.16
@@ -424,7 +427,7 @@ importers:
         version: 7.0.5(expo@52.0.44(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1)))(graphql@15.8.0)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
       expo-router:
         specifier: 'catalog:'
-        version: 4.0.20(79b3901899937f8b99acf1b2d0a1ab95)
+        version: 4.0.20(yvtkcujmidczqjyhmskiiuf6gu)
       expo-splash-screen:
         specifier: 'catalog:'
         version: 0.29.22(expo@52.0.44(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1)))(graphql@15.8.0)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))
@@ -539,7 +542,7 @@ importers:
         version: 8.4.2(prettier@2.8.8)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
       '@storybook/addon-ondevice-controls':
         specifier: 'catalog:'
-        version: 8.4.2(11adc507dd47b428c85bb9c333c617bb)
+        version: 8.4.2(4lllsajx2mhijtk2azn5o222dm)
       '@storybook/addon-ondevice-notes':
         specifier: 'catalog:'
         version: 8.4.2(prettier@2.8.8)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
@@ -551,7 +554,7 @@ importers:
         version: 8.4.5(@storybook/test@8.4.5(storybook@8.4.7(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.7(prettier@2.8.8))(typescript@5.8.3)
       '@storybook/react-native':
         specifier: 'catalog:'
-        version: 8.4.2(5d6b75fc502f813cb470f975a4990a64)
+        version: 8.4.2(vsunezb4iinwze3yhsq7mtmsfa)
       '@storybook/test':
         specifier: 'catalog:'
         version: 8.4.5(storybook@8.4.7(prettier@2.8.8))
@@ -2784,6 +2787,9 @@ packages:
   '@sideway/pinpoint@2.0.0':
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
 
+  '@signaldb/core@1.5.2':
+    resolution: {integrity: sha512-Tw5Jh6Jpq6z7TRQmcT5EfQ0uFwb5K7n3YOn7qdYJoE3KQCozthGYbch92vUx5frWWQgiEVGBdAZtKsyK7PpMLw==}
+
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
@@ -4903,6 +4909,9 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fast-sort@3.4.1:
+    resolution: {integrity: sha512-76uvGPsF6So53sZAqenP9UVT3p5l7cyTHkLWVCMinh41Y8NDrK1IYXJgaBMfc1gk7nJiSRZp676kddFG2Aa5+A==}
+
   fast-uri@3.0.3:
     resolution: {integrity: sha512-aLrHthzCjH5He4Z2H9YZ+v6Ujb9ocRuW6ZzkJQOrTxleEijANq4v1TsaPaVG1PZcuurEzrLcWRyYBYXD5cEiaw==}
 
@@ -6070,6 +6079,9 @@ packages:
   min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
+
+  mingo@6.5.6:
+    resolution: {integrity: sha512-XV89xbTakngi/oIEpuq7+FXXYvdA/Ht6aAsNTuIl8zLW1jfv369Va1PPWod1UTa/cqL0pC6LD2P6ggBcSSeH+A==}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -10566,6 +10578,11 @@ snapshots:
   '@sideway/pinpoint@2.0.0':
     optional: true
 
+  '@signaldb/core@1.5.2':
+    dependencies:
+      fast-sort: 3.4.1
+      mingo: 6.5.6
+
   '@sinclair/typebox@0.27.8': {}
 
   '@sinonjs/commons@2.0.0':
@@ -10675,7 +10692,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/addon-ondevice-controls@8.4.2(11adc507dd47b428c85bb9c333c617bb)':
+  '@storybook/addon-ondevice-controls@8.4.2(4lllsajx2mhijtk2azn5o222dm)':
     dependencies:
       '@gorhom/bottom-sheet': 5.0.4(@types/react@18.3.20)(react-native-gesture-handler@2.20.2(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.17.2(@babel/core@7.26.0)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
       '@react-native-community/datetimepicker': 8.2.0(expo@52.0.44(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1)))(graphql@15.8.0)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
@@ -10683,7 +10700,7 @@ snapshots:
       '@storybook/addon-controls': 8.4.5(storybook@8.4.7(prettier@2.8.8))
       '@storybook/core': 8.4.7(prettier@2.8.8)
       '@storybook/react-native-theming': 8.4.4(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
-      '@storybook/react-native-ui': 8.4.4(bda7027915e68f49e4de61a10882de7b)
+      '@storybook/react-native-ui': 8.4.4(ufip65opkkd4mspiym4c5di47q)
       deep-equal: 1.1.2
       prop-types: 15.8.1
       react: 18.3.1
@@ -10829,7 +10846,7 @@ snapshots:
       react: 18.3.1
       react-native: 0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1)
 
-  '@storybook/react-native-ui@8.4.4(bda7027915e68f49e4de61a10882de7b)':
+  '@storybook/react-native-ui@8.4.4(ufip65opkkd4mspiym4c5di47q)':
     dependencies:
       '@gorhom/bottom-sheet': 5.0.4(@types/react@18.3.20)(react-native-gesture-handler@2.20.2(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.17.2(@babel/core@7.26.0)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
       '@storybook/core': 8.4.7(prettier@2.8.8)
@@ -10855,7 +10872,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@storybook/react-native@8.4.2(5d6b75fc502f813cb470f975a4990a64)':
+  '@storybook/react-native@8.4.2(vsunezb4iinwze3yhsq7mtmsfa)':
     dependencies:
       '@gorhom/bottom-sheet': 5.0.4(@types/react@18.3.20)(react-native-gesture-handler@2.20.2(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.17.2(@babel/core@7.26.0)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
       '@storybook/core': 8.4.7(prettier@2.8.8)
@@ -10863,7 +10880,7 @@ snapshots:
       '@storybook/global': 5.0.0
       '@storybook/react': 8.4.5(@storybook/test@8.4.5(storybook@8.4.7(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.7(prettier@2.8.8))(typescript@5.8.3)
       '@storybook/react-native-theming': 8.4.4(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1)
-      '@storybook/react-native-ui': 8.4.4(bda7027915e68f49e4de61a10882de7b)
+      '@storybook/react-native-ui': 8.4.4(ufip65opkkd4mspiym4c5di47q)
       chokidar: 3.6.0
       commander: 8.3.0
       dedent: 1.5.3
@@ -13234,7 +13251,7 @@ snapshots:
     dependencies:
       invariant: 2.2.4
 
-  expo-router@4.0.20(79b3901899937f8b99acf1b2d0a1ab95):
+  expo-router@4.0.20(yvtkcujmidczqjyhmskiiuf6gu):
     dependencies:
       '@expo/metro-runtime': 4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))
       '@expo/server': 0.5.3
@@ -13395,6 +13412,8 @@ snapshots:
   fast-json-stable-stringify@2.1.0: {}
 
   fast-levenshtein@2.0.6: {}
+
+  fast-sort@3.4.1: {}
 
   fast-uri@3.0.3: {}
 
@@ -14740,6 +14759,8 @@ snapshots:
   mimic-fn@2.1.0: {}
 
   min-indent@1.0.1: {}
+
+  mingo@6.5.6: {}
 
   minimatch@3.1.2:
     dependencies:

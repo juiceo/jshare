@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { trpc, type TrpcInputs } from '~/services/trpc';
+import { trpc, type TrpcInputs } from '~/lib/trpc';
 
 export const useUpdateProfile = () => {
     const trpcUtils = trpc.useUtils();

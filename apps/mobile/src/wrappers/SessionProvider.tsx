@@ -9,7 +9,7 @@ import {
 import type { AuthError, Session } from '@supabase/supabase-js';
 import { useRouter } from 'expo-router';
 
-import { supabase } from '~/services/supabase';
+import { supabase } from '~/lib/supabase';
 import { setAccessToken } from '~/state/auth';
 
 const SessionContext = createContext<{

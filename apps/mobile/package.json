@@ -50,6 +50,7 @@
         "@jshare/theme": "workspace:*",
         "@react-native-async-storage/async-storage": "catalog:",
         "@react-native-community/netinfo": "catalog:",
+        "@signaldb/core": "^1.5.2",
         "@supabase/supabase-js": "catalog:",
         "@tanstack/react-query": "catalog:",
         "@trpc/client": "catalog:",

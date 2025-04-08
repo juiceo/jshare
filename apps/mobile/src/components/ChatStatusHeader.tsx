@@ -6,7 +6,7 @@ import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { IconButton } from '~/components/IconButton';
 import { StatusBadge } from '~/components/StatusBadge';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type ChatStatusHeaderProps = {

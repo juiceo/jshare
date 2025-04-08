@@ -1,6 +1,6 @@
 import { getUserFullName, getUserShortName } from '@jshare/common';
 
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export type UserNameProps = {

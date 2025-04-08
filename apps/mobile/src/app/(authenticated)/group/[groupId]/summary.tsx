@@ -19,7 +19,7 @@ import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
 import { useThrottledLoading } from '~/hooks/useThrottledLoading';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(

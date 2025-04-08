@@ -18,7 +18,7 @@ import { ChatStatusHeader } from '~/components/ChatStatusHeader';
 import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';

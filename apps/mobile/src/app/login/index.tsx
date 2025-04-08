@@ -10,7 +10,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
-import { supabase } from '~/services/supabase';
+import { supabase } from '~/lib/supabase';
 import { screen } from '~/wrappers/screen';
 
 const screenW = Dimensions.get('screen').width;

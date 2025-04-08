@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { BASE_EXCHANGE_RATES, convertAmount, getExchangeRate } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 
 export const useExchangeRates = (): {
     exchangeRates: DB.ExchangeRates;

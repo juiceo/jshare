@@ -18,7 +18,7 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';

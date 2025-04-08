@@ -9,7 +9,7 @@ import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 import { withSuspense } from '~/wrappers/withSuspense';
 

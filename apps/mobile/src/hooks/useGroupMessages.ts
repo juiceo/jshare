@@ -4,7 +4,7 @@ import { getRandomKey } from '@jshare/common';
 import { DB } from '@jshare/db';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 
 export const useGroupMessages = (args: { groupId: string; userId: string }) => {
     const { groupId, userId } = args;

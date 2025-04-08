@@ -17,7 +17,7 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(

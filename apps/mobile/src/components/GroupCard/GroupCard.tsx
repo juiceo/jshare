@@ -9,7 +9,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {

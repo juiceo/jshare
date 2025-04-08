@@ -5,8 +5,8 @@ import { clamp } from 'lodash';
 import { SupabaseStorageBucket } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
-import { supabase } from '~/services/supabase';
-import { trpcUniversal } from '~/services/trpc';
+import { supabase } from '~/lib/supabase';
+import { trpcUniversal } from '~/lib/trpc';
 
 export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> => {
     const response = await fetch(asset.uri);

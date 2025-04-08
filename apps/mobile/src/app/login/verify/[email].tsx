@@ -10,8 +10,8 @@ import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
-import { supabase } from '~/services/supabase';
-import { trpc, trpcUniversal } from '~/services/trpc';
+import { supabase } from '~/lib/supabase';
+import { trpc, trpcUniversal } from '~/lib/trpc';
 import { setAccessToken } from '~/state/auth';
 import { screen } from '~/wrappers/screen';
 

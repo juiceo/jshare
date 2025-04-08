@@ -21,7 +21,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserMenu } from '~/components/UserMenu';
 import { useCurrencyConversion } from '~/hooks/useExchangeRates';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({

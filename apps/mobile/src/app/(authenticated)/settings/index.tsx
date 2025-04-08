@@ -8,7 +8,7 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/services/trpc';
+import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
