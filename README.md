@@ -3,6 +3,10 @@
   <p>Monorepo for the JShare expense tracking app</p>
   <img src="https://github.com/juiceo/jshare-monorepo/actions/workflows/test.yml/badge.svg?branch=main" />
 </div>
+<p></p>
+
+![6 5_ App previews (1242 x 2688)](https://github.com/user-attachments/assets/785872b7-4974-4f94-8a17-76879fccd288)
+
 
 ## What is JShare?
 
