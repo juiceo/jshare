@@ -97,7 +97,7 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                 <ExpenseShareEditorSheet
                     onClose={() => setEditUser(null)}
                     user={editUser}
-                    share={value.find((item) => item.userId === editUser.userId)}
+                    share={value.find((item) => item.userId === editUser.id)}
                     onShareChange={(share) => {
                         onChange(
                             updateShare({

@@ -51,7 +51,7 @@ export const groupParticipantsRouter = router({
             const user = await db.profile.create({
                 data: {
                     email: '',
-                    userId: uuidv4(),
+                    id: uuidv4(),
                     firstName: opts.input.firstName,
                     lastName: opts.input.lastName,
                     currency: DB.CurrencyCode.USD,
@@ -63,7 +63,7 @@ export const groupParticipantsRouter = router({
                 data: {
                     groupId: opts.input.groupId,
                     role: DB.Role.Member,
-                    userId: user.userId,
+                    userId: user.id,
                 },
             });
         }),

@@ -79,12 +79,12 @@ export const paymentsRouter = router({
                 }),
                 db.profile.findUnique({
                     where: {
-                        userId: opts.ctx.userId,
+                        id: opts.ctx.userId,
                     },
                 }),
                 db.profile.findUnique({
                     where: {
-                        userId: opts.input.recipientId,
+                        id: opts.input.recipientId,
                     },
                 }),
             ]);
@@ -96,14 +96,14 @@ export const paymentsRouter = router({
                 });
             }
 
-            if (!payer || !group.participants.some((p) => p.userId === payer.userId)) {
+            if (!payer || !group.participants.some((p) => p.userId === payer.id)) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `User with id ${opts.input.payerId} (payer) not found`,
                 });
             }
 
-            if (!recipient || !group.participants.some((p) => p.userId === recipient.userId)) {
+            if (!recipient || !group.participants.some((p) => p.userId === recipient.id)) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
                     message: `User with id ${opts.input.recipientId} (recipient) not found`,

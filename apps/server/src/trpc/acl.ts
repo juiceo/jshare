@@ -21,7 +21,7 @@ export class ACL {
         try {
             await db.profile.update({
                 where: {
-                    userId: this.userId,
+                    id: this.userId,
                 },
                 data: {
                     lastActivity: new Date(),

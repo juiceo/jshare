@@ -71,8 +71,8 @@ export default screen({}, ({ router }) => {
 
         await createPayment.mutateAsync({
             groupId,
-            payerId: data.payer.userId,
-            recipientId: data.recipient?.userId,
+            payerId: data.payer.id,
+            recipientId: data.recipient?.id,
             amount: data.amount,
             currency: data.currency,
         });
@@ -147,10 +147,7 @@ export default screen({}, ({ router }) => {
                                                         br="xl"
                                                     >
                                                         <Typography variant="h6">From</Typography>
-                                                        <Avatar
-                                                            size="lg"
-                                                            userId={field.value.userId}
-                                                        />
+                                                        <Avatar size="lg" userId={field.value.id} />
                                                         <Typography variant="caption" color="hint">
                                                             {getUserShortName(field.value)}
                                                         </Typography>
@@ -158,7 +155,7 @@ export default screen({}, ({ router }) => {
                                                 </RectButton>
                                                 <UserMenu
                                                     title="Select payer"
-                                                    value={field.value?.userId}
+                                                    value={field.value?.id}
                                                     onChange={(userId, profile) => {
                                                         field.onChange(profile);
                                                     }}
@@ -192,7 +189,7 @@ export default screen({}, ({ router }) => {
                                                         <Typography variant="h6">To</Typography>
                                                         <Avatar
                                                             size="lg"
-                                                            userId={field.value?.userId}
+                                                            userId={field.value?.id}
                                                         />
                                                         <Typography variant="caption" color="hint">
                                                             {field.value
@@ -203,7 +200,7 @@ export default screen({}, ({ router }) => {
                                                 </RectButton>
                                                 <UserMenu
                                                     title="Select recipient"
-                                                    value={field.value?.userId}
+                                                    value={field.value?.id}
                                                     onChange={(userId, profile) => {
                                                         field.onChange(profile);
                                                     }}

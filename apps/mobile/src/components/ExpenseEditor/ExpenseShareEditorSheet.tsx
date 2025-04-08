@@ -23,7 +23,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
 
     const handleAmountChange = (value: number) => {
         onShareChange({
-            ...(share ?? getDefaultShare(user.userId)),
+            ...(share ?? getDefaultShare(user.id)),
             amount: value,
             locked: true,
         });
@@ -41,7 +41,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
 
     const handleReset = () => {
         onShareChange({
-            ...(share ?? getDefaultShare(user.userId)),
+            ...(share ?? getDefaultShare(user.id)),
             locked: false,
         });
     };
@@ -52,7 +52,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                 <Stack column p="xl" pb="3xl" pt="none">
                     <Stack row alignCenter justifyBetween>
                         <Stack center row spacing="md">
-                            <Avatar userId={user.userId} />
+                            <Avatar userId={user.id} />
                             <Typography variant="body1" color="primary">
                                 {getUserShortName(user)}
                             </Typography>

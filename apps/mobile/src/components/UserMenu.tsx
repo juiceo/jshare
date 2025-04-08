@@ -30,18 +30,18 @@ export const UserMenu = (props: UserMenuProps) => {
         switch (props.type) {
             case 'profiles': {
                 return props.users.map((user) => ({
-                    id: user.userId,
+                    id: user.id,
                     label: getUserShortName(user),
                     data: user,
-                    icon: <Avatar userId={user.userId} size="sm" />,
+                    icon: <Avatar userId={user.id} size="sm" />,
                 }));
             }
             case 'participants': {
                 return props.users.map((participant) => ({
-                    id: participant.user.userId,
+                    id: participant.user.id,
                     label: getUserShortName(participant.user),
                     data: participant.user,
-                    icon: <Avatar userId={participant.user.userId} size="sm" />,
+                    icon: <Avatar userId={participant.user.id} size="sm" />,
                 }));
             }
         }

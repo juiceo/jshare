@@ -32,7 +32,7 @@ const main = async () => {
         data: supabaseUsers.map((user) => {
             return {
                 ...generateMock(models.ProfileCreateScalarSchema),
-                userId: user.id,
+                id: user.id,
                 email: user.email!,
             };
         }),
@@ -50,7 +50,7 @@ const main = async () => {
                         createMany: {
                             data: [
                                 {
-                                    userId: user.userId,
+                                    userId: user.id,
                                     role: 'Owner',
                                 },
                             ],

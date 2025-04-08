@@ -35,10 +35,10 @@ export const UserSelect = (props: UserSelectProps) => {
             }
             case 'users': {
                 return users.map((user) => ({
-                    id: user.userId,
+                    id: user.id,
                     label: getUserShortName(user),
                     data: user,
-                    icon: <Avatar userId={user.userId} size="sm" />,
+                    icon: <Avatar userId={user.id} size="sm" />,
                 }));
             }
         }

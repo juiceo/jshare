@@ -4,12 +4,8 @@ import type { DB } from '@jshare/db';
 
 import { createAsyncStorageAdapter } from '~/lib/signaldb/asyncStoragePersistenceAdapter';
 
-const profiles = new Collection<DB.Profile & { id: string }, string>({
+const profiles = new Collection<DB.Profile, string>({
     persistence: createAsyncStorageAdapter('profiles'),
-    transform: (item) => ({
-        ...item,
-        id: item.userId,
-    }),
 });
 
 export default profiles;

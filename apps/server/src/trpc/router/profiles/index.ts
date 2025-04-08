@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server';
-import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { DB, zDB } from '@jshare/db';
@@ -22,7 +21,7 @@ export const profilesRouter = router({
         .mutation(async (opts) => {
             const profile = await db.profile.create({
                 data: {
-                    userId: opts.ctx.userId,
+                    id: opts.ctx.userId,
                     firstName: opts.input.firstName,
                     lastName: opts.input.lastName,
                     email: opts.input.email,
@@ -46,7 +45,7 @@ export const profilesRouter = router({
     me: authProcedure.query(async (opts) => {
         const profile = await db.profile.findUnique({
             where: {
-                userId: opts.ctx.userId,
+                id: opts.ctx.userId,
             },
             include: {
                 avatar: true,
@@ -62,7 +61,7 @@ export const profilesRouter = router({
     get: authProcedure.input(z.object({ id: z.string() })).query(async (opts) => {
         const profile = await db.profile.findUnique({
             where: {
-                userId: opts.input.id,
+                id: opts.input.id,
             },
             include: {
                 avatar: true,
@@ -91,7 +90,7 @@ export const profilesRouter = router({
         .mutation(async (opts) => {
             return db.profile.update({
                 where: {
-                    userId: opts.ctx.userId,
+                    id: opts.ctx.userId,
                 },
                 data: {
                     firstName: opts.input.firstName,
@@ -119,7 +118,7 @@ export const profilesRouter = router({
     acceptTerms: authProcedure.mutation(async (opts) => {
         return db.profile.update({
             where: {
-                userId: opts.ctx.userId,
+                id: opts.ctx.userId,
             },
             data: {
                 termsAcceptedAt: new Date(),
@@ -132,11 +131,10 @@ export const profilesRouter = router({
     delete: authProcedure.mutation(async (opts) => {
         await db.profile.update({
             where: {
-                userId: opts.ctx.userId,
+                id: opts.ctx.userId,
             },
             data: {
                 email: '',
-                userId: uuidv4(),
                 temporary: true,
                 firstName: 'Deleted',
                 lastName: 'User',

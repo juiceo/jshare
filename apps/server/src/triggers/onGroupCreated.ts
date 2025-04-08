@@ -19,7 +19,7 @@ export const onGroupCreated = async (group: DB.Group) => {
         data: {
             groupId: group.id,
             authorType: DB.AuthorType.System,
-            text: `@user=${createdBy.user.userId} created the group "${group.name}"`,
+            text: `@user=${createdBy.user.id} created the group "${group.name}"`,
             key: uuidv4(),
         },
     });
