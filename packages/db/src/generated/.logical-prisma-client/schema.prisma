@@ -82,8 +82,10 @@ enum CurrencyCode {
 /// @@allow('all', true)
 /// @@auth
 model Profile {
-  id               String
-  userId           String             @id()
+  id               String             @id() @default(uuid())
+  archived         Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now()) @updatedAt()
   email            String
   firstName        String
   lastName         String
@@ -101,8 +103,6 @@ model Profile {
   paymentsReceived Payment[]          @relation(name: "payment_recipient")
   paymentsPaid     Payment[]          @relation(name: "payment_payer")
   showInSearch     Boolean            @default(true)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @default(now()) @updatedAt()
 
   @@map("profiles")
   @@schema("public")
@@ -136,7 +136,7 @@ model GroupParticipant {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @default(now()) @updatedAt()
   userId      String
-  user        Profile     @relation(fields: [userId], references: [userId])
+  user        Profile     @relation(fields: [userId], references: [id])
   groupId     String
   group       Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
   role        Role
@@ -176,7 +176,7 @@ model Message {
   text        String?
   authorType  AuthorType
   authorId    String?
-  author      Profile?            @relation(fields: [authorId], references: [userId])
+  author      Profile?            @relation(fields: [authorId], references: [id])
   groupId     String
   group       Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
   attachments MessageAttachment[]
@@ -208,9 +208,9 @@ model Expense {
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @default(now()) @updatedAt()
   ownerId            String
-  owner              Profile             @relation(name: "expense_owner", fields: [ownerId], references: [userId])
+  owner              Profile             @relation(name: "expense_owner", fields: [ownerId], references: [id])
   payerId            String
-  payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [userId])
+  payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [id])
   groupId            String
   group              Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
   amount             Int
@@ -232,7 +232,7 @@ model ExpenseShare {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt()
   userId     String
-  user       Profile      @relation(fields: [userId], references: [userId])
+  user       Profile      @relation(fields: [userId], references: [id])
   expenseId  String
   expense    Expense      @relation(fields: [expenseId], references: [id], onDelete: Cascade)
   amount     Int
@@ -258,9 +258,9 @@ model Payment {
   /// @json
   conversion  Json?
   recipientId String
-  recipient   Profile      @relation(name: "payment_recipient", fields: [recipientId], references: [userId])
+  recipient   Profile      @relation(name: "payment_recipient", fields: [recipientId], references: [id])
   payerId     String
-  payer       Profile      @relation(name: "payment_payer", fields: [payerId], references: [userId])
+  payer       Profile      @relation(name: "payment_payer", fields: [payerId], references: [id])
 
   @@map("payments")
   @@schema("public")

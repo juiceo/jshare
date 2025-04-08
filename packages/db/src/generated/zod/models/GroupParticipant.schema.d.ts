@@ -12,18 +12,18 @@ export declare const GroupParticipantScalarSchema: z.ZodObject<{
     inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
 }, "strict", z.ZodTypeAny, {
     id: string;
+    archived: boolean;
     createdAt: Date;
     updatedAt: Date;
-    archived: boolean;
     role: "Owner" | "Admin" | "Member";
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     id: string;
     role: "Owner" | "Admin" | "Member";
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }>;
@@ -46,10 +46,10 @@ export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShap
     group: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }>, "strip", z.ZodTypeAny, {
     id: string;
-    userId: string;
+    archived: boolean;
     createdAt: Date;
     updatedAt: Date;
-    archived: boolean;
+    userId: string;
     groupId: string;
     role: "Owner" | "Admin" | "Member";
     user?: Record<string, unknown> | undefined;
@@ -61,10 +61,10 @@ export declare const GroupParticipantSchema: z.ZodObject<z.objectUtil.extendShap
     userId: string;
     groupId: string;
     role: "Owner" | "Admin" | "Member";
-    user?: Record<string, unknown> | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
+    user?: Record<string, unknown> | undefined;
     group?: Record<string, unknown> | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
@@ -132,26 +132,26 @@ export declare const GroupParticipantPrismaUpdateSchema: z.ZodObject<{
  */
 export declare const GroupParticipantCreateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
     invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
 }, "strict", z.ZodTypeAny, {
     role: "Owner" | "Admin" | "Member";
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     role: "Owner" | "Admin" | "Member";
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }>;
@@ -160,9 +160,9 @@ export declare const GroupParticipantCreateScalarSchema: z.ZodObject<{
  */
 export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     role: z.ZodEnum<["Owner", "Admin", "Member"]>;
     invitedById: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     inviteType: z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>;
@@ -174,9 +174,9 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
     groupId: string;
     role: "Owner" | "Admin" | "Member";
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }, {
@@ -184,9 +184,9 @@ export declare const GroupParticipantCreateSchema: z.ZodObject<z.objectUtil.exte
     groupId: string;
     role: "Owner" | "Admin" | "Member";
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }>;
@@ -203,17 +203,17 @@ export declare const GroupParticipantUpdateScalarSchema: z.ZodObject<{
     inviteType: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodEnum<["Code", "Invite"]>>>>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
@@ -234,20 +234,20 @@ export declare const GroupParticipantUpdateSchema: z.ZodObject<z.objectUtil.exte
     groupId: z.ZodOptional<z.ZodString>;
 }>, "strip", z.ZodTypeAny, {
     id?: string | undefined;
-    userId?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
+    userId?: string | undefined;
     groupId?: string | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
     invitedById?: string | null | undefined;
     inviteType?: "Code" | "Invite" | null | undefined;
 }, {
     id?: string | undefined;
-    userId?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
+    userId?: string | undefined;
     groupId?: string | undefined;
     role?: "Owner" | "Admin" | "Member" | undefined;
     invitedById?: string | null | undefined;

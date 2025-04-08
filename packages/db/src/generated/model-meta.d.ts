@@ -6,11 +6,33 @@ declare const metadata: {
                 id: {
                     name: string;
                     type: string;
+                    isId: boolean;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
                 };
-                userId: {
+                archived: {
                     name: string;
                     type: string;
-                    isId: boolean;
+                    attributes: {
+                        name: string;
+                        args: {
+                            value: boolean;
+                        }[];
+                    }[];
+                };
+                createdAt: {
+                    name: string;
+                    type: string;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
+                };
+                updatedAt: {
+                    name: string;
+                    type: string;
                     attributes: {
                         name: string;
                         args: never[];
@@ -157,25 +179,9 @@ declare const metadata: {
                         }[];
                     }[];
                 };
-                createdAt: {
-                    name: string;
-                    type: string;
-                    attributes: {
-                        name: string;
-                        args: never[];
-                    }[];
-                };
-                updatedAt: {
-                    name: string;
-                    type: string;
-                    attributes: {
-                        name: string;
-                        args: never[];
-                    }[];
-                };
             };
             uniqueConstraints: {
-                userId: {
+                id: {
                     name: string;
                     fields: string[];
                 };
@@ -377,7 +383,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
                 groupId: {
@@ -585,7 +591,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
                 groupId: {
@@ -789,7 +795,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
                 payerId: {
@@ -812,7 +818,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
                 groupId: {
@@ -943,7 +949,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
                 expenseId: {
@@ -1106,7 +1112,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
                 payerId: {
@@ -1129,7 +1135,7 @@ declare const metadata: {
                     backLink: string;
                     isRelationOwner: boolean;
                     foreignKeyMapping: {
-                        userId: string;
+                        id: string;
                     };
                 };
             };

@@ -8,7 +8,7 @@ export declare namespace auth {
     type WithRequired<T, K extends keyof T> = T & {
         [P in K]-?: T[P];
     };
-    export type Profile = WithRequired<Partial<_P.Profile>, 'userId'> & Record<string, unknown>;
+    export type Profile = WithRequired<Partial<_P.Profile>, 'id'> & Record<string, unknown>;
     export {};
 }
 export declare function enhance<ExtArgs extends Record<string, any> & InternalArgs>(prisma: _PrismaClient<any, any, ExtArgs>, context?: EnhancementContext<auth.Profile>, options?: EnhancementOptions): PrismaClient;

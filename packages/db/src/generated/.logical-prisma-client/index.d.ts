@@ -1975,7 +1975,9 @@ export namespace Prisma {
 
   export type ProfileMinAggregateOutputType = {
     id: string | null
-    userId: string | null
+    archived: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
     email: string | null
     firstName: string | null
     lastName: string | null
@@ -1985,13 +1987,13 @@ export namespace Prisma {
     temporary: boolean | null
     termsAcceptedAt: Date | null
     showInSearch: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type ProfileMaxAggregateOutputType = {
     id: string | null
-    userId: string | null
+    archived: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
     email: string | null
     firstName: string | null
     lastName: string | null
@@ -2001,13 +2003,13 @@ export namespace Prisma {
     temporary: boolean | null
     termsAcceptedAt: Date | null
     showInSearch: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
   }
 
   export type ProfileCountAggregateOutputType = {
     id: number
-    userId: number
+    archived: number
+    createdAt: number
+    updatedAt: number
     email: number
     firstName: number
     lastName: number
@@ -2017,15 +2019,15 @@ export namespace Prisma {
     temporary: number
     termsAcceptedAt: number
     showInSearch: number
-    createdAt: number
-    updatedAt: number
     _all: number
   }
 
 
   export type ProfileMinAggregateInputType = {
     id?: true
-    userId?: true
+    archived?: true
+    createdAt?: true
+    updatedAt?: true
     email?: true
     firstName?: true
     lastName?: true
@@ -2035,13 +2037,13 @@ export namespace Prisma {
     temporary?: true
     termsAcceptedAt?: true
     showInSearch?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type ProfileMaxAggregateInputType = {
     id?: true
-    userId?: true
+    archived?: true
+    createdAt?: true
+    updatedAt?: true
     email?: true
     firstName?: true
     lastName?: true
@@ -2051,13 +2053,13 @@ export namespace Prisma {
     temporary?: true
     termsAcceptedAt?: true
     showInSearch?: true
-    createdAt?: true
-    updatedAt?: true
   }
 
   export type ProfileCountAggregateInputType = {
     id?: true
-    userId?: true
+    archived?: true
+    createdAt?: true
+    updatedAt?: true
     email?: true
     firstName?: true
     lastName?: true
@@ -2067,8 +2069,6 @@ export namespace Prisma {
     temporary?: true
     termsAcceptedAt?: true
     showInSearch?: true
-    createdAt?: true
-    updatedAt?: true
     _all?: true
   }
 
@@ -2146,7 +2146,9 @@ export namespace Prisma {
 
   export type ProfileGroupByOutputType = {
     id: string
-    userId: string
+    archived: boolean
+    createdAt: Date
+    updatedAt: Date
     email: string
     firstName: string
     lastName: string
@@ -2156,8 +2158,6 @@ export namespace Prisma {
     temporary: boolean | null
     termsAcceptedAt: Date | null
     showInSearch: boolean
-    createdAt: Date
-    updatedAt: Date
     _count: ProfileCountAggregateOutputType | null
     _min: ProfileMinAggregateOutputType | null
     _max: ProfileMaxAggregateOutputType | null
@@ -2179,7 +2179,9 @@ export namespace Prisma {
 
   export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
+    archived?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -2189,8 +2191,6 @@ export namespace Prisma {
     temporary?: boolean
     termsAcceptedAt?: boolean
     showInSearch?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
     groups?: boolean | Profile$groupsArgs<ExtArgs>
     avatar?: boolean | Profile$avatarArgs<ExtArgs>
     messages?: boolean | Profile$messagesArgs<ExtArgs>
@@ -2204,7 +2204,9 @@ export namespace Prisma {
 
   export type ProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
+    archived?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -2214,14 +2216,14 @@ export namespace Prisma {
     temporary?: boolean
     termsAcceptedAt?: boolean
     showInSearch?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
     avatar?: boolean | Profile$avatarArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
 
   export type ProfileSelectScalar = {
     id?: boolean
-    userId?: boolean
+    archived?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     email?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -2231,8 +2233,6 @@ export namespace Prisma {
     temporary?: boolean
     termsAcceptedAt?: boolean
     showInSearch?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
   }
 
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2264,7 +2264,9 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      archived: boolean
+      createdAt: Date
+      updatedAt: Date
       email: string
       firstName: string
       lastName: string
@@ -2274,8 +2276,6 @@ export namespace Prisma {
       temporary: boolean | null
       termsAcceptedAt: Date | null
       showInSearch: boolean
-      createdAt: Date
-      updatedAt: Date
     }, ExtArgs["result"]["profile"]>
     composites: {}
   }
@@ -2678,7 +2678,9 @@ export namespace Prisma {
    */ 
   interface ProfileFieldRefs {
     readonly id: FieldRef<"Profile", 'String'>
-    readonly userId: FieldRef<"Profile", 'String'>
+    readonly archived: FieldRef<"Profile", 'Boolean'>
+    readonly createdAt: FieldRef<"Profile", 'DateTime'>
+    readonly updatedAt: FieldRef<"Profile", 'DateTime'>
     readonly email: FieldRef<"Profile", 'String'>
     readonly firstName: FieldRef<"Profile", 'String'>
     readonly lastName: FieldRef<"Profile", 'String'>
@@ -2688,8 +2690,6 @@ export namespace Prisma {
     readonly temporary: FieldRef<"Profile", 'Boolean'>
     readonly termsAcceptedAt: FieldRef<"Profile", 'DateTime'>
     readonly showInSearch: FieldRef<"Profile", 'Boolean'>
-    readonly createdAt: FieldRef<"Profile", 'DateTime'>
-    readonly updatedAt: FieldRef<"Profile", 'DateTime'>
   }
     
 
@@ -12344,7 +12344,9 @@ export namespace Prisma {
 
   export const ProfileScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
+    archived: 'archived',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     email: 'email',
     firstName: 'firstName',
     lastName: 'lastName',
@@ -12353,9 +12355,7 @@ export namespace Prisma {
     avatarId: 'avatarId',
     temporary: 'temporary',
     termsAcceptedAt: 'termsAcceptedAt',
-    showInSearch: 'showInSearch',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    showInSearch: 'showInSearch'
   };
 
   export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
@@ -12562,6 +12562,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -12586,13 +12593,6 @@ export namespace Prisma {
    * Reference to a field of type 'CurrencyCode[]'
    */
   export type ListEnumCurrencyCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CurrencyCode[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -12695,7 +12695,9 @@ export namespace Prisma {
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
     id?: StringFilter<"Profile"> | string
-    userId?: StringFilter<"Profile"> | string
+    archived?: BoolFilter<"Profile"> | boolean
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
     email?: StringFilter<"Profile"> | string
     firstName?: StringFilter<"Profile"> | string
     lastName?: StringFilter<"Profile"> | string
@@ -12705,8 +12707,6 @@ export namespace Prisma {
     temporary?: BoolNullableFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
     showInSearch?: BoolFilter<"Profile"> | boolean
-    createdAt?: DateTimeFilter<"Profile"> | Date | string
-    updatedAt?: DateTimeFilter<"Profile"> | Date | string
     groups?: GroupParticipantListRelationFilter
     avatar?: XOR<ImageNullableRelationFilter, ImageWhereInput> | null
     messages?: MessageListRelationFilter
@@ -12719,7 +12719,9 @@ export namespace Prisma {
 
   export type ProfileOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    archived?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -12729,8 +12731,6 @@ export namespace Prisma {
     temporary?: SortOrderInput | SortOrder
     termsAcceptedAt?: SortOrderInput | SortOrder
     showInSearch?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     groups?: GroupParticipantOrderByRelationAggregateInput
     avatar?: ImageOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
@@ -12742,11 +12742,13 @@ export namespace Prisma {
   }
 
   export type ProfileWhereUniqueInput = Prisma.AtLeast<{
-    userId?: string
+    id?: string
     AND?: ProfileWhereInput | ProfileWhereInput[]
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
-    id?: StringFilter<"Profile"> | string
+    archived?: BoolFilter<"Profile"> | boolean
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
     email?: StringFilter<"Profile"> | string
     firstName?: StringFilter<"Profile"> | string
     lastName?: StringFilter<"Profile"> | string
@@ -12756,8 +12758,6 @@ export namespace Prisma {
     temporary?: BoolNullableFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
     showInSearch?: BoolFilter<"Profile"> | boolean
-    createdAt?: DateTimeFilter<"Profile"> | Date | string
-    updatedAt?: DateTimeFilter<"Profile"> | Date | string
     groups?: GroupParticipantListRelationFilter
     avatar?: XOR<ImageNullableRelationFilter, ImageWhereInput> | null
     messages?: MessageListRelationFilter
@@ -12766,11 +12766,13 @@ export namespace Prisma {
     expenseShares?: ExpenseShareListRelationFilter
     paymentsReceived?: PaymentListRelationFilter
     paymentsPaid?: PaymentListRelationFilter
-  }, "userId">
+  }, "id">
 
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    archived?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -12780,8 +12782,6 @@ export namespace Prisma {
     temporary?: SortOrderInput | SortOrder
     termsAcceptedAt?: SortOrderInput | SortOrder
     showInSearch?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
     _max?: ProfileMaxOrderByAggregateInput
     _min?: ProfileMinOrderByAggregateInput
@@ -12792,7 +12792,9 @@ export namespace Prisma {
     OR?: ProfileScalarWhereWithAggregatesInput[]
     NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Profile"> | string
-    userId?: StringWithAggregatesFilter<"Profile"> | string
+    archived?: BoolWithAggregatesFilter<"Profile"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     email?: StringWithAggregatesFilter<"Profile"> | string
     firstName?: StringWithAggregatesFilter<"Profile"> | string
     lastName?: StringWithAggregatesFilter<"Profile"> | string
@@ -12802,8 +12804,6 @@ export namespace Prisma {
     temporary?: BoolNullableWithAggregatesFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
     showInSearch?: BoolWithAggregatesFilter<"Profile"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
   }
 
   export type GroupWhereInput = {
@@ -13523,8 +13523,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -13533,8 +13535,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
@@ -13546,8 +13546,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -13557,8 +13559,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
@@ -13570,7 +13570,9 @@ export namespace Prisma {
 
   export type ProfileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -13579,8 +13581,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
@@ -13593,7 +13593,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -13603,8 +13605,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
@@ -13615,8 +13615,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateManyInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -13626,13 +13628,13 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type ProfileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -13641,13 +13643,13 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProfileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -13657,8 +13659,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type GroupCreateInput = {
@@ -14439,6 +14439,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -14486,11 +14491,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type GroupParticipantListRelationFilter = {
@@ -14555,7 +14555,9 @@ export namespace Prisma {
 
   export type ProfileCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    archived?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -14565,13 +14567,13 @@ export namespace Prisma {
     temporary?: SortOrder
     termsAcceptedAt?: SortOrder
     showInSearch?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type ProfileMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    archived?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -14581,13 +14583,13 @@ export namespace Prisma {
     temporary?: SortOrder
     termsAcceptedAt?: SortOrder
     showInSearch?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type ProfileMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    archived?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     email?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -14597,8 +14599,6 @@ export namespace Prisma {
     temporary?: SortOrder
     termsAcceptedAt?: SortOrder
     showInSearch?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -14617,6 +14617,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -14681,14 +14689,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type GroupCountOrderByAggregateInput = {
@@ -15382,6 +15382,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -15396,10 +15400,6 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type GroupParticipantUpdateManyWithoutUserNestedInput = {
@@ -16244,6 +16244,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16292,11 +16297,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16323,6 +16323,14 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -16397,14 +16405,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
@@ -17318,8 +17318,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutGroupsInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -17328,8 +17330,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseCreateNestedManyWithoutOwnerInput
@@ -17340,8 +17340,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutGroupsInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -17351,8 +17353,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
     expensesPaid?: ExpenseUncheckedCreateNestedManyWithoutPayerInput
@@ -17414,7 +17414,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutGroupsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -17423,8 +17425,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUpdateManyWithoutOwnerNestedInput
@@ -17436,7 +17436,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutGroupsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -17446,8 +17448,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
     expensesPaid?: ExpenseUncheckedUpdateManyWithoutPayerNestedInput
@@ -17538,8 +17538,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutAvatarInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -17548,8 +17550,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseCreateNestedManyWithoutOwnerInput
@@ -17560,8 +17560,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutAvatarInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -17570,8 +17572,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
@@ -17643,7 +17643,9 @@ export namespace Prisma {
     OR?: ProfileScalarWhereInput[]
     NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
     id?: StringFilter<"Profile"> | string
-    userId?: StringFilter<"Profile"> | string
+    archived?: BoolFilter<"Profile"> | boolean
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
     email?: StringFilter<"Profile"> | string
     firstName?: StringFilter<"Profile"> | string
     lastName?: StringFilter<"Profile"> | string
@@ -17653,13 +17655,13 @@ export namespace Prisma {
     temporary?: BoolNullableFilter<"Profile"> | boolean | null
     termsAcceptedAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
     showInSearch?: BoolFilter<"Profile"> | boolean
-    createdAt?: DateTimeFilter<"Profile"> | Date | string
-    updatedAt?: DateTimeFilter<"Profile"> | Date | string
   }
 
   export type ProfileCreateWithoutMessagesInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -17668,8 +17670,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     expensesOwned?: ExpenseCreateNestedManyWithoutOwnerInput
@@ -17680,8 +17680,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutMessagesInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -17691,8 +17693,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
     expensesPaid?: ExpenseUncheckedCreateNestedManyWithoutPayerInput
@@ -17782,7 +17782,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -17791,8 +17793,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     expensesOwned?: ExpenseUpdateManyWithoutOwnerNestedInput
@@ -17804,7 +17804,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -17814,8 +17816,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
     expensesPaid?: ExpenseUncheckedUpdateManyWithoutPayerNestedInput
@@ -18035,8 +18035,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutExpensesOwnedInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18045,8 +18047,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
@@ -18057,8 +18057,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutExpensesOwnedInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18068,8 +18070,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesPaid?: ExpenseUncheckedCreateNestedManyWithoutPayerInput
@@ -18084,8 +18084,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutExpensesPaidInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18094,8 +18096,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
@@ -18106,8 +18106,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutExpensesPaidInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18117,8 +18119,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
@@ -18242,7 +18242,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutExpensesOwnedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18251,8 +18253,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
@@ -18264,7 +18264,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutExpensesOwnedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18274,8 +18276,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesPaid?: ExpenseUncheckedUpdateManyWithoutPayerNestedInput
@@ -18297,7 +18297,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutExpensesPaidInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18306,8 +18308,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
@@ -18319,7 +18319,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutExpensesPaidInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18329,8 +18331,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
@@ -18413,8 +18413,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutExpenseSharesInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18423,8 +18425,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
@@ -18435,8 +18435,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutExpenseSharesInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18446,8 +18448,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
@@ -18509,7 +18509,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutExpenseSharesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18518,8 +18520,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
@@ -18531,7 +18531,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutExpenseSharesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18541,8 +18543,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
@@ -18628,8 +18628,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutPaymentsReceivedInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18638,8 +18640,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
@@ -18650,8 +18650,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutPaymentsReceivedInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18661,8 +18663,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
@@ -18677,8 +18677,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateWithoutPaymentsPaidInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18687,8 +18689,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantCreateNestedManyWithoutUserInput
     avatar?: ImageCreateNestedOneWithoutProfileInput
     messages?: MessageCreateNestedManyWithoutAuthorInput
@@ -18699,8 +18699,10 @@ export namespace Prisma {
   }
 
   export type ProfileUncheckedCreateWithoutPaymentsPaidInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -18710,8 +18712,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
     groups?: GroupParticipantUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutAuthorInput
     expensesOwned?: ExpenseUncheckedCreateNestedManyWithoutOwnerInput
@@ -18779,7 +18779,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutPaymentsReceivedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18788,8 +18790,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
@@ -18801,7 +18801,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutPaymentsReceivedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18811,8 +18813,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
@@ -18834,7 +18834,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutPaymentsPaidInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18843,8 +18845,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     avatar?: ImageUpdateOneWithoutProfileNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
@@ -18856,7 +18856,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutPaymentsPaidInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -18866,8 +18868,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
@@ -19428,8 +19428,10 @@ export namespace Prisma {
   }
 
   export type ProfileCreateManyAvatarInput = {
-    id: string
-    userId: string
+    id?: string
+    archived?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
     email: string
     firstName: string
     lastName: string
@@ -19438,8 +19440,6 @@ export namespace Prisma {
     temporary?: boolean | null
     termsAcceptedAt?: Date | string | null
     showInSearch?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type GroupUpdateWithoutCoverImageInput = {
@@ -19485,7 +19485,9 @@ export namespace Prisma {
 
   export type ProfileUpdateWithoutAvatarInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -19494,8 +19496,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUpdateManyWithoutOwnerNestedInput
@@ -19507,7 +19507,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateWithoutAvatarInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -19516,8 +19518,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groups?: GroupParticipantUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutAuthorNestedInput
     expensesOwned?: ExpenseUncheckedUpdateManyWithoutOwnerNestedInput
@@ -19529,7 +19529,9 @@ export namespace Prisma {
 
   export type ProfileUncheckedUpdateManyWithoutAvatarInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -19538,8 +19540,6 @@ export namespace Prisma {
     temporary?: NullableBoolFieldUpdateOperationsInput | boolean | null
     termsAcceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     showInSearch?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageAttachmentCreateManyMessageInput = {

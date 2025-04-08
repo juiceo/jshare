@@ -13,9 +13,9 @@ export declare const ImageScalarSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, "strict", z.ZodTypeAny, {
     id: string;
+    archived: boolean;
     createdAt: Date;
     updatedAt: Date;
-    archived: boolean;
     path: string;
     bucket: string;
     uploadedById: string;
@@ -25,9 +25,9 @@ export declare const ImageScalarSchema: z.ZodObject<{
     path: string;
     bucket: string;
     uploadedById: string;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }>;
 /**
@@ -47,9 +47,9 @@ export declare const ImageSchema: z.ZodObject<z.objectUtil.extendShape<{
     Profile: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
 }>, "strip", z.ZodTypeAny, {
     id: string;
+    archived: boolean;
     createdAt: Date;
     updatedAt: Date;
-    archived: boolean;
     path: string;
     bucket: string;
     uploadedById: string;
@@ -62,10 +62,10 @@ export declare const ImageSchema: z.ZodObject<z.objectUtil.extendShape<{
     bucket: string;
     uploadedById: string;
     Profile?: unknown[] | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     Group?: unknown[] | undefined;
-    archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }>;
 /**
@@ -137,9 +137,9 @@ export declare const ImagePrismaUpdateSchema: z.ZodObject<{
  */
 export declare const ImageCreateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     path: z.ZodString;
     bucket: z.ZodString;
     uploadedById: z.ZodString;
@@ -149,18 +149,18 @@ export declare const ImageCreateScalarSchema: z.ZodObject<{
     bucket: string;
     uploadedById: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }, {
     path: string;
     bucket: string;
     uploadedById: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }>;
 /**
@@ -168,9 +168,9 @@ export declare const ImageCreateScalarSchema: z.ZodObject<{
  */
 export declare const ImageCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     path: z.ZodString;
     bucket: z.ZodString;
     uploadedById: z.ZodString;
@@ -180,18 +180,18 @@ export declare const ImageCreateSchema: z.ZodObject<{
     bucket: string;
     uploadedById: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }, {
     path: string;
     bucket: string;
     uploadedById: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     blurhash?: string | null | undefined;
 }>;
 /**
@@ -208,18 +208,18 @@ export declare const ImageUpdateScalarSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
     uploadedById?: string | undefined;
     blurhash?: string | null | undefined;
 }, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
     uploadedById?: string | undefined;
@@ -239,18 +239,18 @@ export declare const ImageUpdateSchema: z.ZodObject<{
     blurhash: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
     uploadedById?: string | undefined;
     blurhash?: string | null | undefined;
 }, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     path?: string | undefined;
     bucket?: string | undefined;
     uploadedById?: string | undefined;

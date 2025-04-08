@@ -8,11 +8,20 @@ const metadata = {
                 id: {
                     name: "id",
                     type: "String",
-                }, userId: {
-                    name: "userId",
-                    type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                }, archived: {
+                    name: "archived",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
                 }, email: {
                     name: "email",
                     type: "String",
@@ -102,20 +111,12 @@ const metadata = {
                     name: "showInSearch",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": true }] }],
-                }, createdAt: {
-                    name: "createdAt",
-                    type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
-                }, updatedAt: {
-                    name: "updatedAt",
-                    type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
                 },
             },
             uniqueConstraints: {
-                userId: {
-                    name: "userId",
-                    fields: ["userId"]
+                id: {
+                    name: "id",
+                    fields: ["id"]
                 },
             },
             attributes: [{ "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
@@ -237,7 +238,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [] }],
                     backLink: 'groups',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "userId" },
+                    foreignKeyMapping: { "id": "userId" },
                 }, groupId: {
                     name: "groupId",
                     type: "String",
@@ -369,7 +370,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [] }],
                     backLink: 'messages',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "authorId" },
+                    foreignKeyMapping: { "id": "authorId" },
                 }, groupId: {
                     name: "groupId",
                     type: "String",
@@ -490,7 +491,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [{ "name": "name", "value": "expense_owner" }] }],
                     backLink: 'expensesOwned',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "ownerId" },
+                    foreignKeyMapping: { "id": "ownerId" },
                 }, payerId: {
                     name: "payerId",
                     type: "String",
@@ -503,7 +504,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [{ "name": "name", "value": "expense_payer" }] }],
                     backLink: 'expensesPaid',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "payerId" },
+                    foreignKeyMapping: { "id": "payerId" },
                 }, groupId: {
                     name: "groupId",
                     type: "String",
@@ -586,7 +587,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [] }],
                     backLink: 'expenseShares',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "userId" },
+                    foreignKeyMapping: { "id": "userId" },
                 }, expenseId: {
                     name: "expenseId",
                     type: "String",
@@ -682,7 +683,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [{ "name": "name", "value": "payment_recipient" }] }],
                     backLink: 'paymentsReceived',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "recipientId" },
+                    foreignKeyMapping: { "id": "recipientId" },
                 }, payerId: {
                     name: "payerId",
                     type: "String",
@@ -695,7 +696,7 @@ const metadata = {
                     attributes: [{ "name": "@relation", "args": [{ "name": "name", "value": "payment_payer" }] }],
                     backLink: 'paymentsPaid',
                     isRelationOwner: true,
-                    foreignKeyMapping: { "userId": "payerId" },
+                    foreignKeyMapping: { "id": "payerId" },
                 },
             },
             uniqueConstraints: {

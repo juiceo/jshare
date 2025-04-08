@@ -26,9 +26,7 @@ plugin zod {
     provider = '@core/zod'
 }
 
-model Profile {
-    id               String
-    userId           String             @id()
+model Profile extends BaseModel {
     email            String
     firstName        String
     lastName         String
@@ -46,10 +44,6 @@ model Profile {
     paymentsReceived Payment[]          @relation(name: "payment_recipient")
     paymentsPaid     Payment[]          @relation(name: "payment_payer")
     showInSearch     Boolean            @default(true)
-
-    createdAt        DateTime           @default(now())
-    updatedAt        DateTime           @default(now()) @updatedAt
-
 
     @@allow('all', true)
     @@map("profiles")
@@ -75,7 +69,7 @@ model Group extends BaseModel {
 
 model GroupParticipant extends BaseModel {
     userId      String
-    user        Profile     @relation(fields: [userId], references: [userId])
+    user        Profile     @relation(fields: [userId], references: [id])
     groupId     String
     group       Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
     role        Role
@@ -108,7 +102,7 @@ model Message extends BaseModel {
 
     authorType  AuthorType
     authorId    String?
-    author      Profile?            @relation(fields: [authorId], references: [userId])
+    author      Profile?            @relation(fields: [authorId], references: [id])
 
     groupId     String
     group       Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -133,10 +127,10 @@ model MessageAttachment extends BaseModel {
 
 model Expense extends BaseModel {
     ownerId            String
-    owner              Profile             @relation(name: "expense_owner", fields: [ownerId], references: [userId])
+    owner              Profile             @relation(name: "expense_owner", fields: [ownerId], references: [id])
 
     payerId            String
-    payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [userId])
+    payer              Profile             @relation(name: "expense_payer", fields: [payerId], references: [id])
 
     groupId            String
     group              Group               @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -155,7 +149,7 @@ model Expense extends BaseModel {
 
 model ExpenseShare extends BaseModel {
     userId     String
-    user       Profile             @relation(fields: [userId], references: [userId])
+    user       Profile             @relation(fields: [userId], references: [id])
 
     expenseId  String
     expense    Expense             @relation(fields: [expenseId], references: [id], onDelete: Cascade)
@@ -178,10 +172,10 @@ model Payment extends BaseModel {
     conversion  CurrencyConversion? @json
 
     recipientId String
-    recipient   Profile             @relation(name: "payment_recipient", fields: [recipientId], references: [userId])
+    recipient   Profile             @relation(name: "payment_recipient", fields: [recipientId], references: [id])
 
     payerId     String
-    payer       Profile             @relation(name: "payment_payer", fields: [payerId], references: [userId])
+    payer       Profile             @relation(name: "payment_payer", fields: [payerId], references: [id])
 
     @@allow('all', true)
     @@map("payments")

@@ -6,7 +6,9 @@ const zod_1 = require("zod");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    userId: zod_1.z.string(),
+    archived: zod_1.z.boolean().default(false),
+    createdAt: zod_1.z.coerce.date().default(() => new Date()),
+    updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     email: zod_1.z.string(),
     firstName: zod_1.z.string(),
     lastName: zod_1.z.string(),
@@ -15,8 +17,6 @@ const baseSchema = zod_1.z.object({
     temporary: zod_1.z.boolean().nullish(),
     termsAcceptedAt: zod_1.z.coerce.date().nullish(),
     showInSearch: zod_1.z.boolean().default(true),
-    createdAt: zod_1.z.coerce.date().default(() => new Date()),
-    updatedAt: zod_1.z.coerce.date().default(() => new Date()),
 }).strict();
 const relationSchema = zod_1.z.object({
     groups: zod_1.z.array(zod_1.z.unknown()).optional(),
@@ -50,7 +50,9 @@ exports.ProfilePrismaCreateSchema = baseSchema.partial().passthrough();
  */
 exports.ProfilePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
-    userId: zod_1.z.string(),
+    archived: zod_1.z.boolean().default(false),
+    createdAt: zod_1.z.coerce.date().default(() => new Date()),
+    updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     email: zod_1.z.string(),
     firstName: zod_1.z.string(),
     lastName: zod_1.z.string(),
@@ -58,15 +60,13 @@ exports.ProfilePrismaUpdateSchema = zod_1.z.object({
     currency: CurrencyCode_schema_1.CurrencyCodeSchema,
     temporary: zod_1.z.boolean().nullish(),
     termsAcceptedAt: zod_1.z.coerce.date().nullish(),
-    showInSearch: zod_1.z.boolean().default(true),
-    createdAt: zod_1.z.coerce.date().default(() => new Date()),
-    updatedAt: zod_1.z.coerce.date().default(() => new Date())
+    showInSearch: zod_1.z.boolean().default(true)
 }).partial().passthrough();
 /**
  * `Profile` schema for create operations excluding foreign keys and relations.
  */
 exports.ProfileCreateScalarSchema = baseSchema.partial({
-    lastActivity: true, showInSearch: true, createdAt: true, updatedAt: true
+    id: true, archived: true, createdAt: true, updatedAt: true, lastActivity: true, showInSearch: true
 });
 /**
  * `Profile` schema for create operations including scalar fields, foreign key fields, and validations.

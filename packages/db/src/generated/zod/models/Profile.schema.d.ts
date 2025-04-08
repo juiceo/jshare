@@ -4,7 +4,9 @@ import { z } from 'zod';
  */
 export declare const ProfileScalarSchema: z.ZodObject<{
     id: z.ZodString;
-    userId: z.ZodString;
+    archived: z.ZodDefault<z.ZodBoolean>;
+    createdAt: z.ZodDefault<z.ZodDate>;
+    updatedAt: z.ZodDefault<z.ZodDate>;
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
@@ -13,41 +15,41 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     termsAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     showInSearch: z.ZodDefault<z.ZodBoolean>;
-    createdAt: z.ZodDefault<z.ZodDate>;
-    updatedAt: z.ZodDefault<z.ZodDate>;
 }, "strict", z.ZodTypeAny, {
     id: string;
-    userId: string;
+    archived: boolean;
+    createdAt: Date;
+    updatedAt: Date;
     email: string;
     firstName: string;
     lastName: string;
     lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     showInSearch: boolean;
-    createdAt: Date;
-    updatedAt: Date;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
 }, {
     id: string;
-    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }>;
 /**
  * `Profile` schema including all fields (scalar, foreign key, and relations) and validations.
  */
 export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
     id: z.ZodString;
-    userId: z.ZodString;
+    archived: z.ZodDefault<z.ZodBoolean>;
+    createdAt: z.ZodDefault<z.ZodDate>;
+    updatedAt: z.ZodDefault<z.ZodDate>;
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
@@ -56,8 +58,6 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     termsAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     showInSearch: z.ZodDefault<z.ZodBoolean>;
-    createdAt: z.ZodDefault<z.ZodDate>;
-    updatedAt: z.ZodDefault<z.ZodDate>;
 }, {
     avatarId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }>, {
@@ -71,15 +71,15 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     paymentsPaid: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
 }>, "strip", z.ZodTypeAny, {
     id: string;
-    userId: string;
+    archived: boolean;
+    createdAt: Date;
+    updatedAt: Date;
     email: string;
     firstName: string;
     lastName: string;
     lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     showInSearch: boolean;
-    createdAt: Date;
-    updatedAt: Date;
     groups?: unknown[] | undefined;
     avatarId?: string | null | undefined;
     avatar?: Record<string, unknown> | undefined;
@@ -93,11 +93,13 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     paymentsPaid?: unknown[] | undefined;
 }, {
     id: string;
-    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
     groups?: unknown[] | undefined;
     avatarId?: string | null | undefined;
@@ -111,8 +113,6 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     paymentsReceived?: unknown[] | undefined;
     paymentsPaid?: unknown[] | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }>;
 /**
  * Schema used for validating Prisma create input. For internal use only.
@@ -120,7 +120,9 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
  */
 export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -129,11 +131,11 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -142,11 +144,11 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -155,8 +157,6 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">>;
 /**
  * Schema used for validating Prisma update input. For internal use only.
@@ -164,7 +164,9 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
  */
 export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -173,11 +175,11 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -186,11 +188,11 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -199,15 +201,15 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">>;
 /**
  * `Profile` schema for create operations excluding foreign keys and relations.
  */
 export declare const ProfileCreateScalarSchema: z.ZodObject<{
-    id: z.ZodString;
-    userId: z.ZodString;
+    id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
@@ -216,41 +218,41 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     termsAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
-    id: string;
-    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
+    id?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }, {
-    id: string;
-    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
+    id?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }>;
 /**
  * `Profile` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
-    id: z.ZodString;
-    userId: z.ZodString;
+    id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodString;
     firstName: z.ZodString;
     lastName: z.ZodString;
@@ -259,45 +261,45 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     temporary: z.ZodOptional<z.ZodNullable<z.ZodBoolean>>;
     termsAcceptedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, {
     avatarId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }>, "strip", z.ZodTypeAny, {
-    id: string;
-    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
+    id?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }, {
-    id: string;
-    userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
+    id?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }>;
 /**
  * `Profile` schema for update operations excluding foreign keys and relations.
  */
 export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -306,11 +308,11 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
-    userId?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
@@ -319,11 +321,11 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }, {
     id?: string | undefined;
-    userId?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
@@ -332,15 +334,15 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }>;
 /**
  * `Profile` schema for update operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
-    userId: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
+    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
     lastName: z.ZodOptional<z.ZodString>;
@@ -349,13 +351,13 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     temporary: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodBoolean>>>;
     termsAcceptedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     showInSearch: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
-    createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, {
     avatarId: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }>, "strip", z.ZodTypeAny, {
     id?: string | undefined;
-    userId?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
@@ -365,11 +367,11 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }, {
     id?: string | undefined;
-    userId?: string | undefined;
+    archived?: boolean | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
@@ -379,6 +381,4 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
     showInSearch?: boolean | undefined;
-    createdAt?: Date | undefined;
-    updatedAt?: Date | undefined;
 }>;

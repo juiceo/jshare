@@ -11,17 +11,17 @@ export declare const ExchangeRatesScalarSchema: z.ZodObject<{
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
     id: string;
+    archived: boolean;
     createdAt: Date;
     updatedAt: Date;
-    archived: boolean;
     baseCurrency: string;
     rates?: any;
 }, {
     id: string;
     baseCurrency: string;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     rates?: any;
 }>;
 /**
@@ -36,17 +36,17 @@ export declare const ExchangeRatesSchema: z.ZodObject<{
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
     id: string;
+    archived: boolean;
     createdAt: Date;
     updatedAt: Date;
-    archived: boolean;
     baseCurrency: string;
     rates?: any;
 }, {
     id: string;
     baseCurrency: string;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     rates?: any;
 }>;
 /**
@@ -106,24 +106,24 @@ export declare const ExchangeRatesPrismaUpdateSchema: z.ZodObject<{
  */
 export declare const ExchangeRatesCreateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     baseCurrency: z.ZodString;
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
     baseCurrency: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     rates?: any;
 }, {
     baseCurrency: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     rates?: any;
 }>;
 /**
@@ -131,24 +131,24 @@ export declare const ExchangeRatesCreateScalarSchema: z.ZodObject<{
  */
 export declare const ExchangeRatesCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
+    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
-    archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     baseCurrency: z.ZodString;
     rates: z.ZodAny;
 }, "strict", z.ZodTypeAny, {
     baseCurrency: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     rates?: any;
 }, {
     baseCurrency: string;
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     rates?: any;
 }>;
 /**
@@ -163,16 +163,16 @@ export declare const ExchangeRatesUpdateScalarSchema: z.ZodObject<{
     rates: z.ZodOptional<z.ZodAny>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
 }, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
 }>;
@@ -188,16 +188,16 @@ export declare const ExchangeRatesUpdateSchema: z.ZodObject<{
     rates: z.ZodOptional<z.ZodAny>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
 }, {
     id?: string | undefined;
+    archived?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    archived?: boolean | undefined;
     baseCurrency?: string | undefined;
     rates?: any;
 }>;
