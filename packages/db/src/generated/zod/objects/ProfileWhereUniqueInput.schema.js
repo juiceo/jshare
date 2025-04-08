@@ -4,11 +4,11 @@ exports.ProfileWhereUniqueInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
-const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
+const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
 const BoolNullableFilter_schema_1 = require("./BoolNullableFilter.schema");
 const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const BoolFilter_schema_1 = require("./BoolFilter.schema");
@@ -22,9 +22,8 @@ const PaymentListRelationFilter_schema_1 = require("./PaymentListRelationFilter.
 exports.ProfileWhereUniqueInputObjectSchema = zod_1.z.object({
     userId: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
-        zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
-        zod_1.z.string(),
-        zod_1.z.null()]).optional().nullable(), email: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.string()]).optional(), email: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), firstName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), lastName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), lastActivity: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),

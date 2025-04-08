@@ -27,7 +27,7 @@ plugin zod {
 }
 
 model Profile {
-    id               String?
+    id               String
     userId           String             @id()
     email            String
     firstName        String

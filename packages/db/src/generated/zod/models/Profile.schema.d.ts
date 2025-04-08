@@ -3,7 +3,7 @@ import { z } from 'zod';
  * `Profile` schema excluding foreign keys and relations.
  */
 export declare const ProfileScalarSchema: z.ZodObject<{
-    id: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    id: z.ZodString;
     userId: z.ZodString;
     email: z.ZodString;
     firstName: z.ZodString;
@@ -16,6 +16,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
@@ -25,16 +26,15 @@ export declare const ProfileScalarSchema: z.ZodObject<{
     showInSearch: boolean;
     createdAt: Date;
     updatedAt: Date;
-    id?: string | null | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
 }, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id?: string | null | undefined;
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
@@ -46,7 +46,7 @@ export declare const ProfileScalarSchema: z.ZodObject<{
  * `Profile` schema including all fields (scalar, foreign key, and relations) and validations.
  */
 export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
-    id: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    id: z.ZodString;
     userId: z.ZodString;
     email: z.ZodString;
     firstName: z.ZodString;
@@ -70,6 +70,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     paymentsReceived: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
     paymentsPaid: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
@@ -79,7 +80,6 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     showInSearch: boolean;
     createdAt: Date;
     updatedAt: Date;
-    id?: string | null | undefined;
     groups?: unknown[] | undefined;
     avatarId?: string | null | undefined;
     avatar?: Record<string, unknown> | undefined;
@@ -92,12 +92,12 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
     paymentsReceived?: unknown[] | undefined;
     paymentsPaid?: unknown[] | undefined;
 }, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id?: string | null | undefined;
     lastActivity?: Date | undefined;
     groups?: unknown[] | undefined;
     avatarId?: string | null | undefined;
@@ -119,7 +119,7 @@ export declare const ProfileSchema: z.ZodObject<z.objectUtil.extendShape<z.objec
  * @private
  */
 export declare const ProfilePrismaCreateSchema: z.ZodObject<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -132,7 +132,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -145,7 +145,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -163,7 +163,7 @@ export declare const ProfilePrismaCreateSchema: z.ZodObject<{
  * @private
  */
 export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -176,7 +176,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -189,7 +189,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -206,7 +206,7 @@ export declare const ProfilePrismaUpdateSchema: z.ZodObject<{
  * `Profile` schema for create operations excluding foreign keys and relations.
  */
 export declare const ProfileCreateScalarSchema: z.ZodObject<{
-    id: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    id: z.ZodString;
     userId: z.ZodString;
     email: z.ZodString;
     firstName: z.ZodString;
@@ -219,12 +219,12 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id?: string | null | undefined;
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
@@ -232,12 +232,12 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id?: string | null | undefined;
     lastActivity?: Date | undefined;
     temporary?: boolean | null | undefined;
     termsAcceptedAt?: Date | null | undefined;
@@ -249,7 +249,7 @@ export declare const ProfileCreateScalarSchema: z.ZodObject<{
  * `Profile` schema for create operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
-    id: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    id: z.ZodString;
     userId: z.ZodString;
     email: z.ZodString;
     firstName: z.ZodString;
@@ -264,12 +264,12 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
 }, {
     avatarId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }>, "strip", z.ZodTypeAny, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id?: string | null | undefined;
     lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
@@ -278,12 +278,12 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
+    id: string;
     userId: string;
     email: string;
     firstName: string;
     lastName: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
-    id?: string | null | undefined;
     lastActivity?: Date | undefined;
     avatarId?: string | null | undefined;
     temporary?: boolean | null | undefined;
@@ -296,7 +296,7 @@ export declare const ProfileCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
  * `Profile` schema for update operations excluding foreign keys and relations.
  */
 export declare const ProfileUpdateScalarSchema: z.ZodObject<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -309,7 +309,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
 }, "strict", z.ZodTypeAny, {
-    id?: string | null | undefined;
+    id?: string | undefined;
     userId?: string | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
@@ -322,7 +322,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
-    id?: string | null | undefined;
+    id?: string | undefined;
     userId?: string | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
@@ -339,7 +339,7 @@ export declare const ProfileUpdateScalarSchema: z.ZodObject<{
  * `Profile` schema for update operations including scalar fields, foreign key fields, and validations.
  */
 export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
-    id: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    id: z.ZodOptional<z.ZodString>;
     userId: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodString>;
     firstName: z.ZodOptional<z.ZodString>;
@@ -354,7 +354,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
 }, {
     avatarId: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
 }>, "strip", z.ZodTypeAny, {
-    id?: string | null | undefined;
+    id?: string | undefined;
     userId?: string | undefined;
     email?: string | undefined;
     firstName?: string | undefined;
@@ -368,7 +368,7 @@ export declare const ProfileUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
-    id?: string | null | undefined;
+    id?: string | undefined;
     userId?: string | undefined;
     email?: string | undefined;
     firstName?: string | undefined;

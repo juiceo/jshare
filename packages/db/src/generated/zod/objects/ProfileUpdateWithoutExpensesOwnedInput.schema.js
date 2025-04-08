@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfileUpdateWithoutExpensesOwnedInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
-const NullableStringFieldUpdateOperationsInput_schema_1 = require("./NullableStringFieldUpdateOperationsInput.schema");
 const StringFieldUpdateOperationsInput_schema_1 = require("./StringFieldUpdateOperationsInput.schema");
 const DateTimeFieldUpdateOperationsInput_schema_1 = require("./DateTimeFieldUpdateOperationsInput.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
@@ -20,8 +19,7 @@ const PaymentUpdateManyWithoutRecipientNestedInput_schema_1 = require("./Payment
 const PaymentUpdateManyWithoutPayerNestedInput_schema_1 = require("./PaymentUpdateManyWithoutPayerNestedInput.schema");
 exports.ProfileUpdateWithoutExpensesOwnedInputObjectSchema = zod_1.z.object({
     id: zod_1.z.union([zod_1.z.string(),
-        zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
-        zod_1.z.null()]).optional().nullable(), userId: zod_1.z.union([zod_1.z.string(),
+        zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), userId: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), email: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), firstName: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), lastName: zod_1.z.union([zod_1.z.string(),

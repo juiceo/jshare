@@ -8,7 +8,6 @@ const metadata = {
                 id: {
                     name: "id",
                     type: "String",
-                    isOptional: true,
                 }, userId: {
                     name: "userId",
                     type: "String",

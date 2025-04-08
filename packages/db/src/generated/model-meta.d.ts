@@ -6,7 +6,6 @@ declare const metadata: {
                 id: {
                     name: string;
                     type: string;
-                    isOptional: boolean;
                 };
                 userId: {
                     name: string;
