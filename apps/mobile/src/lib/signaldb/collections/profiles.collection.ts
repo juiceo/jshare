@@ -1,11 +1,14 @@
 import { Collection } from '@signaldb/core';
+import maverickReactivityAdapter from '@signaldb/maverickjs';
 
-import type { DB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 
 import { createAsyncStorageAdapter } from '~/lib/signaldb/asyncStoragePersistenceAdapter';
 
-const profiles = new Collection<DB.Profile, string>({
-    persistence: createAsyncStorageAdapter('profiles'),
+export const Profiles = new Collection<DB.Profile, string>({
+    persistence: createAsyncStorageAdapter({
+        name: 'profile',
+        schema: zDB.models.ProfileSchema.required(),
+    }),
+    reactivity: maverickReactivityAdapter,
 });
-
-export default profiles;

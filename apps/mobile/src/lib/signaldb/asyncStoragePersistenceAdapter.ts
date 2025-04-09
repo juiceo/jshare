@@ -1,20 +1,33 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createPersistenceAdapter } from '@signaldb/core';
 import SuperJSON from 'superjson';
+import { z } from 'zod';
 
-export const createAsyncStorageAdapter = <T extends { id: I } & Record<string, any>, I>(
-    collectionName: string
-) => {
-    const key = `asyncStorageAdapter:${collectionName}`;
-
+export const createAsyncStorageAdapter = <TSchema extends z.ZodSchema>(args: {
+    name: string;
+    schema: TSchema;
+}) => {
+    const key = `asyncStorageAdapter::${args.name}`;
+    type Data = z.infer<TSchema>;
     /**
      * Retrieves items from AsyncStorage and deserializes them.
      *
      * @returns The deserialized items from AsyncStorage.
      */
-    async function getItems(): Promise<T[]> {
+    async function getItems(): Promise<Data[]> {
         const value = await AsyncStorage.getItem(key);
-        return SuperJSON.parse<T[]>(value ?? '[]');
+        console.log('getItems');
+        const items = SuperJSON.parse<any[]>(value ?? '[]');
+        console.log('parsed items');
+
+        if (!items) return [];
+
+        return items
+            .map((item) => {
+                const parsed = args.schema.safeParse(item);
+                return parsed.success ? parsed.data : null;
+            })
+            .filter((item) => !!item);
     }
 
     /**
@@ -22,12 +35,12 @@ export const createAsyncStorageAdapter = <T extends { id: I } & Record<string, a
      *
      * @param items The items to save.
      */
-    async function saveItems(items: T[]) {
+    async function saveItems(items: Data[]) {
         const value = SuperJSON.stringify(items);
         await AsyncStorage.setItem(key, value);
     }
 
-    return createPersistenceAdapter<T, I>({
+    return createPersistenceAdapter<Data, Data['id']>({
         async register() {},
         async load() {
             const items = await getItems();

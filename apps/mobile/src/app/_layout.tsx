@@ -19,6 +19,7 @@ import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
 import { SessionProvider } from '~/wrappers/SessionProvider';
+import { SignalDBProvider, useSignalDBReady } from '~/wrappers/SignalProvider';
 
 dayjs.extend(relativeTime);
 
@@ -40,16 +41,18 @@ export default function AppLayout() {
                             <JotaiProvider>
                                 <SessionProvider>
                                     <QueryProvider>
-                                        <BottomSheetModalProvider>
-                                            <AppErrorBoundary>
-                                                {storybookEnabled ? (
-                                                    <StorybookRoot />
-                                                ) : (
-                                                    <RootStack />
-                                                )}
-                                                <ToastManager />
-                                            </AppErrorBoundary>
-                                        </BottomSheetModalProvider>
+                                        <SignalDBProvider>
+                                            <BottomSheetModalProvider>
+                                                <AppErrorBoundary>
+                                                    {storybookEnabled ? (
+                                                        <StorybookRoot />
+                                                    ) : (
+                                                        <RootStack />
+                                                    )}
+                                                    <ToastManager />
+                                                </AppErrorBoundary>
+                                            </BottomSheetModalProvider>
+                                        </SignalDBProvider>
                                     </QueryProvider>
                                 </SessionProvider>
                             </JotaiProvider>
@@ -78,10 +81,13 @@ if (storybookEnabled) {
 
 const RootStack = () => {
     const { theme } = useTheme();
+    const ready = useSignalDBReady();
 
     useEffect(() => {
-        SplashScreen.hide();
-    });
+        if (ready) {
+            SplashScreen.hide();
+        }
+    }, [ready]);
 
     return (
         <Stack

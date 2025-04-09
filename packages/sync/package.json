@@ -1,0 +1,31 @@
+{
+    "private": true,
+    "name": "@jshare/sync",
+    "version": "1.0.0",
+    "description": "SignalDB sync types and utilities",
+    "license": "MIT",
+    "main": "build/index.js",
+    "scripts": {
+        "lint": "eslint --ext js,ts,tsx .",
+        "build": "tsup --clean",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@jshare/eslint-config": "workspace:*",
+        "@jshare/tsconfig": "workspace:*",
+        "tsup": "catalog:"
+    },
+    "dependencies": {
+        "@jshare/db": "workspace:*",
+        "@signaldb/core": "catalog:",
+        "@signaldb/sync": "catalog:",
+        "zod": "catalog:"
+    },
+    "eslintConfig": {
+        "extends": "@jshare/eslint-config",
+        "ignorePatterns": [
+            "node_modules",
+            "build"
+        ]
+    }
+}

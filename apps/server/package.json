@@ -22,6 +22,7 @@
     "dependencies": {
         "@jshare/common": "workspace:*",
         "@jshare/db": "workspace:*",
+        "@jshare/sync": "workspace:*",
         "@supabase/supabase-js": "catalog:",
         "@trpc/server": "catalog:",
         "blurhash": "catalog:",

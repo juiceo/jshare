@@ -36,7 +36,7 @@
         "@ianvs/prettier-plugin-sort-imports": "catalog:",
         "prettier": "catalog:",
         "tsx": "catalog:",
-        "turbo": "^2.5.0",
+        "turbo": "catalog:",
         "typescript": "catalog:",
         "zx": "catalog:"
     },
