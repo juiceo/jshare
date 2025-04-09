@@ -9,8 +9,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { useUpdateProfile } from '~/hooks/useUpdateProfile';
-import { trpc } from '~/lib/trpc';
+import { Profiles, useModel } from '~/lib/signaldb';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -18,8 +17,7 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const { data: profile } = trpc.profiles.me.useQuery();
-        const { updateProfile } = useUpdateProfile();
+        const profile = useModel(() => Profiles.findOne({ id: auth.userId }));
 
         return (
             <Screen>
@@ -28,12 +26,17 @@ export default screen(
                         <Stack column center p="xl" br="md" spacing="none">
                             <Stack mt="2xl" center>
                                 <AvatarPicker
-                                    value={profile?.avatar}
+                                    value={null /** TODO: Figure out how to work with relations */}
                                     profile={profile}
                                     onChange={(image) => {
-                                        updateProfile({
-                                            avatarId: image?.id ?? null,
-                                        });
+                                        Profiles.updateOne(
+                                            { id: auth.userId },
+                                            {
+                                                $set: {
+                                                    avatarId: image?.id ?? null,
+                                                },
+                                            }
+                                        );
                                     }}
                                 />
                                 <Typography variant="h6" align="center" mt="xl">

@@ -3,7 +3,7 @@ import { syncManager } from '~/lib/signaldb/SyncManager';
 
 export { Profiles } from './collections/profiles.collection';
 export { syncManager } from './SyncManager';
-export { useLocalDB } from './useLocalDB';
+export { useModel } from './useModel';
 
 export const initSignalDB = async () => {
     return Promise.all([Profiles.isReady, syncManager.isReady]).then(async () => {

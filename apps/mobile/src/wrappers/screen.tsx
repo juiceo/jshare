@@ -29,7 +29,9 @@ export const screen = <TAuth extends boolean = false>(
     },
     Component: ComponentType<{
         router: Router;
-        auth: TAuth extends true ? { session: Session; signOut: () => void } : never;
+        auth: TAuth extends true
+            ? { session: Session; userId: string; signOut: () => void }
+            : never;
     }>
 ) => {
     return function SuspenseWrapper() {
@@ -117,7 +119,7 @@ export const screen = <TAuth extends boolean = false>(
 };
 
 const AuthWrapper = (props: {
-    children: (auth: { session: Session; signOut: () => void }) => JSX.Element;
+    children: (auth: { session: Session; userId: string; signOut: () => void }) => JSX.Element;
 }) => {
     const { session, isLoading, signOut } = useSession();
     const { theme } = useTheme();
@@ -194,5 +196,5 @@ const AuthWrapper = (props: {
         );
     }
 
-    return props.children({ session, signOut });
+    return props.children({ session, signOut, userId: session.user.id });
 };

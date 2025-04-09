@@ -3,11 +3,11 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
-import { Profiles, useLocalDB } from '~/lib/signaldb';
+import { Profiles, useModel } from '~/lib/signaldb';
 import { screen } from '~/wrappers/screen';
 
-export default screen({ auth: true }, ({ router, auth }) => {
-    const profile = useLocalDB(() => Profiles.findOne({ id: auth.session.user.id }));
+export default screen({ auth: true }, ({ auth }) => {
+    const profile = useModel(() => Profiles.findOne({ id: auth.userId }));
 
     return (
         <Screen>
@@ -18,10 +18,7 @@ export default screen({ auth: true }, ({ router, auth }) => {
                         label={'First name'}
                         value={profile?.firstName ?? ''}
                         onChange={(value) => {
-                            Profiles.updateOne(
-                                { id: auth.session.user.id },
-                                { $set: { firstName: value } }
-                            );
+                            Profiles.updateOne({ id: auth.userId }, { $set: { firstName: value } });
                         }}
                         TextInputProps={{
                             placeholder: 'John',
@@ -31,10 +28,7 @@ export default screen({ auth: true }, ({ router, auth }) => {
                         label={'Last name'}
                         value={profile?.lastName ?? ''}
                         onChange={(value) => {
-                            Profiles.updateOne(
-                                { id: auth.session.user.id },
-                                { $set: { lastName: value } }
-                            );
+                            Profiles.updateOne({ id: auth.userId }, { $set: { lastName: value } });
                         }}
                         TextInputProps={{
                             placeholder: 'Doe',
@@ -46,10 +40,7 @@ export default screen({ auth: true }, ({ router, auth }) => {
                         options={CURRENCY_OPTIONS}
                         value={profile?.currency}
                         onChange={(value) => {
-                            Profiles.updateOne(
-                                { id: auth.session.user.id },
-                                { $set: { currency: value } }
-                            );
+                            Profiles.updateOne({ id: auth.userId }, { $set: { currency: value } });
                         }}
                         MenuProps={{
                             title: 'Select currency',

@@ -7,7 +7,6 @@ import type { CollectionSyncSettings } from '@jshare/sync';
 import { createAsyncStorageAdapter } from '~/lib/signaldb/asyncStoragePersistenceAdapter';
 import { trpcUniversal } from '~/lib/trpc';
 
-// const SYNC_MANAGER_API_BASE_PATH = '/api/sync';
 export const syncManager = new SyncManager<CollectionSyncSettings>({
     reactivity: maverickReactivityAdapter,
     persistenceAdapter: (name) => createAsyncStorageAdapter({ name, schema: z.any() }),

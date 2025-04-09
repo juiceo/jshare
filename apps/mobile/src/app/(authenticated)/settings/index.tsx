@@ -8,30 +8,17 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
+import { Profiles, useModel } from '~/lib/signaldb';
 import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen({ auth: true }, ({ router, auth }) => {
+    const profile = useModel(() => Profiles.findOne({ id: auth.userId }));
+
     const updates = Updates.useUpdates();
-    const trpcUtils = trpc.useUtils();
-    const [profile] = trpc.profiles.me.useSuspenseQuery();
-    const updateProfile = trpc.profiles.update.useMutation();
     const deleteAccount = trpc.profiles.delete.useMutation();
     const [isDeleting, setDeleting] = useState<boolean>(false);
-
-    const toggleShowInSearch = (value: boolean) => {
-        updateProfile.mutateAsync({
-            showInSearch: value,
-        });
-        trpcUtils.profiles.me.setData(undefined, (data) => {
-            if (!data) return;
-            return {
-                ...data,
-                showInSearch: value,
-            };
-        });
-    };
 
     const checkForUpdates = () => {
         Updates.checkForUpdateAsync().then((result) => {
@@ -60,7 +47,19 @@ export default screen({ auth: true }, ({ router, auth }) => {
                     <Stack column bg="background.elevation1" br="xl">
                         <Stack row alignCenter spacing="xl" p="xl">
                             <Typography flex={1}>Show me in search</Typography>
-                            <Switch checked={profile.showInSearch} onChange={toggleShowInSearch} />
+                            <Switch
+                                checked={profile?.showInSearch ?? false}
+                                onChange={(checked) => {
+                                    Profiles.updateOne(
+                                        { id: auth.userId },
+                                        {
+                                            $set: {
+                                                showInSearch: checked,
+                                            },
+                                        }
+                                    );
+                                }}
+                            />
                         </Stack>
                     </Stack>
 

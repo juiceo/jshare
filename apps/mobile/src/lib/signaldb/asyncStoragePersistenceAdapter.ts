@@ -16,9 +16,7 @@ export const createAsyncStorageAdapter = <TSchema extends z.ZodSchema>(args: {
      */
     async function getItems(): Promise<Data[]> {
         const value = await AsyncStorage.getItem(key);
-        console.log('getItems');
         const items = SuperJSON.parse<any[]>(value ?? '[]');
-        console.log('parsed items');
 
         if (!items) return [];
 
