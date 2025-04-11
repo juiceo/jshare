@@ -33,7 +33,7 @@ model Profile extends BaseModel {
     lastActivity     DateTime           @default(now())
     currency         CurrencyCode
     groups           GroupParticipant[]
-    avatarId         String?
+    avatarId         String?            @unique
     avatar           Image?             @relation(fields: [avatarId], references: [id])
     temporary        Boolean?
     termsAcceptedAt  DateTime?
@@ -45,7 +45,8 @@ model Profile extends BaseModel {
     paymentsPaid     Payment[]          @relation(name: "payment_payer")
     showInSearch     Boolean            @default(true)
 
-    @@allow('all', true)
+    @@allow('read', auth().id == id)
+    @@allow('update', auth().id == id)
     @@map("profiles")
     @@schema("public")
     @@auth
@@ -55,7 +56,7 @@ model Group extends BaseModel {
     name         String
     currency     CurrencyCode
     participants GroupParticipant[]
-    coverImageId String?
+    coverImageId String?            @unique
     coverImage   Image?             @relation(fields: [coverImageId], references: [id])
     inviteCode   String?            @unique
     messages     Message[]
@@ -89,9 +90,15 @@ model Image extends BaseModel {
     uploadedById String
     blurhash     String?
 
-    Group        Group[]
-    Profile      Profile[]
+    Group        Group?
+    Profile      Profile?
 
+    @@allow("read", auth().id == uploadedById)
+    @@allow("read", auth().id == Profile.id)
+    @@allow("read", Group.participants?[userId == auth().id])
+    @@allow("create", true)
+    @@allow("update", false)
+    @@allow("delete", false)
     @@allow('all', true)
     @@map("images")
 }

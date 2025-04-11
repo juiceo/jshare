@@ -5,6 +5,7 @@ import { z } from 'zod';
 export declare const GroupScalarSchema: z.ZodObject<{
     id: z.ZodString;
     archived: z.ZodDefault<z.ZodBoolean>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     name: z.ZodString;
@@ -19,12 +20,14 @@ export declare const GroupScalarSchema: z.ZodObject<{
     lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
+    archivedAt?: Date | null | undefined;
     inviteCode?: string | null | undefined;
 }, {
     id: string;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -36,6 +39,7 @@ export declare const GroupScalarSchema: z.ZodObject<{
 export declare const GroupSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
     id: z.ZodString;
     archived: z.ZodDefault<z.ZodBoolean>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     name: z.ZodString;
@@ -58,6 +62,7 @@ export declare const GroupSchema: z.ZodObject<z.objectUtil.extendShape<z.objectU
     lastActivity: Date;
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
+    archivedAt?: Date | null | undefined;
     messages?: unknown[] | undefined;
     participants?: unknown[] | undefined;
     coverImageId?: string | null | undefined;
@@ -70,6 +75,7 @@ export declare const GroupSchema: z.ZodObject<z.objectUtil.extendShape<z.objectU
     currency: "AED" | "ARS" | "AUD" | "BRL" | "CAD" | "CHF" | "CLP" | "COP" | "CZK" | "DKK" | "EGP" | "EUR" | "GBP" | "HUF" | "INR" | "KES" | "MAD" | "MXN" | "NOK" | "PEN" | "PLN" | "RON" | "SEK" | "THB" | "TZS" | "USD" | "ZAR" | "KZT" | "KGS";
     name: string;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -88,6 +94,7 @@ export declare const GroupSchema: z.ZodObject<z.objectUtil.extendShape<z.objectU
 export declare const GroupPrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -97,6 +104,7 @@ export declare const GroupPrismaCreateSchema: z.ZodObject<{
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -106,6 +114,7 @@ export declare const GroupPrismaCreateSchema: z.ZodObject<{
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -120,6 +129,7 @@ export declare const GroupPrismaCreateSchema: z.ZodObject<{
 export declare const GroupPrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -129,6 +139,7 @@ export declare const GroupPrismaUpdateSchema: z.ZodObject<{
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -138,6 +149,7 @@ export declare const GroupPrismaUpdateSchema: z.ZodObject<{
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -151,6 +163,7 @@ export declare const GroupPrismaUpdateSchema: z.ZodObject<{
 export declare const GroupCreateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -162,6 +175,7 @@ export declare const GroupCreateScalarSchema: z.ZodObject<{
     name: string;
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -171,6 +185,7 @@ export declare const GroupCreateScalarSchema: z.ZodObject<{
     name: string;
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -182,6 +197,7 @@ export declare const GroupCreateScalarSchema: z.ZodObject<{
 export declare const GroupCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     lastActivity: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
@@ -195,6 +211,7 @@ export declare const GroupCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     name: string;
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -205,6 +222,7 @@ export declare const GroupCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     name: string;
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -217,6 +235,7 @@ export declare const GroupCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
 export declare const GroupUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -226,6 +245,7 @@ export declare const GroupUpdateScalarSchema: z.ZodObject<{
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -235,6 +255,7 @@ export declare const GroupUpdateScalarSchema: z.ZodObject<{
 }, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -248,6 +269,7 @@ export declare const GroupUpdateScalarSchema: z.ZodObject<{
 export declare const GroupUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     name: z.ZodOptional<z.ZodString>;
@@ -259,6 +281,7 @@ export declare const GroupUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
 }>, "strip", z.ZodTypeAny, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;
@@ -269,6 +292,7 @@ export declare const GroupUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
 }, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     lastActivity?: Date | undefined;

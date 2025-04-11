@@ -41,6 +41,7 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 archived: false,
+                archivedAt: null,
             };
 
             const localMessageWithAuthor: DB.Message<{

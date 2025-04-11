@@ -18,3 +18,12 @@ export const db = enhance(
 export const getDb = (user: DB.Profile) => {
     return enhance(prisma, { user });
 };
+
+export const getDbForUserId = async (userId: string) => {
+    const user = await db.profile.findUniqueOrThrow({
+        where: {
+            id: userId,
+        },
+    });
+    return enhance(prisma, { user });
+};

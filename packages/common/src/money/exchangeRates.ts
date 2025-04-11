@@ -46,4 +46,5 @@ export const BASE_EXCHANGE_RATES: DB.ExchangeRates & { rates: RatesObject } = {
     createdAt: new Date('2025-02-06T10:55:01+0000'),
     updatedAt: new Date('2025-02-06T10:55:01+0000'),
     archived: false,
+    archivedAt: null,
 };

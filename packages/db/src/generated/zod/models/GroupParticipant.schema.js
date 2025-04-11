@@ -8,6 +8,7 @@ const InviteType_schema_1 = require("../enums/InviteType.schema");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     role: Role_schema_1.RoleSchema,
@@ -42,6 +43,7 @@ exports.GroupParticipantPrismaCreateSchema = baseSchema.partial().passthrough();
 exports.GroupParticipantPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     role: Role_schema_1.RoleSchema,

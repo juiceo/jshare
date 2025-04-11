@@ -5,6 +5,7 @@ exports.ExpenseShareWhereUniqueInputObjectSchema = void 0;
 const zod_1 = require("zod");
 const ExpenseShareWhereInput_schema_1 = require("./ExpenseShareWhereInput.schema");
 const BoolFilter_schema_1 = require("./BoolFilter.schema");
+const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const IntFilter_schema_1 = require("./IntFilter.schema");
@@ -19,7 +20,9 @@ exports.ExpenseShareWhereUniqueInputObjectSchema = zod_1.z.object({
     id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => ExpenseShareWhereInput_schema_1.ExpenseShareWhereInputObjectSchema),
         zod_1.z.lazy(() => ExpenseShareWhereInput_schema_1.ExpenseShareWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => ExpenseShareWhereInput_schema_1.ExpenseShareWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => ExpenseShareWhereInput_schema_1.ExpenseShareWhereInputObjectSchema),
         zod_1.z.lazy(() => ExpenseShareWhereInput_schema_1.ExpenseShareWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
-        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), userId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), expenseId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),

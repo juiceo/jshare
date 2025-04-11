@@ -6,6 +6,7 @@ const zod_1 = require("zod");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     path: zod_1.z.string(),
@@ -14,8 +15,8 @@ const baseSchema = zod_1.z.object({
     blurhash: zod_1.z.string().nullish(),
 }).strict();
 const relationSchema = zod_1.z.object({
-    Group: zod_1.z.array(zod_1.z.unknown()).optional(),
-    Profile: zod_1.z.array(zod_1.z.unknown()).optional(),
+    Group: zod_1.z.record(zod_1.z.unknown()).optional(),
+    Profile: zod_1.z.record(zod_1.z.unknown()).optional(),
 });
 /**
  * `Image` schema excluding foreign keys and relations.
@@ -37,6 +38,7 @@ exports.ImagePrismaCreateSchema = baseSchema.partial().passthrough();
 exports.ImagePrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     path: zod_1.z.string(),

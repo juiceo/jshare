@@ -7,6 +7,7 @@ const MessageAttachmentType_schema_1 = require("../enums/MessageAttachmentType.s
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     type: MessageAttachmentType_schema_1.MessageAttachmentTypeSchema,
@@ -39,6 +40,7 @@ exports.MessageAttachmentPrismaCreateSchema = baseSchema.partial().passthrough()
 exports.MessageAttachmentPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     type: MessageAttachmentType_schema_1.MessageAttachmentTypeSchema

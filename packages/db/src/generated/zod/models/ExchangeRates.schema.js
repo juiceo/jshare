@@ -6,6 +6,7 @@ const zod_1 = require("zod");
 const baseSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     baseCurrency: zod_1.z.string(),
@@ -31,6 +32,7 @@ exports.ExchangeRatesPrismaCreateSchema = baseSchema.partial().passthrough();
 exports.ExchangeRatesPrismaUpdateSchema = zod_1.z.object({
     id: zod_1.z.string(),
     archived: zod_1.z.boolean().default(false),
+    archivedAt: zod_1.z.coerce.date().nullish(),
     createdAt: zod_1.z.coerce.date().default(() => new Date()),
     updatedAt: zod_1.z.coerce.date().default(() => new Date()),
     baseCurrency: zod_1.z.string(),

@@ -18,6 +18,7 @@ describe('getExchangeRate', () => {
         createdAt: new Date('2025-01-11T10:55:01+0000'),
         updatedAt: new Date('2025-01-11T10:55:01+0000'),
         archived: false,
+        archivedAt: null,
     };
     it('should return the correct exchange rate when fromCurrency is the base currency', () => {
         expect(getExchangeRate({ from: 'USD', to: 'AUD', exchangeRates })).toBe(1.6184215461333);
@@ -52,6 +53,7 @@ describe('convertAmount', () => {
         createdAt: new Date('2025-01-11T10:55:01+0000'),
         updatedAt: new Date('2025-01-11T10:55:01+0000'),
         archived: false,
+        archivedAt: null,
     };
 
     it('should return the original amount if both currencies are the same', () => {

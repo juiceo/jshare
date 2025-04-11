@@ -10,15 +10,18 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
+import { useModel } from '~/lib/signaldb';
+import { Images } from '~/lib/signaldb/collections/images.collection';
 
 export type AvatarPickerProps = {
-    value: DB.Image | null | undefined;
-    onChange: (value: DB.Image | null) => void;
+    value: string | null;
+    onChange: (value: string | null) => void;
     profile?: DB.Profile;
 };
 
 export const AvatarPicker = (props: AvatarPickerProps) => {
     const { value, onChange, profile } = props;
+    const image = useModel(() => (value ? Images.findOne({ id: value }) : null), [value]);
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({
         mediaTypes: MediaTypeOptions.Images,
@@ -30,14 +33,17 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
         allowsMultipleSelection: false,
     });
 
+    console.log('AVATAR ID NOW', value);
+    console.log('IMAGE NOW', image);
+
     const defaultAvatar = profile ? getUserDefaultAvatarUrl(profile) : undefined;
 
     return (
         <>
             <View style={{ position: 'relative', width: 128, height: 128 }}>
                 <Image
-                    image={value}
-                    source={{ uri: defaultAvatar }}
+                    image={image}
+                    source={!value ? { uri: defaultAvatar } : null}
                     w={128}
                     h={128}
                     br="full"
@@ -68,12 +74,12 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
                     switch (option) {
                         case 'library': {
                             return imageUpload.uploadFromLibrary().then(({ uploaded }) => {
-                                return onChange(uploaded[0]);
+                                return onChange(uploaded[0].id);
                             });
                         }
                         case 'camera': {
                             return imageUpload.uploadFromCamera().then(({ uploaded }) => {
-                                return onChange(uploaded[0]);
+                                return onChange(uploaded[0].id);
                             });
                         }
                         case 'remove': {

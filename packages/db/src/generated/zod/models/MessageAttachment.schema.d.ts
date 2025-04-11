@@ -5,6 +5,7 @@ import { z } from 'zod';
 export declare const MessageAttachmentScalarSchema: z.ZodObject<{
     id: z.ZodString;
     archived: z.ZodDefault<z.ZodBoolean>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     type: z.ZodEnum<["Expense"]>;
@@ -14,10 +15,12 @@ export declare const MessageAttachmentScalarSchema: z.ZodObject<{
     createdAt: Date;
     updatedAt: Date;
     type: "Expense";
+    archivedAt?: Date | null | undefined;
 }, {
     id: string;
     type: "Expense";
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -27,6 +30,7 @@ export declare const MessageAttachmentScalarSchema: z.ZodObject<{
 export declare const MessageAttachmentSchema: z.ZodObject<z.objectUtil.extendShape<z.objectUtil.extendShape<{
     id: z.ZodString;
     archived: z.ZodDefault<z.ZodBoolean>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodDefault<z.ZodDate>;
     updatedAt: z.ZodDefault<z.ZodDate>;
     type: z.ZodEnum<["Expense"]>;
@@ -43,6 +47,7 @@ export declare const MessageAttachmentSchema: z.ZodObject<z.objectUtil.extendSha
     updatedAt: Date;
     messageId: string;
     type: "Expense";
+    archivedAt?: Date | null | undefined;
     message?: Record<string, unknown> | undefined;
     expenseId?: string | null | undefined;
     expense?: Record<string, unknown> | undefined;
@@ -51,6 +56,7 @@ export declare const MessageAttachmentSchema: z.ZodObject<z.objectUtil.extendSha
     messageId: string;
     type: "Expense";
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     message?: Record<string, unknown> | undefined;
@@ -64,18 +70,21 @@ export declare const MessageAttachmentSchema: z.ZodObject<z.objectUtil.extendSha
 export declare const MessageAttachmentPrismaCreateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
@@ -87,18 +96,21 @@ export declare const MessageAttachmentPrismaCreateSchema: z.ZodObject<{
 export declare const MessageAttachmentPrismaUpdateSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
 }, "passthrough", z.ZodTypeAny, z.objectOutputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
 }, z.ZodTypeAny, "passthrough">, z.objectInputType<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
@@ -109,6 +121,7 @@ export declare const MessageAttachmentPrismaUpdateSchema: z.ZodObject<{
 export declare const MessageAttachmentCreateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodEnum<["Expense"]>;
@@ -116,12 +129,14 @@ export declare const MessageAttachmentCreateScalarSchema: z.ZodObject<{
     type: "Expense";
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }, {
     type: "Expense";
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
 }>;
@@ -131,6 +146,7 @@ export declare const MessageAttachmentCreateScalarSchema: z.ZodObject<{
 export declare const MessageAttachmentCreateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodNullable<z.ZodDate>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodEnum<["Expense"]>;
@@ -142,6 +158,7 @@ export declare const MessageAttachmentCreateSchema: z.ZodObject<z.objectUtil.ext
     type: "Expense";
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     expenseId?: string | null | undefined;
@@ -150,6 +167,7 @@ export declare const MessageAttachmentCreateSchema: z.ZodObject<z.objectUtil.ext
     type: "Expense";
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     expenseId?: string | null | undefined;
@@ -160,18 +178,21 @@ export declare const MessageAttachmentCreateSchema: z.ZodObject<z.objectUtil.ext
 export declare const MessageAttachmentUpdateScalarSchema: z.ZodObject<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
 }, "strict", z.ZodTypeAny, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     type?: "Expense" | undefined;
 }, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     type?: "Expense" | undefined;
@@ -182,6 +203,7 @@ export declare const MessageAttachmentUpdateScalarSchema: z.ZodObject<{
 export declare const MessageAttachmentUpdateSchema: z.ZodObject<z.objectUtil.extendShape<{
     id: z.ZodOptional<z.ZodString>;
     archived: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+    archivedAt: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodDate>>>;
     createdAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     updatedAt: z.ZodOptional<z.ZodDefault<z.ZodDate>>;
     type: z.ZodOptional<z.ZodEnum<["Expense"]>>;
@@ -191,6 +213,7 @@ export declare const MessageAttachmentUpdateSchema: z.ZodObject<z.objectUtil.ext
 }>, "strip", z.ZodTypeAny, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     messageId?: string | undefined;
@@ -199,6 +222,7 @@ export declare const MessageAttachmentUpdateSchema: z.ZodObject<z.objectUtil.ext
 }, {
     id?: string | undefined;
     archived?: boolean | undefined;
+    archivedAt?: Date | null | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     messageId?: string | undefined;

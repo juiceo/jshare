@@ -22,6 +22,11 @@ declare const metadata: {
                         }[];
                     }[];
                 };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -73,6 +78,10 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
                     isForeignKey: boolean;
                     relationField: string;
                 };
@@ -185,14 +194,16 @@ declare const metadata: {
                     name: string;
                     fields: string[];
                 };
+                avatarId: {
+                    name: string;
+                    fields: string[];
+                };
             };
             attributes: {
                 name: string;
-                args: ({
+                args: {
                     value: string;
-                } | {
-                    value: boolean;
-                })[];
+                }[];
             }[];
         };
         group: {
@@ -216,6 +227,11 @@ declare const metadata: {
                             value: boolean;
                         }[];
                     }[];
+                };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -252,6 +268,10 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isOptional: boolean;
+                    attributes: {
+                        name: string;
+                        args: never[];
+                    }[];
                     isForeignKey: boolean;
                     relationField: string;
                 };
@@ -314,6 +334,10 @@ declare const metadata: {
                     name: string;
                     fields: string[];
                 };
+                coverImageId: {
+                    name: string;
+                    fields: string[];
+                };
                 inviteCode: {
                     name: string;
                     fields: string[];
@@ -349,6 +373,11 @@ declare const metadata: {
                             value: boolean;
                         }[];
                     }[];
+                };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -458,6 +487,11 @@ declare const metadata: {
                         }[];
                     }[];
                 };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -495,14 +529,14 @@ declare const metadata: {
                     name: string;
                     type: string;
                     isDataModel: boolean;
-                    isArray: boolean;
+                    isOptional: boolean;
                     backLink: string;
                 };
                 Profile: {
                     name: string;
                     type: string;
                     isDataModel: boolean;
-                    isArray: boolean;
+                    isOptional: boolean;
                     backLink: string;
                 };
             };
@@ -542,6 +576,11 @@ declare const metadata: {
                             value: boolean;
                         }[];
                     }[];
+                };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -659,6 +698,11 @@ declare const metadata: {
                         }[];
                     }[];
                 };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -758,6 +802,11 @@ declare const metadata: {
                             value: boolean;
                         }[];
                     }[];
+                };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -916,6 +965,11 @@ declare const metadata: {
                         }[];
                     }[];
                 };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
+                };
                 createdAt: {
                     name: string;
                     type: string;
@@ -1037,6 +1091,11 @@ declare const metadata: {
                             value: boolean;
                         }[];
                     }[];
+                };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;
@@ -1175,6 +1234,11 @@ declare const metadata: {
                             value: boolean;
                         }[];
                     }[];
+                };
+                archivedAt: {
+                    name: string;
+                    type: string;
+                    isOptional: boolean;
                 };
                 createdAt: {
                     name: string;

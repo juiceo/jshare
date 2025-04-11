@@ -5,21 +5,30 @@ exports.ImageWhereInputObjectSchema = void 0;
 const zod_1 = require("zod");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const BoolFilter_schema_1 = require("./BoolFilter.schema");
+const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
-const GroupListRelationFilter_schema_1 = require("./GroupListRelationFilter.schema");
-const ProfileListRelationFilter_schema_1 = require("./ProfileListRelationFilter.schema");
+const GroupNullableScalarRelationFilter_schema_1 = require("./GroupNullableScalarRelationFilter.schema");
+const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
+const ProfileNullableScalarRelationFilter_schema_1 = require("./ProfileNullableScalarRelationFilter.schema");
+const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
 exports.ImageWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
-        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), path: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), bucket: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), uploadedById: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), blurhash: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
         zod_1.z.string(),
-        zod_1.z.null()]).optional().nullable(), Group: zod_1.z.lazy(() => GroupListRelationFilter_schema_1.GroupListRelationFilterObjectSchema).optional(), Profile: zod_1.z.lazy(() => ProfileListRelationFilter_schema_1.ProfileListRelationFilterObjectSchema).optional()
+        zod_1.z.null()]).optional().nullable(), Group: zod_1.z.union([zod_1.z.lazy(() => GroupNullableScalarRelationFilter_schema_1.GroupNullableScalarRelationFilterObjectSchema),
+        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
+        zod_1.z.null()]).optional().nullable(), Profile: zod_1.z.union([zod_1.z.lazy(() => ProfileNullableScalarRelationFilter_schema_1.ProfileNullableScalarRelationFilterObjectSchema),
+        zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
+        zod_1.z.null()]).optional().nullable()
 }).strict();

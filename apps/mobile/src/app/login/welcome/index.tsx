@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, Linking, Text } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '@jshare/common';
-import { zDB, type DB } from '@jshare/db';
+import { zDB } from '@jshare/db';
 import { useTheme } from '@jshare/theme';
 
 import { Checkbox } from '~/components/atoms/Checkbox';
@@ -26,6 +26,7 @@ const schema = z.object({
     firstName: z.string().min(1, 'First name is required'),
     lastName: z.string(),
     currency: zDB.enums.CurrencyCodeSchema,
+    avatarId: z.string().optional(),
     termsAccepted: z
         .boolean()
         .refine((value) => value === true, 'Please accept the Privacy Policy and Terms of Service'),
@@ -48,7 +49,6 @@ export default screen({}, ({ router }) => {
     const trpcUtils = trpc.useUtils();
     const createProfile = trpc.profiles.create.useMutation();
     const { session } = useSession();
-    const [image, setImage] = useState<DB.Image | null>(null);
 
     useEffect(() => {
         if (!session) {
@@ -65,7 +65,7 @@ export default screen({}, ({ router }) => {
         await createProfile.mutateAsync({
             firstName: data.firstName,
             lastName: data.lastName,
-            avatarId: image?.id,
+            avatarId: data.avatarId,
             currency: data.currency,
             email,
         });
@@ -88,7 +88,16 @@ export default screen({}, ({ router }) => {
             <Screen.Content scrollable>
                 <Stack p="xl" flex={1} spacing="md">
                     <Stack py="3xl" center>
-                        <AvatarPicker value={image} onChange={setImage} />
+                        <Controller
+                            control={form.control}
+                            name="avatarId"
+                            render={({ field }) => (
+                                <AvatarPicker
+                                    value={field.value ?? null}
+                                    onChange={field.onChange}
+                                />
+                            )}
+                        />
                     </Stack>
                     <Controller
                         control={form.control}

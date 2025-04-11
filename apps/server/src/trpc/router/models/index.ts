@@ -1,39 +1,79 @@
 import { z } from 'zod';
 
-import type { DB } from '@jshare/db';
-import { ModelSchemas } from '@jshare/sync';
+import { getLowerCaseModelName, ModelSchemas } from '@jshare/sync';
 
-import { db } from '../../../services/db';
+import { getDbForUserId } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
-import { zSyncPullInput, zSyncPushInput } from './schemas';
+import { zFindByIdInput, zSyncPullInput, zSyncPushInput } from './schemas';
 
 export const syncRouter = router({
     pull: authProcedure.input(zSyncPullInput).query(async (opts) => {
-        const userId = opts.ctx.userId;
+        const db = await getDbForUserId(opts.ctx.userId);
 
         switch (opts.input.model) {
             case 'Profile': {
-                const modified = await db.profile.findMany({
-                    where: {
-                        id: userId,
-                        updatedAt: opts.input.since
-                            ? {
-                                  gt: new Date(opts.input.since),
-                              }
-                            : undefined,
-                    },
-                });
-                const added = await db.profile.findMany({
-                    where: {
-                        id: userId,
-                        createdAt: opts.input.since
-                            ? {
-                                  gt: new Date(opts.input.since),
-                              }
-                            : undefined,
-                    },
-                });
-                const removed = [] as DB.Profile[];
+                const [modified, added, removed] = await Promise.all([
+                    db.profile.findMany({
+                        where: {
+                            updatedAt: opts.input.since
+                                ? {
+                                      gt: new Date(opts.input.since),
+                                  }
+                                : undefined,
+                        },
+                    }),
+                    db.profile.findMany({
+                        where: {
+                            createdAt: opts.input.since
+                                ? {
+                                      gt: new Date(opts.input.since),
+                                  }
+                                : undefined,
+                        },
+                    }),
+                    db.profile.findMany({
+                        where: {
+                            archivedAt: opts.input.since
+                                ? { gt: new Date(opts.input.since) }
+                                : undefined,
+                        },
+                    }),
+                ]);
+
+                return {
+                    added,
+                    modified,
+                    removed,
+                };
+            }
+            case 'Image': {
+                const [modified, added, removed] = await Promise.all([
+                    db.image.findMany({
+                        where: {
+                            updatedAt: opts.input.since
+                                ? {
+                                      gt: new Date(opts.input.since),
+                                  }
+                                : undefined,
+                        },
+                    }),
+                    db.image.findMany({
+                        where: {
+                            createdAt: opts.input.since
+                                ? {
+                                      gt: new Date(opts.input.since),
+                                  }
+                                : undefined,
+                        },
+                    }),
+                    db.image.findMany({
+                        where: {
+                            archivedAt: opts.input.since
+                                ? { gt: new Date(opts.input.since) }
+                                : undefined,
+                        },
+                    }),
+                ]);
 
                 return {
                     added,
@@ -51,6 +91,7 @@ export const syncRouter = router({
         }
     }),
     push: authProcedure.input(zSyncPushInput).mutation(async (opts) => {
+        const db = await getDbForUserId(opts.ctx.userId);
         switch (opts.input.model) {
             case 'Profile': {
                 const inserts = getInserts(opts.input.changes.added, ModelSchemas.Profile.insert);
@@ -59,10 +100,14 @@ export const syncRouter = router({
                     ModelSchemas.Profile.update
                 );
 
+                const removals = opts.input.changes.removed;
+
                 await Promise.all([
-                    db.profile.createMany({
-                        data: inserts,
-                    }),
+                    inserts
+                        ? db.profile.createMany({
+                              data: inserts,
+                          })
+                        : null,
                     ...updates.map((update) => {
                         return db.profile.update({
                             where: {
@@ -71,13 +116,31 @@ export const syncRouter = router({
                             data: update,
                         });
                     }),
-                ]);
-
-                /**
-                 * TODO: Handle removals
-                 */
+                    ...removals.map((removal) => {
+                        return db.profile.update({
+                            where: {
+                                id: removal.id,
+                            },
+                            data: {
+                                archived: true,
+                                archivedAt: new Date(),
+                            },
+                        });
+                    }),
+                ]).catch(() => {});
             }
         }
+    }),
+    findById: authProcedure.input(zFindByIdInput).query(async (opts) => {
+        const db = await getDbForUserId(opts.ctx.userId);
+        const dbKey = getLowerCaseModelName(opts.input.model);
+        const dbInstance = db[dbKey];
+
+        return (dbInstance as any).findUnique({
+            where: {
+                id: opts.input.id,
+            },
+        });
     }),
 });
 

@@ -5,13 +5,12 @@ exports.ProfileWhereUniqueInputObjectSchema = void 0;
 const zod_1 = require("zod");
 const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
 const BoolFilter_schema_1 = require("./BoolFilter.schema");
+const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
 const CurrencyCode_schema_1 = require("../enums/CurrencyCode.schema");
-const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
 const BoolNullableFilter_schema_1 = require("./BoolNullableFilter.schema");
-const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const GroupParticipantListRelationFilter_schema_1 = require("./GroupParticipantListRelationFilter.schema");
 const ImageNullableScalarRelationFilter_schema_1 = require("./ImageNullableScalarRelationFilter.schema");
 const ImageWhereInput_schema_1 = require("./ImageWhereInput.schema");
@@ -20,19 +19,19 @@ const ExpenseListRelationFilter_schema_1 = require("./ExpenseListRelationFilter.
 const ExpenseShareListRelationFilter_schema_1 = require("./ExpenseShareListRelationFilter.schema");
 const PaymentListRelationFilter_schema_1 = require("./PaymentListRelationFilter.schema");
 exports.ProfileWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
+    id: zod_1.z.string().optional(), avatarId: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
-        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), email: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), firstName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), lastName: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), lastActivity: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
-        zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), avatarId: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
-        zod_1.z.string(),
-        zod_1.z.null()]).optional().nullable(), temporary: zod_1.z.union([zod_1.z.lazy(() => BoolNullableFilter_schema_1.BoolNullableFilterObjectSchema),
+        zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), temporary: zod_1.z.union([zod_1.z.lazy(() => BoolNullableFilter_schema_1.BoolNullableFilterObjectSchema),
         zod_1.z.boolean(),
         zod_1.z.null()]).optional().nullable(), termsAcceptedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),

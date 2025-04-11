@@ -26,14 +26,14 @@ export default screen(
                         <Stack column center p="xl" br="md" spacing="none">
                             <Stack mt="2xl" center>
                                 <AvatarPicker
-                                    value={null /** TODO: Figure out how to work with relations */}
+                                    value={profile?.avatarId ?? null}
                                     profile={profile}
-                                    onChange={(image) => {
+                                    onChange={(imageId) => {
                                         Profiles.updateOne(
                                             { id: auth.userId },
                                             {
                                                 $set: {
-                                                    avatarId: image?.id ?? null,
+                                                    avatarId: imageId,
                                                 },
                                             }
                                         );

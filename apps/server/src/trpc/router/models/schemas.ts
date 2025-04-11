@@ -15,3 +15,8 @@ export const zSyncPushInput = z.object({
         removed: z.array(z.any()),
     }),
 });
+
+export const zFindByIdInput = z.object({
+    model: zModelName,
+    id: z.string(),
+});

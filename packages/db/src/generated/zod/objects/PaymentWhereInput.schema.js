@@ -5,6 +5,7 @@ exports.PaymentWhereInputObjectSchema = void 0;
 const zod_1 = require("zod");
 const StringFilter_schema_1 = require("./StringFilter.schema");
 const BoolFilter_schema_1 = require("./BoolFilter.schema");
+const DateTimeNullableFilter_schema_1 = require("./DateTimeNullableFilter.schema");
 const DateTimeFilter_schema_1 = require("./DateTimeFilter.schema");
 const IntFilter_schema_1 = require("./IntFilter.schema");
 const EnumCurrencyCodeFilter_schema_1 = require("./EnumCurrencyCodeFilter.schema");
@@ -19,7 +20,9 @@ exports.PaymentWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => exports.PaymentWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.PaymentWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.PaymentWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.PaymentWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
-        zod_1.z.boolean()]).optional(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), updatedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), groupId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), amount: zod_1.z.union([zod_1.z.lazy(() => IntFilter_schema_1.IntFilterObjectSchema),

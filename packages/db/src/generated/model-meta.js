@@ -14,6 +14,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -48,6 +52,7 @@ const metadata = {
                     name: "avatarId",
                     type: "String",
                     isOptional: true,
+                    attributes: [{ "name": "@unique", "args": [] }],
                     isForeignKey: true,
                     relationField: 'avatar',
                 }, avatar: {
@@ -117,9 +122,12 @@ const metadata = {
                 id: {
                     name: "id",
                     fields: ["id"]
+                }, avatarId: {
+                    name: "avatarId",
+                    fields: ["avatarId"]
                 },
             },
-            attributes: [{ "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
+            attributes: [{ "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "update" }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
         },
         group: {
             name: 'Group', fields: {
@@ -132,6 +140,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -156,6 +168,7 @@ const metadata = {
                     name: "coverImageId",
                     type: "String",
                     isOptional: true,
+                    attributes: [{ "name": "@unique", "args": [] }],
                     isForeignKey: true,
                     relationField: 'coverImage',
                 }, coverImage: {
@@ -200,6 +213,9 @@ const metadata = {
                 id: {
                     name: "id",
                     fields: ["id"]
+                }, coverImageId: {
+                    name: "coverImageId",
+                    fields: ["coverImageId"]
                 }, inviteCode: {
                     name: "inviteCode",
                     fields: ["inviteCode"]
@@ -218,6 +234,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -284,6 +304,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -309,13 +333,13 @@ const metadata = {
                     name: "Group",
                     type: "Group",
                     isDataModel: true,
-                    isArray: true,
+                    isOptional: true,
                     backLink: 'coverImage',
                 }, Profile: {
                     name: "Profile",
                     type: "Profile",
                     isDataModel: true,
-                    isArray: true,
+                    isOptional: true,
                     backLink: 'avatar',
                 },
             },
@@ -325,7 +349,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "create" }, { "value": true }] }, { "name": "@@allow", "args": [{ "value": "update" }, { "value": false }] }, { "name": "@@allow", "args": [{ "value": "delete" }, { "value": false }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
         },
         message: {
             name: 'Message', fields: {
@@ -338,6 +362,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -411,6 +439,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -471,6 +503,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -567,6 +603,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -638,6 +678,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -718,6 +762,10 @@ const metadata = {
                     name: "archived",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": false }] }],
+                }, archivedAt: {
+                    name: "archivedAt",
+                    type: "DateTime",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",

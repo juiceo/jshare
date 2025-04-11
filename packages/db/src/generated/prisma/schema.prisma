@@ -82,6 +82,7 @@ enum CurrencyCode {
 model Profile {
   id               String             @id() @default(uuid())
   archived         Boolean            @default(false)
+  archivedAt       DateTime?
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @default(now()) @updatedAt()
   email            String
@@ -90,7 +91,7 @@ model Profile {
   lastActivity     DateTime           @default(now())
   currency         CurrencyCode
   groups           GroupParticipant[]
-  avatarId         String?
+  avatarId         String?            @unique()
   avatar           Image?             @relation(fields: [avatarId], references: [id])
   temporary        Boolean?
   termsAcceptedAt  DateTime?
@@ -109,12 +110,13 @@ model Profile {
 model Group {
   id           String             @id() @default(uuid())
   archived     Boolean            @default(false)
+  archivedAt   DateTime?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @default(now()) @updatedAt()
   name         String
   currency     CurrencyCode
   participants GroupParticipant[]
-  coverImageId String?
+  coverImageId String?            @unique()
   coverImage   Image?             @relation(fields: [coverImageId], references: [id])
   inviteCode   String?            @unique()
   messages     Message[]
@@ -129,6 +131,7 @@ model Group {
 model GroupParticipant {
   id          String      @id() @default(uuid())
   archived    Boolean     @default(false)
+  archivedAt  DateTime?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @default(now()) @updatedAt()
   userId      String
@@ -148,14 +151,15 @@ model GroupParticipant {
 model Image {
   id           String    @id() @default(uuid())
   archived     Boolean   @default(false)
+  archivedAt   DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @default(now()) @updatedAt()
   path         String
   bucket       String
   uploadedById String
   blurhash     String?
-  Group        Group[]
-  Profile      Profile[]
+  Group        Group?
+  Profile      Profile?
 
   @@map("images")
   @@schema("public")
@@ -164,6 +168,7 @@ model Image {
 model Message {
   id          String              @id() @default(uuid())
   archived    Boolean             @default(false)
+  archivedAt  DateTime?
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @default(now()) @updatedAt()
   key         String
@@ -180,15 +185,16 @@ model Message {
 }
 
 model MessageAttachment {
-  id        String                @id() @default(uuid())
-  archived  Boolean               @default(false)
-  createdAt DateTime              @default(now())
-  updatedAt DateTime              @default(now()) @updatedAt()
-  messageId String
-  message   Message               @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  type      MessageAttachmentType
-  expenseId String?
-  expense   Expense?              @relation(fields: [expenseId], references: [id], onDelete: SetNull)
+  id         String                @id() @default(uuid())
+  archived   Boolean               @default(false)
+  archivedAt DateTime?
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @default(now()) @updatedAt()
+  messageId  String
+  message    Message               @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  type       MessageAttachmentType
+  expenseId  String?
+  expense    Expense?              @relation(fields: [expenseId], references: [id], onDelete: SetNull)
 
   @@map("message_attachments")
   @@schema("public")
@@ -197,6 +203,7 @@ model MessageAttachment {
 model Expense {
   id                 String              @id() @default(uuid())
   archived           Boolean             @default(false)
+  archivedAt         DateTime?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @default(now()) @updatedAt()
   ownerId            String
@@ -219,6 +226,7 @@ model Expense {
 model ExpenseShare {
   id         String       @id() @default(uuid())
   archived   Boolean      @default(false)
+  archivedAt DateTime?
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now()) @updatedAt()
   userId     String
@@ -237,6 +245,7 @@ model ExpenseShare {
 model Payment {
   id          String       @id() @default(uuid())
   archived    Boolean      @default(false)
+  archivedAt  DateTime?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now()) @updatedAt()
   groupId     String
@@ -254,11 +263,12 @@ model Payment {
 }
 
 model ExchangeRates {
-  id           String   @id() @default(uuid())
-  archived     Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt()
-  baseCurrency String   @db.VarChar(3)
+  id           String    @id() @default(uuid())
+  archived     Boolean   @default(false)
+  archivedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt()
+  baseCurrency String    @db.VarChar(3)
   rates        Json
 
   @@map("exchange_rates")

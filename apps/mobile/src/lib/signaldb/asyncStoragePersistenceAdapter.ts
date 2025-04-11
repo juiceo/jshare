@@ -1,31 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createPersistenceAdapter } from '@signaldb/core';
-import SuperJSON from 'superjson';
-import { z } from 'zod';
 
-export const createAsyncStorageAdapter = <TSchema extends z.ZodSchema>(args: {
-    name: string;
-    schema: TSchema;
-}) => {
+export const createAsyncStorageAdapter = (args: { name: string }) => {
     const key = `asyncStorageAdapter::${args.name}`;
-    type Data = z.infer<TSchema>;
     /**
      * Retrieves items from AsyncStorage and deserializes them.
      *
      * @returns The deserialized items from AsyncStorage.
      */
-    async function getItems(): Promise<Data[]> {
+    async function getItems(): Promise<any[]> {
         const value = await AsyncStorage.getItem(key);
-        const items = SuperJSON.parse<any[]>(value ?? '[]');
-
-        if (!items) return [];
-
-        return items
-            .map((item) => {
-                const parsed = args.schema.safeParse(item);
-                return parsed.success ? parsed.data : null;
-            })
-            .filter((item) => !!item);
+        const items = JSON.parse(value ?? '[]');
+        return items ?? [];
     }
 
     /**
@@ -33,35 +19,42 @@ export const createAsyncStorageAdapter = <TSchema extends z.ZodSchema>(args: {
      *
      * @param items The items to save.
      */
-    async function saveItems(items: Data[]) {
-        const value = SuperJSON.stringify(items);
+    async function saveItems(items: any[]) {
+        const value = JSON.stringify(items);
         await AsyncStorage.setItem(key, value);
     }
 
-    return createPersistenceAdapter<Data, Data['id']>({
+    return createPersistenceAdapter<any, string>({
         async register() {},
         async load() {
+            console.log('START LOAD', args.name);
             const items = await getItems();
+            console.log('LOAD DONE', args.name, items.length);
             return { items };
         },
-        async save(items, { added, modified, removed }) {
-            const currentItems = await getItems();
-            added.forEach((item) => {
-                currentItems.push(item);
-            });
-            modified.forEach((item) => {
-                const index = currentItems.findIndex(({ id }) => id === item.id);
-                /* istanbul ignore if -- @preserve */
-                if (index === -1) throw new Error(`Item with ID ${item.id as string} not found`);
-                currentItems[index] = item;
-            });
-            removed.forEach((item) => {
-                const index = currentItems.findIndex(({ id }) => id === item.id);
-                /* istanbul ignore if -- @preserve */
-                if (index === -1) throw new Error(`Item with ID ${item.id as string} not found`);
-                currentItems.splice(index, 1);
-            });
-            await saveItems(currentItems);
+        async save(_, changes) {
+            console.log('START SAVE', args.name, changes);
+            let items = await getItems();
+            for (const addition of changes.added) {
+                items.push(addition);
+            }
+            for (const modification of changes.modified) {
+                items = items.map((item) => {
+                    if (item.id === modification.id) {
+                        return modification;
+                    }
+                    return item;
+                });
+            }
+            for (const removal of changes.removed) {
+                items = items.filter((item) => {
+                    if (item.id === removal.id) {
+                        return false;
+                    }
+                    return true;
+                });
+            }
+            await saveItems(items);
         },
     });
 };
