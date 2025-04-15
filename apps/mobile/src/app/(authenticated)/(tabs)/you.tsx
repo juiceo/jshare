@@ -9,7 +9,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { Profiles, useModel } from '~/lib/signaldb';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -17,7 +17,9 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const profile = useModel(() => Profiles.findOne({ id: auth.userId }));
+        const [profile] = trpc.profiles.get.useSuspenseQuery({ id: auth.userId });
+
+        const handleUpdate = () => {};
 
         return (
             <Screen>
@@ -29,14 +31,9 @@ export default screen(
                                     value={profile?.avatarId ?? null}
                                     profile={profile}
                                     onChange={(imageId) => {
-                                        Profiles.updateOne(
-                                            { id: auth.userId },
-                                            {
-                                                $set: {
-                                                    avatarId: imageId,
-                                                },
-                                            }
-                                        );
+                                        /**
+                                         * TODO: Implement this
+                                         */
                                     }}
                                 />
                                 <Typography variant="h6" align="center" mt="xl">
@@ -71,6 +68,9 @@ export default screen(
                                 </Stack>
                             </RectButton>
                         </Stack>
+                        <Button color="primary" variant="contained" onPress={handleUpdate}>
+                            Test update
+                        </Button>
 
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
                             Sign out

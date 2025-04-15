@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { skipToken } from '@tanstack/react-query';
 
 import { getUserDefaultAvatarUrl } from '@jshare/common';
 import type { DB } from '@jshare/db';
@@ -10,8 +11,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { useModel } from '~/lib/signaldb';
-import { Images } from '~/lib/signaldb/collections/images.collection';
+import { trpc } from '~/lib/trpc';
 
 export type AvatarPickerProps = {
     value: string | null;
@@ -21,7 +21,12 @@ export type AvatarPickerProps = {
 
 export const AvatarPicker = (props: AvatarPickerProps) => {
     const { value, onChange, profile } = props;
-    const image = useModel(() => (value ? Images.findOne({ id: value }) : null), [value]);
+
+    const imageQuery = trpc.models.images.findById.useQuery(value ? { id: value } : skipToken);
+    const image = imageQuery.data;
+
+    console.log('IMAGE', image);
+
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({
         mediaTypes: MediaTypeOptions.Images,
@@ -32,9 +37,6 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
         base64: true,
         allowsMultipleSelection: false,
     });
-
-    console.log('AVATAR ID NOW', value);
-    console.log('IMAGE NOW', image);
 
     const defaultAvatar = profile ? getUserDefaultAvatarUrl(profile) : undefined;
 
@@ -49,6 +51,7 @@ export const AvatarPicker = (props: AvatarPickerProps) => {
                     br="full"
                     bg="background.elevation1"
                 />
+
                 <LoadingOverlay visible={imageUpload.isUploading} />
                 <Stack absoluteFill justifyEnd alignEnd>
                     <Button

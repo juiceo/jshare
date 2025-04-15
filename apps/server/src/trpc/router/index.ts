@@ -9,7 +9,7 @@ import { groupParticipantsRouter } from './groupParticipants';
 import { groupsRouter } from './groups';
 import { imagesRouter } from './images';
 import { messagesRouter } from './messages';
-import { syncRouter } from './models';
+import { modelsRouter } from './models';
 import { paymentsRouter } from './payments';
 import { profilesRouter } from './profiles';
 
@@ -34,5 +34,5 @@ export const appRouter = router({
     balances: balancesRouter,
     exchangeRates: exchangeRatesRouter,
     auth: authRouter,
-    sync: syncRouter,
+    models: modelsRouter,
 });

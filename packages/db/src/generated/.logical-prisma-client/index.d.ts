@@ -15,8 +15,7 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 /**
  * Model Profile
- * @@allow('read', auth().id == id)
- * @@allow('update', auth().id == id)
+ * @@allow('all', true)
  * @@auth
  */
 export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
@@ -32,12 +31,6 @@ export type Group = $Result.DefaultSelection<Prisma.$GroupPayload>
 export type GroupParticipant = $Result.DefaultSelection<Prisma.$GroupParticipantPayload>
 /**
  * Model Image
- * @@allow('read', auth().id == uploadedById)
- * @@allow('read', auth().id == Profile.id)
- * @@allow('read', Group.participants?[userId == auth().id])
- * @@allow('create', true)
- * @@allow('update', false)
- * @@allow('delete', false)
  * @@allow('all', true)
  */
 export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>

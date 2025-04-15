@@ -201,9 +201,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         group: {

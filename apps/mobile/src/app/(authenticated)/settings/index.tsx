@@ -8,13 +8,12 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { Profiles, useModel } from '~/lib/signaldb';
 import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen({ auth: true }, ({ router, auth }) => {
-    const profile = useModel(() => Profiles.findOne({ id: auth.userId }));
+    const [profile] = trpc.profiles.get.useSuspenseQuery({ id: auth.userId });
 
     const updates = Updates.useUpdates();
     const deleteAccount = trpc.profiles.delete.useMutation();
@@ -50,14 +49,9 @@ export default screen({ auth: true }, ({ router, auth }) => {
                             <Switch
                                 checked={profile?.showInSearch ?? false}
                                 onChange={(checked) => {
-                                    Profiles.updateOne(
-                                        { id: auth.userId },
-                                        {
-                                            $set: {
-                                                showInSearch: checked,
-                                            },
-                                        }
-                                    );
+                                    /**
+                                     * TODO: Update profile
+                                     */
                                 }}
                             />
                         </Stack>

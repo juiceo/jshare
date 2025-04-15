@@ -79,8 +79,7 @@ enum CurrencyCode {
   @@schema("public")
 }
 
-/// @@allow('read', auth().id == id)
-/// @@allow('update', auth().id == id)
+/// @@allow('all', true)
 /// @@auth
 model Profile {
   id               String             @id() @default(uuid())
@@ -153,12 +152,6 @@ model GroupParticipant {
   @@schema("public")
 }
 
-/// @@allow('read', auth().id == uploadedById)
-/// @@allow('read', auth().id == Profile.id)
-/// @@allow('read', Group.participants?[userId == auth().id])
-/// @@allow('create', true)
-/// @@allow('update', false)
-/// @@allow('delete', false)
 /// @@allow('all', true)
 model Image {
   id           String    @id() @default(uuid())

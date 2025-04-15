@@ -45,8 +45,7 @@ model Profile extends BaseModel {
     paymentsPaid     Payment[]          @relation(name: "payment_payer")
     showInSearch     Boolean            @default(true)
 
-    @@allow('read', auth().id == id)
-    @@allow('update', auth().id == id)
+    @@allow('all', true)
     @@map("profiles")
     @@schema("public")
     @@auth
@@ -93,12 +92,6 @@ model Image extends BaseModel {
     Group        Group?
     Profile      Profile?
 
-    @@allow("read", auth().id == uploadedById)
-    @@allow("read", auth().id == Profile.id)
-    @@allow("read", Group.participants?[userId == auth().id])
-    @@allow("create", true)
-    @@allow("update", false)
-    @@allow("delete", false)
     @@allow('all', true)
     @@map("images")
 }

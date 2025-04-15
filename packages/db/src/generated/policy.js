@@ -265,47 +265,33 @@ const policy = {
             hasValidation: false
         },
     },
-    authSelector: { "id": true },
 };
 function Profile_read(context, db) {
-    var _a, _b, _c;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : {
-        id: {
-            equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null)
-        }
-    };
+    return { AND: [] };
 }
 function $check_Profile_read(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    if (((user === null || user === void 0 ? void 0 : user.id) == (input === null || input === void 0 ? void 0 : input.id))) {
+    if (true) {
         return true;
     }
     return false;
 }
 function Profile_create(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_create(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Profile_create_input(input, context) {
-    return false;
+    return true;
 }
 function Profile_update(context, db) {
-    var _a, _b, _c;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : {
-        id: {
-            equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null)
-        }
-    };
+    return { AND: [] };
 }
 function $check_Profile_update(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    if (((user === null || user === void 0 ? void 0 : user.id) == (input === null || input === void 0 ? void 0 : input.id))) {
+    if (true) {
         return true;
     }
     return false;
@@ -317,9 +303,12 @@ function $check_Profile_postUpdate(input, context) {
     return true;
 }
 function Profile_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Group_read(context, db) {
@@ -416,17 +405,6 @@ function Image_read(context, db) {
     return { AND: [] };
 }
 function $check_Image_read(input, context) {
-    var _a, _b, _c, _d, _e;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    if (((user === null || user === void 0 ? void 0 : user.id) == (input === null || input === void 0 ? void 0 : input.uploadedById))) {
-        return true;
-    }
-    if (((user === null || user === void 0 ? void 0 : user.id) == ((_b = input === null || input === void 0 ? void 0 : input.Profile) === null || _b === void 0 ? void 0 : _b.id))) {
-        return true;
-    }
-    if (((_e = ((_d = ((_c = input === null || input === void 0 ? void 0 : input.Group) === null || _c === void 0 ? void 0 : _c.participants)) === null || _d === void 0 ? void 0 : _d.some((_item) => ((_item === null || _item === void 0 ? void 0 : _item.userId) == (user === null || user === void 0 ? void 0 : user.id))))) !== null && _e !== void 0 ? _e : false)) {
-        return true;
-    }
     if (true) {
         return true;
     }
@@ -439,21 +417,15 @@ function $check_Image_create(input, context) {
     if (true) {
         return true;
     }
-    if (true) {
-        return true;
-    }
     return false;
 }
 function Image_create_input(input, context) {
-    return true || true;
+    return true;
 }
 function Image_update(context, db) {
     return { AND: [] };
 }
 function $check_Image_update(input, context) {
-    if (false) {
-        return true;
-    }
     if (true) {
         return true;
     }
@@ -469,9 +441,6 @@ function Image_delete(context, db) {
     return { AND: [] };
 }
 function $check_Image_delete(input, context) {
-    if (false) {
-        return true;
-    }
     if (true) {
         return true;
     }

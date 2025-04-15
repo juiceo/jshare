@@ -127,7 +127,7 @@ const metadata = {
                     fields: ["avatarId"]
                 },
             },
-            attributes: [{ "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "update" }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
+            attributes: [{ "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
         },
         group: {
             name: 'Group', fields: {
@@ -349,7 +349,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "create" }, { "value": true }] }, { "name": "@@allow", "args": [{ "value": "update" }, { "value": false }] }, { "name": "@@allow", "args": [{ "value": "delete" }, { "value": false }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
         },
         message: {
             name: 'Message', fields: {

@@ -3,11 +3,11 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
-import { Profiles, useModel } from '~/lib/signaldb';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen({ auth: true }, ({ auth }) => {
-    const profile = useModel(() => Profiles.findOne({ id: auth.userId }));
+    const [profile] = trpc.profiles.get.useSuspenseQuery({ id: auth.userId });
 
     return (
         <Screen>
@@ -16,9 +16,11 @@ export default screen({ auth: true }, ({ auth }) => {
                 <Stack p="xl" spacing="md">
                     <TextField
                         label={'First name'}
-                        value={profile?.firstName ?? ''}
+                        value={profile.firstName ?? ''}
                         onChange={(value) => {
-                            Profiles.updateOne({ id: auth.userId }, { $set: { firstName: value } });
+                            /**
+                             * TODO: Update profile
+                             */
                         }}
                         TextInputProps={{
                             placeholder: 'John',
@@ -26,9 +28,11 @@ export default screen({ auth: true }, ({ auth }) => {
                     />
                     <TextField
                         label={'Last name'}
-                        value={profile?.lastName ?? ''}
+                        value={profile.lastName ?? ''}
                         onChange={(value) => {
-                            Profiles.updateOne({ id: auth.userId }, { $set: { lastName: value } });
+                            /**
+                             * TODO: Update profile
+                             */
                         }}
                         TextInputProps={{
                             placeholder: 'Doe',
@@ -38,9 +42,11 @@ export default screen({ auth: true }, ({ auth }) => {
                         label="Preferred currency"
                         placeholder="Select currency"
                         options={CURRENCY_OPTIONS}
-                        value={profile?.currency}
+                        value={profile.currency}
                         onChange={(value) => {
-                            Profiles.updateOne({ id: auth.userId }, { $set: { currency: value } });
+                            /**
+                             * TODO: Update profile
+                             */
                         }}
                         MenuProps={{
                             title: 'Select currency',
