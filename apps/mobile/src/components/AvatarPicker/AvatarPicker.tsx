@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { skipToken } from '@tanstack/react-query';
+import { skipToken, useQuery } from '@tanstack/react-query';
 
 import { getUserDefaultAvatarUrl } from '@jshare/common';
 import type { DB } from '@jshare/db';
@@ -11,7 +11,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 
 export type AvatarPickerProps = {
     value: string | null;
@@ -21,11 +21,11 @@ export type AvatarPickerProps = {
 
 export const AvatarPicker = (props: AvatarPickerProps) => {
     const { value, onChange, profile } = props;
-
-    const imageQuery = trpc.models.images.findById.useQuery(value ? { id: value } : skipToken);
+    const trpc = useTRPC();
+    const imageQuery = useQuery(
+        trpc.z.image.findUnique.queryOptions(value ? { where: { id: value ?? '' } } : skipToken)
+    );
     const image = imageQuery.data;
-
-    console.log('IMAGE', image);
 
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({

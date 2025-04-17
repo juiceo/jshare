@@ -4,6 +4,6 @@ exports.NestedBoolFilterObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 exports.NestedBoolFilterObjectSchema = zod_1.z.object({
-    equals: zod_1.z.boolean().optional(), not: zod_1.z.union([zod_1.z.boolean(),
+    equals: zod_1.z.boolean().optional().optional(), not: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => exports.NestedBoolFilterObjectSchema)]).optional()
 }).strict();

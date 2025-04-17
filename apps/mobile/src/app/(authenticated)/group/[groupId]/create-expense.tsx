@@ -1,5 +1,6 @@
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 
 import { formatAmount, getDefaultShares, getTotalFromShares } from '@jshare/common';
@@ -13,7 +14,7 @@ import {
 } from '~/components/ExpenseEditor';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -21,10 +22,13 @@ export default screen(
         auth: true,
     },
     ({ router, auth }) => {
+        const trpc = useTRPC();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
-        const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
-        const createExpenseMutation = trpc.expenses.create.useMutation();
+        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
+        const groupMembers = useSuspenseQuery(
+            trpc.groupParticipants.list.queryOptions({ groupId })
+        ).data;
+        const createExpenseMutation = useMutation(trpc.expenses.create.mutationOptions());
         const form = useForm<ExpenseEditorSchema>({
             defaultValues: {
                 payerId: auth.session.user.id,

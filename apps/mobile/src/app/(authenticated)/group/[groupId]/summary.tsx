@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs, type TabBarProps } from 'react-native-collapsible-tab-view';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { formatAmount } from '@jshare/common';
@@ -19,7 +20,7 @@ import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
 import { useThrottledLoading } from '~/hooks/useThrottledLoading';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -27,34 +28,29 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
+        const trpc = useTRPC();
         const router = useRouter();
         const userId = auth.session.user.id;
         const { theme } = useTheme();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
-        const [groupTotal] = trpc.expenses.getTotalForGroup.useSuspenseQuery({
-            groupId,
-        });
-        const [balances, { refetch: refetchBalances, isRefetching: isRefetchingBalances }] =
-            trpc.balances.getByParticipantInGroup.useSuspenseQuery({
-                groupId,
-            });
-
-        const [expenses, { refetch: refetchExpenses, isRefetching: isRefetchingExpenses }] =
-            trpc.expenses.list.useSuspenseQuery({
-                groupId,
-            });
-
-        const [payments, { refetch: refetchPayments, isRefetching: isRefetchingPayments }] =
-            trpc.payments.list.useSuspenseQuery({
-                groupId,
-            });
+        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
+        const groupTotal = useSuspenseQuery(
+            trpc.expenses.getTotalForGroup.queryOptions({ groupId })
+        ).data;
+        const balancesQuery = useSuspenseQuery(
+            trpc.balances.getByParticipantInGroup.queryOptions({ groupId })
+        );
+        const balances = balancesQuery.data;
+        const expensesQuery = useSuspenseQuery(trpc.expenses.list.queryOptions({ groupId }));
+        const expenses = expensesQuery.data;
+        const paymentsQuery = useSuspenseQuery(trpc.payments.list.queryOptions({ groupId }));
+        const payments = paymentsQuery.data;
 
         const ownBalance = balances.find((b) => b.userId === userId);
 
-        const throttledIsRefetchingBalances = useThrottledLoading(isRefetchingBalances, 1000);
-        const throttledIsRefetchingExpenses = useThrottledLoading(isRefetchingExpenses, 1000);
-        const throttledIsRefetchingPayments = useThrottledLoading(isRefetchingPayments, 1000);
+        const throttledIsRefetchingBalances = useThrottledLoading(balancesQuery.isRefetching, 1000);
+        const throttledIsRefetchingExpenses = useThrottledLoading(expensesQuery.isRefetching, 1000);
+        const throttledIsRefetchingPayments = useThrottledLoading(paymentsQuery.isRefetching, 1000);
 
         const styles = getStyles(theme);
 
@@ -128,7 +124,7 @@ export default screen(
                                     />
                                 )}
                                 keyExtractor={(item) => item.userId}
-                                onRefresh={refetchBalances}
+                                onRefresh={balancesQuery.refetch}
                                 refreshing={throttledIsRefetchingBalances}
                                 ItemSeparatorComponent={() => (
                                     <Divider horizontal color="background.elevation1" />
@@ -142,7 +138,7 @@ export default screen(
                                     <ExpenseListItem data={item} userId={userId} />
                                 )}
                                 keyExtractor={(item) => item.id}
-                                onRefresh={refetchExpenses}
+                                onRefresh={expensesQuery.refetch}
                                 refreshing={throttledIsRefetchingExpenses}
                                 ItemSeparatorComponent={() => (
                                     <Divider horizontal color="background.elevation1" />
@@ -157,7 +153,7 @@ export default screen(
                                 data={payments}
                                 renderItem={({ item }) => <PaymentListItem data={item} />}
                                 keyExtractor={(item) => item.id}
-                                onRefresh={refetchPayments}
+                                onRefresh={paymentsQuery.refetch}
                                 refreshing={throttledIsRefetchingPayments}
                                 ItemSeparatorComponent={() => (
                                     <Divider horizontal color="background.elevation1" />

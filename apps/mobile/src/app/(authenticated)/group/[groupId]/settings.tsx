@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import * as Clipboard from 'expo-clipboard';
 import { useLocalSearchParams } from 'expo-router';
@@ -18,7 +19,7 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
@@ -28,13 +29,14 @@ export default screen(
         auth: true,
     },
     ({ auth, router }) => {
-        const trpcUtils = trpc.useUtils();
+        const trpc = useTRPC();
+        const queryClient = useQueryClient();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
+        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
         const { presentUserIds } = useGroupContext();
-        const updateGroup = trpc.groups.update.useMutation();
-        const refreshInviteCode = trpc.groups.refreshCode.useMutation();
-        const deleteGroup = trpc.groups.delete.useMutation();
+        const updateGroup = useMutation(trpc.groups.update.mutationOptions());
+        const refreshInviteCode = useMutation(trpc.groups.refreshCode.mutationOptions());
+        const deleteGroup = useMutation(trpc.groups.delete.mutationOptions());
 
         const [isDeleting, setDeleting] = useState<boolean>(false);
 
@@ -46,8 +48,8 @@ export default screen(
 
         const handleRefreshInviteCode = async () => {
             const updatedGroup = await refreshInviteCode.mutateAsync({ groupId });
-            trpcUtils.groups.get.setData({ id: groupId }, updatedGroup);
-            trpcUtils.groups.get.invalidate();
+            queryClient.setQueryData(trpc.groups.get.queryKey({ id: groupId }), updatedGroup);
+            queryClient.invalidateQueries({ queryKey: trpc.groups.get.queryKey({ id: groupId }) });
         };
 
         const handleCopyInviteCode = async () => {
@@ -58,7 +60,7 @@ export default screen(
         };
 
         const handleGroupUpdate = async (args: Pick<DB.Group, 'name'>) => {
-            trpcUtils.groups.get.setData({ id: groupId }, (prev) => {
+            queryClient.setQueryData(trpc.groups.get.queryKey({ id: groupId }), (prev) => {
                 if (!prev) return prev;
                 return {
                     ...prev,
@@ -69,13 +71,15 @@ export default screen(
                 groupId,
                 updates: args,
             });
-            trpcUtils.groups.invalidate();
+            queryClient.invalidateQueries({ queryKey: trpc.groups.get.queryKey({ id: groupId }) });
         };
 
         const handleGroupDelete = async () => {
             try {
                 await deleteGroup.mutateAsync({ groupId });
-                trpcUtils.groups.invalidate();
+                queryClient.invalidateQueries({
+                    queryKey: trpc.groups.get.queryKey({ id: groupId }),
+                });
                 router.replace('/(authenticated)/(tabs)/groups');
                 toast.info(`Success`, `${group.name} was deleted`);
             } catch {

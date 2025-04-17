@@ -12,7 +12,7 @@ const MessageAttachmentType_schema_1 = require("../enums/MessageAttachmentType.s
 const StringNullableFilter_schema_1 = require("./StringNullableFilter.schema");
 exports.MessageAttachmentScalarWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.MessageAttachmentScalarWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),

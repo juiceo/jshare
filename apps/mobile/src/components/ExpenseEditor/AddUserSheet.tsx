@@ -1,6 +1,8 @@
 import { Controller, useForm } from 'react-hook-form';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getQueryKey } from '@trpc/react-query';
 import { z } from 'zod';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
@@ -8,7 +10,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 
 export type AddUserSheetProps = {
     onClose: () => void;
@@ -24,9 +26,12 @@ type Schema = z.infer<typeof schema>;
 
 export const AddUserSheet = (props: AddUserSheetProps) => {
     const { onClose, groupId } = props;
-    const trpcUtils = trpc.useUtils();
-    const createTemporaryParticipant =
-        trpc.groupParticipants.createTemporaryParticipant.useMutation();
+    const trpc = useTRPC();
+    const queryClient = useQueryClient();
+
+    const createTemporaryParticipant = useMutation(
+        trpc.groupParticipants.createTemporaryParticipant.mutationOptions()
+    );
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
@@ -37,8 +42,9 @@ export const AddUserSheet = (props: AddUserSheetProps) => {
             groupId,
             ...data,
         });
-        trpcUtils.groupParticipants.invalidate();
-        trpcUtils.groups.invalidate();
+        queryClient.invalidateQueries({
+            queryKey: [getQueryKey(trpc.groupParticipants as any), getQueryKey(trpc.groups as any)],
+        });
         props.onClose();
     };
 

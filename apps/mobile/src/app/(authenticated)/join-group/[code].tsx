@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 
 import { plural } from '@jshare/common';
@@ -8,7 +9,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { trpcUtils, useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -17,10 +18,11 @@ export default screen(
         auth: true,
     },
     ({ router, auth }) => {
-        const trpcUtils = trpc.useUtils();
+        const trpc = useTRPC();
+        const queryClient = useQueryClient();
         const { code } = useLocalSearchParams<{ code: string }>();
-        const [group] = trpc.groups.getByCode.useSuspenseQuery({ code });
-        const joinGroup = trpc.groups.joinByCode.useMutation();
+        const group = useSuspenseQuery(trpc.groups.getByCode.queryOptions({ code })).data;
+        const joinGroup = useMutation(trpc.groups.joinByCode.mutationOptions());
 
         const isMember = group?.participants.some((p) => p.userId === auth.session.user.id);
 
@@ -29,7 +31,10 @@ export default screen(
             if (!isMember) {
                 await joinGroup.mutateAsync({ code });
             }
-            trpcUtils.groups.invalidate();
+
+            queryClient.invalidateQueries({
+                queryKey: trpcUtils.groups.pathKey(),
+            });
             router.dismiss();
             router.dismiss();
             router.push({

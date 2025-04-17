@@ -14,7 +14,7 @@ const EnumInviteTypeNullableWithAggregatesFilter_schema_1 = require("./EnumInvit
 const InviteType_schema_1 = require("../enums/InviteType.schema");
 exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema),
-        zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema),
+        zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema),
         zod_1.z.lazy(() => exports.GroupParticipantScalarWhereWithAggregatesInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringWithAggregatesFilter_schema_1.StringWithAggregatesFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolWithAggregatesFilter_schema_1.BoolWithAggregatesFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableWithAggregatesFilter_schema_1.DateTimeNullableWithAggregatesFilterObjectSchema),

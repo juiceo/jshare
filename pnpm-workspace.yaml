@@ -47,7 +47,8 @@ catalog:
     '@types/validator': ^13.12.2
     '@typescript-eslint/eslint-plugin': ^5.62.0
     '@typescript-eslint/parser': ^5.62.0
-    '@zenstackhq/runtime': ^2.11.2
+    '@zenstackhq/runtime': 2.14.0
+    '@zenstackhq/trpc': 2.14.0
     babel-loader: ^8.4.1
     babel-preset-expo: ^12.0.11
     blurhash: ^2.0.5
@@ -107,6 +108,6 @@ catalog:
     uuid: ^11.0.3
     validator: ^13.12.0
     vitest: ^2.1.8
-    zenstack: ^2.11.2
+    zenstack: 2.14.0
     zod: ^3.24.1
     zx: ^8.2.2

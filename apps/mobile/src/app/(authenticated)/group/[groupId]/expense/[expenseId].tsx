@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
@@ -17,7 +18,7 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpc } from '~/lib/trpc';
+import { trpcUtils, useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -25,21 +26,23 @@ export default screen(
         auth: true,
     },
     ({ auth, router }) => {
-        const trpcUtils = trpc.useUtils();
+        const trpc = useTRPC();
+        const queryClient = useQueryClient();
         const [mode, setMode] = useState<'edit' | 'view'>('view');
         const [isDeleting, setDeleting] = useState<boolean>(false);
         const { expenseId, groupId } = useLocalSearchParams<{
             expenseId: string;
             groupId: string;
         }>();
-        const [expense, expenseQuery] = trpc.expenses.get.useSuspenseQuery({
-            id: expenseId,
-        });
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
+        const expenseQuery = useSuspenseQuery(trpc.expenses.get.queryOptions({ id: expenseId }));
+        const expense = expenseQuery.data;
+
+        const groupQuery = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId }));
+        const group = groupQuery.data;
         const isOwner = expense.ownerId === auth.session.user.id;
 
-        const updateExpense = trpc.expenses.update.useMutation();
-        const archiveExpense = trpc.expenses.archive.useMutation();
+        const updateExpense = useMutation(trpc.expenses.update.mutationOptions());
+        const archiveExpense = useMutation(trpc.expenses.archive.mutationOptions());
 
         const form = useForm<ExpenseEditorSchema>({
             resolver: zodResolver(expenseEditorSchema),
@@ -59,11 +62,15 @@ export default screen(
                 ...data,
             });
 
-            trpcUtils.expenses.get.setData({ id: expense.id }, () => {
+            queryClient.setQueryData(trpc.expenses.get.queryKey({ id: expense.id }), () => {
                 return updatedExpense;
             });
-            trpcUtils.expenses.invalidate();
-            trpcUtils.balances.invalidate();
+            queryClient.invalidateQueries({
+                queryKey: trpc.expenses.get.queryKey({ id: expense.id }),
+            });
+            queryClient.invalidateQueries({
+                queryKey: trpc.balances.getByParticipantInGroup.queryKey({ groupId }),
+            });
             expenseQuery.refetch();
 
             setMode('view');
@@ -74,8 +81,9 @@ export default screen(
                 expenseId: expense.id,
             });
 
-            trpcUtils.expenses.invalidate();
-            trpcUtils.balances.invalidate();
+            queryClient.invalidateQueries({
+                queryKey: [trpcUtils.expenses.pathKey(), trpcUtils.balances.pathKey()],
+            });
 
             router.back();
         };

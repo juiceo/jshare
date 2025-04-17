@@ -1,269 +1,117 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const policy = {
-    policy: {
-        profile: {
-            modelLevel: {
-                read: {
-                    guard: Profile_read,
-                },
-                create: {
-                    guard: Profile_create, inputChecker: Profile_create_input,
-                },
-                update: {
-                    guard: Profile_update,
-                },
-                postUpdate: {
-                    guard: Profile_postUpdate,
-                },
-                delete: {
-                    guard: Profile_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+    policy: { profile: {
+            modelLevel: { read: { guard: Profile_read, },
+                create: { guard: Profile_create, inputChecker: Profile_create_input, },
+                update: { guard: Profile_update, },
+                postUpdate: { guard: Profile_postUpdate, },
+                delete: { guard: Profile_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         group: {
-            modelLevel: {
-                read: {
-                    guard: Group_read,
-                },
-                create: {
-                    guard: Group_create, inputChecker: Group_create_input,
-                },
-                update: {
-                    guard: Group_update,
-                },
-                postUpdate: {
-                    guard: Group_postUpdate,
-                },
-                delete: {
-                    guard: Group_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: Group_read, },
+                create: { guard: Group_create, inputChecker: Group_create_input, },
+                update: { guard: Group_update, },
+                postUpdate: { guard: Group_postUpdate, },
+                delete: { guard: Group_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         groupParticipant: {
-            modelLevel: {
-                read: {
-                    guard: GroupParticipant_read,
-                },
-                create: {
-                    guard: GroupParticipant_create, inputChecker: GroupParticipant_create_input,
-                },
-                update: {
-                    guard: GroupParticipant_update,
-                },
-                postUpdate: {
-                    guard: GroupParticipant_postUpdate,
-                },
-                delete: {
-                    guard: GroupParticipant_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: GroupParticipant_read, },
+                create: { guard: GroupParticipant_create, inputChecker: GroupParticipant_create_input, },
+                update: { guard: GroupParticipant_update, },
+                postUpdate: { guard: GroupParticipant_postUpdate, },
+                delete: { guard: GroupParticipant_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         image: {
-            modelLevel: {
-                read: {
-                    guard: Image_read,
-                },
-                create: {
-                    guard: Image_create, inputChecker: Image_create_input,
-                },
-                update: {
-                    guard: Image_update,
-                },
-                postUpdate: {
-                    guard: Image_postUpdate,
-                },
-                delete: {
-                    guard: Image_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: Image_read, },
+                create: { guard: Image_create, inputChecker: Image_create_input, },
+                update: { guard: Image_update, },
+                postUpdate: { guard: Image_postUpdate, },
+                delete: { guard: Image_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         message: {
-            modelLevel: {
-                read: {
-                    guard: Message_read,
-                },
-                create: {
-                    guard: Message_create, inputChecker: Message_create_input,
-                },
-                update: {
-                    guard: Message_update,
-                },
-                postUpdate: {
-                    guard: Message_postUpdate,
-                },
-                delete: {
-                    guard: Message_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: Message_read, },
+                create: { guard: Message_create, inputChecker: Message_create_input, },
+                update: { guard: Message_update, },
+                postUpdate: { guard: Message_postUpdate, },
+                delete: { guard: Message_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         messageAttachment: {
-            modelLevel: {
-                read: {
-                    guard: MessageAttachment_read,
-                },
-                create: {
-                    guard: MessageAttachment_create, inputChecker: MessageAttachment_create_input,
-                },
-                update: {
-                    guard: MessageAttachment_update,
-                },
-                postUpdate: {
-                    guard: MessageAttachment_postUpdate,
-                },
-                delete: {
-                    guard: MessageAttachment_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: MessageAttachment_read, },
+                create: { guard: MessageAttachment_create, inputChecker: MessageAttachment_create_input, },
+                update: { guard: MessageAttachment_update, },
+                postUpdate: { guard: MessageAttachment_postUpdate, },
+                delete: { guard: MessageAttachment_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         expense: {
-            modelLevel: {
-                read: {
-                    guard: Expense_read,
-                },
-                create: {
-                    guard: Expense_create, inputChecker: Expense_create_input,
-                },
-                update: {
-                    guard: Expense_update,
-                },
-                postUpdate: {
-                    guard: Expense_postUpdate,
-                },
-                delete: {
-                    guard: Expense_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: Expense_read, },
+                create: { guard: Expense_create, inputChecker: Expense_create_input, },
+                update: { guard: Expense_update, },
+                postUpdate: { guard: Expense_postUpdate, },
+                delete: { guard: Expense_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         expenseShare: {
-            modelLevel: {
-                read: {
-                    guard: ExpenseShare_read,
-                },
-                create: {
-                    guard: ExpenseShare_create, inputChecker: ExpenseShare_create_input,
-                },
-                update: {
-                    guard: ExpenseShare_update,
-                },
-                postUpdate: {
-                    guard: ExpenseShare_postUpdate,
-                },
-                delete: {
-                    guard: ExpenseShare_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: ExpenseShare_read, },
+                create: { guard: ExpenseShare_create, inputChecker: ExpenseShare_create_input, },
+                update: { guard: ExpenseShare_update, },
+                postUpdate: { guard: ExpenseShare_postUpdate, },
+                delete: { guard: ExpenseShare_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         payment: {
-            modelLevel: {
-                read: {
-                    guard: Payment_read,
-                },
-                create: {
-                    guard: Payment_create, inputChecker: Payment_create_input,
-                },
-                update: {
-                    guard: Payment_update,
-                },
-                postUpdate: {
-                    guard: Payment_postUpdate,
-                },
-                delete: {
-                    guard: Payment_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: Payment_read, },
+                create: { guard: Payment_create, inputChecker: Payment_create_input, },
+                update: { guard: Payment_update, },
+                postUpdate: { guard: Payment_postUpdate, },
+                delete: { guard: Payment_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
         exchangeRates: {
-            modelLevel: {
-                read: {
-                    guard: ExchangeRates_read,
-                },
-                create: {
-                    guard: ExchangeRates_create, inputChecker: ExchangeRates_create_input,
-                },
-                update: {
-                    guard: ExchangeRates_update,
-                },
-                postUpdate: {
-                    guard: ExchangeRates_postUpdate,
-                },
-                delete: {
-                    guard: ExchangeRates_delete,
-                }
-            },
-            fieldLevel: {
-                read: {},
+            modelLevel: { read: { guard: ExchangeRates_read, },
+                create: { guard: ExchangeRates_create, inputChecker: ExchangeRates_create_input, },
+                update: { guard: ExchangeRates_update, },
+                postUpdate: { guard: ExchangeRates_postUpdate, },
+                delete: { guard: ExchangeRates_delete, } },
+            fieldLevel: { read: {},
                 update: {},
             },
         },
     },
-    validation: {
-        profile: {
-            hasValidation: false
-        },
-        group: {
-            hasValidation: false
-        },
-        groupParticipant: {
-            hasValidation: false
-        },
-        image: {
-            hasValidation: false
-        },
-        message: {
-            hasValidation: false
-        },
-        messageAttachment: {
-            hasValidation: false
-        },
-        expense: {
-            hasValidation: true
-        },
-        expenseShare: {
-            hasValidation: true
-        },
-        payment: {
-            hasValidation: true
-        },
-        exchangeRates: {
-            hasValidation: false
-        },
+    validation: { profile: { hasValidation: false },
+        group: { hasValidation: false },
+        groupParticipant: { hasValidation: false },
+        image: { hasValidation: false },
+        message: { hasValidation: false },
+        messageAttachment: { hasValidation: false },
+        expense: { hasValidation: true },
+        expenseShare: { hasValidation: true },
+        payment: { hasValidation: true },
+        exchangeRates: { hasValidation: false },
     },
 };
 function Profile_read(context, db) {

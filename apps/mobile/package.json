@@ -58,6 +58,7 @@
         "@trpc/client": "catalog:",
         "@trpc/react-query": "catalog:",
         "@trpc/server": "catalog:",
+        "@trpc/tanstack-react-query": "^11.1.0",
         "dayjs": "catalog:",
         "expo": "catalog:",
         "expo-blur": "catalog:",

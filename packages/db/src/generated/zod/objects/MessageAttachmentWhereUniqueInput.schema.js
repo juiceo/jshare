@@ -16,8 +16,8 @@ const MessageWhereInput_schema_1 = require("./MessageWhereInput.schema");
 const ExpenseNullableScalarRelationFilter_schema_1 = require("./ExpenseNullableScalarRelationFilter.schema");
 const ExpenseWhereInput_schema_1 = require("./ExpenseWhereInput.schema");
 exports.MessageAttachmentWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema),
-        zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema),
+    id: zod_1.z.string().optional().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema),
+        zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema),
         zod_1.z.lazy(() => MessageAttachmentWhereInput_schema_1.MessageAttachmentWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),

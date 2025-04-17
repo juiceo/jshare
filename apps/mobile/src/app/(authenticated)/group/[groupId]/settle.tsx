@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { isEqual } from 'lodash';
 
@@ -11,7 +12,7 @@ import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpc } from '~/lib/trpc';
+import { trpcUtils, useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -20,14 +21,15 @@ export default screen(
     },
     ({ auth, router }) => {
         const userId = auth.session.user.id;
-        const trpcUtils = trpc.useUtils();
+        const trpc = useTRPC();
+        const queryClient = useQueryClient();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
         const [checked, setChecked] = useState<PaymentObject[]>([]);
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
-        const [balances] = trpc.balances.getByParticipantInGroup.useSuspenseQuery({
-            groupId,
-        });
-        const createPayment = trpc.payments.create.useMutation();
+        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
+        const balances = useSuspenseQuery(
+            trpc.balances.getByParticipantInGroup.queryOptions({ groupId })
+        ).data;
+        const createPayment = useMutation(trpc.payments.create.mutationOptions());
 
         const payments = useMemo(() => {
             return getPaymentsFromBalances(balances);
@@ -64,8 +66,12 @@ export default screen(
                 });
             }
 
-            trpcUtils.balances.invalidate();
-            trpcUtils.payments.invalidate();
+            queryClient.invalidateQueries({
+                queryKey: trpcUtils.balances.pathKey(),
+            });
+            queryClient.invalidateQueries({
+                queryKey: trpcUtils.payments.pathKey(),
+            });
 
             router.back();
         };

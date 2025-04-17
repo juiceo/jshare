@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable } from 'react-native';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { Stack } from '~/components/atoms/Stack';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
@@ -8,11 +9,12 @@ import { NewGroupMenu } from '~/components/NewGroupMenu/NewGroupMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen({}, ({ router }) => {
-    const [groups] = trpc.groups.list.useSuspenseQuery();
+    const trpc = useTRPC();
+    const groups = useSuspenseQuery(trpc.groups.list.queryOptions()).data;
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
     const handleSelect = (value: 'create' | 'join') => {

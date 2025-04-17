@@ -12,5 +12,5 @@ exports.NestedEnumInviteTypeNullableWithAggregatesFilterObjectSchema = zod_1.z.o
         zod_1.z.null()]).optional().nullable(), notIn: zod_1.z.union([zod_1.z.lazy(() => InviteType_schema_1.InviteTypeSchema).array(),
         zod_1.z.null()]).optional().nullable(), not: zod_1.z.union([zod_1.z.lazy(() => InviteType_schema_1.InviteTypeSchema),
         zod_1.z.lazy(() => exports.NestedEnumInviteTypeNullableWithAggregatesFilterObjectSchema),
-        zod_1.z.null()]).optional().nullable(), _count: zod_1.z.lazy(() => NestedIntNullableFilter_schema_1.NestedIntNullableFilterObjectSchema).optional(), _min: zod_1.z.lazy(() => NestedEnumInviteTypeNullableFilter_schema_1.NestedEnumInviteTypeNullableFilterObjectSchema).optional(), _max: zod_1.z.lazy(() => NestedEnumInviteTypeNullableFilter_schema_1.NestedEnumInviteTypeNullableFilterObjectSchema).optional()
+        zod_1.z.null()]).optional().nullable(), _count: zod_1.z.lazy(() => NestedIntNullableFilter_schema_1.NestedIntNullableFilterObjectSchema).optional().optional(), _min: zod_1.z.lazy(() => NestedEnumInviteTypeNullableFilter_schema_1.NestedEnumInviteTypeNullableFilterObjectSchema).optional().optional(), _max: zod_1.z.lazy(() => NestedEnumInviteTypeNullableFilter_schema_1.NestedEnumInviteTypeNullableFilterObjectSchema).optional().optional()
 }).strict();

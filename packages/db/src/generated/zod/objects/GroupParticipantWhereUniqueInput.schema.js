@@ -18,8 +18,8 @@ const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
 const GroupScalarRelationFilter_schema_1 = require("./GroupScalarRelationFilter.schema");
 const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
 exports.GroupParticipantWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema),
-        zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema),
+    id: zod_1.z.string().optional().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema),
+        zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema),
         zod_1.z.lazy(() => GroupParticipantWhereInput_schema_1.GroupParticipantWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),

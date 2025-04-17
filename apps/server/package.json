@@ -7,7 +7,7 @@
     "main": "src/index.ts",
     "exports": {
         ".": {
-            "types": "./src/trpc/types.ts",
+            "types": "./src/client.ts",
             "default": null
         }
     },

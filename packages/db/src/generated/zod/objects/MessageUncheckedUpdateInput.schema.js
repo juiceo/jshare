@@ -25,5 +25,5 @@ exports.MessageUncheckedUpdateInputObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => EnumAuthorTypeFieldUpdateOperationsInput_schema_1.EnumAuthorTypeFieldUpdateOperationsInputObjectSchema)]).optional(), authorId: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), groupId: zod_1.z.union([zod_1.z.string(),
-        zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), attachments: zod_1.z.lazy(() => MessageAttachmentUncheckedUpdateManyWithoutMessageNestedInput_schema_1.MessageAttachmentUncheckedUpdateManyWithoutMessageNestedInputObjectSchema).optional()
+        zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), attachments: zod_1.z.lazy(() => MessageAttachmentUncheckedUpdateManyWithoutMessageNestedInput_schema_1.MessageAttachmentUncheckedUpdateManyWithoutMessageNestedInputObjectSchema).optional().optional()
 }).strict();

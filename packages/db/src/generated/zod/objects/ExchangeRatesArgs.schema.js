@@ -5,5 +5,5 @@ exports.ExchangeRatesArgsObjectSchema = void 0;
 const zod_1 = require("zod");
 const ExchangeRatesSelect_schema_1 = require("./ExchangeRatesSelect.schema");
 exports.ExchangeRatesArgsObjectSchema = zod_1.z.object({
-    select: zod_1.z.lazy(() => ExchangeRatesSelect_schema_1.ExchangeRatesSelectObjectSchema).optional()
+    select: zod_1.z.lazy(() => ExchangeRatesSelect_schema_1.ExchangeRatesSelectObjectSchema).optional().optional()
 }).strict();

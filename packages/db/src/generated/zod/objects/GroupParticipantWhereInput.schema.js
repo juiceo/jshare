@@ -18,7 +18,7 @@ const GroupScalarRelationFilter_schema_1 = require("./GroupScalarRelationFilter.
 const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
 exports.GroupParticipantWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.GroupParticipantWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),

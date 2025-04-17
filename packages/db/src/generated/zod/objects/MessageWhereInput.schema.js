@@ -17,7 +17,7 @@ const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
 const MessageAttachmentListRelationFilter_schema_1 = require("./MessageAttachmentListRelationFilter.schema");
 exports.MessageWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.MessageWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
@@ -34,5 +34,5 @@ exports.MessageWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string()]).optional(), author: zod_1.z.union([zod_1.z.lazy(() => ProfileNullableScalarRelationFilter_schema_1.ProfileNullableScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), group: zod_1.z.union([zod_1.z.lazy(() => GroupScalarRelationFilter_schema_1.GroupScalarRelationFilterObjectSchema),
-        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), attachments: zod_1.z.lazy(() => MessageAttachmentListRelationFilter_schema_1.MessageAttachmentListRelationFilterObjectSchema).optional()
+        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), attachments: zod_1.z.lazy(() => MessageAttachmentListRelationFilter_schema_1.MessageAttachmentListRelationFilterObjectSchema).optional().optional()
 }).strict();

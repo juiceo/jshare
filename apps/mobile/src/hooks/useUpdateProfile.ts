@@ -1,14 +1,16 @@
 import { useCallback } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { trpc, type TrpcInputs } from '~/lib/trpc';
+import { useTRPC, type TrpcInputs } from '~/lib/trpc';
 
 export const useUpdateProfile = () => {
-    const trpcUtils = trpc.useUtils();
-    const updateProfileMutation = trpc.profiles.update.useMutation();
+    const trpc = useTRPC();
+    const queryClient = useQueryClient();
+    const updateProfileMutation = useMutation(trpc.profiles.update.mutationOptions());
 
     const updateProfile = useCallback(
         async (args: TrpcInputs['profiles']['update']) => {
-            trpcUtils.profiles.me.setData(undefined, (prev) => {
+            queryClient.setQueryData(trpc.profiles.me.queryKey(), (prev) => {
                 if (!prev) return;
                 return {
                     ...prev,
@@ -17,12 +19,12 @@ export const useUpdateProfile = () => {
             });
             return updateProfileMutation.mutateAsync(args, {
                 onSuccess: (data) => {
-                    trpcUtils.profiles.me.setData(undefined, () => data);
-                    trpcUtils.profiles.me.invalidate();
+                    queryClient.setQueryData(trpc.profiles.me.queryKey(), () => data);
+                    queryClient.invalidateQueries({ queryKey: trpc.profiles.me.queryKey() });
                 },
             });
         },
-        [updateProfileMutation, trpcUtils.profiles.me]
+        [queryClient, trpc.profiles.me, updateProfileMutation]
     );
 
     return {

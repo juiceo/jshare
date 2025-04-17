@@ -6,5 +6,5 @@ const zod_1 = require("zod");
 const MessageCreateManyGroupInput_schema_1 = require("./MessageCreateManyGroupInput.schema");
 exports.MessageCreateManyGroupInputEnvelopeObjectSchema = zod_1.z.object({
     data: zod_1.z.union([zod_1.z.lazy(() => MessageCreateManyGroupInput_schema_1.MessageCreateManyGroupInputObjectSchema),
-        zod_1.z.lazy(() => MessageCreateManyGroupInput_schema_1.MessageCreateManyGroupInputObjectSchema).array()]), skipDuplicates: zod_1.z.boolean().optional()
+        zod_1.z.lazy(() => MessageCreateManyGroupInput_schema_1.MessageCreateManyGroupInputObjectSchema).array()]), skipDuplicates: zod_1.z.boolean().optional().optional()
 }).strict();

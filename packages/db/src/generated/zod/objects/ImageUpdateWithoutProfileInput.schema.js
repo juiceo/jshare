@@ -21,5 +21,5 @@ exports.ImageUpdateWithoutProfileInputObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), uploadedById: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => StringFieldUpdateOperationsInput_schema_1.StringFieldUpdateOperationsInputObjectSchema)]).optional(), blurhash: zod_1.z.union([zod_1.z.string(),
         zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
-        zod_1.z.null()]).optional().nullable(), Group: zod_1.z.lazy(() => GroupUpdateOneWithoutCoverImageNestedInput_schema_1.GroupUpdateOneWithoutCoverImageNestedInputObjectSchema).optional()
+        zod_1.z.null()]).optional().nullable(), Group: zod_1.z.lazy(() => GroupUpdateOneWithoutCoverImageNestedInput_schema_1.GroupUpdateOneWithoutCoverImageNestedInputObjectSchema).optional().optional()
 }).strict();

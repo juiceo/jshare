@@ -12,7 +12,7 @@ const EnumAuthorTypeFilter_schema_1 = require("./EnumAuthorTypeFilter.schema");
 const AuthorType_schema_1 = require("../enums/AuthorType.schema");
 exports.MessageScalarWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.MessageScalarWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),

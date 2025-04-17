@@ -1,1 +1,1 @@
-export type * from './.logical-prisma-client/index-fixed';
+export * from './.logical-prisma-client';

@@ -1,4 +1,5 @@
 import { Pressable } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
 
 import { useTheme } from '@jshare/theme';
 
@@ -6,7 +7,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Icon } from '~/components/Icon';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 
 export type ProfileBadgeProps = {
     onPress: () => void;
@@ -14,11 +15,12 @@ export type ProfileBadgeProps = {
 
 export const ProfileBadge = (props: ProfileBadgeProps) => {
     const { theme } = useTheme();
-    const profile = trpc.profiles.me.useQuery();
+    const trpc = useTRPC();
+    const profile = useQuery(trpc.profiles.me.queryOptions()).data;
 
     const getName = () => {
-        if (!profile.data) return '';
-        return [profile.data.firstName, profile.data.lastName?.slice(0, 1).concat('.')]
+        if (!profile) return '';
+        return [profile.firstName, profile.lastName?.slice(0, 1).concat('.')]
             .filter(Boolean)
             .join(' ');
     };
@@ -31,7 +33,7 @@ export const ProfileBadge = (props: ProfileBadgeProps) => {
                     br="xl"
                     border="accent.main"
                     darken={0.2}
-                    image={profile.data?.avatar}
+                    image={profile?.avatar}
                     fit={'fill'}
                 />
                 <Stack row center pl="lg" pr="md" spacing="md">

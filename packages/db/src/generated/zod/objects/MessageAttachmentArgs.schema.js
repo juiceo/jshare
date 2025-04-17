@@ -6,5 +6,5 @@ const zod_1 = require("zod");
 const MessageAttachmentSelect_schema_1 = require("./MessageAttachmentSelect.schema");
 const MessageAttachmentInclude_schema_1 = require("./MessageAttachmentInclude.schema");
 exports.MessageAttachmentArgsObjectSchema = zod_1.z.object({
-    select: zod_1.z.lazy(() => MessageAttachmentSelect_schema_1.MessageAttachmentSelectObjectSchema).optional(), include: zod_1.z.lazy(() => MessageAttachmentInclude_schema_1.MessageAttachmentIncludeObjectSchema).optional()
+    select: zod_1.z.lazy(() => MessageAttachmentSelect_schema_1.MessageAttachmentSelectObjectSchema).optional().optional(), include: zod_1.z.lazy(() => MessageAttachmentInclude_schema_1.MessageAttachmentIncludeObjectSchema).optional().optional()
 }).strict();

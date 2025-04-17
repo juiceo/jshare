@@ -4,5 +4,5 @@ exports.StringFieldUpdateOperationsInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 exports.StringFieldUpdateOperationsInputObjectSchema = zod_1.z.object({
-    set: zod_1.z.string().optional()
+    set: zod_1.z.string().optional().optional()
 }).strict();

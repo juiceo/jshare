@@ -1,15 +1,17 @@
 import { useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { BASE_EXCHANGE_RATES, convertAmount, getExchangeRate } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 
 export const useExchangeRates = (): {
     exchangeRates: DB.ExchangeRates;
     refetch: () => void;
 } => {
-    const ratesQuery = trpc.exchangeRates.latest.useQuery();
+    const trpc = useTRPC();
+    const ratesQuery = useQuery(trpc.exchangeRates.latest.queryOptions());
 
     return {
         exchangeRates: ratesQuery.data ?? BASE_EXCHANGE_RATES,

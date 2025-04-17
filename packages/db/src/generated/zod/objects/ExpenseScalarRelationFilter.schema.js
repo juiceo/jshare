@@ -5,5 +5,5 @@ exports.ExpenseScalarRelationFilterObjectSchema = void 0;
 const zod_1 = require("zod");
 const ExpenseWhereInput_schema_1 = require("./ExpenseWhereInput.schema");
 exports.ExpenseScalarRelationFilterObjectSchema = zod_1.z.object({
-    is: zod_1.z.lazy(() => ExpenseWhereInput_schema_1.ExpenseWhereInputObjectSchema).optional(), isNot: zod_1.z.lazy(() => ExpenseWhereInput_schema_1.ExpenseWhereInputObjectSchema).optional()
+    is: zod_1.z.lazy(() => ExpenseWhereInput_schema_1.ExpenseWhereInputObjectSchema).optional().optional(), isNot: zod_1.z.lazy(() => ExpenseWhereInput_schema_1.ExpenseWhereInputObjectSchema).optional().optional()
 }).strict();

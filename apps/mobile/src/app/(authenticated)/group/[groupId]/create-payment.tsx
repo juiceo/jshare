@@ -3,6 +3,7 @@ import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { RectButton } from 'react-native-gesture-handler';
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { z } from 'zod';
 
@@ -21,7 +22,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserMenu } from '~/components/UserMenu';
 import { useCurrencyConversion } from '~/hooks/useExchangeRates';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
@@ -35,11 +36,14 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>;
 
 export default screen({}, ({ router }) => {
+    const trpc = useTRPC();
     const { groupId } = useLocalSearchParams<{ groupId: string }>();
-    const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
-    const [groupMembers] = trpc.groupParticipants.list.useSuspenseQuery({ groupId });
-    const [profile] = trpc.profiles.me.useSuspenseQuery();
-    const createPayment = trpc.payments.create.useMutation();
+    const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
+    const groupMembers = useSuspenseQuery(
+        trpc.groupParticipants.list.queryOptions({ groupId })
+    ).data;
+    const profile = useSuspenseQuery(trpc.profiles.me.queryOptions()).data;
+    const createPayment = useMutation(trpc.payments.create.mutationOptions());
     const { convert } = useCurrencyConversion();
     const form = useForm<Schema>({
         defaultValues: {

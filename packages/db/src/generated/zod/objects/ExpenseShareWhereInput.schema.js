@@ -17,7 +17,7 @@ const ExpenseScalarRelationFilter_schema_1 = require("./ExpenseScalarRelationFil
 const ExpenseWhereInput_schema_1 = require("./ExpenseWhereInput.schema");
 exports.ExpenseShareWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.ExpenseShareWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
@@ -29,7 +29,7 @@ exports.ExpenseShareWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.string()]).optional(), amount: zod_1.z.union([zod_1.z.lazy(() => IntFilter_schema_1.IntFilterObjectSchema),
         zod_1.z.number()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
         zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), locked: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
-        zod_1.z.boolean()]).optional(), conversion: zod_1.z.lazy(() => JsonNullableFilter_schema_1.JsonNullableFilterObjectSchema).optional(), user: zod_1.z.union([zod_1.z.lazy(() => ProfileScalarRelationFilter_schema_1.ProfileScalarRelationFilterObjectSchema),
+        zod_1.z.boolean()]).optional(), conversion: zod_1.z.lazy(() => JsonNullableFilter_schema_1.JsonNullableFilterObjectSchema).optional().optional(), user: zod_1.z.union([zod_1.z.lazy(() => ProfileScalarRelationFilter_schema_1.ProfileScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema)]).optional(), expense: zod_1.z.union([zod_1.z.lazy(() => ExpenseScalarRelationFilter_schema_1.ExpenseScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ExpenseWhereInput_schema_1.ExpenseWhereInputObjectSchema)]).optional()
 }).strict();

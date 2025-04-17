@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { getUserFullName, getUserShortName } from '@jshare/common';
 
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export type UserNameProps = {
@@ -10,9 +12,10 @@ export type UserNameProps = {
 };
 
 export const UserName = (props: UserNameProps) => {
-    const { session } = useSession();
     const { userId } = props;
-    const { data: profile } = trpc.profiles.get.useQuery({ id: userId });
+    const trpc = useTRPC();
+    const { session } = useSession();
+    const profile = useQuery(trpc.profiles.get.queryOptions({ id: userId })).data;
 
     const userName = (() => {
         if (!profile) return '';

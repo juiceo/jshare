@@ -1,9 +1,11 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import * as trpcExpress from '@trpc/server/adapters/express';
+import type { Request } from 'express';
 import jwt from 'jsonwebtoken';
 import { get } from 'lodash';
 import superjson from 'superjson';
 
+import { getDbForUserId } from '../services/db';
 import { ACL } from './acl';
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -13,8 +15,12 @@ if (!JWT_SECRET) {
 }
 
 export const createContext = async (opts: trpcExpress.CreateExpressContextOptions) => {
+    const userId = getUserIdFromRequest(opts.req);
+
     return {
         req: opts.req,
+        userId,
+        prisma: await getDbForUserId(userId),
     };
 };
 type Context = Awaited<ReturnType<typeof createContext>>;
@@ -27,6 +33,31 @@ const t = initTRPC.context<Context>().create({
     transformer: superjson,
 });
 
+const getUserIdFromRequest = (req: Request) => {
+    const header = req.headers['authorization'];
+
+    if (!header) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Authorization header missing' });
+    }
+
+    try {
+        const decoded = jwt.verify(header, JWT_SECRET);
+        if (typeof decoded === 'string') {
+            throw new Error('Decoded JWT type was string, aborting...');
+        }
+        if (!decoded.sub) {
+            throw new Error('Decoded JWT payload missing sub, aborting...');
+        }
+
+        return decoded.sub;
+    } catch (err: any) {
+        console.error('Authorization failed: ' + err.message);
+        throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'Invalid Authorization header',
+        });
+    }
+};
 /**
  * Export reusable router and procedure helpers
  * that can be used throughout the router
@@ -94,3 +125,9 @@ export const authProcedure = t.procedure
 
         return result;
     });
+
+/**
+ * Required for Zenstack generated router
+ */
+export const procedure = t.procedure;
+export const createTRPCRouter = t.router;

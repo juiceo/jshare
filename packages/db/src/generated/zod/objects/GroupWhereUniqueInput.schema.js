@@ -17,8 +17,8 @@ const MessageListRelationFilter_schema_1 = require("./MessageListRelationFilter.
 const ExpenseListRelationFilter_schema_1 = require("./ExpenseListRelationFilter.schema");
 const PaymentListRelationFilter_schema_1 = require("./PaymentListRelationFilter.schema");
 exports.GroupWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), coverImageId: zod_1.z.string().optional(), inviteCode: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
-        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
+    id: zod_1.z.string().optional().optional(), coverImageId: zod_1.z.string().optional().optional(), inviteCode: zod_1.z.string().optional().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
+        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema),
         zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
@@ -27,7 +27,7 @@ exports.GroupWhereUniqueInputObjectSchema = zod_1.z.object({
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), name: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
         zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), lastActivity: zod_1.z.union([zod_1.z.lazy(() => DateTimeFilter_schema_1.DateTimeFilterObjectSchema),
-        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), participants: zod_1.z.lazy(() => GroupParticipantListRelationFilter_schema_1.GroupParticipantListRelationFilterObjectSchema).optional(), coverImage: zod_1.z.union([zod_1.z.lazy(() => ImageNullableScalarRelationFilter_schema_1.ImageNullableScalarRelationFilterObjectSchema),
+        zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), participants: zod_1.z.lazy(() => GroupParticipantListRelationFilter_schema_1.GroupParticipantListRelationFilterObjectSchema).optional().optional(), coverImage: zod_1.z.union([zod_1.z.lazy(() => ImageNullableScalarRelationFilter_schema_1.ImageNullableScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
-        zod_1.z.null()]).optional().nullable(), messages: zod_1.z.lazy(() => MessageListRelationFilter_schema_1.MessageListRelationFilterObjectSchema).optional(), expenses: zod_1.z.lazy(() => ExpenseListRelationFilter_schema_1.ExpenseListRelationFilterObjectSchema).optional(), payments: zod_1.z.lazy(() => PaymentListRelationFilter_schema_1.PaymentListRelationFilterObjectSchema).optional()
+        zod_1.z.null()]).optional().nullable(), messages: zod_1.z.lazy(() => MessageListRelationFilter_schema_1.MessageListRelationFilterObjectSchema).optional().optional(), expenses: zod_1.z.lazy(() => ExpenseListRelationFilter_schema_1.ExpenseListRelationFilterObjectSchema).optional().optional(), payments: zod_1.z.lazy(() => PaymentListRelationFilter_schema_1.PaymentListRelationFilterObjectSchema).optional().optional()
 }).strict();

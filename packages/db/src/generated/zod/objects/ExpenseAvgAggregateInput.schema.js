@@ -4,5 +4,5 @@ exports.ExpenseAvgAggregateInputObjectSchema = void 0;
 // @ts-nocheck
 const zod_1 = require("zod");
 exports.ExpenseAvgAggregateInputObjectSchema = zod_1.z.object({
-    amount: zod_1.z.literal(true).optional()
+    amount: zod_1.z.literal(true).optional().optional()
 }).strict();

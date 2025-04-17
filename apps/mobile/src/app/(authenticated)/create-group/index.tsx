@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
 import { zDB, type DB } from '@jshare/db';
@@ -13,7 +14,7 @@ import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { useCreateGroup } from '~/hooks/useCreateGroup';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
@@ -23,11 +24,11 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>;
 
 export default screen({}, ({ router }) => {
+    const trpc = useTRPC();
     const { createGroup, isPending } = useCreateGroup();
-    const [profile] = trpc.profiles.me.useSuspenseQuery();
+    const queryClient = useQueryClient();
+    const profile = useSuspenseQuery(trpc.profiles.me.queryOptions()).data;
     const [image, setImage] = useState<DB.Image | null>(null);
-
-    const trpcUtils = trpc.useUtils();
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
@@ -42,7 +43,7 @@ export default screen({}, ({ router }) => {
             ...data,
             coverImageId: image?.id,
         });
-        trpcUtils.groups.invalidate();
+        queryClient.invalidateQueries({ queryKey: trpc.groups.list.queryKey() });
         router.dismiss();
         router.push({
             pathname: '/(authenticated)/group/[groupId]',

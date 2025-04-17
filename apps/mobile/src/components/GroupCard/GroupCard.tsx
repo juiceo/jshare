@@ -1,4 +1,5 @@
 import { Dimensions } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -9,7 +10,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
@@ -18,13 +19,15 @@ export type GroupCardProps = {
 
 export const GroupCard = (props: GroupCardProps) => {
     const { group } = props;
+    const trpc = useTRPC();
     const user = useCurrentUser();
 
-    const { data: groupTotal } = trpc.expenses.getTotalForGroup.useQuery({ groupId: group.id });
-    const { data: userStatus } = trpc.balances.getForParticipantInGroup.useQuery({
-        groupId: group.id,
-        userId: user.id,
-    });
+    const groupTotal = useQuery(
+        trpc.expenses.getTotalForGroup.queryOptions({ groupId: group.id })
+    ).data;
+    const userStatus = useQuery(
+        trpc.balances.getForParticipantInGroup.queryOptions({ groupId: group.id, userId: user.id })
+    ).data;
 
     return (
         <Stack

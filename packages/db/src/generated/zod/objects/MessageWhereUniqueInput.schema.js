@@ -17,8 +17,8 @@ const GroupScalarRelationFilter_schema_1 = require("./GroupScalarRelationFilter.
 const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
 const MessageAttachmentListRelationFilter_schema_1 = require("./MessageAttachmentListRelationFilter.schema");
 exports.MessageWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema),
-        zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema),
+    id: zod_1.z.string().optional().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema),
+        zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema),
         zod_1.z.lazy(() => MessageWhereInput_schema_1.MessageWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
@@ -34,5 +34,5 @@ exports.MessageWhereUniqueInputObjectSchema = zod_1.z.object({
         zod_1.z.string()]).optional(), author: zod_1.z.union([zod_1.z.lazy(() => ProfileNullableScalarRelationFilter_schema_1.ProfileNullableScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), group: zod_1.z.union([zod_1.z.lazy(() => GroupScalarRelationFilter_schema_1.GroupScalarRelationFilterObjectSchema),
-        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), attachments: zod_1.z.lazy(() => MessageAttachmentListRelationFilter_schema_1.MessageAttachmentListRelationFilterObjectSchema).optional()
+        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), attachments: zod_1.z.lazy(() => MessageAttachmentListRelationFilter_schema_1.MessageAttachmentListRelationFilterObjectSchema).optional().optional()
 }).strict();

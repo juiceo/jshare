@@ -9,5 +9,5 @@ exports.NestedBoolNullableWithAggregatesFilterObjectSchema = zod_1.z.object({
     equals: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.null()]).optional().nullable(), not: zod_1.z.union([zod_1.z.boolean(),
         zod_1.z.lazy(() => exports.NestedBoolNullableWithAggregatesFilterObjectSchema),
-        zod_1.z.null()]).optional().nullable(), _count: zod_1.z.lazy(() => NestedIntNullableFilter_schema_1.NestedIntNullableFilterObjectSchema).optional(), _min: zod_1.z.lazy(() => NestedBoolNullableFilter_schema_1.NestedBoolNullableFilterObjectSchema).optional(), _max: zod_1.z.lazy(() => NestedBoolNullableFilter_schema_1.NestedBoolNullableFilterObjectSchema).optional()
+        zod_1.z.null()]).optional().nullable(), _count: zod_1.z.lazy(() => NestedIntNullableFilter_schema_1.NestedIntNullableFilterObjectSchema).optional().optional(), _min: zod_1.z.lazy(() => NestedBoolNullableFilter_schema_1.NestedBoolNullableFilterObjectSchema).optional().optional(), _max: zod_1.z.lazy(() => NestedBoolNullableFilter_schema_1.NestedBoolNullableFilterObjectSchema).optional().optional()
 }).strict();

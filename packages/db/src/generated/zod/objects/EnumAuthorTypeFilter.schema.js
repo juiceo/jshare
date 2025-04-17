@@ -6,6 +6,6 @@ const zod_1 = require("zod");
 const AuthorType_schema_1 = require("../enums/AuthorType.schema");
 const NestedEnumAuthorTypeFilter_schema_1 = require("./NestedEnumAuthorTypeFilter.schema");
 exports.EnumAuthorTypeFilterObjectSchema = zod_1.z.object({
-    equals: zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema).optional(), in: zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema).array().optional(), notIn: zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema).array().optional(), not: zod_1.z.union([zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema),
+    equals: zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema).optional().optional(), in: zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema).array().optional().optional(), notIn: zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema).array().optional().optional(), not: zod_1.z.union([zod_1.z.lazy(() => AuthorType_schema_1.AuthorTypeSchema),
         zod_1.z.lazy(() => NestedEnumAuthorTypeFilter_schema_1.NestedEnumAuthorTypeFilterObjectSchema)]).optional()
 }).strict();

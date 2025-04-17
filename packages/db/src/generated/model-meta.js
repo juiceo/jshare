@@ -117,8 +117,7 @@ const metadata = {
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "value": true }] }],
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -208,8 +207,7 @@ const metadata = {
                     type: "DateTime",
                     attributes: [{ "name": "@default", "args": [] }],
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -284,8 +282,7 @@ const metadata = {
                     type: "InviteType",
                     isOptional: true,
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -342,8 +339,7 @@ const metadata = {
                     isOptional: true,
                     backLink: 'avatar',
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -419,8 +415,7 @@ const metadata = {
                     isArray: true,
                     backLink: 'message',
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -483,8 +478,7 @@ const metadata = {
                     isRelationOwner: true,
                     foreignKeyMapping: { "id": "expenseId" },
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -583,8 +577,7 @@ const metadata = {
                     isArray: true,
                     backLink: 'expense',
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -658,8 +651,7 @@ const metadata = {
                     isOptional: true,
                     attributes: [{ "name": "@json", "args": [] }],
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -742,8 +734,7 @@ const metadata = {
                     isRelationOwner: true,
                     foreignKeyMapping: { "id": "payerId" },
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
@@ -782,8 +773,7 @@ const metadata = {
                     name: "rates",
                     type: "Json",
                 },
-            },
-            uniqueConstraints: {
+            }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]

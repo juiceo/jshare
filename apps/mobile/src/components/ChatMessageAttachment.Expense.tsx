@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { Skeleton } from 'moti/skeleton';
 
@@ -9,7 +10,7 @@ import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 import { withSuspense } from '~/wrappers/withSuspense';
 
@@ -41,11 +42,16 @@ const ExpenseNotFound = () => {
 
 export const ChatMessageExpenseAttachment = withSuspense(
     (props: ChatMessageExpenseAttachmentProps) => {
+        const trpc = useTRPC();
         const { session } = useSession();
         const router = useRouter();
         const userId = session?.user.id;
-        const [expense] = trpc.expenses.get.useSuspenseQuery({ id: props.expenseId });
-        const [payerProfile] = trpc.profiles.get.useSuspenseQuery({ id: expense.payerId });
+        const expense = useSuspenseQuery(
+            trpc.expenses.get.queryOptions({ id: props.expenseId })
+        ).data;
+        const payerProfile = useSuspenseQuery(
+            trpc.profiles.get.queryOptions({ id: expense.payerId })
+        ).data;
 
         const ownShare = expense.shares.find((share) => share.userId === userId);
 

@@ -17,8 +17,8 @@ const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
 const ProfileScalarRelationFilter_schema_1 = require("./ProfileScalarRelationFilter.schema");
 const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
 exports.PaymentWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema),
-        zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema),
+    id: zod_1.z.string().optional().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema),
+        zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema),
         zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
@@ -27,7 +27,7 @@ exports.PaymentWhereUniqueInputObjectSchema = zod_1.z.object({
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()])]).optional(), groupId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), amount: zod_1.z.union([zod_1.z.lazy(() => IntFilter_schema_1.IntFilterObjectSchema),
         zod_1.z.number()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
-        zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), conversion: zod_1.z.lazy(() => JsonNullableFilter_schema_1.JsonNullableFilterObjectSchema).optional(), recipientId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
+        zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), conversion: zod_1.z.lazy(() => JsonNullableFilter_schema_1.JsonNullableFilterObjectSchema).optional().optional(), recipientId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), payerId: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), group: zod_1.z.union([zod_1.z.lazy(() => GroupScalarRelationFilter_schema_1.GroupScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), recipient: zod_1.z.union([zod_1.z.lazy(() => ProfileScalarRelationFilter_schema_1.ProfileScalarRelationFilterObjectSchema),

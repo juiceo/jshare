@@ -1,6 +1,7 @@
 import { Suspense, type ComponentType } from 'react';
 import { ActivityIndicator, Linking, Text } from 'react-native';
 import type { Session } from '@supabase/supabase-js';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Redirect, useRouter, type Router } from 'expo-router';
 import * as Updates from 'expo-updates';
 
@@ -19,7 +20,7 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { LoadingState } from '~/components/util/LoadingState';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 
 export const screen = <TAuth extends boolean = false>(
@@ -123,9 +124,10 @@ const AuthWrapper = (props: {
 }) => {
     const { session, isLoading, signOut } = useSession();
     const { theme } = useTheme();
-    const trpcUtils = trpc.useUtils();
-    const profile = trpc.profiles.me.useQuery();
-    const acceptTerms = trpc.profiles.acceptTerms.useMutation();
+    const trpc = useTRPC();
+    const queryClient = useQueryClient();
+    const profile = useQuery(trpc.profiles.me.queryOptions());
+    const acceptTerms = useMutation(trpc.profiles.acceptTerms.mutationOptions());
 
     const openPrivacyPolicy = () => {
         Linking.openURL(PRIVACY_POLICY_URL);
@@ -138,7 +140,7 @@ const AuthWrapper = (props: {
     const handleAcceptTerms = async () => {
         const updatedProfile = await acceptTerms.mutateAsync();
 
-        trpcUtils.profiles.me.setData(undefined, () => updatedProfile);
+        queryClient.setQueryData(trpc.profiles.me.queryKey(), (prev) => updatedProfile);
     };
 
     if (isLoading || profile.isLoading) {

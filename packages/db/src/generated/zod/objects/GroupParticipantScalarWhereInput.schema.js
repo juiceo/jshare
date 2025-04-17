@@ -14,7 +14,7 @@ const EnumInviteTypeNullableFilter_schema_1 = require("./EnumInviteTypeNullableF
 const InviteType_schema_1 = require("../enums/InviteType.schema");
 exports.GroupParticipantScalarWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.GroupParticipantScalarWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),

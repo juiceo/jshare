@@ -14,8 +14,8 @@ const GroupWhereInput_schema_1 = require("./GroupWhereInput.schema");
 const ProfileNullableScalarRelationFilter_schema_1 = require("./ProfileNullableScalarRelationFilter.schema");
 const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
 exports.ImageWhereUniqueInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
-        zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
+    id: zod_1.z.string().optional().optional(), AND: zod_1.z.union([zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
+        zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema),
         zod_1.z.lazy(() => ImageWhereInput_schema_1.ImageWhereInputObjectSchema).array()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
         zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),

@@ -5,5 +5,5 @@ exports.PaymentListRelationFilterObjectSchema = void 0;
 const zod_1 = require("zod");
 const PaymentWhereInput_schema_1 = require("./PaymentWhereInput.schema");
 exports.PaymentListRelationFilterObjectSchema = zod_1.z.object({
-    every: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).optional(), some: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).optional(), none: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).optional()
+    every: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).optional().optional(), some: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).optional().optional(), none: zod_1.z.lazy(() => PaymentWhereInput_schema_1.PaymentWhereInputObjectSchema).optional().optional()
 }).strict();

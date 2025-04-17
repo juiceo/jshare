@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ActivityIndicator, Alert, Keyboard } from 'react-native';
+import { useMutation } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 
 import { isDemoUserEmail } from '@jshare/common';
@@ -11,17 +12,18 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
 import { supabase } from '~/lib/supabase';
-import { trpc, trpcUniversal } from '~/lib/trpc';
+import { trpcUniversal, useTRPC } from '~/lib/trpc';
 import { setAccessToken } from '~/state/auth';
 import { screen } from '~/wrappers/screen';
 
 export default screen({}, () => {
     const { email } = useLocalSearchParams<{ email: string }>();
+    const trpc = useTRPC();
     const [code, setCode] = useState<number[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [lastCodeSent, setLastCodeSent] = useState<number>(Date.now());
     const timer = useTimer({ to: lastCodeSent + 60_000 });
-    const createDemoUser = trpc.auth.createDemoUser.useMutation();
+    const createDemoUser = useMutation(trpc.auth.createDemoUser.mutationOptions());
 
     const handleChange = async (value: number[], done: boolean) => {
         setCode(value);

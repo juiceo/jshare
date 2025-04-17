@@ -9,6 +9,7 @@ generator client {
     binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
+
 datasource db {
     provider  = "postgresql"
     url       = env("DATABASE_URL")
@@ -24,6 +25,16 @@ plugin prisma {
 
 plugin zod {
     provider = '@core/zod'
+}
+
+plugin trpc {
+    provider = '@zenstackhq/trpc'
+    output = '../../apps/server/src/trpc/generated'
+    generateClientHelpers = 'react'
+    zodSchemasImport = "@jshare/db/zod"
+    version = 'v11'
+    importCreateRouter = "../../trpc"
+    importProcedure = "../../trpc"
 }
 
 model Profile extends BaseModel {

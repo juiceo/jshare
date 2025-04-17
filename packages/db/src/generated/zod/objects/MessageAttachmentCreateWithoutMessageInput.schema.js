@@ -6,6 +6,6 @@ const zod_1 = require("zod");
 const MessageAttachmentType_schema_1 = require("../enums/MessageAttachmentType.schema");
 const ExpenseCreateNestedOneWithoutMessageAttachmentsInput_schema_1 = require("./ExpenseCreateNestedOneWithoutMessageAttachmentsInput.schema");
 exports.MessageAttachmentCreateWithoutMessageInputObjectSchema = zod_1.z.object({
-    id: zod_1.z.string().optional(), archived: zod_1.z.boolean().optional(), archivedAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
-        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.date().optional(), zod_1.z.string().datetime().optional()]), updatedAt: zod_1.z.union([zod_1.z.date().optional(), zod_1.z.string().datetime().optional()]), type: zod_1.z.lazy(() => MessageAttachmentType_schema_1.MessageAttachmentTypeSchema), expense: zod_1.z.lazy(() => ExpenseCreateNestedOneWithoutMessageAttachmentsInput_schema_1.ExpenseCreateNestedOneWithoutMessageAttachmentsInputObjectSchema).optional()
+    id: zod_1.z.string().optional().optional(), archived: zod_1.z.boolean().optional().optional(), archivedAt: zod_1.z.union([zod_1.z.union([zod_1.z.date(), zod_1.z.string().datetime().optional()]),
+        zod_1.z.null()]).optional().nullable(), createdAt: zod_1.z.union([zod_1.z.date().optional(), zod_1.z.string().datetime().optional()]).optional(), updatedAt: zod_1.z.union([zod_1.z.date().optional(), zod_1.z.string().datetime().optional()]).optional(), type: zod_1.z.lazy(() => MessageAttachmentType_schema_1.MessageAttachmentTypeSchema), expense: zod_1.z.lazy(() => ExpenseCreateNestedOneWithoutMessageAttachmentsInput_schema_1.ExpenseCreateNestedOneWithoutMessageAttachmentsInputObjectSchema).optional().optional()
 }).strict();

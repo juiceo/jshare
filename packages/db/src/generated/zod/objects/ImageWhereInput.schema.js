@@ -14,7 +14,7 @@ const ProfileNullableScalarRelationFilter_schema_1 = require("./ProfileNullableS
 const ProfileWhereInput_schema_1 = require("./ProfileWhereInput.schema");
 exports.ImageWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.ImageWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),

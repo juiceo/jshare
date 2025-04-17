@@ -1,4 +1,5 @@
 import { RectButton } from 'react-native-gesture-handler';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { router } from 'expo-router';
 
@@ -9,7 +10,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -17,9 +18,23 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const [profile] = trpc.profiles.get.useSuspenseQuery({ id: auth.userId });
+        const trpc = useTRPC();
+        const profile = useSuspenseQuery(
+            trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: auth.userId } })
+        ).data;
 
-        const handleUpdate = () => {};
+        const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
+
+        console.log('PROFILE NOW', profile);
+
+        const updateAvatar = (avatarId: string | null) => {
+            updateProfile.mutateAsync({
+                where: { id: auth.userId },
+                data: {
+                    avatarId,
+                },
+            });
+        };
 
         return (
             <Screen>
@@ -29,12 +44,8 @@ export default screen(
                             <Stack mt="2xl" center>
                                 <AvatarPicker
                                     value={profile?.avatarId ?? null}
-                                    profile={profile}
-                                    onChange={(imageId) => {
-                                        /**
-                                         * TODO: Implement this
-                                         */
-                                    }}
+                                    profile={profile!}
+                                    onChange={updateAvatar}
                                 />
                                 <Typography variant="h6" align="center" mt="xl">
                                     {profile?.firstName} {profile?.lastName}
@@ -68,9 +79,6 @@ export default screen(
                                 </Stack>
                             </RectButton>
                         </Stack>
-                        <Button color="primary" variant="contained" onPress={handleUpdate}>
-                            Test update
-                        </Button>
 
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
                             Sign out

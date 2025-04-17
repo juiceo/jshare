@@ -25,5 +25,5 @@ exports.GroupParticipantUpdateWithoutUserInputObjectSchema = zod_1.z.object({
         zod_1.z.lazy(() => NullableStringFieldUpdateOperationsInput_schema_1.NullableStringFieldUpdateOperationsInputObjectSchema),
         zod_1.z.null()]).optional().nullable(), inviteType: zod_1.z.union([zod_1.z.lazy(() => InviteType_schema_1.InviteTypeSchema),
         zod_1.z.lazy(() => NullableEnumInviteTypeFieldUpdateOperationsInput_schema_1.NullableEnumInviteTypeFieldUpdateOperationsInputObjectSchema),
-        zod_1.z.null()]).optional().nullable(), group: zod_1.z.lazy(() => GroupUpdateOneRequiredWithoutParticipantsNestedInput_schema_1.GroupUpdateOneRequiredWithoutParticipantsNestedInputObjectSchema).optional()
+        zod_1.z.null()]).optional().nullable(), group: zod_1.z.lazy(() => GroupUpdateOneRequiredWithoutParticipantsNestedInput_schema_1.GroupUpdateOneRequiredWithoutParticipantsNestedInputObjectSchema).optional().optional()
 }).strict();

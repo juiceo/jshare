@@ -5,7 +5,8 @@
     "main": "build/index.ts",
     "exports": {
         ".": "./build/index.ts",
-        "./server": "./build/server.ts"
+        "./server": "./build/server.ts",
+        "./zod/input": "./build/generated/zod/input/index.js"
     },
     "keywords": [],
     "license": "MIT",
@@ -33,6 +34,7 @@
         "@prisma/client": "catalog:",
         "@supabase/supabase-js": "catalog:",
         "@types/shortid": "catalog:",
+        "@zenstackhq/trpc": "catalog:",
         "lodash": "catalog:",
         "prisma": "catalog:",
         "shortid": "catalog:",

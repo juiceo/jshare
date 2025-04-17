@@ -20,7 +20,7 @@ const ExpenseShareListRelationFilter_schema_1 = require("./ExpenseShareListRelat
 const MessageAttachmentListRelationFilter_schema_1 = require("./MessageAttachmentListRelationFilter.schema");
 exports.ExpenseWhereInputObjectSchema = zod_1.z.object({
     AND: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema),
-        zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema).array().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema),
+        zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema).array()]).optional(), OR: zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema).array().optional().optional(), NOT: zod_1.z.union([zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema),
         zod_1.z.lazy(() => exports.ExpenseWhereInputObjectSchema).array()]).optional(), id: zod_1.z.union([zod_1.z.lazy(() => StringFilter_schema_1.StringFilterObjectSchema),
         zod_1.z.string()]).optional(), archived: zod_1.z.union([zod_1.z.lazy(() => BoolFilter_schema_1.BoolFilterObjectSchema),
         zod_1.z.boolean()]).optional(), archivedAt: zod_1.z.union([zod_1.z.lazy(() => DateTimeNullableFilter_schema_1.DateTimeNullableFilterObjectSchema),
@@ -34,8 +34,8 @@ exports.ExpenseWhereInputObjectSchema = zod_1.z.object({
         zod_1.z.number()]).optional(), currency: zod_1.z.union([zod_1.z.lazy(() => EnumCurrencyCodeFilter_schema_1.EnumCurrencyCodeFilterObjectSchema),
         zod_1.z.lazy(() => CurrencyCode_schema_1.CurrencyCodeSchema)]).optional(), description: zod_1.z.union([zod_1.z.lazy(() => StringNullableFilter_schema_1.StringNullableFilterObjectSchema),
         zod_1.z.string(),
-        zod_1.z.null()]).optional().nullable(), conversion: zod_1.z.lazy(() => JsonNullableFilter_schema_1.JsonNullableFilterObjectSchema).optional(), owner: zod_1.z.union([zod_1.z.lazy(() => ProfileScalarRelationFilter_schema_1.ProfileScalarRelationFilterObjectSchema),
+        zod_1.z.null()]).optional().nullable(), conversion: zod_1.z.lazy(() => JsonNullableFilter_schema_1.JsonNullableFilterObjectSchema).optional().optional(), owner: zod_1.z.union([zod_1.z.lazy(() => ProfileScalarRelationFilter_schema_1.ProfileScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema)]).optional(), payer: zod_1.z.union([zod_1.z.lazy(() => ProfileScalarRelationFilter_schema_1.ProfileScalarRelationFilterObjectSchema),
         zod_1.z.lazy(() => ProfileWhereInput_schema_1.ProfileWhereInputObjectSchema)]).optional(), group: zod_1.z.union([zod_1.z.lazy(() => GroupScalarRelationFilter_schema_1.GroupScalarRelationFilterObjectSchema),
-        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), shares: zod_1.z.lazy(() => ExpenseShareListRelationFilter_schema_1.ExpenseShareListRelationFilterObjectSchema).optional(), messageAttachments: zod_1.z.lazy(() => MessageAttachmentListRelationFilter_schema_1.MessageAttachmentListRelationFilterObjectSchema).optional()
+        zod_1.z.lazy(() => GroupWhereInput_schema_1.GroupWhereInputObjectSchema)]).optional(), shares: zod_1.z.lazy(() => ExpenseShareListRelationFilter_schema_1.ExpenseShareListRelationFilterObjectSchema).optional().optional(), messageAttachments: zod_1.z.lazy(() => MessageAttachmentListRelationFilter_schema_1.MessageAttachmentListRelationFilterObjectSchema).optional().optional()
 }).strict();

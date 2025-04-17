@@ -6,6 +6,6 @@ const zod_1 = require("zod");
 const NestedIntFilter_schema_1 = require("./NestedIntFilter.schema");
 const NestedBoolFilter_schema_1 = require("./NestedBoolFilter.schema");
 exports.NestedBoolWithAggregatesFilterObjectSchema = zod_1.z.object({
-    equals: zod_1.z.boolean().optional(), not: zod_1.z.union([zod_1.z.boolean(),
-        zod_1.z.lazy(() => exports.NestedBoolWithAggregatesFilterObjectSchema)]).optional(), _count: zod_1.z.lazy(() => NestedIntFilter_schema_1.NestedIntFilterObjectSchema).optional(), _min: zod_1.z.lazy(() => NestedBoolFilter_schema_1.NestedBoolFilterObjectSchema).optional(), _max: zod_1.z.lazy(() => NestedBoolFilter_schema_1.NestedBoolFilterObjectSchema).optional()
+    equals: zod_1.z.boolean().optional().optional(), not: zod_1.z.union([zod_1.z.boolean(),
+        zod_1.z.lazy(() => exports.NestedBoolWithAggregatesFilterObjectSchema)]).optional(), _count: zod_1.z.lazy(() => NestedIntFilter_schema_1.NestedIntFilterObjectSchema).optional().optional(), _min: zod_1.z.lazy(() => NestedBoolFilter_schema_1.NestedBoolFilterObjectSchema).optional().optional(), _max: zod_1.z.lazy(() => NestedBoolFilter_schema_1.NestedBoolFilterObjectSchema).optional().optional()
 }).strict();

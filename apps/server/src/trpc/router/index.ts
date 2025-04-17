@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { createRouter as createZenstackRouter } from '../generated/routers';
 import { publicProcedure, router } from '../trpc';
 import { authRouter } from './auth';
 import { balancesRouter } from './balances';
@@ -35,4 +36,5 @@ export const appRouter = router({
     exchangeRates: exchangeRatesRouter,
     auth: authRouter,
     models: modelsRouter,
+    z: createZenstackRouter(),
 });

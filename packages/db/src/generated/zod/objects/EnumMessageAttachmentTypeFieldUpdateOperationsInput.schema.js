@@ -5,5 +5,5 @@ exports.EnumMessageAttachmentTypeFieldUpdateOperationsInputObjectSchema = void 0
 const zod_1 = require("zod");
 const MessageAttachmentType_schema_1 = require("../enums/MessageAttachmentType.schema");
 exports.EnumMessageAttachmentTypeFieldUpdateOperationsInputObjectSchema = zod_1.z.object({
-    set: zod_1.z.lazy(() => MessageAttachmentType_schema_1.MessageAttachmentTypeSchema).optional()
+    set: zod_1.z.lazy(() => MessageAttachmentType_schema_1.MessageAttachmentTypeSchema).optional().optional()
 }).strict();

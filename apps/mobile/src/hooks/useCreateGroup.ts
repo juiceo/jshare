@@ -1,22 +1,25 @@
 import { useCallback } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { trpc, type TrpcInputs } from '~/lib/trpc';
+import { useTRPC, type TrpcInputs } from '~/lib/trpc';
 
 export const useCreateGroup = () => {
-    const trpcUtils = trpc.useUtils();
-    const createGroupMutation = trpc.groups.create.useMutation();
+    const trpc = useTRPC();
+    const queryClient = useQueryClient();
+
+    const createGroupMutation = useMutation(trpc.groups.create.mutationOptions());
 
     const createGroup = useCallback(
         (args: TrpcInputs['groups']['create']) => {
             return createGroupMutation.mutateAsync(args, {
                 onSuccess: (data) => {
-                    trpcUtils.groups.list.setData(undefined, (prev) => {
+                    queryClient.setQueryData(trpc.groups.list.queryKey(), (prev) => {
                         return prev ? [...prev, data] : [data];
                     });
                 },
             });
         },
-        [createGroupMutation, trpcUtils.groups.list]
+        [createGroupMutation, queryClient, trpc.groups.list]
     );
 
     return { createGroup, ...createGroupMutation };

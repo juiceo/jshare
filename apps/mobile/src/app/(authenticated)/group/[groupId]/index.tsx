@@ -3,6 +3,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { sortBy } from 'lodash';
 
@@ -18,7 +19,7 @@ import { ChatStatusHeader } from '~/components/ChatStatusHeader';
 import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';
@@ -30,8 +31,9 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
+        const trpc = useTRPC();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const [group] = trpc.groups.get.useSuspenseQuery({ id: groupId });
+        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
         const { theme } = useTheme();
         const { presentUserIds } = useGroupContext();
         const router = useRouter();

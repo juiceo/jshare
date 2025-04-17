@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import * as Updates from 'expo-updates';
 
@@ -8,15 +9,16 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { useTRPC } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen({ auth: true }, ({ router, auth }) => {
-    const [profile] = trpc.profiles.get.useSuspenseQuery({ id: auth.userId });
-
     const updates = Updates.useUpdates();
-    const deleteAccount = trpc.profiles.delete.useMutation();
+    const trpc = useTRPC();
+    const profile = useSuspenseQuery(trpc.profiles.get.queryOptions({ id: auth.userId })).data;
+    const deleteAccount = useMutation(trpc.profiles.delete.mutationOptions());
+
     const [isDeleting, setDeleting] = useState<boolean>(false);
 
     const checkForUpdates = () => {
