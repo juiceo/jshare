@@ -11,7 +11,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessage } from '~/components/ChatMessage';
 import { SystemMessage } from '~/components/SystemMessage';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type ChatMessageGroupProps = {
     userId: string;
@@ -21,10 +21,22 @@ export type ChatMessageGroupProps = {
 
 export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>) => {
     const { theme } = useTheme();
-    const trpc = useTRPC();
+
     const profile = useQuery(
-        trpc.profiles.get.queryOptions(props.authorId ? { id: props.authorId } : skipToken)
-    ).data;
+        trpc.z.profile.findUniqueOrThrow.queryOptions(
+            props.authorId
+                ? {
+                      where: {
+                          id: props.authorId,
+                      },
+                      include: {
+                          avatar: true,
+                      },
+                  }
+                : skipToken
+        )
+    ).data as DB.Profile<{ avatar: true }> | null;
+
     const isSelf = props.authorId === props.userId;
     const isSystem = props.authorId === null;
     const styles = getStyles(theme, {

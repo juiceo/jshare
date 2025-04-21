@@ -4,13 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import { BASE_EXCHANGE_RATES, convertAmount, getExchangeRate } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 
 export const useExchangeRates = (): {
     exchangeRates: DB.ExchangeRates;
     refetch: () => void;
 } => {
-    const trpc = useTRPC();
     const ratesQuery = useQuery(trpc.exchangeRates.latest.queryOptions());
 
     return {

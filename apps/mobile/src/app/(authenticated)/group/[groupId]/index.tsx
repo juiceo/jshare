@@ -7,6 +7,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { sortBy } from 'lodash';
 
+import type { DB } from '@jshare/db';
 import { useTheme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
@@ -19,7 +20,7 @@ import { ChatStatusHeader } from '~/components/ChatStatusHeader';
 import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
 import { useGroupMessages } from '~/hooks/useGroupMessages';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';
@@ -31,9 +32,14 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const trpc = useTRPC();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
+        const group = useSuspenseQuery(
+            trpc.z.group.findUniqueOrThrow.queryOptions({
+                where: { id: groupId },
+                include: { participants: true, coverImage: true },
+            })
+        ).data as DB.Group<{ participants: true; coverImage: true }>;
+
         const { theme } = useTheme();
         const { presentUserIds } = useGroupContext();
         const router = useRouter();
@@ -41,7 +47,7 @@ export default screen(
 
         const {
             data: messages,
-            fetchNextPage: loadOlderMessages,
+            fetchNextPage,
             sendMessage,
         } = useGroupMessages({ groupId, userId: auth.session.user.id });
 
@@ -134,7 +140,7 @@ export default screen(
                                             paddingHorizontal: theme.spacing.xs,
                                             paddingVertical: theme.spacing.lg,
                                         }}
-                                        onEndReached={() => loadOlderMessages()}
+                                        onEndReached={() => fetchNextPage()}
                                         onEndReachedThreshold={0.5}
                                     />
                                 </ChatBackground>

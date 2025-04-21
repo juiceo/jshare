@@ -5,12 +5,13 @@ import { useRouter } from 'expo-router';
 import { Skeleton } from 'moti/skeleton';
 
 import { formatAmount, getUserShortName } from '@jshare/common';
+import type { DB } from '@jshare/db';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { useSession } from '~/wrappers/SessionProvider';
 import { withSuspense } from '~/wrappers/withSuspense';
 
@@ -42,16 +43,17 @@ const ExpenseNotFound = () => {
 
 export const ChatMessageExpenseAttachment = withSuspense(
     (props: ChatMessageExpenseAttachmentProps) => {
-        const trpc = useTRPC();
         const { session } = useSession();
         const router = useRouter();
         const userId = session?.user.id;
         const expense = useSuspenseQuery(
-            trpc.expenses.get.queryOptions({ id: props.expenseId })
-        ).data;
-        const payerProfile = useSuspenseQuery(
-            trpc.profiles.get.queryOptions({ id: expense.payerId })
-        ).data;
+            trpc.z.expense.findUnique.queryOptions({
+                where: { id: props.expenseId },
+                include: { payer: true, shares: true },
+            })
+        ).data as DB.Expense<{ payer: true; shares: true }> | null;
+
+        if (!expense) return null;
 
         const ownShare = expense.shares.find((share) => share.userId === userId);
 
@@ -69,7 +71,7 @@ export const ChatMessageExpenseAttachment = withSuspense(
                     <Stack column center br="xl" mb="md" spacing="md">
                         <Avatar userId={expense.payerId} size="sm" />
                         <Typography variant="caption" color="hint" align="center">
-                            {getUserShortName(payerProfile)} paid
+                            {getUserShortName(expense.payer)} paid
                         </Typography>
                     </Stack>
                     <Stack center p="2xl">

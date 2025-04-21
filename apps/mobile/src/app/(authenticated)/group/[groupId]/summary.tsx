@@ -20,7 +20,7 @@ import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
 import { useThrottledLoading } from '~/hooks/useThrottledLoading';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -28,7 +28,6 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const trpc = useTRPC();
         const router = useRouter();
         const userId = auth.session.user.id;
         const { theme } = useTheme();

@@ -1,5 +1,5 @@
 import { RectButton } from 'react-native-gesture-handler';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { router } from 'expo-router';
 
@@ -10,7 +10,9 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { useDb } from '~/lib/collections/hooks';
+import { Profiles } from '~/lib/collections/profiles.collection';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -18,14 +20,9 @@ export default screen(
         auth: true,
     },
     ({ auth }) => {
-        const trpc = useTRPC();
-        const profile = useSuspenseQuery(
-            trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: auth.userId } })
-        ).data;
+        const profile = useDb(() => Profiles.findById(auth.userId), [auth.userId]);
 
         const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
-
-        console.log('PROFILE NOW', profile);
 
         const updateAvatar = (avatarId: string | null) => {
             updateProfile.mutateAsync({
@@ -36,6 +33,12 @@ export default screen(
             });
         };
 
+        const testUpdate = () => {
+            Profiles.update(auth.userId, {
+                avatarId: null,
+            });
+        };
+
         return (
             <Screen>
                 <Screen.Content scrollable>
@@ -43,15 +46,15 @@ export default screen(
                         <Stack column center p="xl" br="md" spacing="none">
                             <Stack mt="2xl" center>
                                 <AvatarPicker
-                                    value={profile?.avatarId ?? null}
-                                    profile={profile!}
+                                    value={profile?.data.avatarId ?? null}
+                                    profile={profile?.data}
                                     onChange={updateAvatar}
                                 />
                                 <Typography variant="h6" align="center" mt="xl">
-                                    {profile?.firstName} {profile?.lastName}
+                                    {profile?.data.firstName} {profile?.data.lastName}
                                 </Typography>
                                 <Typography variant="body2" color="secondary" align="center">
-                                    Joined {dayjs(profile?.createdAt).format('MMM D, YYYY')}
+                                    Joined {dayjs(profile?.data.createdAt).format('MMM D, YYYY')}
                                 </Typography>
                             </Stack>
                         </Stack>
@@ -79,7 +82,7 @@ export default screen(
                                 </Stack>
                             </RectButton>
                         </Stack>
-
+                        <Button onPress={testUpdate}>Test update</Button>
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
                             Sign out
                         </Button>

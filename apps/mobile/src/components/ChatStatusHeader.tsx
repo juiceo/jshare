@@ -7,7 +7,7 @@ import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { IconButton } from '~/components/IconButton';
 import { StatusBadge } from '~/components/StatusBadge';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type ChatStatusHeaderProps = {
@@ -17,7 +17,7 @@ export type ChatStatusHeaderProps = {
 
 export const ChatStatusHeader = (props: ChatStatusHeaderProps) => {
     const { groupId, currency } = props;
-    const trpc = useTRPC();
+
     const user = useCurrentUser();
     const userStatus = useQuery(
         trpc.balances.getForParticipantInGroup.queryOptions({

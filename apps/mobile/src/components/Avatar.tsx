@@ -1,10 +1,11 @@
 import { skipToken, useQuery } from '@tanstack/react-query';
 
 import { getUserDefaultAvatarUrl } from '@jshare/common';
+import type { DB } from '@jshare/db';
 import type { BorderRadiusUnit } from '@jshare/theme';
 
 import { Image } from '~/components/atoms/Image';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type AvatarProps = {
     userId?: string;
@@ -14,11 +15,12 @@ export type AvatarProps = {
 
 export const Avatar = (props: AvatarProps) => {
     const { userId } = props;
-    const trpc = useTRPC();
 
     const profile = useQuery(
-        trpc.profiles.get.queryOptions(userId ? { id: userId } : skipToken)
-    ).data;
+        trpc.z.profile.findUnique.queryOptions(
+            userId ? { where: { id: userId }, include: { avatar: true } } : skipToken
+        )
+    ).data as DB.Profile<{ avatar: true }> | undefined;
 
     const dimensions = (() => {
         switch (props.size) {

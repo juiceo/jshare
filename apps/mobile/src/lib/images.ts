@@ -6,7 +6,7 @@ import { SupabaseStorageBucket } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
 import { supabase } from '~/lib/supabase';
-import { trpcUniversal } from '~/lib/trpc';
+import { trpcClient } from '~/lib/trpc';
 
 export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> => {
     const response = await fetch(asset.uri);
@@ -23,7 +23,7 @@ export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> =>
         throw new Error(supabaseImage.error.message);
     }
 
-    const dbImage = await trpcUniversal.images.create.mutate({
+    const dbImage = await trpcClient.images.create.mutate({
         path,
         bucket: SupabaseStorageBucket.Public,
     });

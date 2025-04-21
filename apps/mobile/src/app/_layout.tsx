@@ -38,8 +38,8 @@ export default function AppLayout() {
                     <FontLoader>
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <JotaiProvider>
-                                <SessionProvider>
-                                    <QueryProvider>
+                                <QueryProvider>
+                                    <SessionProvider>
                                         <BottomSheetModalProvider>
                                             <AppErrorBoundary>
                                                 {storybookEnabled ? (
@@ -50,8 +50,8 @@ export default function AppLayout() {
                                                 <ToastManager />
                                             </AppErrorBoundary>
                                         </BottomSheetModalProvider>
-                                    </QueryProvider>
-                                </SessionProvider>
+                                    </SessionProvider>
+                                </QueryProvider>
                             </JotaiProvider>
                         </GestureHandlerRootView>
                     </FontLoader>

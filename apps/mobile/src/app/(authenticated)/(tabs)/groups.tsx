@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import type { DB } from '@jshare/db';
+
 import { Stack } from '~/components/atoms/Stack';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
 import { IconButton } from '~/components/IconButton';
@@ -9,12 +11,28 @@ import { NewGroupMenu } from '~/components/NewGroupMenu/NewGroupMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
-export default screen({}, ({ router }) => {
-    const trpc = useTRPC();
-    const groups = useSuspenseQuery(trpc.groups.list.queryOptions()).data;
+export default screen({ auth: true }, ({ router, auth }) => {
+    const groups = useSuspenseQuery(
+        trpc.z.group.findMany.queryOptions({
+            where: {
+                participants: {
+                    some: {
+                        userId: auth.userId,
+                    },
+                },
+            },
+            orderBy: {
+                lastActivity: 'desc',
+            },
+            include: {
+                coverImage: true,
+                participants: true,
+            },
+        })
+    ).data as DB.Group<{ coverImage: true; participants: true }>[];
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
     const handleSelect = (value: 'create' | 'join') => {

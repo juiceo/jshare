@@ -9,14 +9,17 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen({ auth: true }, ({ router, auth }) => {
     const updates = Updates.useUpdates();
-    const trpc = useTRPC();
-    const profile = useSuspenseQuery(trpc.profiles.get.queryOptions({ id: auth.userId })).data;
+
+    const profile = useSuspenseQuery(
+        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: auth.userId } })
+    ).data;
+    const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
     const deleteAccount = useMutation(trpc.profiles.delete.mutationOptions());
 
     const [isDeleting, setDeleting] = useState<boolean>(false);
@@ -51,9 +54,14 @@ export default screen({ auth: true }, ({ router, auth }) => {
                             <Switch
                                 checked={profile?.showInSearch ?? false}
                                 onChange={(checked) => {
-                                    /**
-                                     * TODO: Update profile
-                                     */
+                                    updateProfile.mutateAsync({
+                                        where: {
+                                            id: auth.userId,
+                                        },
+                                        data: {
+                                            showInSearch: checked,
+                                        },
+                                    });
                                 }}
                             />
                         </Stack>

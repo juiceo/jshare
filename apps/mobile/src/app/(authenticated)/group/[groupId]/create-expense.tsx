@@ -4,6 +4,7 @@ import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 
 import { formatAmount, getDefaultShares, getTotalFromShares } from '@jshare/common';
+import type { DB } from '@jshare/db';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -14,7 +15,7 @@ import {
 } from '~/components/ExpenseEditor';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -22,12 +23,13 @@ export default screen(
         auth: true,
     },
     ({ router, auth }) => {
-        const trpc = useTRPC();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
-        const groupMembers = useSuspenseQuery(
-            trpc.groupParticipants.list.queryOptions({ groupId })
-        ).data;
+        const group = useSuspenseQuery(
+            trpc.z.group.findUniqueOrThrow.queryOptions({
+                where: { id: groupId },
+                include: { participants: { include: { user: true } } },
+            })
+        ).data as DB.Group<{ participants: { include: { user: true } } }>;
         const createExpenseMutation = useMutation(trpc.expenses.create.mutationOptions());
         const form = useForm<ExpenseEditorSchema>({
             defaultValues: {
@@ -35,7 +37,7 @@ export default screen(
                 amount: 0,
                 currency: group.currency,
                 description: '',
-                shares: getDefaultShares(groupMembers ?? []),
+                shares: getDefaultShares(group.participants ?? []),
             },
             resolver: zodResolver(expenseEditorSchema),
             mode: 'onSubmit',
@@ -64,7 +66,7 @@ export default screen(
                         <ExpenseEditor
                             form={form}
                             groupCurrency={group.currency}
-                            groupMembers={groupMembers}
+                            groupMembers={group.participants}
                             groupId={group.id}
                         />
                     </Screen.Content>

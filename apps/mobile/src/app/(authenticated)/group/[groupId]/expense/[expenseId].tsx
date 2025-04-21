@@ -18,7 +18,7 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpcUtils, useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -26,7 +26,6 @@ export default screen(
         auth: true,
     },
     ({ auth, router }) => {
-        const trpc = useTRPC();
         const queryClient = useQueryClient();
         const [mode, setMode] = useState<'edit' | 'view'>('view');
         const [isDeleting, setDeleting] = useState<boolean>(false);
@@ -82,7 +81,7 @@ export default screen(
             });
 
             queryClient.invalidateQueries({
-                queryKey: [trpcUtils.expenses.pathKey(), trpcUtils.balances.pathKey()],
+                queryKey: [trpc.expenses.pathKey(), trpc.balances.pathKey()],
             });
 
             router.back();

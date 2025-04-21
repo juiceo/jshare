@@ -10,7 +10,7 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
@@ -19,7 +19,7 @@ export type GroupCardProps = {
 
 export const GroupCard = (props: GroupCardProps) => {
     const { group } = props;
-    const trpc = useTRPC();
+
     const user = useCurrentUser();
 
     const groupTotal = useQuery(

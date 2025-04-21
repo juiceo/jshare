@@ -5,7 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import SuperJSON from 'superjson';
 
-import { queryClient } from '~/lib/queries';
+import { queryClient } from '~/lib/trpc';
 
 const asyncStoragePersister = createAsyncStoragePersister({
     storage: AsyncStorage,

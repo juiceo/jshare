@@ -9,7 +9,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpcUtils, useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
@@ -18,7 +18,6 @@ export default screen(
         auth: true,
     },
     ({ router, auth }) => {
-        const trpc = useTRPC();
         const queryClient = useQueryClient();
         const { code } = useLocalSearchParams<{ code: string }>();
         const group = useSuspenseQuery(trpc.groups.getByCode.queryOptions({ code })).data;
@@ -33,7 +32,7 @@ export default screen(
             }
 
             queryClient.invalidateQueries({
-                queryKey: trpcUtils.groups.pathKey(),
+                queryKey: trpc.groups.pathKey(),
             });
             router.dismiss();
             router.dismiss();

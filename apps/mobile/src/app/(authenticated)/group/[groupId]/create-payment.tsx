@@ -8,7 +8,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { z } from 'zod';
 
 import { formatAmount, getCurrencyDetails, getUserShortName } from '@jshare/common';
-import { zDB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -22,7 +22,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserMenu } from '~/components/UserMenu';
 import { useCurrencyConversion } from '~/hooks/useExchangeRates';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
 const schema = z.object({
@@ -35,14 +35,24 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default screen({}, ({ router }) => {
-    const trpc = useTRPC();
+export default screen({ auth: true }, ({ router, auth }) => {
     const { groupId } = useLocalSearchParams<{ groupId: string }>();
-    const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
-    const groupMembers = useSuspenseQuery(
-        trpc.groupParticipants.list.queryOptions({ groupId })
+    const group = useSuspenseQuery(
+        trpc.z.group.findUniqueOrThrow.queryOptions({
+            where: { id: groupId },
+            include: {
+                participants: {
+                    include: {
+                        user: true,
+                    },
+                },
+            },
+        })
+    ).data as DB.Group<{ participants: { include: { user: true } } }>;
+    const groupMembers = group.participants;
+    const profile = useSuspenseQuery(
+        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: auth.userId } })
     ).data;
-    const profile = useSuspenseQuery(trpc.profiles.me.queryOptions()).data;
     const createPayment = useMutation(trpc.payments.create.mutationOptions());
     const { convert } = useCurrencyConversion();
     const form = useForm<Schema>({

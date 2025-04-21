@@ -10,7 +10,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type AddUserSheetProps = {
     onClose: () => void;
@@ -26,7 +26,7 @@ type Schema = z.infer<typeof schema>;
 
 export const AddUserSheet = (props: AddUserSheetProps) => {
     const { onClose, groupId } = props;
-    const trpc = useTRPC();
+
     const queryClient = useQueryClient();
 
     const createTemporaryParticipant = useMutation(

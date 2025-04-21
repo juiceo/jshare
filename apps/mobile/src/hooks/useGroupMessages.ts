@@ -10,13 +10,14 @@ import { getRandomKey } from '@jshare/common';
 import { DB } from '@jshare/db';
 
 import { useGroupBroadcasts } from '~/hooks/useBroadcast';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 
 export const useGroupMessages = (args: { groupId: string; userId: string }) => {
     const { groupId, userId } = args;
-    const trpc = useTRPC();
     const queryClient = useQueryClient();
-    const profile = useSuspenseQuery(trpc.profiles.me.queryOptions()).data;
+    const profile = useSuspenseQuery(
+        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: userId } })
+    ).data;
     const sendMessageMutation = useMutation(trpc.messages.create.mutationOptions());
 
     const queryInput = useMemo(() => ({ groupId, limit: 15 }), [groupId]);
@@ -34,7 +35,7 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
         queryClient.invalidateQueries({
             queryKey: trpc.messages.listByGroup.queryKey(queryInput),
         });
-    }, [queryClient, queryInput, trpc.messages.listByGroup]);
+    }, [queryClient, queryInput]);
 
     useGroupBroadcasts({
         groupId,
@@ -85,16 +86,7 @@ export const useGroupMessages = (args: { groupId: string; userId: string }) => {
             });
             invalidateMessages();
         },
-        [
-            groupId,
-            invalidateMessages,
-            profile,
-            queryClient,
-            queryInput,
-            sendMessageMutation,
-            trpc.messages.listByGroup,
-            userId,
-        ]
+        [groupId, invalidateMessages, profile, queryClient, queryInput, sendMessageMutation, userId]
     );
 
     return {

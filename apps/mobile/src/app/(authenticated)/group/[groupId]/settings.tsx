@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import * as Clipboard from 'expo-clipboard';
 import { useLocalSearchParams } from 'expo-router';
 import { sortBy } from 'lodash';
+import shortid from 'shortid';
 
 import { DB } from '@jshare/db';
 
@@ -19,24 +21,28 @@ import { IconButton } from '~/components/IconButton';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
+
+type FormData = Pick<DB.Group, 'name'>;
 
 export default screen(
     {
         auth: true,
     },
     ({ auth, router }) => {
-        const trpc = useTRPC();
-        const queryClient = useQueryClient();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
+        const group = useSuspenseQuery(
+            trpc.z.group.findUniqueOrThrow.queryOptions({
+                where: { id: groupId },
+                include: { coverImage: true, participants: { include: { user: true } } },
+            })
+        ).data as DB.Group<{ coverImage: true; participants: { include: { user: true } } }>;
         const { presentUserIds } = useGroupContext();
-        const updateGroup = useMutation(trpc.groups.update.mutationOptions());
-        const refreshInviteCode = useMutation(trpc.groups.refreshCode.mutationOptions());
-        const deleteGroup = useMutation(trpc.groups.delete.mutationOptions());
+        const updateGroup = useMutation(trpc.z.group.update.mutationOptions());
+        const deleteGroup = useMutation(trpc.z.group.delete.mutationOptions());
 
         const [isDeleting, setDeleting] = useState<boolean>(false);
 
@@ -44,12 +50,19 @@ export default screen(
         const isAdmin = role === DB.Role.Admin || role === DB.Role.Owner;
         const isOwner = role === DB.Role.Owner;
 
-        const [groupName, setGroupName] = useState<string>(group.name);
+        const form = useForm<FormData>({
+            defaultValues: {
+                name: group.name,
+            },
+        });
 
         const handleRefreshInviteCode = async () => {
-            const updatedGroup = await refreshInviteCode.mutateAsync({ groupId });
-            queryClient.setQueryData(trpc.groups.get.queryKey({ id: groupId }), updatedGroup);
-            queryClient.invalidateQueries({ queryKey: trpc.groups.get.queryKey({ id: groupId }) });
+            await updateGroup.mutateAsync({
+                where: { id: groupId },
+                data: {
+                    inviteCode: shortid.generate(),
+                },
+            });
         };
 
         const handleCopyInviteCode = async () => {
@@ -59,27 +72,9 @@ export default screen(
             toast.info('Invite code copied!');
         };
 
-        const handleGroupUpdate = async (args: Pick<DB.Group, 'name'>) => {
-            queryClient.setQueryData(trpc.groups.get.queryKey({ id: groupId }), (prev) => {
-                if (!prev) return prev;
-                return {
-                    ...prev,
-                    ...args,
-                };
-            });
-            await updateGroup.mutateAsync({
-                groupId,
-                updates: args,
-            });
-            queryClient.invalidateQueries({ queryKey: trpc.groups.get.queryKey({ id: groupId }) });
-        };
-
         const handleGroupDelete = async () => {
             try {
-                await deleteGroup.mutateAsync({ groupId });
-                queryClient.invalidateQueries({
-                    queryKey: trpc.groups.get.queryKey({ id: groupId }),
-                });
+                await deleteGroup.mutateAsync({ where: { id: groupId } });
                 router.replace('/(authenticated)/(tabs)/groups');
                 toast.info(`Success`, `${group.name} was deleted`);
             } catch {
@@ -95,8 +90,15 @@ export default screen(
             });
         }, [group.participants, presentUserIds]);
 
+        const handleSubmit = (data: FormData) => {
+            updateGroup.mutateAsync({
+                where: { id: groupId },
+                data,
+            });
+        };
+
         return (
-            <Screen>
+            <Screen onBlur={form.handleSubmit(handleSubmit)}>
                 <Screen.Header title="Manage group" blur />
                 <Screen.Content scrollable disableTopInset>
                     <Stack center ar="1/1">
@@ -138,7 +140,7 @@ export default screen(
                                     <Stack center>
                                         <IconButton
                                             icon="RefreshCcw"
-                                            disabled={refreshInviteCode.isPending}
+                                            disabled={updateGroup.isPending}
                                             onPress={handleRefreshInviteCode}
                                             variant="ghost"
                                         />
@@ -189,13 +191,16 @@ export default screen(
                         {isAdmin && (
                             <Stack mt="3xl" spacing="xl">
                                 <Typography variant="h6">Settings</Typography>
-                                <TextField
-                                    label="Group name"
-                                    value={groupName}
-                                    onChange={setGroupName}
-                                    TextInputProps={{
-                                        onBlur: () => handleGroupUpdate({ name: groupName }),
-                                    }}
+                                <Controller
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <TextField
+                                            label="Group name"
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                        />
+                                    )}
                                 />
                                 {isOwner && (
                                     <>

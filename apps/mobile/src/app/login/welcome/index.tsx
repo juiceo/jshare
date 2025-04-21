@@ -20,7 +20,7 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 
@@ -47,7 +47,7 @@ export default screen({}, ({ router }) => {
         },
         resolver: zodResolver(schema),
     });
-    const trpc = useTRPC();
+
     const queryClient = useQueryClient();
     const createProfile = useMutation(trpc.profiles.create.mutationOptions());
     const { session } = useSession();

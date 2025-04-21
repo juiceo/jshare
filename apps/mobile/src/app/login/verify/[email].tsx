@@ -12,13 +12,13 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
 import { supabase } from '~/lib/supabase';
-import { trpcUniversal, useTRPC } from '~/lib/trpc';
+import { trpc, trpcClient } from '~/lib/trpc';
 import { setAccessToken } from '~/state/auth';
 import { screen } from '~/wrappers/screen';
 
 export default screen({}, () => {
     const { email } = useLocalSearchParams<{ email: string }>();
-    const trpc = useTRPC();
+
     const [code, setCode] = useState<number[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [lastCodeSent, setLastCodeSent] = useState<number>(Date.now());
@@ -61,7 +61,7 @@ export default screen({}, () => {
                 }
 
                 setAccessToken(accessToken);
-                const profile = await trpcUniversal.profiles.me.query().catch(() => null);
+                const profile = await trpcClient.profiles.me.query().catch(() => null);
 
                 if (profile) {
                     router.replace('/');

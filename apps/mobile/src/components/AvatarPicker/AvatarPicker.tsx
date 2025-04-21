@@ -11,7 +11,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { useTRPC } from '~/lib/trpc';
+import { trpc } from '~/lib/trpc';
 
 export type AvatarPickerProps = {
     value: string | null;
@@ -21,7 +21,7 @@ export type AvatarPickerProps = {
 
 export const AvatarPicker = (props: AvatarPickerProps) => {
     const { value, onChange, profile } = props;
-    const trpc = useTRPC();
+
     const imageQuery = useQuery(
         trpc.z.image.findUnique.queryOptions(value ? { where: { id: value ?? '' } } : skipToken)
     );
