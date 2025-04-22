@@ -15,12 +15,15 @@ if (!JWT_SECRET) {
 }
 
 export const createContext = async (opts: trpcExpress.CreateExpressContextOptions) => {
-    const userId = getUserIdFromRequest(opts.req);
+    let userId;
+    try {
+        userId = getUserIdFromRequest(opts.req);
+    } catch {}
 
     return {
         req: opts.req,
         userId,
-        prisma: await getDbForUserId(userId),
+        prisma: userId ? await getDbForUserId(userId) : undefined,
     };
 };
 type Context = Awaited<ReturnType<typeof createContext>>;

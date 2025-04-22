@@ -1,6 +1,7 @@
 import { atom, type Getter } from 'jotai';
 import { v4 as uuidv4 } from 'uuid';
 
+import { sleep } from '@jshare/common';
 import { DB, type Prisma } from '@jshare/db';
 
 import { DocumentCollection } from '~/lib/collections/Collection';
@@ -13,29 +14,34 @@ const profilesStore = atom<
     DbDocumentStore<DB.Profile, Partial<DB.Profile>, Prisma.ProfileCreateInput>
 >({
     documents: {},
-    metadata: {},
+
     updates: {},
     inserts: {},
     deletes: {},
 });
 
 export class Profile extends CollectionDocument<DB.Profile> {
-    avatar: Image | undefined;
-    constructor(data: DB.Profile, getter: Getter) {
-        super(data, getter);
-        this.avatar = data.avatarId ? getter(Images.findById(data.avatarId)) : undefined;
+    private _avatar: Image | undefined;
+
+    get avatar() {
+        return null;
     }
 }
 
 export const Profiles = new DocumentCollection({
     name: 'profiles',
     store: profilesStore,
-    loaders: {
-        findByIds: (ids: string[]) => {
-            return trpcClient.z.profile.findMany.query({ where: { id: { in: ids } } });
+    api: {
+        find: (queries: Partial<DB.Profile>[]) => {
+            return trpcClient.z.profile.findMany.query({ where: { OR: queries } });
         },
-        findMany: (wheres: Partial<DB.Profile>[]) => {
-            return trpcClient.z.profile.findMany.query({ where: { OR: wheres } });
+        update: async (id: string, data: Partial<DB.Profile>) => {
+            return trpcClient.z.profile.update.mutate({
+                where: {
+                    id,
+                },
+                data,
+            });
         },
     },
     transformer: (doc, getter) => new Profile(doc, getter),

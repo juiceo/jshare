@@ -11,7 +11,6 @@ export type DbDocumentStore<
     TInsert extends object,
 > = {
     documents: Record<string, TDocument>;
-    metadata: Record<string, DocumentMetadata>;
     updates: Record<string, TUpdate>;
     inserts: Record<string, TInsert>;
     deletes: Record<string, true>;

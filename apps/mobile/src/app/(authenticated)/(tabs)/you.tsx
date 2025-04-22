@@ -33,12 +33,6 @@ export default screen(
             });
         };
 
-        const testUpdate = () => {
-            Profiles.update(auth.userId, {
-                avatarId: null,
-            });
-        };
-
         return (
             <Screen>
                 <Screen.Content scrollable>
@@ -82,7 +76,6 @@ export default screen(
                                 </Stack>
                             </RectButton>
                         </Stack>
-                        <Button onPress={testUpdate}>Test update</Button>
                         <Button color="error" variant="ghost" onPress={auth.signOut}>
                             Sign out
                         </Button>

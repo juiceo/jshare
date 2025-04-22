@@ -10,7 +10,6 @@ import { trpcClient } from '~/lib/trpc';
 
 const imagesStore = atom<DbDocumentStore<DB.Image, Partial<DB.Image>, DB.Image>>({
     documents: {},
-    metadata: {},
     updates: {},
     inserts: {},
     deletes: {},
@@ -21,12 +20,17 @@ export class Image extends CollectionDocument<DB.Image> {}
 export const Images = new DocumentCollection({
     name: 'images',
     store: imagesStore,
-    loaders: {
-        findByIds: (ids: string[]) => {
-            return trpcClient.z.image.findMany.query({ where: { id: { in: ids } } });
+    api: {
+        find: (queries: Partial<DB.Image>[]) => {
+            return trpcClient.z.image.findMany.query({ where: { OR: queries } });
         },
-        findMany: (wheres: Partial<DB.Profile>[]) => {
-            return trpcClient.z.image.findMany.query({ where: { OR: wheres } });
+        update: (id: string, data: Partial<DB.Image>) => {
+            return trpcClient.z.image.update.mutate({
+                where: {
+                    id,
+                },
+                data,
+            });
         },
     },
     transformer: (doc, getter) => new Image(doc, getter),
