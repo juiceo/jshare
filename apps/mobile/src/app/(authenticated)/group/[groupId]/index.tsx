@@ -25,13 +25,11 @@ import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
-    {
-        loadingMessage: 'Loading group...',
-        auth: true,
-    },
-    ({ auth }) => {
+    () => {
+        const user = useCurrentUser();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
         const group = useSuspenseQuery(
             trpc.z.group.findUniqueOrThrow.queryOptions({
@@ -49,7 +47,7 @@ export default screen(
             data: messages,
             fetchNextPage,
             sendMessage,
-        } = useGroupMessages({ groupId, userId: auth.session.user.id });
+        } = useGroupMessages({ groupId, userId: user.id });
 
         const chatListItems = useMemo(() => {
             return messagesToChatListItems(messages ?? []);
@@ -118,7 +116,7 @@ export default screen(
                                                 case 'messages': {
                                                     return (
                                                         <ChatMessageGroup
-                                                            userId={auth.session.user.id}
+                                                            userId={user.id}
                                                             authorId={chatListItem.item.authorId}
                                                             messages={sortBy(
                                                                 chatListItem.item.messages,
@@ -165,5 +163,8 @@ export default screen(
                 </KeyboardStickyView>
             </Screen>
         );
+    },
+    {
+        loadingMessage: 'Loading group...',
     }
 );

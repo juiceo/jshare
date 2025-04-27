@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Pressable } from 'react-native';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
 
 import type { DB } from '@jshare/db';
 
@@ -13,14 +14,17 @@ import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
-export default screen({ auth: true }, ({ router, auth }) => {
+export default screen(() => {
+    const router = useRouter();
+    const user = useCurrentUser();
     const groups = useSuspenseQuery(
         trpc.z.group.findMany.queryOptions({
             where: {
                 participants: {
                     some: {
-                        userId: auth.userId,
+                        userId: user.id,
                     },
                 },
             },

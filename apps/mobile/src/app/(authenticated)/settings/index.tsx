@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import * as Updates from 'expo-updates';
 
@@ -9,17 +9,19 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
+import { useDb } from '~/lib/collections/hooks';
+import { Profiles } from '~/lib/collections/profiles.collection';
 import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
 
-export default screen({ auth: true }, ({ router, auth }) => {
+export default screen(() => {
     const updates = Updates.useUpdates();
+    const user = useCurrentUser();
+    const { signOut } = useSession();
 
-    const profile = useSuspenseQuery(
-        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: auth.userId } })
-    ).data;
-    const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
+    const profile = useDb(() => Profiles.findById(user.id), [user.id]);
     const deleteAccount = useMutation(trpc.profiles.delete.mutationOptions());
 
     const [isDeleting, setDeleting] = useState<boolean>(false);
@@ -37,8 +39,7 @@ export default screen({ auth: true }, ({ router, auth }) => {
 
     const handleDeleteAccount = async () => {
         await deleteAccount.mutateAsync();
-        auth.signOut();
-        router.replace('/login');
+        signOut();
     };
     return (
         <Screen>
@@ -52,15 +53,10 @@ export default screen({ auth: true }, ({ router, auth }) => {
                         <Stack row alignCenter spacing="xl" p="xl">
                             <Typography flex={1}>Show me in search</Typography>
                             <Switch
-                                checked={profile?.showInSearch ?? false}
+                                checked={profile.data?.showInSearch ?? false}
                                 onChange={(checked) => {
-                                    updateProfile.mutateAsync({
-                                        where: {
-                                            id: auth.userId,
-                                        },
-                                        data: {
-                                            showInSearch: checked,
-                                        },
+                                    profile.update({
+                                        showInSearch: checked,
                                     });
                                 }}
                             />

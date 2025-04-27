@@ -20,10 +20,10 @@ export const getDb = (user: DB.Profile) => {
 };
 
 export const getDbForUserId = async (userId: string) => {
-    const user = await db.profile.findUniqueOrThrow({
+    const user = await db.profile.findUnique({
         where: {
             id: userId,
         },
     });
-    return enhance(prisma, { user });
+    return enhance(prisma, user ? { user } : {});
 };

@@ -74,6 +74,7 @@
         "expo-splash-screen": "catalog:",
         "expo-status-bar": "catalog:",
         "expo-updates": "catalog:",
+        "immer": "^10.1.1",
         "jotai": "catalog:",
         "jotai-optics": "^0.4.0",
         "lodash": "catalog:",

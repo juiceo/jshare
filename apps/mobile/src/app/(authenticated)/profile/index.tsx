@@ -6,9 +6,11 @@ import { Screen } from '~/components/Screen';
 import { useDb } from '~/lib/collections/hooks';
 import { Profiles } from '~/lib/collections/profiles.collection';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
-export default screen({ auth: true }, ({ auth }) => {
-    const profile = useDb(() => Profiles.findById(auth.userId), [auth.userId]);
+export default screen(() => {
+    const user = useCurrentUser();
+    const profile = useDb(() => Profiles.findById(user.id), [user.id]);
 
     return (
         <Screen>
@@ -17,16 +19,16 @@ export default screen({ auth: true }, ({ auth }) => {
                 <Stack p="xl" spacing="md">
                     <TextField
                         label={'First name'}
-                        value={profile?.data.firstName ?? ''}
-                        onChange={(value) => Profiles.update(auth.userId, { firstName: value })}
+                        value={profile.data?.firstName ?? ''}
+                        onChange={(value) => profile?.update({ firstName: value })}
                         TextInputProps={{
                             placeholder: 'John',
                         }}
                     />
                     <TextField
                         label={'Last name'}
-                        value={profile?.data.lastName ?? ''}
-                        onChange={(value) => Profiles.update(auth.userId, { lastName: value })}
+                        value={profile.data?.lastName ?? ''}
+                        onChange={(value) => profile?.update({ lastName: value })}
                         TextInputProps={{
                             placeholder: 'Doe',
                         }}
@@ -35,8 +37,8 @@ export default screen({ auth: true }, ({ auth }) => {
                         label="Preferred currency"
                         placeholder="Select currency"
                         options={CURRENCY_OPTIONS}
-                        value={profile?.data.currency ?? 'USD'}
-                        onChange={(value) => Profiles.update(auth.userId, { currency: value })}
+                        value={profile.data?.currency ?? 'USD'}
+                        onChange={(value) => profile?.update({ currency: value })}
                         MenuProps={{
                             title: 'Select currency',
                         }}

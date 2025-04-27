@@ -1,50 +1,47 @@
-import { atom, type Getter } from 'jotai';
 import { v4 as uuidv4 } from 'uuid';
 
-import { sleep } from '@jshare/common';
-import { DB, type Prisma } from '@jshare/db';
+import { DB } from '@jshare/db';
 
 import { DocumentCollection } from '~/lib/collections/Collection';
-import { CollectionDocument } from '~/lib/collections/CollectionDocument';
-import { Image, Images } from '~/lib/collections/images.collection';
-import type { DbDocumentStore } from '~/lib/collections/types';
 import { trpcClient } from '~/lib/trpc';
 
-const profilesStore = atom<
-    DbDocumentStore<DB.Profile, Partial<DB.Profile>, Prisma.ProfileCreateInput>
+type ProfileUpdateInput = Partial<Omit<DB.Profile, 'id' | 'createdAt' | 'updatedAt'>>;
+type ProfileCreateInput = Partial<Omit<DB.Profile, 'createdAt' | 'updatedAt'>> &
+    Pick<DB.Profile, 'firstName' | 'lastName' | 'email' | 'avatarId' | 'currency'>;
+
+export const Profiles = new DocumentCollection<
+    DB.Profile<{ avatar: true }>,
+    ProfileUpdateInput,
+    ProfileCreateInput
 >({
-    documents: {},
-
-    updates: {},
-    inserts: {},
-    deletes: {},
-});
-
-export class Profile extends CollectionDocument<DB.Profile> {
-    private _avatar: Image | undefined;
-
-    get avatar() {
-        return null;
-    }
-}
-
-export const Profiles = new DocumentCollection({
     name: 'profiles',
-    store: profilesStore,
     api: {
-        find: (queries: Partial<DB.Profile>[]) => {
-            return trpcClient.z.profile.findMany.query({ where: { OR: queries } });
+        find: async (queries: Partial<DB.Profile>[]) => {
+            return trpcClient.z.profile.findMany.query({
+                where: { OR: queries },
+                include: { avatar: true },
+            }) as Promise<DB.Profile<{ avatar: true }>[]>;
         },
-        update: async (id: string, data: Partial<DB.Profile>) => {
+        update: async (id: string, data: ProfileUpdateInput) => {
             return trpcClient.z.profile.update.mutate({
                 where: {
                     id,
                 },
                 data,
-            });
+                include: {
+                    avatar: true,
+                },
+            }) as Promise<DB.Profile<{ avatar: true }>>;
+        },
+        create: async (data: ProfileCreateInput) => {
+            return trpcClient.z.profile.create.mutate({
+                data,
+                include: {
+                    avatar: true,
+                },
+            }) as Promise<DB.Profile<{ avatar: true }>>;
         },
     },
-    transformer: (doc, getter) => new Profile(doc, getter),
     defaults: () => ({
         id: uuidv4(),
         email: '',
@@ -60,5 +57,6 @@ export const Profiles = new DocumentCollection({
         showInSearch: true,
         currency: DB.CurrencyCode.USD,
         lastActivity: new Date(),
+        avatar: null,
     }),
 });

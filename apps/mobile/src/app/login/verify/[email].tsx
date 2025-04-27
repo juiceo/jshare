@@ -10,12 +10,13 @@ import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
+import { Profiles } from '~/lib/collections/profiles.collection';
 import { supabase } from '~/lib/supabase';
 import { trpcClient } from '~/lib/trpc';
 import { setAccessToken } from '~/state/auth';
 import { screen } from '~/wrappers/screen';
 
-export default screen({}, () => {
+export default screen(() => {
     const { email } = useLocalSearchParams<{ email: string }>();
 
     const [code, setCode] = useState<number[]>([]);
@@ -32,7 +33,6 @@ export default screen({}, () => {
                 let authResult;
 
                 if (isDemoUserEmail(email)) {
-                    console.log('IS DEMO USER');
                     await trpcClient.auth.createDemoUser.mutate({ email });
                     authResult = await supabase.auth.signInWithPassword({
                         email,
@@ -48,17 +48,19 @@ export default screen({}, () => {
 
                 if (authResult.error) {
                     Alert.alert(authResult.error.message);
+                    return;
                 }
 
                 const accessToken = authResult.data.session?.access_token;
+                const userId = authResult.data.user?.id;
 
-                if (!accessToken) {
+                if (!accessToken || !userId) {
                     Alert.alert('Invalid code, please try again');
                     return;
                 }
 
                 setAccessToken(accessToken);
-                const profile = await trpcClient.profiles.me.query().catch(() => null);
+                const profile = await Profiles.fetchById(userId);
 
                 if (profile) {
                     router.replace('/');

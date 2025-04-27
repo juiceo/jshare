@@ -14,74 +14,72 @@ import { useDb } from '~/lib/collections/hooks';
 import { Profiles } from '~/lib/collections/profiles.collection';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
 
-export default screen(
-    {
-        auth: true,
-    },
-    ({ auth }) => {
-        const profile = useDb(() => Profiles.findById(auth.userId), [auth.userId]);
+export default screen(() => {
+    const user = useCurrentUser();
+    const { signOut } = useSession();
+    const profile = useDb(() => Profiles.findById(user.id), [user.id]);
 
-        const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
+    const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
 
-        const updateAvatar = (avatarId: string | null) => {
-            updateProfile.mutateAsync({
-                where: { id: auth.userId },
-                data: {
-                    avatarId,
-                },
-            });
-        };
+    const updateAvatar = (avatarId: string | null) => {
+        updateProfile.mutateAsync({
+            where: { id: user.id },
+            data: {
+                avatarId,
+            },
+        });
+    };
 
-        return (
-            <Screen>
-                <Screen.Content scrollable>
-                    <Stack flex={1} spacing="md" px="xl">
-                        <Stack column center p="xl" br="md" spacing="none">
-                            <Stack mt="2xl" center>
-                                <AvatarPicker
-                                    value={profile?.data.avatarId ?? null}
-                                    profile={profile?.data}
-                                    onChange={updateAvatar}
-                                />
-                                <Typography variant="h6" align="center" mt="xl">
-                                    {profile?.data.firstName} {profile?.data.lastName}
-                                </Typography>
-                                <Typography variant="body2" color="secondary" align="center">
-                                    Joined {dayjs(profile?.data.createdAt).format('MMM D, YYYY')}
-                                </Typography>
-                            </Stack>
+    return (
+        <Screen>
+            <Screen.Content scrollable>
+                <Stack flex={1} spacing="md" px="xl">
+                    <Stack column center p="xl" br="md" spacing="none">
+                        <Stack mt="2xl" center>
+                            <AvatarPicker
+                                value={profile.data?.avatarId ?? null}
+                                profile={profile.data ?? undefined}
+                                onChange={updateAvatar}
+                            />
+                            <Typography variant="h6" align="center" mt="xl">
+                                {profile.data?.firstName} {profile.data?.lastName}
+                            </Typography>
+                            <Typography variant="body2" color="secondary" align="center">
+                                Joined {dayjs(profile.data?.createdAt).format('MMM D, YYYY')}
+                            </Typography>
                         </Stack>
-
-                        <Stack bg="background.elevation1" br="xl">
-                            <RectButton onPress={() => router.push('/profile')}>
-                                <Stack row alignCenter p="xl" spacing="xl">
-                                    <Icon
-                                        name="UserPen"
-                                        size={32}
-                                        color={(t) => t.palette.text.secondary}
-                                    />
-                                    <Typography variant="h5">Profile</Typography>
-                                </Stack>
-                            </RectButton>
-                            <Divider horizontal />
-                            <RectButton onPress={() => router.push('/settings')}>
-                                <Stack row alignCenter p="xl" spacing="xl">
-                                    <Icon
-                                        name="Cog"
-                                        size={32}
-                                        color={(t) => t.palette.text.secondary}
-                                    />
-                                    <Typography variant="h5">Settings</Typography>
-                                </Stack>
-                            </RectButton>
-                        </Stack>
-                        <Button color="error" variant="ghost" onPress={auth.signOut}>
-                            Sign out
-                        </Button>
                     </Stack>
-                </Screen.Content>
-            </Screen>
-        );
-    }
-);
+
+                    <Stack bg="background.elevation1" br="xl">
+                        <RectButton onPress={() => router.push('/profile')}>
+                            <Stack row alignCenter p="xl" spacing="xl">
+                                <Icon
+                                    name="UserPen"
+                                    size={32}
+                                    color={(t) => t.palette.text.secondary}
+                                />
+                                <Typography variant="h5">Profile</Typography>
+                            </Stack>
+                        </RectButton>
+                        <Divider horizontal />
+                        <RectButton onPress={() => router.push('/settings')}>
+                            <Stack row alignCenter p="xl" spacing="xl">
+                                <Icon
+                                    name="Cog"
+                                    size={32}
+                                    color={(t) => t.palette.text.secondary}
+                                />
+                                <Typography variant="h5">Settings</Typography>
+                            </Stack>
+                        </RectButton>
+                    </Stack>
+                    <Button color="error" variant="ghost" onPress={signOut}>
+                        Sign out
+                    </Button>
+                </Stack>
+            </Screen.Content>
+        </Screen>
+    );
+});

@@ -452,6 +452,9 @@ importers:
       expo-updates:
         specifier: 'catalog:'
         version: 0.27.4(expo@52.0.44(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1)))(graphql@15.10.1)(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      immer:
+        specifier: ^10.1.1
+        version: 10.1.1
       jotai:
         specifier: 'catalog:'
         version: 2.10.1(@types/react@18.3.20)(react@18.3.1)
@@ -5357,6 +5360,9 @@ packages:
     resolution: {integrity: sha512-xfOoWjceHntRb3qFCrh5ZFORYH8XCdYpASltMhZ/Q0KZiOwjdE/Yl2QCiWdwD+lygV5bMCvauzgu5PxBX/Yerg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
+
+  immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
 
   import-fresh@2.0.0:
     resolution: {integrity: sha512-eZ5H8rcgYazHbKC3PG4ClHNykCSxtAhxSSEM+2mb+7evD2CKF5V7c0dNum7AdpDh0ZdICwZY9sRSn8f+KH96sg==}
@@ -13979,6 +13985,8 @@ snapshots:
   image-size@1.0.2:
     dependencies:
       queue: 6.0.2
+
+  immer@10.1.1: {}
 
   import-fresh@2.0.0:
     dependencies:

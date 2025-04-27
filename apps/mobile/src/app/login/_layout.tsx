@@ -4,7 +4,7 @@ import { useTheme } from '@jshare/theme';
 
 import { screen } from '~/wrappers/screen';
 
-export default screen({}, () => {
+export default screen(() => {
     const { theme } = useTheme();
     return (
         <Stack

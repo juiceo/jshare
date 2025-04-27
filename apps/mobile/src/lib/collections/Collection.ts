@@ -1,162 +1,305 @@
-import { atom, type Atom, type Getter, type PrimitiveAtom } from 'jotai';
+import { InteractionManager } from 'react-native';
+import { castDraft, produce } from 'immer';
+import { atom, type Atom, type PrimitiveAtom } from 'jotai';
 import { selectAtom } from 'jotai/utils';
-import { debounce, matches, omit } from 'lodash';
+import { debounce, get, isEqual, matches, pick } from 'lodash';
 
-import type { CollectionDocument } from '~/lib/collections/CollectionDocument';
-import type { DbDocument, DbDocumentStore } from '~/lib/collections/types';
+import { QueryResult, QueryResultMany } from '~/lib/collections/QueryResult';
+import type { DbDocument } from '~/lib/collections/types';
+import { hydrateCollectionState, persistCollectionState } from '~/lib/collections/util';
 import { jotaiStore } from '~/wrappers/JotaiProvider';
 
-export type CollectionAPI<T extends DbDocument> = {
+/**
+ * TODOs:
+ *
+ * - Ability to insert documents
+ * - Cache buster key support (use zod schemas for hydration?)
+ * - Ability to delete documents
+ * - Remove documents from local cache if no longer found in database
+ * - Loading state for documents
+ *
+ */
+
+export type CollectionAPI<T extends DbDocument, TUpdate extends object, TInsert extends object> = {
     find: (queries: Partial<T>[]) => Promise<T[]>;
-    update: (id: string, data: Partial<T>) => Promise<T | undefined>;
+    update: (id: string, data: TUpdate) => Promise<T>;
+    create: (data: TInsert) => Promise<T>;
 };
 
 export type DocumentCollectionArgs<
     TDocument extends DbDocument,
     TUpdate extends object,
     TInsert extends object,
-    TTransformed extends CollectionDocument<TDocument> = CollectionDocument<TDocument>,
 > = {
     name: string;
-    store: PrimitiveAtom<DbDocumentStore<TDocument, TUpdate, TInsert>>;
-    api: CollectionAPI<TDocument>;
-    transformer: (doc: TDocument, getter: Getter) => TTransformed;
+    api: CollectionAPI<TDocument, TUpdate, TInsert>;
     defaults: () => TDocument;
 };
 
-type QueryMetadata<TDocument extends DbDocument> = {
+export type QueryMetadata<TDocument extends DbDocument> = {
     key: string;
     query: Partial<TDocument>;
     status: 'pending' | 'in-progress' | 'finished' | 'error';
     executedAt: Date | null;
 };
 
+export type CollectionState<
+    TDocument extends DbDocument,
+    TUpdate extends object,
+    TInsert extends object,
+> = {
+    originalDocs: Record<string, TDocument>;
+    docs: Record<string, TDocument>;
+    updates: Record<string, TUpdate>;
+    deletes: Record<string, boolean>;
+    inserts: Record<string, { doc: TDocument; data: TInsert }>;
+};
+
 export class DocumentCollection<
     TDocument extends DbDocument,
     TUpdate extends object,
     TInsert extends object,
-    TDocumentTransformed extends CollectionDocument<TDocument> = CollectionDocument<TDocument>,
 > {
     name: string;
-    store: PrimitiveAtom<DbDocumentStore<TDocument, TUpdate, TInsert>>;
-    api: CollectionAPI<TDocument>;
-    transformer: ((doc: TDocument, getter: Getter) => TDocumentTransformed) | undefined;
-
-    queries: Record<string, QueryMetadata<TDocument>>;
+    api: CollectionAPI<TDocument, TUpdate, TInsert>;
+    queries: PrimitiveAtom<Record<string, QueryMetadata<TDocument>>>;
     staleTime: number;
-    flushUpdates: () => void;
+    flushUpdatesDebounced: () => void;
+    flushInsertsDebounced: () => void;
+    persistState: () => void;
+    defaults: () => TDocument;
 
-    _findByIdAtoms: Record<string, Atom<TDocumentTransformed | undefined>>;
-    _findManyAtoms: Record<string, Atom<TDocumentTransformed[]>>;
-    _originalDocs: Record<string, TDocument>;
-    _docs: PrimitiveAtom<Record<string, TDocument>>;
-    _updates: PrimitiveAtom<Record<string, Partial<TDocument>>>;
-    _deletes: PrimitiveAtom<Record<string, boolean>>;
+    pendingUpdates: string[];
+    pendingInserts: string[];
 
-    constructor(args: DocumentCollectionArgs<TDocument, TUpdate, TInsert, TDocumentTransformed>) {
+    findOneQueryResults: Record<string, Atom<QueryResult<TDocument, TUpdate>>>;
+    findManyQueryResults: Record<string, Atom<any>>;
+
+    __state: PrimitiveAtom<CollectionState<TDocument, TUpdate, TInsert>>;
+    state: PrimitiveAtom<CollectionState<TDocument, TUpdate, TInsert>>;
+    ready: Promise<void>;
+
+    constructor(args: DocumentCollectionArgs<TDocument, TUpdate, TInsert>) {
         this.name = args.name;
-        this.store = args.store;
         this.api = args.api;
-        this.transformer = args.transformer;
-        this.queries = {};
-        this.staleTime = 1000 * 15; // 15 seconds
-        this.flushUpdates = debounce(this._flushUpdates.bind(this), 1000, {
+        this.queries = atom({});
+        this.defaults = args.defaults;
+        this.staleTime = 15_000; // 15 seconds
+        this.flushUpdatesDebounced = debounce(this.flushUpdates.bind(this), 1000, {
             maxWait: 15_000,
         });
 
-        this._findByIdAtoms = {};
-        this._findManyAtoms = {};
-        this._originalDocs = {};
-        this._docs = atom({});
-        this._updates = atom({});
-        this._deletes = atom({});
+        this.flushInsertsDebounced = debounce(this.flushInserts.bind(this), 1000, {
+            maxWait: 15_000,
+        });
+
+        this.pendingUpdates = [];
+        this.pendingInserts = [];
+        this.findOneQueryResults = {};
+        this.findManyQueryResults = {};
+
+        this.__state = atom({
+            originalDocs: {},
+            docs: {},
+            updates: {},
+            deletes: {},
+            inserts: {},
+        });
+
+        this.state = atom(
+            (get) => {
+                return get(this.__state);
+            },
+            (get, set, update) => {
+                jotaiStore.set(this.__state, update);
+                this.persistState();
+            }
+        );
+
+        this.persistState = debounce(this._persistState.bind(this), 1000, {
+            maxWait: 15_000,
+        });
+
+        this.ready = this.hydrateState();
     }
 
-    private transform(doc: TDocument, getter: Getter): TDocumentTransformed {
-        return this.transformer
-            ? this.transformer(doc, getter)
-            : (doc as unknown as TDocumentTransformed);
+    private async hydrateState() {
+        const hydratedState = await hydrateCollectionState(this.name);
+        if (!hydratedState) return;
+        jotaiStore.set(this.state, hydratedState);
     }
 
-    private async fetchQueryResults(where: Partial<TDocument>) {
+    private async _persistState() {
+        InteractionManager.runAfterInteractions(async () => {
+            await persistCollectionState(this.name, jotaiStore.get(this.state));
+        });
+    }
+
+    registerQuery(where: Partial<TDocument>): string {
+        console.timeLog('registerQuery');
         const queryKey = JSON.stringify(where);
-        const query = this.queries[queryKey];
+        const query = jotaiStore.get(this.queries)[queryKey];
 
         if (query?.status === 'in-progress') {
-            console.log('query in progress');
-            return;
+            return queryKey;
         }
 
         if (query?.status === 'finished') {
             const executedTimestamp = query.executedAt?.valueOf() ?? 0;
             if (executedTimestamp + this.staleTime > new Date().valueOf()) {
-                console.log('query not stale');
-                return;
+                return queryKey;
             }
         }
 
-        this.queries[queryKey] = {
-            key: queryKey,
-            query: where,
-            status: 'pending',
-            executedAt: null,
-        };
+        jotaiStore.set(this.queries, (prev) => {
+            return produce(prev, (draft) => {
+                draft[queryKey] = {
+                    key: queryKey,
+                    query: castDraft(where),
+                    status: 'pending',
+                    executedAt: null,
+                };
+            });
+        });
 
         setTimeout(() => {
-            const pendingQueries = Object.values(this.queries).filter(
-                (q) => q.status === 'pending'
-            );
+            const queries = jotaiStore.get(this.queries);
+            const pendingQueries = Object.values(queries).filter((q) => q.status === 'pending');
             if (pendingQueries.length === 0) return;
-            for (const query of pendingQueries) {
-                this.queries[query.key].status = 'in-progress';
-            }
-            const queries = pendingQueries.map((q) => q.query);
-            console.log('fetchQueryResults', this.name, queries);
-            this.api
-                .find(queries)
-                .then((res) => {
+            jotaiStore.set(this.queries, (prev) => {
+                return produce(prev, (draft) => {
                     for (const query of pendingQueries) {
-                        this.queries[query.key].status = 'finished';
-                        this.queries[query.key].executedAt = new Date();
+                        draft[query.key].status = 'in-progress';
                     }
-                    this.registerDocuments(res);
-                })
-                .catch(() => {
-                    for (const query of pendingQueries) {
-                        this.queries[query.key].status = 'error';
-                        this.queries[query.key].executedAt = new Date();
-                    }
-                    return [];
                 });
+            });
+            this.fetchQueries(pendingQueries.map((q) => q.query));
         }, 1);
+
+        return queryKey;
     }
 
-    private async _flushUpdates() {
-        await Promise.all(
-            Object.entries(jotaiStore.get(this._updates)).map(([id, data]) => {
-                jotaiStore.set(this._docs, (prev) => {
-                    return {
-                        ...prev,
-                        [id]: {
-                            ...prev[id],
-                            ...data,
-                        },
-                    };
+    fetchQueries(queries: Partial<TDocument>[]): Promise<TDocument[]> {
+        console.log(`fetchQueries::${this.name}`, queries);
+        return this.api
+            .find(queries)
+            .then((res) => {
+                console.log('FETCH SUCCESS');
+                jotaiStore.set(this.queries, (prev) => {
+                    return produce(prev, (draft) => {
+                        for (const query of queries) {
+                            const queryKey = JSON.stringify(query);
+                            if (draft[queryKey]) {
+                                draft[queryKey].status = 'finished';
+                                draft[queryKey].executedAt = new Date();
+                            }
+                        }
+                    });
                 });
+                this.registerDocuments(res);
+                return res;
+            })
+            .catch(() => {
+                console.log('FETCH ERROR');
+                jotaiStore.set(this.queries, (prev) => {
+                    return produce(prev, (draft) => {
+                        for (const query of queries) {
+                            const queryKey = JSON.stringify(query);
+                            if (draft[queryKey]) {
+                                draft[queryKey].status = 'error';
+                                draft[queryKey].executedAt = new Date();
+                            }
+                        }
+                    });
+                });
+                return [];
+            });
+    }
+
+    fetchQuery(query: Partial<TDocument>): Promise<TDocument[]> {
+        return this.fetchQueries([query]);
+    }
+
+    fetchById(id: string): Promise<TDocument | null> {
+        return this.fetchQueries([{ id } as Partial<TDocument>]).then((res) => res[0] ?? null);
+    }
+
+    private async flushInserts() {
+        console.log(`flushInserts::${this.name}`);
+        const insertsToFlush = Object.entries(jotaiStore.get(this.state).inserts).filter(([id]) => {
+            if (this.pendingInserts.includes(id)) return false;
+            this.pendingInserts.push(id);
+            return true;
+        });
+
+        await Promise.all(
+            insertsToFlush.map(([id, { data }]) => {
+                return this.api
+                    .create(data)
+                    .then((res) => {
+                        if (!res) {
+                            throw new Error('No response from create');
+                        }
+                        console.log('insert success');
+                        this.pendingInserts = this.pendingInserts.filter((_id) => _id !== id);
+                        jotaiStore.set(this.state, (prev) => {
+                            return produce(prev, (draft) => {
+                                delete draft.inserts[id];
+                                draft.docs[res.id] = castDraft(res);
+                                draft.originalDocs[res.id] = castDraft(res);
+                            });
+                        });
+                    })
+                    .catch(() => {
+                        /**
+                         * TODO: Figure out if insert should be retried or not based on error.
+                         * Maybe max. N attempts and then remove
+                         */
+                        this.pendingInserts = this.pendingInserts.filter((_id) => _id !== id);
+                    });
+            })
+        );
+    }
+
+    private async flushUpdates() {
+        console.log(`flushUpdates::${this.name}`);
+        const updatesToFlush = Object.entries(jotaiStore.get(this.state).updates).filter(([id]) => {
+            if (this.pendingUpdates.includes(id)) return false;
+            this.pendingUpdates.push(id);
+            return true;
+        });
+
+        await Promise.all(
+            updatesToFlush.map(([id, data]) => {
+                console.log('RUN UPDATE', data);
                 return this.api
                     .update(id, data)
                     .then((res) => {
-                        if (!res) return;
-                        jotaiStore.set(this._updates, (prev) => omit(prev, id));
-                        this.registerDocuments(res);
+                        if (!res) {
+                            throw new Error('No response from update');
+                        }
+                        this.pendingUpdates = this.pendingUpdates.filter((_id) => _id !== id);
+                        jotaiStore.set(this.state, (prev) => {
+                            return produce(prev, (draft) => {
+                                if (
+                                    isEqual(
+                                        draft.updates[id],
+                                        pick(res, Object.keys(draft.updates[id]))
+                                    )
+                                ) {
+                                    delete draft.updates[id];
+                                }
+                                draft.docs[id] = castDraft(res);
+                                draft.originalDocs[id] = castDraft(res);
+                            });
+                        });
                     })
                     .catch(() => {
-                        jotaiStore.set(this._docs, (prev) => {
-                            return {
-                                ...prev,
-                                [id]: this._originalDocs[id],
-                            };
-                        });
+                        /**
+                         * TODO: Figure out if update should be retried or not based on error.
+                         * Maybe max. N attempts and then remove
+                         */
+                        this.pendingUpdates = this.pendingUpdates.filter((_id) => _id !== id);
                     });
             })
         );
@@ -164,44 +307,56 @@ export class DocumentCollection<
 
     registerDocuments(docs: TDocument | TDocument[]) {
         const docsArray = Array.isArray(docs) ? docs : [docs];
-        for (const doc of docsArray) {
-            this._originalDocs[doc.id] = doc;
-        }
-        jotaiStore.set(this._docs, (prev) => {
-            const newDocs = { ...prev };
-            for (const doc of docsArray) {
-                newDocs[doc.id] = doc;
-            }
-            return newDocs;
+        jotaiStore.set(this.state, (prev) => {
+            return produce(prev, (draft) => {
+                for (const doc of docsArray) {
+                    draft.originalDocs[doc.id] = castDraft(doc);
+                    draft.docs[doc.id] = castDraft(doc);
+                }
+            });
         });
     }
 
-    registerUpdate(id: string, data: Partial<TDocument>) {
-        jotaiStore.set(this._updates, (prev) => {
-            return {
-                ...prev,
-                [id]: {
-                    ...prev[id],
+    registerUpdate(id: string, data: TUpdate) {
+        jotaiStore.set(this.state, (prev) => {
+            return produce(prev, (draft) => {
+                draft.updates[id] = {
+                    ...draft.updates[id],
                     ...data,
-                },
-            };
+                };
+            });
+        });
+    }
+
+    registerInsert(data: TInsert) {
+        const doc: TDocument = {
+            ...this.defaults(),
+            ...data,
+        };
+
+        jotaiStore.set(this.state, (prev) => {
+            return produce(prev, (draft) => {
+                draft.inserts[doc.id] = castDraft({ doc, data });
+            });
         });
     }
 
     registerDelete(id: string) {
-        jotaiStore.set(this._deletes, (prev) => {
-            prev[id] = true;
-            return prev;
+        jotaiStore.set(this.state, (prev) => {
+            return produce(prev, (draft) => {
+                draft.deletes[id] = true;
+            });
         });
     }
 
     resetDocument(id: string) {
-        const original = this._originalDocs[id];
+        const original = jotaiStore.get(this.state).originalDocs[id];
 
         if (!original) {
-            jotaiStore.set(this._docs, (prev) => {
-                delete prev[id];
-                return prev;
+            jotaiStore.set(this.state, (prev) => {
+                return produce(prev, (draft) => {
+                    delete draft.docs[id];
+                });
             });
         }
 
@@ -210,75 +365,124 @@ export class DocumentCollection<
 
     invalidateDoc(id: string) {
         const allQueries = Object.values(this.queries).filter((q) => q.query[id]);
-        for (const query of allQueries) {
-            if (matches(query.query)({ id })) {
-                delete this.queries[query.key];
-            }
-        }
+        jotaiStore.set(this.queries, (prev) => {
+            return produce(prev, (draft) => {
+                for (const query of allQueries) {
+                    if (matches(query.query)({ id })) {
+                        delete draft[query.key];
+                    }
+                }
+            });
+        });
     }
 
     invalidateQuery(where: Partial<TDocument>) {
         const queryKey = JSON.stringify(where);
-        delete this.queries[queryKey];
+        jotaiStore.set(this.queries, (prev) => {
+            return produce(prev, (draft) => {
+                delete draft[queryKey];
+            });
+        });
     }
 
     invalidateAllQueries() {
-        this.queries = {};
+        jotaiStore.set(this.queries, {});
     }
 
-    findById(id: string): Atom<TDocumentTransformed | undefined> {
-        this.fetchQueryResults({ id } as Partial<TDocument>);
-
-        const docAtom = selectAtom(this._docs, (docs) => docs[id]);
-        const updatesAtom = selectAtom(this._updates, (updates) => updates[id]);
-        const deletesAtom = selectAtom(this._deletes, (deletes) => deletes[id]);
-
-        if (!this._findByIdAtoms[id]) {
-            this._findByIdAtoms[id] = atom((get) => {
-                console.log('Evaluate findById', this.name, id);
-                const doc = get(docAtom);
-                if (!doc) return undefined;
-                const isDeleted = get(deletesAtom);
-                if (isDeleted) return undefined;
-                const updates = get(updatesAtom);
-
-                return this.transform(updates ? { ...doc, ...updates } : doc, get);
+    findById(
+        id: string | null | undefined,
+        opts?: { noFetch: true }
+    ): Atom<QueryResult<TDocument, TUpdate>> {
+        console.log('findById');
+        if (!id) {
+            return atom((get) => {
+                return new QueryResult(null, get, this, null);
             });
         }
 
-        return this._findByIdAtoms[id];
+        const query = { id } as Partial<TDocument>;
+        const queryKey = JSON.stringify(query);
+        if (!opts?.noFetch) {
+            this.registerQuery(query);
+        }
+
+        if (!this.findOneQueryResults[queryKey]) {
+            const docAtom = selectAtom(this.state, (state) => state.docs[id]);
+            const updatesAtom = selectAtom(this.state, (state) => state.updates[id]);
+            const deletesAtom = selectAtom(this.state, (state) => state.deletes[id]);
+
+            this.findOneQueryResults[queryKey] = atom((get) => {
+                console.log(`findOne::${this.name}`, id);
+                const doc = get(docAtom);
+                const isDeleted = get(deletesAtom);
+                const updates = get(updatesAtom);
+                const data = updates ? { ...doc, ...updates } : doc;
+                return new QueryResult(isDeleted ? null : data, get, this, query);
+            });
+        }
+
+        return this.findOneQueryResults[queryKey];
     }
 
-    findMany(where: Partial<TDocument>): Atom<TDocumentTransformed[]> {
-        console.log('findMany INIT', this.name);
-        const key = JSON.stringify(where);
-        this.fetchQueryResults(where);
+    findMany(
+        query: Partial<TDocument> | null | undefined,
+        opts?: { noFetch: true }
+    ): Atom<QueryResultMany<TDocument>> {
+        if (!query) {
+            return atom((get) => {
+                return new QueryResultMany([], get, this, null);
+            });
+        }
 
-        if (!this._findManyAtoms[key]) {
-            const docsAtom = selectAtom(this._docs, (docs) => Object.values(docs));
-            this._findManyAtoms[key] = atom((get) => {
-                console.log('Evaluate findMany', this.name, where);
+        const queryKey = JSON.stringify(query);
+
+        if (!opts?.noFetch) {
+            this.registerQuery(query);
+        }
+
+        if (!this.findManyQueryResults[queryKey]) {
+            const docsAtom = selectAtom(this.state, (state) => Object.values(state.docs));
+            const updatesAtom = selectAtom(this.state, (state) => state.updates);
+            const deletesAtom = selectAtom(this.state, (state) => state.deletes);
+
+            this.findManyQueryResults[queryKey] = atom((get) => {
+                console.log(`findMany::${this.name}`, query);
                 const docs = get(docsAtom);
-                const updates = get(this._updates);
-                const deletes = get(this._deletes);
+                const updates = get(updatesAtom);
+                const deletes = get(deletesAtom);
 
-                return docs.reduce((results, doc) => {
+                const data = docs.reduce((results, doc) => {
                     if (deletes[doc.id]) return results;
                     const docWithUpdates = updates[doc.id] ? { ...doc, ...updates[doc.id] } : doc;
-                    if (matches(where)(docWithUpdates)) {
-                        results.push(this.transform(docWithUpdates, get));
+                    if (matches(query)(docWithUpdates)) {
+                        results.push(docWithUpdates);
                     }
                     return results;
-                }, [] as TDocumentTransformed[]);
+                }, [] as TDocument[]);
+
+                return new QueryResultMany(data, get, this, query);
             });
         }
 
-        return this._findManyAtoms[key];
+        return this.findManyQueryResults[queryKey];
     }
 
-    update(id: string, data: TUpdate): void {
-        console.log('update');
+    async update(id: string, data: TUpdate, opts?: { immediate: boolean }): Promise<void> {
+        console.log(`update::${this.name}`);
         this.registerUpdate(id, data);
-        this.flushUpdates();
+        if (opts?.immediate) {
+            await this.flushUpdates();
+        } else {
+            await this.flushUpdatesDebounced();
+        }
+    }
+
+    async create(data: TInsert, opts?: { immediate: boolean }): Promise<void> {
+        this.registerInsert(data);
+        if (opts?.immediate) {
+            await this.flushInserts();
+        } else {
+            await this.flushInsertsDebounced();
+        }
     }
 }

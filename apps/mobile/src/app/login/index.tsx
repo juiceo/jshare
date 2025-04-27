@@ -15,7 +15,7 @@ import { screen } from '~/wrappers/screen';
 
 const screenW = Dimensions.get('screen').width;
 
-export default screen({}, () => {
+export default screen(() => {
     const inputRef = useRef<TextInput>(null);
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<boolean>(false);

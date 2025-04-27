@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { plural } from '@jshare/common';
 
@@ -11,19 +11,18 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
-    {
-        loadingMessage: 'Checking code...',
-        auth: true,
-    },
-    ({ router, auth }) => {
+    () => {
+        const user = useCurrentUser();
+        const router = useRouter();
         const queryClient = useQueryClient();
         const { code } = useLocalSearchParams<{ code: string }>();
         const group = useSuspenseQuery(trpc.groups.getByCode.queryOptions({ code })).data;
         const joinGroup = useMutation(trpc.groups.joinByCode.mutationOptions());
 
-        const isMember = group?.participants.some((p) => p.userId === auth.session.user.id);
+        const isMember = group?.participants.some((p) => p.userId === user.id);
 
         const handleJoin = async () => {
             if (!group) return;
@@ -109,5 +108,8 @@ export default screen(
                 </Screen.Footer>
             </Screen>
         );
+    },
+    {
+        loadingMessage: 'Checking code...',
     }
 );

@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, Linking, Text } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getQueryKey } from '@trpc/react-query';
+import { useRouter } from 'expo-router';
 import { z } from 'zod';
 
 import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '@jshare/common';
@@ -20,7 +19,7 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { Profiles } from '~/lib/collections/profiles.collection';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 
@@ -36,7 +35,8 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default screen({}, ({ router }) => {
+export default screen(() => {
+    const router = useRouter();
     const { theme } = useTheme();
     const form = useForm<Schema>({
         defaultValues: {
@@ -47,9 +47,8 @@ export default screen({}, ({ router }) => {
         },
         resolver: zodResolver(schema),
     });
+    const [isLoading, setLoading] = useState<boolean>(false);
 
-    const queryClient = useQueryClient();
-    const createProfile = useMutation(trpc.profiles.create.mutationOptions());
     const { session } = useSession();
 
     useEffect(() => {
@@ -64,16 +63,20 @@ export default screen({}, ({ router }) => {
             Alert.alert('Missing email!');
             return;
         }
-        await createProfile.mutateAsync({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            avatarId: data.avatarId,
-            currency: data.currency,
-            email,
-        });
-        queryClient.invalidateQueries({
-            queryKey: getQueryKey(trpc.profiles as any),
-        });
+        setLoading(true);
+        await Profiles.create(
+            {
+                id: session.user.id,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                avatarId: data.avatarId ?? null,
+                currency: data.currency,
+                email,
+                termsAcceptedAt: new Date(),
+            },
+            { immediate: true }
+        );
+        setLoading(false);
         router.dismissAll();
         router.replace('/(authenticated)/(tabs)/groups');
     };
@@ -194,7 +197,7 @@ export default screen({}, ({ router }) => {
                     variant={'contained'}
                     color={'primary'}
                     onPress={form.handleSubmit(handleSubmit)}
-                    loading={createProfile.isPending}
+                    loading={isLoading}
                 >
                     Continue
                 </Button>

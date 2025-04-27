@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
 
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
@@ -7,7 +8,8 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { screen } from '~/wrappers/screen';
 
-export default screen({}, ({ router }) => {
+export default screen(() => {
+    const router = useRouter();
     const [code, setCode] = useState<string>('');
 
     return (

@@ -4,7 +4,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { z } from 'zod';
 
 import { formatAmount, getCurrencyDetails, getUserShortName } from '@jshare/common';
@@ -24,6 +24,7 @@ import { UserMenu } from '~/components/UserMenu';
 import { useCurrencyConversion } from '~/hooks/useExchangeRates';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     payer: zDB.models.ProfileScalarSchema.passthrough(),
@@ -35,7 +36,9 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default screen({ auth: true }, ({ router, auth }) => {
+export default screen(() => {
+    const user = useCurrentUser();
+    const router = useRouter();
     const { groupId } = useLocalSearchParams<{ groupId: string }>();
     const group = useSuspenseQuery(
         trpc.z.group.findUniqueOrThrow.queryOptions({
@@ -51,7 +54,7 @@ export default screen({ auth: true }, ({ router, auth }) => {
     ).data as DB.Group<{ participants: { include: { user: true } } }>;
     const groupMembers = group.participants;
     const profile = useSuspenseQuery(
-        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: auth.userId } })
+        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: user.id } })
     ).data;
     const createPayment = useMutation(trpc.payments.create.mutationOptions());
     const { convert } = useCurrencyConversion();

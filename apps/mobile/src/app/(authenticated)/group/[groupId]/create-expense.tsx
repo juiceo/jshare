@@ -1,7 +1,7 @@
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { formatAmount, getDefaultShares, getTotalFromShares } from '@jshare/common';
 import type { DB } from '@jshare/db';
@@ -17,87 +17,80 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
-export default screen(
-    {
-        auth: true,
-    },
-    ({ router, auth }) => {
-        const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const group = useSuspenseQuery(
-            trpc.z.group.findUniqueOrThrow.queryOptions({
-                where: { id: groupId },
-                include: { participants: { include: { user: true } } },
-            })
-        ).data as DB.Group<{ participants: { include: { user: true } } }>;
-        const createExpenseMutation = useMutation(trpc.expenses.create.mutationOptions());
-        const form = useForm<ExpenseEditorSchema>({
-            defaultValues: {
-                payerId: auth.session.user.id,
-                amount: 0,
-                currency: group.currency,
-                description: '',
-                shares: getDefaultShares(group.participants ?? []),
-            },
-            resolver: zodResolver(expenseEditorSchema),
-            mode: 'onSubmit',
+export default screen(() => {
+    const user = useCurrentUser();
+    const router = useRouter();
+    const { groupId } = useLocalSearchParams<{ groupId: string }>();
+    const group = useSuspenseQuery(
+        trpc.z.group.findUniqueOrThrow.queryOptions({
+            where: { id: groupId },
+            include: { participants: { include: { user: true } } },
+        })
+    ).data as DB.Group<{ participants: { include: { user: true } } }>;
+    const createExpenseMutation = useMutation(trpc.expenses.create.mutationOptions());
+    const form = useForm<ExpenseEditorSchema>({
+        defaultValues: {
+            payerId: user.id,
+            amount: 0,
+            currency: group.currency,
+            description: '',
+            shares: getDefaultShares(group.participants ?? []),
+        },
+        resolver: zodResolver(expenseEditorSchema),
+        mode: 'onSubmit',
+    });
+
+    const amount = useWatch({ control: form.control, name: 'amount' });
+    const currency = useWatch({ control: form.control, name: 'currency' });
+    const shares = useWatch({ control: form.control, name: 'shares' });
+
+    const totalFromShares = getTotalFromShares(shares);
+    const hasAmountMismatch = totalFromShares !== amount;
+
+    const handleSubmit = async (data: ExpenseEditorSchema) => {
+        await createExpenseMutation.mutateAsync({
+            groupId,
+            ...data,
         });
+        router.back();
+    };
 
-        const amount = useWatch({ control: form.control, name: 'amount' });
-        const currency = useWatch({ control: form.control, name: 'currency' });
-        const shares = useWatch({ control: form.control, name: 'shares' });
+    return (
+        <FormProvider {...form}>
+            <Screen>
+                <Screen.Header title="New expense" backButton="down" disableInset />
+                <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
+                    <ExpenseEditor
+                        form={form}
+                        groupCurrency={group.currency}
+                        groupMembers={group.participants}
+                        groupId={group.id}
+                    />
+                </Screen.Content>
+                <Screen.Footer>
+                    <Stack column>
+                        {hasAmountMismatch && (
+                            <Typography variant="caption" color="error.light" align="center" p="md">
+                                Please make sure the total sum of shares (
+                                {formatAmount(totalFromShares, currency)}) matches the amount (
+                                {formatAmount(amount, currency)})
+                            </Typography>
+                        )}
 
-        const totalFromShares = getTotalFromShares(shares);
-        const hasAmountMismatch = totalFromShares !== amount;
-
-        const handleSubmit = async (data: ExpenseEditorSchema) => {
-            await createExpenseMutation.mutateAsync({
-                groupId,
-                ...data,
-            });
-            router.back();
-        };
-
-        return (
-            <FormProvider {...form}>
-                <Screen>
-                    <Screen.Header title="New expense" backButton="down" disableInset />
-                    <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
-                        <ExpenseEditor
-                            form={form}
-                            groupCurrency={group.currency}
-                            groupMembers={group.participants}
-                            groupId={group.id}
-                        />
-                    </Screen.Content>
-                    <Screen.Footer>
-                        <Stack column>
-                            {hasAmountMismatch && (
-                                <Typography
-                                    variant="caption"
-                                    color="error.light"
-                                    align="center"
-                                    p="md"
-                                >
-                                    Please make sure the total sum of shares (
-                                    {formatAmount(totalFromShares, currency)}) matches the amount (
-                                    {formatAmount(amount, currency)})
-                                </Typography>
-                            )}
-
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                disabled={hasAmountMismatch}
-                                onPress={form.handleSubmit(handleSubmit)}
-                                loading={form.formState.isSubmitting}
-                            >
-                                Create expense
-                            </Button>
-                        </Stack>
-                    </Screen.Footer>
-                </Screen>
-            </FormProvider>
-        );
-    }
-);
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            disabled={hasAmountMismatch}
+                            onPress={form.handleSubmit(handleSubmit)}
+                            loading={form.formState.isSubmitting}
+                        >
+                            Create expense
+                        </Button>
+                    </Stack>
+                </Screen.Footer>
+            </Screen>
+        </FormProvider>
+    );
+});

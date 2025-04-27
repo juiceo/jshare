@@ -23,7 +23,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
     const [isLoading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<AuthError | null>(null);
     const [session, setSession] = useState<Session | null>(null);
-    const router = useRouter();
+    const { dismissAll, replace } = useRouter();
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session }, error }) => {
@@ -46,9 +46,9 @@ export const SessionProvider = (props: PropsWithChildren) => {
 
     const signOut = useCallback(() => {
         supabase.auth.signOut();
-        router.dismissAll();
-        router.replace('/login');
-    }, [router]);
+        dismissAll();
+        replace('/login');
+    }, [dismissAll, replace]);
 
     return (
         <SessionContext.Provider
