@@ -1,5 +1,4 @@
 import { RectButton } from 'react-native-gesture-handler';
-import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { router } from 'expo-router';
 
@@ -12,7 +11,6 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useDb } from '~/lib/collections/hooks';
 import { Profiles } from '~/lib/collections/profiles.collection';
-import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
 
@@ -21,14 +19,9 @@ export default screen(() => {
     const { signOut } = useSession();
     const profile = useDb(() => Profiles.findById(user.id), [user.id]);
 
-    const updateProfile = useMutation(trpc.z.profile.update.mutationOptions());
-
     const updateAvatar = (avatarId: string | null) => {
-        updateProfile.mutateAsync({
-            where: { id: user.id },
-            data: {
-                avatarId,
-            },
+        Profiles.update(user.id, {
+            avatarId,
         });
     };
 

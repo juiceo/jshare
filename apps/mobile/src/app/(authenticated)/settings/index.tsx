@@ -3,6 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import * as Updates from 'expo-updates';
 
+import { SUPPORT_EMAIL } from '@jshare/common';
+
 import { Stack } from '~/components/atoms/Stack';
 import { Switch } from '~/components/atoms/Switch';
 import { Button } from '~/components/Button';
@@ -109,7 +111,7 @@ export default screen(() => {
                     <Stack p="xl" bg="background.elevation1" br="xl">
                         <Typography>
                             To request an export of your account information, please send an email
-                            to <Typography color="accent.light">support@jshare.me</Typography>
+                            to <Typography color="accent.light">{SUPPORT_EMAIL}</Typography>
                         </Typography>
                         <Typography mt="xl">
                             If you wish to permanently delete your account, click below to begin
