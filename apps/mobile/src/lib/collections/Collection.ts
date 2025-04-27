@@ -2,7 +2,7 @@ import { InteractionManager } from 'react-native';
 import { castDraft, produce } from 'immer';
 import { atom, type Atom, type PrimitiveAtom } from 'jotai';
 import { selectAtom } from 'jotai/utils';
-import { debounce, get, isEqual, matches, pick } from 'lodash';
+import { debounce, isEqual, matches, pick } from 'lodash';
 
 import { QueryResult, QueryResultMany } from '~/lib/collections/QueryResult';
 import type { DbDocument } from '~/lib/collections/types';
