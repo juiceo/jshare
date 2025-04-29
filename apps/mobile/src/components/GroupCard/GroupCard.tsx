@@ -10,17 +10,19 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
+import { Store } from '~/lib/store/collections';
 import { trpc } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
-    group: DB.Group<{ coverImage: true; participants: true }>;
+    group: DB.Group;
 };
 
 export const GroupCard = (props: GroupCardProps) => {
     const { group } = props;
 
     const user = useCurrentUser();
+    const image = Store.images.findById(group.coverImageId);
 
     const groupTotal = useQuery(
         trpc.expenses.getTotalForGroup.queryOptions({ groupId: group.id })
@@ -41,7 +43,7 @@ export const GroupCard = (props: GroupCardProps) => {
                 <Image
                     height={140}
                     width={Dimensions.get('window').width}
-                    image={group.coverImage}
+                    image={image?.data}
                     fit="cover"
                     quality={80}
                 />
@@ -69,7 +71,7 @@ export const GroupCard = (props: GroupCardProps) => {
                     {`${formatAmount(groupTotal ?? 0, group.currency)} | ${plural({
                         plural: 'members',
                         singular: 'member',
-                        count: group.participants.length,
+                        count: 0, //TODO: get participants
                     })}`}
                 </Typography>
             </Stack>

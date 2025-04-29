@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const policy = {
     policy: { profile: {
             modelLevel: { read: { guard: Profile_read, },
-                create: { guard: Profile_create, inputChecker: Profile_create_input, },
+                create: { guard: Profile_create, },
                 update: { guard: Profile_update, },
                 postUpdate: { guard: Profile_postUpdate, },
                 delete: { guard: Profile_delete, } },
@@ -113,33 +113,46 @@ const policy = {
         payment: { hasValidation: true },
         exchangeRates: { hasValidation: false },
     },
+    authSelector: { "id": true },
 };
 function Profile_read(context, db) {
-    return { AND: [] };
+    var _a, _b, _c;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    return { OR: [{ showInSearch: true }, (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } }] };
 }
 function $check_Profile_read(input, context) {
-    if (true) {
+    var _a;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    if (input === null || input === void 0 ? void 0 : input.showInSearch) {
+        return true;
+    }
+    if (((input === null || input === void 0 ? void 0 : input.id) == (user === null || user === void 0 ? void 0 : user.id))) {
         return true;
     }
     return false;
 }
 function Profile_create(context, db) {
-    return { AND: [] };
+    var _a, _b, _c;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } };
 }
 function $check_Profile_create(input, context) {
-    if (true) {
+    var _a;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    if (((input === null || input === void 0 ? void 0 : input.id) == (user === null || user === void 0 ? void 0 : user.id))) {
         return true;
     }
     return false;
 }
-function Profile_create_input(input, context) {
-    return true;
-}
 function Profile_update(context, db) {
-    return { AND: [] };
+    var _a, _b, _c;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } };
 }
 function $check_Profile_update(input, context) {
-    if (true) {
+    var _a;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    if (((input === null || input === void 0 ? void 0 : input.id) == (user === null || user === void 0 ? void 0 : user.id))) {
         return true;
     }
     return false;
@@ -151,12 +164,9 @@ function $check_Profile_postUpdate(input, context) {
     return true;
 }
 function Profile_delete(context, db) {
-    return { AND: [] };
+    return { OR: [] };
 }
 function $check_Profile_delete(input, context) {
-    if (true) {
-        return true;
-    }
     return false;
 }
 function Group_read(context, db) {
@@ -259,24 +269,27 @@ function $check_Image_read(input, context) {
     return false;
 }
 function Image_create(context, db) {
-    return { AND: [] };
+    var _a, _b, _c;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { uploadedById: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } };
 }
 function $check_Image_create(input, context) {
-    if (true) {
+    var _a;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    if (((input === null || input === void 0 ? void 0 : input.uploadedById) == (user === null || user === void 0 ? void 0 : user.id))) {
         return true;
     }
     return false;
 }
 function Image_create_input(input, context) {
-    return true;
+    var _a;
+    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    return ((input === null || input === void 0 ? void 0 : input.uploadedById) == (user === null || user === void 0 ? void 0 : user.id));
 }
 function Image_update(context, db) {
-    return { AND: [] };
+    return { OR: [] };
 }
 function $check_Image_update(input, context) {
-    if (true) {
-        return true;
-    }
     return false;
 }
 function Image_postUpdate(context, db) {
@@ -286,12 +299,9 @@ function $check_Image_postUpdate(input, context) {
     return true;
 }
 function Image_delete(context, db) {
-    return { AND: [] };
+    return { OR: [] };
 }
 function $check_Image_delete(input, context) {
-    if (true) {
-        return true;
-    }
     return false;
 }
 function Message_read(context, db) {

@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import shortid from 'shortid';
 import { z } from 'zod';
 
-import { DB, zDB } from '@jshare/db';
+import { zDB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -15,64 +12,43 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
     currency: zDB.enums.CurrencyCodeSchema,
+    coverImageId: z.string().optional(),
 });
 type Schema = z.infer<typeof schema>;
 
 export default screen(() => {
     const user = useCurrentUser();
     const router = useRouter();
-    const profile = useSuspenseQuery(
-        trpc.z.profile.findUniqueOrThrow.queryOptions({
-            where: {
-                id: user.id,
-            },
-        })
-    ).data;
-    const createGroup = useMutation(trpc.z.group.create.mutationOptions());
-    const [image, setImage] = useState<DB.Image | null>(null);
+    const profile = Store.profiles.findById(user.id);
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {
             name: '',
-            currency: profile.currency,
+            currency: profile?.data?.currency ?? 'USD',
         },
     });
 
     const handleSubmit = async (data: Schema) => {
-        const group = await createGroup.mutateAsync({
-            data: {
-                name: data.name,
-                currency: data.currency,
-                inviteCode: shortid.generate(),
-                coverImage: image?.id
-                    ? {
-                          connect: {
-                              id: image.id,
-                          },
-                      }
-                    : undefined,
-                participants: {
-                    create: {
-                        userId: user.id,
-                        role: DB.Role.Owner,
-                    },
-                },
-            },
-        });
-        if (!group) return;
+        // Groups.create({
+        //     id: uuid(),
+        //     name: data.name,
+        //     currency: data.currency,
+        //     inviteCode: shortid.generate(),
+        //     coverImageId: data.coverImageId,
+        // });
         router.dismiss();
-        router.push({
-            pathname: '/(authenticated)/group/[groupId]',
-            params: { groupId: group.id },
-        });
+        // router.push({
+        //     pathname: '/(authenticated)/group/[groupId]',
+        //     params: { groupId: group.id },
+        // });
     };
 
     return (
@@ -80,11 +56,17 @@ export default screen(() => {
             <Screen.Header title="Create group" backButton="down" disableInset />
             <Screen.Content scrollable disableTopInset>
                 <Stack column spacing="md" p="xl">
-                    <ImageUploader
-                        value={image}
-                        onChange={setImage}
-                        aspectRatio={[16, 9]}
-                        placeholder="Add a cover image"
+                    <Controller
+                        control={form.control}
+                        name="coverImageId"
+                        render={({ field }) => (
+                            <ImageUploader
+                                value={field.value}
+                                onChange={field.onChange}
+                                aspectRatio={[16, 9]}
+                                placeholder="Add a cover image"
+                            />
+                        )}
                     />
                     <Controller
                         control={form.control}
@@ -127,7 +109,7 @@ export default screen(() => {
                         color="primary"
                         variant="contained"
                         onPress={form.handleSubmit(handleSubmit)}
-                        loading={createGroup.isPending}
+                        loading={false}
                     >
                         Create group
                     </Button>

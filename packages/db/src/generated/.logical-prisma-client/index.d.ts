@@ -14,7 +14,13 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>;
 /**
  * Model Profile
  * @
- * @allow ('all', true)
+ * @allow ('read', showInSearch)
+ * @
+ * @allow ('read', id == auth().id)
+ * @
+ * @allow ('update', id == auth().id)
+ * @
+ * @allow ('create', id == auth().id)
  * @
  * @auth
  */
@@ -34,7 +40,9 @@ export type GroupParticipant = $Result.DefaultSelection<Prisma.$GroupParticipant
 /**
  * Model Image
  * @
- * @allow ('all', true)
+ * @allow ('read', true)
+ * @
+ * @allow ('create', uploadedById == auth().id)
  */
 export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>;
 /**

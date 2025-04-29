@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Pressable } from 'react-native';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-
-import type { DB } from '@jshare/db';
+import { observer } from 'mobx-react-lite';
 
 import { Stack } from '~/components/atoms/Stack';
 import { GroupCard } from '~/components/GroupCard/GroupCard';
@@ -12,92 +10,86 @@ import { NewGroupMenu } from '~/components/NewGroupMenu/NewGroupMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
-export default screen(() => {
-    const router = useRouter();
-    const user = useCurrentUser();
-    const groups = useSuspenseQuery(
-        trpc.z.group.findMany.queryOptions({
-            where: {
-                participants: {
-                    some: {
-                        userId: user.id,
-                    },
+export default screen(
+    observer(() => {
+        console.log('RENDER');
+        const router = useRouter();
+
+        const groups = Store.groups.findMany(
+            {},
+            {
+                orderBy: {
+                    field: 'lastActivity',
+                    order: 'desc',
                 },
-            },
-            orderBy: {
-                lastActivity: 'desc',
-            },
-            include: {
-                coverImage: true,
-                participants: true,
-            },
-        })
-    ).data as DB.Group<{ coverImage: true; participants: true }>[];
-    const [menuOpen, setMenuOpen] = useState<boolean>(false);
+            }
+        );
 
-    const handleSelect = (value: 'create' | 'join') => {
-        switch (value) {
-            case 'create':
-                router.push('/create-group');
-                break;
-            case 'join':
-                router.push('/join-group');
-                break;
-        }
-    };
+        const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-    return (
-        <Screen>
-            <Screen.Content scrollable contentStyle={{ paddingBottom: 100 }}>
-                <Stack column px="xl" pt="3xl">
-                    <Stack mt="3xl" br="xl" mb="xl">
-                        <Stack row alignCenter justifyBetween spacing="md">
-                            <Typography variant="h1">Your groups</Typography>
-                            <IconButton
-                                icon="Plus"
-                                rounded
-                                variant="contained"
-                                color="primary"
-                                onPress={() => setMenuOpen(true)}
+        const handleSelect = (value: 'create' | 'join') => {
+            switch (value) {
+                case 'create':
+                    router.push('/create-group');
+                    break;
+                case 'join':
+                    router.push('/join-group');
+                    break;
+            }
+        };
+
+        return (
+            <Screen>
+                <Screen.Content scrollable contentStyle={{ paddingBottom: 100 }}>
+                    <Stack column px="xl" pt="3xl">
+                        <Stack mt="3xl" br="xl" mb="xl">
+                            <Stack row alignCenter justifyBetween spacing="md">
+                                <Typography variant="h1">Your groups</Typography>
+                                <IconButton
+                                    icon="Plus"
+                                    rounded
+                                    variant="contained"
+                                    color="primary"
+                                    onPress={() => setMenuOpen(true)}
+                                />
+                            </Stack>
+                        </Stack>
+                        {groups.length ? (
+                            <Stack column spacing="xl">
+                                {groups.map((group) => (
+                                    <Pressable
+                                        key={group.id}
+                                        onPress={() =>
+                                            router.push({
+                                                pathname: '/group/[groupId]',
+                                                params: { groupId: group.id },
+                                            })
+                                        }
+                                    >
+                                        <GroupCard group={group.data} />
+                                    </Pressable>
+                                ))}
+                            </Stack>
+                        ) : (
+                            <EmptyState
+                                title="Welcome! 👋"
+                                message="Create or join a group to get started!"
+                                icon="Users"
+                                bg="background.elevation1"
+                                br="xl"
                             />
-                        </Stack>
+                        )}
                     </Stack>
-                    {groups.length ? (
-                        <Stack column spacing="xl">
-                            {groups?.map((group) => (
-                                <Pressable
-                                    key={group.id}
-                                    onPress={() =>
-                                        router.push({
-                                            pathname: '/group/[groupId]',
-                                            params: { groupId: group.id },
-                                        })
-                                    }
-                                >
-                                    <GroupCard group={group} />
-                                </Pressable>
-                            ))}
-                        </Stack>
-                    ) : (
-                        <EmptyState
-                            title="Welcome! 👋"
-                            message="Create or join a group to get started!"
-                            icon="Users"
-                            bg="background.elevation1"
-                            br="xl"
-                        />
-                    )}
-                </Stack>
-                <NewGroupMenu
-                    isOpen={menuOpen}
-                    onClose={() => setMenuOpen(false)}
-                    onSelect={handleSelect}
-                />
-            </Screen.Content>
-        </Screen>
-    );
-});
+                    <NewGroupMenu
+                        isOpen={menuOpen}
+                        onClose={() => setMenuOpen(false)}
+                        onSelect={handleSelect}
+                    />
+                </Screen.Content>
+            </Screen>
+        );
+    })
+);

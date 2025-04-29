@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ActivityIndicator, Pressable } from 'react-native';
-
-import type { DB } from '@jshare/db';
+import { observer } from 'mobx-react-lite';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
@@ -9,15 +8,16 @@ import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { Typography } from '~/components/Typography';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
+import { Store } from '~/lib/store/collections';
 
 export type ImageUploaderProps = {
-    value: DB.Image | null | undefined;
-    onChange: (value: DB.Image | null) => void;
+    value: string | null | undefined;
+    onChange: (value: string | null) => void;
     aspectRatio: [number, number];
     placeholder?: string;
 };
 
-export const ImageUploader = (props: ImageUploaderProps) => {
+export const ImageUploader = observer((props: ImageUploaderProps) => {
     const { value, onChange, aspectRatio = [16, 9], placeholder } = props;
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({
@@ -29,6 +29,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         base64: true,
         allowsMultipleSelection: false,
     });
+
+    const image = Store.images.findById(value);
 
     return (
         <>
@@ -46,8 +48,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                     {!value && <EmptyPlaceholder text={placeholder ?? 'Upload an image'} />}
                     {imageUpload.isUploading && <LoadingOverlay />}
                     <Image
-                        key={value?.id}
-                        image={value}
+                        key={value}
+                        image={image?.data}
                         quality={50}
                         style={[
                             {
@@ -67,12 +69,12 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                     switch (option) {
                         case 'library':
                             return imageUpload.uploadFromLibrary().then(({ uploaded }) => {
-                                onChange(uploaded[0] ?? null);
+                                onChange(uploaded[0].id ?? null);
                             });
                         case 'camera':
                             return imageUpload
                                 .uploadFromCamera()
-                                .then(({ uploaded }) => onChange(uploaded[0] ?? null));
+                                .then(({ uploaded }) => onChange(uploaded[0].id ?? null));
                         case 'remove':
                             return onChange(null);
                     }
@@ -80,7 +82,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             />
         </>
     );
-};
+});
 
 const EmptyPlaceholder = (props: { text: string }) => {
     return (

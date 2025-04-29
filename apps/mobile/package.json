@@ -13,6 +13,8 @@
         "typecheck": "tsc --noEmit",
         "build": "expo export --output-dir ./build --platform all",
         "lint": "eslint --ext js,ts,tsx . --max-warnings=0",
+        "test": "vitest run",
+        "test:watch": "vitest watch",
         "run:ios": "env-cmd -f .env.dev expo run:ios --device",
         "run:ios:staging": "env-cmd -f .env.staging expo run:ios --device",
         "run:ios:production": "env-cmd -f .env.production expo run:ios --device",
@@ -79,6 +81,9 @@
         "jotai-optics": "^0.4.0",
         "lodash": "catalog:",
         "lucide-react-native": "catalog:",
+        "mobx": "^6.13.7",
+        "mobx-react-lite": "^4.1.0",
+        "mobx-utils": "^6.1.0",
         "moti": "catalog:",
         "optics-ts": "^2.4.1",
         "react": "catalog:",
@@ -126,7 +131,8 @@
         "babel-loader": "catalog:",
         "babel-preset-expo": "catalog:",
         "dotenv": "catalog:",
-        "env-cmd": "catalog:"
+        "env-cmd": "catalog:",
+        "vitest": "catalog:"
     },
     "expo": {
         "install": {

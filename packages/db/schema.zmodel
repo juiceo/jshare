@@ -56,7 +56,10 @@ model Profile extends BaseModel {
     paymentsPaid     Payment[]          @relation(name: "payment_payer")
     showInSearch     Boolean            @default(true)
 
-    @@allow('all', true)
+    @@allow('read', showInSearch)
+    @@allow('read', id == auth().id)
+    @@allow('update', id == auth().id)
+    @@allow('create', id == auth().id)
     @@map("profiles")
     @@schema("public")
     @@auth
@@ -103,7 +106,13 @@ model Image extends BaseModel {
     Group        Group?
     Profile      Profile?
 
-    @@allow('all', true)
+    /**
+     * TODO: We should only allow fetching images with specific ID, not list all. Not sure how to achieve that.
+     * 
+     * The other alternative is to define complex access policy rules for whether the user is in the group, etc.
+     */
+    @@allow('read', true)
+    @@allow('create', uploadedById == auth().id)
     @@map("images")
 }
 

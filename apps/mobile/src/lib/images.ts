@@ -5,7 +5,7 @@ import { clamp } from 'lodash';
 import { SupabaseStorageBucket } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
-import { Images } from '~/lib/collections/images.collection';
+import { Store } from '~/lib/store/collections';
 import { supabase } from '~/lib/supabase';
 import { trpcClient } from '~/lib/trpc';
 
@@ -29,7 +29,7 @@ export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> =>
         bucket: SupabaseStorageBucket.Public,
     });
 
-    Images.registerDocuments(dbImage);
+    Store.images.registerItem(dbImage.id, dbImage);
 
     return dbImage;
 };

@@ -1,5 +1,6 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import * as trpcExpress from '@trpc/server/adapters/express';
+import type { MiddlewareFunction } from '@trpc/server/unstable-core-do-not-import';
 import type { Request } from 'express';
 import jwt from 'jsonwebtoken';
 import { get } from 'lodash';
@@ -61,76 +62,61 @@ const getUserIdFromRequest = (req: Request) => {
         });
     }
 };
-/**
- * Export reusable router and procedure helpers
- * that can be used throughout the router
- */
-export const router = t.router;
-export const publicProcedure = t.procedure;
+
+const loggingMiddleware: MiddlewareFunction<Context, any, any, any, any> = async (opts) => {
+    const start = Date.now();
+
+    const result = await opts.next();
+
+    const durationMs = Date.now() - start;
+    const meta = {
+        path: opts.path,
+        type: opts.type,
+        durationMs,
+        input:
+            opts.type === 'query'
+                ? JSON.stringify(get(result, 'ctx.req.query.input'), null, 4)
+                : JSON.stringify(get(result, 'ctx.req.body[0].json'), null, 4),
+    };
+
+    if (result.ok) {
+        console.log(`[OK ${meta.durationMs}ms] ${meta.type} ${meta.path}`, {
+            input: meta.input,
+        });
+    } else {
+        console.error(`[ERR ${meta.durationMs}ms] ${meta.type} ${meta.path}`, {
+            input: meta.input,
+        });
+    }
+
+    return result;
+};
 
 export const authProcedure = t.procedure
     .use(async function isAuthed(opts) {
         const { ctx } = opts;
-        const header = ctx.req.headers['authorization'];
+        const { userId } = ctx;
 
-        if (!header) {
-            throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Authorization header missing' });
-        }
-
-        try {
-            const decoded = jwt.verify(header, JWT_SECRET);
-            if (typeof decoded === 'string') {
-                throw new Error('Decoded JWT type was string, aborting...');
-            }
-            if (!decoded.sub) {
-                throw new Error('Decoded JWT payload missing sub, aborting...');
-            }
-
-            return opts.next({
-                ctx: {
-                    userId: decoded.sub,
-                    acl: new ACL(decoded.sub),
-                },
-            });
-        } catch (err: any) {
-            console.error('Authorization failed: ' + err.message);
+        if (!userId) {
             throw new TRPCError({
                 code: 'UNAUTHORIZED',
-                message: 'Invalid Authorization header',
+                message: 'This endpoint requires authorization',
             });
         }
+
+        return opts.next({
+            ctx: {
+                userId,
+                acl: new ACL(userId),
+            },
+        });
     })
-    .use(async (opts) => {
-        const start = Date.now();
-
-        const result = await opts.next();
-
-        const durationMs = Date.now() - start;
-        const meta = {
-            path: opts.path,
-            type: opts.type,
-            durationMs,
-            input:
-                opts.type === 'query'
-                    ? JSON.stringify(get(result, 'ctx.req.query.input'), null, 4)
-                    : JSON.stringify(get(result, 'ctx.req.body[0].json'), null, 4),
-        };
-
-        if (result.ok) {
-            console.log(`[OK ${meta.durationMs}ms] ${meta.type} ${meta.path}`, {
-                input: meta.input,
-            });
-        } else {
-            console.error(`[ERR ${meta.durationMs}ms] ${meta.type} ${meta.path}`, {
-                input: meta.input,
-            });
-        }
-
-        return result;
-    });
+    .use(loggingMiddleware);
 
 /**
  * Required for Zenstack generated router
  */
-export const procedure = t.procedure;
 export const createTRPCRouter = t.router;
+export const procedure = t.procedure.use(loggingMiddleware);
+
+export const router = t.router;

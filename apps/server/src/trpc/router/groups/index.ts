@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { DB, zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
-import { authProcedure, publicProcedure, router } from '../../trpc';
+import { authProcedure, procedure, router } from '../../trpc';
 import { defaultGroupInclude } from './util';
 
 export const groupsRouter = router({
@@ -96,7 +96,7 @@ export const groupsRouter = router({
 
         return group;
     }),
-    getByCode: publicProcedure.input(z.object({ code: z.string() })).query(async (opts) => {
+    getByCode: procedure.input(z.object({ code: z.string() })).query(async (opts) => {
         const group = await db.group.findUnique({
             where: {
                 inviteCode: opts.input.code,

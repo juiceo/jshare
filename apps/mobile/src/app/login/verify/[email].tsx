@@ -10,10 +10,9 @@ import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
-import { Profiles } from '~/lib/collections/profiles.collection';
 import { supabase } from '~/lib/supabase';
 import { trpcClient } from '~/lib/trpc';
-import { setAccessToken } from '~/state/auth';
+import { setAccessToken, setUserId } from '~/state/auth';
 import { screen } from '~/wrappers/screen';
 
 export default screen(() => {
@@ -60,7 +59,8 @@ export default screen(() => {
                 }
 
                 setAccessToken(accessToken);
-                const profile = await Profiles.fetchById(userId);
+                setUserId(userId);
+                const profile = await trpcClient.models.profiles.findById.query(userId);
 
                 if (profile) {
                     router.replace('/');

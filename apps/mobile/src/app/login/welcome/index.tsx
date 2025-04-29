@@ -19,7 +19,6 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { Profiles } from '~/lib/collections/profiles.collection';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 
@@ -64,18 +63,18 @@ export default screen(() => {
             return;
         }
         setLoading(true);
-        await Profiles.create(
-            {
-                id: session.user.id,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                avatarId: data.avatarId ?? null,
-                currency: data.currency,
-                email,
-                termsAcceptedAt: new Date(),
-            },
-            { immediate: true }
-        );
+        // await Profiles.create(
+        //     {
+        //         id: session.user.id,
+        //         firstName: data.firstName,
+        //         lastName: data.lastName,
+        //         avatarId: data.avatarId ?? null,
+        //         currency: data.currency,
+        //         email,
+        //         termsAcceptedAt: new Date(),
+        //     },
+        //     { immediate: true }
+        // );
         setLoading(false);
         router.dismissAll();
         router.replace('/(authenticated)/(tabs)/groups');
