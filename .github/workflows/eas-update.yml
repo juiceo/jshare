@@ -29,6 +29,12 @@ jobs:
             - name: 👷 Build packages
               run: pnpm run -w build:mobile
 
+            - name: 🚀 Update EAS production branch
+              working-directory: apps/mobile
+              run: |
+                  echo "Version in package.json is not greater than latest EAS version. Running EAS update..."
+                  pnpm eas:update:production:ci
+
             - name: 🧐 Compare version with EAS build
               id: compare_versions
               working-directory: apps/mobile
@@ -50,10 +56,3 @@ jobs:
               run: |
                   echo "Version in package.json is greater than latest EAS version. Running EAS submit..."
                   pnpm eas:submit:production:ci
-
-            - name: 🚀 Version number not increased - Update EAS production branch
-              if: "${{ steps.compare_versions.outputs.result != 'true' }}"
-              working-directory: apps/mobile
-              run: |
-                  echo "Version in package.json is not greater than latest EAS version. Running EAS update..."
-                  pnpm eas:update:production:ci
