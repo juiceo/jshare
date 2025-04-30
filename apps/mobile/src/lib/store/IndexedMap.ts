@@ -46,6 +46,11 @@ export class IndexedMap<
         return this.items.keys();
     }
 
+    clear() {
+        this.items.clear();
+        this.indexes.clear();
+    }
+
     find(query: Partial<TData>): Document<TData, TResolvers, TIndexes>[] {
         const queryKeys = Object.keys(query) as (keyof TData)[];
         if (queryKeys.length === 0) return Array.from(this.items.values());

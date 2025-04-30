@@ -12,3 +12,7 @@ export const Store = {
 export const storeIsReady = async () => {
     await Promise.all(Object.values(Store).map((store) => store.isReady));
 };
+
+export const resetStore = () => {
+    Object.values(Store).forEach((store) => store.reset());
+};

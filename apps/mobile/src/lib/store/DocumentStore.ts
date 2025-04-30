@@ -194,10 +194,7 @@ export class DocumentStore<
 
     private async persist() {
         InteractionManager.runAfterInteractions(async () => {
-            const items = this.index
-                .getAll()
-                .map((doc) => doc.snapshot)
-                .filter((data) => !!data);
+            const items = this.index.getAll().map((doc) => doc.snapshot);
             await AsyncStorage.setItem(`DocumentStore::${this.name}`, JSON.stringify(items));
         });
     }
@@ -374,5 +371,10 @@ export class DocumentStore<
         /**
          * TODO: Implement server side delete
          */
+    }
+
+    reset() {
+        this.index.clear();
+        this.persist();
     }
 }

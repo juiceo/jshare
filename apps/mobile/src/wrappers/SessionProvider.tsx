@@ -9,6 +9,7 @@ import {
 import type { AuthError, Session } from '@supabase/supabase-js';
 import { useRouter } from 'expo-router';
 
+import { resetStore } from '~/lib/store/collections';
 import { supabase } from '~/lib/supabase';
 import { setAccessToken, setUserId } from '~/state/auth';
 
@@ -48,6 +49,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
 
     const signOut = useCallback(() => {
         supabase.auth.signOut();
+        resetStore();
         dismissAll();
         replace('/login');
     }, [dismissAll, replace]);

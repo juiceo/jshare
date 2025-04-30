@@ -29,7 +29,7 @@ export const uploadImage = async (asset: ImagePickerAsset): Promise<DB.Image> =>
         bucket: SupabaseStorageBucket.Public,
     });
 
-    Store.images.registerItem(dbImage.id, dbImage);
+    Store.images.registerItem(dbImage);
 
     return dbImage;
 };
