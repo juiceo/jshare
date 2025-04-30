@@ -1,5 +1,7 @@
+import { InteractionManager } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { debounce, sortBy, type DebouncedFunc } from 'lodash';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import { computedFn } from 'mobx-utils';
 
 import { Document } from '~/lib/store/Document';
@@ -21,10 +23,9 @@ export class DocumentStore<
     TResolvers extends ResolverMap<TData>,
     TIndexes extends (keyof TData)[],
 > {
+    isReady: Promise<void>;
     name: string;
     api: DocumentApi<TData>;
-    docs: Map<string, Document<TData, TResolvers, TIndexes>> = new Map();
-    isLoading: boolean = false;
     flushUpdates: DebouncedFunc<() => Promise<void>>;
     flushQueries: DebouncedFunc<() => Promise<void>>;
     updates: Record<string, UpdateEntry<TData>> = {};
@@ -40,9 +41,10 @@ export class DocumentStore<
         indexedKeys?: TIndexes;
     }) {
         this.index = new IndexedMap(args.indexedKeys || []);
-        this.queries = {};
-        makeAutoObservable(this);
-        this.updates = {};
+        makeAutoObservable(this, {
+            findById: false,
+            findMany: false,
+        });
         this.indexedKeys = args.indexedKeys;
         this.name = args.name;
         this.api = args.api;
@@ -167,6 +169,37 @@ export class DocumentStore<
             1000,
             { maxWait: 15_000 }
         );
+
+        this.isReady = this.hydrate();
+
+        reaction(
+            () => this.index.updatedAt,
+            () => {
+                this.persist();
+            },
+            {
+                delay: 2500,
+            }
+        );
+    }
+
+    private async hydrate() {
+        const items = await AsyncStorage.getItem(`DocumentStore::${this.name}`);
+        const parsedItems = items ? JSON.parse(items) : [];
+        const docs = parsedItems.map((item: TData) => new Document(this, item, this.resolvers));
+        runInAction(() => {
+            this.index.init(docs);
+        });
+    }
+
+    private async persist() {
+        InteractionManager.runAfterInteractions(async () => {
+            const items = this.index
+                .getAll()
+                .map((doc) => doc.snapshot)
+                .filter((data) => !!data);
+            await AsyncStorage.setItem(`DocumentStore::${this.name}`, JSON.stringify(items));
+        });
     }
 
     private getQueryKey(where: string | Query<TData>) {
@@ -247,6 +280,7 @@ export class DocumentStore<
         };
 
         let docs = this.index.find(where);
+
         const { orderBy, limit } = opts || {};
         if (orderBy) {
             docs = sortBy(docs, (doc) => doc.data[orderBy.field]);
@@ -316,6 +350,9 @@ export class DocumentStore<
     }
 
     update(id: string, updates: Partial<TData>) {
+        const doc = this.index.get(id);
+        if (!doc) return;
+
         this.updates[id] = {
             id,
             updates: {
@@ -324,6 +361,11 @@ export class DocumentStore<
             },
             status: 'pending',
         };
+        this.index.update(id, {
+            ...doc.snapshot,
+            ...updates,
+        });
+
         this.flushUpdates();
     }
 

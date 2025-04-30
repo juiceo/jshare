@@ -9,6 +9,7 @@ export class IndexedMap<
     TResolvers extends ResolverMap<TData>,
     TIndexes extends (keyof TData)[],
 > {
+    updatedAt: number = Date.now();
     private items = new Map<string, Document<TData, TResolvers, TIndexes>>();
     private indexes: Map<keyof TData, Map<any, Set<Document<TData, TResolvers, TIndexes>>>> =
         new Map();
@@ -20,12 +21,17 @@ export class IndexedMap<
             add: action,
             update: action,
             delete: action,
+            updatedAt: observable,
         });
         this.indexedKeys = indexedKeys;
     }
 
     get(id: string): Document<TData, TResolvers, TIndexes> | undefined {
         return this.items.get(id);
+    }
+
+    getAll(): Document<TData, TResolvers, TIndexes>[] {
+        return Array.from(this.items.values());
     }
 
     has(id: string): boolean {
@@ -96,6 +102,8 @@ export class IndexedMap<
     }
 
     add(id: string, doc: Document<TData, TResolvers, TIndexes>): void {
+        if (!doc) return;
+        this.updatedAt = Date.now();
         const existing = this.items.get(id);
         if (existing) {
             if (isEqual(existing.data, doc.data)) return;
@@ -106,7 +114,14 @@ export class IndexedMap<
         this.index(doc);
     }
 
+    init(docs: Document<TData, TResolvers, TIndexes>[]) {
+        for (const doc of docs) {
+            this.add(doc.id, doc);
+        }
+    }
+
     delete(id: string): Document<TData, TResolvers, TIndexes> | null {
+        this.updatedAt = Date.now();
         const existing = this.items.get(id);
         if (!existing) return null;
 
@@ -116,6 +131,7 @@ export class IndexedMap<
     }
 
     update(id: string, data: TData) {
+        this.updatedAt = Date.now();
         const doc = this.items.get(id);
         if (!doc) return;
         if (isEqual(doc.data, data)) return;

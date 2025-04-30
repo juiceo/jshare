@@ -1,6 +1,6 @@
 import 'react-native-get-random-values';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -15,6 +15,7 @@ import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { AppErrorBoundary } from '~/components/errors/AppErrorBoundary';
 import { ToastManager } from '~/components/Toast/ToastManager';
+import { storeIsReady } from '~/lib/store/collections';
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
@@ -78,10 +79,16 @@ if (storybookEnabled) {
 
 const RootStack = () => {
     const { theme } = useTheme();
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        SplashScreen.hide();
+        storeIsReady().then(() => {
+            setIsReady(true);
+            SplashScreen.hide();
+        });
     }, []);
+
+    if (!isReady) return null;
 
     return (
         <Stack

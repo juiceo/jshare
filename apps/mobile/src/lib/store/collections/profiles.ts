@@ -13,6 +13,9 @@ export const ProfilesStore = new DocumentStore({
         findWhere: async (where: Partial<DB.Profile>) => {
             return trpcClient.models.profiles.findWhere.query(where);
         },
+        update: async (id: string, data: Partial<DB.Profile>) => {
+            return trpcClient.models.profiles.update.mutate({ id, data });
+        },
         create: async (input: DB.Profile) => {
             return trpcClient.models.profiles.create.mutate(input);
         },
