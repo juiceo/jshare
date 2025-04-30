@@ -1,4 +1,4 @@
-import type { DB } from '@jshare/db';
+import { DB } from '@jshare/db';
 
 import { ImagesStore } from '~/lib/store/collections/images';
 import { DocumentStore } from '~/lib/store/DocumentStore';
@@ -12,6 +12,9 @@ export const ProfilesStore = new DocumentStore({
         },
         findWhere: async (where: Partial<DB.Profile>) => {
             return trpcClient.models.profiles.findWhere.query(where);
+        },
+        create: async (input: DB.Profile) => {
+            return trpcClient.models.profiles.create.mutate(input);
         },
     },
     resolvers: {

@@ -26,10 +26,12 @@ export const zGroupsCreate = zDB.models.GroupCreateScalarSchema.omit({
     id: true,
     createdAt: true,
     updatedAt: true,
-}).extend({
-    id: zID,
-    coverImageId: zID.nullable().optional(),
-});
+})
+    .extend({
+        id: zID,
+        coverImageId: zID.nullable().optional(),
+    })
+    .strip();
 
 export const groupsRouter = router({
     findById: authProcedure.input(zID.array()).query(async (opts) => {

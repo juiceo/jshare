@@ -2,6 +2,7 @@ import { Dimensions } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
+import { observer } from 'mobx-react-lite';
 
 import { formatAmount, plural } from '@jshare/common';
 import type { DB } from '@jshare/db';
@@ -18,7 +19,7 @@ export type GroupCardProps = {
     group: DB.Group;
 };
 
-export const GroupCard = (props: GroupCardProps) => {
+export const GroupCard = observer((props: GroupCardProps) => {
     const { group } = props;
 
     const user = useCurrentUser();
@@ -77,4 +78,4 @@ export const GroupCard = (props: GroupCardProps) => {
             </Stack>
         </Stack>
     );
-};
+});

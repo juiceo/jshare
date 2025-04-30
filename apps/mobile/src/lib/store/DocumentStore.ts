@@ -13,6 +13,8 @@ import type {
     ResolverMap,
     UpdateEntry,
 } from '~/lib/store/types';
+import { createData, type CreateInput } from '~/lib/store/util';
+import { getUserId } from '~/state/auth';
 
 export class DocumentStore<
     TData extends { id: string },
@@ -119,7 +121,7 @@ export class DocumentStore<
 
                 runInAction(() => {
                     for (const doc of added) {
-                        this.registerItem(doc.id, doc);
+                        this.registerItem(doc);
                     }
 
                     for (const id of removed) {
@@ -170,6 +172,11 @@ export class DocumentStore<
     private getQueryKey(where: string | Query<TData>) {
         return typeof where === 'string' ? where : JSON.stringify(where);
     }
+
+    getQueryState = computedFn((queryKey: string | undefined) => {
+        if (!queryKey) return null;
+        return this.queries[queryKey]?.status;
+    });
 
     private async registerFindById(id: string) {
         let shouldFlush = false;
@@ -229,7 +236,7 @@ export class DocumentStore<
     findById(id: string | null | undefined) {
         if (!id) return null;
 
-        this.registerFindById(id).then(() => {});
+        this.registerFindById(id);
         return this.findByIdComputed(id);
     }
 
@@ -270,15 +277,11 @@ export class DocumentStore<
         return this.findManyComputed(JSON.stringify({ where, opts }));
     }
 
-    getQueryState(queryKey: string) {
-        return this.queries[queryKey]?.status;
-    }
-
-    registerItem(id: string, item: TData) {
-        if (this.index.has(id)) {
-            this.index.update(id, item);
+    registerItem(item: TData) {
+        if (this.index.has(item.id)) {
+            this.index.update(item.id, item);
         } else {
-            this.index.add(id, new Document(this, item, this.resolvers));
+            this.index.add(item.id, new Document(this, item, this.resolvers));
         }
     }
 
@@ -289,7 +292,28 @@ export class DocumentStore<
         }
     }
 
-    create(data: TData) {}
+    async create(input: CreateInput<TData>) {
+        const userId = getUserId();
+        if (!userId) return;
+
+        const data = createData(input);
+
+        this.registerItem(data);
+
+        await this.api.create?.(data).then((res) => {
+            if (res) {
+                runInAction(() => {
+                    this.registerItem(res);
+                });
+            } else {
+                runInAction(() => {
+                    this.disposeItem(data.id);
+                });
+            }
+        });
+
+        return this.index.get(data.id);
+    }
 
     update(id: string, updates: Partial<TData>) {
         this.updates[id] = {

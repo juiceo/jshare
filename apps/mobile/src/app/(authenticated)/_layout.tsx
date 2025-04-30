@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ActivityIndicator, Linking, Text } from 'react-native';
+import { skipToken, useQuery } from '@tanstack/react-query';
 import { Redirect, Stack } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 
@@ -16,6 +17,7 @@ import { Stack as StackView } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
+import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 
@@ -24,11 +26,20 @@ export default screen(
         const { theme } = useTheme();
         const { session, isLoading: isLoadingSession } = useSession();
 
-        const profile = Store.profiles.findById(session?.user.id);
+        const profileQuery = useQuery(
+            trpc.models.profiles.findById.queryOptions(session ? [session?.user.id] : skipToken)
+        );
+        const profile = profileQuery.data?.[0];
+
+        useEffect(() => {
+            if (profile) {
+                Store.profiles.registerItem(profile);
+            }
+        }, [profile]);
 
         const termsStatus = useMemo(() => {
             if (!profile) return null;
-            return getTermsAcceptanceStatus(profile.data);
+            return getTermsAcceptanceStatus(profile);
         }, [profile]);
 
         const openPrivacyPolicy = () => {
@@ -45,10 +56,10 @@ export default screen(
 
         const handleAcceptTerms = () => {
             if (!profile) return;
-            profile.update({ termsAcceptedAt: new Date() });
+            Store.profiles.update(profile.id, { termsAcceptedAt: new Date() });
         };
 
-        if (isLoadingSession || !profile) {
+        if (isLoadingSession || profileQuery.isLoading) {
             return (
                 <StackView center absoluteFill>
                     <ActivityIndicator />
@@ -56,7 +67,7 @@ export default screen(
             );
         }
 
-        if (!session) {
+        if (!session || !profile) {
             return <Redirect href={{ pathname: '/login' }} />;
         }
 

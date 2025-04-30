@@ -31,10 +31,12 @@ export const zProfilesUpdate = z.object({
 export const zProfilesCreate = zDB.models.ProfileCreateScalarSchema.omit({
     createdAt: true,
     updatedAt: true,
-}).extend({
-    id: zID,
-    avatarId: zID.nullable().optional(),
-});
+})
+    .extend({
+        id: zID,
+        avatarId: zID.nullable().optional(),
+    })
+    .strip();
 
 export const profilesRouter = router({
     findById: authProcedure.input(zID.array()).query(async (opts) => {

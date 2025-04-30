@@ -19,6 +19,8 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
+import { Store } from '~/lib/store/collections';
+import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
 
@@ -63,21 +65,25 @@ export default screen(() => {
             return;
         }
         setLoading(true);
-        // await Profiles.create(
-        //     {
-        //         id: session.user.id,
-        //         firstName: data.firstName,
-        //         lastName: data.lastName,
-        //         avatarId: data.avatarId ?? null,
-        //         currency: data.currency,
-        //         email,
-        //         termsAcceptedAt: new Date(),
-        //     },
-        //     { immediate: true }
-        // );
+        try {
+            await Store.profiles.create({
+                id: session.user.id,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                currency: data.currency,
+                avatarId: data.avatarId ?? null,
+                email,
+                lastActivity: new Date(),
+                temporary: false,
+                termsAcceptedAt: new Date(),
+                showInSearch: true,
+            });
+            router.dismissAll();
+            router.replace('/(authenticated)/(tabs)/groups');
+        } catch {
+            toast.error('Something went wrong, please try again');
+        }
         setLoading(false);
-        router.dismissAll();
-        router.replace('/(authenticated)/(tabs)/groups');
     };
 
     const openPrivacyPolicy = () => {

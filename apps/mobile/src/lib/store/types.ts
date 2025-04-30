@@ -6,6 +6,7 @@ export type DocumentApi<T extends { id: string }> = {
     findById: (ids: string[]) => Promise<T[]>;
     findWhere: (where: Query<T>) => Promise<T[]>;
     update?: (id: string, updates: Partial<T>) => Promise<T>;
+    create?: (input: T) => Promise<T>;
 };
 
 export type Resolver<TData extends { id: string }, TResult> = (data: TData) => TResult;

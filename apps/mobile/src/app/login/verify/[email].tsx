@@ -60,7 +60,7 @@ export default screen(() => {
 
                 setAccessToken(accessToken);
                 setUserId(userId);
-                const profile = await trpcClient.models.profiles.findById.query(userId);
+                const [profile] = await trpcClient.models.profiles.findById.query([userId]);
 
                 if (profile) {
                     router.replace('/');
@@ -68,6 +68,7 @@ export default screen(() => {
                     router.replace('/login/welcome');
                 }
             } catch (err) {
+                console.log('AUTH ERROR', (err as any).message);
                 console.error('AUTH ERROR', err);
                 Alert.alert('Something went wrong, please try again');
                 setCode([]);
