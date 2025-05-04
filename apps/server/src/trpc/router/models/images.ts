@@ -36,11 +36,6 @@ export const imagesRouter = router({
             },
         });
     }),
-    findWhere: authProcedure.input(zImagesQuery).query(async (opts) => {
-        return db.image.findMany({
-            where: opts.input,
-        });
-    }),
     create: authProcedure.input(zImagesCreate).mutation(async (opts) => {
         const { path, bucket } = opts.input;
 

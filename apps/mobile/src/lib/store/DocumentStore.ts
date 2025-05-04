@@ -77,7 +77,7 @@ export class DocumentStore<
                     })
                     .filter((id) => id !== null);
 
-                const wheres = queriesToRun
+                let wheres = queriesToRun
                     .map(([key, item]) => {
                         if (item.type === 'findMany') {
                             return item.query;
@@ -85,6 +85,15 @@ export class DocumentStore<
                         return null;
                     })
                     .filter((where) => where !== null);
+
+                if (!this.api.findWhere) {
+                    if (wheres.length > 0) {
+                        console.warn(
+                            `findMany is not supported for collection ${this.name}, ignoring...`
+                        );
+                        wheres = [];
+                    }
+                }
 
                 const { added, removed } = await Promise.all([
                     this.api.findById(ids).then((res) => {
@@ -94,7 +103,7 @@ export class DocumentStore<
                         };
                     }),
                     ...wheres.map((where) =>
-                        this.api.findWhere(where).then((res) => {
+                        this.api.findWhere!(where).then((res) => {
                             const currentResults = this.index.find(where);
                             return {
                                 added: res,
@@ -107,6 +116,7 @@ export class DocumentStore<
                 ]).then((res) => {
                     return res.reduce(
                         (acc, curr) => {
+                            if (!curr) return acc;
                             for (const data of curr.added) {
                                 if (!acc.added.some((r) => r.id === data.id)) {
                                     acc.added.push(data);

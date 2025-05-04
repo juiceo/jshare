@@ -4,7 +4,7 @@ export type Query<T extends { id: string }> = Partial<T>;
 
 export type DocumentApi<T extends { id: string }> = {
     findById: (ids: string[]) => Promise<T[]>;
-    findWhere: (where: Query<T>) => Promise<T[]>;
+    findWhere?: (where: Query<T>) => Promise<T[]>;
     update?: (id: string, updates: Partial<T>) => Promise<T>;
     create?: (input: T) => Promise<T>;
 };

@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { observer } from 'mobx-react-lite';
 
 import { getUserFullName, getUserShortName } from '@jshare/common';
 
-import { trpc } from '~/lib/trpc';
-import { useSession } from '~/wrappers/SessionProvider';
+import { Store } from '~/lib/store/collections';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type UserNameProps = {
     userId: string;
@@ -11,24 +11,23 @@ export type UserNameProps = {
     prefix?: string;
 };
 
-export const UserName = (props: UserNameProps) => {
+export const UserName = observer((props: UserNameProps) => {
     const { userId } = props;
 
-    const { session } = useSession();
-    const profile = useQuery(
-        trpc.z.profile.findUnique.queryOptions({ where: { id: userId } })
-    ).data;
+    const currentUser = useCurrentUser();
+
+    const profile = Store.profiles.findById(userId);
 
     const userName = (() => {
-        if (!profile) return '';
-        if (session?.user.id === userId) return 'You';
+        if (!profile?.data) return '';
+        if (currentUser.id === userId) return 'You';
         switch (props.variant) {
             case 'short':
-                return getUserShortName(profile);
+                return getUserShortName(profile.data);
             case 'full':
-                return getUserFullName(profile);
+                return getUserFullName(profile.data);
         }
     })();
 
     return [props.prefix, userName].filter(Boolean).join(' ');
-};
+});
