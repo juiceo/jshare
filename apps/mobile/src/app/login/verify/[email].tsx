@@ -60,7 +60,9 @@ export default screen(() => {
 
                 setAccessToken(accessToken);
                 setUserId(userId);
-                const [profile] = await trpcClient.models.profiles.findById.query([userId]);
+                const [profile] = await trpcClient.models.profiles.findById.query({
+                    ids: [userId],
+                });
 
                 if (profile) {
                     router.replace('/');

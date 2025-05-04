@@ -11,6 +11,7 @@ import { groupsRouter } from './groups';
 import { imagesRouter } from './images';
 import { messagesRouter } from './messages';
 import { modelsRouter } from './models';
+import { modelsRouter_LEGACY } from './models_LEGACY';
 import { paymentsRouter } from './payments';
 import { profilesRouter } from './profiles';
 
@@ -35,6 +36,7 @@ export const appRouter = router({
     balances: balancesRouter,
     exchangeRates: exchangeRatesRouter,
     auth: authRouter,
+    models_LEGACY: modelsRouter_LEGACY,
     models: modelsRouter,
     z: createZenstackRouter(),
 });

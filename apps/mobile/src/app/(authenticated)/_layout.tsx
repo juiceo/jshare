@@ -27,7 +27,9 @@ export default screen(
         const { session, isLoading: isLoadingSession } = useSession();
 
         const profileQuery = useQuery(
-            trpc.models.profiles.findById.queryOptions(session ? [session?.user.id] : skipToken)
+            trpc.models.profiles.findById.queryOptions(
+                session ? { ids: [session.user.id] } : skipToken
+            )
         );
         const profile = profileQuery.data?.[0];
 

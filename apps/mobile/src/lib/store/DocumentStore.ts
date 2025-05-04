@@ -8,6 +8,7 @@ import { Document } from '~/lib/store/Document';
 import { IndexedMap } from '~/lib/store/IndexedMap';
 import type {
     DocumentApi,
+    DocumentStoreHooks,
     FindManyOpts,
     Query,
     QueryEntry,
@@ -26,19 +27,22 @@ export class DocumentStore<
     isReady: Promise<void>;
     name: string;
     api: DocumentApi<TData>;
-    flushUpdates: DebouncedFunc<() => Promise<void>>;
+    flushUpdates: DebouncedFunc<() => Promise<TData[]>>;
     flushQueries: DebouncedFunc<() => Promise<void>>;
     updates: Record<string, UpdateEntry<TData>> = {};
     queries: Record<string, QueryEntry<TData>> = {};
     indexedKeys?: TIndexes;
     index: IndexedMap<TData, TResolvers, TIndexes>;
     resolvers?: TResolvers;
+    hooks?: DocumentStoreHooks<TData>;
     staleTime: number;
+
     constructor(args: {
         name: string;
         api: DocumentApi<TData>;
         resolvers?: TResolvers;
         indexedKeys?: TIndexes;
+        hooks?: DocumentStoreHooks<TData>;
         staleTime?: number;
     }) {
         this.index = new IndexedMap(args.indexedKeys || []);
@@ -51,6 +55,7 @@ export class DocumentStore<
         this.api = args.api;
         this.resolvers = args.resolvers;
         this.staleTime = args.staleTime ?? 60_000;
+        this.hooks = args.hooks;
 
         this.flushQueries = debounce(
             async () => {
@@ -77,7 +82,7 @@ export class DocumentStore<
                     })
                     .filter((id) => id !== null);
 
-                let wheres = queriesToRun
+                let queries = queriesToRun
                     .map(([key, item]) => {
                         if (item.type === 'findMany') {
                             return item.query;
@@ -87,67 +92,75 @@ export class DocumentStore<
                     .filter((where) => where !== null);
 
                 if (!this.api.findWhere) {
-                    if (wheres.length > 0) {
+                    if (queries.length > 0) {
                         console.warn(
                             `findMany is not supported for collection ${this.name}, ignoring...`
                         );
-                        wheres = [];
+                        queries = [];
                     }
                 }
 
                 const { added, removed } = await Promise.all([
-                    this.api.findById(ids).then((res) => {
-                        return {
-                            added: res,
-                            removed: ids.filter((id) => !res.some((r) => r.id === id)),
-                        };
-                    }),
-                    ...wheres.map((where) =>
-                        this.api.findWhere!(where).then((res) => {
-                            const currentResults = this.index.find(where);
-                            return {
-                                added: res,
-                                removed: currentResults
-                                    .filter((r) => !res.some((r2) => r2.id === r.id))
-                                    .map((r) => r.id),
-                            };
-                        })
-                    ),
+                    ids.length > 0
+                        ? this.api.findById(ids).then((res) => {
+                              return {
+                                  added: res,
+                                  removed: ids.filter((id) => !res.some((r) => r.id === id)),
+                              };
+                          })
+                        : Promise.resolve({ added: [], removed: [] }),
+                    queries.length > 0
+                        ? this.api.findWhere!(queries).then((res) => {
+                              const queriesWithResults = queries.map((query, index) => {
+                                  return {
+                                      query,
+                                      results: res[index],
+                                  };
+                              });
+
+                              return queriesWithResults.reduce(
+                                  (acc, { query, results }) => {
+                                      const currentResults = this.index.find(query);
+
+                                      for (const result of results) {
+                                          acc.added.push(result);
+                                      }
+
+                                      for (const current of currentResults) {
+                                          if (!results.some((r) => r.id === current.id)) {
+                                              acc.removed.push(current.id);
+                                          }
+                                      }
+
+                                      return acc;
+                                  },
+                                  { added: [] as TData[], removed: [] as string[] }
+                              );
+                          })
+                        : Promise.resolve({ added: [], removed: [] }),
                 ]).then((res) => {
-                    return res.reduce(
-                        (acc, curr) => {
-                            if (!curr) return acc;
-                            for (const data of curr.added) {
-                                if (!acc.added.some((r) => r.id === data.id)) {
-                                    acc.added.push(data);
-                                }
-                            }
-                            for (const id of curr.removed) {
-                                if (!acc.removed.includes(id)) {
-                                    acc.removed.push(id);
-                                }
-                            }
-                            return acc;
-                        },
-                        { added: [], removed: [] }
-                    );
+                    return {
+                        added: res.flatMap((r) => r.added),
+                        removed: res.flatMap((r) => r.removed),
+                    };
                 });
 
                 runInAction(() => {
-                    for (const doc of added) {
-                        this.registerItem(doc);
-                    }
-
                     for (const id of removed) {
                         this.disposeItem(id);
+                    }
+                    for (const doc of added) {
+                        this.registerItem(doc);
                     }
 
                     /**
                      * TODO: Handle errors somehow (mark query state as failed?)
                      */
                     queriesToRun.forEach(([key]) => {
-                        this.queries[key].status = 'done';
-                        this.queries[key].lastFetched = Date.now();
+                        if (this.queries[key].status === 'running') {
+                            this.queries[key].status = 'done';
+                            this.queries[key].lastFetched = Date.now();
+                        }
                     });
                 });
             },
@@ -166,13 +179,22 @@ export class DocumentStore<
                         return false;
                     });
                 });
-                if (updatesToRun.length === 0) return;
+                if (updatesToRun.length === 0) return [];
 
-                await Promise.all(
+                return Promise.all(
                     updatesToRun.map(async ([id, data]) => this.api.update?.(id, data.updates))
-                ).then((results) => {
-                    return results.filter((r) => r !== undefined);
-                });
+                )
+                    .then((results) => {
+                        return results.filter((r) => r !== undefined);
+                    })
+                    .then((docs) => {
+                        if (this.hooks?.afterUpdate) {
+                            docs.forEach((data) => {
+                                this.hooks!.afterUpdate!(data);
+                            });
+                        }
+                        return docs;
+                    });
 
                 /**
                  * TODO: Handle errors somehow (mark update state as failed?)
@@ -211,8 +233,24 @@ export class DocumentStore<
         });
     }
 
-    private getQueryKey(where: string | Query<TData>) {
-        return typeof where === 'string' ? where : JSON.stringify(where);
+    private getQueryKey(queryOrId: string | Query<TData>) {
+        return typeof queryOrId === 'string' ? queryOrId : JSON.stringify(queryOrId);
+    }
+
+    private isQueryStale(queryKey: string) {
+        const query = this.queries[queryKey];
+        if (!query) return true;
+        if (query.status === 'running') return false;
+        if (!query.lastFetched) return true;
+        return Date.now() - query.lastFetched > this.staleTime;
+    }
+
+    invalidate(queryOrId: string | Query<TData>) {
+        if (typeof queryOrId === 'string') {
+            this.registerFindById(queryOrId, true);
+        } else {
+            this.registerQuery(queryOrId, true);
+        }
     }
 
     getQueryState = computedFn((queryKey: string | undefined) => {
@@ -220,8 +258,8 @@ export class DocumentStore<
         return this.queries[queryKey]?.status;
     });
 
-    private async registerFindById(id: string) {
-        let shouldFlush = false;
+    private async registerFindById(id: string, forceInvalidate = false) {
+        let shouldFlush = forceInvalidate;
         runInAction(() => {
             if (!this.queries[id]) {
                 this.queries[id] = {
@@ -231,11 +269,8 @@ export class DocumentStore<
                     status: 'pending',
                 };
                 shouldFlush = true;
-            } else if (this.queries[id].status !== 'running') {
-                const lastFetched = this.queries[id].lastFetched ?? 0;
-                if (Date.now() - lastFetched > this.staleTime) {
-                    this.queries[id].status = 'pending';
-                }
+            } else if (this.isQueryStale(id) || forceInvalidate) {
+                this.queries[id].status = 'pending';
                 shouldFlush = true;
             }
         });
@@ -245,7 +280,7 @@ export class DocumentStore<
         }
     }
 
-    private async registerQuery(query: Query<TData>) {
+    private async registerQuery(query: Query<TData>, forceInvalidate = false) {
         let shouldFlush = false;
         runInAction(() => {
             const key = this.getQueryKey(query);
@@ -257,11 +292,8 @@ export class DocumentStore<
                     status: 'pending',
                 };
                 shouldFlush = true;
-            } else if (this.queries[key].status !== 'running') {
-                const lastFetched = this.queries[key].lastFetched ?? 0;
-                if (Date.now() - lastFetched > this.staleTime) {
-                    this.queries[key].status = 'pending';
-                }
+            } else if (this.isQueryStale(key) || forceInvalidate) {
+                this.queries[key].status = 'pending';
                 shouldFlush = true;
             }
         });
@@ -355,10 +387,16 @@ export class DocumentStore<
             }
         });
 
-        return this.index.get(data.id);
+        const doc = this.index.get(data.id);
+
+        if (doc && this.hooks?.afterCreate) {
+            this.hooks.afterCreate(doc.data);
+        }
+
+        return doc;
     }
 
-    update(id: string, updates: Partial<TData>) {
+    async update(id: string, updates: Partial<TData>) {
         const doc = this.index.get(id);
         if (!doc) return;
 

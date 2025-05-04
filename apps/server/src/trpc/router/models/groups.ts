@@ -1,44 +1,17 @@
 import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
 
 import { zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
-import { zID } from './_util';
-
-export const zGroupsQuery = z
-    .object({
-        id: z.string(),
-    })
-    .partial();
-
-export const zGroupsUpdate = z.object({
-    id: z.string(),
-    data: zDB.models.GroupUpdateScalarSchema.omit({
-        createdAt: true,
-        updatedAt: true,
-        id: true,
-    }).partial(),
-});
-
-export const zGroupsCreate = zDB.models.GroupCreateScalarSchema.omit({
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-})
-    .extend({
-        id: zID,
-        coverImageId: zID.nullable().optional(),
-    })
-    .strip();
+import { zCreateArgs, zFindByIdArgs, zFindManyArgs, zUpdateArgs } from './_util';
 
 export const groupsRouter = router({
-    findById: authProcedure.input(zID.array()).query(async (opts) => {
+    findById: authProcedure.input(zFindByIdArgs).query(async (opts) => {
         return db.group.findMany({
             where: {
                 id: {
-                    in: opts.input,
+                    in: opts.input.ids,
                 },
                 participants: {
                     some: {
@@ -48,59 +21,75 @@ export const groupsRouter = router({
             },
         });
     }),
-    findWhere: authProcedure.input(zGroupsQuery).query(async (opts) => {
-        return db.group.findMany({
-            where: {
-                ...opts.input,
-                participants: {
-                    some: {
-                        userId: opts.ctx.userId,
-                    },
-                },
-            },
-        });
-    }),
-    update: authProcedure.input(zGroupsUpdate).mutation(async (opts) => {
-        const group = await db.group.findUnique({
-            where: {
-                id: opts.input.id,
-                participants: {
-                    some: {
-                        userId: opts.ctx.userId,
-                        role: {
-                            in: ['Admin', 'Owner'],
+    findWhere: authProcedure
+        .input(
+            zFindManyArgs(zDB.models.GroupScalarSchema.pick({ inviteCode: true }), {
+                allowEmpty: true,
+            })
+        )
+        .query(async (opts) => {
+            const queries = opts.input.queries;
+
+            return Promise.all(
+                queries.map(async (query) => {
+                    return db.group.findMany({
+                        where: {
+                            ...query,
+                            participants: {
+                                some: {
+                                    userId: opts.ctx.userId,
+                                },
+                            },
+                        },
+                    });
+                })
+            );
+        }),
+    update: authProcedure
+        .input(zUpdateArgs(zDB.models.GroupUpdateSchema))
+        .mutation(async (opts) => {
+            const group = await db.group.findUnique({
+                where: {
+                    id: opts.input.id,
+                    participants: {
+                        some: {
+                            userId: opts.ctx.userId,
+                            role: {
+                                in: ['Admin', 'Owner'],
+                            },
                         },
                     },
                 },
-            },
-        });
-
-        if (!group) {
-            throw new TRPCError({
-                code: 'NOT_FOUND',
-                message:
-                    'Group not found, or you are missing the required permission to update the group',
             });
-        }
 
-        return db.group.update({
-            where: {
-                id: opts.input.id,
-            },
-            data: opts.input.data,
-        });
-    }),
-    create: authProcedure.input(zGroupsCreate).mutation(async (opts) => {
-        return db.group.create({
-            data: {
-                ...opts.input,
-                participants: {
-                    create: {
-                        userId: opts.ctx.userId,
-                        role: 'Owner',
+            if (!group) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message:
+                        'Group not found, or you are missing the required permission to update the group',
+                });
+            }
+
+            return db.group.update({
+                where: {
+                    id: opts.input.id,
+                },
+                data: opts.input.data,
+            });
+        }),
+    create: authProcedure
+        .input(zCreateArgs(zDB.models.GroupCreateSchema))
+        .mutation(async (opts) => {
+            return db.group.create({
+                data: {
+                    ...opts.input,
+                    participants: {
+                        create: {
+                            userId: opts.ctx.userId,
+                            role: 'Owner',
+                        },
                     },
                 },
-            },
-        });
-    }),
+            });
+        }),
 });

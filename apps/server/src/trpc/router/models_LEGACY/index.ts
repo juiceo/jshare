@@ -1,12 +1,10 @@
 import { router } from '../../trpc';
-import { groupParticipantsRouter } from './groupParticipants';
 import { groupsRouter } from './groups';
 import { imagesRouter } from './images';
 import { profilesRouter } from './profiles';
 
-export const modelsRouter = router({
+export const modelsRouter_LEGACY = router({
     profiles: profilesRouter,
     images: imagesRouter,
     groups: groupsRouter,
-    groupParticipants: groupParticipantsRouter,
 });

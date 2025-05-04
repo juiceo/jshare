@@ -1,23 +1,21 @@
 import { DB } from '@jshare/db';
 
 import { DocumentStore } from '~/lib/store/DocumentStore';
+import type { Query } from '~/lib/store/types';
 import { trpcClient } from '~/lib/trpc';
 
-export const GroupsStore = new DocumentStore({
+export const GroupParticipantsStore = new DocumentStore({
     name: 'groupParticipants',
     api: {
         findById: async (ids: string[]) => {
-            return trpcClient.models.groups.findById.query(ids);
+            return trpcClient.models.groupParticipants.findById.query({ ids });
         },
-        findWhere: async (where: Partial<DB.Group>) => {
-            return trpcClient.models.groups.findWhere.query(where);
+        findWhere: async (queries: Query<DB.GroupParticipant>[]) => {
+            return trpcClient.models.groupParticipants.findWhere.query({ queries });
         },
-        create: async (input: DB.Group) => {
-            return trpcClient.models.groups.create.mutate(input);
+        create: async (input: DB.GroupParticipant) => {
+            return trpcClient.models.groupParticipants.create.mutate(input);
         },
-        // update: async (id: string, updates: Partial<DB.Profile>) => {
-        //     return trpcClient.models.profiles.update.mutate({ id, data: updates });
-        // },
     },
     resolvers: {},
     staleTime: 30_000, // 30 seconds

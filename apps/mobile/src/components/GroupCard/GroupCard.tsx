@@ -5,25 +5,25 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react-lite';
 
 import { formatAmount, plural } from '@jshare/common';
-import type { DB } from '@jshare/db';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
-import { Store } from '~/lib/store/collections';
+import { type Docs } from '~/lib/store/collections';
 import { trpc } from '~/lib/trpc';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
-    group: DB.Group;
+    group: Docs.Group;
 };
 
 export const GroupCard = observer((props: GroupCardProps) => {
     const { group } = props;
 
     const user = useCurrentUser();
-    const image = Store.images.findById(group.coverImageId);
+    const image = group.get('coverImage');
+    const participants = group.get('participants');
 
     const groupTotal = useQuery(
         trpc.expenses.getTotalForGroup.queryOptions({ groupId: group.id })
@@ -54,12 +54,12 @@ export const GroupCard = observer((props: GroupCardProps) => {
                 >
                     <Stack p="xl" row justifyBetween alignCenter>
                         <Typography variant="caption">
-                            {dayjs(group.lastActivity).fromNow()}
+                            {dayjs(group.data.lastActivity).fromNow()}
                         </Typography>
                         {userStatus && (
                             <StatusBadge
                                 amount={userStatus.balance}
-                                currency={group.currency}
+                                currency={group.data.currency}
                                 prefix="You:"
                             />
                         )}
@@ -67,12 +67,12 @@ export const GroupCard = observer((props: GroupCardProps) => {
                 </LinearGradient>
             </Stack>
             <Stack column p="xl" br="2xl" style={{ position: 'relative' }}>
-                <Typography variant="h4">{group.name}</Typography>
+                <Typography variant="h4">{group.data.name}</Typography>
                 <Typography variant="caption" color="secondary">
-                    {`${formatAmount(groupTotal ?? 0, group.currency)} | ${plural({
+                    {`${formatAmount(groupTotal ?? 0, group.data.currency)} | ${plural({
                         plural: 'members',
                         singular: 'member',
-                        count: 0, //TODO: get participants
+                        count: participants.length || 1,
                     })}`}
                 </Typography>
             </Stack>

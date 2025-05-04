@@ -15,7 +15,6 @@ import { screen } from '~/wrappers/screen';
 
 export default screen(
     observer(() => {
-        console.log('RENDER');
         const router = useRouter();
 
         const groups = Store.groups.findMany(
@@ -69,7 +68,7 @@ export default screen(
                                             })
                                         }
                                     >
-                                        <GroupCard group={group.data} />
+                                        <GroupCard group={group} />
                                     </Pressable>
                                 ))}
                             </Stack>
