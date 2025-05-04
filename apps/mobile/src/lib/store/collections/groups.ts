@@ -20,4 +20,5 @@ export const GroupsStore = new DocumentStore({
         // },
     },
     resolvers: {},
+    staleTime: 30_000, // 30 seconds
 });

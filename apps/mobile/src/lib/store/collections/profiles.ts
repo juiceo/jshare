@@ -28,4 +28,5 @@ export const ProfilesStore = new DocumentStore({
             return data.avatarId ? ImagesStore.findById(data.avatarId) : undefined;
         },
     },
+    staleTime: 120_000, // 2 minutes
 });

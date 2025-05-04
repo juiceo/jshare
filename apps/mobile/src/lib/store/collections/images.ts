@@ -13,4 +13,5 @@ export const ImagesStore = new DocumentStore({
             return trpcClient.models.images.findWhere.query(where);
         },
     },
+    staleTime: 60_000 * 60, // 1 hour
 });
