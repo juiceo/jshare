@@ -50,7 +50,8 @@
                 "buildType": "app-bundle"
             },
             "ios": {
-                "resourceClass": "m-medium"
+                "resourceClass": "m-medium",
+                "image": "latest"
             },
             "env": {
                 "EXPO_USE_FAST_RESOLVER": "true"
