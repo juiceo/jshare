@@ -30,9 +30,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
 
     const handleBack = () => {
         Keyboard.dismiss();
-        setTimeout(() => {
-            router.back();
-        }, 50);
+        router.back();
     };
 
     const content = (

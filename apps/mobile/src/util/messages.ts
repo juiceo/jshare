@@ -1,35 +1,35 @@
 import dayjs from 'dayjs';
 
-import type { DB } from '@jshare/db';
+import type { Docs } from '~/lib/store/collections';
 
-export type MessageGroup<TMessage extends DB.Message> = {
+export type MessageGroup = {
     authorId: string | null;
     timestamp: Date;
-    messages: TMessage[];
+    messages: Docs.Message[];
 };
 
-export type ChatListItem<TMessage extends DB.Message> =
+export type ChatListItem =
     | {
           type: 'messages';
           authorId: string | null;
-          messages: TMessage[];
+          messages: Docs.Message[];
       }
     | {
           type: 'date';
           date: string;
       };
 
-export const messagesToChatListItems = <TMessage extends DB.Message>(
-    messages: TMessage[]
-): ChatListItem<TMessage>[] => {
-    let currentDate: string | null = dayjs(messages.at(0)?.createdAt).startOf('day').toISOString();
-    let currentAuthor: string | null = messages.at(0)?.authorId ?? null;
-    let currentMessages: TMessage[] = [];
+export const messagesToChatListItems = (messages: Docs.Message[]): ChatListItem[] => {
+    let currentDate: string | null = dayjs(messages.at(0)?.data.createdAt)
+        .startOf('day')
+        .toISOString();
+    let currentAuthor: string | null = messages.at(0)?.data.authorId ?? null;
+    let currentMessages: Docs.Message[] = [];
 
-    const result: ChatListItem<TMessage>[] = [];
+    const result: ChatListItem[] = [];
 
     for (const message of messages) {
-        if (!!currentDate && !dayjs(message.createdAt).isSame(currentDate, 'day')) {
+        if (!!currentDate && !dayjs(message.data.createdAt).isSame(currentDate, 'day')) {
             result.push({
                 type: 'messages',
                 authorId: currentAuthor ?? null,
@@ -40,18 +40,18 @@ export const messagesToChatListItems = <TMessage extends DB.Message>(
                 date: currentDate,
             });
             currentDate = null;
-            currentAuthor = message.authorId;
+            currentAuthor = message.data.authorId;
             currentMessages = [message];
             continue;
         }
 
-        if (message.authorId !== currentAuthor) {
+        if (message.data.authorId !== currentAuthor) {
             result.push({
                 type: 'messages',
                 authorId: currentAuthor,
                 messages: currentMessages,
             });
-            currentAuthor = message.authorId;
+            currentAuthor = message.data.authorId;
             currentMessages = [message];
             continue;
         }
@@ -65,7 +65,7 @@ export const messagesToChatListItems = <TMessage extends DB.Message>(
         messages: currentMessages,
     });
 
-    const lastMessageDate = dayjs(messages.at(-1)?.createdAt).startOf('day').toISOString();
+    const lastMessageDate = dayjs(messages.at(-1)?.data.createdAt).startOf('day').toISOString();
     const lastDateSeparator = result.findLast((item) => item.type === 'date');
 
     if (lastDateSeparator && lastDateSeparator.date !== lastMessageDate) {

@@ -1,33 +1,36 @@
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
+import { observer } from 'mobx-react-lite';
 
-import type { DB } from '@jshare/db';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
-import { ChatMessageAttachment } from '~/components/ChatMessageAttachment';
 import { Typography } from '~/components/Typography';
+import { UserName } from '~/components/UserName';
+import type { Docs } from '~/lib/store/collections';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type ChatMessageProps = {
-    text: string;
-    timestamp: Date;
-    authorName?: string;
-    color: 'primary' | 'secondary';
-    attachments?: DB.MessageAttachment[];
+    message: Docs.Message;
 };
 
-export const ChatMessage = (props: ChatMessageProps) => {
+const _ChatMessage = observer((props: ChatMessageProps) => {
     const { theme } = useTheme();
     const styles = getStyles(theme);
+    const currentUser = useCurrentUser();
+
+    const { message } = props;
+
+    const isSelf = props.message.data.authorId === currentUser.id;
 
     const gradientColors = ((): [string, string] => {
-        switch (props.color) {
-            case 'primary':
-                return [theme.palette.primary.main, theme.palette.primary.dark];
-            case 'secondary':
-                return [theme.palette.background.elevation2, theme.palette.background.elevation3];
+        if (isSelf) {
+            return [theme.palette.primary.main, theme.palette.primary.dark];
+        } else {
+            return [theme.palette.background.elevation2, theme.palette.background.elevation3];
         }
     })();
 
@@ -38,16 +41,21 @@ export const ChatMessage = (props: ChatMessageProps) => {
             start={{ x: 0, y: -1 }}
             end={{ x: 1, y: 1 }}
         >
-            {props.authorName && (
+            {!isSelf && message.data.authorId ? (
                 <Stack style={styles.author}>
                     <Typography variant="h6" style={styles.authorName}>
-                        {props.authorName}
+                        <UserName userId={message.data.authorId} variant="short" />
                     </Typography>
                 </Stack>
+            ) : (
+                <Box h={4} />
             )}
-            {props.attachments && (
+            {/**
+             * TODO: Add support for attachments
+             */}
+            {/* {attachments.length && (
                 <Stack style={styles.attachments} column justifyStart>
-                    {props.attachments.map((attachment) => (
+                    {attachments.map((attachment) => (
                         <ChatMessageAttachment
                             key={attachment.id}
                             type={attachment.type}
@@ -55,23 +63,25 @@ export const ChatMessage = (props: ChatMessageProps) => {
                         />
                     ))}
                 </Stack>
-            )}
-            {props.text && (
+            )} */}
+            {message.data.text && (
                 <Stack style={styles.text}>
                     <Typography variant="body1">
-                        {props.text}
+                        {message.data.text}
                         <Box style={styles.textPadding} />
                     </Typography>
                 </Stack>
             )}
             <Stack style={styles.footer}>
                 <Typography variant="caption" color="hint">
-                    {dayjs(props.timestamp).format('HH:mm')}
+                    {dayjs(message.data.createdAt).format('HH:mm')}
                 </Typography>
             </Stack>
         </LinearGradient>
     );
-};
+});
+
+export const ChatMessage = React.memo(_ChatMessage);
 
 const getStyles = (theme: Theme) => {
     return StyleSheet.create({

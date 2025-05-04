@@ -3,11 +3,9 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { sortBy } from 'lodash';
+import { observer } from 'mobx-react-lite';
 
-import type { DB } from '@jshare/db';
 import { useTheme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
@@ -19,8 +17,7 @@ import { ChatMessageGroup } from '~/components/ChatMessageGroup';
 import { ChatStatusHeader } from '~/components/ChatStatusHeader';
 import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
-import { useGroupMessages } from '~/hooks/useGroupMessages';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
 import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';
@@ -28,26 +25,41 @@ import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
-    () => {
+    observer(() => {
         const user = useCurrentUser();
         const { groupId } = useLocalSearchParams<{ groupId: string }>();
-        const group = useSuspenseQuery(
-            trpc.z.group.findUniqueOrThrow.queryOptions({
-                where: { id: groupId },
-                include: { participants: true, coverImage: true },
-            })
-        ).data as DB.Group<{ participants: true; coverImage: true }>;
-
         const { theme } = useTheme();
         const { presentUserIds } = useGroupContext();
         const router = useRouter();
         const insets = useSafeAreaInsets();
 
-        const {
-            data: messages,
-            fetchNextPage,
-            sendMessage,
-        } = useGroupMessages({ groupId, userId: user.id });
+        const group = Store.groups.findById(groupId);
+        const messages = Store.messages.findMany(
+            { groupId },
+            {
+                orderBy: {
+                    field: 'createdAt',
+                    order: 'desc',
+                },
+            }
+        );
+        const participants = group?.get('participants');
+        const coverImage = group?.get('coverImage');
+
+        const handleSendMessage = (text: string) => {
+            Store.messages.create({
+                groupId,
+                text,
+                key: '', //TODO: Remove key from the database, not necessary anymore
+                authorType: 'User',
+                authorId: user.id,
+            });
+            console.log('SEND!!!!');
+        };
+
+        const handleEndReached = () => {
+            console.log('END REACHED!!!!');
+        };
 
         const chatListItems = useMemo(() => {
             return messagesToChatListItems(messages ?? []);
@@ -56,24 +68,32 @@ export default screen(
         return (
             <Screen>
                 <Screen.Header
-                    title={group.name}
+                    title={group?.data.name ?? ''}
                     subtitle={getGroupSubheader(
-                        group.participants.length,
+                        /**
+                         * TODO: Check this works correctly
+                         */
+                        participants?.length ?? 1,
                         presentUserIds.length - 1 // Subtract the current user
                     )}
-                    footer={<ChatStatusHeader groupId={group.id} currency={group.currency} />}
+                    footer={
+                        <ChatStatusHeader
+                            groupId={groupId}
+                            currency={group?.data.currency ?? 'USD' /** TODO */}
+                        />
+                    }
                     right={
                         <BorderlessButton
                             activeOpacity={0.8}
                             onPress={() =>
                                 router.push({
                                     pathname: '/group/[groupId]/settings',
-                                    params: { groupId: group.id },
+                                    params: { groupId },
                                 })
                             }
                         >
                             <Image
-                                image={group.coverImage}
+                                image={coverImage?.data}
                                 width={40}
                                 height={40}
                                 br="full"
@@ -100,7 +120,7 @@ export default screen(
                                                 case 'date':
                                                     return `date_${item.date}`;
                                                 case 'messages':
-                                                    return `messages_${item.messages.at(-1)?.key ?? ''}`;
+                                                    return `messages_${item.messages.at(-1)?.id ?? ''}`;
                                             }
                                         }}
                                         ItemSeparatorComponent={() => <Box height={8} />}
@@ -118,18 +138,15 @@ export default screen(
                                                         <ChatMessageGroup
                                                             userId={user.id}
                                                             authorId={chatListItem.item.authorId}
-                                                            messages={sortBy(
-                                                                chatListItem.item.messages,
-                                                                (message) => message.createdAt
-                                                            )}
+                                                            messages={chatListItem.item.messages}
                                                         />
                                                     );
                                                 }
                                             }
                                         }}
                                         ListFooterComponent={
-                                            group.inviteCode && group.participants.length === 1 ? (
-                                                <CopyInviteCodeBlock code={group.inviteCode} />
+                                            group?.data.inviteCode && participants?.length === 1 ? (
+                                                <CopyInviteCodeBlock code={group.data.inviteCode} />
                                             ) : null
                                         }
                                         inverted
@@ -138,22 +155,22 @@ export default screen(
                                             paddingHorizontal: theme.spacing.xs,
                                             paddingVertical: theme.spacing.lg,
                                         }}
-                                        onEndReached={() => fetchNextPage()}
+                                        onEndReached={() => handleEndReached()}
                                         onEndReachedThreshold={0.5}
                                     />
                                 </ChatBackground>
                                 <ChatInputFooter
-                                    onMessage={sendMessage}
+                                    onMessage={handleSendMessage}
                                     onExpense={() => {
                                         router.push({
                                             pathname: '/group/[groupId]/create-expense',
-                                            params: { groupId: group.id },
+                                            params: { groupId },
                                         });
                                     }}
                                     onPayment={() => {
                                         router.push({
                                             pathname: '/group/[groupId]/create-payment',
-                                            params: { groupId: group.id },
+                                            params: { groupId },
                                         });
                                     }}
                                 />
@@ -163,7 +180,7 @@ export default screen(
                 </KeyboardStickyView>
             </Screen>
         );
-    },
+    }),
     {
         loadingMessage: 'Loading group...',
     }

@@ -1,9 +1,9 @@
-import type { PropsWithChildren } from 'react';
+import React, { useMemo, type PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
-import { skipToken, useQuery } from '@tanstack/react-query';
+import { sortBy } from 'lodash';
+import { observer } from 'mobx-react-lite';
 
-import { getUserDefaultAvatarUrl, getUserShortName } from '@jshare/common';
-import { DB } from '@jshare/db';
+import { getUserDefaultAvatarUrl } from '@jshare/common';
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
@@ -11,31 +11,19 @@ import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { ChatMessage } from '~/components/ChatMessage';
 import { SystemMessage } from '~/components/SystemMessage';
-import { trpc } from '~/lib/trpc';
+import { Store, type Docs } from '~/lib/store/collections';
 
 export type ChatMessageGroupProps = {
     userId: string;
     authorId: string | null;
-    messages: DB.Message<{ author: true; attachments: true }>[];
+    messages: Docs.Message[];
 };
 
-export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>) => {
+const _ChatMessageGroup = observer((props: PropsWithChildren<ChatMessageGroupProps>) => {
     const { theme } = useTheme();
 
-    const profile = useQuery(
-        trpc.z.profile.findUniqueOrThrow.queryOptions(
-            props.authorId
-                ? {
-                      where: {
-                          id: props.authorId,
-                      },
-                      include: {
-                          avatar: true,
-                      },
-                  }
-                : skipToken
-        )
-    ).data as DB.Profile<{ avatar: true }> | null;
+    const profile = Store.profiles.findById(props.authorId);
+    const avatar = profile?.get('avatar');
 
     const isSelf = props.authorId === props.userId;
     const isSystem = props.authorId === null;
@@ -43,35 +31,20 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
         align: isSelf ? 'right' : isSystem ? 'center' : 'left',
     });
 
+    const sortedMessages = useMemo(() => {
+        return sortBy(props.messages, (message) => message.data.createdAt);
+    }, [props.messages]);
+
     return (
         <Stack style={[styles.wrapper]}>
             <Box style={styles.messages}>
-                {props.messages.map((message) => {
-                    switch (message.authorType) {
+                {sortedMessages.map((message) => {
+                    switch (message.data.authorType) {
                         case 'User': {
-                            return (
-                                <ChatMessage
-                                    key={message.key}
-                                    text={message.text ?? ''}
-                                    timestamp={message.createdAt}
-                                    authorName={
-                                        !isSelf && message.author
-                                            ? getUserShortName(message.author)
-                                            : undefined
-                                    }
-                                    color={isSelf ? 'primary' : 'secondary'}
-                                    attachments={message.attachments}
-                                />
-                            );
+                            return <ChatMessage key={message.id} message={message} />;
                         }
                         case 'System': {
-                            return (
-                                <SystemMessage
-                                    key={message.key}
-                                    text={message.text ?? ''}
-                                    timestamp={message.createdAt}
-                                />
-                            );
+                            return <SystemMessage key={message.id} message={message} />;
                         }
                     }
                 })}
@@ -79,8 +52,10 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
             {!isSelf && props.authorId && (
                 <Box style={styles.avatar}>
                     <Image
-                        image={profile?.avatar}
-                        source={{ uri: profile ? getUserDefaultAvatarUrl(profile) : undefined }}
+                        image={avatar?.data}
+                        source={{
+                            uri: profile ? getUserDefaultAvatarUrl(profile.data) : undefined,
+                        }}
                         width={40}
                         height={40}
                         br="full"
@@ -89,7 +64,9 @@ export const ChatMessageGroup = (props: PropsWithChildren<ChatMessageGroupProps>
             )}
         </Stack>
     );
-};
+});
+
+export const ChatMessageGroup = React.memo(_ChatMessageGroup);
 
 const getStyles = (theme: Theme, opts: { align: 'left' | 'right' | 'center' }) => {
     return StyleSheet.create({
