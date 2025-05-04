@@ -33,12 +33,13 @@ export class DocumentStore<
     indexedKeys?: TIndexes;
     index: IndexedMap<TData, TResolvers, TIndexes>;
     resolvers?: TResolvers;
-
+    staleTime: number;
     constructor(args: {
         name: string;
         api: DocumentApi<TData>;
         resolvers?: TResolvers;
         indexedKeys?: TIndexes;
+        staleTime?: number;
     }) {
         this.index = new IndexedMap(args.indexedKeys || []);
         makeAutoObservable(this, {
@@ -49,6 +50,7 @@ export class DocumentStore<
         this.name = args.name;
         this.api = args.api;
         this.resolvers = args.resolvers;
+        this.staleTime = args.staleTime ?? 60_000;
 
         this.flushQueries = debounce(
             async () => {
@@ -221,7 +223,7 @@ export class DocumentStore<
                 shouldFlush = true;
             } else if (this.queries[id].status !== 'running') {
                 const lastFetched = this.queries[id].lastFetched ?? 0;
-                if (Date.now() - lastFetched > 15_000) {
+                if (Date.now() - lastFetched > this.staleTime) {
                     this.queries[id].status = 'pending';
                 }
                 shouldFlush = true;
@@ -247,7 +249,7 @@ export class DocumentStore<
                 shouldFlush = true;
             } else if (this.queries[key].status !== 'running') {
                 const lastFetched = this.queries[key].lastFetched ?? 0;
-                if (Date.now() - lastFetched > 15_000) {
+                if (Date.now() - lastFetched > this.staleTime) {
                     this.queries[key].status = 'pending';
                 }
                 shouldFlush = true;
