@@ -1,19 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 
 import type { DocumentStore } from '~/lib/store/DocumentStore';
-import type { ResolverMap } from '~/lib/store/types';
+import type { InferDataType, InferResolvers, InferUpdateInput } from '~/lib/store/types';
 
-export class Document<
-    T extends { id: string },
-    TResolvers extends ResolverMap<T>,
-    TIndexes extends (keyof T)[],
-> {
+export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
     id: string;
-    data: T;
-    private store: DocumentStore<T, TResolvers, TIndexes>;
-    private resolvers?: TResolvers;
+    data: InferDataType<TStore>;
+    private store: TStore;
+    private resolvers?: InferResolvers<TStore>;
 
-    constructor(store: DocumentStore<T, TResolvers, TIndexes>, data: T, resolvers?: TResolvers) {
+    constructor(store: TStore, data: InferDataType<TStore>, resolvers?: InferResolvers<TStore>) {
         this.store = store;
         this.id = data.id;
         this.data = data;
@@ -28,12 +24,16 @@ export class Document<
         };
     }
 
-    update(updates: Partial<T>) {
+    set(data: Partial<InferDataType<TStore>>) {
+        this.data = { ...this.data, ...data };
+    }
+
+    update(updates: InferUpdateInput<TStore['api']>) {
         this.data = { ...this.data, ...updates };
         this.store.update(this.id, updates);
     }
 
-    get<K extends keyof TResolvers>(key: K): ReturnType<TResolvers[K]> {
+    get<K extends keyof InferResolvers<TStore>>(key: K): ReturnType<InferResolvers<TStore>[K]> {
         if (!this.resolvers) {
             throw new Error(`No resolvers defined for collection ${this.store.name}`);
         }

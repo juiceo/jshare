@@ -43,16 +43,12 @@ export default screen(
                 },
             }
         );
-        const participants = group?.get('participants');
-        const coverImage = group?.get('coverImage');
 
         const handleSendMessage = (text: string) => {
             Store.messages.create({
                 groupId,
                 text,
                 key: '', //TODO: Remove key from the database, not necessary anymore
-                authorType: 'User',
-                authorId: user.id,
             });
             console.log('SEND!!!!');
         };
@@ -73,7 +69,7 @@ export default screen(
                         /**
                          * TODO: Check this works correctly
                          */
-                        participants?.length ?? 1,
+                        group?.data.participants?.length ?? 1,
                         presentUserIds.length - 1 // Subtract the current user
                     )}
                     footer={
@@ -93,7 +89,7 @@ export default screen(
                             }
                         >
                             <Image
-                                image={coverImage?.data}
+                                image={group?.data.coverImage}
                                 width={40}
                                 height={40}
                                 br="full"
@@ -145,7 +141,8 @@ export default screen(
                                             }
                                         }}
                                         ListFooterComponent={
-                                            group?.data.inviteCode && participants?.length === 1 ? (
+                                            group?.data.inviteCode &&
+                                            group?.data.participants?.length === 1 ? (
                                                 <CopyInviteCodeBlock code={group.data.inviteCode} />
                                             ) : null
                                         }

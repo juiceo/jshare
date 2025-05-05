@@ -21,9 +21,12 @@ export const messagesRouter = router({
                     },
                 },
             },
+            include: {
+                attachments: true,
+            },
         });
     }),
-    findWhere: authProcedure
+    findMany: authProcedure
         .input(zFindManyArgs(zDB.models.MessageSchema.pick({ groupId: true })))
         .query(async (opts) => {
             const queries = opts.input.queries;
@@ -40,19 +43,22 @@ export const messagesRouter = router({
                                 },
                             },
                         },
+                        include: {
+                            attachments: true,
+                        },
                     });
                 })
             );
         }),
     create: authProcedure
         .input(
-            zCreateArgs(zDB.models.MessageCreateSchema).omit({ authorId: true, authorType: true })
+            zCreateArgs(zDB.models.MessageCreateSchema.omit({ authorId: true, authorType: true }))
         )
         .mutation(async (opts) => {
             const isGroupParticipant = await db.groupParticipant.findFirst({
                 where: {
                     userId: opts.ctx.userId,
-                    groupId: opts.input.groupId,
+                    groupId: opts.input.data.groupId,
                 },
             });
 
@@ -65,9 +71,12 @@ export const messagesRouter = router({
 
             return db.message.create({
                 data: {
-                    ...opts.input,
+                    ...opts.input.data,
                     authorId: opts.ctx.userId,
                     authorType: 'User',
+                },
+                include: {
+                    attachments: true,
                 },
             });
         }),

@@ -8,6 +8,7 @@ import { useTheme, type Theme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
+import { ChatMessageAttachment } from '~/components/ChatMessageAttachment';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import type { Docs } from '~/lib/store/collections';
@@ -41,29 +42,20 @@ const _ChatMessage = observer((props: ChatMessageProps) => {
             start={{ x: 0, y: -1 }}
             end={{ x: 1, y: 1 }}
         >
-            {!isSelf && message.data.authorId ? (
+            {!isSelf && message.data.authorId && (
                 <Stack style={styles.author}>
                     <Typography variant="h6" style={styles.authorName}>
                         <UserName userId={message.data.authorId} variant="short" />
                     </Typography>
                 </Stack>
-            ) : (
-                <Box h={4} />
             )}
-            {/**
-             * TODO: Add support for attachments
-             */}
-            {/* {attachments.length && (
+            {!!message.data.attachments?.length && (
                 <Stack style={styles.attachments} column justifyStart>
-                    {attachments.map((attachment) => (
-                        <ChatMessageAttachment
-                            key={attachment.id}
-                            type={attachment.type}
-                            expenseId={attachment.expenseId ?? ''}
-                        />
+                    {message.data.attachments.map((attachment) => (
+                        <ChatMessageAttachment key={attachment.id} attachment={attachment} />
                     ))}
                 </Stack>
-            )} */}
+            )}
             {message.data.text && (
                 <Stack style={styles.text}>
                     <Typography variant="body1">

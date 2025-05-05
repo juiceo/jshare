@@ -11,18 +11,15 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { Store } from '~/lib/store/collections';
 
 export type AvatarPickerProps = {
-    value: string | null;
-    onChange: (value: string | null) => void;
+    value: DB.Image | null;
+    onChange: (value: DB.Image | null) => void;
     profile?: DB.Profile;
 };
 
 export const AvatarPicker = observer((props: AvatarPickerProps) => {
     const { value, onChange, profile } = props;
-
-    const image = Store.images.findById(value);
 
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({
@@ -41,7 +38,7 @@ export const AvatarPicker = observer((props: AvatarPickerProps) => {
         <>
             <View style={{ position: 'relative', width: 128, height: 128 }}>
                 <Image
-                    image={image?.data}
+                    image={value}
                     source={!value ? { uri: defaultAvatar } : null}
                     w={128}
                     h={128}
@@ -74,12 +71,12 @@ export const AvatarPicker = observer((props: AvatarPickerProps) => {
                     switch (option) {
                         case 'library': {
                             return imageUpload.uploadFromLibrary().then(({ uploaded }) => {
-                                return onChange(uploaded[0].id);
+                                return onChange(uploaded[0]);
                             });
                         }
                         case 'camera': {
                             return imageUpload.uploadFromCamera().then(({ uploaded }) => {
-                                return onChange(uploaded[0].id);
+                                return onChange(uploaded[0]);
                             });
                         }
                         case 'remove': {

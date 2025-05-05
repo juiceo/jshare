@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import type { DocumentStore } from '~/lib/store/DocumentStore';
 import { Document } from './Document';
 import { IndexedMap } from './IndexedMap';
 
@@ -11,14 +12,16 @@ describe('IndexedMap', () => {
         read?: boolean;
     };
 
-    let map: IndexedMap<Message, any, ['groupId', 'read']>;
+    type StoreType = DocumentStore<any, any, any, any, Message>;
+    type DocType = Document<StoreType>;
+    let map: IndexedMap<StoreType>;
 
     const getDoc = (id: string, groupId: string, authorId: string, read?: boolean) => {
         return new Document(
             null as any,
             { id, groupId, authorId, read } as Message,
             null as any
-        ) as Document<Message, any, ['groupId', 'read']>;
+        ) as DocType;
     };
 
     beforeEach(() => {

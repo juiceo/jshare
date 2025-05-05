@@ -1,31 +1,24 @@
-import { DB } from '@jshare/db';
+import { DB, zDB } from '@jshare/db';
 
 import { GroupsStore } from '~/lib/store/collections/groups';
 import { ProfilesStore } from '~/lib/store/collections/profiles';
 import { DocumentStore } from '~/lib/store/DocumentStore';
-import type { Query } from '~/lib/store/types';
 import { trpcClient } from '~/lib/trpc';
 
 export const MessagesStore = new DocumentStore({
     name: 'messages',
+    schema: zDB.models.MessageSchema.transform((data) => data as DB.Message<{ attachments: true }>),
     api: {
-        findById: async (ids: string[]) => {
-            return trpcClient.models.messages.findById.query({ ids });
-        },
-        findWhere: async (queries: Query<DB.Message>[]) => {
-            return trpcClient.models.messages.findWhere.query({ queries });
-        },
-        create: async (input: DB.Message) => {
-            return trpcClient.models.messages.create.mutate(input);
-        },
+        findById: trpcClient.models.messages.findById.query,
+        findMany: trpcClient.models.messages.findMany.query,
+        create: trpcClient.models.messages.create.mutate,
     },
     resolvers: {
-        author: (message: DB.Message) => {
+        author: (message) => {
             return ProfilesStore.findById(message.authorId);
         },
-        group: (message: DB.Message) => {
+        group: (message) => {
             return GroupsStore.findById(message.groupId);
         },
     },
-    staleTime: 60_000, // 30 seconds
 });

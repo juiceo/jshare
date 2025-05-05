@@ -14,7 +14,6 @@ export const zFindManyArgs = <TAllowedFields extends Zod.ZodObject<any>>(
     z.object({
         queries: schema
             .partial()
-            .strip()
             .refine<z.infer<TAllowedFields>>(
                 (value): value is TAllowedFields => {
                     if (!isEmpty(value)) return true;
@@ -34,27 +33,25 @@ export const zFindManyArgs = <TAllowedFields extends Zod.ZodObject<any>>(
 export const zUpdateArgs = <TUpdateSchema extends Zod.ZodObject<any>>(schema: TUpdateSchema) =>
     z.object({
         id: zID,
+        data: schema.omit({
+            id: true,
+            createdAt: true,
+            updatedAt: true,
+        }) as TUpdateSchema,
+    });
+
+export const zCreateArgs = <TCreateSchema extends Zod.ZodObject<any>>(schema: TCreateSchema) =>
+    z.object({
         data: schema
             .omit({
                 id: true,
                 createdAt: true,
                 updatedAt: true,
             })
-            .partial()
-            .strip(),
+            .extend({
+                id: zID,
+            }) as TCreateSchema,
     });
-
-export const zCreateArgs = <TCreateSchema extends Zod.ZodObject<any>>(schema: TCreateSchema) =>
-    schema
-        .omit({
-            createdAt: true,
-            updatedAt: true,
-            id: true,
-        })
-        .extend({
-            id: zID,
-        })
-        .strip() as TCreateSchema;
 
 export const zDeleteArgs = z.object({
     id: zID,

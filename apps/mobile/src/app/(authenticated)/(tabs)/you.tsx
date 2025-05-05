@@ -3,6 +3,8 @@ import dayjs from 'dayjs';
 import { router } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 
+import type { DB } from '@jshare/db';
+
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
@@ -21,9 +23,10 @@ export default screen(
 
         const profile = Store.profiles.findById(user.id);
 
-        const updateAvatar = (avatarId: string | null) => {
+        const updateAvatar = (avatar: DB.Image | null) => {
+            profile?.set({ avatar });
             profile?.update({
-                avatarId,
+                avatarId: avatar?.id,
             });
         };
 
@@ -34,7 +37,7 @@ export default screen(
                         <Stack column center p="xl" br="md" spacing="none">
                             <Stack mt="2xl" center>
                                 <AvatarPicker
-                                    value={profile?.data?.avatarId ?? null}
+                                    value={profile?.data?.avatar ?? null}
                                     profile={profile?.data ?? undefined}
                                     onChange={updateAvatar}
                                 />

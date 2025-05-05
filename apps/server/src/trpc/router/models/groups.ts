@@ -19,9 +19,13 @@ export const groupsRouter = router({
                     },
                 },
             },
+            include: {
+                coverImage: true,
+                participants: true,
+            },
         });
     }),
-    findWhere: authProcedure
+    findMany: authProcedure
         .input(
             zFindManyArgs(zDB.models.GroupScalarSchema.pick({ inviteCode: true }), {
                 allowEmpty: true,
@@ -40,6 +44,10 @@ export const groupsRouter = router({
                                     userId: opts.ctx.userId,
                                 },
                             },
+                        },
+                        include: {
+                            coverImage: true,
+                            participants: true,
                         },
                     });
                 })
@@ -75,6 +83,10 @@ export const groupsRouter = router({
                     id: opts.input.id,
                 },
                 data: opts.input.data,
+                include: {
+                    coverImage: true,
+                    participants: true,
+                },
             });
         }),
     create: authProcedure
@@ -82,13 +94,17 @@ export const groupsRouter = router({
         .mutation(async (opts) => {
             return db.group.create({
                 data: {
-                    ...opts.input,
+                    ...opts.input.data,
                     participants: {
                         create: {
                             userId: opts.ctx.userId,
                             role: 'Owner',
                         },
                     },
+                },
+                include: {
+                    coverImage: true,
+                    participants: true,
                 },
             });
         }),

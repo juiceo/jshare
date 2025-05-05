@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import shortid from 'shortid';
 import { z } from 'zod';
 
-import { zDB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -21,7 +21,11 @@ import { useCurrentUser } from '~/wrappers/SessionProvider';
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
     currency: zDB.enums.CurrencyCodeSchema,
-    coverImageId: z.string().optional(),
+    coverImage: z
+        .object({ id: z.string() })
+        .passthrough()
+        .transform((d) => d as DB.Image)
+        .nullable(),
 });
 type Schema = z.infer<typeof schema>;
 
@@ -40,13 +44,17 @@ export default screen(
         });
 
         const handleSubmit = async (data: Schema) => {
-            Store.groups.create({
+            console.log('SUBMITTING', data);
+            const group = await Store.groups.create({
                 name: data.name,
                 currency: data.currency,
-                coverImageId: data.coverImageId ?? null,
+                coverImageId: data.coverImage?.id ?? null,
                 inviteCode: shortid.generate(),
                 lastActivity: new Date(),
             });
+            if (group && data.coverImage) {
+                group.set({ coverImage: data.coverImage });
+            }
             router.dismiss();
         };
 
@@ -57,10 +65,10 @@ export default screen(
                     <Stack column spacing="md" p="xl">
                         <Controller
                             control={form.control}
-                            name="coverImageId"
+                            name="coverImage"
                             render={({ field }) => (
                                 <ImageUploader
-                                    value={field.value}
+                                    value={field.value as DB.Image | null}
                                     onChange={field.onChange}
                                     aspectRatio={[16, 9]}
                                     placeholder="Add a cover image"

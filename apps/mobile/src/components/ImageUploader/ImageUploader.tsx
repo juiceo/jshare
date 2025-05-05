@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { ActivityIndicator, Pressable } from 'react-native';
 import { observer } from 'mobx-react-lite';
 
+import type { DB } from '@jshare/db';
+
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Icon } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { Typography } from '~/components/Typography';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
-import { Store } from '~/lib/store/collections';
 
 export type ImageUploaderProps = {
-    value: string | null | undefined;
-    onChange: (value: string | null) => void;
+    value: DB.Image | null;
+    onChange: (value: DB.Image | null) => void;
     aspectRatio: [number, number];
     placeholder?: string;
 };
@@ -30,8 +31,6 @@ export const ImageUploader = observer((props: ImageUploaderProps) => {
         allowsMultipleSelection: false,
     });
 
-    const image = Store.images.findById(value);
-
     return (
         <>
             <Pressable onPress={() => setMenuOpen(true)}>
@@ -48,8 +47,8 @@ export const ImageUploader = observer((props: ImageUploaderProps) => {
                     {!value && <EmptyPlaceholder text={placeholder ?? 'Upload an image'} />}
                     {imageUpload.isUploading && <LoadingOverlay />}
                     <Image
-                        key={value}
-                        image={image?.data}
+                        key={value?.id ?? '-'}
+                        image={value}
                         quality={50}
                         style={[
                             {
@@ -69,12 +68,12 @@ export const ImageUploader = observer((props: ImageUploaderProps) => {
                     switch (option) {
                         case 'library':
                             return imageUpload.uploadFromLibrary().then(({ uploaded }) => {
-                                onChange(uploaded[0].id ?? null);
+                                onChange(uploaded[0]);
                             });
                         case 'camera':
                             return imageUpload
                                 .uploadFromCamera()
-                                .then(({ uploaded }) => onChange(uploaded[0].id ?? null));
+                                .then(({ uploaded }) => onChange(uploaded[0]));
                         case 'remove':
                             return onChange(null);
                     }

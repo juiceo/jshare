@@ -23,7 +23,6 @@ const _ChatMessageGroup = observer((props: PropsWithChildren<ChatMessageGroupPro
     const { theme } = useTheme();
 
     const profile = Store.profiles.findById(props.authorId);
-    const avatar = profile?.get('avatar');
 
     const isSelf = props.authorId === props.userId;
     const isSystem = props.authorId === null;
@@ -52,7 +51,7 @@ const _ChatMessageGroup = observer((props: PropsWithChildren<ChatMessageGroupPro
             {!isSelf && props.authorId && (
                 <Box style={styles.avatar}>
                     <Image
-                        image={avatar?.data}
+                        image={profile?.data.avatar}
                         source={{
                             uri: profile ? getUserDefaultAvatarUrl(profile.data) : undefined,
                         }}

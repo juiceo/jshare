@@ -80,10 +80,9 @@ const loggingMiddleware: MiddlewareFunction<Context, any, any, any, any> = async
     };
 
     if (result.ok) {
-        console.log(`[OK ${meta.durationMs}ms] ${meta.type} ${meta.path}`, {
-            input: meta.input,
-        });
+        console.log(`[OK ${meta.durationMs}ms] ${meta.type} ${meta.path}`);
     } else {
+        console.error(result.error);
         console.error(`[ERR ${meta.durationMs}ms] ${meta.type} ${meta.path}`, {
             input: meta.input,
         });

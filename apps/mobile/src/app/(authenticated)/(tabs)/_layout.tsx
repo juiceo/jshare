@@ -24,6 +24,7 @@ export default screen(() => {
                 sceneStyle: {
                     backgroundColor: theme.palette.background.main,
                 },
+                animation: 'shift',
             }}
         >
             <Tabs.Screen

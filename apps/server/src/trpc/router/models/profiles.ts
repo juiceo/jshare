@@ -15,14 +15,17 @@ export const profilesRouter = router({
                     in: opts.input.ids,
                 },
             },
+            include: {
+                avatar: true,
+            },
         });
     }),
     update: authProcedure
         .input(
             zUpdateArgs(
                 zDB.models.ProfileUpdateSchema.extend({
-                    avatarId: z.string().nullable(),
-                })
+                    avatarId: z.string().nullable().optional(),
+                }).omit({ lastActivity: true, temporary: true })
             )
         )
         .mutation(async (opts) => {
@@ -37,19 +40,39 @@ export const profilesRouter = router({
                     id: opts.input.id,
                 },
                 data: opts.input.data,
+                include: {
+                    avatar: true,
+                },
             });
         }),
     create: authProcedure
-        .input(zCreateArgs(zDB.models.ProfileCreateSchema))
+        .input(
+            zCreateArgs(
+                zDB.models.ProfileCreateSchema.omit({
+                    lastActivity: true,
+                    temporary: true,
+                    termsAcceptedAt: true,
+                })
+            )
+        )
         .mutation(async (opts) => {
-            if (opts.input.id !== opts.ctx.userId) {
+            if (opts.input.data.id !== opts.ctx.userId) {
                 throw new TRPCError({
                     code: 'UNAUTHORIZED',
                     message: 'You can only create your own profile',
                 });
             }
             return db.profile.create({
-                data: opts.input,
+                data: {
+                    ...opts.input.data,
+                    lastActivity: new Date(),
+                    temporary: false,
+                    termsAcceptedAt: new Date(),
+                    showInSearch: true,
+                },
+                include: {
+                    avatar: true,
+                },
             });
         }),
 });

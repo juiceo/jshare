@@ -1,13 +1,35 @@
+import { z } from 'zod';
+
 import type { Document } from '~/lib/store/Document';
+import type { DocumentStore } from '~/lib/store/DocumentStore';
 
 export type Query<T extends { id: string }> = Partial<T>;
 
-export type DocumentApi<T extends { id: string }> = {
-    findById: (ids: string[]) => Promise<T[]>;
-    findWhere?: (queries: Query<T>[]) => Promise<T[][]>;
-    update?: (id: string, updates: Partial<T>) => Promise<T>;
-    create?: (input: T) => Promise<T>;
+export type DocumentApi<
+    TData extends { id: string },
+    TCreateInput extends object,
+    TUpdateInput extends object,
+> = {
+    findById: (args: { ids: string[] }) => Promise<TData[]>;
+    findMany?: (args: { queries: Query<TData>[] }) => Promise<TData[][]>;
+    update?: (args: { id: string; data: TUpdateInput }) => Promise<TData>;
+    create?: (args: { data: TCreateInput }) => Promise<TData>;
 };
+
+export type InferCreateInput<TApi extends DocumentApi<any, any, any>> =
+    TApi extends DocumentApi<any, infer C, any> ? C : never;
+
+export type InferUpdateInput<TApi extends DocumentApi<any, any, any>> =
+    TApi extends DocumentApi<any, any, infer U> ? U : never;
+
+export type InferResolvers<TStore extends DocumentStore<any, any, any, any, any>> =
+    TStore extends DocumentStore<any, any, infer R, any, any> ? R : never;
+
+export type InferIndexedKeys<TStore extends DocumentStore<any, any, any, any, any>> =
+    TStore extends DocumentStore<any, any, any, infer I, any> ? I : never;
+
+export type InferDataType<TStore extends DocumentStore<any, any, any, any, any>> =
+    TStore extends DocumentStore<infer S, any, any, any, any> ? z.infer<S> : never;
 
 export type DocumentStoreHooks<T extends { id: string }> = {
     afterCreate?: (doc: T) => void;
@@ -28,9 +50,9 @@ export type FindManyOpts<TData extends { id: string }> = {
     };
 };
 
-export type UpdateEntry<TData extends { id: string }> = {
+export type UpdateEntry<TApi extends DocumentApi<any, any, any>> = {
     id: string;
-    updates: Partial<TData>;
+    updates: InferUpdateInput<TApi>;
     status: 'pending' | 'running' | 'done';
 };
 
@@ -48,7 +70,8 @@ export type QueryEntry<TData extends { id: string }> =
           status: 'pending' | 'running' | 'done';
       };
 
-export interface QueryResultsArray<T extends { id: string }> extends Array<Document<T, any, any>> {
+export interface QueryResultsArray<TStore extends DocumentStore<any, any, any, any, any>>
+    extends Array<Document<TStore>> {
     readonly $queryKey: string;
     readonly $loading?: boolean;
 }

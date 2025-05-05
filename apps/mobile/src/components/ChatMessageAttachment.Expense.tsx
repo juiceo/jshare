@@ -1,19 +1,18 @@
 import { Dimensions } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
+import { observer } from 'mobx-react-lite';
 import { Skeleton } from 'moti/skeleton';
 
-import { formatAmount, getUserShortName } from '@jshare/common';
-import type { DB } from '@jshare/db';
+import { formatAmount } from '@jshare/common';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { UserName } from '~/components/UserName';
+import { Store } from '~/lib/store/collections';
 import { useSession } from '~/wrappers/SessionProvider';
-import { withSuspense } from '~/wrappers/withSuspense';
 
 const screenW = Dimensions.get('window').width;
 
@@ -29,80 +28,64 @@ const ExpenseSkeleton = () => {
     );
 };
 
-const ExpenseNotFound = () => {
-    return (
-        <Box br="xl" style={{ overflow: 'hidden' }} bg="background.main">
-            <Stack width={screenW * 0.6} height={screenW * 0.6} center>
-                <Typography variant="subtitle1" color="hint">
-                    Expense not found
-                </Typography>
-            </Stack>
-        </Box>
-    );
-};
+export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseAttachmentProps) => {
+    const { session } = useSession();
+    const router = useRouter();
+    const userId = session?.user.id;
 
-export const ChatMessageExpenseAttachment = withSuspense(
-    (props: ChatMessageExpenseAttachmentProps) => {
-        const { session } = useSession();
-        const router = useRouter();
-        const userId = session?.user.id;
-        const expense = useSuspenseQuery(
-            trpc.z.expense.findUnique.queryOptions({
-                where: { id: props.expenseId },
-                include: { payer: true, shares: true },
-            })
-        ).data as DB.Expense<{ payer: true; shares: true }> | null;
+    const expense = Store.expenses.findById(props.expenseId);
+    const shares = Store.expenseShares.findMany({ expenseId: props.expenseId });
 
-        if (!expense) return null;
-
-        const ownShare = expense.shares.find((share) => share.userId === userId);
-
-        return (
-            <BorderlessButton
-                activeOpacity={0.9}
-                onPress={() => {
-                    router.push({
-                        pathname: '/group/[groupId]/expense/[expenseId]',
-                        params: { groupId: expense.groupId, expenseId: expense.id },
-                    });
-                }}
-            >
-                <Stack bg="background.elevation1" p="2xl">
-                    <Stack column center br="xl" mb="md" spacing="md">
-                        <Avatar userId={expense.payerId} size="sm" />
-                        <Typography variant="caption" color="hint" align="center">
-                            {getUserShortName(expense.payer)} paid
-                        </Typography>
-                    </Stack>
-                    <Stack center p="2xl">
-                        <Typography
-                            variant="h1"
-                            align="center"
-                            strikeThrough={!!expense.archived}
-                            color={expense.archived ? 'hint' : 'primary'}
-                        >
-                            {formatAmount(expense.amount, expense.currency)}
-                        </Typography>
-                        <Typography variant="caption" color="secondary" align="center">
-                            {expense.description}
-                        </Typography>
-                    </Stack>
-                    {!expense.archived && (
-                        <Stack column center>
-                            <Typography variant="h6">
-                                Your share:{' '}
-                                {ownShare
-                                    ? formatAmount(ownShare.amount, ownShare.currency)
-                                    : formatAmount(0, expense.currency)}
-                            </Typography>
-                        </Stack>
-                    )}
-                </Stack>
-            </BorderlessButton>
-        );
-    },
-    {
-        loader: <ExpenseSkeleton />,
-        fallback: <ExpenseNotFound />,
+    if (!expense) {
+        /**
+         * TODO: Figure out how to differentiate between loading and not found state
+         */
+        return <ExpenseSkeleton />;
     }
-);
+
+    const ownShare = shares.find((share) => share.data.userId === userId);
+
+    return (
+        <BorderlessButton
+            activeOpacity={0.9}
+            onPress={() => {
+                router.push({
+                    pathname: '/group/[groupId]/expense/[expenseId]',
+                    params: { groupId: expense.data.groupId, expenseId: expense.id },
+                });
+            }}
+        >
+            <Stack bg="background.elevation1" p="2xl">
+                <Stack column center br="xl" mb="md" spacing="md">
+                    <Avatar userId={expense.data.payerId} size="sm" />
+                    <Typography variant="caption" color="hint" align="center">
+                        <UserName userId={expense.data.payerId} variant="short" /> paid
+                    </Typography>
+                </Stack>
+                <Stack center p="2xl">
+                    <Typography
+                        variant="h1"
+                        align="center"
+                        strikeThrough={!!expense.data.archived}
+                        color={expense.data.archived ? 'hint' : 'primary'}
+                    >
+                        {formatAmount(expense.data.amount, expense.data.currency)}
+                    </Typography>
+                    <Typography variant="caption" color="secondary" align="center">
+                        {expense.data.description}
+                    </Typography>
+                </Stack>
+                {!expense.data.archived && (
+                    <Stack column center>
+                        <Typography variant="h6">
+                            Your share:{' '}
+                            {ownShare
+                                ? formatAmount(ownShare.data.amount, ownShare.data.currency)
+                                : formatAmount(0, expense.data.currency)}
+                        </Typography>
+                    </Stack>
+                )}
+            </Stack>
+        </BorderlessButton>
+    );
+});

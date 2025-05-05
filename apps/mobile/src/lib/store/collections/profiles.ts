@@ -1,34 +1,22 @@
-import { DB } from '@jshare/db';
+import { getUserFullName } from '@jshare/common';
+import { zDB, type DB } from '@jshare/db';
 
-import { ImagesStore } from '~/lib/store/collections/images';
 import { DocumentStore } from '~/lib/store/DocumentStore';
 import { trpcClient } from '~/lib/trpc';
 
 export const ProfilesStore = new DocumentStore({
     name: 'profiles',
+    schema: zDB.models.ProfileSchema.extend({
+        avatar: zDB.models.ImageSchema.nullable().optional(),
+    }).transform((data) => data as DB.Profile<{ avatar: true }>),
     api: {
-        findById: async (ids: string[]) => {
-            return trpcClient.models.profiles.findById.query({ ids });
-        },
-        update: async (id: string, data: Partial<DB.Profile>) => {
-            return trpcClient.models.profiles.update.mutate({ id, data });
-        },
-        create: async (input: DB.Profile) => {
-            return trpcClient.models.profiles.create.mutate(input);
-        },
+        findById: trpcClient.models.profiles.findById.query,
+        update: trpcClient.models.profiles.update.mutate,
+        create: trpcClient.models.profiles.create.mutate,
     },
     resolvers: {
-        fullName: (data: DB.Profile) => {
-            return `${data.firstName} ${data.lastName}`;
-        },
-        avatar: (data: DB.Profile) => {
-            return data.avatarId ? ImagesStore.findById(data.avatarId) : undefined;
+        fullName: (data) => {
+            return getUserFullName(data);
         },
     },
-    hooks: {
-        afterUpdate: (data: DB.Profile) => {
-            console.log('PROFILE UPDATED', data.id);
-        },
-    },
-    staleTime: 120_000, // 2 minutes
 });

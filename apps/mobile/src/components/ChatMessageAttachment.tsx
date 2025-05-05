@@ -1,3 +1,5 @@
+import { observer } from 'mobx-react-lite';
+
 import type { DB } from '@jshare/db';
 
 import { ChatMessageExpenseAttachment } from '~/components/ChatMessageAttachment.Expense';
@@ -5,14 +7,14 @@ import { ChatMessageExpenseAttachment } from '~/components/ChatMessageAttachment
 export type ChatMessageAttachmentProps = ChatMessageExpenseAttachmentProps;
 
 type ChatMessageExpenseAttachmentProps = {
-    type: DB.MessageAttachmentType;
-    expenseId: string;
+    attachment: DB.MessageAttachment;
 };
 
-export const ChatMessageAttachment = (props: ChatMessageAttachmentProps) => {
-    switch (props.type) {
+export const ChatMessageAttachment = observer((props: ChatMessageAttachmentProps) => {
+    switch (props.attachment.type) {
         case 'Expense': {
-            return <ChatMessageExpenseAttachment expenseId={props.expenseId} />;
+            const expenseId = props.attachment.expenseId;
+            return expenseId ? <ChatMessageExpenseAttachment expenseId={expenseId} /> : null;
         }
     }
-};
+});

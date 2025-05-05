@@ -2,20 +2,16 @@ import { isEqual } from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 
 import { Document } from '~/lib/store/Document';
-import type { ResolverMap } from '~/lib/store/types';
+import type { DocumentStore } from '~/lib/store/DocumentStore';
+import type { InferDataType, InferIndexedKeys } from '~/lib/store/types';
 
-export class IndexedMap<
-    TData extends { id: string },
-    TResolvers extends ResolverMap<TData>,
-    TIndexes extends (keyof TData)[],
-> {
+export class IndexedMap<TStore extends DocumentStore<any, any, any, any, any>> {
     updatedAt: number = Date.now();
-    private items = new Map<string, Document<TData, TResolvers, TIndexes>>();
-    private indexes: Map<keyof TData, Map<any, Set<Document<TData, TResolvers, TIndexes>>>> =
-        new Map();
-    private readonly indexedKeys: (keyof TData)[];
+    private items = new Map<string, Document<TStore>>();
+    private indexes: Map<keyof InferDataType<TStore>, Map<any, Set<Document<TStore>>>> = new Map();
+    private readonly indexedKeys: (keyof InferIndexedKeys<TStore>)[];
 
-    constructor(indexedKeys: (keyof TData)[]) {
+    constructor(indexedKeys: InferIndexedKeys<TStore>) {
         makeObservable<this, 'items'>(this, {
             items: observable,
             add: action,
@@ -26,11 +22,11 @@ export class IndexedMap<
         this.indexedKeys = indexedKeys;
     }
 
-    get(id: string): Document<TData, TResolvers, TIndexes> | undefined {
+    get(id: string): Document<TStore> | undefined {
         return this.items.get(id);
     }
 
-    getAll(): Document<TData, TResolvers, TIndexes>[] {
+    getAll(): Document<TStore>[] {
         return Array.from(this.items.values());
     }
 
@@ -38,7 +34,7 @@ export class IndexedMap<
         return this.items.has(id);
     }
 
-    values(): IterableIterator<Document<TData, TResolvers, TIndexes>> {
+    values(): IterableIterator<Document<TStore>> {
         return this.items.values();
     }
 
@@ -51,13 +47,13 @@ export class IndexedMap<
         this.indexes.clear();
     }
 
-    find(query: Partial<TData>): Document<TData, TResolvers, TIndexes>[] {
-        const queryKeys = Object.keys(query) as (keyof TData)[];
+    find(query: Partial<InferDataType<TStore>>): Document<TStore>[] {
+        const queryKeys = Object.keys(query) as (keyof InferDataType<TStore>)[];
         if (queryKeys.length === 0) return Array.from(this.items.values());
 
         // Separate indexed and unindexed query parts
-        const indexed: [keyof TData, any][] = [];
-        const unindexed: [keyof TData, any][] = [];
+        const indexed: [keyof InferDataType<TStore>, any][] = [];
+        const unindexed: [keyof InferDataType<TStore>, any][] = [];
 
         for (const key of queryKeys) {
             if (this.indexes.has(key)) {
@@ -67,7 +63,7 @@ export class IndexedMap<
             }
         }
 
-        let candidateSet: Set<Document<TData, TResolvers, TIndexes>> | null = null;
+        let candidateSet: Set<Document<TStore>> | null = null;
 
         for (const [key, val] of indexed) {
             const keyIndex = this.indexes.get(key);
@@ -81,7 +77,7 @@ export class IndexedMap<
                 candidateSet = new Set(docsForKey);
             } else {
                 candidateSet = new Set(
-                    [...candidateSet].filter((doc: Document<TData, TResolvers, TIndexes>) => {
+                    [...candidateSet].filter((doc: Document<TStore>) => {
                         return docsForKey.has(doc);
                     })
                 );
@@ -89,7 +85,7 @@ export class IndexedMap<
             }
         }
 
-        let result: Document<TData, TResolvers, TIndexes>[];
+        let result: Document<TStore>[];
 
         if (candidateSet) {
             result = [...candidateSet];
@@ -106,7 +102,7 @@ export class IndexedMap<
         return result;
     }
 
-    add(id: string, doc: Document<TData, TResolvers, TIndexes>): void {
+    add(id: string, doc: Document<TStore>): void {
         if (!doc) return;
         this.updatedAt = Date.now();
         const existing = this.items.get(id);
@@ -119,13 +115,13 @@ export class IndexedMap<
         this.index(doc);
     }
 
-    init(docs: Document<TData, TResolvers, TIndexes>[]) {
+    init(docs: Document<TStore>[]) {
         for (const doc of docs) {
             this.add(doc.id, doc);
         }
     }
 
-    delete(id: string): Document<TData, TResolvers, TIndexes> | null {
+    delete(id: string): Document<TStore> | null {
         this.updatedAt = Date.now();
         const existing = this.items.get(id);
         if (!existing) return null;
@@ -135,7 +131,7 @@ export class IndexedMap<
         return existing;
     }
 
-    update(id: string, data: TData) {
+    update(id: string, data: InferDataType<TStore>) {
         this.updatedAt = Date.now();
         const doc = this.items.get(id);
         if (!doc) return;
@@ -145,7 +141,7 @@ export class IndexedMap<
         this.index(doc);
     }
 
-    private index(doc: Document<TData, TResolvers, TIndexes>) {
+    private index(doc: Document<TStore>) {
         for (const key of this.indexedKeys) {
             const val = doc.data[key];
             if (val == null) continue;
@@ -166,7 +162,7 @@ export class IndexedMap<
         }
     }
 
-    private unindex(doc: Document<TData, TResolvers, TIndexes>) {
+    private unindex(doc: Document<TStore>) {
         for (const key of this.indexedKeys) {
             const val = doc.data[key];
             if (val == null) continue;

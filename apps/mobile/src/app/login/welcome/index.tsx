@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { z } from 'zod';
 
 import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '@jshare/common';
-import { zDB } from '@jshare/db';
+import { zDB, type DB } from '@jshare/db';
 import { useTheme } from '@jshare/theme';
 
 import { Checkbox } from '~/components/atoms/Checkbox';
@@ -28,7 +28,7 @@ const schema = z.object({
     firstName: z.string().min(1, 'First name is required'),
     lastName: z.string(),
     currency: zDB.enums.CurrencyCodeSchema,
-    avatarId: z.string().optional(),
+    avatar: zDB.models.ImageSchema.nullable(),
     termsAccepted: z
         .boolean()
         .refine((value) => value === true, 'Please accept the Privacy Policy and Terms of Service'),
@@ -71,11 +71,8 @@ export default screen(() => {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 currency: data.currency,
-                avatarId: data.avatarId ?? null,
+                avatarId: data.avatar?.id ?? null,
                 email,
-                lastActivity: new Date(),
-                temporary: false,
-                termsAcceptedAt: new Date(),
                 showInSearch: true,
             });
             router.dismissAll();
@@ -102,10 +99,10 @@ export default screen(() => {
                     <Stack py="3xl" center>
                         <Controller
                             control={form.control}
-                            name="avatarId"
+                            name="avatar"
                             render={({ field }) => (
                                 <AvatarPicker
-                                    value={field.value ?? null}
+                                    value={field.value as DB.Image | null}
                                     onChange={field.onChange}
                                 />
                             )}

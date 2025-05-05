@@ -1,14 +1,16 @@
 import { router } from '../../trpc';
-import { groupParticipantsRouter } from './groupParticipants';
+import { expensesRouter } from './expenses';
+import { expenseSharesRouter } from './expenseShares';
 import { groupsRouter } from './groups';
-import { imagesRouter } from './images';
 import { messagesRouter } from './messages';
+import { paymentsRouter } from './payments';
 import { profilesRouter } from './profiles';
 
 export const modelsRouter = router({
     profiles: profilesRouter,
-    images: imagesRouter,
     groups: groupsRouter,
-    groupParticipants: groupParticipantsRouter,
     messages: messagesRouter,
+    expenses: expensesRouter,
+    expenseShares: expenseSharesRouter,
+    payments: paymentsRouter,
 });

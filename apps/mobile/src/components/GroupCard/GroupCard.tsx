@@ -22,8 +22,6 @@ export const GroupCard = observer((props: GroupCardProps) => {
     const { group } = props;
 
     const user = useCurrentUser();
-    const image = group.get('coverImage');
-    const participants = group.get('participants');
 
     const groupTotal = useQuery(
         trpc.expenses.getTotalForGroup.queryOptions({ groupId: group.id })
@@ -44,7 +42,7 @@ export const GroupCard = observer((props: GroupCardProps) => {
                 <Image
                     height={140}
                     width={Dimensions.get('window').width}
-                    image={image?.data}
+                    image={group?.data.coverImage}
                     fit="cover"
                     quality={80}
                 />
@@ -72,7 +70,7 @@ export const GroupCard = observer((props: GroupCardProps) => {
                     {`${formatAmount(groupTotal ?? 0, group.data.currency)} | ${plural({
                         plural: 'members',
                         singular: 'member',
-                        count: participants.length || 1,
+                        count: group.data.participants?.length || 1,
                     })}`}
                 </Typography>
             </Stack>
