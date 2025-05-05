@@ -35,7 +35,7 @@ export type ExpenseEditorSchema = z.infer<typeof expenseEditorSchema>;
 export type ExpenseEditorProps = {
     form: UseFormReturn<ExpenseEditorSchema>;
     groupCurrency: DB.CurrencyCode;
-    groupMembers: DB.GroupParticipant<{ user: true }>[];
+    groupMembers: DB.GroupParticipant[];
     groupId: string;
 };
 
@@ -117,8 +117,7 @@ export const ExpenseEditor = (props: ExpenseEditorProps) => {
                         <UserSelect
                             label="Paid by"
                             placeholder="Select person"
-                            type="participants"
-                            users={groupMembers ?? []}
+                            userIds={groupMembers.map((member) => member.userId)}
                             value={field.value}
                             onChange={(userId, profile) => field.onChange(userId)}
                             error={error?.message}

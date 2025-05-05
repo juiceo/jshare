@@ -394,6 +394,20 @@ export class DocumentStore<
         return this.findByIdComputed(id);
     }
 
+    private findByIdsComputed = computedFn((ids: string[]) => {
+        return ids.map((id) => this.index.get(id)).filter((doc) => doc !== undefined);
+    });
+
+    findByIds(ids: string[]) {
+        if (ids.length === 0) return [];
+
+        ids.forEach((id) => {
+            this.registerFindById(id);
+        });
+
+        return this.findByIdsComputed(ids);
+    }
+
     private findManyComputed = computedFn(
         (args: string): QueryResultsArray<DocumentStore<S, A, R, I, T>> => {
             const { where, opts } = JSON.parse(args) as {

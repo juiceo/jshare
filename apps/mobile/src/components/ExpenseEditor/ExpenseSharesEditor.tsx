@@ -16,13 +16,13 @@ export type ExpenseSharesEditorProps = {
     value: PartialExpenseShare[];
     onChange: (value: PartialExpenseShare[]) => void;
     expense: Pick<DB.Expense, 'amount' | 'currency'>;
-    groupMembers: DB.GroupParticipant<{ user: true }>[];
+    groupMembers: DB.GroupParticipant[];
     groupId: string;
 };
 
 export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
     const { value, onChange, groupMembers, expense, groupId } = props;
-    const [editUser, setEditUser] = useState<DB.Profile | null>(null);
+    const [editUser, setEditUser] = useState<string | null>(null);
     const [addingUser, setAddingUser] = useState<boolean>(false);
 
     const handleToggle = (userId: string) => {
@@ -66,11 +66,11 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                     return (
                         <React.Fragment key={member.id}>
                             <ExpenseSharesEditorItem
-                                user={member.user}
+                                userId={member.userId}
                                 share={userShare}
                                 currency={expense.currency}
                                 onPress={() => handleToggle(member.userId)}
-                                onLongPress={() => setEditUser(member.user)}
+                                onLongPress={() => setEditUser(member.userId)}
                             />
                             {index !== groupMembers.length - 1 && (
                                 <Divider horizontal color="background.default" />
@@ -96,8 +96,8 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
             {!!editUser && (
                 <ExpenseShareEditorSheet
                     onClose={() => setEditUser(null)}
-                    user={editUser}
-                    share={value.find((item) => item.userId === editUser.id)}
+                    userId={editUser}
+                    share={value.find((item) => item.userId === editUser)}
                     onShareChange={(share) => {
                         onChange(
                             updateShare({

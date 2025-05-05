@@ -7,42 +7,25 @@ import { Select, type SelectProps } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
+import { Store } from '~/lib/store/collections';
 
-export type UserSelectProps = Omit<SelectProps<string, DB.Profile>, 'options'> &
-    (
-        | {
-              type: 'participants';
-              users: DB.GroupParticipant<{ user: true }>[];
-          }
-        | {
-              type: 'users';
-              users: DB.Profile[];
-          }
-    );
+export type UserSelectProps = Omit<SelectProps<string, DB.Profile>, 'options'> & {
+    userIds: string[];
+};
 
 export const UserSelect = (props: UserSelectProps) => {
-    const { type, users, ...rest } = props;
+    const { userIds, ...rest } = props;
+
+    const users = Store.profiles.findByIds(userIds);
 
     const options = useMemo(() => {
-        switch (type) {
-            case 'participants': {
-                return users?.map((member) => ({
-                    id: member.userId,
-                    label: getUserShortName(member.user),
-                    data: member.user,
-                    icon: <Avatar userId={member.userId} size="sm" />,
-                }));
-            }
-            case 'users': {
-                return users.map((user) => ({
-                    id: user.id,
-                    label: getUserShortName(user),
-                    data: user,
-                    icon: <Avatar userId={user.id} size="sm" />,
-                }));
-            }
-        }
-    }, [type, users]);
+        return users?.map((user) => ({
+            id: user.id,
+            label: getUserShortName(user.data),
+            data: user.data,
+            icon: <Avatar userId={user.id} size="sm" />,
+        }));
+    }, [users]);
 
     return (
         <Select

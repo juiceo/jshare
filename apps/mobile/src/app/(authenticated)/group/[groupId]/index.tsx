@@ -3,7 +3,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import Animated, { Easing, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 
 import { useTheme } from '@jshare/theme';
@@ -27,13 +27,12 @@ import { useCurrentUser } from '~/wrappers/SessionProvider';
 export default screen(
     observer(() => {
         const user = useCurrentUser();
-        const { groupId } = useLocalSearchParams<{ groupId: string }>();
+        const { group, groupId } = useGroupContext();
         const { theme } = useTheme();
         const { presentUserIds } = useGroupContext();
         const router = useRouter();
         const insets = useSafeAreaInsets();
 
-        const group = Store.groups.findById(groupId);
         const messages = Store.messages.findMany(
             { groupId },
             {
@@ -141,8 +140,8 @@ export default screen(
                                             }
                                         }}
                                         ListFooterComponent={
-                                            group?.data.inviteCode &&
-                                            group?.data.participants?.length === 1 ? (
+                                            group.data.inviteCode &&
+                                            group.data.participants?.length === 1 ? (
                                                 <CopyInviteCodeBlock code={group.data.inviteCode} />
                                             ) : null
                                         }
@@ -177,8 +176,5 @@ export default screen(
                 </KeyboardStickyView>
             </Screen>
         );
-    }),
-    {
-        loadingMessage: 'Loading group...',
-    }
+    })
 );

@@ -1,10 +1,9 @@
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
 
 import { formatAmount, getDefaultShares, getTotalFromShares } from '@jshare/common';
-import type { DB } from '@jshare/db';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
@@ -16,27 +15,22 @@ import {
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { trpc } from '~/lib/trpc';
+import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(() => {
     const user = useCurrentUser();
     const router = useRouter();
-    const { groupId } = useLocalSearchParams<{ groupId: string }>();
-    const group = useSuspenseQuery(
-        trpc.z.group.findUniqueOrThrow.queryOptions({
-            where: { id: groupId },
-            include: { participants: { include: { user: true } } },
-        })
-    ).data as DB.Group<{ participants: { include: { user: true } } }>;
+    const { group, groupId } = useGroupContext();
     const createExpenseMutation = useMutation(trpc.expenses.create.mutationOptions());
     const form = useForm<ExpenseEditorSchema>({
         defaultValues: {
             payerId: user.id,
             amount: 0,
-            currency: group.currency,
+            currency: group.data.currency,
             description: '',
-            shares: getDefaultShares(group.participants ?? []),
+            shares: getDefaultShares(group.data.participants ?? []),
         },
         resolver: zodResolver(expenseEditorSchema),
         mode: 'onSubmit',
@@ -64,8 +58,8 @@ export default screen(() => {
                 <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
                     <ExpenseEditor
                         form={form}
-                        groupCurrency={group.currency}
-                        groupMembers={group.participants}
+                        groupCurrency={group.data.currency}
+                        groupMembers={group.data.participants}
                         groupId={group.id}
                     />
                 </Screen.Content>

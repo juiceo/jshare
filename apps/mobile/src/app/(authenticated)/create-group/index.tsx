@@ -25,7 +25,8 @@ const schema = z.object({
         .object({ id: z.string() })
         .passthrough()
         .transform((d) => d as DB.Image)
-        .nullable(),
+        .nullable()
+        .optional(),
 });
 type Schema = z.infer<typeof schema>;
 
@@ -44,7 +45,6 @@ export default screen(
         });
 
         const handleSubmit = async (data: Schema) => {
-            console.log('SUBMITTING', data);
             const group = await Store.groups.create({
                 name: data.name,
                 currency: data.currency,

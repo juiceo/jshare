@@ -34,7 +34,6 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
     const userId = session?.user.id;
 
     const expense = Store.expenses.findById(props.expenseId);
-    const shares = Store.expenseShares.findMany({ expenseId: props.expenseId });
 
     if (!expense) {
         /**
@@ -43,7 +42,7 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
         return <ExpenseSkeleton />;
     }
 
-    const ownShare = shares.find((share) => share.data.userId === userId);
+    const ownShare = expense.data.shares.find((share) => share.userId === userId);
 
     return (
         <BorderlessButton
@@ -80,7 +79,7 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
                         <Typography variant="h6">
                             Your share:{' '}
                             {ownShare
-                                ? formatAmount(ownShare.data.amount, ownShare.data.currency)
+                                ? formatAmount(ownShare.amount, ownShare.currency)
                                 : formatAmount(0, expense.data.currency)}
                         </Typography>
                     </Stack>

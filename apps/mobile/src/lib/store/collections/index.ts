@@ -1,5 +1,4 @@
 import { ExpensesStore } from '~/lib/store/collections/expenses';
-import { ExpenseSharesStore } from '~/lib/store/collections/expenseShares';
 import { GroupsStore } from '~/lib/store/collections/groups';
 import { MessagesStore } from '~/lib/store/collections/messages';
 import { PaymentsStore } from '~/lib/store/collections/payments';
@@ -12,7 +11,6 @@ export const Store = {
     groups: GroupsStore,
     messages: MessagesStore,
     expenses: ExpensesStore,
-    expenseShares: ExpenseSharesStore,
     payments: PaymentsStore,
 } satisfies Record<string, DocumentStore<any, any, any, any, any>>;
 

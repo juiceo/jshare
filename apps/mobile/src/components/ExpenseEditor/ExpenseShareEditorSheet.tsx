@@ -1,7 +1,6 @@
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
-import { getDefaultShare, getUserShortName, type PartialExpenseShare } from '@jshare/common';
-import type { DB } from '@jshare/db';
+import { getDefaultShare, type PartialExpenseShare } from '@jshare/common';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
 import { Stack } from '~/components/atoms/Stack';
@@ -10,20 +9,21 @@ import { Button } from '~/components/Button';
 import { IconButton } from '~/components/IconButton';
 import { MoneyInput } from '~/components/MoneyInput';
 import { Typography } from '~/components/Typography';
+import { UserName } from '~/components/UserName';
 
 export type ExpenseShareEditorSheetProps = {
     onClose: () => void;
-    user: DB.Profile;
+    userId: string;
     share: PartialExpenseShare | undefined;
     onShareChange: (share: PartialExpenseShare) => void;
 };
 
 export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => {
-    const { onClose, user, share, onShareChange } = props;
+    const { onClose, userId, share, onShareChange } = props;
 
     const handleAmountChange = (value: number) => {
         onShareChange({
-            ...(share ?? getDefaultShare(user.id)),
+            ...(share ?? getDefaultShare(userId)),
             amount: value,
             locked: true,
         });
@@ -41,7 +41,7 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
 
     const handleReset = () => {
         onShareChange({
-            ...(share ?? getDefaultShare(user.id)),
+            ...(share ?? getDefaultShare(userId)),
             locked: false,
         });
     };
@@ -52,9 +52,9 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                 <Stack column p="xl" pb="3xl" pt="none">
                     <Stack row alignCenter justifyBetween>
                         <Stack center row spacing="md">
-                            <Avatar userId={user.id} />
+                            <Avatar userId={userId} />
                             <Typography variant="body1" color="primary">
-                                {getUserShortName(user)}
+                                <UserName userId={userId} variant="short" />
                             </Typography>
                         </Stack>
                         <Stack center row spacing="md">
