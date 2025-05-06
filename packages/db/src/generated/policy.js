@@ -118,11 +118,14 @@ const policy = {
 function Profile_read(context, db) {
     var _a, _b, _c;
     const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return { OR: [{ showInSearch: true }, (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } }] };
+    return { AND: [{ NOT: { archived: true } }, { OR: [{ showInSearch: true }, (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } }] }] };
 }
 function $check_Profile_read(input, context) {
     var _a;
     const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (input === null || input === void 0 ? void 0 : input.showInSearch) {
         return true;
     }
@@ -170,9 +173,12 @@ function $check_Profile_delete(input, context) {
     return false;
 }
 function Group_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_Group_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -215,9 +221,12 @@ function $check_Group_delete(input, context) {
     return false;
 }
 function GroupParticipant_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_GroupParticipant_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -260,9 +269,12 @@ function $check_GroupParticipant_delete(input, context) {
     return false;
 }
 function Image_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_Image_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -305,9 +317,12 @@ function $check_Image_delete(input, context) {
     return false;
 }
 function Message_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_Message_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -350,9 +365,12 @@ function $check_Message_delete(input, context) {
     return false;
 }
 function MessageAttachment_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_MessageAttachment_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -395,9 +413,12 @@ function $check_MessageAttachment_delete(input, context) {
     return false;
 }
 function Expense_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_Expense_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -440,9 +461,12 @@ function $check_Expense_delete(input, context) {
     return false;
 }
 function ExpenseShare_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_ExpenseShare_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -485,9 +509,12 @@ function $check_ExpenseShare_delete(input, context) {
     return false;
 }
 function Payment_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_Payment_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }
@@ -530,9 +557,12 @@ function $check_Payment_delete(input, context) {
     return false;
 }
 function ExchangeRates_read(context, db) {
-    return { AND: [] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_ExchangeRates_read(input, context) {
+    if (input === null || input === void 0 ? void 0 : input.archived) {
+        return false;
+    }
     if (true) {
         return true;
     }

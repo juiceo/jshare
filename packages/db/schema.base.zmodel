@@ -7,4 +7,5 @@ abstract model BaseModel {
     updatedAt  DateTime  @default(now()) @updatedAt()
 
     @@schema("public")
+    @@deny('read', archived)
 }

@@ -14,6 +14,8 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>;
 /**
  * Model Profile
  * @
+ * @deny ('read', archived)
+ * @
  * @allow ('read', showInSearch)
  * @
  * @allow ('read', id == auth().id)
@@ -28,17 +30,23 @@ export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>;
 /**
  * Model Group
  * @
+ * @deny ('read', archived)
+ * @
  * @allow ('all', true)
  */
 export type Group = $Result.DefaultSelection<Prisma.$GroupPayload>;
 /**
  * Model GroupParticipant
  * @
+ * @deny ('read', archived)
+ * @
  * @allow ('all', true)
  */
 export type GroupParticipant = $Result.DefaultSelection<Prisma.$GroupParticipantPayload>;
 /**
  * Model Image
+ * @
+ * @deny ('read', archived)
  * @
  * @allow ('read', true)
  * @
@@ -48,11 +56,15 @@ export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>;
 /**
  * Model Message
  * @
+ * @deny ('read', archived)
+ * @
  * @allow ('all', true)
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>;
 /**
  * Model MessageAttachment
+ * @
+ * @deny ('read', archived)
  * @
  * @allow ('all', true)
  */
@@ -60,11 +72,15 @@ export type MessageAttachment = $Result.DefaultSelection<Prisma.$MessageAttachme
 /**
  * Model Expense
  * @
+ * @deny ('read', archived)
+ * @
  * @allow ('all', true)
  */
 export type Expense = $Result.DefaultSelection<Prisma.$ExpensePayload>;
 /**
  * Model ExpenseShare
+ * @
+ * @deny ('read', archived)
  * @
  * @allow ('all', true)
  */
@@ -72,11 +88,15 @@ export type ExpenseShare = $Result.DefaultSelection<Prisma.$ExpenseSharePayload>
 /**
  * Model Payment
  * @
+ * @deny ('read', archived)
+ * @
  * @allow ('all', true)
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>;
 /**
  * Model ExchangeRates
+ * @
+ * @deny ('read', archived)
  * @
  * @allow ('all', true)
  */
