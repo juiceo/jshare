@@ -38,8 +38,11 @@ export default screen(
                             <Stack mt="2xl" center>
                                 <AvatarPicker
                                     value={profile?.data?.avatar ?? null}
-                                    profile={profile?.data ?? undefined}
                                     onChange={updateAvatar}
+                                    fallback={{
+                                        type: 'ui-avatar',
+                                        name: profile?.get('fullName') ?? '',
+                                    }}
                                 />
                                 <Typography variant="h6" align="center" mt="xl">
                                     {profile?.get('fullName')}

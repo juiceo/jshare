@@ -2,24 +2,32 @@ import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { observer } from 'mobx-react-lite';
 
-import { getUserDefaultAvatarUrl } from '@jshare/common';
+import { getAvatarUrl } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
-import { Icon } from '~/components/Icon';
+import { Icon, type IconName } from '~/components/Icon';
 import { ImageUploadMenu } from '~/components/ImageUploadMenu/ImageUploadMenu';
 import { MediaTypeOptions, useImageUpload } from '~/hooks/useImageUpload';
 
 export type AvatarPickerProps = {
     value: DB.Image | null;
     onChange: (value: DB.Image | null) => void;
-    profile?: DB.Profile;
+    fallback?:
+        | {
+              type: 'icon';
+              icon: IconName;
+          }
+        | {
+              type: 'ui-avatar';
+              name: string;
+          };
 };
 
 export const AvatarPicker = observer((props: AvatarPickerProps) => {
-    const { value, onChange, profile } = props;
+    const { value, onChange, fallback } = props;
 
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const imageUpload = useImageUpload({
@@ -32,19 +40,28 @@ export const AvatarPicker = observer((props: AvatarPickerProps) => {
         allowsMultipleSelection: false,
     });
 
-    const defaultAvatar = profile ? getUserDefaultAvatarUrl(profile) : undefined;
-
     return (
         <>
             <View style={{ position: 'relative', width: 128, height: 128 }}>
-                <Image
-                    image={value}
-                    source={!value ? { uri: defaultAvatar } : null}
-                    w={128}
-                    h={128}
-                    br="full"
-                    bg="background.elevation1"
-                />
+                {(value || !fallback) && (
+                    <Image image={value} w={128} h={128} br="full" bg="background.elevation1" />
+                )}
+
+                {!value && fallback?.type === 'ui-avatar' && (
+                    <Image
+                        source={{ uri: getAvatarUrl({ name: fallback.name }) }}
+                        w={128}
+                        h={128}
+                        br="full"
+                        bg="background.elevation1"
+                    />
+                )}
+
+                {!value && fallback?.type === 'icon' && (
+                    <Stack absoluteFill center style={{ pointerEvents: 'none' }}>
+                        <Icon name={fallback?.icon} size={36} />
+                    </Stack>
+                )}
 
                 <LoadingOverlay visible={imageUpload.isUploading} />
                 <Stack absoluteFill justifyEnd alignEnd>
@@ -57,11 +74,6 @@ export const AvatarPicker = observer((props: AvatarPickerProps) => {
                         Edit
                     </Button>
                 </Stack>
-                {!value && !defaultAvatar && (
-                    <Stack absoluteFill center style={{ pointerEvents: 'none' }}>
-                        <Icon name="User" size={36} />
-                    </Stack>
-                )}
             </View>
             <ImageUploadMenu
                 isOpen={isMenuOpen}

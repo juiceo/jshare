@@ -11,8 +11,12 @@ export const getUserShortName = (profile: Pick<DB.Profile, 'firstName' | 'lastNa
 };
 
 export const getUserDefaultAvatarUrl = (profile: Pick<DB.Profile, 'firstName' | 'lastName'>) => {
+    return getAvatarUrl({ name: getUserFullName(profile) });
+};
+
+export const getAvatarUrl = (args: { name: string }) => {
     const params = new URLSearchParams({
-        name: getUserFullName(profile),
+        name: args.name,
         background: 'random',
         bold: 'true',
         size: '128',

@@ -22,7 +22,7 @@ export const getEmptyBalanceObject = (args: {
 export const getBalanceByParticipant = (args: {
     expenses: DB.Expense<{ shares: true }>[];
     payments: DB.Payment[];
-    participants: DB.GroupParticipant<{ user: true }>[];
+    participants: DB.GroupParticipant[];
     currency: DB.CurrencyCode;
 }): BalanceObject[] => {
     const balances: Record<string, BalanceObject> = toObject({

@@ -14,6 +14,7 @@ export type DocumentApi<
     findMany?: (args: { queries: Query<TData>[] }) => Promise<TData[][]>;
     update?: (args: { id: string; data: TUpdateInput }) => Promise<TData>;
     create?: (args: { data: TCreateInput }) => Promise<TData>;
+    delete?: (args: { id: string }) => Promise<TData>;
 };
 
 export type InferCreateInput<TApi extends DocumentApi<any, any, any>> =
@@ -23,23 +24,39 @@ export type InferUpdateInput<TApi extends DocumentApi<any, any, any>> =
     TApi extends DocumentApi<any, any, infer U> ? U : never;
 
 export type InferResolvers<TStore extends DocumentStore<any, any, any, any, any>> =
-    TStore extends DocumentStore<any, any, infer R, any, any> ? R : never;
+    TStore extends DocumentStore<any, any, infer R, any, any, any> ? R : never;
+
+export type InferFunctions<TStore extends DocumentStore<any, any, any, any, any>> =
+    TStore extends DocumentStore<any, any, any, infer F, any, any> ? F : never;
 
 export type InferIndexedKeys<TStore extends DocumentStore<any, any, any, any, any>> =
-    TStore extends DocumentStore<any, any, any, infer I, any> ? I : never;
+    TStore extends DocumentStore<any, any, any, any, infer I, any> ? I : never;
 
 export type InferDataType<TStore extends DocumentStore<any, any, any, any, any>> =
-    TStore extends DocumentStore<infer S, any, any, any, any> ? z.infer<S> : never;
+    TStore extends DocumentStore<infer S, any, any, any, any, any> ? z.infer<S> : never;
 
 export type DocumentStoreHooks<T extends { id: string }> = {
     afterCreate?: (doc: T) => void;
     afterUpdate?: (doc: T) => void;
 };
 
-export type Resolver<TData extends { id: string }, TResult> = (data: TData) => TResult;
+export type DocumentResolver<TData extends { id: string }, TResult> = (data: TData) => TResult;
 
-export type ResolverMap<TData extends { id: string }> = {
-    [key: string]: Resolver<TData, any>;
+export type DocumentResolvers<TData extends { id: string }> = {
+    [key: string]: DocumentResolver<TData, any>;
+};
+
+export type DocumentOfType<TData extends { id: string }> = Document<
+    DocumentStore<any, any, any, any, any, TData>
+>;
+
+export type DocumentFunction<TData extends { id: string }, TArgs extends object, TResult> = (
+    args: TArgs,
+    doc: DocumentOfType<TData>
+) => TResult;
+
+export type DocumentFunctions<TData extends { id: string }> = {
+    [key: string]: DocumentFunction<TData, any, any>;
 };
 
 export type FindManyOpts<TData extends { id: string }> = {
@@ -70,7 +87,7 @@ export type QueryEntry<TData extends { id: string }> =
           status: 'pending' | 'running' | 'done';
       };
 
-export interface QueryResultsArray<TStore extends DocumentStore<any, any, any, any, any>>
+export interface QueryResultsArray<TStore extends DocumentStore<any, any, any, any, any, any>>
     extends Array<Document<TStore>> {
     readonly $queryKey: string;
     readonly $loading?: boolean;

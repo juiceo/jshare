@@ -1,5 +1,4 @@
 import { Pressable } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 
@@ -7,24 +6,25 @@ import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { IconButton } from '~/components/IconButton';
 import { StatusBadge } from '~/components/StatusBadge';
-import { trpc } from '~/lib/trpc';
+import { useUserBalance } from '~/hooks/useUserBalance';
+import { Store } from '~/lib/store/collections';
+import { useGroupContext } from '~/wrappers/GroupContext';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
-export type ChatStatusHeaderProps = {
-    groupId: string;
-    currency: string;
-};
-
-export const ChatStatusHeader = (props: ChatStatusHeaderProps) => {
-    const { groupId, currency } = props;
-
+export const ChatStatusHeader = () => {
+    const { group } = useGroupContext();
     const user = useCurrentUser();
-    const userStatus = useQuery(
-        trpc.balances.getForParticipantInGroup.queryOptions({
-            groupId,
-            userId: user.id,
-        })
-    ).data;
+
+    const expenses = Store.expenses.findMany({ groupId: group.id });
+    const payments = Store.payments.findMany({ groupId: group.id });
+
+    const balance = useUserBalance({
+        userId: user.id,
+        currency: group.data.currency,
+        expenses,
+        payments,
+    });
+
     return (
         <BlurView
             style={{
@@ -36,15 +36,13 @@ export const ChatStatusHeader = (props: ChatStatusHeaderProps) => {
                 onPress={() =>
                     router.push({
                         pathname: '/group/[groupId]/summary',
-                        params: { groupId },
+                        params: { groupId: group.id },
                     })
                 }
             >
                 <Stack row alignCenter justifyBetween p="md">
                     <Box>
-                        {userStatus && (
-                            <StatusBadge amount={userStatus.balance} currency={currency} />
-                        )}
+                        <StatusBadge amount={balance.balance} currency={group.data.currency} />
                     </Box>
                     <IconButton
                         icon="ChevronRight"

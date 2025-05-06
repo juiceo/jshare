@@ -1,7 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 
 import type { DocumentStore } from '~/lib/store/DocumentStore';
-import type { InferDataType, InferResolvers, InferUpdateInput } from '~/lib/store/types';
+import type {
+    InferDataType,
+    InferFunctions,
+    InferResolvers,
+    InferUpdateInput,
+} from '~/lib/store/types';
 
 export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
     id: string;
@@ -43,6 +48,22 @@ export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
             );
         }
         return this.resolvers[key](this.data);
+    }
+
+    action<K extends keyof InferFunctions<TStore>>(
+        key: K,
+        args: Parameters<InferFunctions<TStore>[K]>[0]
+    ) {
+        if (!this.store.functions) {
+            throw new Error(`No functions defined for collection ${this.store.name}`);
+        }
+        if (!(key in this.store.functions)) {
+            throw new Error(
+                `Function ${key.toString()} not found for collection ${this.store.name}`
+            );
+        }
+
+        return this.store.functions[key](args, this);
     }
 
     dispose() {

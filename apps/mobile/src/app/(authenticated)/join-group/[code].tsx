@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { plural } from '@jshare/common';
@@ -17,7 +17,6 @@ export default screen(
     () => {
         const user = useCurrentUser();
         const router = useRouter();
-        const queryClient = useQueryClient();
         const { code } = useLocalSearchParams<{ code: string }>();
         const group = useSuspenseQuery(trpc.groups.getByCode.queryOptions({ code })).data;
         const joinGroup = useMutation(trpc.groups.joinByCode.mutationOptions());
@@ -30,9 +29,6 @@ export default screen(
                 await joinGroup.mutateAsync({ code });
             }
 
-            queryClient.invalidateQueries({
-                queryKey: trpc.groups.pathKey(),
-            });
             router.dismiss();
             router.dismiss();
             router.push({

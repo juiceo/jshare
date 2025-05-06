@@ -1,17 +1,17 @@
+import { useMemo } from 'react';
 import { Dimensions } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react-lite';
 
-import { formatAmount, plural } from '@jshare/common';
+import { formatAmount, plural, sumInCurrency } from '@jshare/common';
 
 import { Image } from '~/components/atoms/Image';
 import { Stack } from '~/components/atoms/Stack';
 import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
-import { type Docs } from '~/lib/store/collections';
-import { trpc } from '~/lib/trpc';
+import { useUserBalance } from '~/hooks/useUserBalance';
+import { Store, type Docs } from '~/lib/store/collections';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type GroupCardProps = {
@@ -23,12 +23,27 @@ export const GroupCard = observer((props: GroupCardProps) => {
 
     const user = useCurrentUser();
 
-    const groupTotal = useQuery(
-        trpc.expenses.getTotalForGroup.queryOptions({ groupId: group.id })
-    ).data;
-    const userStatus = useQuery(
-        trpc.balances.getForParticipantInGroup.queryOptions({ groupId: group.id, userId: user.id })
-    ).data;
+    const expenses = Store.expenses.findMany({
+        groupId: group.id,
+    });
+
+    const payments = Store.payments.findMany({
+        groupId: group.id,
+    });
+
+    const groupTotal = useMemo(() => {
+        return sumInCurrency(
+            expenses.map((e) => e.data),
+            group.data.currency
+        );
+    }, [expenses, group.data.currency]);
+
+    const balance = useUserBalance({
+        userId: user.id,
+        currency: group.data.currency,
+        expenses,
+        payments,
+    });
 
     return (
         <Stack
@@ -54,13 +69,11 @@ export const GroupCard = observer((props: GroupCardProps) => {
                         <Typography variant="caption">
                             {dayjs(group.data.lastActivity).fromNow()}
                         </Typography>
-                        {userStatus && (
-                            <StatusBadge
-                                amount={userStatus.balance}
-                                currency={group.data.currency}
-                                prefix="You:"
-                            />
-                        )}
+                        <StatusBadge
+                            amount={balance.balance}
+                            currency={group.data.currency}
+                            prefix="You:"
+                        />
                     </Stack>
                 </LinearGradient>
             </Stack>

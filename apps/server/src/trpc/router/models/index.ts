@@ -1,6 +1,5 @@
 import { router } from '../../trpc';
 import { expensesRouter } from './expenses';
-import { expenseSharesRouter } from './expenseShares';
 import { groupsRouter } from './groups';
 import { messagesRouter } from './messages';
 import { paymentsRouter } from './payments';
@@ -11,6 +10,5 @@ export const modelsRouter = router({
     groups: groupsRouter,
     messages: messagesRouter,
     expenses: expensesRouter,
-    expenseShares: expenseSharesRouter,
     payments: paymentsRouter,
 });

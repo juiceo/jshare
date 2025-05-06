@@ -12,7 +12,7 @@ describe('IndexedMap', () => {
         read?: boolean;
     };
 
-    type StoreType = DocumentStore<any, any, any, any, Message>;
+    type StoreType = DocumentStore<any, any, any, any, any, Message>;
     type DocType = Document<StoreType>;
     let map: IndexedMap<StoreType>;
 

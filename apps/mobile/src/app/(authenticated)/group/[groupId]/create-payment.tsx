@@ -3,12 +3,11 @@ import { Controller, FormProvider, useForm, useWatch } from 'react-hook-form';
 import { RectButton } from 'react-native-gesture-handler';
 import { ErrorMessage } from '@hookform/error-message';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { z } from 'zod';
 
 import { formatAmount, getCurrencyDetails, getUserShortName } from '@jshare/common';
-import { zDB, type DB } from '@jshare/db';
+import { zDB } from '@jshare/db';
 
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
@@ -22,7 +21,8 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserMenu } from '~/components/UserMenu';
 import { useCurrencyConversion } from '~/hooks/useExchangeRates';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
+import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
@@ -39,31 +39,16 @@ type Schema = z.infer<typeof schema>;
 export default screen(() => {
     const user = useCurrentUser();
     const router = useRouter();
-    const { groupId } = useLocalSearchParams<{ groupId: string }>();
-    const group = useSuspenseQuery(
-        trpc.z.group.findUniqueOrThrow.queryOptions({
-            where: { id: groupId },
-            include: {
-                participants: {
-                    include: {
-                        user: true,
-                    },
-                },
-            },
-        })
-    ).data as DB.Group<{ participants: { include: { user: true } } }>;
-    const groupMembers = group.participants;
-    const profile = useSuspenseQuery(
-        trpc.z.profile.findUniqueOrThrow.queryOptions({ where: { id: user.id } })
-    ).data;
-    const createPayment = useMutation(trpc.payments.create.mutationOptions());
+    const { group, groupId, groupMemberIds } = useGroupContext();
+
+    const profile = Store.profiles.findById(user.id);
     const { convert } = useCurrencyConversion();
     const form = useForm<Schema>({
         defaultValues: {
-            payer: profile,
+            payer: profile?.data,
             recipient: null,
             amount: 0,
-            currency: group.currency,
+            currency: group.data.currency,
             description: '',
         },
         resolver: zodResolver(schema.passthrough()),
@@ -79,17 +64,17 @@ export default screen(() => {
             form.setError('recipient', { message: 'Please select a recipient' });
             return;
         }
-        if (data.payer.userId === data.recipient?.userId) {
+        if (data.payer.id === data.recipient?.id) {
             form.setError('recipient', {
                 message: 'Payer and recipient cannot be the same person',
             });
             return;
         }
 
-        await createPayment.mutateAsync({
+        Store.payments.create({
             groupId,
             payerId: data.payer.id,
-            recipientId: data.recipient?.id,
+            recipientId: data.recipient.id,
             amount: data.amount,
             currency: data.currency,
         });
@@ -118,15 +103,15 @@ export default screen(() => {
                             <Typography variant="caption">
                                 {getCurrencyDetails(currency).name_plural}
                             </Typography>
-                            {currency !== group.currency && (
+                            {currency !== group.data.currency && (
                                 <Typography variant="caption" color="hint">
                                     {`= ${formatAmount(
                                         convert({
                                             amount,
                                             from: currency,
-                                            to: group.currency,
+                                            to: group.data.currency,
                                         }),
-                                        group.currency
+                                        group.data.currency
                                     )}`}
                                 </Typography>
                             )}
@@ -178,8 +163,7 @@ export default screen(() => {
                                                     }}
                                                     isOpen={menu === 'payer'}
                                                     onClose={() => setMenu(null)}
-                                                    users={groupMembers ?? []}
-                                                    type="participants"
+                                                    userIds={groupMemberIds}
                                                 />
                                             </>
                                         )}
@@ -223,8 +207,7 @@ export default screen(() => {
                                                     }}
                                                     isOpen={menu === 'recipient'}
                                                     onClose={() => setMenu(null)}
-                                                    users={groupMembers ?? []}
-                                                    type="participants"
+                                                    userIds={groupMemberIds}
                                                 />
                                             </>
                                         )}

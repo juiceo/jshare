@@ -1,9 +1,13 @@
-import React, { useMemo, useState } from 'react';
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
+import { useRouter } from 'expo-router';
 import { isEqual } from 'lodash';
 
-import { formatAmount, getPaymentsFromBalances, type PaymentObject } from '@jshare/common';
+import {
+    formatAmount,
+    getBalanceByParticipant,
+    getPaymentsFromBalances,
+    type PaymentObject,
+} from '@jshare/common';
 
 import { Checkbox } from '~/components/atoms/Checkbox';
 import { Stack } from '~/components/atoms/Stack';
@@ -12,31 +16,43 @@ import { Button } from '~/components/Button';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
+import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(() => {
     const user = useCurrentUser();
     const router = useRouter();
-    const queryClient = useQueryClient();
-    const { groupId } = useLocalSearchParams<{ groupId: string }>();
+    const { group, groupId } = useGroupContext();
     const [checked, setChecked] = useState<PaymentObject[]>([]);
-    const group = useSuspenseQuery(trpc.groups.get.queryOptions({ id: groupId })).data;
-    const balances = useSuspenseQuery(
-        trpc.balances.getByParticipantInGroup.queryOptions({ groupId })
-    ).data;
-    const createPayment = useMutation(trpc.payments.create.mutationOptions());
 
-    const payments = useMemo(() => {
+    const expenses = Store.expenses.findMany({
+        groupId,
+    });
+
+    const payments = Store.payments.findMany({
+        groupId,
+    });
+
+    const balances = useMemo(() => {
+        return getBalanceByParticipant({
+            expenses: expenses.map((e) => e.data),
+            payments: payments.map((p) => p.data),
+            participants: group.data.participants,
+            currency: group.data.currency,
+        });
+    }, [expenses, payments, group.data.participants, group.data.currency]);
+
+    const paymentsToSettle = useMemo(() => {
         return getPaymentsFromBalances(balances);
     }, [balances]);
 
     const ownPayments = useMemo(() => {
-        return payments.filter(
+        return paymentsToSettle.filter(
             (payment) => payment.fromUserId === user.id || payment.toUserId === user.id
         );
-    }, [user.id, payments]);
+    }, [paymentsToSettle, user.id]);
 
     const balance = balances.find((b) => b.userId === user.id)?.balance ?? 0;
 
@@ -54,7 +70,7 @@ export default screen(() => {
 
     const handleSubmit = async () => {
         for (const payment of checked) {
-            await createPayment.mutateAsync({
+            Store.payments.create({
                 groupId,
                 payerId: payment.fromUserId,
                 recipientId: payment.toUserId,
@@ -63,19 +79,12 @@ export default screen(() => {
             });
         }
 
-        queryClient.invalidateQueries({
-            queryKey: trpc.balances.pathKey(),
-        });
-        queryClient.invalidateQueries({
-            queryKey: trpc.payments.pathKey(),
-        });
-
         router.back();
     };
 
     return (
         <Screen>
-            <Screen.Header title="Settle up" subtitle={group.name} blur />
+            <Screen.Header title="Settle up" subtitle={group.data.name} blur />
             <Screen.Content scrollable disableTopInset>
                 <Stack column center alignCenter p="2xl" ar="16/9">
                     {balance < 0 && (
@@ -84,7 +93,7 @@ export default screen(() => {
                                 You need to pay
                             </Typography>
                             <Typography variant="h1" align="center">
-                                {formatAmount(-balance, group.currency)}
+                                {formatAmount(-balance, group.data.currency)}
                             </Typography>
                             <Typography variant="body1" align="center">
                                 to settle your balance
@@ -97,7 +106,7 @@ export default screen(() => {
                                 You will receive
                             </Typography>
                             <Typography variant="h1" align="center">
-                                {formatAmount(balance, group.currency)}
+                                {formatAmount(balance, group.data.currency)}
                             </Typography>
                             <Typography variant="body1" align="center">
                                 to settle your balance
@@ -110,7 +119,7 @@ export default screen(() => {
                                 All settled!
                             </Typography>
                             <Typography variant="body1" align="center">
-                                Your balance is {formatAmount(0, group.currency)}
+                                Your balance is {formatAmount(0, group.data.currency)}
                             </Typography>
                         </Stack>
                     )}
@@ -178,7 +187,6 @@ export default screen(() => {
                         <Button
                             color="primary"
                             disabled={checked.length === 0}
-                            loading={createPayment.isPending}
                             onPress={handleSubmit}
                         >{`Mark ${checked.length}/${ownPayments.length} as ${balance > 0 ? 'received' : 'paid'}`}</Button>
                     </Screen.Footer>

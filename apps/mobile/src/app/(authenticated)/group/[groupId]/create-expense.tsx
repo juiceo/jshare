@@ -1,6 +1,5 @@
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 
 import { formatAmount, getDefaultShares, getTotalFromShares } from '@jshare/common';
@@ -14,7 +13,7 @@ import {
 } from '~/components/ExpenseEditor';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
@@ -23,7 +22,6 @@ export default screen(() => {
     const user = useCurrentUser();
     const router = useRouter();
     const { group, groupId } = useGroupContext();
-    const createExpenseMutation = useMutation(trpc.expenses.create.mutationOptions());
     const form = useForm<ExpenseEditorSchema>({
         defaultValues: {
             payerId: user.id,
@@ -44,7 +42,7 @@ export default screen(() => {
     const hasAmountMismatch = totalFromShares !== amount;
 
     const handleSubmit = async (data: ExpenseEditorSchema) => {
-        await createExpenseMutation.mutateAsync({
+        Store.expenses.create({
             groupId,
             ...data,
         });

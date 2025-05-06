@@ -71,12 +71,7 @@ export default screen(
                         group?.data.participants?.length ?? 1,
                         presentUserIds.length - 1 // Subtract the current user
                     )}
-                    footer={
-                        <ChatStatusHeader
-                            groupId={groupId}
-                            currency={group?.data.currency ?? 'USD' /** TODO */}
-                        />
-                    }
+                    footer={<ChatStatusHeader />}
                     right={
                         <BorderlessButton
                             activeOpacity={0.8}

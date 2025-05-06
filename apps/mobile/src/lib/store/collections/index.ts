@@ -17,6 +17,9 @@ export const Store = {
 export namespace Docs {
     export type Group = Document<typeof GroupsStore>;
     export type Message = Document<typeof MessagesStore>;
+    export type Expense = Document<typeof ExpensesStore>;
+    export type Payment = Document<typeof PaymentsStore>;
+    export type Profile = Document<typeof ProfilesStore>;
 }
 
 export const storeIsReady = async () => {

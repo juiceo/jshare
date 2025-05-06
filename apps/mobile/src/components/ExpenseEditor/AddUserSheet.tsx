@@ -1,8 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getQueryKey } from '@trpc/react-query';
+import { observer } from 'mobx-react-lite';
 import { z } from 'zod';
 
 import { BottomSheet } from '~/components/atoms/BottomSheet';
@@ -10,7 +9,7 @@ import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
 import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
 
 export type AddUserSheetProps = {
     onClose: () => void;
@@ -24,27 +23,22 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export const AddUserSheet = (props: AddUserSheetProps) => {
+export const AddUserSheet = observer((props: AddUserSheetProps) => {
     const { onClose, groupId } = props;
 
-    const queryClient = useQueryClient();
-
-    const createTemporaryParticipant = useMutation(
-        trpc.groupParticipants.createTemporaryParticipant.mutationOptions()
-    );
+    const group = Store.groups.findById(groupId);
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
     });
 
     const handleSubmit = async (data: Schema) => {
-        await createTemporaryParticipant.mutateAsync({
-            groupId,
-            ...data,
+        console.log('SUBMIT');
+        await group?.action('createTemporaryParticipant', {
+            firstName: data.firstName,
+            lastName: data.lastName,
         });
-        queryClient.invalidateQueries({
-            queryKey: [getQueryKey(trpc.groupParticipants as any), getQueryKey(trpc.groups as any)],
-        });
+        console.log('DONE');
         props.onClose();
     };
 
@@ -93,7 +87,6 @@ export const AddUserSheet = (props: AddUserSheetProps) => {
                         color="primary"
                         variant="contained"
                         onPress={form.handleSubmit(handleSubmit)}
-                        loading={createTemporaryParticipant.isPending}
                     >
                         Confirm
                     </Button>
@@ -101,4 +94,4 @@ export const AddUserSheet = (props: AddUserSheetProps) => {
             </BottomSheetView>
         </BottomSheet>
     );
-};
+});

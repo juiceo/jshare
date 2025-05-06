@@ -13,6 +13,8 @@ export const ExpensesStore = new DocumentStore({
         findById: trpcClient.models.expenses.findById.query,
         findMany: trpcClient.models.expenses.findMany.query,
         create: trpcClient.models.expenses.create.mutate,
+        update: trpcClient.models.expenses.update.mutate,
+        delete: trpcClient.models.expenses.delete.mutate,
     },
     resolvers: {
         payer: (data) => {

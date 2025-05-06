@@ -5,7 +5,7 @@ import { Document } from '~/lib/store/Document';
 import type { DocumentStore } from '~/lib/store/DocumentStore';
 import type { InferDataType, InferIndexedKeys } from '~/lib/store/types';
 
-export class IndexedMap<TStore extends DocumentStore<any, any, any, any, any>> {
+export class IndexedMap<TStore extends DocumentStore<any, any, any, any, any, any>> {
     updatedAt: number = Date.now();
     private items = new Map<string, Document<TStore>>();
     private indexes: Map<keyof InferDataType<TStore>, Map<any, Set<Document<TStore>>>> = new Map();

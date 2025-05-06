@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { getUserShortName } from '@jshare/common';
 import type { DB } from '@jshare/db';
 
 import { Menu, type MenuOption } from '~/components/atoms/Menu';
 import { Avatar } from '~/components/Avatar';
+import { Store } from '~/lib/store/collections';
 
 export type UserMenuProps = {
     value: string | undefined;
@@ -12,40 +14,23 @@ export type UserMenuProps = {
     isOpen: boolean;
     onClose: () => void;
     title?: string;
-} & (
-    | {
-          type: 'profiles';
-          users: DB.Profile[];
-      }
-    | {
-          type: 'participants';
-          users: DB.GroupParticipant<{ user: true }>[];
-      }
-);
+} & {
+    userIds: string[];
+};
 
-export const UserMenu = (props: UserMenuProps) => {
+export const UserMenu = observer((props: UserMenuProps) => {
     const { value, onChange, isOpen, onClose, title = 'Select user' } = props;
 
+    const users = Store.profiles.findByIds(props.userIds);
+
     const options = useMemo((): MenuOption<string, DB.Profile>[] => {
-        switch (props.type) {
-            case 'profiles': {
-                return props.users.map((user) => ({
-                    id: user.id,
-                    label: getUserShortName(user),
-                    data: user,
-                    icon: <Avatar userId={user.id} size="sm" />,
-                }));
-            }
-            case 'participants': {
-                return props.users.map((participant) => ({
-                    id: participant.user.id,
-                    label: getUserShortName(participant.user),
-                    data: participant.user,
-                    icon: <Avatar userId={participant.user.id} size="sm" />,
-                }));
-            }
-        }
-    }, [props.users, props.type]);
+        return users.map((user) => ({
+            id: user.id,
+            label: getUserShortName(user.data),
+            data: user.data,
+            icon: <Avatar userId={user.id} size="sm" />,
+        }));
+    }, [users]);
 
     return (
         <Menu
@@ -57,4 +42,4 @@ export const UserMenu = (props: UserMenuProps) => {
             options={options}
         />
     );
-};
+});

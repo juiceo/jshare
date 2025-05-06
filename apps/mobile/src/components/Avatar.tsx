@@ -1,11 +1,10 @@
-import { skipToken, useQuery } from '@tanstack/react-query';
+import { observer } from 'mobx-react-lite';
 
 import { getUserDefaultAvatarUrl } from '@jshare/common';
-import type { DB } from '@jshare/db';
 import type { BorderRadiusUnit } from '@jshare/theme';
 
 import { Image } from '~/components/atoms/Image';
-import { trpc } from '~/lib/trpc';
+import { Store } from '~/lib/store/collections';
 
 export type AvatarProps = {
     userId?: string;
@@ -13,14 +12,10 @@ export type AvatarProps = {
     size?: 'sm' | 'md' | 'lg';
 };
 
-export const Avatar = (props: AvatarProps) => {
+export const Avatar = observer((props: AvatarProps) => {
     const { userId } = props;
 
-    const profile = useQuery(
-        trpc.z.profile.findUnique.queryOptions(
-            userId ? { where: { id: userId }, include: { avatar: true } } : skipToken
-        )
-    ).data as DB.Profile<{ avatar: true }> | undefined;
+    const profile = Store.profiles.findById(userId);
 
     const dimensions = (() => {
         switch (props.size) {
@@ -48,8 +43,8 @@ export const Avatar = (props: AvatarProps) => {
 
     return (
         <Image
-            image={profile?.avatar}
-            source={{ uri: profile ? getUserDefaultAvatarUrl(profile) : undefined }}
+            image={profile?.data.avatar}
+            source={{ uri: profile ? getUserDefaultAvatarUrl(profile.data) : undefined }}
             width={dimensions}
             height={dimensions}
             br={borderRadius}
@@ -58,4 +53,4 @@ export const Avatar = (props: AvatarProps) => {
             }}
         />
     );
-};
+});
