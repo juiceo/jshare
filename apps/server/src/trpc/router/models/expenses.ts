@@ -270,15 +270,13 @@ export const expensesRouter = router({
             });
         }
 
-        return db.expense.update({
+        await db.expense.update({
             where: {
                 id: opts.input.id,
             },
-            include: {
-                shares: true,
-            },
             data: {
                 archived: true,
+                archivedAt: new Date(),
             },
         });
     }),

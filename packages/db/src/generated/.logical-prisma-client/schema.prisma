@@ -80,16 +80,16 @@ enum CurrencyCode {
 }
 
 /// @@deny('read', archived)
-/// @@allow('read', showInSearch)
-/// @@allow('read', id == auth().id)
-/// @@allow('update', id == auth().id)
-/// @@allow('create', id == auth().id)
+/// @@allow('all', true)
 /// @@auth
 model Profile {
+  /// @deny('update', true)
   id               String             @id() @default(uuid())
   archived         Boolean            @default(false)
   archivedAt       DateTime?
+  /// @deny('update', true)
   createdAt        DateTime           @default(now())
+  /// @deny('update', true)
   updatedAt        DateTime           @default(now()) @updatedAt()
   email            String
   firstName        String
@@ -116,10 +116,13 @@ model Profile {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model Group {
+  /// @deny('update', true)
   id           String             @id() @default(uuid())
   archived     Boolean            @default(false)
   archivedAt   DateTime?
+  /// @deny('update', true)
   createdAt    DateTime           @default(now())
+  /// @deny('update', true)
   updatedAt    DateTime           @default(now()) @updatedAt()
   name         String
   currency     CurrencyCode
@@ -139,10 +142,13 @@ model Group {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model GroupParticipant {
+  /// @deny('update', true)
   id          String      @id() @default(uuid())
   archived    Boolean     @default(false)
   archivedAt  DateTime?
+  /// @deny('update', true)
   createdAt   DateTime    @default(now())
+  /// @deny('update', true)
   updatedAt   DateTime    @default(now()) @updatedAt()
   userId      String
   user        Profile     @relation(fields: [userId], references: [id])
@@ -159,13 +165,15 @@ model GroupParticipant {
 }
 
 /// @@deny('read', archived)
-/// @@allow('read', true)
-/// @@allow('create', uploadedById == auth().id)
+/// @@allow('all', true)
 model Image {
+  /// @deny('update', true)
   id           String    @id() @default(uuid())
   archived     Boolean   @default(false)
   archivedAt   DateTime?
+  /// @deny('update', true)
   createdAt    DateTime  @default(now())
+  /// @deny('update', true)
   updatedAt    DateTime  @default(now()) @updatedAt()
   path         String
   bucket       String
@@ -181,10 +189,13 @@ model Image {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model Message {
+  /// @deny('update', true)
   id          String              @id() @default(uuid())
   archived    Boolean             @default(false)
   archivedAt  DateTime?
+  /// @deny('update', true)
   createdAt   DateTime            @default(now())
+  /// @deny('update', true)
   updatedAt   DateTime            @default(now()) @updatedAt()
   key         String
   text        String?
@@ -202,10 +213,13 @@ model Message {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model MessageAttachment {
+  /// @deny('update', true)
   id         String                @id() @default(uuid())
   archived   Boolean               @default(false)
   archivedAt DateTime?
+  /// @deny('update', true)
   createdAt  DateTime              @default(now())
+  /// @deny('update', true)
   updatedAt  DateTime              @default(now()) @updatedAt()
   messageId  String
   message    Message               @relation(fields: [messageId], references: [id], onDelete: Cascade)
@@ -220,10 +234,13 @@ model MessageAttachment {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model Expense {
+  /// @deny('update', true)
   id                 String              @id() @default(uuid())
   archived           Boolean             @default(false)
   archivedAt         DateTime?
+  /// @deny('update', true)
   createdAt          DateTime            @default(now())
+  /// @deny('update', true)
   updatedAt          DateTime            @default(now()) @updatedAt()
   ownerId            String
   owner              Profile             @relation(name: "expense_owner", fields: [ownerId], references: [id])
@@ -246,10 +263,13 @@ model Expense {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model ExpenseShare {
+  /// @deny('update', true)
   id         String       @id() @default(uuid())
   archived   Boolean      @default(false)
   archivedAt DateTime?
+  /// @deny('update', true)
   createdAt  DateTime     @default(now())
+  /// @deny('update', true)
   updatedAt  DateTime     @default(now()) @updatedAt()
   userId     String
   user       Profile      @relation(fields: [userId], references: [id])
@@ -268,10 +288,13 @@ model ExpenseShare {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model Payment {
+  /// @deny('update', true)
   id          String       @id() @default(uuid())
   archived    Boolean      @default(false)
   archivedAt  DateTime?
+  /// @deny('update', true)
   createdAt   DateTime     @default(now())
+  /// @deny('update', true)
   updatedAt   DateTime     @default(now()) @updatedAt()
   groupId     String
   group       Group        @relation(fields: [groupId], references: [id], onDelete: Cascade)
@@ -291,10 +314,13 @@ model Payment {
 /// @@deny('read', archived)
 /// @@allow('all', true)
 model ExchangeRates {
+  /// @deny('update', true)
   id           String    @id() @default(uuid())
   archived     Boolean   @default(false)
   archivedAt   DateTime?
+  /// @deny('update', true)
   createdAt    DateTime  @default(now())
+  /// @deny('update', true)
   updatedAt    DateTime  @default(now()) @updatedAt()
   baseCurrency String    @db.VarChar(3)
   rates        Json

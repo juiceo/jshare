@@ -9,7 +9,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -32,7 +36,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -40,7 +48,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 email: {
@@ -201,9 +213,11 @@ declare const metadata: {
             };
             attributes: {
                 name: string;
-                args: {
+                args: ({
                     value: string;
-                }[];
+                } | {
+                    value: boolean;
+                })[];
             }[];
         };
         group: {
@@ -215,7 +229,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -238,7 +256,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -246,7 +268,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 name: {
@@ -361,7 +387,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -384,7 +414,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -392,7 +426,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 userId: {
@@ -474,7 +512,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -497,7 +539,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -505,7 +551,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 path: {
@@ -564,7 +614,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -587,7 +641,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -595,7 +653,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 key: {
@@ -685,7 +747,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -708,7 +774,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -716,7 +786,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 messageId: {
@@ -790,7 +864,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -813,7 +891,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -821,7 +903,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 ownerId: {
@@ -952,7 +1038,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -975,7 +1065,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -983,7 +1077,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 userId: {
@@ -1079,7 +1177,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -1102,7 +1204,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -1110,7 +1216,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 groupId: {
@@ -1222,7 +1332,11 @@ declare const metadata: {
                     isId: boolean;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 archived: {
@@ -1245,7 +1359,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 updatedAt: {
@@ -1253,7 +1371,11 @@ declare const metadata: {
                     type: string;
                     attributes: {
                         name: string;
-                        args: never[];
+                        args: ({
+                            value: string;
+                        } | {
+                            value: boolean;
+                        })[];
                     }[];
                 };
                 baseCurrency: {

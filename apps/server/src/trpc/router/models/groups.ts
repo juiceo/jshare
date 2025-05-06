@@ -4,7 +4,7 @@ import { zDB } from '@jshare/db';
 
 import { db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
-import { zCreateArgs, zFindByIdArgs, zFindManyArgs, zUpdateArgs } from './_util';
+import { zCreateArgs, zDeleteArgs, zFindByIdArgs, zFindManyArgs, zUpdateArgs } from './_util';
 
 export const groupsRouter = router({
     findById: authProcedure.input(zFindByIdArgs).query(async (opts) => {
@@ -108,4 +108,34 @@ export const groupsRouter = router({
                 },
             });
         }),
+    delete: authProcedure.input(zDeleteArgs).mutation(async (opts) => {
+        const isOwner = await db.group.findUnique({
+            where: {
+                id: opts.input.id,
+                participants: {
+                    some: {
+                        userId: opts.ctx.userId,
+                        role: 'Owner',
+                    },
+                },
+            },
+        });
+
+        if (!isOwner) {
+            throw new TRPCError({
+                code: 'UNAUTHORIZED',
+                message: 'This group does not exist or you are not the group owner',
+            });
+        }
+
+        await db.group.update({
+            where: {
+                id: opts.input.id,
+            },
+            data: {
+                archived: true,
+                archivedAt: new Date(),
+            },
+        });
+    }),
 });

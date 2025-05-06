@@ -16,13 +16,7 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>;
  * @
  * @deny ('read', archived)
  * @
- * @allow ('read', showInSearch)
- * @
- * @allow ('read', id == auth().id)
- * @
- * @allow ('update', id == auth().id)
- * @
- * @allow ('create', id == auth().id)
+ * @allow ('all', true)
  * @
  * @auth
  */
@@ -48,9 +42,7 @@ export type GroupParticipant = $Result.DefaultSelection<Prisma.$GroupParticipant
  * @
  * @deny ('read', archived)
  * @
- * @allow ('read', true)
- * @
- * @allow ('create', uploadedById == auth().id)
+ * @allow ('all', true)
  */
 export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>;
 /**
@@ -5797,10 +5789,19 @@ export namespace Prisma {
             paymentsPaid: Prisma.$PaymentPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             email: string
             firstName: string
@@ -6517,10 +6518,19 @@ export namespace Prisma {
             payments: Prisma.$PaymentPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             name: string
             currency: $Enums.CurrencyCode
@@ -7167,10 +7177,19 @@ export namespace Prisma {
             group: Prisma.$GroupPayload<ExtArgs>
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             userId: string
             groupId: string
@@ -7712,10 +7731,19 @@ export namespace Prisma {
             Profile: Prisma.$ProfilePayload<ExtArgs> | null
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             path: string
             bucket: string
@@ -8300,10 +8328,19 @@ export namespace Prisma {
             attachments: Prisma.$MessageAttachmentPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             key: string
             text: string | null
@@ -8873,10 +8910,19 @@ export namespace Prisma {
             expense: Prisma.$ExpensePayload<ExtArgs> | null
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             messageId: string
             type: $Enums.MessageAttachmentType
@@ -9504,10 +9550,19 @@ export namespace Prisma {
             messageAttachments: Prisma.$MessageAttachmentPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             ownerId: string
             payerId: string
@@ -10143,10 +10198,19 @@ export namespace Prisma {
             expense: Prisma.$ExpensePayload<ExtArgs>
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             userId: string
             expenseId: string
@@ -10748,10 +10812,19 @@ export namespace Prisma {
             payer: Prisma.$ProfilePayload<ExtArgs>
         }
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             groupId: string
             amount: number
@@ -11263,10 +11336,19 @@ export namespace Prisma {
         name: "ExchangeRates"
         objects: {}
         scalars: $Extensions.GetPayloadResult<{
+            /**
+             * @deny('update', true)
+             */
             id: string
             archived: boolean
             archivedAt: Date | null
+            /**
+             * @deny('update', true)
+             */
             createdAt: Date
+            /**
+             * @deny('update', true)
+             */
             updatedAt: Date
             baseCurrency: string
             rates: Prisma.JsonValue

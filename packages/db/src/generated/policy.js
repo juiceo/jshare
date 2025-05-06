@@ -3,12 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const policy = {
     policy: { profile: {
             modelLevel: { read: { guard: Profile_read, },
-                create: { guard: Profile_create, },
+                create: { guard: Profile_create, inputChecker: Profile_create_input, },
                 update: { guard: Profile_update, },
                 postUpdate: { guard: Profile_postUpdate, },
                 delete: { guard: Profile_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: Profile$id_update,
+                    },
+                    createdAt: {
+                        guard: Profile$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: Profile$updatedAt_update,
+                    },
+                },
             },
         },
         group: {
@@ -18,7 +28,17 @@ const policy = {
                 postUpdate: { guard: Group_postUpdate, },
                 delete: { guard: Group_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: Group$id_update,
+                    },
+                    createdAt: {
+                        guard: Group$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: Group$updatedAt_update,
+                    },
+                },
             },
         },
         groupParticipant: {
@@ -28,7 +48,17 @@ const policy = {
                 postUpdate: { guard: GroupParticipant_postUpdate, },
                 delete: { guard: GroupParticipant_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: GroupParticipant$id_update,
+                    },
+                    createdAt: {
+                        guard: GroupParticipant$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: GroupParticipant$updatedAt_update,
+                    },
+                },
             },
         },
         image: {
@@ -38,7 +68,17 @@ const policy = {
                 postUpdate: { guard: Image_postUpdate, },
                 delete: { guard: Image_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: Image$id_update,
+                    },
+                    createdAt: {
+                        guard: Image$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: Image$updatedAt_update,
+                    },
+                },
             },
         },
         message: {
@@ -48,7 +88,17 @@ const policy = {
                 postUpdate: { guard: Message_postUpdate, },
                 delete: { guard: Message_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: Message$id_update,
+                    },
+                    createdAt: {
+                        guard: Message$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: Message$updatedAt_update,
+                    },
+                },
             },
         },
         messageAttachment: {
@@ -58,7 +108,17 @@ const policy = {
                 postUpdate: { guard: MessageAttachment_postUpdate, },
                 delete: { guard: MessageAttachment_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: MessageAttachment$id_update,
+                    },
+                    createdAt: {
+                        guard: MessageAttachment$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: MessageAttachment$updatedAt_update,
+                    },
+                },
             },
         },
         expense: {
@@ -68,7 +128,17 @@ const policy = {
                 postUpdate: { guard: Expense_postUpdate, },
                 delete: { guard: Expense_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: Expense$id_update,
+                    },
+                    createdAt: {
+                        guard: Expense$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: Expense$updatedAt_update,
+                    },
+                },
             },
         },
         expenseShare: {
@@ -78,7 +148,17 @@ const policy = {
                 postUpdate: { guard: ExpenseShare_postUpdate, },
                 delete: { guard: ExpenseShare_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: ExpenseShare$id_update,
+                    },
+                    createdAt: {
+                        guard: ExpenseShare$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: ExpenseShare$updatedAt_update,
+                    },
+                },
             },
         },
         payment: {
@@ -88,7 +168,17 @@ const policy = {
                 postUpdate: { guard: Payment_postUpdate, },
                 delete: { guard: Payment_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: Payment$id_update,
+                    },
+                    createdAt: {
+                        guard: Payment$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: Payment$updatedAt_update,
+                    },
+                },
             },
         },
         exchangeRates: {
@@ -98,7 +188,17 @@ const policy = {
                 postUpdate: { guard: ExchangeRates_postUpdate, },
                 delete: { guard: ExchangeRates_delete, } },
             fieldLevel: { read: {},
-                update: {},
+                update: {
+                    id: {
+                        guard: ExchangeRates$id_update,
+                    },
+                    createdAt: {
+                        guard: ExchangeRates$createdAt_update,
+                    },
+                    updatedAt: {
+                        guard: ExchangeRates$updatedAt_update,
+                    },
+                },
             },
         },
     },
@@ -113,49 +213,36 @@ const policy = {
         payment: { hasValidation: true },
         exchangeRates: { hasValidation: false },
     },
-    authSelector: { "id": true },
 };
 function Profile_read(context, db) {
-    var _a, _b, _c;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return { AND: [{ NOT: { archived: true } }, { OR: [{ showInSearch: true }, (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } }] }] };
+    return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
 function $check_Profile_read(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
     if (input === null || input === void 0 ? void 0 : input.archived) {
         return false;
     }
-    if (input === null || input === void 0 ? void 0 : input.showInSearch) {
-        return true;
-    }
-    if (((input === null || input === void 0 ? void 0 : input.id) == (user === null || user === void 0 ? void 0 : user.id))) {
+    if (true) {
         return true;
     }
     return false;
 }
 function Profile_create(context, db) {
-    var _a, _b, _c;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } };
+    return { AND: [] };
 }
 function $check_Profile_create(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    if (((input === null || input === void 0 ? void 0 : input.id) == (user === null || user === void 0 ? void 0 : user.id))) {
+    if (true) {
         return true;
     }
     return false;
 }
+function Profile_create_input(input, context) {
+    return true;
+}
 function Profile_update(context, db) {
-    var _a, _b, _c;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { id: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } };
+    return { AND: [] };
 }
 function $check_Profile_update(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    if (((input === null || input === void 0 ? void 0 : input.id) == (user === null || user === void 0 ? void 0 : user.id))) {
+    if (true) {
         return true;
     }
     return false;
@@ -167,10 +254,49 @@ function $check_Profile_postUpdate(input, context) {
     return true;
 }
 function Profile_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Profile_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
+}
+function Profile$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Profile$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Profile$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Profile$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Profile$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Profile$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
 }
 function Group_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
@@ -220,6 +346,42 @@ function $check_Group_delete(input, context) {
     }
     return false;
 }
+function Group$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Group$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Group$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Group$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Group$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Group$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
 function GroupParticipant_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
@@ -268,6 +430,42 @@ function $check_GroupParticipant_delete(input, context) {
     }
     return false;
 }
+function GroupParticipant$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_GroupParticipant$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function GroupParticipant$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_GroupParticipant$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function GroupParticipant$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_GroupParticipant$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
 function Image_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
@@ -281,27 +479,24 @@ function $check_Image_read(input, context) {
     return false;
 }
 function Image_create(context, db) {
-    var _a, _b, _c;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return (((_b = user === null || user === void 0 ? void 0 : user.id) !== null && _b !== void 0 ? _b : null) == null) ? { OR: [] } : { uploadedById: { equals: ((_c = user === null || user === void 0 ? void 0 : user.id) !== null && _c !== void 0 ? _c : null) } };
+    return { AND: [] };
 }
 function $check_Image_create(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    if (((input === null || input === void 0 ? void 0 : input.uploadedById) == (user === null || user === void 0 ? void 0 : user.id))) {
+    if (true) {
         return true;
     }
     return false;
 }
 function Image_create_input(input, context) {
-    var _a;
-    const user = (_a = context.user) !== null && _a !== void 0 ? _a : null;
-    return ((input === null || input === void 0 ? void 0 : input.uploadedById) == (user === null || user === void 0 ? void 0 : user.id));
+    return true;
 }
 function Image_update(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Image_update(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
 }
 function Image_postUpdate(context, db) {
@@ -311,10 +506,49 @@ function $check_Image_postUpdate(input, context) {
     return true;
 }
 function Image_delete(context, db) {
-    return { OR: [] };
+    return { AND: [] };
 }
 function $check_Image_delete(input, context) {
+    if (true) {
+        return true;
+    }
     return false;
+}
+function Image$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Image$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Image$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Image$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Image$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Image$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
 }
 function Message_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
@@ -364,6 +598,42 @@ function $check_Message_delete(input, context) {
     }
     return false;
 }
+function Message$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Message$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Message$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Message$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Message$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Message$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
 function MessageAttachment_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
@@ -411,6 +681,42 @@ function $check_MessageAttachment_delete(input, context) {
         return true;
     }
     return false;
+}
+function MessageAttachment$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_MessageAttachment$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function MessageAttachment$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_MessageAttachment$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function MessageAttachment$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_MessageAttachment$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
 }
 function Expense_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
@@ -460,6 +766,42 @@ function $check_Expense_delete(input, context) {
     }
     return false;
 }
+function Expense$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Expense$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Expense$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Expense$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Expense$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Expense$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
 function ExpenseShare_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
@@ -507,6 +849,42 @@ function $check_ExpenseShare_delete(input, context) {
         return true;
     }
     return false;
+}
+function ExpenseShare$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_ExpenseShare$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function ExpenseShare$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_ExpenseShare$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function ExpenseShare$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_ExpenseShare$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
 }
 function Payment_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
@@ -556,6 +934,42 @@ function $check_Payment_delete(input, context) {
     }
     return false;
 }
+function Payment$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Payment$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Payment$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Payment$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function Payment$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_Payment$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
 function ExchangeRates_read(context, db) {
     return { AND: [{ NOT: { archived: true } }, { AND: [] }] };
 }
@@ -603,5 +1017,41 @@ function $check_ExchangeRates_delete(input, context) {
         return true;
     }
     return false;
+}
+function ExchangeRates$id_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_ExchangeRates$id_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function ExchangeRates$createdAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_ExchangeRates$createdAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
+}
+function ExchangeRates$updatedAt_update(context, db) {
+    if (true) {
+        return { OR: [] };
+    }
+    return { AND: [] };
+}
+function $check_ExchangeRates$updatedAt_update(input, context) {
+    if (true) {
+        return false;
+    }
+    return true;
 }
 exports.default = policy;

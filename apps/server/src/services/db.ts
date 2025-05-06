@@ -9,9 +9,8 @@ const prisma = new PrismaClient();
 export const db = enhance(
     prisma,
     {},
-    { kinds: ['validation', 'delegate', 'password', 'encryption'] }
+    { kinds: ['validation', 'delegate', 'password', 'encryption', 'policy'] }
 );
-
 /**
  * Get a database client that enforces ACL checks for a given user
  */

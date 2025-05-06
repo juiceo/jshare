@@ -65,10 +65,4 @@ export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
 
         return this.store.functions[key](args, this);
     }
-
-    dispose() {
-        /**
-         * TODO: Cleanup
-         */
-    }
 }

@@ -51,7 +51,6 @@ export default screen(
                 Store.groups.delete(groupId);
                 router.replace('/(authenticated)/(tabs)/groups');
                 toast.info(`Success`, `${group.data.name} was deleted`);
-                Store.groups.disposeItem(groupId);
             } catch {
                 toast.error('Something went wrong');
             }

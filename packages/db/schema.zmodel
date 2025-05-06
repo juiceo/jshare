@@ -56,10 +56,6 @@ model Profile extends BaseModel {
     paymentsPaid     Payment[]          @relation(name: "payment_payer")
     showInSearch     Boolean            @default(true)
 
-    @@allow('read', showInSearch)
-    @@allow('read', id == auth().id)
-    @@allow('update', id == auth().id)
-    @@allow('create', id == auth().id)
     @@map("profiles")
     @@schema("public")
     @@auth
@@ -77,7 +73,6 @@ model Group extends BaseModel {
     payments     Payment[]
     lastActivity DateTime           @default(now())
 
-    @@allow('all', true)
     @@map("groups")
 }
 
@@ -93,7 +88,6 @@ model GroupParticipant extends BaseModel {
 
     @@index([groupId])
     @@index([userId])
-    @@allow('all', true)
     @@map("group_participants")
 }
 
@@ -111,8 +105,6 @@ model Image extends BaseModel {
      * 
      * The other alternative is to define complex access policy rules for whether the user is in the group, etc.
      */
-    @@allow('read', true)
-    @@allow('create', uploadedById == auth().id)
     @@map("images")
 }
 
@@ -129,7 +121,6 @@ model Message extends BaseModel {
 
     attachments MessageAttachment[]
 
-    @@allow('all', true)
     @@map("messages")
 }
 
@@ -141,7 +132,6 @@ model MessageAttachment extends BaseModel {
     expenseId String?
     expense   Expense?              @relation(fields: [expenseId], references: [id], onDelete: SetNull)
 
-    @@allow('all', true)
     @@map("message_attachments")
 }
 
@@ -163,7 +153,6 @@ model Expense extends BaseModel {
     shares             ExpenseShare[]
     messageAttachments MessageAttachment[]
 
-    @@allow('all', true)
     @@map("expenses")
 }
 
@@ -179,7 +168,6 @@ model ExpenseShare extends BaseModel {
     locked     Boolean             @default(false)
     conversion CurrencyConversion? @json
 
-    @@allow('all', true)
     @@map("expense_shares")
 }
 
@@ -197,7 +185,6 @@ model Payment extends BaseModel {
     payerId     String
     payer       Profile             @relation(name: "payment_payer", fields: [payerId], references: [id])
 
-    @@allow('all', true)
     @@map("payments")
 }
 
@@ -205,6 +192,5 @@ model ExchangeRates extends BaseModel {
     baseCurrency String @db.VarChar(3)
     rates        Json
 
-    @@allow('all', true)
     @@map("exchange_rates")
 }

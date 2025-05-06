@@ -14,7 +14,7 @@ export type DocumentApi<
     findMany?: (args: { queries: Query<TData>[] }) => Promise<TData[][]>;
     update?: (args: { id: string; data: TUpdateInput }) => Promise<TData>;
     create?: (args: { data: TCreateInput }) => Promise<TData>;
-    delete?: (args: { id: string }) => Promise<TData>;
+    delete?: (args: { id: string }) => Promise<void>;
 };
 
 export type InferCreateInput<TApi extends DocumentApi<any, any, any>> =

@@ -28,18 +28,37 @@ const ExpenseSkeleton = () => {
     );
 };
 
+const ExpenseDeleted = () => {
+    return (
+        <Stack
+            bg="background.elevation1"
+            center
+            style={{ width: screenW * 0.6, height: screenW * 0.6 }}
+        >
+            <Typography strikeThrough variant="h4" color="hint">
+                Expense deleted
+            </Typography>
+        </Stack>
+    );
+};
+
 export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseAttachmentProps) => {
     const { session } = useSession();
     const router = useRouter();
     const userId = session?.user.id;
 
     const expense = Store.expenses.findById(props.expenseId);
+    const isLoading = Store.expenses.isLoading();
 
-    if (!expense) {
+    if (!expense && isLoading) {
         /**
          * TODO: Figure out how to differentiate between loading and not found state
          */
         return <ExpenseSkeleton />;
+    }
+
+    if (!expense) {
+        return <ExpenseDeleted />;
     }
 
     const ownShare = expense.data.shares.find((share) => share.userId === userId);

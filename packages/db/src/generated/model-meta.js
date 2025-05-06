@@ -9,7 +9,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -21,11 +21,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, email: {
                     name: "email",
                     type: "String",
@@ -126,7 +126,7 @@ const metadata = {
                     fields: ["avatarId"]
                 },
             },
-            attributes: [{ "name": "@@deny", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "update" }] }, { "name": "@@allow", "args": [{ "value": "create" }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
+            attributes: [{ "name": "@@deny", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "profiles" }] }, { "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@auth", "args": [] }],
         },
         group: {
             name: 'Group', fields: {
@@ -134,7 +134,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -146,11 +146,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, name: {
                     name: "name",
                     type: "String",
@@ -227,7 +227,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -239,11 +239,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, userId: {
                     name: "userId",
                     type: "String",
@@ -288,7 +288,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@deny", "args": [{ "value": "read" }] }, { "name": "@@index", "args": [] }, { "name": "@@index", "args": [] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "group_participants" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@deny", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@index", "args": [] }, { "name": "@@index", "args": [] }, { "name": "@@map", "args": [{ "value": "group_participants" }] }],
         },
         image: {
             name: 'Image', fields: {
@@ -296,7 +296,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -308,11 +308,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, path: {
                     name: "path",
                     type: "String",
@@ -345,7 +345,7 @@ const metadata = {
                     fields: ["id"]
                 },
             },
-            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@deny", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "read" }, { "value": true }] }, { "name": "@@allow", "args": [{ "value": "create" }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
+            attributes: [{ "name": "@@schema", "args": [{ "value": "public" }] }, { "name": "@@deny", "args": [{ "value": "read" }] }, { "name": "@@allow", "args": [{ "value": "all" }, { "value": true }] }, { "name": "@@map", "args": [{ "value": "images" }] }],
         },
         message: {
             name: 'Message', fields: {
@@ -353,7 +353,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -365,11 +365,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, key: {
                     name: "key",
                     type: "String",
@@ -429,7 +429,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -441,11 +441,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, messageId: {
                     name: "messageId",
                     type: "String",
@@ -492,7 +492,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -504,11 +504,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, ownerId: {
                     name: "ownerId",
                     type: "String",
@@ -591,7 +591,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -603,11 +603,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, userId: {
                     name: "userId",
                     type: "String",
@@ -665,7 +665,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -677,11 +677,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, groupId: {
                     name: "groupId",
                     type: "String",
@@ -748,7 +748,7 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@id", "args": [] }, { "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, archived: {
                     name: "archived",
                     type: "Boolean",
@@ -760,11 +760,11 @@ const metadata = {
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, updatedAt: {
                     name: "updatedAt",
                     type: "DateTime",
-                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }],
+                    attributes: [{ "name": "@default", "args": [] }, { "name": "@updatedAt", "args": [] }, { "name": "@deny", "args": [{ "value": "update" }, { "value": true }] }],
                 }, baseCurrency: {
                     name: "baseCurrency",
                     type: "String",

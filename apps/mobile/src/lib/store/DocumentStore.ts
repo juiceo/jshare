@@ -340,6 +340,10 @@ export class DocumentStore<
         }
     }
 
+    isLoading = computedFn(() => {
+        return Object.values(this.queries).some((q) => q.status !== 'done');
+    });
+
     getQueryState = computedFn((queryKey: string | undefined) => {
         if (!queryKey) return null;
         return this.queries[queryKey]?.status;
@@ -483,10 +487,7 @@ export class DocumentStore<
     }
 
     disposeItem(id: string) {
-        const doc = this.index.delete(id);
-        if (doc) {
-            doc.dispose();
-        }
+        this.index.delete(id);
     }
 
     async create(
@@ -570,9 +571,11 @@ export class DocumentStore<
             return;
         }
         this.disposeItem(id);
-        /**
-         * TODO: Implement server side delete
-         */
+        this.api.delete({ id }).catch((err) => {
+            console.error('Delete failed', err);
+            this.invalidate(id);
+            this.flushQueries();
+        });
     }
 
     reset() {

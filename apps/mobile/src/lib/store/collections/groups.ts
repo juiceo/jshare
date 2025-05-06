@@ -17,6 +17,7 @@ export const GroupsStore = new DocumentStore({
         findMany: trpcClient.models.groups.findMany.query,
         create: trpcClient.models.groups.create.mutate,
         update: trpcClient.models.groups.update.mutate,
+        delete: trpcClient.models.groups.delete.mutate,
     },
     createOptimistic: (data) => {
         return {
