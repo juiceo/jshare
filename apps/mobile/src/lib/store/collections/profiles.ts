@@ -4,11 +4,14 @@ import { zDB, type DB } from '@jshare/db';
 import { DocumentStore } from '~/lib/store/DocumentStore';
 import { trpcClient } from '~/lib/trpc';
 
+const schema = zDB.models.ProfileSchema.extend({
+    avatar: zDB.models.ImageSchema.nullable().optional(),
+}) as Zod.ZodSchema<DB.Profile<{ avatar: true }>>;
+
 export const ProfilesStore = new DocumentStore({
     name: 'profiles',
-    schema: zDB.models.ProfileSchema.extend({
-        avatar: zDB.models.ImageSchema.nullable().optional(),
-    }).transform((data) => data as DB.Profile<{ avatar: true }>),
+    schema,
+    mode: 'on-demand',
     api: {
         findById: trpcClient.models.profiles.findById.query,
         update: trpcClient.models.profiles.update.mutate,

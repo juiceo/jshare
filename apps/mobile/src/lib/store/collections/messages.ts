@@ -6,14 +6,16 @@ import { DocumentStore } from '~/lib/store/DocumentStore';
 import { trpcClient } from '~/lib/trpc';
 import { getUserId } from '~/state/auth';
 
+const schema = zDB.models.MessageSchema.extend({
+    attachments: zDB.models.MessageAttachmentSchema.array().optional(),
+}) as Zod.ZodSchema<DB.Message<{ attachments: true }>>;
+
 export const MessagesStore = new DocumentStore({
     name: 'messages',
-    schema: zDB.models.MessageSchema.extend({
-        attachments: zDB.models.MessageAttachmentSchema.array().optional(),
-    }).transform((data) => data as DB.Message<{ attachments: true }>),
+    schema,
+    mode: 'sync',
     api: {
-        findById: trpcClient.models.messages.findById.query,
-        findMany: trpcClient.models.messages.findMany.query,
+        sync: trpcClient.models.messages.sync.query,
         create: trpcClient.models.messages.create.mutate,
     },
     resolvers: {

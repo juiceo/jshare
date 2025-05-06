@@ -2,54 +2,70 @@ import { TRPCError } from '@trpc/server';
 
 import { zDB } from '@jshare/db';
 
-import { db } from '../../../services/db';
+import { adminDb, db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
-import { zCreateArgs, zFindByIdArgs, zFindManyArgs } from './_util';
+import { zCreateArgs, zSyncArgs } from './_util';
 
 export const messagesRouter = router({
-    findById: authProcedure.input(zFindByIdArgs).query(async (opts) => {
-        return db.message.findMany({
-            where: {
-                id: {
-                    in: opts.input.ids,
+    sync: authProcedure.input(zSyncArgs).query(async (opts) => {
+        const timestamp = Date.now();
+
+        const groupIds = await db.groupParticipant
+            .findMany({
+                where: {
+                    userId: opts.ctx.userId,
                 },
-                group: {
-                    participants: {
-                        some: {
-                            userId: opts.ctx.userId,
-                        },
-                    },
+            })
+            .then((res) => res.map((p) => p.groupId));
+
+        const created = await db.message.findMany({
+            where: {
+                groupId: {
+                    in: groupIds,
+                },
+                createdAt: {
+                    gt: new Date(opts.input.lastSync),
                 },
             },
             include: {
                 attachments: true,
             },
         });
+
+        const updated = await db.message.findMany({
+            where: {
+                groupId: {
+                    in: groupIds,
+                },
+                updatedAt: {
+                    gt: new Date(opts.input.lastSync),
+                },
+            },
+            include: {
+                attachments: true,
+            },
+        });
+
+        const removed = await adminDb.message
+            .findMany({
+                where: {
+                    groupId: {
+                        in: groupIds,
+                    },
+                    archivedAt: {
+                        gt: new Date(opts.input.lastSync),
+                    },
+                },
+            })
+            .then((res) => res.map((m) => m.id));
+
+        return {
+            created,
+            updated,
+            removed,
+            timestamp,
+        };
     }),
-    findMany: authProcedure
-        .input(zFindManyArgs(zDB.models.MessageSchema.pick({ groupId: true })))
-        .query(async (opts) => {
-            const queries = opts.input.queries;
-            return Promise.all(
-                queries.map(async (query) => {
-                    return db.message.findMany({
-                        where: {
-                            ...query,
-                            group: {
-                                participants: {
-                                    some: {
-                                        userId: opts.ctx.userId,
-                                    },
-                                },
-                            },
-                        },
-                        include: {
-                            attachments: true,
-                        },
-                    });
-                })
-            );
-        }),
     create: authProcedure
         .input(
             zCreateArgs(zDB.models.MessageCreateSchema.omit({ authorId: true, authorType: true }))

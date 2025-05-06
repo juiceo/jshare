@@ -7,14 +7,14 @@ import { trpcClient } from '~/lib/trpc';
 const schema = zDB.models.GroupSchema.extend({
     participants: zDB.models.GroupParticipantSchema.array().optional(),
     coverImage: zDB.models.ImageSchema.nullable().optional(),
-}).transform((data) => data as DB.Group<{ participants: true; coverImage: true }>);
+}) as Zod.ZodSchema<DB.Group<{ participants: true; coverImage: true }>>;
 
 export const GroupsStore = new DocumentStore({
     name: 'groups',
     schema,
+    mode: 'sync',
     api: {
-        findById: trpcClient.models.groups.findById.query,
-        findMany: trpcClient.models.groups.findMany.query,
+        sync: trpcClient.models.groups.sync.query,
         create: trpcClient.models.groups.create.mutate,
         update: trpcClient.models.groups.update.mutate,
         delete: trpcClient.models.groups.delete.mutate,

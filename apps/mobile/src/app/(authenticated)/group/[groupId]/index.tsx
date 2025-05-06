@@ -49,12 +49,9 @@ export default screen(
                 text,
                 key: '', //TODO: Remove key from the database, not necessary anymore
             });
-            console.log('SEND!!!!');
         };
 
-        const handleEndReached = () => {
-            console.log('END REACHED!!!!');
-        };
+        const handleEndReached = () => {};
 
         const chatListItems = useMemo(() => {
             return messagesToChatListItems(messages ?? []);

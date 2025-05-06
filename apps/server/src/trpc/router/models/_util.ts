@@ -7,6 +7,10 @@ export const zFindByIdArgs = z.object({
     ids: zID.array(),
 });
 
+export const zSyncArgs = z.object({
+    lastSync: z.number(),
+});
+
 export const zFindManyArgs = <TAllowedFields extends Zod.ZodObject<any>>(
     schema: TAllowedFields,
     opts?: { allowEmpty?: boolean }

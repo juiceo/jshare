@@ -10,11 +10,19 @@ export type DocumentApi<
     TCreateInput extends object,
     TUpdateInput extends object,
 > = {
-    findById: (args: { ids: string[] }) => Promise<TData[]>;
+    sync?: (args: { lastSync: number }) => Promise<SyncResult<TData>>;
+    findById?: (args: { ids: string[] }) => Promise<TData[]>;
     findMany?: (args: { queries: Query<TData>[] }) => Promise<TData[][]>;
     update?: (args: { id: string; data: TUpdateInput }) => Promise<TData>;
     create?: (args: { data: TCreateInput }) => Promise<TData>;
     delete?: (args: { id: string }) => Promise<void>;
+};
+
+export type SyncResult<TData extends { id: string }> = {
+    created: TData[];
+    updated: TData[];
+    removed: string[];
+    timestamp: number;
 };
 
 export type InferCreateInput<TApi extends DocumentApi<any, any, any>> =

@@ -4,12 +4,21 @@ import { enhance, PrismaClient } from '@jshare/db/server';
 const prisma = new PrismaClient();
 
 /**
- * "Superuser" database client, bypasses all ACL checks
+ * Database client that enforces policy checks
  */
 export const db = enhance(
     prisma,
     {},
     { kinds: ['validation', 'delegate', 'password', 'encryption', 'policy'] }
+);
+
+/**
+ * Superuser database client, bypasses all access policy checks
+ */
+export const adminDb = enhance(
+    prisma,
+    {},
+    { kinds: ['validation', 'delegate', 'password', 'encryption'] }
 );
 /**
  * Get a database client that enforces ACL checks for a given user

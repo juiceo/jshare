@@ -6,10 +6,10 @@ import { trpcClient } from '~/lib/trpc';
 
 export const PaymentsStore = new DocumentStore({
     name: 'payments',
-    schema: zDB.models.PaymentSchema.transform((data) => data as DB.Payment),
+    schema: zDB.models.PaymentSchema as Zod.ZodSchema<DB.Payment>,
+    mode: 'sync',
     api: {
-        findById: trpcClient.models.payments.findById.query,
-        findMany: trpcClient.models.payments.findMany.query,
+        sync: trpcClient.models.payments.sync.query,
         create: trpcClient.models.payments.create.mutate,
     },
     resolvers: {

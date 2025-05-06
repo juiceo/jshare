@@ -51,6 +51,7 @@ export default screen(
 
         const handleSubmit = async (data: ExpenseEditorSchema) => {
             if (!expense) return;
+            console.log('handleSubmit', data);
             expense.update(data);
 
             setMode('view');

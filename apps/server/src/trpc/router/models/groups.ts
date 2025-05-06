@@ -2,16 +2,17 @@ import { TRPCError } from '@trpc/server';
 
 import { zDB } from '@jshare/db';
 
-import { db } from '../../../services/db';
+import { adminDb, db } from '../../../services/db';
 import { authProcedure, router } from '../../trpc';
-import { zCreateArgs, zDeleteArgs, zFindByIdArgs, zFindManyArgs, zUpdateArgs } from './_util';
+import { zCreateArgs, zDeleteArgs, zSyncArgs, zUpdateArgs } from './_util';
 
 export const groupsRouter = router({
-    findById: authProcedure.input(zFindByIdArgs).query(async (opts) => {
-        return db.group.findMany({
+    sync: authProcedure.input(zSyncArgs).query(async (opts) => {
+        const timestamp = Date.now();
+        const created = await db.group.findMany({
             where: {
-                id: {
-                    in: opts.input.ids,
+                createdAt: {
+                    gt: new Date(opts.input.lastSync),
                 },
                 participants: {
                     some: {
@@ -24,35 +25,46 @@ export const groupsRouter = router({
                 participants: true,
             },
         });
-    }),
-    findMany: authProcedure
-        .input(
-            zFindManyArgs(zDB.models.GroupScalarSchema.pick({ inviteCode: true }), {
-                allowEmpty: true,
-            })
-        )
-        .query(async (opts) => {
-            const queries = opts.input.queries;
 
-            return Promise.all(
-                queries.map(async (query) => {
-                    return db.group.findMany({
-                        where: {
-                            ...query,
-                            participants: {
-                                some: {
-                                    userId: opts.ctx.userId,
-                                },
-                            },
+        const updated = await db.group.findMany({
+            where: {
+                updatedAt: {
+                    gt: new Date(opts.input.lastSync),
+                },
+                participants: {
+                    some: {
+                        userId: opts.ctx.userId,
+                    },
+                },
+            },
+            include: {
+                coverImage: true,
+                participants: true,
+            },
+        });
+
+        const removed = await adminDb.group
+            .findMany({
+                where: {
+                    archivedAt: {
+                        gt: new Date(opts.input.lastSync),
+                    },
+                    participants: {
+                        some: {
+                            userId: opts.ctx.userId,
                         },
-                        include: {
-                            coverImage: true,
-                            participants: true,
-                        },
-                    });
-                })
-            );
-        }),
+                    },
+                },
+            })
+            .then((res) => res.map((g) => g.id));
+
+        return {
+            created,
+            updated,
+            removed,
+            timestamp,
+        };
+    }),
     update: authProcedure
         .input(zUpdateArgs(zDB.models.GroupUpdateSchema))
         .mutation(async (opts) => {

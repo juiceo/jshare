@@ -23,7 +23,7 @@ export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
         makeAutoObservable(this);
     }
 
-    get snapshot() {
+    get snapshot(): InferDataType<TStore> {
         return {
             ...this.data,
         };
@@ -34,7 +34,6 @@ export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
     }
 
     update(updates: InferUpdateInput<TStore['api']>) {
-        this.data = { ...this.data, ...updates };
         this.store.update(this.id, updates);
     }
 
