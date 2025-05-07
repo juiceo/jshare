@@ -23,4 +23,17 @@ export const ExpensesStore = new DocumentStore({
             return ProfilesStore.findById(data.payerId);
         },
     },
+    updateOptimistic: (data, updates) => {
+        const { shares, ...rest } = updates;
+        return {
+            ...data,
+            ...rest,
+            shares: data.shares.map((share) => {
+                return {
+                    ...share,
+                    ...updates.shares.find((s) => s.userId === share.userId),
+                };
+            }),
+        };
+    },
 });

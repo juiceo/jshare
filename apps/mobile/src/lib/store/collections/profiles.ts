@@ -22,4 +22,10 @@ export const ProfilesStore = new DocumentStore({
             return getUserFullName(data);
         },
     },
+    updateOptimistic: (data, updates) => {
+        return {
+            ...data,
+            ...updates,
+        };
+    },
 });

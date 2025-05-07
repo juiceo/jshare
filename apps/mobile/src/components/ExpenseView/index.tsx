@@ -1,19 +1,20 @@
 import dayjs from 'dayjs';
+import { observer } from 'mobx-react-lite';
 
 import { formatAmount } from '@jshare/common';
-import type { DB } from '@jshare/db';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
+import type { Docs } from '~/lib/store/collections';
 
 export type ExpenseViewProps = {
-    expense: DB.Expense<{ shares: true }>;
+    expense: Docs.Expense;
 };
 
-export const ExpenseView = (props: ExpenseViewProps) => {
-    const { expense } = props;
+export const ExpenseView = observer((props: ExpenseViewProps) => {
+    const expense = props.expense.data;
 
     return (
         <Stack column>
@@ -76,4 +77,4 @@ export const ExpenseView = (props: ExpenseViewProps) => {
             </Stack>
         </Stack>
     );
-};
+});

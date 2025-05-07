@@ -82,7 +82,7 @@ export default screen(
                     }
                 />
                 <Screen.Content scrollable contentStyle={{ paddingBottom: 64 }}>
-                    {mode === 'view' && <ExpenseView expense={expense.data} />}
+                    {mode === 'view' && <ExpenseView expense={expense} />}
                     {mode === 'edit' && (
                         <ExpenseEditor
                             form={form}

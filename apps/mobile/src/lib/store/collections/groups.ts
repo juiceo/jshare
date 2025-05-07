@@ -29,6 +29,12 @@ export const GroupsStore = new DocumentStore({
             coverImage: null,
         };
     },
+    updateOptimistic: (data: DB.Group<{ participants: true; coverImage: true }>, updates) => {
+        return {
+            ...data,
+            ...updates,
+        };
+    },
     functions: {
         createTemporaryParticipant: async (
             args: { firstName: string; lastName: string },

@@ -45,6 +45,7 @@ export default screen(() => {
             lastName: '',
             currency: 'EUR',
             termsAccepted: false,
+            avatar: null,
         },
         resolver: zodResolver(schema),
     });
