@@ -91,8 +91,8 @@ catalogs:
       specifier: ^8.4.2
       version: 8.4.5
     '@supabase/supabase-js':
-      specifier: ^2.47.16
-      version: 2.47.16
+      specifier: 2.49.4
+      version: 2.49.4
     '@tanstack/react-query':
       specifier: 5.74.3
       version: 5.74.3
@@ -385,7 +385,7 @@ importers:
         version: 11.4.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))
       '@supabase/supabase-js':
         specifier: 'catalog:'
-        version: 2.47.16
+        version: 2.49.4
       '@tanstack/query-async-storage-persister':
         specifier: ^5.74.3
         version: 5.74.3
@@ -632,7 +632,7 @@ importers:
         version: link:../../packages/db
       '@supabase/supabase-js':
         specifier: 'catalog:'
-        version: 2.47.16
+        version: 2.49.4
       '@trpc/server':
         specifier: 'catalog:'
         version: 11.1.0(typescript@5.8.3)
@@ -691,12 +691,18 @@ importers:
       '@jshare/db':
         specifier: workspace:*
         version: link:../db
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.49.4
       dayjs:
         specifier: 'catalog:'
         version: 1.11.13
       lodash:
         specifier: 'catalog:'
         version: 4.17.21
+      superjson:
+        specifier: 'catalog:'
+        version: 2.2.1
       vitest:
         specifier: 'catalog:'
         version: 2.1.8(@types/node@22.14.0)(lightningcss@1.27.0)(terser@5.39.0)
@@ -764,7 +770,7 @@ importers:
         version: 5.21.1(prisma@5.21.1)
       '@supabase/supabase-js':
         specifier: 'catalog:'
-        version: 2.47.16
+        version: 2.49.4
       '@types/shortid':
         specifier: 'catalog:'
         version: 2.2.0
@@ -2956,9 +2962,6 @@ packages:
   '@sideway/address@4.1.5':
     resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
 
-  '@sideway/formula@3.0.0':
-    resolution: {integrity: sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==}
-
   '@sideway/formula@3.0.1':
     resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==}
 
@@ -3187,8 +3190,8 @@ packages:
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
-  '@supabase/auth-js@2.67.3':
-    resolution: {integrity: sha512-NJDaW8yXs49xMvWVOkSIr8j46jf+tYHV0wHhrwOaLLMZSFO4g6kKAf+MfzQ2RaD06OCUkUHIzctLAxjTgEVpzw==}
+  '@supabase/auth-js@2.69.1':
+    resolution: {integrity: sha512-FILtt5WjCNzmReeRLq5wRs3iShwmnWgBvxHfqapC/VoljJl+W8hDAyFmf1NVw3zH+ZjZ05AKxiKxVeb0HNWRMQ==}
 
   '@supabase/functions-js@2.4.4':
     resolution: {integrity: sha512-WL2p6r4AXNGwop7iwvul2BvOtuJ1YQy8EbOd0dhG1oN1q8el/BIRSFCFnWAMM/vJJlHWLi4ad22sKbKr9mvjoA==}
@@ -3197,8 +3200,8 @@ packages:
     resolution: {integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==}
     engines: {node: 4.x || >=6.0.0}
 
-  '@supabase/postgrest-js@1.17.11':
-    resolution: {integrity: sha512-AOqqgQEhLVqzOMmA8Q0bxQFMfbozbjjQ1Tt4kprkstIKdRl4yZRaMdoVxFkCpU8ivmAe2xNfAVkNK+l16a9P0A==}
+  '@supabase/postgrest-js@1.19.4':
+    resolution: {integrity: sha512-O4soKqKtZIW3olqmbXXbKugUtByD2jPa8kL2m2c1oozAO11uCcGrRhkZL0kVxjBLrXHE0mdSkFsMj7jDSfyNpw==}
 
   '@supabase/realtime-js@2.11.2':
     resolution: {integrity: sha512-u/XeuL2Y0QEhXSoIPZZwR6wMXgB+RQbJzG9VErA3VghVt7uRfSVsjeqd7m5GhX3JR6dM/WRmLbVR8URpDWG4+w==}
@@ -3206,8 +3209,8 @@ packages:
   '@supabase/storage-js@2.7.1':
     resolution: {integrity: sha512-asYHcyDR1fKqrMpytAS1zjyEfvxuOIp1CIXX7ji4lHHcJKqyk+sLl/Vxgm4sN6u8zvuUtae9e4kDxQP2qrwWBA==}
 
-  '@supabase/supabase-js@2.47.16':
-    resolution: {integrity: sha512-FnoV0miLnYUL8ZTS94tSIyn+ogCwh5DB5f1fj1n4wHGNAqJSKFb8OQzLVlRFAH7cB9TKQ5eon3/n2lXUWY7GfA==}
+  '@supabase/supabase-js@2.49.4':
+    resolution: {integrity: sha512-jUF0uRUmS8BKt37t01qaZ88H9yV1mbGYnqLeuFWLcdV+x1P4fl0yP9DGtaEhFPZcwSom7u16GkLEH9QJZOqOkw==}
 
   '@tanstack/query-async-storage-persister@5.74.3':
     resolution: {integrity: sha512-kz84Poyvum0DkB1ga5yBta0peI7IEqOnUzXXjpiEwtRnIo6XDfnATdnB3RQNejYG1SfZuIuVjd7j5mE2o2dgeQ==}
@@ -5975,9 +5978,6 @@ packages:
   joi@17.13.3:
     resolution: {integrity: sha512-otDA4ldcIx+ZXsKHWmp0YizCweVRZG96J10b0FevjfuncLO1oX59THoAmHkNubYJ+9gWsYsp5k8v4ib6oDv1fA==}
 
-  joi@17.6.0:
-    resolution: {integrity: sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==}
-
   join-component@1.1.0:
     resolution: {integrity: sha512-bF7vcQxbODoGK1imE2P9GS9aw4zD0Sd+Hni68IMZLj7zRnquH7dXUmMw9hDI5S/Jzt7q+IyTXN0rSg2GI0IKhQ==}
 
@@ -8678,10 +8678,6 @@ packages:
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-  yaml@2.3.1:
-    resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
-    engines: {node: '>= 14'}
-
   yaml@2.6.0:
     resolution: {integrity: sha512-a6ae//JvKDEra2kdi1qzCyrJW/WZCgFi8ydDV+eXExl95t+5R+ijnqHJbz9tmMh8FUjx3iv2fCQ4dclAQlO2UQ==}
     engines: {node: '>= 14'}
@@ -11034,7 +11030,7 @@ snapshots:
       cosmiconfig: 5.2.1
       deepmerge: 4.3.1
       fast-glob: 3.3.2
-      joi: 17.6.0
+      joi: 17.13.3
     transitivePeerDependencies:
       - encoding
     optional: true
@@ -11064,7 +11060,7 @@ snapshots:
       semver: 7.6.3
       strip-ansi: 5.2.0
       wcwidth: 1.0.1
-      yaml: 2.3.1
+      yaml: 2.6.0
     transitivePeerDependencies:
       - encoding
     optional: true
@@ -11147,7 +11143,7 @@ snapshots:
 
   '@react-native-community/cli-types@13.6.9':
     dependencies:
-      joi: 17.6.0
+      joi: 17.13.3
     optional: true
 
   '@react-native-community/cli@13.6.9':
@@ -11467,9 +11463,6 @@ snapshots:
   '@sideway/address@4.1.5':
     dependencies:
       '@hapi/hoek': 9.3.0
-
-  '@sideway/formula@3.0.0':
-    optional: true
 
   '@sideway/formula@3.0.1': {}
 
@@ -11832,7 +11825,7 @@ snapshots:
     dependencies:
       storybook: 8.4.7(prettier@2.8.8)
 
-  '@supabase/auth-js@2.67.3':
+  '@supabase/auth-js@2.69.1':
     dependencies:
       '@supabase/node-fetch': 2.6.15
 
@@ -11844,7 +11837,7 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  '@supabase/postgrest-js@1.17.11':
+  '@supabase/postgrest-js@1.19.4':
     dependencies:
       '@supabase/node-fetch': 2.6.15
 
@@ -11862,12 +11855,12 @@ snapshots:
     dependencies:
       '@supabase/node-fetch': 2.6.15
 
-  '@supabase/supabase-js@2.47.16':
+  '@supabase/supabase-js@2.49.4':
     dependencies:
-      '@supabase/auth-js': 2.67.3
+      '@supabase/auth-js': 2.69.1
       '@supabase/functions-js': 2.4.4
       '@supabase/node-fetch': 2.6.15
-      '@supabase/postgrest-js': 1.17.11
+      '@supabase/postgrest-js': 1.19.4
       '@supabase/realtime-js': 2.11.2
       '@supabase/storage-js': 2.7.1
     transitivePeerDependencies:
@@ -15376,15 +15369,6 @@ snapshots:
       '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
 
-  joi@17.6.0:
-    dependencies:
-      '@hapi/hoek': 9.3.0
-      '@hapi/topo': 5.1.0
-      '@sideway/address': 4.1.4
-      '@sideway/formula': 3.0.0
-      '@sideway/pinpoint': 2.0.0
-    optional: true
-
   join-component@1.1.0: {}
 
   jotai-optics@0.4.0(jotai@2.10.1(@types/react@18.3.20)(react@18.3.1))(optics-ts@2.4.1):
@@ -18319,9 +18303,6 @@ snapshots:
   yallist@3.1.1: {}
 
   yallist@4.0.0: {}
-
-  yaml@2.3.1:
-    optional: true
 
   yaml@2.6.0: {}
 

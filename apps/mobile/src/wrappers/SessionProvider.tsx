@@ -9,6 +9,7 @@ import {
 import type { AuthError, Session } from '@supabase/supabase-js';
 import { useRouter } from 'expo-router';
 
+import { useRealtimeUpdates } from '~/lib/realtime';
 import { resetStore } from '~/lib/store/collections';
 import { supabase } from '~/lib/supabase';
 import { setAccessToken, setUserId } from '~/state/auth';
@@ -25,6 +26,8 @@ export const SessionProvider = (props: PropsWithChildren) => {
     const [error, setError] = useState<AuthError | null>(null);
     const [session, setSession] = useState<Session | null>(null);
     const { dismissAll, replace } = useRouter();
+
+    useRealtimeUpdates(session?.user.id ?? null);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session }, error }) => {

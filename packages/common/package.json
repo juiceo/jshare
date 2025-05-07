@@ -13,11 +13,13 @@
         "test:watch": "vitest watch"
     },
     "dependencies": {
+        "@supabase/supabase-js": "catalog:",
         "dayjs": "catalog:",
         "lodash": "catalog:",
         "vitest": "catalog:",
         "zod": "catalog:",
-        "@jshare/db": "workspace:*"
+        "@jshare/db": "workspace:*",
+        "superjson": "catalog:"
     },
     "devDependencies": {
         "@jshare/eslint-config": "workspace:*",

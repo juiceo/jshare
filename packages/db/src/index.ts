@@ -107,4 +107,24 @@ export namespace DB {
     export type ExchangeRates = Omit<models.ExchangeRates, 'rates'> & {
         rates: ExchangeRatesObject;
     };
+
+    export type ModelName = models.Prisma.ModelName;
+
+    export type ModelFromName<T extends ModelName> = T extends 'Profile'
+        ? Profile
+        : T extends 'Group'
+          ? Group
+          : T extends 'GroupParticipant'
+            ? GroupParticipant
+            : T extends 'Message'
+              ? Message
+              : T extends 'MessageAttachment'
+                ? MessageAttachment
+                : T extends 'Expense'
+                  ? Expense
+                  : T extends 'ExpenseShare'
+                    ? ExpenseShare
+                    : T extends 'Payment'
+                      ? Payment
+                      : never;
 }

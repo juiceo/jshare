@@ -31,7 +31,7 @@ const _ChatMessageGroup = observer((props: PropsWithChildren<ChatMessageGroupPro
     });
 
     const sortedMessages = useMemo(() => {
-        return sortBy(props.messages, (message) => message.data.createdAt);
+        return sortBy(props.messages, (message) => message.data.createdAt.valueOf());
     }, [props.messages]);
 
     return (

@@ -1,17 +1,22 @@
-import { getGroupBroadcastChannel, GroupBroadcastEvent } from '@jshare/common';
+import { broadcastRealtimeUpdate } from '@jshare/common';
 import { DB } from '@jshare/db';
 
 import { db } from '../services/db';
 import { supabase } from '../services/supabase';
 
-export const onMessageCreated = async (message: DB.Message) => {
-    supabase.channel(getGroupBroadcastChannel(message.groupId)).send({
-        type: 'broadcast',
-        event: GroupBroadcastEvent.Message,
-        payload: {
-            type: GroupBroadcastEvent.Message,
+export const onMessageCreated = async (message: DB.Message<{ attachments: true }>) => {
+    const groupParticipants = await db.groupParticipant.findMany({
+        where: {
+            groupId: message.groupId,
         },
     });
+
+    for (const subscriber of groupParticipants) {
+        broadcastRealtimeUpdate(supabase, subscriber.userId, {
+            model: 'Message',
+            data: message,
+        });
+    }
 
     await db.group.update({
         where: {

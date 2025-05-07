@@ -34,7 +34,7 @@ export const onModelCreated = async (model: Prisma.ModelName, id: string) => {
         switch (model) {
             case 'Expense': {
                 const expense = await exponentialBackoff(async () =>
-                    adminDb.expense.findUniqueOrThrow({ where: { id } })
+                    adminDb.expense.findUniqueOrThrow({ where: { id }, include: { shares: true } })
                 );
 
                 await onExpenseCreated(expense);
@@ -50,7 +50,10 @@ export const onModelCreated = async (model: Prisma.ModelName, id: string) => {
             }
             case 'Message': {
                 const message = await exponentialBackoff(async () =>
-                    adminDb.message.findUniqueOrThrow({ where: { id } })
+                    adminDb.message.findUniqueOrThrow({
+                        where: { id },
+                        include: { attachments: true },
+                    })
                 );
 
                 await onMessageCreated(message);

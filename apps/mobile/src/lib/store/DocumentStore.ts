@@ -178,13 +178,7 @@ export class DocumentStore<
             });
 
             try {
-                console.log('start sync', this.name, this.lastSync);
                 const result = await this.api.sync({ lastSync: this.lastSync?.timestamp ?? 0 });
-                console.log('sync success', this.name, {
-                    added: result.created.length,
-                    updated: result.updated.length,
-                    removed: result.removed.length,
-                });
 
                 runInAction(() => {
                     this.lastSync = result;
@@ -347,7 +341,7 @@ export class DocumentStore<
             { maxWait: 15_000 }
         );
 
-        this.isReady = Promise.resolve(); //this.hydrate();
+        this.isReady = this.hydrate();
 
         reaction(
             () => this.index.updatedAt,
@@ -489,9 +483,6 @@ export class DocumentStore<
     }
 
     private findByIdComputed = computedFn((id: string) => {
-        if (this.name === 'expenses') {
-            console.log('findByIdComputed', id);
-        }
         return this.index.get(id);
     });
 
@@ -595,7 +586,7 @@ export class DocumentStore<
         return this.findManyComputed(JSON.stringify({ where, opts }));
     }
 
-    registerItem(item: T): Document<DocumentStore<S, A, R, F, I, T>> {
+    registerItem(item: z.infer<S>): Document<DocumentStore<S, A, R, F, I, T>> {
         if (this.index.has(item.id)) {
             this.index.update(item.id, item);
             return this.index.get(item.id)!;
@@ -666,8 +657,6 @@ export class DocumentStore<
         }
         const doc = this.index.get(id);
         if (!doc) return;
-
-        console.log('DocumentStore.update', updates.amount);
 
         this.updates[id] = {
             id,
