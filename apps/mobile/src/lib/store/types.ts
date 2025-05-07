@@ -14,7 +14,7 @@ export type DocumentApi<
     findById?: (args: { ids: string[] }) => Promise<TData[]>;
     findMany?: (args: { queries: Query<TData>[] }) => Promise<TData[][]>;
     update?: (args: { id: string; data: TUpdateInput }) => Promise<TData>;
-    create?: (args: { data: TCreateInput }) => Promise<TData>;
+    create?: (args: { id: string; data: TCreateInput }) => Promise<TData>;
     delete?: (args: { id: string }) => Promise<void>;
 };
 

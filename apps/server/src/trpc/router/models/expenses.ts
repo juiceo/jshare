@@ -88,7 +88,7 @@ export const expensesRouter = router({
             )
         )
         .mutation(async (opts) => {
-            const { data } = opts.input;
+            const { id, data } = opts.input;
             const isUserInGroup = await opts.ctx.acl.isInGroup(data.groupId);
             if (!isUserInGroup) {
                 throw new TRPCError({
@@ -144,6 +144,7 @@ export const expensesRouter = router({
 
             return db.expense.create({
                 data: {
+                    id,
                     ownerId: opts.ctx.userId,
                     groupId: data.groupId,
                     payerId: data.payerId,

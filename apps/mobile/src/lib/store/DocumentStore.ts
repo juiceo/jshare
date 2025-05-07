@@ -384,7 +384,7 @@ export class DocumentStore<
             await Promise.all(
                 createsToRun.map(async (entry) => {
                     return this.api
-                        .create?.({ data: entry.data })
+                        .create?.({ id: entry.id, data: entry.data })
                         .then((res) => {
                             runInAction(() => {
                                 delete this.creates[entry.id];

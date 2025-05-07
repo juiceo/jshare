@@ -106,6 +106,7 @@ export const groupsRouter = router({
         .mutation(async (opts) => {
             return db.group.create({
                 data: {
+                    id: opts.input.id,
                     ...opts.input.data,
                     participants: {
                         create: {

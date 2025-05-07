@@ -87,6 +87,7 @@ export const messagesRouter = router({
 
             return db.message.create({
                 data: {
+                    id: opts.input.id,
                     ...opts.input.data,
                     authorId: opts.ctx.userId,
                     authorType: 'User',

@@ -67,6 +67,7 @@ export const paymentsRouter = router({
         .input(
             zCreateArgs(
                 z.object({
+                    id: z.string(),
                     groupId: z.string(),
                     payerId: z.string(),
                     recipientId: z.string(),
@@ -76,7 +77,7 @@ export const paymentsRouter = router({
             )
         )
         .mutation(async (opts) => {
-            const { data } = opts.input;
+            const { id, data } = opts.input;
             const isInGroup = await opts.ctx.acl.isInGroup(data.groupId);
             if (!isInGroup) {
                 throw new TRPCError({
@@ -132,6 +133,7 @@ export const paymentsRouter = router({
 
             return db.payment.create({
                 data: {
+                    id,
                     groupId: data.groupId,
                     recipientId: data.recipientId,
                     payerId: data.payerId,

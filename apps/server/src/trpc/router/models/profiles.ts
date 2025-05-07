@@ -56,7 +56,7 @@ export const profilesRouter = router({
             )
         )
         .mutation(async (opts) => {
-            if (opts.input.data.id !== opts.ctx.userId) {
+            if (opts.input.id !== opts.ctx.userId) {
                 throw new TRPCError({
                     code: 'UNAUTHORIZED',
                     message: 'You can only create your own profile',
@@ -64,6 +64,7 @@ export const profilesRouter = router({
             }
             return db.profile.create({
                 data: {
+                    id: opts.input.id,
                     ...opts.input.data,
                     lastActivity: new Date(),
                     temporary: false,
