@@ -133,7 +133,7 @@ export default screen(
                                         }}
                                         ListFooterComponent={
                                             group.data.inviteCode &&
-                                            group.data.participants?.length === 1 ? (
+                                            (group.data.participants?.length ?? 0) <= 1 ? (
                                                 <CopyInviteCodeBlock code={group.data.inviteCode} />
                                             ) : null
                                         }

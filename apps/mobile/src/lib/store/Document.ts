@@ -13,6 +13,7 @@ export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
     data: InferDataType<TStore>;
     private store: TStore;
     private resolvers?: InferResolvers<TStore>;
+    private optimistic: boolean = false;
 
     constructor(store: TStore, data: InferDataType<TStore>, resolvers?: InferResolvers<TStore>) {
         this.store = store;
@@ -27,6 +28,14 @@ export class Document<TStore extends DocumentStore<any, any, any, any, any>> {
         return {
             ...this.data,
         };
+    }
+
+    get isOptimistic(): boolean {
+        return this.optimistic;
+    }
+
+    setOptimistic(value: boolean) {
+        this.optimistic = value;
     }
 
     set(data: Partial<InferDataType<TStore>>) {

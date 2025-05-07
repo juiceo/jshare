@@ -477,6 +477,9 @@ export class DocumentStore<
 
         this.isReady = this.hydrate().then(flushAllMutations);
 
+        /**
+         * TODO: This should only run when network state changes
+         */
         setInterval(async () => {
             flushAllMutations();
         }, 10_000);
@@ -724,12 +727,18 @@ export class DocumentStore<
         return this.findManyComputed(JSON.stringify({ where, opts }));
     }
 
-    registerItem(item: z.infer<S>): Document<DocumentStore<S, A, R, F, I, T>> {
+    registerItem(
+        item: z.infer<S>,
+        opts?: { optimistic: true }
+    ): Document<DocumentStore<S, A, R, F, I, T>> {
         if (this.index.has(item.id)) {
             this.index.update(item.id, item);
+            const doc = this.index.get(item.id)!;
+            doc.setOptimistic(opts?.optimistic ?? false);
             return this.index.get(item.id)!;
         } else {
             const doc = new Document<DocumentStore<S, A, R, F, I, T>>(this, item, this.resolvers);
+            doc.setOptimistic(opts?.optimistic ?? false);
             this.index.add(item.id, doc);
             return doc;
         }
@@ -763,7 +772,7 @@ export class DocumentStore<
 
         if (this.createOptimistic) {
             const optimisticData = this.createOptimistic(data);
-            return this.registerItem(optimisticData);
+            this.registerItem(optimisticData, { optimistic: true });
         }
 
         this.flushCreates();
@@ -790,7 +799,7 @@ export class DocumentStore<
 
         if (this.updateOptimistic) {
             const optimisticData = this.updateOptimistic(doc.data as T, { ...updates });
-            this.index.update(id, optimisticData);
+            this.registerItem(optimisticData, { optimistic: true });
         }
 
         this.flushUpdates();

@@ -1,5 +1,6 @@
 import { zDB, type DB } from '@jshare/db';
 
+import { MessagesStore } from '~/lib/store/collections/messages';
 import { ProfilesStore } from '~/lib/store/collections/profiles';
 import { DocumentStore } from '~/lib/store/DocumentStore';
 import { trpcClient } from '~/lib/trpc';
@@ -18,6 +19,14 @@ export const PaymentsStore = new DocumentStore({
         },
         recipient: (data) => {
             return ProfilesStore.findById(data.recipientId);
+        },
+    },
+    hooks: {
+        afterCreate: () => {
+            MessagesStore.invalidate();
+        },
+        afterUpdate: () => {
+            MessagesStore.invalidate();
         },
     },
 });

@@ -27,7 +27,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
     const [session, setSession] = useState<Session | null>(null);
     const { dismissAll, replace } = useRouter();
 
-    useRealtimeUpdates(session?.user.id ?? null);
+    // useRealtimeUpdates(session?.user.id ?? null);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session }, error }) => {
