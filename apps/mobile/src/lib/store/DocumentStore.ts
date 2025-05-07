@@ -1,6 +1,6 @@
 import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { debounce, sortBy, type DebouncedFunc } from 'lodash';
+import { debounce, get, sortBy, type DebouncedFunc } from 'lodash';
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import { z } from 'zod';
@@ -8,6 +8,8 @@ import { z } from 'zod';
 import { Document } from '~/lib/store/Document';
 import { IndexedMap } from '~/lib/store/IndexedMap';
 import type {
+    CreateEntry,
+    DeleteEntry,
     DocumentApi,
     DocumentFunctions,
     DocumentResolvers,
@@ -126,8 +128,13 @@ export class DocumentStore<
     sync: (force?: boolean) => Promise<void>;
     flushUpdates: DebouncedFunc<() => Promise<T[]>>;
     flushQueries: DebouncedFunc<() => Promise<void>>;
+    flushCreates: () => Promise<void>;
+    flushDeletes: () => Promise<void>;
     updates: Record<string, UpdateEntry<A>> = {};
     queries: Record<string, QueryEntry<T>> = {};
+    creates: Record<string, CreateEntry<A>> = {};
+    deletes: Record<string, DeleteEntry<T>> = {};
+
     lastSync: SyncResult<T> | null = null;
     isSyncing: boolean = false;
     index: IndexedMap<DocumentStore<S, A, R, F, I, T>>;
@@ -318,11 +325,35 @@ export class DocumentStore<
 
                 return Promise.all(
                     updatesToRun.map(async ([id, data]) =>
-                        this.api.update?.({ id, data: data.updates })
+                        this.api
+                            .update?.({ id, data: data.updates })
+                            .then((res) => {
+                                runInAction(() => {
+                                    delete this.updates[id];
+                                });
+                                return res;
+                            })
+                            .catch((err: Error) => {
+                                if ('data' in err) {
+                                    const status = get(err, 'data.httpStatus');
+                                    if (status && status >= 400 && status < 500) {
+                                        runInAction(() => {
+                                            delete this.updates[id];
+                                        });
+                                        return null;
+                                    }
+                                } else {
+                                    runInAction(() => {
+                                        if (this.updates[id]) {
+                                            this.updates[id].status = 'pending';
+                                        }
+                                    });
+                                }
+                            })
                     )
                 )
                     .then((results) => {
-                        return results.filter((r) => r !== undefined);
+                        return results.filter((r) => r !== undefined && r !== null);
                     })
                     .then((docs) => {
                         if (this.hooks?.afterUpdate) {
@@ -332,16 +363,123 @@ export class DocumentStore<
                         }
                         return docs;
                     });
-
-                /**
-                 * TODO: Handle errors somehow (mark update state as failed?)
-                 */
             },
             1000,
             { maxWait: 15_000 }
         );
 
-        this.isReady = this.hydrate();
+        this.flushCreates = async () => {
+            const createsToRun = runInAction(() => {
+                return Object.values(this.creates).filter((entry) => {
+                    if (entry.status === 'pending') {
+                        this.creates[entry.id].status = 'running';
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            if (createsToRun.length === 0) return;
+
+            await Promise.all(
+                createsToRun.map(async (entry) => {
+                    return this.api
+                        .create?.({ data: entry.data })
+                        .then((res) => {
+                            runInAction(() => {
+                                delete this.creates[entry.id];
+                                this.registerItem(res);
+                            });
+                            return res;
+                        })
+                        .catch((err: Error) => {
+                            if ('data' in err) {
+                                const status = get(err, 'data.httpStatus');
+                                if (status && status >= 400 && status < 500) {
+                                    runInAction(() => {
+                                        delete this.creates[entry.id];
+                                    });
+                                    return null;
+                                }
+                            } else {
+                                runInAction(() => {
+                                    if (this.creates[entry.id]) {
+                                        this.creates[entry.id].status = 'failed';
+                                    }
+                                });
+                                return null;
+                            }
+                        });
+                })
+            )
+                .then((results) => {
+                    return results.filter((r) => r !== null && r !== undefined);
+                })
+                .then((createdDocs) => {
+                    if (this.hooks?.afterCreate) {
+                        createdDocs.forEach((data) => {
+                            this.hooks!.afterCreate!(data);
+                        });
+                    }
+                });
+        };
+
+        this.flushDeletes = async () => {
+            const deletesToRun = runInAction(() => {
+                return Object.values(this.deletes).filter((entry) => {
+                    if (entry.status === 'pending') {
+                        this.deletes[entry.id].status = 'running';
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            if (deletesToRun.length === 0) return;
+
+            await Promise.all(
+                deletesToRun.map(async (entry) => {
+                    return this.api
+                        .delete?.({ id: entry.id })
+                        .then(() => {
+                            runInAction(() => {
+                                delete this.deletes[entry.id];
+                            });
+                        })
+                        .catch((err: Error) => {
+                            if ('data' in err) {
+                                const status = get(err, 'data.httpStatus');
+                                if (status && status >= 400 && status < 500) {
+                                    runInAction(() => {
+                                        delete this.creates[entry.id];
+                                    });
+                                    return null;
+                                }
+                            } else {
+                                runInAction(() => {
+                                    if (this.creates[entry.id]) {
+                                        this.creates[entry.id].status = 'failed';
+                                    }
+                                    this.registerItem(entry.data);
+                                });
+                                return null;
+                            }
+                        });
+                })
+            );
+        };
+
+        const flushAllMutations = async () => {
+            await this.flushDeletes();
+            await this.flushCreates();
+            await this.flushUpdates();
+        };
+
+        this.isReady = this.hydrate().then(flushAllMutations);
+
+        setInterval(async () => {
+            flushAllMutations();
+        }, 10_000);
 
         reaction(
             () => this.index.updatedAt,
@@ -601,9 +739,7 @@ export class DocumentStore<
         this.index.delete(id);
     }
 
-    async create(
-        input: InferCreateInput<A>
-    ): Promise<Document<DocumentStore<S, A, R, F, I, T>> | null> {
+    async create(input: InferCreateInput<A>) {
         if (!this.api.create) {
             throw new Error(
                 `Tried to create a document in ${this.name}, but there is no create method defined in the collection API.`
@@ -619,33 +755,18 @@ export class DocumentStore<
             ...input,
         };
 
-        const createResult = this.api.create!({ data })
-            .then((res) => {
-                if (res) {
-                    runInAction(() => {
-                        this.registerItem(res);
-                    });
-                } else {
-                    runInAction(() => {
-                        this.disposeItem(data.id);
-                    });
-                }
-                return res;
-            })
-            .then((res) => {
-                const doc = this.index.get(res.id);
-                if (doc && this.hooks?.afterCreate) {
-                    this.hooks.afterCreate(doc.data as T);
-                }
-                return doc ?? null;
-            });
+        this.creates[data.id] = {
+            id: data.id,
+            data,
+            status: 'pending',
+        };
 
         if (this.createOptimistic) {
             const optimisticData = this.createOptimistic(data);
             return this.registerItem(optimisticData);
         }
 
-        return await createResult;
+        this.flushCreates();
     }
 
     async update(id: string, updates: InferUpdateInput<A>) {
@@ -683,24 +804,18 @@ export class DocumentStore<
             return;
         }
         const doc = this.index.get(id);
+        if (!doc) return;
         this.disposeItem(id);
-        this.api.delete({ id }).catch((err) => {
-            console.error('Delete failed', err);
-            switch (this.mode) {
-                case 'on-demand': {
-                    this.invalidateQuery(id);
-                    this.flushQueries();
-                    break;
-                }
-                case 'sync': {
-                    if (doc) {
-                        this.registerItem(doc.snapshot as T);
-                    }
-                    this.sync(true);
-                    break;
-                }
-            }
-        });
+
+        this.deletes[id] = {
+            id,
+            data: doc.snapshot as T,
+            status: 'pending',
+        };
+        delete this.updates[id];
+        delete this.creates[id];
+
+        this.flushDeletes();
     }
 
     reset() {

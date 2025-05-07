@@ -81,6 +81,18 @@ export type UpdateEntry<TApi extends DocumentApi<any, any, any>> = {
     status: 'pending' | 'running' | 'done';
 };
 
+export type CreateEntry<TApi extends DocumentApi<any, any, any>> = {
+    id: string;
+    data: InferCreateInput<TApi>;
+    status: 'pending' | 'running' | 'done' | 'failed';
+};
+
+export type DeleteEntry<TData extends { id: string }> = {
+    id: string;
+    data: TData;
+    status: 'pending' | 'running' | 'done' | 'failed';
+};
+
 export type QueryEntry<TData extends { id: string }> =
     | {
           type: 'findMany';
