@@ -404,6 +404,21 @@ export class DocumentStore<
         return Date.now() - query.lastFetched > this.staleTime;
     }
 
+    invalidate() {
+        switch (this.mode) {
+            case 'on-demand': {
+                runInAction(() => {
+                    this.queries = {};
+                });
+                break;
+            }
+            case 'sync': {
+                this.sync(true);
+                break;
+            }
+        }
+    }
+
     invalidateQuery(queryOrId: string | Query<T>) {
         if (typeof queryOrId === 'string') {
             this.registerFindById(queryOrId, true);

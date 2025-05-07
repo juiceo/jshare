@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 import { db } from './services/db';
-import { initTriggers } from './triggers';
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';
 
@@ -41,7 +40,5 @@ app.get('/health-check/db', async (_, res) => {
 app.listen(PORT, () => {
     console.log(`JShare server listening on port ${PORT}`);
 });
-
-initTriggers();
 
 export type AppRouter = typeof appRouter;

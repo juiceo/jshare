@@ -1,6 +1,8 @@
-import type { DB } from '@jshare/db';
+import { sleep } from '@jshare/common';
+import type { Prisma } from '@jshare/db';
 
-import { supabase } from '../services/supabase';
+import { adminDb } from '../services/db';
+import { exponentialBackoff } from '../util/async';
 import { onExpenseCreated } from './onExpenseCreated';
 import { onExpenseUpdated } from './onExpenseUpdated';
 import { onGroupCreated } from './onGroupCreated';
@@ -8,74 +10,70 @@ import { onGroupParticipantCreated } from './onGroupParticipantCreated';
 import { onMessageCreated } from './onMessageCreated';
 import { onPaymentCreated } from './onPaymentCreated';
 
-export const initTriggers = () => {
-    supabase
-        .channel('database_triggers')
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'expenses',
-            },
-            (payload) => {
-                return onExpenseCreated(payload.new as DB.Expense);
+export const onModelUpdated = async (model: Prisma.ModelName, id: string) => {
+    await sleep(10);
+    try {
+        switch (model) {
+            case 'Expense': {
+                const expense = await exponentialBackoff(async () =>
+                    adminDb.expense.findUniqueOrThrow({ where: { id } })
+                );
+
+                await onExpenseUpdated(expense);
+                break;
             }
-        )
-        .on(
-            'postgres_changes',
-            {
-                event: 'UPDATE',
-                schema: 'public',
-                table: 'expenses',
-            },
-            (payload) => {
-                return onExpenseUpdated(payload.new as DB.Expense);
+        }
+    } catch (err) {
+        console.error(`Error onModelUpdated: ${model} ${id}`, err);
+    }
+};
+
+export const onModelCreated = async (model: Prisma.ModelName, id: string) => {
+    await sleep(10);
+    try {
+        switch (model) {
+            case 'Expense': {
+                const expense = await exponentialBackoff(async () =>
+                    adminDb.expense.findUniqueOrThrow({ where: { id } })
+                );
+
+                await onExpenseCreated(expense);
+                break;
             }
-        )
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'payments',
-            },
-            (payload) => {
-                return onPaymentCreated(payload.new as DB.Payment);
+            case 'Payment': {
+                const payment = await exponentialBackoff(async () =>
+                    adminDb.payment.findUniqueOrThrow({ where: { id } })
+                );
+
+                await onPaymentCreated(payment);
+                break;
             }
-        )
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'messages',
-            },
-            (payload) => {
-                return onMessageCreated(payload.new as DB.Message);
+            case 'Message': {
+                const message = await exponentialBackoff(async () =>
+                    adminDb.message.findUniqueOrThrow({ where: { id } })
+                );
+
+                await onMessageCreated(message);
+                break;
             }
-        )
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'groups',
-            },
-            (payload) => {
-                return onGroupCreated(payload.new as DB.Group);
+            case 'Group': {
+                const group = await exponentialBackoff(async () =>
+                    adminDb.group.findUniqueOrThrow({ where: { id } })
+                );
+
+                await onGroupCreated(group);
+                break;
             }
-        )
-        .on(
-            'postgres_changes',
-            {
-                event: 'INSERT',
-                schema: 'public',
-                table: 'group_participants',
-            },
-            (payload) => {
-                return onGroupParticipantCreated(payload.new as DB.GroupParticipant);
+            case 'GroupParticipant': {
+                const groupParticipant = await exponentialBackoff(async () =>
+                    adminDb.groupParticipant.findUniqueOrThrow({ where: { id } })
+                );
+
+                await onGroupParticipantCreated(groupParticipant);
+                break;
             }
-        )
-        .subscribe();
+        }
+    } catch (err) {
+        console.error(`Error onModelCreated: ${model} ${id}`, err);
+    }
 };

@@ -1,7 +1,28 @@
 import type { DB } from '@jshare/db';
 import { enhance, PrismaClient } from '@jshare/db/server';
 
-const prisma = new PrismaClient();
+import { onModelCreated, onModelUpdated } from '../triggers';
+
+const prisma = new PrismaClient().$extends({
+    query: {
+        $allModels: {
+            update: async ({ args, operation, model, query }) => {
+                const result = await query(args);
+                if (result.id) {
+                    onModelUpdated(model, result.id);
+                }
+                return result;
+            },
+            create: async ({ args, operation, model, query }) => {
+                const result = await query(args);
+                if (result.id) {
+                    onModelCreated(model, result.id);
+                }
+                return result;
+            },
+        },
+    },
+});
 
 /**
  * Database client that enforces policy checks

@@ -45,16 +45,13 @@ export default screen(
         });
 
         const handleSubmit = async (data: Schema) => {
-            const group = await Store.groups.create({
+            Store.groups.create({
                 name: data.name,
                 currency: data.currency,
                 coverImageId: data.coverImage?.id ?? null,
                 inviteCode: shortid.generate(),
                 lastActivity: new Date(),
             });
-            if (group && data.coverImage) {
-                group.set({ coverImage: data.coverImage });
-            }
             router.dismiss();
         };
 
