@@ -67,7 +67,6 @@ export const paymentsRouter = router({
         .input(
             zCreateArgs(
                 z.object({
-                    id: z.string(),
                     groupId: z.string(),
                     payerId: z.string(),
                     recipientId: z.string(),
