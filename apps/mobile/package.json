@@ -3,7 +3,7 @@
     "name": "@jshare/mobile",
     "description": "JShare mobile app",
     "license": "MIT",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "main": "expo-router/entry",
     "scripts": {
         "dev": "env-cmd -f .env.dev expo start",
@@ -72,6 +72,7 @@
         "expo-image-picker": "catalog:",
         "expo-linear-gradient": "catalog:",
         "expo-linking": "catalog:",
+        "expo-network": "~7.0.5",
         "expo-router": "catalog:",
         "expo-splash-screen": "catalog:",
         "expo-status-bar": "catalog:",
