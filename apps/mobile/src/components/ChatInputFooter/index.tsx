@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, TextInput } from 'react-native';
+import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
 import { useTheme, type Theme } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Icon } from '~/components/Icon';
 import { IconButton } from '~/components/IconButton';
+import { OFFLINE_INDICATOR_HEIGHT } from '~/components/OfflineIndicator';
+import { useScreen } from '~/components/Screen/useScreen';
 import { Typography } from '~/components/Typography';
 
 export type ChatInputFooterProps = {
@@ -20,6 +23,22 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     const styles = getStyles(theme);
     const [inputValue, setInputValue] = useState<string>('');
     const [inputFocused, setInputFocused] = useState<boolean>(false);
+
+    const { connectedSv } = useScreen();
+
+    const wrapperStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateY: interpolate(
+                        connectedSv.value,
+                        [0, 1],
+                        [-OFFLINE_INDICATOR_HEIGHT, 0]
+                    ),
+                },
+            ],
+        };
+    });
 
     const handleSendMessage = async () => {
         onMessage(inputValue);
@@ -48,60 +67,62 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
     };
 
     return (
-        <Stack row alignCenter p="md" spacing="md">
-            {!inputFocused && (
-                <Stack row center spacing="md" pr="md">
-                    <Pressable onPress={onExpense}>
-                        <Stack row center spacing="md">
-                            <Stack center w={24} ar="1/1" br="full" bg="primary.light">
-                                <Icon
-                                    name="CreditCard"
-                                    size={16}
-                                    color={theme.palette.text.primary}
-                                />
+        <Animated.View style={wrapperStyle}>
+            <Stack row alignCenter p="md" spacing="md" bg="background.main" style={{ zIndex: 100 }}>
+                {!inputFocused && (
+                    <Stack row center spacing="md" pr="md">
+                        <Pressable onPress={onExpense}>
+                            <Stack row center spacing="md">
+                                <Stack center w={24} ar="1/1" br="full" bg="primary.light">
+                                    <Icon
+                                        name="CreditCard"
+                                        size={16}
+                                        color={theme.palette.text.primary}
+                                    />
+                                </Stack>
+                                <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
+                                    Expense
+                                </Typography>
                             </Stack>
-                            <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
-                                Expense
-                            </Typography>
-                        </Stack>
-                    </Pressable>
-                    <Pressable onPress={onPayment}>
-                        <Stack row center spacing="md">
-                            <Stack center w={24} ar="1/1" br="full" bg="primary.light">
-                                <Icon
-                                    name="ArrowDownUp"
-                                    size={16}
-                                    color={theme.palette.text.primary}
-                                />
+                        </Pressable>
+                        <Pressable onPress={onPayment}>
+                            <Stack row center spacing="md">
+                                <Stack center w={24} ar="1/1" br="full" bg="primary.light">
+                                    <Icon
+                                        name="ArrowDownUp"
+                                        size={16}
+                                        color={theme.palette.text.primary}
+                                    />
+                                </Stack>
+                                <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
+                                    Pay
+                                </Typography>
                             </Stack>
-                            <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
-                                Pay
-                            </Typography>
-                        </Stack>
-                    </Pressable>
-                </Stack>
-            )}
+                        </Pressable>
+                    </Stack>
+                )}
 
-            <TextInput
-                style={[styles.input]}
-                placeholder={'Type something...'}
-                value={inputValue}
-                onChangeText={setInputValue}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-            />
-            {inputFocused && (
-                <IconButton
-                    icon="Send"
-                    rounded
-                    disabled={!inputValue}
-                    size="sm"
-                    onPress={handleSendMessage}
-                    variant="contained"
-                    color="primary"
+                <TextInput
+                    style={[styles.input]}
+                    placeholder={'Type something...'}
+                    value={inputValue}
+                    onChangeText={setInputValue}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                 />
-            )}
-        </Stack>
+                {inputFocused && (
+                    <IconButton
+                        icon="Send"
+                        rounded
+                        disabled={!inputValue}
+                        size="sm"
+                        onPress={handleSendMessage}
+                        variant="contained"
+                        color="primary"
+                    />
+                )}
+            </Stack>
+        </Animated.View>
     );
 };
 

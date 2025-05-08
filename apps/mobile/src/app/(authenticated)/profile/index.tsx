@@ -3,16 +3,18 @@ import { observer } from 'mobx-react-lite';
 import { Select } from '~/components/atoms/Select';
 import { Stack } from '~/components/atoms/Stack';
 import { TextField } from '~/components/atoms/TextField';
+import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Store } from '~/lib/store/collections';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
+import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
         const user = useCurrentUser();
         const profile = Store.profiles.findById(user.id);
+        const { signOut } = useSession();
 
         return (
             <Screen>
@@ -47,6 +49,11 @@ export default screen(
                         />
                     </Stack>
                 </Screen.Content>
+                <Screen.Footer>
+                    <Button color="error" variant="ghost" onPress={signOut}>
+                        Sign out
+                    </Button>
+                </Screen.Footer>
             </Screen>
         );
     })

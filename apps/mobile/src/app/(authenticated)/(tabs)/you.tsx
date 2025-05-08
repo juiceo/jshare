@@ -8,18 +8,16 @@ import type { DB } from '@jshare/db';
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
 import { AvatarPicker } from '~/components/AvatarPicker/AvatarPicker';
-import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
+import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
         const user = useCurrentUser();
-        const { signOut } = useSession();
 
         const profile = Store.profiles.findById(user.id);
 
@@ -59,26 +57,45 @@ export default screen(
                                     <Icon
                                         name="UserPen"
                                         size={32}
-                                        color={(t) => t.palette.text.secondary}
+                                        color={(t) => t.palette.text.primary}
                                     />
                                     <Typography variant="h5">Profile</Typography>
                                 </Stack>
                             </RectButton>
+                            {/* <Divider horizontal /> */}
+                            {/* <RectButton onPress={() => router.push('/preferences')}>
+                                <Stack row alignCenter p="xl" spacing="xl">
+                                    <Icon
+                                        name="Settings2"
+                                        size={32}
+                                        color={(t) => t.palette.text.primary}
+                                    />
+                                    <Typography variant="h5">Preferences</Typography>
+                                </Stack>
+                            </RectButton> */}
                             <Divider horizontal />
                             <RectButton onPress={() => router.push('/settings')}>
                                 <Stack row alignCenter p="xl" spacing="xl">
                                     <Icon
                                         name="Cog"
                                         size={32}
-                                        color={(t) => t.palette.text.secondary}
+                                        color={(t) => t.palette.text.primary}
                                     />
-                                    <Typography variant="h5">Settings</Typography>
+                                    <Typography variant="h5">Account & System</Typography>
+                                </Stack>
+                            </RectButton>
+                            <Divider horizontal />
+                            <RectButton onPress={() => router.push('/updates')}>
+                                <Stack row alignCenter p="xl" spacing="xl">
+                                    <Icon
+                                        name="CloudDownload"
+                                        size={32}
+                                        color={(t) => t.palette.text.primary}
+                                    />
+                                    <Typography variant="h5">Updates</Typography>
                                 </Stack>
                             </RectButton>
                         </Stack>
-                        <Button color="error" variant="ghost" onPress={signOut}>
-                            Sign out
-                        </Button>
                     </Stack>
                 </Screen.Content>
             </Screen>

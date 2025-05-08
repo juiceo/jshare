@@ -57,7 +57,7 @@ export default screen(
 
         return (
             <Screen>
-                <Screen.Header title="Create group" backButton="down" disableInset />
+                <Screen.Header title="Create group" backButton="down" />
                 <Screen.Content scrollable disableTopInset>
                     <Stack column spacing="md" p="xl">
                         <Controller

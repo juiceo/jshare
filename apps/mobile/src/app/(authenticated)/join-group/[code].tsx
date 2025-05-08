@@ -39,7 +39,7 @@ export default screen(
 
         return (
             <Screen>
-                <Screen.Header title="Join group" backButton="back" disableInset />
+                <Screen.Header title="Join group" backButton="back" />
                 <Screen.Content>
                     {group ? (
                         <Stack column center flex={1} p="2xl" spacing="md">

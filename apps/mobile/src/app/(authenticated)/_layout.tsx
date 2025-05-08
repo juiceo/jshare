@@ -139,13 +139,17 @@ export default screen(
                 <Stack.Screen
                     name="create-group/index"
                     options={{ presentation: 'modal', headerShown: false }}
+                    initialParams={{ modal: true }}
                 />
                 <Stack.Screen
                     name="join-group"
                     options={{ presentation: 'modal', headerShown: false }}
+                    initialParams={{ modal: true }}
                 />
                 <Stack.Screen name="profile/index" options={{ headerShown: false }} />
+                <Stack.Screen name="preferences/index" options={{ headerShown: false }} />
                 <Stack.Screen name="settings/index" options={{ headerShown: false }} />
+                <Stack.Screen name="updates/index" options={{ headerShown: false }} />
             </Stack>
         );
     })

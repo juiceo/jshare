@@ -25,10 +25,12 @@ export default screen(() => {
                     <Stack.Screen
                         name="create-expense"
                         options={{ presentation: 'modal', headerShown: false }}
+                        initialParams={{ modal: true }}
                     />
                     <Stack.Screen
                         name="create-payment"
                         options={{ presentation: 'modal', headerShown: false }}
+                        initialParams={{ modal: true }}
                     />
                 </Stack>
             </GroupContextProvider>

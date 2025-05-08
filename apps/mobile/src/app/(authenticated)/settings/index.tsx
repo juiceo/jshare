@@ -1,110 +1,55 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import * as Updates from 'expo-updates';
+import { reloadAppAsync } from 'expo';
 import { observer } from 'mobx-react-lite';
 
 import { SUPPORT_EMAIL } from '@jshare/common';
 
 import { Stack } from '~/components/atoms/Stack';
-import { Switch } from '~/components/atoms/Switch';
 import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { Store } from '~/lib/store/collections';
+import { resetStore } from '~/lib/store/collections';
 import { trpc } from '~/lib/trpc';
-import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
+import { useSession } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const updates = Updates.useUpdates();
-        const user = useCurrentUser();
         const { signOut } = useSession();
-
-        const profile = Store.profiles.findById(user.id);
 
         const deleteAccount = useMutation(trpc.profiles.delete.mutationOptions());
 
         const [isDeleting, setDeleting] = useState<boolean>(false);
 
-        const checkForUpdates = () => {
-            Updates.checkForUpdateAsync().then((result) => {
-                if (result.isAvailable) {
-                    Updates.fetchUpdateAsync();
-                    Updates.reloadAsync();
-                } else {
-                    toast.info('Your app version is up to date!');
-                }
-            });
-        };
-
         const handleDeleteAccount = async () => {
             await deleteAccount.mutateAsync();
             signOut();
         };
+
+        const handleClearLocalData = async () => {
+            resetStore();
+            reloadAppAsync();
+        };
+
         return (
             <Screen>
                 <Screen.Header title="Settings" />
                 <Screen.Content scrollable disableTopInset>
                     <Stack p="xl" spacing="md">
                         <Typography m="md" variant="h5">
-                            Privacy settings
-                        </Typography>
-                        <Stack column bg="background.elevation1" br="xl">
-                            <Stack row alignCenter spacing="xl" p="xl">
-                                <Typography flex={1}>Show me in search</Typography>
-                                <Switch
-                                    checked={profile?.data?.showInSearch ?? false}
-                                    onChange={(checked) => {
-                                        profile?.update({
-                                            showInSearch: checked,
-                                        });
-                                    }}
-                                />
-                            </Stack>
-                        </Stack>
-
-                        <Typography m="md" variant="h5" mt="2xl">
-                            App information
+                            Local data
                         </Typography>
                         <Stack p="xl" bg="background.elevation1" br="xl">
-                            <Stack>
-                                <Typography>
-                                    App version: {updates.currentlyRunning.runtimeVersion}
-                                </Typography>
-                                <Typography>
-                                    Last updated:{' '}
-                                    {dayjs(updates.currentlyRunning.createdAt).format(
-                                        'DD/MM/YYYY HH:mm'
-                                    )}
-                                </Typography>
-                            </Stack>
-                            {!updates.isUpdatePending && (
-                                <Button
-                                    size="md"
-                                    color="secondary"
-                                    variant="contained"
-                                    mt="xl"
-                                    onPress={checkForUpdates}
-                                    loading={updates.isChecking}
-                                >
-                                    {updates.isChecking
-                                        ? 'Checking for updates...'
-                                        : updates.isDownloading
-                                          ? 'Downloading update...'
-                                          : 'Check for updates'}
-                                </Button>
-                            )}
-                            {updates.isUpdatePending && (
-                                <Stack spacing="md">
-                                    <Button size="md" color="primary">
-                                        Install update
-                                    </Button>
-                                </Stack>
-                            )}
+                            <Typography variant="body1" mb="xl">
+                                JShare stores data on your device to improve performance, reduce
+                                data usage and provide offline capabilities. If you are experiencing
+                                issues, press below to clear any local data and reload the app.
+                            </Typography>
+                            <Button variant="ghost" onPress={handleClearLocalData}>
+                                Clear local data
+                            </Button>
                         </Stack>
 
                         <Typography m="md" variant="h5" mt="2xl">

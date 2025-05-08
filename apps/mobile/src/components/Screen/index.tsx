@@ -1,6 +1,5 @@
-import { useCallback, type ReactElement } from 'react';
+import { type ReactElement } from 'react';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import { useFocusEffect } from 'expo-router';
 
 import { useTheme } from '@jshare/theme';
 
@@ -13,41 +12,30 @@ import { useHasParentScreen } from '~/components/Screen/useHasParentScreen';
 export type ScreenProps = {
     children: (ReactElement | null | undefined) | (ReactElement | null | undefined)[];
     avoidKeyboard?: boolean;
-    onBlur?: () => void;
 };
 
 export const Screen = (props: ScreenProps) => {
-    const { onBlur } = props;
     const hasParentScreen = useHasParentScreen();
     const { theme } = useTheme();
-
-    useFocusEffect(
-        useCallback(() => {
-            return () => {
-                onBlur?.();
-            };
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [])
-    );
 
     if (hasParentScreen) {
         throw new Error('Screen component should not be nested within another Screen component.');
     }
 
-    if (props.avoidKeyboard) {
-        return (
-            <KeyboardAvoidingView
-                behavior="padding"
-                style={{ flex: 1 }}
-                keyboardVerticalOffset={theme.spacing.md}
-                enabled={props.avoidKeyboard}
-            >
-                <ScreenProvider>{props.children}</ScreenProvider>
-            </KeyboardAvoidingView>
-        );
-    }
+    const content = props.avoidKeyboard ? (
+        <KeyboardAvoidingView
+            behavior="padding"
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={theme.spacing.md}
+            enabled={props.avoidKeyboard}
+        >
+            <ScreenProvider>{props.children}</ScreenProvider>
+        </KeyboardAvoidingView>
+    ) : (
+        <ScreenProvider>{props.children}</ScreenProvider>
+    );
 
-    return <ScreenProvider>{props.children}</ScreenProvider>;
+    return content;
 };
 
 Screen.Content = ScreenContent;

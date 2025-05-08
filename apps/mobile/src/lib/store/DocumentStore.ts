@@ -1,12 +1,13 @@
 import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { debounce, get, sortBy, type DebouncedFunc } from 'lodash';
-import { makeAutoObservable, reaction, runInAction } from 'mobx';
+import { autorun, makeAutoObservable, reaction, runInAction } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import { z } from 'zod';
 
 import { Document } from '~/lib/store/Document';
 import { IndexedMap } from '~/lib/store/IndexedMap';
+import { SystemStore } from '~/lib/store/SystemStore';
 import type {
     CreateEntry,
     DeleteEntry,
@@ -165,6 +166,7 @@ export class DocumentStore<
         this.mode = args.mode;
 
         this.sync = async (force?: boolean) => {
+            if (this.mode !== 'sync') return;
             if (this.isSyncing) return;
             if (this.lastSync && !force) {
                 const now = Date.now();
@@ -470,6 +472,7 @@ export class DocumentStore<
         };
 
         const flushAllMutations = async () => {
+            console.log('flushing all mutations');
             await this.flushDeletes();
             await this.flushCreates();
             await this.flushUpdates();
@@ -477,12 +480,12 @@ export class DocumentStore<
 
         this.isReady = this.hydrate().then(flushAllMutations);
 
-        /**
-         * TODO: This should only run when network state changes
-         */
-        setInterval(async () => {
-            flushAllMutations();
-        }, 10_000);
+        autorun(() => {
+            if (SystemStore.isConnected) {
+                flushAllMutations();
+                this.sync();
+            }
+        });
 
         reaction(
             () => this.index.updatedAt,
@@ -775,7 +778,7 @@ export class DocumentStore<
             this.registerItem(optimisticData, { optimistic: true });
         }
 
-        this.flushCreates();
+        return this.flushCreates();
     }
 
     async update(id: string, updates: InferUpdateInput<A>) {
@@ -828,7 +831,13 @@ export class DocumentStore<
     }
 
     reset() {
-        this.index.clear();
+        runInAction(() => {
+            this.queries = {};
+            this.updates = {};
+            this.deletes = {};
+            this.creates = {};
+            this.index.clear();
+        });
         this.persist();
     }
 }

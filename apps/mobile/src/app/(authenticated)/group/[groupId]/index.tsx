@@ -142,6 +142,7 @@ export default screen(
                                             paddingBottom: context.headerHeight + 100,
                                             paddingHorizontal: theme.spacing.xs,
                                             paddingVertical: theme.spacing.lg,
+                                            paddingTop: 32,
                                         }}
                                         onEndReached={() => handleEndReached()}
                                         onEndReachedThreshold={0.5}

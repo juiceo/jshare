@@ -1,20 +1,29 @@
 import { addNetworkStateListener, NetworkState } from 'expo-network';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 import { hotReloadable } from '~/lib/store/util';
 
 export class SystemStoreInstance {
-    networkState: NetworkState | null = null;
+    private networkState: NetworkState | null = null;
 
     constructor() {
         makeAutoObservable(this);
 
         addNetworkStateListener((state) => {
-            console.log(
-                `Network state changed - type: ${state.type} - isConnected: ${state.isConnected} - isInternetReachable: ${state.isInternetReachable}`
-            );
-            this.networkState = state;
+            runInAction(() => {
+                this.networkState = state;
+            });
         });
+    }
+
+    get isConnected() {
+        return this.networkState?.isInternetReachable ?? false;
+    }
+
+    setConnected(connected: boolean) {
+        if (this.networkState) {
+            this.networkState.isInternetReachable = connected;
+        }
     }
 }
 
