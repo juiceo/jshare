@@ -5,6 +5,7 @@ import { PaymentsStore } from '~/lib/store/collections/payments';
 import { ProfilesStore } from '~/lib/store/collections/profiles';
 import type { Document } from '~/lib/store/Document';
 import type { DocumentStore } from '~/lib/store/DocumentStore';
+import { PreferencesStore } from '~/lib/store/PreferencesStore';
 
 export const Store = {
     profiles: ProfilesStore,
@@ -28,4 +29,5 @@ export const storeIsReady = async () => {
 
 export const resetStore = () => {
     Object.values(Store).forEach((store) => store.reset());
+    PreferencesStore.reset();
 };

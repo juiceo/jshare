@@ -3,6 +3,7 @@ import { zDB, type DB } from '@jshare/db';
 import { MessagesStore } from '~/lib/store/collections/messages';
 import { ProfilesStore } from '~/lib/store/collections/profiles';
 import { DocumentStore } from '~/lib/store/DocumentStore';
+import { PreferencesStore } from '~/lib/store/PreferencesStore';
 import { hotReloadable } from '~/lib/store/util';
 import { trpcClient } from '~/lib/trpc';
 
@@ -26,11 +27,13 @@ export const PaymentsStore = hotReloadable(
                 },
             },
             hooks: {
-                afterCreate: () => {
+                afterCreate: (data) => {
                     MessagesStore.invalidate();
+                    PreferencesStore.addUsedCurrency(data.currency);
                 },
-                afterUpdate: () => {
+                afterUpdate: (data) => {
                     MessagesStore.invalidate();
+                    PreferencesStore.addUsedCurrency(data.currency);
                 },
             },
         })
