@@ -87,7 +87,9 @@ export const MenuItem = (props: MenuItemProps) => {
                 <Stack column flex={1}>
                     <Typography variant="body1">{props.label}</Typography>
                     {props.secondary && (
-                        <Typography variant="caption">{props.secondary}</Typography>
+                        <Typography variant="caption" color="hint">
+                            {props.secondary}
+                        </Typography>
                     )}
                 </Stack>
                 <Stack center pl="xl">

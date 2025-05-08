@@ -1,3 +1,4 @@
+import { Keyboard, Pressable } from 'react-native';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { getDefaultShare, type PartialExpenseShare } from '@jshare/common';
@@ -75,40 +76,42 @@ export const ExpenseShareEditorSheet = (props: ExpenseShareEditorSheetProps) => 
                             onChange={handleAmountChange}
                             bottomSheet
                         />
-                        <Stack row pt="2xl" spacing="xl">
-                            <Button
-                                size="sm"
-                                color="secondary"
-                                variant="contained"
-                                onPress={() => handleMultiply(0.5)}
-                            >
-                                0.5x
-                            </Button>
-                            <Button
-                                size="sm"
-                                color="secondary"
-                                variant="contained"
-                                onPress={() => handleMultiply(0.9)}
-                            >
-                                -10%
-                            </Button>
-                            <Button
-                                size="sm"
-                                color="secondary"
-                                variant="contained"
-                                onPress={() => handleMultiply(1.1)}
-                            >
-                                +10%
-                            </Button>
-                            <Button
-                                size="sm"
-                                color="secondary"
-                                variant="contained"
-                                onPress={() => handleMultiply(2)}
-                            >
-                                2x
-                            </Button>
-                        </Stack>
+                        <Pressable onTouchStart={() => Keyboard.dismiss()}>
+                            <Stack row pt="2xl" spacing="xl">
+                                <Button
+                                    size="sm"
+                                    color="secondary"
+                                    variant="contained"
+                                    onPress={() => handleMultiply(0.5)}
+                                >
+                                    0.5x
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    color="secondary"
+                                    variant="contained"
+                                    onPress={() => handleMultiply(0.9)}
+                                >
+                                    -10%
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    color="secondary"
+                                    variant="contained"
+                                    onPress={() => handleMultiply(1.1)}
+                                >
+                                    +10%
+                                </Button>
+                                <Button
+                                    size="sm"
+                                    color="secondary"
+                                    variant="contained"
+                                    onPress={() => handleMultiply(2)}
+                                >
+                                    2x
+                                </Button>
+                            </Stack>
+                        </Pressable>
                     </Stack>
                     <Button color="secondary" variant="contained" onPress={onClose}>
                         Done

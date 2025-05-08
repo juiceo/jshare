@@ -17,6 +17,11 @@ export const CurrencySelect = observer((props: CurrencySelectProps) => {
         return sortBy(CURRENCY_OPTIONS, (option) => {
             const index = recentCurrencies.indexOf(option.id);
             return index === -1 ? Infinity : index;
+        }).map((option) => {
+            return {
+                ...option,
+                secondary: recentCurrencies.includes(option.id) ? 'Recently used' : undefined,
+            };
         });
     }, [recentCurrencies]);
 

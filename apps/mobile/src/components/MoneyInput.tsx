@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     StyleSheet,
     TextInput,
@@ -25,6 +25,7 @@ export const MoneyInput = (props: MoneyInputProps) => {
 
     const InputComponent = bottomSheet ? BottomSheetTextInput : TextInput;
 
+    const lastEditedValue = useRef<number | null>(null);
     const majorUnitsInputRef = useRef<any>(null);
     const minorUnitsInputRef = useRef<any>(null);
 
@@ -37,6 +38,21 @@ export const MoneyInput = (props: MoneyInputProps) => {
 
     const styles = getStyles(theme);
 
+    useEffect(() => {
+        if (lastEditedValue.current !== value) {
+            const minorUnits = value % 100;
+            setMinorUnitsValue(
+                minorUnits === 0 ? '' : minorUnits < 10 ? `0${minorUnits}` : minorUnits.toString()
+            );
+            lastEditedValue.current = null;
+        }
+    }, [value]);
+
+    const handleChange = (value: number) => {
+        lastEditedValue.current = value;
+        onChange(value);
+    };
+
     const handleMajorUnitsChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
         const value = e.nativeEvent.text;
         if (value.length > 7) {
@@ -48,33 +64,25 @@ export const MoneyInput = (props: MoneyInputProps) => {
             units = 0;
         }
         if (units > 9_999_999) return;
-        onChange(units * 100 + minorUnits);
+        handleChange(units * 100 + minorUnits);
     };
 
     const handleMinorUnitsChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
         const value = e.nativeEvent.text;
         if (value.length > 2) return;
         setMinorUnitsValue(value);
-    };
 
-    const handleMinorUnitsBlur = () => {
-        let units =
-            minorUnitsValue.length === 0
-                ? 0
-                : minorUnitsValue.length === 1
-                  ? 10 * parseInt(minorUnitsValue, 10)
-                  : parseInt(minorUnitsValue, 10);
-        if (isNaN(units)) {
-            units = 0;
+        switch (value.length) {
+            case 0:
+                handleChange(majorUnits * 100);
+                break;
+            case 1:
+                handleChange(majorUnits * 100 + parseInt(value, 10) * 10);
+                break;
+            case 2:
+                handleChange(majorUnits * 100 + parseInt(value, 10));
+                break;
         }
-        if (units > 99) return;
-        if (units === 0) {
-            setMinorUnitsValue('');
-        }
-        if (units >= 10 && minorUnitsValue.length === 1) {
-            setMinorUnitsValue(units.toString());
-        }
-        onChange(majorUnits * 100 + units);
     };
 
     return (
@@ -106,7 +114,6 @@ export const MoneyInput = (props: MoneyInputProps) => {
                         ref={minorUnitsInputRef}
                         value={minorUnitsValue}
                         onChange={handleMinorUnitsChange}
-                        onBlur={handleMinorUnitsBlur}
                         style={styles.input}
                         placeholderTextColor={theme.palette.text.disabled}
                         placeholder="00"
