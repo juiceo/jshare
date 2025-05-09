@@ -10,7 +10,7 @@ import type { AuthError, Session } from '@supabase/supabase-js';
 import { useRouter } from 'expo-router';
 
 import { useRealtimeUpdates } from '~/lib/realtime';
-import { resetStore } from '~/lib/store/collections';
+import { resetStore, syncStores } from '~/lib/store/collections';
 import { supabase } from '~/lib/supabase';
 import { setAccessToken, setUserId } from '~/state/auth';
 
@@ -30,7 +30,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
     useRealtimeUpdates(session?.user.id ?? null);
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session }, error }) => {
+        supabase.auth.getSession().then(async ({ data: { session }, error }) => {
             setSession(session);
             setError(error);
             setLoading(false);
@@ -40,11 +40,17 @@ export const SessionProvider = (props: PropsWithChildren) => {
 
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
+        } = supabase.auth.onAuthStateChange(async (_event, session) => {
             setSession(session);
             setLoading(false);
             setAccessToken(session?.access_token ?? null);
             setUserId(session?.user.id ?? null);
+
+            if (!session) {
+                await resetStore();
+            } else {
+                await syncStores();
+            }
         });
 
         return () => subscription.unsubscribe();

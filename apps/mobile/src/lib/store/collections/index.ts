@@ -27,7 +27,11 @@ export const storeIsReady = async () => {
     await Promise.all(Object.values(Store).map((store) => store.isReady));
 };
 
-export const resetStore = () => {
-    Object.values(Store).forEach((store) => store.reset());
+export const syncStores = async () => {
+    await Promise.all(Object.values(Store).map((store) => store.sync()));
+};
+
+export const resetStore = async () => {
+    await Promise.all(Object.values(Store).map((store) => store.reset()));
     PreferencesStore.reset();
 };

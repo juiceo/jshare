@@ -29,7 +29,7 @@ export default screen(
         };
 
         const handleClearLocalData = async () => {
-            resetStore();
+            await resetStore();
             reloadAppAsync();
         };
 

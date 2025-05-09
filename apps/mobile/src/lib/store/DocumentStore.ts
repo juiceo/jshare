@@ -206,6 +206,9 @@ export class DocumentStore<
                     }
                 });
             } catch (error) {
+                runInAction(() => {
+                    this.isSyncing = false;
+                });
                 console.error('sync error', this.name, error);
             }
         };
@@ -314,6 +317,9 @@ export class DocumentStore<
 
         this.flushUpdates = debounce(
             async () => {
+                if (!SystemStore.isConnected) {
+                    return [];
+                }
                 const updatesToRun = runInAction(() => {
                     return Object.entries(this.updates).filter(([id, data]) => {
                         if (data.status === 'pending') {
@@ -371,6 +377,9 @@ export class DocumentStore<
         );
 
         this.flushCreates = async () => {
+            if (!SystemStore.isConnected) {
+                return;
+            }
             const createsToRun = runInAction(() => {
                 return Object.values(this.creates).filter((entry) => {
                     if (entry.status === 'pending') {
@@ -427,6 +436,9 @@ export class DocumentStore<
         };
 
         this.flushDeletes = async () => {
+            if (!SystemStore.isConnected) {
+                return;
+            }
             const deletesToRun = runInAction(() => {
                 return Object.values(this.deletes).filter((entry) => {
                     if (entry.status === 'pending') {
@@ -472,7 +484,6 @@ export class DocumentStore<
         };
 
         const flushAllMutations = async () => {
-            console.log('flushing all mutations');
             await this.flushDeletes();
             await this.flushCreates();
             await this.flushUpdates();
@@ -480,12 +491,15 @@ export class DocumentStore<
 
         this.isReady = this.hydrate().then(flushAllMutations);
 
-        autorun(() => {
-            if (SystemStore.isConnected) {
-                flushAllMutations();
-                this.sync();
+        reaction(
+            () => SystemStore.isConnected,
+            () => {
+                if (SystemStore.isConnected) {
+                    flushAllMutations();
+                    this.sync(true);
+                }
             }
-        });
+        );
 
         reaction(
             () => this.index.updatedAt,
@@ -830,7 +844,7 @@ export class DocumentStore<
         this.flushDeletes();
     }
 
-    reset() {
+    async reset() {
         runInAction(() => {
             this.queries = {};
             this.updates = {};
@@ -838,6 +852,6 @@ export class DocumentStore<
             this.creates = {};
             this.index.clear();
         });
-        this.persist();
+        return this.persist();
     }
 }
