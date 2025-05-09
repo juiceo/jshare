@@ -16,7 +16,7 @@ import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { AppErrorBoundary } from '~/components/errors/AppErrorBoundary';
 import { ToastManager } from '~/components/Toast/ToastManager';
-import { storeIsReady } from '~/lib/store/collections';
+import { initStores } from '~/lib/store/collections';
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
@@ -89,7 +89,7 @@ const RootStack = () => {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        storeIsReady().then(() => {
+        initStores().then(() => {
             setIsReady(true);
             SplashScreen.hide();
         });

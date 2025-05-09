@@ -10,7 +10,7 @@ import { Button } from '~/components/Button';
 import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
-import { resetStore } from '~/lib/store/collections';
+import { resetStores } from '~/lib/store/collections';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 import { useSession } from '~/wrappers/SessionProvider';
@@ -29,7 +29,7 @@ export default screen(
         };
 
         const handleClearLocalData = async () => {
-            await resetStore();
+            await resetStores();
             reloadAppAsync();
         };
 
