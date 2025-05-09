@@ -95,6 +95,18 @@ export default screen(
                                     <Typography variant="h5">Updates</Typography>
                                 </Stack>
                             </RectButton>
+                            {__DEV__ && (
+                                <RectButton onPress={() => router.push('/developer-settings')}>
+                                    <Stack row alignCenter p="xl" spacing="xl">
+                                        <Icon
+                                            name="Code"
+                                            size={32}
+                                            color={(t) => t.palette.text.primary}
+                                        />
+                                        <Typography variant="h5">Developer settings</Typography>
+                                    </Stack>
+                                </RectButton>
+                            )}
                         </Stack>
                     </Stack>
                 </Screen.Content>

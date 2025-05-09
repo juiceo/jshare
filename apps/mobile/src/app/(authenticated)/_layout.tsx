@@ -150,6 +150,12 @@ export default screen(
                 <Stack.Screen name="preferences/index" options={{ headerShown: false }} />
                 <Stack.Screen name="settings/index" options={{ headerShown: false }} />
                 <Stack.Screen name="updates/index" options={{ headerShown: false }} />
+                {__DEV__ && (
+                    <Stack.Screen
+                        name="developer-settings/index"
+                        options={{ headerShown: false }}
+                    />
+                )}
             </Stack>
         );
     })

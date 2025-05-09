@@ -11,7 +11,7 @@ import { InfoSheet } from '~/components/InfoSheet';
 import { useScreen } from '~/components/Screen/useScreen';
 import { Typography } from '~/components/Typography';
 
-export const OFFLINE_INDICATOR_HEIGHT = 32;
+export const OFFLINE_INDICATOR_HEIGHT = 24;
 
 export const OfflineIndicator = observer(() => {
     const insets = useSafeAreaInsets();
@@ -58,8 +58,9 @@ export const OfflineIndicator = observer(() => {
                         <Stack flex={1} column alignCenter justifyEnd px="md">
                             <Typography
                                 align="center"
-                                variant="h6"
+                                variant="caption"
                                 onPress={() => setShowInfo(true)}
+                                h={24}
                             >
                                 No internet. Using{' '}
                                 <Text
