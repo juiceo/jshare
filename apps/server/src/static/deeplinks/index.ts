@@ -3,7 +3,7 @@ import { Router } from 'express';
 
 export const router = Router();
 
-router.get('/:code', (req, res) => {
+router.get('/invite/:code', (req, res) => {
     res.sendFile(path.join(__dirname, 'invite.html'));
 });
 
