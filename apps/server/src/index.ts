@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 import { db } from './services/db';
-import inviteRouter from './static/invite/index';
+import deeplinksRouter from './static/deeplinks/index';
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';
 
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, '..', 'public')));
-app.use('/invite', inviteRouter);
+app.use('/l', deeplinksRouter);
 
 app.use(
     '/trpc',

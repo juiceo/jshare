@@ -1,23 +1,17 @@
 {
     "applinks": {
-        "apps": [],
         "details": [
             {
-                "appID": "RN7TJRGG33.com.juiceo.jshare",
-                "paths": [
-                    "/invite/*"
-                ]
-            },
-            {
-                "appID": "RN7TJRGG33.com.juiceo.jshare.dev",
-                "paths": [
-                    "/invite/*"
-                ]
-            },
-            {
-                "appID": "RN7TJRGG33.com.juiceo.jshare.staging",
-                "paths": [
-                    "/invite/*"
+                "appIDs": [
+                    "RN7TJRGG33.com.juiceo.jshare",
+                    "RN7TJRGG33.com.juiceo.jshare.dev",
+                    "RN7TJRGG33.com.juiceo.jshare.staging"
+                ],
+                "components": [
+                    {
+                        "/": "/l/*",
+                        "comment": "Any path with l/* will be handled as a deep link"
+                    }
                 ]
             }
         ]
