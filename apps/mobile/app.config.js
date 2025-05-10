@@ -69,6 +69,7 @@ export default ({ config }) => {
                 config: {
                     usesNonExemptEncryption: false,
                 },
+                associatedDomains: ['applinks:app.jshare.me'],
             },
             android: {
                 package: packageName,

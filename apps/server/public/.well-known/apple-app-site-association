@@ -1,0 +1,23 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "RN7TJRGG33.com.juiceo.jshare",
+                "paths": [
+                    "/invite/*"
+                ]
+            }
+        ]
+    },
+    "activitycontinuation": {
+        "apps": [
+            "RN7TJRGG33.com.juiceo.jshare"
+        ]
+    },
+    "webcredentials": {
+        "apps": [
+            "RN7TJRGG33.com.juiceo.jshare"
+        ]
+    }
+}

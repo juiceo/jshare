@@ -1,8 +1,10 @@
+import path from 'path';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import bodyParser from 'body-parser';
 import express from 'express';
 
 import { db } from './services/db';
+import inviteRouter from './static/invite/index';
 import { appRouter } from './trpc/router';
 import { createContext } from './trpc/trpc';
 
@@ -15,6 +17,9 @@ if (!PORT) {
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use('/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/invite', inviteRouter);
 
 app.use(
     '/trpc',
