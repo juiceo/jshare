@@ -7,17 +7,29 @@
                 "paths": [
                     "/invite/*"
                 ]
+            },
+            {
+                "appID": "RN7TJRGG33.com.juiceo.jshare.dev",
+                "paths": [
+                    "/invite/*"
+                ]
+            },
+            {
+                "appID": "RN7TJRGG33.com.juiceo.jshare.staging",
+                "paths": [
+                    "/invite/*"
+                ]
             }
         ]
     },
     "activitycontinuation": {
         "apps": [
-            "RN7TJRGG33.com.juiceo.jshare"
+            "RN7TJRGG33.com.juiceo.jshare, RN7TJRGG33.com.juiceo.jshare.dev, RN7TJRGG33.com.juiceo.jshare.staging"
         ]
     },
     "webcredentials": {
         "apps": [
-            "RN7TJRGG33.com.juiceo.jshare"
+            "RN7TJRGG33.com.juiceo.jshare, RN7TJRGG33.com.juiceo.jshare.dev, RN7TJRGG33.com.juiceo.jshare.staging"
         ]
     }
 }
