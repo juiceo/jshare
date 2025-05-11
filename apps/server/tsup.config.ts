@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
@@ -18,4 +19,5 @@ export default defineConfig({
     target: 'node20',
     replaceNodeEnv: true,
     shims: true,
+    publicDir: 'public',
 });

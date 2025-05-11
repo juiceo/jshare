@@ -15,10 +15,12 @@ if (!PORT) {
 }
 
 const app = express();
+app.set('view engine', 'pug');
+app.set('views', path.resolve(__dirname, 'templates'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', express.static(path.join(__dirname, '..', 'public')));
+app.use('/', express.static(path.resolve(__dirname, '..', 'public')));
 app.use('/l', deeplinksRouter);
 
 app.use(
