@@ -211,7 +211,9 @@ export class DocumentStore<
                 });
             } catch (error) {
                 runInAction(() => {
-                    this.isSyncing = false;
+                    setTimeout(() => {
+                        this.isSyncing = false;
+                    }, 1000);
                 });
                 console.error('sync error', this.name, error);
             }
