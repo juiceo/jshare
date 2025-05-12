@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { observer } from 'mobx-react-lite';
@@ -11,11 +11,13 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
 import { Store } from '~/lib/store/collections';
+import { SystemStore } from '~/lib/store/SystemStore';
 import { screen } from '~/wrappers/screen';
 
 export default screen(
     observer(() => {
         const router = useRouter();
+        const pendingDeepLink = SystemStore.pendingDeepLink;
 
         const groups = Store.groups.findMany(
             {},
@@ -39,6 +41,27 @@ export default screen(
                     break;
             }
         };
+
+        useEffect(() => {
+            if (pendingDeepLink) {
+                switch (pendingDeepLink.type) {
+                    case 'invite':
+                        /**
+                         * The modal does not open correctly without the timeout,
+                         * for whatever reason.
+                         */
+                        setTimeout(() => {
+                            router.push({
+                                pathname: '/join-group/[code]',
+                                params: { code: pendingDeepLink.code },
+                            });
+                        }, 1);
+
+                        SystemStore.setPendingDeepLink(null);
+                        break;
+                }
+            }
+        }, [pendingDeepLink, router]);
 
         return (
             <Screen>

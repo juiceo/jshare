@@ -29,8 +29,7 @@ export default screen(
                 await joinGroup.mutateAsync({ code });
             }
 
-            router.dismiss();
-            router.dismiss();
+            router.dismissAll();
             router.push({
                 pathname: '/(authenticated)/group/[groupId]',
                 params: { groupId: group.id },

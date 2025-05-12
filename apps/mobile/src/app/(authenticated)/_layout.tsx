@@ -142,7 +142,12 @@ export default screen(
                     initialParams={{ modal: true }}
                 />
                 <Stack.Screen
-                    name="join-group"
+                    name="join-group/index"
+                    options={{ presentation: 'modal', headerShown: false }}
+                    initialParams={{ modal: true }}
+                />
+                <Stack.Screen
+                    name="join-group/[code]"
                     options={{ presentation: 'modal', headerShown: false }}
                     initialParams={{ modal: true }}
                 />
