@@ -1,9 +1,14 @@
 doctype html
 html
     head
-        title JShare | Accept invite
-        meta(name="description" content="Accept the invite to join #{groupName} in JShare.")
+        title Join #{groupName} on JShare
+        meta(name="description" content=`Click to accept the invite and start collaborating in ${groupName}`)
         meta(name="apple-itunes-app" content="app-id=6743673035")
+        meta(property="og:title", content=`Join ${groupName} on JShare`)
+        meta(property="og:description", content=`Click to accept the invite and start collaborating in ${groupName}.`)
+        meta(property="og:image", content="/jshare.png")
+        meta(property="og:url", content=`https://app.jshare.me/l/invite/${inviteCode}`)
+        meta(property="og:type", content="website")
 
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
@@ -96,5 +101,5 @@ html
             h1 You've been invited!
             h3 #{groupName}
             p.description Click the button below to accept the invite and open the group in JShare.
-            a(href="jshare://l/invite/" + inviteCode)
+            a(href=`jshare://l/invite/${inviteCode}`)
                 button Accept invite

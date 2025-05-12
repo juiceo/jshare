@@ -1,9 +1,14 @@
 doctype html
 html
     head
-        title JShare | Invalid invite link
+        title Invalid invite link
         meta(name="description" content="No group was found with this link. Please ask the group owner for a new link.")
         meta(name="apple-itunes-app" content="app-id=6743673035")
+        meta(property="og:title", content=`Invalid invite link`)
+        meta(property="og:description", content=`No group was found with this link. Please ask the group owner for a new link.`)
+        meta(property="og:image", content="/jshare.png")
+        meta(property="og:url", content=`https://app.jshare.me/l/invite/${inviteCode}`)
+        meta(property="og:type", content="website")
 
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
