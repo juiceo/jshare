@@ -41,9 +41,10 @@ export default screen(
 
         const handleCopyInviteCode = async () => {
             const inviteCode = group.data.inviteCode;
+            const link = `https://app.jshare.me/l/invite/${inviteCode}`;
             if (!inviteCode) return;
-            await Clipboard.setStringAsync(inviteCode);
-            toast.info('Invite code copied!');
+            await Clipboard.setStringAsync(link);
+            toast.info('Invite link copied!');
         };
 
         const handleGroupDelete = async () => {
@@ -102,9 +103,9 @@ export default screen(
                                 >
                                     <Stack column flex={1}>
                                         <Typography variant="caption">
-                                            Tap to copy invite code
+                                            Tap to copy invite link
                                         </Typography>
-                                        <Typography variant="subtitle1" color="primary.light">
+                                        <Typography variant="subtitle1" color="accent.light">
                                             {group.data.inviteCode}
                                         </Typography>
                                     </Stack>

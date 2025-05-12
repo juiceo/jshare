@@ -8,8 +8,9 @@ import { toast } from '~/state/toast';
 
 export const CopyInviteCodeBlock = (props: { code: string }) => {
     const handleCopy = async () => {
-        await Clipboard.setStringAsync(props.code);
-        toast.info('Invite code copied!');
+        const link = `https://app.jshare.me/l/invite/${props.code}`;
+        await Clipboard.setStringAsync(link);
+        toast.info('Invite link copied!');
     };
 
     return (
@@ -33,7 +34,7 @@ export const CopyInviteCodeBlock = (props: { code: string }) => {
                         {props.code}
                     </Typography>
                     <Button size="sm" color="primary" onPress={handleCopy}>
-                        Copy to clipboard
+                        Copy link
                     </Button>
                 </Stack>
             </BlurView>
