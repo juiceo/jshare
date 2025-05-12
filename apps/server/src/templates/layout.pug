@@ -1,0 +1,136 @@
+//- layout.pug
+doctype html
+html
+  head
+    title #{meta.title}
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="description", content=meta.description)
+    meta(name="apple-itunes-app", content="app-id=6743673035")
+    meta(property="og:title", content=meta.title)
+    meta(property="og:description", content=meta.description)
+    meta(property="og:image", content="/jshare.png")
+    meta(property="og:url", content=meta.url)
+    meta(property="og:type", content="website")
+
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Poppins:wght@400;500&display=swap" rel="stylesheet")
+    link(rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png")
+    link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
+    link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
+    link(rel="manifest" href="/site.webmanifest")
+
+    style.
+      * { 
+        box-sizing: border-box; 
+        margin: 0; 
+      }
+
+      body {
+        padding: 16px;
+        font-family: Open Sans;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #FFA5A5;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: Poppins;
+      }
+
+      p {
+        font-family: Open Sans;
+      }
+
+      .mt-8 {
+        margin-top: 8px;
+      }
+
+      .mt-16 {
+        margin-top: 16px;
+      }
+
+      .mt-24 {
+        margin-top: 24px;
+      }
+
+      .mt-32 {
+        margin-top: 32px;
+      }
+
+      .mt-40 {
+        margin-top: 40px;
+      }
+
+      .mb-8 {
+        margin-bottom: 8px;
+      }
+
+      .mb-16 {
+        margin-bottom: 16px;
+      }
+
+      .mb-24 {
+        margin-bottom: 24px;
+      }
+
+      .mb-32 {
+        margin-bottom: 32px;
+      }
+
+      .mb-40 {
+        margin-bottom: 40px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ececec;
+        border-radius: 6px;
+        padding: 32px;
+        gap: 8px;
+        box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+        animation: fadeIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      }
+
+      img.circle {
+        border-radius: 50%;
+      }
+
+      button {
+        background-color: #254459;
+        color: white;
+        border: none;
+        padding: 8px;
+        min-width: 200px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #557687;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+
+  body
+    block content

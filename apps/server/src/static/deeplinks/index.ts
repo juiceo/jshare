@@ -17,30 +17,25 @@ router.get('/invite/:code', async (req, res) => {
     });
 
     if (!group) {
-        return res.render('invite-invalid', { code: req.params.code });
-    }
-
-    const image = group.coverImage
-        ? supabase.storage.from(group.coverImage.bucket).getPublicUrl(group.coverImage.path, {
-              transform: {
-                  width: 100,
-                  height: 100,
-                  quality: 50,
-              },
-          }).data.publicUrl
-        : null;
-
-    if (!group) {
-        res.render('invite-invalid', { code: req.params.code });
+        res.render('invite-invalid', {
+            code: req.params.code,
+            meta: {
+                title: `Invalid invite link`,
+                description: `No group was found with this link. Please ask the group owner for a new link.`,
+                url: `https://app.jshare.me/l/invite/${req.params.code}`,
+            },
+        });
     } else {
         res.render('invite', {
             groupName: group.name,
             inviteCode: group.inviteCode,
-            image,
+            meta: {
+                title: `Join ${group.name} on JShare`,
+                description: `Click to accept the invite and start collaborating in ${group.name}.`,
+                url: `https://app.jshare.me/l/invite/${group.inviteCode}`,
+            },
         });
     }
-
-    console.log('GROUP', group);
 });
 
 export default router;
