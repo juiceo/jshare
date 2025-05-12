@@ -53,12 +53,6 @@ export default screen(
                                         )}
                                     </Typography>
                                 </Stack>
-                                {updates.isChecking && (
-                                    <Stack row center p="xl" spacing="xl">
-                                        <ActivityIndicator size="small" color="white" />
-                                        <Typography>Checking for updates...</Typography>
-                                    </Stack>
-                                )}
 
                                 {updates.isUpdateAvailable || updates.isUpdatePending ? (
                                     <Stack column>
@@ -83,6 +77,13 @@ export default screen(
                                         <Typography>
                                             Your app is up to date. Check back later.
                                         </Typography>
+                                        <Button
+                                            mt="xl"
+                                            color="secondary"
+                                            loading={updates.isChecking}
+                                        >
+                                            Check for updates
+                                        </Button>
                                     </Stack>
                                 )}
                             </Stack>
@@ -91,9 +92,23 @@ export default screen(
                         <Typography variant="h3" mt="2xl" align="center">
                             Changelog
                         </Typography>
-                        <Stack column spacing="2xl" mt="3xl">
+                        <Stack column spacing="3xl" mt="3xl">
                             <Stack>
-                                <Typography variant="caption">May 8th, 2025</Typography>
+                                <Typography variant="caption" color="hint">
+                                    May 12th, 2025
+                                </Typography>
+                                <Typography variant="h4" mb="xl" color="accent.light">
+                                    Added support for invite links
+                                </Typography>
+                                <Typography variant="body1">
+                                    You can now easily invite friends to join your group by just
+                                    sharing a link with them!
+                                </Typography>
+                            </Stack>
+                            <Stack>
+                                <Typography variant="caption" color="hint">
+                                    May 8th, 2025
+                                </Typography>
                                 <Typography variant="h4" mb="xl" color="accent.light">
                                     Introducing offline mode!
                                 </Typography>
