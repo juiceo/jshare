@@ -190,8 +190,6 @@ export class DocumentStore<
                 this.isSyncing = true;
             });
 
-            console.log('SYNC NOW WITH TIMESTAMP', this.lastSync?.timestamp);
-
             try {
                 const result = await this.api.sync({ lastSync: this.lastSync?.timestamp ?? 0 });
 
