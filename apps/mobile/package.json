@@ -3,7 +3,7 @@
     "name": "@jshare/mobile",
     "description": "JShare mobile app",
     "license": "MIT",
-    "version": "1.4.7",
+    "version": "1.4.8",
     "main": "expo-router/entry",
     "scripts": {
         "dev": "env-cmd -f .env.dev expo start",

@@ -32,5 +32,6 @@ export const ProfilesStore = hotReloadable(
                     ...updates,
                 };
             },
+            staleTime: 120_000,
         })
 );

@@ -9,6 +9,7 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
+import { Store } from '~/lib/store/collections';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 import { useCurrentUser } from '~/wrappers/SessionProvider';
@@ -27,6 +28,11 @@ export default screen(
             if (!group) return;
             if (!isMember) {
                 await joinGroup.mutateAsync({ code });
+                Store.groups.registerItem(group);
+                Store.groups.invalidate();
+                Store.messages.invalidate();
+                Store.expenses.invalidate();
+                Store.payments.invalidate();
             }
 
             router.dismissAll();

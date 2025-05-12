@@ -159,7 +159,7 @@ export class DocumentStore<
         this.api = args.api;
         this.resolvers = args.resolvers;
         this.functions = args.functions;
-        this.staleTime = args.staleTime ?? 60_000;
+        this.staleTime = args.staleTime ?? 5000;
         this.hooks = args.hooks;
         this.schema = args.schema;
         this.createOptimistic = args.createOptimistic;
@@ -169,11 +169,13 @@ export class DocumentStore<
         this.sync = async (force?: boolean) => {
             if (!this.isReady) return;
             if (this.mode !== 'sync') return;
-            if (this.isSyncing) return;
-            if (this.lastSync && !force) {
-                const now = Date.now();
-                if (now - this.lastSync.timestamp < this.staleTime) {
-                    return;
+            if (!force) {
+                if (this.isSyncing) return;
+                if (this.lastSync) {
+                    const now = Date.now();
+                    if (now - this.lastSync.timestamp < this.staleTime) {
+                        return;
+                    }
                 }
             }
 
@@ -187,6 +189,8 @@ export class DocumentStore<
             runInAction(() => {
                 this.isSyncing = true;
             });
+
+            console.log('SYNC NOW WITH TIMESTAMP', this.lastSync?.timestamp);
 
             try {
                 const result = await this.api.sync({ lastSync: this.lastSync?.timestamp ?? 0 });
@@ -494,6 +498,12 @@ export class DocumentStore<
             await this.flushDeletes();
         };
 
+        if (this.mode === 'sync') {
+            setInterval(() => {
+                this.sync();
+            }, 1000);
+        }
+
         reaction(
             () => SystemStore.isConnected,
             async () => {
@@ -577,6 +587,7 @@ export class DocumentStore<
                 break;
             }
             case 'sync': {
+                this.lastSync = null;
                 this.sync(true);
                 break;
             }

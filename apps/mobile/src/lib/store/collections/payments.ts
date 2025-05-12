@@ -28,11 +28,11 @@ export const PaymentsStore = hotReloadable(
             },
             hooks: {
                 afterCreate: (data) => {
-                    MessagesStore.invalidate();
+                    MessagesStore.sync(true);
                     PreferencesStore.addUsedCurrency(data.currency);
                 },
                 afterUpdate: (data) => {
-                    MessagesStore.invalidate();
+                    MessagesStore.sync(true);
                     PreferencesStore.addUsedCurrency(data.currency);
                 },
             },

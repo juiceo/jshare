@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import dayjs from 'dayjs';
 import * as Updates from 'expo-updates';
 import { observer } from 'mobx-react-lite';
