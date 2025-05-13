@@ -35,11 +35,11 @@ When the time comes to settle your expenses and pay or receive money from someon
 
 #### How is this different from Splitwise/Splid/etc.?
 
-Honestly, I haven't done much digging into these competitors. This is a hobby project built by one person, primarily because I find it fun and useful - the aim will never be to achieve world domination in the "split bills" category. Feature-wise, those apps will always probably have more things to offer.
+Honestly, I haven't done much feature comparison with these other apps. This is a hobby project built by one person, primarily because I find it fun and useful. It may well be that these other apps have some features that are missing from JShare (for now, at least).
 
 Here's a few things that JShare can promise, though:
 
--   The app will always be fully free to use
+-   It will always be fully free to use
 -   It's really good for the use cases that it's made for
 -   All features are designed by users, for users - not because the app needs to generate revenue
 
@@ -47,7 +47,7 @@ Here's a few things that JShare can promise, though:
 
 From the start, the goal with building JShare has been to improve on all aspects of existing alternatives - especially in terms of user experience. Some high-level design goals have been:
 
--   Simple: all features should be distilled to the simplest possible form, no over-engineering
+-   Simple: all features should be distilled to the simplest possible form
 -   Offline-first: the app should be fully usable whether you are online or not
 -   Fast: optimistic updates over loading screens whenever possible
 -   Useful: everyone working on the app is a power user themselves - and all features added to the app are things we want to see in it
