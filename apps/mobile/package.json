@@ -92,6 +92,7 @@
         "react-hook-form": "catalog:",
         "react-native": "catalog:",
         "react-native-collapsible-tab-view": "catalog:",
+        "react-native-context-menu-view": "^1.19.0",
         "react-native-gesture-handler": "catalog:",
         "react-native-get-random-values": "catalog:",
         "react-native-keyboard-controller": "catalog:",

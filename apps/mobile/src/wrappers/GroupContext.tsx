@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, type PropsWithChildren } from 'react';
+import { createContext, useCallback, useContext, useMemo, type PropsWithChildren } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { DB } from '@jshare/db';
@@ -13,7 +13,9 @@ export type GroupContextType = {
     presentUserIds: string[];
     groupMemberIds: string[];
     isAdmin: boolean;
+    isUserAdmin: (userId: string) => boolean;
     isOwner: boolean;
+    isUserOwner: (userId: string) => boolean;
 };
 
 export const GroupContext = createContext<GroupContextType | null>(null);
@@ -41,6 +43,26 @@ export const GroupContextProvider = observer((props: PropsWithChildren<{ groupId
         return currentUserRole === DB.Role.Owner;
     }, [currentUserRole]);
 
+    const isUserAdmin = useCallback(
+        (userId: string) => {
+            const participant = group?.data.participants.find(
+                (participant) => participant.userId === userId
+            );
+            return participant?.role === DB.Role.Admin || participant?.role === DB.Role.Owner;
+        },
+        [group?.data.participants]
+    );
+
+    const isUserOwner = useCallback(
+        (userId: string) => {
+            const participant = group?.data.participants.find(
+                (participant) => participant.userId === userId
+            );
+            return participant?.role === DB.Role.Owner;
+        },
+        [group?.data.participants]
+    );
+
     if (!group) {
         return null;
     }
@@ -53,7 +75,9 @@ export const GroupContextProvider = observer((props: PropsWithChildren<{ groupId
                 group,
                 groupMemberIds,
                 isAdmin,
+                isUserAdmin,
                 isOwner,
+                isUserOwner,
             }}
         >
             {props.children}

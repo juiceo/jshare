@@ -22,6 +22,9 @@ export type BackgroundColor = {
     elevation1: string;
     elevation2: string;
     elevation3: string;
+    dark1: string;
+    dark2: string;
+    dark3: string;
 };
 
 export type BorderColor = {

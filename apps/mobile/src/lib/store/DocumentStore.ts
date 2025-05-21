@@ -537,6 +537,7 @@ export class DocumentStore<
     private async hydrate() {
         const items = await AsyncStorage.getItem(`DocumentStore::${this.name}`);
         const parsedItems = items ? JSON.parse(items) : [];
+        console.log('HYDRATING', this.name, parsedItems.length);
         const docs = parsedItems
             .map((item: any) => {
                 if (!item) return null;
@@ -564,6 +565,10 @@ export class DocumentStore<
             const items = this.index.getAll().map((doc) => doc.snapshot);
             await AsyncStorage.setItem(`DocumentStore::${this.name}`, JSON.stringify(items));
         });
+    }
+
+    private async clearPersistedState() {
+        await AsyncStorage.removeItem(`DocumentStore::${this.name}`);
     }
 
     private getQueryKey(queryOrId: string | Query<T>) {
@@ -876,6 +881,6 @@ export class DocumentStore<
             this.index.clear();
             this.isReady = false;
         });
-        return this.persist();
+        return this.clearPersistedState();
     }
 }

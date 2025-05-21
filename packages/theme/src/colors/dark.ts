@@ -17,6 +17,9 @@ export const darkPalette: ColorPalette = {
         elevation1: '#1D1F27',
         elevation2: '#32353E',
         elevation3: '#2A2A2A',
+        dark1: 'rgba(0,0,0,0.05)',
+        dark2: 'rgba(0,0,0,0.10)',
+        dark3: 'rgba(0,0,0,0.15)',
     },
     border: {
         paper: '#3C3C3C',
