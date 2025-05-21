@@ -278,7 +278,6 @@ export const groupParticipantsRouter = router({
                     }
 
                     for (const payment of userPayments) {
-                        console.log('UPDATING PAYMENT', payment);
                         const updatedValues = {
                             payerId:
                                 payment.payerId === opts.input.userId
@@ -289,8 +288,6 @@ export const groupParticipantsRouter = router({
                                     ? transferTo.id
                                     : payment.recipientId,
                         };
-
-                        console.log('UPDATED VALUES', updatedValues);
 
                         if (updatedValues.payerId !== updatedValues.recipientId) {
                             await tx.payment.update({

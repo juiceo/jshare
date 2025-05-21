@@ -537,7 +537,6 @@ export class DocumentStore<
     private async hydrate() {
         const items = await AsyncStorage.getItem(`DocumentStore::${this.name}`);
         const parsedItems = items ? JSON.parse(items) : [];
-        console.log('HYDRATING', this.name, parsedItems.length);
         const docs = parsedItems
             .map((item: any) => {
                 if (!item) return null;
