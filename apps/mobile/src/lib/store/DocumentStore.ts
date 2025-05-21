@@ -566,6 +566,10 @@ export class DocumentStore<
         });
     }
 
+    private async clearPersistedState() {
+        await AsyncStorage.removeItem(`DocumentStore::${this.name}`);
+    }
+
     private getQueryKey(queryOrId: string | Query<T>) {
         return typeof queryOrId === 'string' ? queryOrId : JSON.stringify(queryOrId);
     }
@@ -876,6 +880,6 @@ export class DocumentStore<
             this.index.clear();
             this.isReady = false;
         });
-        return this.persist();
+        return this.clearPersistedState();
     }
 }

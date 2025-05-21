@@ -8,6 +8,7 @@ import {
 } from 'react';
 import type { AuthError, Session } from '@supabase/supabase-js';
 import { useRouter } from 'expo-router';
+import { Store } from 'lucide-react-native';
 
 import { useRealtimeUpdates } from '~/lib/realtime';
 import { initStores, resetStores } from '~/lib/store/collections';
@@ -60,6 +61,7 @@ export const SessionProvider = (props: PropsWithChildren) => {
         supabase.auth.signOut();
         dismissAll();
         replace('/login');
+        resetStores();
     }, [dismissAll, replace]);
 
     return (
