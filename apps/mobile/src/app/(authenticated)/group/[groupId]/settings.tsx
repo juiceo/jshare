@@ -99,6 +99,8 @@ export default screen(
             const actions: ContextMenuAction[] = [];
             const isTemporaryUser = participant.data.temporary;
 
+            if (participant.id === currentUser.id) return [];
+
             if (isUserOwner(currentUser.id) && !isTemporaryUser) {
                 actions.push({
                     title: UserAction.TransferOwnership,
@@ -119,7 +121,7 @@ export default screen(
                 }
             }
 
-            if (isUserAdmin(currentUser.id)) {
+            if (isUserAdmin(currentUser.id) && !isUserAdmin(participant.id)) {
                 actions.push({
                     title: UserAction.RemoveFromGroup,
                     systemIcon: 'trash',
@@ -228,7 +230,12 @@ export default screen(
                             </BorderlessButton>
                         )}
 
-                        <Stack column bg="background.elevation1" br="xl">
+                        <Stack
+                            column
+                            bg="background.elevation1"
+                            br="xl"
+                            style={{ overflow: 'hidden' }}
+                        >
                             {isAdmin && (
                                 <>
                                     <Stack p="xl" row alignCenter spacing="sm">
