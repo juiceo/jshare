@@ -10,9 +10,10 @@ import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { supabase } from '~/lib/supabase';
 import { trpcClient } from '~/lib/trpc';
-import { setAccessToken, setUserId } from '~/state/auth';
+import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
 export default screen(() => {
@@ -29,39 +30,20 @@ export default screen(() => {
             Keyboard.dismiss();
             setLoading(true);
             try {
-                let authResult;
-
-                if (isDemoUserEmail(email)) {
-                    await trpcClient.auth.createDemoUser.mutate({ email });
-                    authResult = await supabase.auth.signInWithPassword({
-                        email,
-                        password: value.join(''),
-                    });
-                } else {
-                    authResult = await supabase.auth.verifyOtp({
-                        email,
-                        token: value.join(''),
-                        type: 'email',
-                    });
-                }
+                const authResult = await SessionStore.signIn(email, value.join(''));
 
                 if (authResult.error) {
-                    Alert.alert(authResult.error.message);
+                    toast.error(authResult.error.message);
                     return;
                 }
 
-                const accessToken = authResult.data.session?.access_token;
-                const userId = authResult.data.user?.id;
-
-                if (!accessToken || !userId) {
-                    Alert.alert('Invalid code, please try again');
+                if (!authResult.data.user) {
+                    toast.error('Login failed, please try again');
                     return;
                 }
 
-                setAccessToken(accessToken);
-                setUserId(userId);
                 const [profile] = await trpcClient.models.profiles.findById.query({
-                    ids: [userId],
+                    ids: [authResult.data.user.id],
                 });
 
                 if (profile) {

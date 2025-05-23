@@ -7,7 +7,7 @@ import superjson from 'superjson';
 
 import { type AppRouter } from '@jshare/server';
 
-import { getAccessToken } from '~/state/auth';
+import { SessionStore } from '~/lib/store/SessionStore';
 
 const apiBaseUrl = Constants.expoConfig?.extra?.jshareApiUrl;
 if (!apiBaseUrl) {
@@ -34,7 +34,7 @@ export const trpcHttpLink = httpBatchLink({
     url: `${apiBaseUrl}/trpc`,
     async headers() {
         return {
-            authorization: getAccessToken(),
+            authorization: SessionStore.sessionMaybe?.access_token,
         };
     },
     transformer: superjson,

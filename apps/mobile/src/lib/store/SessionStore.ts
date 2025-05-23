@@ -91,6 +91,8 @@ export class SessionStoreInstance {
             this._error = null;
         }
         this._loading = false;
+
+        return authResult;
     }
 
     get state(): SessionState {

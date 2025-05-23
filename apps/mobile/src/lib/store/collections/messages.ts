@@ -3,9 +3,9 @@ import { DB, zDB } from '@jshare/db';
 import { GroupsStore } from '~/lib/store/collections/groups';
 import { ProfilesStore } from '~/lib/store/collections/profiles';
 import { DocumentStore } from '~/lib/store/DocumentStore';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { hotReloadable } from '~/lib/store/util';
 import { trpcClient } from '~/lib/trpc';
-import { getUserId } from '~/state/auth';
 
 const schema = zDB.models.MessageSchema.extend({
     attachments: zDB.models.MessageAttachmentSchema.array().optional(),
@@ -35,7 +35,7 @@ export const MessagesStore = hotReloadable(
                     ...data,
                     attachments: [],
                     authorType: DB.AuthorType.User,
-                    authorId: getUserId(),
+                    authorId: SessionStore.user.id,
                     text: data.text ?? '',
                 };
             },
