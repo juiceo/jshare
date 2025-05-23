@@ -42,10 +42,10 @@ const UpdatesScreen = screen(
                             <Stack column spacing="3xl">
                                 <Stack>
                                     <Typography variant="h5">Current version</Typography>
-                                    <Typography>
+                                    <Typography color="secondary">
                                         App version: {updates.currentlyRunning.runtimeVersion}
                                     </Typography>
-                                    <Typography>
+                                    <Typography color="secondary">
                                         Last updated:{' '}
                                         {dayjs(updates.currentlyRunning.createdAt).format(
                                             'DD/MM/YYYY HH:mm'
@@ -56,7 +56,7 @@ const UpdatesScreen = screen(
                                 {updates.isUpdateAvailable || updates.isUpdatePending ? (
                                     <Stack column>
                                         <Typography variant="h5">Update available</Typography>
-                                        <Typography>
+                                        <Typography color="secondary">
                                             A new version of the app is available.
                                         </Typography>
                                         <Button
@@ -73,7 +73,7 @@ const UpdatesScreen = screen(
                                 ) : (
                                     <Stack column>
                                         <Typography variant="h5">No updates available</Typography>
-                                        <Typography>
+                                        <Typography color="secondary">
                                             Your app is up to date. Check back later.
                                         </Typography>
                                         <Button

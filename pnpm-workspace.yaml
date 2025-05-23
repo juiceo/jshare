@@ -8,6 +8,7 @@ catalog:
     '@expo-google-fonts/nunito': ^0.2.3
     '@expo-google-fonts/poppins': ^0.2.3
     '@expo-google-fonts/ubuntu': ^0.2.3
+    '@expo-google-fonts/inter': ^0.2.3
     '@expo/metro-runtime': ^4.0.1
     '@faker-js/faker': ^9.2.0
     '@gorhom/bottom-sheet': ^5

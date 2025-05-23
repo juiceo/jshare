@@ -1,20 +1,26 @@
 import {
-    Nunito_400Regular,
-    Nunito_500Medium,
-    Nunito_600SemiBold,
-    Nunito_700Bold,
-} from '@expo-google-fonts/nunito';
-import { Poppins_600SemiBold } from '@expo-google-fonts/poppins';
-import { Ubuntu_700Bold } from '@expo-google-fonts/ubuntu';
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+} from '@expo-google-fonts/inter';
+import {
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
 import type { FontSource } from 'expo-font';
 
 export const Fonts = {
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Poppins_400Regular,
+    Poppins_500Medium,
     Poppins_600SemiBold,
-    Nunito_400Regular,
-    Nunito_500Medium,
-    Nunito_600SemiBold,
-    Nunito_700Bold,
-    Ubuntu_700Bold,
+    Poppins_700Bold,
 } satisfies Record<string, FontSource>;
 
 export type FontFamily = keyof typeof Fonts;

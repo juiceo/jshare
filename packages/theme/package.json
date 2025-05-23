@@ -14,6 +14,7 @@
         "@expo-google-fonts/nunito": "catalog:",
         "@expo-google-fonts/poppins": "catalog:",
         "@expo-google-fonts/ubuntu": "catalog:",
+        "@expo-google-fonts/inter": "catalog:",
         "@types/chroma-js": "catalog:",
         "chroma-js": "catalog:",
         "expo-font": "catalog:",

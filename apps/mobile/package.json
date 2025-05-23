@@ -43,6 +43,7 @@
         "ios": "expo run:ios"
     },
     "dependencies": {
+        "@expo-google-fonts/inter": "^0.3.0",
         "@expo/metro-runtime": "catalog:",
         "@gorhom/bottom-sheet": "catalog:",
         "@hookform/error-message": "catalog:",

@@ -12,6 +12,9 @@ catalogs:
     '@babel/core':
       specifier: ^7.24.5
       version: 7.26.0
+    '@expo-google-fonts/inter':
+      specifier: ^0.2.3
+      version: 0.2.3
     '@expo-google-fonts/nunito':
       specifier: ^0.2.3
       version: 0.2.3
@@ -353,6 +356,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@expo-google-fonts/inter':
+        specifier: ^0.3.0
+        version: 0.3.0
       '@expo/metro-runtime':
         specifier: 'catalog:'
         version: 4.0.1(react-native@0.76.9(@babel/core@7.26.0)(@babel/preset-env@7.20.2(@babel/core@7.26.0))(@react-native-community/cli@13.6.9)(@types/react@18.3.20)(react@18.3.1))
@@ -696,7 +702,7 @@ importers:
         version: 10.1.0
       esbuild-plugin-copy:
         specifier: ^2.1.1
-        version: 2.1.1(esbuild@0.24.2)
+        version: 2.1.1(esbuild@0.23.1)
       tsx:
         specifier: 'catalog:'
         version: 4.19.2
@@ -815,6 +821,9 @@ importers:
 
   packages/theme:
     dependencies:
+      '@expo-google-fonts/inter':
+        specifier: 'catalog:'
+        version: 0.2.3
       '@expo-google-fonts/nunito':
         specifier: 'catalog:'
         version: 0.2.3
@@ -2356,6 +2365,12 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@expo-google-fonts/inter@0.2.3':
+    resolution: {integrity: sha512-iHK9FI+dnE45X5c2Z5hSFwNH4zUWethizpbv3XUn0FIGw5jwvzriENz0a6wCdkI4/d+1QkurnHo5XHti7TbNJA==}
+
+  '@expo-google-fonts/inter@0.3.0':
+    resolution: {integrity: sha512-x77HsdpizmZFNZ8nMd7hsNah/MyxhLmihZQEyIkB473jskBcXIpsyf+tVVLXvXEhtnpGx8zZ2XAe9u+i0qvIEw==}
 
   '@expo-google-fonts/nunito@0.2.3':
     resolution: {integrity: sha512-z+Bx3IuT0t3jguoMxiyWuC7pW3wDVNHgYko/G9V23QhR/yDSjEsT+Kx+VGDT/hu9TXSxw3CtpQ5MFHikqSVDYw==}
@@ -10692,6 +10707,10 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
+  '@expo-google-fonts/inter@0.2.3': {}
+
+  '@expo-google-fonts/inter@0.3.0': {}
+
   '@expo-google-fonts/nunito@0.2.3': {}
 
   '@expo-google-fonts/poppins@0.2.3': {}
@@ -14627,11 +14646,11 @@ snapshots:
       is-date-object: 1.1.0
       is-symbol: 1.1.1
 
-  esbuild-plugin-copy@2.1.1(esbuild@0.24.2):
+  esbuild-plugin-copy@2.1.1(esbuild@0.23.1):
     dependencies:
       chalk: 4.1.2
       chokidar: 3.6.0
-      esbuild: 0.24.2
+      esbuild: 0.23.1
       fs-extra: 10.1.0
       globby: 11.1.0
 

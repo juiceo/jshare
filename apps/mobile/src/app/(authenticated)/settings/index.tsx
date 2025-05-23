@@ -40,7 +40,7 @@ const SettingsScreen = screen(
                             Local data
                         </Typography>
                         <Stack p="xl" bg="background.secondary" br="xl">
-                            <Typography variant="body1" mb="xl">
+                            <Typography variant="body1" mb="xl" color="secondary">
                                 JShare stores data on your device to improve performance, reduce
                                 data usage and provide offline capabilities. If you are experiencing
                                 issues, press below to clear any local data and reload the app.
@@ -54,12 +54,12 @@ const SettingsScreen = screen(
                             Account
                         </Typography>
                         <Stack p="xl" bg="background.secondary" br="xl">
-                            <Typography>
+                            <Typography color="secondary">
                                 To request an export of your account information, please send an
                                 email to{' '}
                                 <Typography color="accent.primary">{SUPPORT_EMAIL}</Typography>
                             </Typography>
-                            <Typography mt="xl">
+                            <Typography mt="xl" color="secondary">
                                 If you wish to permanently delete your account, click below to begin
                                 account deletion.
                             </Typography>
