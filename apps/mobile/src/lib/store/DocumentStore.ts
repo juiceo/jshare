@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 import { Document } from '~/lib/store/Document';
 import { IndexedMap } from '~/lib/store/IndexedMap';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { SystemStore } from '~/lib/store/SystemStore';
 import type {
     CreateEntry,
@@ -147,6 +148,7 @@ export class DocumentStore<
     mode: 'on-demand' | 'sync';
     isReady: boolean = false;
     init: () => Promise<void>;
+    syncInterval: NodeJS.Timeout | null = null;
 
     constructor(args: DocumentStoreArgs<S, A, R, F, I, T>) {
         this.index = new IndexedMap((args.indexedKeys || []) as I);
@@ -168,6 +170,10 @@ export class DocumentStore<
         this.sync = async (force?: boolean) => {
             if (!this.isReady) return;
             if (this.mode !== 'sync') return;
+            if (!SessionStore.isAuthenticated) {
+                this.debug('not authenticated, skipping sync');
+                return;
+            }
             if (!force) {
                 if (this.isSyncing) return;
                 if (this.lastSync) {
@@ -185,9 +191,11 @@ export class DocumentStore<
                 return;
             }
 
-            runInAction(() => {
-                this.isSyncing = true;
-            });
+            setTimeout(() => {
+                runInAction(() => {
+                    this.isSyncing = true;
+                });
+            }, 1);
 
             try {
                 const result = await this.api.sync({ lastSync: this.lastSync?.timestamp ?? 0 });
@@ -221,6 +229,10 @@ export class DocumentStore<
         this.flushQueries = debounce(
             async () => {
                 if (!this.isReady) return;
+                if (!SessionStore.isAuthenticated) {
+                    this.debug('not authenticated, skipping flushQueries');
+                    return;
+                }
                 const queriesToRun = runInAction(() => {
                     return Object.entries(this.queries).filter(([key, item]) => {
                         if (item.status === 'pending') {
@@ -324,13 +336,15 @@ export class DocumentStore<
         this.flushUpdates = debounce(
             async () => {
                 if (!this.isReady) return [];
-                if (!SystemStore.isConnected) return [];
-                if (!this.api.update) {
-                    console.warn(
-                        `Tried to flush updates in ${this.name}, but there is no update method defined in the collection API.`
-                    );
+                if (!SystemStore.isConnected) {
+                    this.debug('not connected, skipping flushUpdates');
                     return [];
                 }
+                if (!SessionStore.isAuthenticated) {
+                    this.debug('not authenticated, skipping flushUpdates');
+                    return [];
+                }
+
                 const updatesToRun = runInAction(() => {
                     return Object.entries(this.updates).filter(([id, data]) => {
                         if (data.status === 'pending') {
@@ -341,6 +355,13 @@ export class DocumentStore<
                     });
                 });
                 if (updatesToRun.length === 0) return [];
+
+                if (!this.api.update) {
+                    console.warn(
+                        `Tried to flush updates in ${this.name}, but there is no update method defined in the collection API.`
+                    );
+                    return [];
+                }
 
                 return Promise.all(
                     updatesToRun.map(async ([id, data]) =>
@@ -388,13 +409,15 @@ export class DocumentStore<
 
         this.flushCreates = async () => {
             if (!this.isReady) return;
-            if (!SystemStore.isConnected) return;
-            if (!this.api.create) {
-                console.warn(
-                    `Tried to flush creates in ${this.name}, but there is no create method defined in the collection API.`
-                );
+            if (!SystemStore.isConnected) {
+                this.debug('not connected, skipping flushCreates');
                 return;
             }
+            if (!SessionStore.isAuthenticated) {
+                this.debug('not authenticated, skipping flushCreates');
+                return;
+            }
+
             const createsToRun = runInAction(() => {
                 return Object.values(this.creates).filter((entry) => {
                     if (entry.status === 'pending') {
@@ -406,6 +429,14 @@ export class DocumentStore<
             });
 
             if (createsToRun.length === 0) return;
+
+            if (!this.api.create) {
+                console.warn(
+                    `Tried to flush creates in ${this.name}, but there is no create method defined in the collection API.`
+                );
+                return;
+            }
+
             const sortedCreates = sortBy(createsToRun, (entry) => entry.data.createdAt);
 
             for (const entry of sortedCreates) {
@@ -446,7 +477,14 @@ export class DocumentStore<
 
         this.flushDeletes = async () => {
             if (!this.isReady) return;
-            if (!SystemStore.isConnected) return;
+            if (!SystemStore.isConnected) {
+                this.debug('not connected, skipping flushDeletes');
+                return;
+            }
+            if (!SessionStore.isAuthenticated) {
+                this.debug('not authenticated, skipping flushDeletes');
+                return;
+            }
             const deletesToRun = runInAction(() => {
                 return Object.values(this.deletes).filter((entry) => {
                     if (entry.status === 'pending') {
@@ -504,9 +542,26 @@ export class DocumentStore<
         }
 
         reaction(
+            () => SessionStore.state,
+            async (authState) => {
+                switch (authState.type) {
+                    case 'error':
+                    case 'unauthenticated': {
+                        this.reset();
+                        break;
+                    }
+                    case 'authenticated': {
+                        this.init();
+                        break;
+                    }
+                }
+            }
+        );
+
+        reaction(
             () => SystemStore.isConnected,
-            async () => {
-                if (SystemStore.isConnected) {
+            async (isConnected) => {
+                if (isConnected) {
                     await flushAllMutations();
                     this.sync(true);
                 }
@@ -530,7 +585,17 @@ export class DocumentStore<
             }
             flushAllMutations();
             this.sync(true);
+
+            this.syncInterval = setInterval(() => {
+                this.sync();
+            }, 2000);
         };
+    }
+
+    private debug(...messages: any[]) {
+        if (__DEV__) {
+            console.log(`DocumentStore::${this.name}`, ...messages);
+        }
     }
 
     private async hydrate() {
@@ -553,6 +618,8 @@ export class DocumentStore<
                 }
             })
             .filter((d: any) => d !== null);
+
+        this.debug(`hydrated ${docs.length} documents`);
         runInAction(() => {
             this.index.init(docs);
         });
@@ -561,6 +628,7 @@ export class DocumentStore<
     private async persist() {
         InteractionManager.runAfterInteractions(async () => {
             const items = this.index.getAll().map((doc) => doc.snapshot);
+            this.debug(`persisting ${items.length} documents`);
             await AsyncStorage.setItem(`DocumentStore::${this.name}`, JSON.stringify(items));
         });
     }
@@ -869,12 +937,18 @@ export class DocumentStore<
 
     async reset() {
         runInAction(() => {
+            this.isReady = false;
+        });
+        if (this.syncInterval) {
+            clearInterval(this.syncInterval);
+            this.syncInterval = null;
+        }
+        runInAction(() => {
             this.queries = {};
             this.updates = {};
             this.deletes = {};
             this.creates = {};
             this.index.clear();
-            this.isReady = false;
         });
         return this.clearPersistedState();
     }

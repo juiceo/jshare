@@ -7,7 +7,7 @@ import { Typography } from '~/components/Typography';
 import { SystemStore } from '~/lib/store/SystemStore';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const DeveloperSettingsScreen = screen(
     observer(() => {
         return (
             <Screen>
@@ -34,3 +34,5 @@ export default screen(
         );
     })
 );
+
+export default DeveloperSettingsScreen;

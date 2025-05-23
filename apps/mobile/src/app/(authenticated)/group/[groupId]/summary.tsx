@@ -24,7 +24,7 @@ import { SessionStore } from '~/lib/store/SessionStore';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const GroupSummaryScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const router = useRouter();
@@ -196,3 +196,5 @@ const getStyles = (theme: Theme) => {
         },
     });
 };
+
+export default GroupSummaryScreen;

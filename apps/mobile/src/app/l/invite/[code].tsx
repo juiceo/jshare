@@ -3,7 +3,7 @@ import { Redirect, useLocalSearchParams } from 'expo-router';
 
 import { SystemStore } from '~/lib/store/SystemStore';
 
-export default function DeepLinkLayout() {
+function DeepLinkLayout() {
     const { code } = useLocalSearchParams<{ code: string }>();
 
     useEffect(() => {
@@ -15,3 +15,5 @@ export default function DeepLinkLayout() {
 
     return <Redirect href="/(authenticated)/(tabs)/groups" />;
 }
+
+export default DeepLinkLayout;

@@ -39,7 +39,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export default screen(
+const CreatePaymentScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const router = useRouter();
@@ -320,3 +320,5 @@ export default screen(
         );
     })
 );
+
+export default CreatePaymentScreen;

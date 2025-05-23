@@ -22,7 +22,7 @@ import { SessionStore } from '~/lib/store/SessionStore';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const GroupSettleScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const router = useRouter();
@@ -204,3 +204,5 @@ export default screen(
         );
     })
 );
+
+export default GroupSettleScreen;

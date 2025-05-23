@@ -7,7 +7,7 @@ import { LoadingState } from '~/components/util/LoadingState';
 import { GroupContextProvider } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 
-export default screen(() => {
+const GroupLayout = screen(() => {
     const params = useLocalSearchParams<{ groupId: string }>();
     const { theme } = useTheme();
 
@@ -37,3 +37,5 @@ export default screen(() => {
         </Suspense>
     );
 });
+
+export default GroupLayout;

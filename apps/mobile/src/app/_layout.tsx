@@ -16,7 +16,7 @@ import { ThemeProvider, Themes, useTheme } from '@jshare/theme';
 
 import { AppErrorBoundary } from '~/components/errors/AppErrorBoundary';
 import { ToastManager } from '~/components/Toast/ToastManager';
-import { initStores } from '~/lib/store/collections';
+import { LoadingState } from '~/components/util/LoadingState';
 import { FontLoader } from '~/wrappers/FontLoader';
 import { JotaiProvider } from '~/wrappers/JotaiProvider';
 import { QueryProvider } from '~/wrappers/QueryProvider';
@@ -38,7 +38,7 @@ SplashScreen.setOptions({
 
 const storybookEnabled = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
 
-export default function AppLayout() {
+function AppLayout() {
     return (
         <SafeAreaProvider>
             <KeyboardProvider>
@@ -89,13 +89,13 @@ const RootStack = () => {
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        initStores().then(() => {
+        setTimeout(() => {
             setIsReady(true);
             SplashScreen.hide();
-        });
+        }, 1000);
     }, []);
 
-    if (!isReady) return null;
+    if (!isReady) return <LoadingState />;
 
     return (
         <Stack
@@ -115,3 +115,5 @@ const RootStack = () => {
         />
     );
 };
+
+export default AppLayout;

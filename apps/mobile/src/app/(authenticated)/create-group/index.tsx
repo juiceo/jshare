@@ -30,7 +30,7 @@ const schema = z.object({
 });
 type Schema = z.infer<typeof schema>;
 
-export default screen(
+const CreateGroupScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const router = useRouter();
@@ -123,3 +123,5 @@ export default screen(
         );
     })
 );
+
+export default CreateGroupScreen;

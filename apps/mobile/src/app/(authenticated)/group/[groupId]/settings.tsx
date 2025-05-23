@@ -39,7 +39,7 @@ enum UserAction {
     PromoteToAdmin = 'Promote to Admin',
 }
 
-export default screen(
+const GroupSettingsScreen = screen(
     observer(() => {
         const router = useRouter();
         const { theme } = useTheme();
@@ -389,3 +389,5 @@ export default screen(
         );
     })
 );
+
+export default GroupSettingsScreen;

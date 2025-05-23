@@ -10,13 +10,14 @@ import { PinCodeInput } from '~/components/PinCodeInput/PinCodeInput';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { useTimer } from '~/hooks/useTimer';
+import { Store } from '~/lib/store/collections';
 import { SessionStore } from '~/lib/store/SessionStore';
 import { supabase } from '~/lib/supabase';
 import { trpcClient } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
-export default screen(() => {
+const VerifyEmailScreen = screen(() => {
     const { email } = useLocalSearchParams<{ email: string }>();
 
     const [code, setCode] = useState<number[]>([]);
@@ -47,6 +48,7 @@ export default screen(() => {
                 });
 
                 if (profile) {
+                    Store.profiles.registerItem(profile);
                     router.replace('/');
                 } else {
                     router.replace('/login/welcome');
@@ -107,3 +109,5 @@ export default screen(() => {
         </Screen>
     );
 });
+
+export default VerifyEmailScreen;

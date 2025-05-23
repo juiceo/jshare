@@ -14,7 +14,7 @@ import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const JoinGroupCodeScreen = screen(
     () => {
         const user = SessionStore.user;
         const router = useRouter();
@@ -114,3 +114,5 @@ export default screen(
         loadingMessage: 'Checking code...',
     }
 );
+
+export default JoinGroupCodeScreen;

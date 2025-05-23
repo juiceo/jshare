@@ -15,7 +15,7 @@ import { Store } from '~/lib/store/collections';
 import { SessionStore } from '~/lib/store/SessionStore';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const YouScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const profile = Store.profiles.findById(user.id);
@@ -116,3 +116,5 @@ export default screen(
         );
     })
 );
+
+export default YouScreen;

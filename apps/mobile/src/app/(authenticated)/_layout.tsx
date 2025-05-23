@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { ActivityIndicator, Linking, Text } from 'react-native';
-import { skipToken, useQuery } from '@tanstack/react-query';
 import { Redirect, Stack } from 'expo-router';
 import { observer } from 'mobx-react-lite';
 
@@ -18,32 +17,19 @@ import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
 import { SessionStore } from '~/lib/store/SessionStore';
-import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const AuthenticatedLayout = screen(
     observer(() => {
         const { theme } = useTheme();
         const authState = SessionStore.state;
+        const user = SessionStore.userMaybe;
 
-        const profileQuery = useQuery(
-            trpc.models.profiles.findById.queryOptions(
-                authState.type === 'authenticated'
-                    ? { ids: [authState.session.user.id] }
-                    : skipToken
-            )
-        );
-        const profile = profileQuery.data?.[0];
-
-        useEffect(() => {
-            if (profile) {
-                Store.profiles.registerItem(profile);
-            }
-        }, [profile]);
+        const profile = Store.profiles.findById(user?.id);
 
         const termsStatus = useMemo(() => {
             if (!profile) return null;
-            return getTermsAcceptanceStatus(profile);
+            return getTermsAcceptanceStatus(profile.data);
         }, [profile]);
 
         const openPrivacyPolicy = () => {
@@ -63,7 +49,7 @@ export default screen(
             Store.profiles.update(profile.id, { termsAcceptedAt: new Date() });
         };
 
-        if (authState.type === 'loading' || profileQuery.isLoading) {
+        if (authState.type === 'loading') {
             return (
                 <StackView center absoluteFill>
                     <ActivityIndicator />
@@ -167,3 +153,5 @@ export default screen(
         );
     })
 );
+
+export default AuthenticatedLayout;

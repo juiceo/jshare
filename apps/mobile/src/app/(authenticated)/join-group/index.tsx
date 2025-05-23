@@ -8,7 +8,7 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { screen } from '~/wrappers/screen';
 
-export default screen(() => {
+const JoinGroupScreen = screen(() => {
     const router = useRouter();
     const [code, setCode] = useState<string>('');
 
@@ -49,3 +49,5 @@ export default screen(() => {
         </Screen>
     );
 });
+
+export default JoinGroupScreen;

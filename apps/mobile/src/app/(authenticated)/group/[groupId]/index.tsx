@@ -24,7 +24,7 @@ import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const GroupScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const { group, groupId } = useGroupContext();
@@ -171,3 +171,5 @@ export default screen(
         );
     })
 );
+
+export default GroupScreen;

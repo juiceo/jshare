@@ -7,7 +7,7 @@ import { SessionStore } from '~/lib/store/SessionStore';
 
 export const SessionProvider = observer((props: PropsWithChildren) => {
     const isLoading = SessionStore.isLoading;
-    useRealtimeUpdates(SessionStore.user?.id);
+    useRealtimeUpdates(SessionStore.userMaybe?.id);
 
     if (isLoading) {
         return <LoadingState />;

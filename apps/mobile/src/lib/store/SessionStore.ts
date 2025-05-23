@@ -1,9 +1,10 @@
 import type { AuthError, Session } from '@supabase/supabase-js';
 import { router } from 'expo-router';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 import { isDemoUserEmail } from '@jshare/common';
 
+import { PreferencesStore } from '~/lib/store/PreferencesStore';
 import { hotReloadable } from '~/lib/store/util';
 import { supabase } from '~/lib/supabase';
 
@@ -47,16 +48,21 @@ export class SessionStoreInstance {
         makeAutoObservable(this);
 
         supabase.auth.getSession().then(async ({ data: { session }, error }) => {
-            this._session = session;
-            this._error = error;
-            this._loading = false;
+            runInAction(() => {
+                this._session = session;
+                this._error = error;
+                this._loading = false;
+            });
         });
 
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            this._session = session;
-            this._loading = false;
+            runInAction(() => {
+                this._session = session;
+                this._loading = false;
+                this._error = null;
+            });
         });
 
         this.cleanup = () => {
@@ -68,10 +74,10 @@ export class SessionStoreInstance {
         supabase.auth.signOut();
         router.dismissAll();
         router.replace('/login');
+        PreferencesStore.reset();
     }
 
     async signIn(email: string, code: string) {
-        this._loading = true;
         const authResult = isDemoUserEmail(email)
             ? await supabase.auth.signInWithPassword({
                   email,
@@ -90,7 +96,6 @@ export class SessionStoreInstance {
             this._session = authResult.data.session;
             this._error = null;
         }
-        this._loading = false;
 
         return authResult;
     }

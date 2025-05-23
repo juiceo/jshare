@@ -10,7 +10,7 @@ import { Typography } from '~/components/Typography';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const UpdatesScreen = screen(
     observer(() => {
         const updates = Updates.useUpdates();
         const [isInstalling, setInstalling] = useState<boolean>(false);
@@ -125,3 +125,5 @@ export default screen(
         );
     })
 );
+
+export default UpdatesScreen;

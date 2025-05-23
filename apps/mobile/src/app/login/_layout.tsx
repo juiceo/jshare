@@ -4,7 +4,7 @@ import { useTheme } from '@jshare/theme';
 
 import { screen } from '~/wrappers/screen';
 
-export default screen(() => {
+const LoginLayout = screen(() => {
     const { theme } = useTheme();
     return (
         <Stack
@@ -24,3 +24,5 @@ export default screen(() => {
         />
     );
 });
+
+export default LoginLayout;

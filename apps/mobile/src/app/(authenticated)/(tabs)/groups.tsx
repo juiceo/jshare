@@ -14,7 +14,7 @@ import { Store } from '~/lib/store/collections';
 import { SystemStore } from '~/lib/store/SystemStore';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const GroupsScreen = screen(
     observer(() => {
         const router = useRouter();
         const pendingDeepLink = SystemStore.pendingDeepLink;
@@ -115,3 +115,5 @@ export default screen(
         );
     })
 );
+
+export default GroupsScreen;

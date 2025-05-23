@@ -23,14 +23,6 @@ export namespace Docs {
     export type Profile = Document<typeof ProfilesStore>;
 }
 
-export const initStores = async () => {
-    await Promise.all(Object.values(Store).map((store) => store.init()));
-};
-
-export const syncStores = async () => {
-    await Promise.all(Object.values(Store).map((store) => store.sync()));
-};
-
 export const resetStores = async () => {
     await Promise.all(Object.values(Store).map((store) => store.reset()));
     PreferencesStore.reset();

@@ -15,7 +15,7 @@ import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
 
-export default screen(
+const SettingsScreen = screen(
     observer(() => {
         const deleteAccount = useMutation(trpc.profiles.delete.mutationOptions());
 
@@ -88,3 +88,5 @@ export default screen(
         );
     })
 );
+
+export default SettingsScreen;
