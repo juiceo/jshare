@@ -120,7 +120,7 @@ const CreatePaymentScreen = screen(
                                         {getCurrencyDetails(currency).name_plural}
                                     </Typography>
                                     {currency !== group.data.currency && (
-                                        <Typography variant="caption" color="hint">
+                                        <Typography variant="caption" color="tertiary">
                                             {`= ${formatAmount(
                                                 convert({
                                                     amount,
@@ -173,7 +173,7 @@ const CreatePaymentScreen = screen(
                                                                 />
                                                                 <Typography
                                                                     variant="caption"
-                                                                    color="hint"
+                                                                    color="tertiary"
                                                                 >
                                                                     {getUserShortName(field.value)}
                                                                 </Typography>
@@ -220,7 +220,7 @@ const CreatePaymentScreen = screen(
                                                                 />
                                                                 <Typography
                                                                     variant="caption"
-                                                                    color="hint"
+                                                                    color="tertiary"
                                                                 >
                                                                     {field.value
                                                                         ? getUserShortName(

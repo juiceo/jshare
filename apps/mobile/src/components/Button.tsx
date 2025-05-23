@@ -87,16 +87,16 @@ const getPrimaryColor = (
     switch (args.color) {
         case 'primary':
             return args.variant === 'contained'
-                ? theme.palette.primary.main
-                : theme.palette.primary.light;
+                ? theme.palette.brand.primary
+                : theme.palette.brand.secondary;
         case 'secondary':
             return args.variant === 'contained'
                 ? theme.palette.background.tertiary
-                : theme.palette.text.hint;
+                : theme.palette.text.tertiary;
 
         case 'error':
             return args.variant === 'contained'
-                ? theme.palette.error.main
-                : theme.palette.error.light;
+                ? theme.palette.error.primary
+                : theme.palette.error.secondary;
     }
 };

@@ -87,7 +87,7 @@ export const MenuItem = (props: MenuItemProps) => {
                 <Stack column flex={1}>
                     <Typography variant="body1">{props.label}</Typography>
                     {props.secondary && (
-                        <Typography variant="caption" color="hint">
+                        <Typography variant="caption" color="tertiary">
                             {props.secondary}
                         </Typography>
                     )}
@@ -95,7 +95,7 @@ export const MenuItem = (props: MenuItemProps) => {
                 <Stack center pl="xl">
                     <Icon
                         name="CheckCheck"
-                        color={theme.palette.accent.main}
+                        color="accent.primary"
                         style={{ opacity: props.selected ? 1 : 0 }}
                     />
                 </Stack>

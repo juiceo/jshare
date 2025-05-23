@@ -42,23 +42,11 @@ export const ExpenseSharesEditorItem = (props: ExpenseSharesEditorItemProps) => 
                         {!share ? '-' : formatAmount(share.amount ?? 0, currency)}
                     </Typography>
                     {!share ? (
-                        <Icon
-                            name="Circle"
-                            size={32}
-                            color={(theme) => theme.palette.text.disabled}
-                        />
+                        <Icon name="Circle" size={32} color="text.disabled" />
                     ) : share.locked ? (
-                        <Icon
-                            name="Lock"
-                            size={32}
-                            color={(theme) => theme.palette.primary.light}
-                        />
+                        <Icon name="Lock" size={32} color="brand.primary" />
                     ) : (
-                        <Icon
-                            name="CircleCheck"
-                            size={32}
-                            color={(theme) => theme.palette.primary.light}
-                        />
+                        <Icon name="CircleCheck" size={32} color="brand.primary" />
                     )}
                 </Stack>
             </Stack>

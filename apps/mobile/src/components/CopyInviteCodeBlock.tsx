@@ -30,7 +30,7 @@ export const CopyInviteCodeBlock = (props: { code: string }) => {
                     <Typography variant="body1" align="center">
                         Invite your friends to join the group by sharing this invite code:
                     </Typography>
-                    <Typography variant="subtitle1" color="accent.light" my="2xl">
+                    <Typography variant="subtitle1" color="accent.primary" my="2xl">
                         {props.code}
                     </Typography>
                     <Button size="sm" color="primary" onPress={handleCopy}>

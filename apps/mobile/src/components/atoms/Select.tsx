@@ -32,9 +32,7 @@ export const Select = <T extends string, TData = undefined>(props: SelectProps<T
                 {...formControlProps}
                 onPress={() => setOpen(true)}
                 focused={isOpen}
-                endAdornment={
-                    <Icon name="ChevronDown" color={(theme) => theme.palette.text.hint} />
-                }
+                endAdornment={<Icon name="ChevronDown" color="text.secondary" />}
             >
                 {renderValue && selectedItem ? (
                     renderValue(selectedItem.id, selectedItem.data)

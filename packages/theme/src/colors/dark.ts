@@ -1,15 +1,15 @@
 import type { ColorPalette } from './types';
 
 export const darkPalette: ColorPalette = {
-    primary: {
-        light: '#557687',
-        main: '#254459',
-        dark: '#1A3242',
+    brand: {
+        primary: '#6991C7',
+        secondary: '#A1C4FD',
+        tertiary: '#4F359B',
     },
     accent: {
-        light: '#FFA5A5',
-        main: '#FF7070',
-        dark: '#CC5A5A',
+        primary: '#FF7070',
+        secondary: '#CC5A5A',
+        tertiary: '#CC5A5A',
     },
     background: {
         system: '#0A0A0A',
@@ -27,24 +27,27 @@ export const darkPalette: ColorPalette = {
         tertiary: '#22262F',
     },
     success: {
-        light: '#66BB6A',
-        main: '#388E3C',
-        dark: '#1B5E20',
+        tertiary: '#053321',
+        primary: '#079455',
+        secondary: '#079455',
     },
     warning: {
-        light: '#FFCA28',
-        main: '#FFA000',
-        dark: '#FF6F00',
+        primary: '#4E1D09',
+        secondary: '#DC6803',
+        tertiary: '#DC6803',
     },
     error: {
-        light: '#EF5350',
-        main: '#D32F2F',
-        dark: '#B71C1C',
+        primary: '#55160C',
+        secondary: '#D92D20',
+        tertiary: '#D92D20',
     },
     text: {
-        primary: '#E0E0E0',
-        secondary: '#B3B3B3',
-        disabled: '#757575',
-        hint: '#9E9E9E',
+        primary: '#F7F7F7',
+        secondary: '#CECFD2',
+        tertiary: '#94979C',
+        disabled: '#94979C',
+        error: '#F97066',
+        warning: '#FDB022',
+        success: '#47CD89',
     },
 };

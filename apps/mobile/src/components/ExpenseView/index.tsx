@@ -24,12 +24,12 @@ export const ExpenseView = observer((props: ExpenseViewProps) => {
                     <Typography
                         variant="h1"
                         strikeThrough={!!expense.archived}
-                        color={expense.archived ? 'hint' : 'primary'}
+                        color={expense.archived ? 'secondary' : 'primary'}
                     >
                         {formatAmount(expense.amount, expense.currency)}
                     </Typography>
                     {expense.conversion && (
-                        <Typography variant="caption" color="hint">
+                        <Typography variant="caption" color="tertiary">
                             = {formatAmount(expense.conversion.amount, expense.conversion.currency)}
                         </Typography>
                     )}
@@ -63,7 +63,7 @@ export const ExpenseView = observer((props: ExpenseViewProps) => {
                         <Stack column alignEnd>
                             <Typography>{formatAmount(share.amount, share.currency)}</Typography>
                             {share.conversion && (
-                                <Typography variant="caption" color="hint">
+                                <Typography variant="caption" color="tertiary">
                                     ={' '}
                                     {formatAmount(
                                         share.conversion.amount,

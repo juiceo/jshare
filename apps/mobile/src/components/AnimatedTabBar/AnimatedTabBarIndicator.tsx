@@ -23,7 +23,7 @@ export const AnimatedTabBarIndicator = (props: TabBarProps<any>) => {
                 {
                     width: (props.width ?? 0) / props.tabNames.length,
                     height: 2,
-                    backgroundColor: theme.palette.primary.light,
+                    backgroundColor: theme.palette.brand.secondary,
                 },
             ]}
         />

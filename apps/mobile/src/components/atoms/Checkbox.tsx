@@ -34,7 +34,7 @@ export const Checkbox = (props: CheckboxProps) => {
             backgroundColor: interpolateColor(
                 checkedSv.value,
                 [0, 1],
-                ['transparent', theme.palette.primary.light]
+                ['transparent', theme.palette.brand.primary]
             ),
         };
     });
@@ -57,7 +57,7 @@ export const Checkbox = (props: CheckboxProps) => {
                         width: 32,
                         height: 32,
                         borderRadius: variant === 'rounded' ? 16 : 8,
-                        borderColor: theme.palette.primary.light,
+                        borderColor: theme.palette.brand.primary,
                         borderWidth: 2,
                     },
                     animatedViewStyle,

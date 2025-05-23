@@ -73,7 +73,7 @@ export const ExpenseEditor = (props: ExpenseEditorProps) => {
                     {getCurrencyDetails(currency).name_plural}
                 </Typography>
                 {currency !== groupCurrency && (
-                    <Typography variant="caption" color="hint">
+                    <Typography variant="caption" color="tertiary">
                         {`= ${formatAmount(
                             convert({
                                 amount,

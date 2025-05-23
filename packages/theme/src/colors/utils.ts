@@ -2,14 +2,7 @@ import chroma from 'chroma-js';
 import { get } from 'lodash';
 
 import type { Theme } from '../types';
-import type {
-    BackgroundColorPath,
-    BorderColorPath,
-    ColorPalette,
-    PrimaryColorPath,
-    TextColorPath,
-    TextColorVariant,
-} from './types';
+import type { ColorPalette, ColorPath, PrimaryColorPath, TextColorVariant } from './types';
 
 export const getColorVariant = <TKey extends keyof ColorPalette>(
     key: TKey,
@@ -19,22 +12,25 @@ export const getColorVariant = <TKey extends keyof ColorPalette>(
     return theme.palette[key][variant];
 };
 
-export const getColorFromPath = (
-    key: PrimaryColorPath | BackgroundColorPath | TextColorPath | BorderColorPath | undefined,
-    theme: Theme
-) => {
+export const getColorFromPath = (key: ColorPath | (string & {}) | undefined, theme: Theme) => {
     if (!key) return undefined;
 
-    return get(theme.palette, key);
+    return get(theme.palette, key) ?? key;
 };
 
 export const getTextColorFromPath = (
     key: TextColorVariant | PrimaryColorPath | undefined,
     theme: Theme
-) => {
+): string | undefined => {
     if (!key) return undefined;
 
-    return get(theme.palette.text, key) ?? get(theme.palette, key);
+    const value = get(theme.palette.text, key) ?? get(theme.palette, key);
+
+    if (typeof value === 'string') {
+        return value;
+    }
+
+    return undefined;
 };
 
 export const getContrastTextColor = (

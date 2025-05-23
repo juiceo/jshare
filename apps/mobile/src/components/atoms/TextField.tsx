@@ -45,9 +45,9 @@ export const TextField = (props: TextFieldProps) => {
                 ref={inputRef}
                 style={styles.input}
                 placeholderTextColor={theme.palette.text.disabled}
-                cursorColor={theme.palette.primary.light}
-                selectionColor={theme.palette.primary.light}
-                selectionHandleColor={theme.palette.primary.light}
+                cursorColor={theme.palette.brand.primary}
+                selectionColor={theme.palette.brand.primary}
+                selectionHandleColor={theme.palette.brand.primary}
                 placeholder={placeholder}
                 {...TextInputProps}
                 onFocus={(e) => {

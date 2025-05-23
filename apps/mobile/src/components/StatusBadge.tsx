@@ -28,9 +28,9 @@ export const StatusBadge = (props: StatusBadgeProps) => {
                 style={{
                     lineHeight: 0,
                     color: isPositive
-                        ? theme.palette.success.light
+                        ? theme.palette.success.secondary
                         : isNegative
-                          ? theme.palette.error.light
+                          ? theme.palette.error.secondary
                           : theme.palette.text.secondary,
                 }}
             >

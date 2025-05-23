@@ -80,12 +80,8 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
                     <Stack row center spacing="md" pr="md">
                         <Pressable onPress={onExpense}>
                             <Stack row center spacing="md">
-                                <Stack center w={24} ar="1/1" br="full" bg="primary.light">
-                                    <Icon
-                                        name="CreditCard"
-                                        size={16}
-                                        color={theme.palette.text.primary}
-                                    />
+                                <Stack center w={24} ar="1/1" br="full" bg="brand.primary">
+                                    <Icon name="CreditCard" size={16} color="text.primary" />
                                 </Stack>
                                 <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
                                     Expense
@@ -94,12 +90,8 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
                         </Pressable>
                         <Pressable onPress={onPayment}>
                             <Stack row center spacing="md">
-                                <Stack center w={24} ar="1/1" br="full" bg="primary.light">
-                                    <Icon
-                                        name="ArrowDownUp"
-                                        size={16}
-                                        color={theme.palette.text.primary}
-                                    />
+                                <Stack center w={24} ar="1/1" br="full" bg="brand.primary">
+                                    <Icon name="ArrowDownUp" size={16} color="text.primary" />
                                 </Stack>
                                 <Typography variant="buttonSmall" style={{ lineHeight: 0 }}>
                                     Pay

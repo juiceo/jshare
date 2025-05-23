@@ -72,7 +72,7 @@ const AuthenticatedLayout = screen(
                         updated{' '}
                         <Text
                             style={{
-                                color: theme.palette.accent.light,
+                                color: theme.palette.accent.primary,
                             }}
                             onPress={openTermsOfService}
                         >
@@ -81,7 +81,7 @@ const AuthenticatedLayout = screen(
                         and{' '}
                         <Text
                             style={{
-                                color: theme.palette.accent.light,
+                                color: theme.palette.accent.primary,
                             }}
                             onPress={openPrivacyPolicy}
                         >
@@ -93,7 +93,7 @@ const AuthenticatedLayout = screen(
                         If you have any questions or concerns, please contact us at{' '}
                         <Text
                             onPress={openSupportEmail}
-                            style={{ color: theme.palette.accent.light }}
+                            style={{ color: theme.palette.accent.primary }}
                         >
                             {SUPPORT_EMAIL}
                         </Text>

@@ -22,7 +22,7 @@ export default screen(
                         backgroundColor: theme.palette.background.secondary,
                         borderTopWidth: 0,
                     },
-                    tabBarActiveTintColor: theme.palette.accent.main,
+                    tabBarActiveTintColor: theme.palette.accent.primary,
                     sceneStyle: {
                         backgroundColor: theme.palette.background.primary,
                     },

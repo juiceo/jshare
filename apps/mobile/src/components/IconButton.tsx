@@ -46,8 +46,8 @@ export const IconButton = (props: IconButtonProps) => {
         switch (color) {
             case 'primary': {
                 return variant === 'contained'
-                    ? theme.palette.primary.main
-                    : theme.palette.primary.light;
+                    ? theme.palette.brand.primary
+                    : theme.palette.brand.secondary;
             }
             case 'secondary': {
                 return variant === 'contained'
@@ -56,13 +56,13 @@ export const IconButton = (props: IconButtonProps) => {
             }
             case 'error': {
                 return variant === 'contained'
-                    ? theme.palette.error.main
-                    : theme.palette.error.light;
+                    ? theme.palette.error.primary
+                    : theme.palette.error.secondary;
             }
             case 'success': {
                 return variant === 'contained'
-                    ? theme.palette.success.main
-                    : theme.palette.success.light;
+                    ? theme.palette.success.primary
+                    : theme.palette.success.secondary;
             }
         }
     })();

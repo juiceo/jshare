@@ -31,14 +31,14 @@ export const NewGroupMenu = (props: NewGroupMenuProps) => {
                             onPress={() => handleSelect('create')}
                         >
                             <Stack center column p="xl" spacing="xl">
-                                <Icon name="Plus" size={36} />
+                                <Icon name="Plus" size={36} color="text.primary" />
                                 <Typography variant="button">Create a group</Typography>
                             </Stack>
                         </BorderlessButton>
                         <Divider vertical />
                         <BorderlessButton style={{ flex: 1 }} onPress={() => handleSelect('join')}>
                             <Stack center column p="xl" spacing="xl">
-                                <Icon name="KeyRound" size={36} />
+                                <Icon name="KeyRound" size={36} color="text.primary" />
                                 <Typography variant="button" align="center">
                                     Join with code
                                 </Typography>

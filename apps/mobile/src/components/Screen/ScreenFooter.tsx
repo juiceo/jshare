@@ -30,7 +30,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                             padding: theme.spacing.xl,
                             paddingBottom: 0,
                             borderTopWidth: 1,
-                            borderTopColor: theme.palette.border.primary,
+                            borderTopColor: theme.palette.border.tertiary,
                         },
                         style,
                     ]}
@@ -48,7 +48,7 @@ export const ScreenFooter = (props: ScreenFooterProps) => {
                             padding: theme.spacing.xl,
                             paddingBottom: 0,
                             borderTopWidth: 1,
-                            borderTopColor: theme.palette.border.primary,
+                            borderTopColor: theme.palette.border.tertiary,
                         },
                         style,
                     ]}

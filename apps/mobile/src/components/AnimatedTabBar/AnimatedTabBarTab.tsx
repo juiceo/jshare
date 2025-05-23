@@ -40,12 +40,12 @@ export const AnimatedTabBarTab = (props: AnimatedTabBarTabProps) => {
                         <Stack
                             center
                             style={{ width: 18, height: 18, borderRadius: 8 }}
-                            bg="primary.light"
+                            bg="brand.primary"
                         >
                             <Typography
                                 variant="h6"
                                 style={{ fontSize: 12, lineHeight: 0 }}
-                                color="primary.dark"
+                                color="primary"
                             >
                                 {Math.min(props.badge ?? 99)}
                             </Typography>

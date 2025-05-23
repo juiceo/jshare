@@ -20,10 +20,10 @@ export const BalanceListItem = (props: BalanceListItemProps) => {
                 <Typography variant="h6">
                     <UserName userId={data.userId} variant="short" />
                 </Typography>
-                <Typography variant="body2" color="hint">
+                <Typography variant="body2" color="tertiary">
                     Paid {formatAmount(data.paid, data.currency)}
                 </Typography>
-                <Typography variant="body2" color="hint">
+                <Typography variant="body2" color="tertiary">
                     Received: {formatAmount(data.received, data.currency)}
                 </Typography>
             </Stack>

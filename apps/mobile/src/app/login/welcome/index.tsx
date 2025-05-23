@@ -173,7 +173,7 @@ const WelcomeScreen = screen(
                                             <Text
                                                 style={{
                                                     textDecorationLine: 'underline',
-                                                    color: theme.palette.accent.light,
+                                                    color: theme.palette.accent.primary,
                                                 }}
                                                 onPress={openPrivacyPolicy}
                                             >
@@ -183,7 +183,7 @@ const WelcomeScreen = screen(
                                             <Text
                                                 style={{
                                                     textDecorationLine: 'underline',
-                                                    color: theme.palette.accent.light,
+                                                    color: theme.palette.accent.primary,
                                                 }}
                                                 onPress={openTermsOfService}
                                             >

@@ -105,7 +105,7 @@ const ExpenseScreen = screen(
                             {mode === 'view' && !isOwner && !isAdmin && (
                                 <Stack center column spacing="md" px="xl">
                                     <Icon name="Lock" />
-                                    <Typography variant="caption" color="hint" align="center">
+                                    <Typography variant="caption" color="tertiary" align="center">
                                         This expense can only be edited by{' '}
                                         <UserName userId={expense.data.ownerId} variant="short" />{' '}
                                         or group admins
@@ -132,7 +132,7 @@ const ExpenseScreen = screen(
                         </Stack>
                     ) : (
                         <Stack center column spacing="md" px="xl">
-                            <Typography variant="caption" color="hint" align="center">
+                            <Typography variant="caption" color="tertiary" align="center">
                                 This expense has been archived
                             </Typography>
                         </Stack>

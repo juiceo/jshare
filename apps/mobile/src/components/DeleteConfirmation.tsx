@@ -45,7 +45,7 @@ export const DeleteConfirmation = (props: DeleteConfirmationProps) => {
                         <>
                             <Typography variant="body1" align="center" mt="2xl" mb="xl">
                                 Please type{' '}
-                                <Typography variant="h6" color="accent.main">
+                                <Typography variant="h6" color="accent.primary">
                                     {confirmPhrase.toUpperCase()}
                                 </Typography>{' '}
                                 to confirm

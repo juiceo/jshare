@@ -122,7 +122,7 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
                                 'You are '
                             ) : (
                                 <>
-                                    <Typography variant="caption" color="accent.light">
+                                    <Typography variant="caption" color="accent.primary">
                                         <UserName userId={userId} variant="full" />
                                     </Typography>
                                     {' is'}
@@ -137,7 +137,7 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
                                 'You are '
                             ) : (
                                 <>
-                                    <Typography variant="caption" color="accent.light">
+                                    <Typography variant="caption" color="accent.primary">
                                         <UserName userId={userId} variant="full" />
                                     </Typography>
                                     {' is'}
@@ -160,15 +160,15 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
                                 <UserName userId={userId} variant="full" />
                             </Typography>
                             <Stack column spacing="none">
-                                <Typography variant="caption" color="hint" m="none">
+                                <Typography variant="caption" color="tertiary" m="none">
                                     Paid:{' '}
                                     {formatAmount(userBalance?.paid ?? 0, group.data.currency)}
                                 </Typography>
-                                <Typography variant="caption" color="hint" m="none">
+                                <Typography variant="caption" color="tertiary" m="none">
                                     Received:{' '}
                                     {formatAmount(userBalance?.received ?? 0, group.data.currency)}
                                 </Typography>
-                                <Typography variant="caption" color="hint" m="none">
+                                <Typography variant="caption" color="tertiary" m="none">
                                     Balance:{' '}
                                     {formatAmount(userBalance?.balance ?? 0, group.data.currency)}
                                 </Typography>

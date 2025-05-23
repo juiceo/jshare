@@ -26,7 +26,7 @@ const JoinGroupScreen = screen(() => {
                         value={code}
                         onChange={setCode}
                     />
-                    <Typography variant="caption" color="hint" align="center">
+                    <Typography variant="caption" color="tertiary" align="center">
                         Don't have a code? Ask someone from the group to share it with you.
                     </Typography>
                 </Stack>

@@ -54,8 +54,8 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
         <>
             <Stack column bg="background.primary" br="xl">
                 <Stack p="xl" row alignCenter spacing="sm">
-                    <Icon name="Info" size={12} color={(theme) => theme.palette.text.hint} />
-                    <Typography variant="caption" color="hint" align="center">
+                    <Icon name="Info" size={12} color="text.secondary" />
+                    <Typography variant="caption" color="tertiary" align="center">
                         Tap to toggle people, long press to edit
                     </Typography>
                 </Stack>

@@ -17,7 +17,7 @@ const ProfileScreen = screen(
 
         return (
             <Screen>
-                <Screen.Header title="Profile" />
+                <Screen.Header title="Profile" blur />
                 <Screen.Content scrollable disableTopInset>
                     <Stack p="xl" spacing="md">
                         <TextField

@@ -23,11 +23,7 @@ export const AppErrorBoundary = (props: PropsWithChildren) => {
         return (
             <Stack bg="background.primary" flex={1}>
                 <Stack flex={1} column center spacing="xl" p="xl">
-                    <Icon
-                        name="ServerCrash"
-                        size={64}
-                        color={(theme) => theme.palette.error.main}
-                    />
+                    <Icon name="ServerCrash" size={64} color="text.error" />
                     <Typography variant="h2" align="center">
                         Application error
                     </Typography>

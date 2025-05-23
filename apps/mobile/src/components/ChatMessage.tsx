@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react-lite';
 
-import { useTheme, type Theme } from '@jshare/theme';
+import { darken, useTheme, type Theme } from '@jshare/theme';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
@@ -29,7 +29,7 @@ const _ChatMessage = observer((props: ChatMessageProps) => {
 
     const gradientColors = ((): [string, string] => {
         if (isSelf) {
-            return [theme.palette.primary.main, theme.palette.primary.dark];
+            return [darken(theme.palette.brand.primary, 0.5), theme.palette.brand.tertiary];
         } else {
             return [theme.palette.background.tertiary, theme.palette.background.quaternary];
         }
@@ -65,7 +65,7 @@ const _ChatMessage = observer((props: ChatMessageProps) => {
                 </Stack>
             )}
             <Stack style={styles.footer}>
-                <Typography variant="caption" color="hint">
+                <Typography variant="caption" color="tertiary">
                     {dayjs(message.data.createdAt).format('HH:mm')}
                 </Typography>
             </Stack>

@@ -1,5 +1,5 @@
 export type ColorPalette = {
-    primary: PrimaryColor;
+    brand: PrimaryColor;
     accent: PrimaryColor;
     success: PrimaryColor;
     warning: PrimaryColor;
@@ -11,9 +11,9 @@ export type ColorPalette = {
 };
 
 export type PrimaryColor = {
-    light: string;
-    main: string;
-    dark: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
 };
 
 export type BackgroundColor = {
@@ -36,8 +36,11 @@ export type BorderColor = {
 export type TextColor = {
     primary: string;
     secondary: string;
+    tertiary: string;
     disabled: string;
-    hint: string;
+    error: string;
+    warning: string;
+    success: string;
 };
 
 export type PrimaryColorVariant = keyof PrimaryColor;
@@ -52,3 +55,5 @@ export type BorderColorPath = `border.${BorderColorVariant}`;
 
 export type TextColorVariant = keyof TextColor;
 export type TextColorPath = `text.${TextColorVariant}`;
+
+export type ColorPath = PrimaryColorPath | BackgroundColorPath | TextColorPath | BorderColorPath;

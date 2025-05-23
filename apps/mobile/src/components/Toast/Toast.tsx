@@ -25,13 +25,13 @@ export const Toast = (props: ToastProps) => {
     const iconColor = (() => {
         switch (props.variant) {
             case 'info':
-                return theme.palette.primary.main;
+                return theme.palette.brand.primary;
             case 'error':
-                return theme.palette.error.main;
+                return theme.palette.text.error;
             case 'warning':
-                return theme.palette.warning.main;
+                return theme.palette.text.warning;
             case 'success':
-                return theme.palette.success.main;
+                return theme.palette.text.success;
         }
     })();
 

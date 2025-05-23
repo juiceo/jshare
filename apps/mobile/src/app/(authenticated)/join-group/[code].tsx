@@ -59,7 +59,7 @@ const JoinGroupCodeScreen = screen(
                             {isMember ? (
                                 <Typography variant="subtitle1">You're already a member</Typography>
                             ) : (
-                                <Typography variant="caption" color="hint" align="center">
+                                <Typography variant="caption" color="tertiary" align="center">
                                     {plural({
                                         singular: 'member',
                                         plural: 'members',
@@ -79,11 +79,11 @@ const JoinGroupCodeScreen = screen(
                             <Stack column spacing="md" mt="2xl">
                                 <Typography variant="body1" align="center" color="primary">
                                     No group was found with the code{' '}
-                                    <Typography variant="subtitle1" color="primary.light">
+                                    <Typography variant="subtitle1" color="brand.primary">
                                         {code}
                                     </Typography>
                                 </Typography>
-                                <Typography variant="caption" align="center" color="hint">
+                                <Typography variant="caption" align="center" color="tertiary">
                                     Please double-check the code or ask the group owner to send you
                                     a new one.
                                 </Typography>

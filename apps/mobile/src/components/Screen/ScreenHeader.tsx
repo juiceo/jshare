@@ -63,6 +63,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                             icon="ChevronLeft"
                             size="md"
                             variant="ghost"
+                            color="secondary"
                             onPress={handleBack}
                         />
                     )}
@@ -71,6 +72,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                             icon="ChevronDown"
                             size="md"
                             variant="ghost"
+                            color="secondary"
                             onPress={handleBack}
                         />
                     )}
@@ -86,7 +88,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                         {title}
                     </Typography>
                     {subtitle && (
-                        <Typography variant="caption" color="hint" align="center">
+                        <Typography variant="caption" color="tertiary" align="center">
                             {subtitle}
                         </Typography>
                     )}

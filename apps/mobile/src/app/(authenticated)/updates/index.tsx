@@ -35,7 +35,7 @@ const UpdatesScreen = screen(
 
         return (
             <Screen>
-                <Screen.Header title="Updates" />
+                <Screen.Header title="Updates" blur />
                 <Screen.Content scrollable disableTopInset>
                     <Stack p="xl" spacing="md">
                         <Stack p="xl" bg="background.secondary" br="xl">
@@ -93,10 +93,10 @@ const UpdatesScreen = screen(
                         </Typography>
                         <Stack column spacing="3xl" mt="3xl">
                             <Stack>
-                                <Typography variant="caption" color="hint">
+                                <Typography variant="caption" color="tertiary">
                                     May 12th, 2025
                                 </Typography>
-                                <Typography variant="h4" mb="xl" color="accent.light">
+                                <Typography variant="h4" mb="xl" color="accent.primary">
                                     Added support for invite links
                                 </Typography>
                                 <Typography variant="body1">
@@ -105,10 +105,10 @@ const UpdatesScreen = screen(
                                 </Typography>
                             </Stack>
                             <Stack>
-                                <Typography variant="caption" color="hint">
+                                <Typography variant="caption" color="tertiary">
                                     May 8th, 2025
                                 </Typography>
-                                <Typography variant="h4" mb="xl" color="accent.light">
+                                <Typography variant="h4" mb="xl" color="accent.primary">
                                     Introducing offline mode!
                                 </Typography>
                                 <Typography variant="body1">

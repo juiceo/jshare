@@ -87,7 +87,7 @@ const Digit = (props: { value: number | undefined; focused?: boolean }) => {
                 backgroundColor: theme.palette.background.tertiary,
                 borderWidth: 2,
                 borderColor: props.focused
-                    ? theme.palette.accent.main
+                    ? theme.palette.accent.primary
                     : theme.palette.border.primary,
                 borderStyle: 'solid',
             }}

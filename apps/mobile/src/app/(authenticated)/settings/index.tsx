@@ -33,7 +33,7 @@ const SettingsScreen = screen(
 
         return (
             <Screen>
-                <Screen.Header title="Settings" />
+                <Screen.Header title="Settings" blur />
                 <Screen.Content scrollable disableTopInset>
                     <Stack p="xl" spacing="md">
                         <Typography m="md" variant="h5">
@@ -57,7 +57,7 @@ const SettingsScreen = screen(
                             <Typography>
                                 To request an export of your account information, please send an
                                 email to{' '}
-                                <Typography color="accent.light">{SUPPORT_EMAIL}</Typography>
+                                <Typography color="accent.primary">{SUPPORT_EMAIL}</Typography>
                             </Typography>
                             <Typography mt="xl">
                                 If you wish to permanently delete your account, click below to begin

@@ -24,7 +24,7 @@ export const PaymentListItem = (props: PaymentListItemProps) => {
                         <UserName prefix=" to" userId={data.recipientId} variant="short" />
                     </Typography>
                 </Stack>
-                <Typography variant="caption" color="hint">
+                <Typography variant="caption" color="tertiary">
                     {dayjs(data.createdAt).format('MMM D, YYYY HH:mm')}
                 </Typography>
             </Stack>
@@ -33,7 +33,7 @@ export const PaymentListItem = (props: PaymentListItemProps) => {
                     {formatAmount(data.amount, data.currency)}
                 </Typography>
                 {data.conversion && (
-                    <Typography variant="subtitle2" color="hint">
+                    <Typography variant="subtitle2" color="tertiary">
                         = {formatAmount(data.conversion.amount, data.conversion.currency)}
                     </Typography>
                 )}

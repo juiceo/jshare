@@ -37,7 +37,7 @@ export const Switch = (props: SwitchProps) => {
             backgroundColor: interpolateColor(
                 checkedSv.value,
                 [0, 100],
-                ['rgba(255,255,255,0.1)', theme.palette.primary.light]
+                ['rgba(255,255,255,0.1)', theme.palette.brand.primary]
             ),
         };
     }, [props.disabled]);

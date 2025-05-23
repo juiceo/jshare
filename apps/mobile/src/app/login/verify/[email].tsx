@@ -79,7 +79,7 @@ const VerifyEmailScreen = screen(() => {
                     <Typography variant="body1" align="center">
                         Please enter the 6-digit code sent to
                     </Typography>
-                    <Typography variant="body1" color="accent.main" align="center">
+                    <Typography variant="body1" color="accent.primary" align="center">
                         {email}
                     </Typography>
                     <Stack mt="xl" center spacing="md">

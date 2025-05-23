@@ -35,7 +35,7 @@ const ExpenseDeleted = () => {
             center
             style={{ width: screenW * 0.6, height: screenW * 0.6 }}
         >
-            <Typography strikeThrough variant="h4" color="hint">
+            <Typography strikeThrough variant="h4" color="tertiary">
                 Expense deleted
             </Typography>
         </Stack>
@@ -75,7 +75,7 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
             <Stack bg="background.secondary" p="2xl">
                 <Stack column center br="xl" mb="md" spacing="md">
                     <Avatar userId={expense.data.payerId} size="sm" />
-                    <Typography variant="caption" color="hint" align="center">
+                    <Typography variant="caption" color="tertiary" align="center">
                         <UserName userId={expense.data.payerId} variant="short" /> paid
                     </Typography>
                 </Stack>
@@ -84,7 +84,7 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
                         variant="h1"
                         align="center"
                         strikeThrough={!!expense.data.archived}
-                        color={expense.data.archived ? 'hint' : 'primary'}
+                        color={expense.data.archived ? 'secondary' : 'primary'}
                     >
                         {formatAmount(expense.data.amount, expense.data.currency)}
                     </Typography>

@@ -13,7 +13,7 @@ const meta = {
     argTypes: {
         color: {
             control: 'radio',
-            options: ['primary', 'secondary', 'hint', 'disabled', 'accent.main', 'error.main'],
+            options: ['primary', 'secondary', 'hint', 'disabled', 'accent.primary', 'error.main'],
         },
     },
     decorators: [

@@ -33,10 +33,10 @@ export const ExpenseListItem = (props: ExpenseListItemProps) => {
             <Stack row p="xl" spacing="xl">
                 <Stack column flex={1}>
                     <Typography variant="h6">{data.description ?? 'Untitled expense'}</Typography>
-                    <Typography variant="caption" color="hint">
+                    <Typography variant="caption" color="tertiary">
                         <UserName prefix="Paid by" userId={data.payerId} variant="short" />
                     </Typography>
-                    <Typography variant="caption" color="hint">
+                    <Typography variant="caption" color="tertiary">
                         {dayjs(data.createdAt).format('MMM D, YYYY HH:mm')}
                     </Typography>
                     <Stack row spacing="md" alignCenter mt="md">
@@ -53,12 +53,12 @@ export const ExpenseListItem = (props: ExpenseListItemProps) => {
                     <Typography
                         variant="subtitle1"
                         strikeThrough={!!data.archived}
-                        color={data.archived ? 'hint' : 'primary'}
+                        color={data.archived ? 'secondary' : 'primary'}
                     >
                         {formatAmount(data.amount, data.currency)}
                     </Typography>
                     {ownShare && !data.archived && (
-                        <Typography variant="subtitle2" color="hint">
+                        <Typography variant="subtitle2" color="tertiary">
                             You: {formatAmount(ownShare.amount, ownShare.currency)}
                         </Typography>
                     )}

@@ -215,7 +215,7 @@ const GroupSettingsScreen = screen(
                                         <Typography variant="caption">
                                             Tap to copy invite link
                                         </Typography>
-                                        <Typography variant="subtitle1" color="accent.light">
+                                        <Typography variant="subtitle1" color="accent.primary">
                                             {group.data.inviteCode}
                                         </Typography>
                                     </Stack>
@@ -224,6 +224,7 @@ const GroupSettingsScreen = screen(
                                             icon="RefreshCcw"
                                             onPress={handleRefreshInviteCode}
                                             variant="ghost"
+                                            color="secondary"
                                         />
                                     </Stack>
                                 </Stack>
@@ -239,12 +240,12 @@ const GroupSettingsScreen = screen(
                             {isAdmin && (
                                 <>
                                     <Stack p="xl" row alignCenter spacing="sm">
-                                        <Icon
-                                            name="Info"
-                                            size={12}
-                                            color={(theme) => theme.palette.text.hint}
-                                        />
-                                        <Typography variant="caption" color="hint" align="center">
+                                        <Icon name="Info" size={12} color="text.tertiary" />
+                                        <Typography
+                                            variant="caption"
+                                            color="tertiary"
+                                            align="center"
+                                        >
                                             Long press to edit users
                                         </Typography>
                                     </Stack>
@@ -277,24 +278,24 @@ const GroupSettingsScreen = screen(
                                                 {isUserOwner(participant.id) ? (
                                                     <Typography
                                                         variant="caption"
-                                                        color="accent.light"
+                                                        color="accent.primary"
                                                     >
                                                         <Icon
                                                             name="Star"
                                                             size={12}
-                                                            color={(t) => t.palette.accent.light}
+                                                            color="accent.primary"
                                                         />
                                                         {' Owner'}
                                                     </Typography>
                                                 ) : isUserAdmin(participant.id) ? (
                                                     <Typography
                                                         variant="caption"
-                                                        color="accent.light"
+                                                        color="accent.primary"
                                                     >
                                                         <Icon
                                                             name="Key"
                                                             size={12}
-                                                            color={(t) => t.palette.accent.light}
+                                                            color="accent.primary"
                                                         />
                                                         {' Admin'}
                                                     </Typography>
@@ -308,16 +309,16 @@ const GroupSettingsScreen = screen(
                                                 {presentUserIds.includes(participant.id) ? (
                                                     <Typography
                                                         variant="caption"
-                                                        color="primary.light"
+                                                        color="brand.primary"
                                                     >
                                                         Online
                                                     </Typography>
                                                 ) : !participant.data.temporary ? (
-                                                    <Typography variant="caption" color="hint">
+                                                    <Typography variant="caption" color="tertiary">
                                                         {`Last seen ${dayjs(participant.data.lastActivity).fromNow()}`}
                                                     </Typography>
                                                 ) : (
-                                                    <Typography variant="caption" color="hint">
+                                                    <Typography variant="caption" color="tertiary">
                                                         Temporary user
                                                     </Typography>
                                                 )}
@@ -348,7 +349,7 @@ const GroupSettingsScreen = screen(
                         <Stack mt="3xl" spacing="xl">
                             <Typography variant="h6">Danger zone</Typography>
                             {isOwner && (
-                                <Typography variant="caption" color="hint">
+                                <Typography variant="caption" color="tertiary">
                                     You are the owner of this group. To leave the group, you must
                                     first transfer ownership to another user.
                                 </Typography>
