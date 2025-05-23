@@ -38,7 +38,7 @@ export default screen(
                 <Screen.Header title="Updates" />
                 <Screen.Content scrollable disableTopInset>
                     <Stack p="xl" spacing="md">
-                        <Stack p="xl" bg="background.elevation1" br="xl">
+                        <Stack p="xl" bg="background.secondary" br="xl">
                             <Stack column spacing="3xl">
                                 <Stack>
                                     <Typography variant="h5">Current version</Typography>

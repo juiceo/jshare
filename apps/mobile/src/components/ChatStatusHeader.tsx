@@ -1,6 +1,7 @@
 import { Pressable } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
+import { observer } from 'mobx-react-lite';
 
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
@@ -8,12 +9,12 @@ import { IconButton } from '~/components/IconButton';
 import { StatusBadge } from '~/components/StatusBadge';
 import { useUserBalance } from '~/hooks/useUserBalance';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { useGroupContext } from '~/wrappers/GroupContext';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
-export const ChatStatusHeader = () => {
+export const ChatStatusHeader = observer(() => {
     const { group } = useGroupContext();
-    const user = useCurrentUser();
+    const user = SessionStore.user;
 
     const expenses = Store.expenses.findMany({ groupId: group.id });
     const payments = Store.payments.findMany({ groupId: group.id });
@@ -55,4 +56,4 @@ export const ChatStatusHeader = () => {
             </Pressable>
         </BlurView>
     );
-};
+});

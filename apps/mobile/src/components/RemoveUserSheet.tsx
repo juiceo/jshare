@@ -14,10 +14,10 @@ import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { UserSelect } from '~/components/UserSelect';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { useGroupContext } from '~/wrappers/GroupContext';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export type RemoveUserSheetProps = {
     userId: string;
@@ -27,7 +27,7 @@ export type RemoveUserSheetProps = {
 export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
     const { userId, onClose } = props;
     const router = useRouter();
-    const currentUser = useCurrentUser();
+    const user = SessionStore.user;
     const { group, groupId, groupMemberIds } = useGroupContext();
 
     const removeParticipant = useMutation(
@@ -43,7 +43,7 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
         groupId,
     });
 
-    const isSelf = userId === currentUser.id;
+    const isSelf = userId === user.id;
 
     const balances = useMemo(() => {
         return getBalanceByParticipant({
@@ -150,7 +150,7 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
                         row
                         alignCenter
                         spacing="xl"
-                        background="background.dark2"
+                        background="background.level2"
                         p="xl"
                         br="xl"
                     >
@@ -182,7 +182,7 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
                             value={transferTo ?? undefined}
                             onChange={(value) => setTransferTo(value)}
                             userIds={groupMemberIds.filter((id) => id !== userId)}
-                            backgroundColor="background.dark2"
+                            backgroundColor="background.level2"
                         />
                     )}
                     <Button

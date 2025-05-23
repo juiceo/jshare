@@ -7,14 +7,13 @@ import { Button } from '~/components/Button';
 import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser, useSession } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const user = useCurrentUser();
+        const user = SessionStore.user;
         const profile = Store.profiles.findById(user.id);
-        const { signOut } = useSession();
 
         return (
             <Screen>
@@ -50,7 +49,7 @@ export default screen(
                     </Stack>
                 </Screen.Content>
                 <Screen.Footer>
-                    <Button color="error" variant="ghost" onPress={signOut}>
+                    <Button color="error" variant="ghost" onPress={SessionStore.signOut}>
                         Sign out
                     </Button>
                 </Screen.Footer>

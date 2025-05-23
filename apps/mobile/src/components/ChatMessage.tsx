@@ -12,7 +12,7 @@ import { ChatMessageAttachment } from '~/components/ChatMessageAttachment';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import type { Docs } from '~/lib/store/collections';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
+import { SessionStore } from '~/lib/store/SessionStore';
 
 export type ChatMessageProps = {
     message: Docs.Message;
@@ -21,17 +21,17 @@ export type ChatMessageProps = {
 const _ChatMessage = observer((props: ChatMessageProps) => {
     const { theme } = useTheme();
     const styles = getStyles(theme);
-    const currentUser = useCurrentUser();
+    const user = SessionStore.user;
 
     const { message } = props;
 
-    const isSelf = props.message.data.authorId === currentUser.id;
+    const isSelf = props.message.data.authorId === user.id;
 
     const gradientColors = ((): [string, string] => {
         if (isSelf) {
             return [theme.palette.primary.main, theme.palette.primary.dark];
         } else {
-            return [theme.palette.background.elevation2, theme.palette.background.elevation3];
+            return [theme.palette.background.tertiary, theme.palette.background.quaternary];
         }
     })();
 

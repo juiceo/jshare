@@ -5,7 +5,7 @@ import { DB } from '@jshare/db';
 
 import { useGroupPresence } from '~/hooks/useGroupPresence';
 import { Store, type Docs } from '~/lib/store/collections';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
+import { SessionStore } from '~/lib/store/SessionStore';
 
 export type GroupContextType = {
     groupId: string;
@@ -22,7 +22,7 @@ export const GroupContext = createContext<GroupContextType | null>(null);
 
 export const GroupContextProvider = observer((props: PropsWithChildren<{ groupId: string }>) => {
     const presentUserIds = useGroupPresence(props.groupId);
-    const currentUser = useCurrentUser();
+    const user = SessionStore.user;
     const group = Store.groups.findById(props.groupId);
 
     const groupMemberIds = useMemo(
@@ -31,9 +31,8 @@ export const GroupContextProvider = observer((props: PropsWithChildren<{ groupId
     );
 
     const currentUserRole = useMemo(() => {
-        return group?.data.participants.find((participant) => participant.userId === currentUser.id)
-            ?.role;
-    }, [currentUser.id, group?.data.participants]);
+        return group?.data.participants.find((participant) => participant.userId === user.id)?.role;
+    }, [user.id, group?.data.participants]);
 
     const isAdmin = useMemo(() => {
         return currentUserRole === DB.Role.Admin || currentUserRole === DB.Role.Owner;

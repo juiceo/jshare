@@ -18,7 +18,7 @@ export type DividerProps = {
 } & SxMarginProps;
 
 export const Divider = (props: DividerProps) => {
-    const { color = 'border.divider' } = props;
+    const { color = 'border.primary' } = props;
     const { theme } = useTheme();
     const styles = getStyles(theme);
     return (

@@ -34,7 +34,7 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
             case 'transparent':
                 return 'transparent';
             case undefined: {
-                return theme.palette.background.elevation1;
+                return theme.palette.background.secondary;
             }
             default:
                 return getColorFromPath(props.backgroundColor, theme);
@@ -81,7 +81,7 @@ const getStyles = (theme: Theme) => {
             borderRadius: theme.borderRadius.lg,
             width: '100%',
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.background.elevation1,
+            backgroundColor: theme.palette.background.secondary,
             fontSize: theme.typography.body1.fontSize,
             paddingHorizontal: theme.spacing.xl,
             paddingVertical: theme.spacing.lg,

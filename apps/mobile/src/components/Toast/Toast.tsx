@@ -20,11 +20,24 @@ export const TOAST_HEIGHT = 72;
 export const Toast = (props: ToastProps) => {
     const { theme } = useTheme();
     const { title, message, onDismiss } = props;
-    const styles = getStyles(props, theme);
+    const styles = getStyles(theme);
+
+    const iconColor = (() => {
+        switch (props.variant) {
+            case 'info':
+                return theme.palette.primary.main;
+            case 'error':
+                return theme.palette.error.main;
+            case 'warning':
+                return theme.palette.warning.main;
+            case 'success':
+                return theme.palette.success.main;
+        }
+    })();
 
     return (
         <Stack row alignCenter spacing="xl" p="xl" br="xl" style={styles.wrapper}>
-            <Icon name="Info" size={24} />
+            <Icon name="Info" size={24} color={iconColor} />
             <Stack column flex={1}>
                 <Typography variant="subtitle1" color="primary">
                     {title}
@@ -44,25 +57,13 @@ export const Toast = (props: ToastProps) => {
     );
 };
 
-const getStyles = (props: ToastProps, theme: Theme) => {
-    const { variant } = props;
+const getStyles = (theme: Theme) => {
     return StyleSheet.create({
         wrapper: {
             height: TOAST_HEIGHT,
-            backgroundColor: theme.palette.background.elevation1,
+            backgroundColor: theme.palette.background.secondary,
             borderWidth: 2,
-            borderColor: (() => {
-                switch (variant) {
-                    case 'info':
-                        return theme.palette.background.elevation2;
-                    case 'error':
-                        return theme.palette.error.main;
-                    case 'warning':
-                        return theme.palette.warning.main;
-                    case 'success':
-                        return theme.palette.success.main;
-                }
-            })(),
+            borderColor: theme.palette.border.primary,
         },
         text: {
             color: theme.palette.text.primary,

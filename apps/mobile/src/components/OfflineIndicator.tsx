@@ -43,7 +43,7 @@ export const OfflineIndicator = observer(() => {
                 <Animated.View
                     style={[
                         {
-                            backgroundColor: theme.palette.background.default,
+                            backgroundColor: theme.palette.background.system,
                             height: (isModal ? 0 : insets.top) + OFFLINE_INDICATOR_HEIGHT,
                             position: 'absolute',
                             top: 0,

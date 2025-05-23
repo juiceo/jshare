@@ -91,7 +91,7 @@ const getPrimaryColor = (
                 : theme.palette.primary.light;
         case 'secondary':
             return args.variant === 'contained'
-                ? theme.palette.background.elevation2
+                ? theme.palette.background.tertiary
                 : theme.palette.text.hint;
 
         case 'error':

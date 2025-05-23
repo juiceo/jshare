@@ -96,7 +96,7 @@ const Backdrop = (props: BottomSheetBackdropProps) => {
 const getStyles = (theme: Theme) => {
     return StyleSheet.create({
         sheetBackground: {
-            backgroundColor: theme.palette.background.elevation1,
+            backgroundColor: theme.palette.background.secondary,
         },
         handleIndicator: {
             backgroundColor: theme.palette.text.disabled,
@@ -105,7 +105,7 @@ const getStyles = (theme: Theme) => {
             borderRadius: theme.borderRadius.lg,
             width: '100%',
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.background.elevation1,
+            backgroundColor: theme.palette.background.secondary,
             fontSize: theme.typography.body1.fontSize,
             borderWidth: 1,
             borderStyle: 'solid',

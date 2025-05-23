@@ -62,7 +62,7 @@ export const AddUserSheet = observer((props: AddUserSheetProps) => {
                                 placeholder="John"
                                 value={field.value}
                                 onChange={field.onChange}
-                                backgroundColor="background.dark2"
+                                backgroundColor="background.level2"
                                 bottomSheet
                                 mb="md"
                             />
@@ -77,7 +77,7 @@ export const AddUserSheet = observer((props: AddUserSheetProps) => {
                                 placeholder="Doe"
                                 value={field.value}
                                 onChange={field.onChange}
-                                backgroundColor="background.dark2"
+                                backgroundColor="background.level2"
                                 bottomSheet
                                 mb="xl"
                             />

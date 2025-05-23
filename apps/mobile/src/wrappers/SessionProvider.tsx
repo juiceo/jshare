@@ -1,99 +1,17 @@
-import {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useState,
-    type PropsWithChildren,
-} from 'react';
-import type { AuthError, Session } from '@supabase/supabase-js';
-import { useRouter } from 'expo-router';
+import { type PropsWithChildren } from 'react';
+import { observer } from 'mobx-react-lite';
 
+import { LoadingState } from '~/components/util/LoadingState';
 import { useRealtimeUpdates } from '~/lib/realtime';
-import { initStores, resetStores } from '~/lib/store/collections';
-import { supabase } from '~/lib/supabase';
-import { setAccessToken, setUserId } from '~/state/auth';
+import { SessionStore } from '~/lib/store/SessionStore';
 
-const SessionContext = createContext<{
-    session: Session | null;
-    isLoading: boolean;
-    error: AuthError | null;
-    signOut: () => void;
-} | null>(null);
+export const SessionProvider = observer((props: PropsWithChildren) => {
+    const isLoading = SessionStore.isLoading;
+    useRealtimeUpdates(SessionStore.user?.id);
 
-export const SessionProvider = (props: PropsWithChildren) => {
-    const [isLoading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<AuthError | null>(null);
-    const [session, setSession] = useState<Session | null>(null);
-    const { dismissAll, replace } = useRouter();
-
-    useRealtimeUpdates(session?.user.id ?? null);
-
-    useEffect(() => {
-        supabase.auth.getSession().then(async ({ data: { session }, error }) => {
-            setSession(session);
-            setError(error);
-            setLoading(false);
-            setAccessToken(session?.access_token ?? null);
-            setUserId(session?.user.id ?? null);
-        });
-
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            setSession(session);
-            setLoading(false);
-            setAccessToken(session?.access_token ?? null);
-            setUserId(session?.user.id ?? null);
-
-            if (!session) {
-                await resetStores();
-            } else {
-                await initStores();
-            }
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
-    const signOut = useCallback(() => {
-        supabase.auth.signOut();
-        dismissAll();
-        replace('/login');
-        resetStores();
-    }, [dismissAll, replace]);
-
-    return (
-        <SessionContext.Provider
-            value={{
-                signOut,
-                session,
-                error,
-                isLoading,
-            }}
-        >
-            {props.children}
-        </SessionContext.Provider>
-    );
-};
-
-// This hook can be used to access the user info.
-export function useSession() {
-    const context = useContext(SessionContext);
-
-    if (!context) {
-        throw new Error('useSession must be wrapped in a <SessionProvider />');
+    if (isLoading) {
+        return <LoadingState />;
     }
 
-    return context;
-}
-
-export function useCurrentUser() {
-    const { session } = useSession();
-
-    if (!session) {
-        throw new Error('useCurrentUser can only be used inside an authenticated route');
-    }
-
-    return session.user;
-}
+    return props.children;
+});

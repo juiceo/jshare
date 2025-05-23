@@ -18,15 +18,15 @@ import { ChatStatusHeader } from '~/components/ChatStatusHeader';
 import { CopyInviteCodeBlock } from '~/components/CopyInviteCodeBlock';
 import { Screen } from '~/components/Screen';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { getGroupSubheader } from '~/util/groups';
 import { messagesToChatListItems } from '~/util/messages';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const user = useCurrentUser();
+        const user = SessionStore.user;
         const { group, groupId } = useGroupContext();
         const { theme } = useTheme();
         const { presentUserIds } = useGroupContext();
@@ -84,7 +84,7 @@ export default screen(
                                 width={40}
                                 height={40}
                                 br="full"
-                                bg="background.elevation1"
+                                bg="background.secondary"
                             />
                         </BorderlessButton>
                     }

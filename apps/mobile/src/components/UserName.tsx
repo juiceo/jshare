@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { getUserFullName, getUserShortName } from '@jshare/common';
 
 import { Store } from '~/lib/store/collections';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
+import { SessionStore } from '~/lib/store/SessionStore';
 
 export type UserNameProps = {
     userId: string;
@@ -14,13 +14,12 @@ export type UserNameProps = {
 export const UserName = observer((props: UserNameProps) => {
     const { userId } = props;
 
-    const currentUser = useCurrentUser();
-
+    const user = SessionStore.user;
     const profile = Store.profiles.findById(userId);
 
     const userName = (() => {
         if (!profile?.data) return '';
-        if (currentUser.id === userId) return 'You';
+        if (user.id === userId) return 'You';
         switch (props.variant) {
             case 'short':
                 return getUserShortName(profile.data);

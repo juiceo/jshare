@@ -52,14 +52,14 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
 
     return (
         <>
-            <Stack column bg="background.elevation1" br="xl">
+            <Stack column bg="background.primary" br="xl">
                 <Stack p="xl" row alignCenter spacing="sm">
                     <Icon name="Info" size={12} color={(theme) => theme.palette.text.hint} />
                     <Typography variant="caption" color="hint" align="center">
                         Tap to toggle people, long press to edit
                     </Typography>
                 </Stack>
-                <Divider horizontal color="background.default" />
+                <Divider horizontal color="background.primary" />
                 {groupMembers.map((member, index) => {
                     const userShare = value.find((item) => item.userId === member.userId);
 
@@ -73,22 +73,19 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                                 onLongPress={() => setEditUser(member.userId)}
                             />
                             {index !== groupMembers.length - 1 && (
-                                <Divider horizontal color="background.default" />
+                                <Divider horizontal color="background.primary" />
                             )}
                         </React.Fragment>
                     );
                 })}
-                <Divider horizontal color="background.default" />
+                <Divider horizontal color="background.primary" />
                 <RectButton onPress={() => setAddingUser(true)}>
                     <Stack row alignCenter spacing="md" p="xl">
-                        <Stack center bg="background.elevation2" h={36} w={36} br="full">
+                        <Stack center bg="background.secondary" h={36} w={36} br="full">
                             <Icon name="Plus" size={18} />
                         </Stack>
                         <Stack column>
                             <Typography variant="buttonSmall">Add person</Typography>
-                            <Typography variant="caption" color="hint">
-                                Add someone who is not in the group yet
-                            </Typography>
                         </Stack>
                     </Stack>
                 </RectButton>

@@ -16,7 +16,7 @@ export const StatusBadge = (props: StatusBadgeProps) => {
     const isNegative = props.amount < 0;
     const isPositive = props.amount > 0;
     return (
-        <Stack row alignCenter bg="background.elevation1" px="md" py="xs" br="xl" spacing="sm">
+        <Stack row alignCenter bg="background.secondary" px="md" py="xs" br="xl" spacing="sm">
             {prefix && (
                 <Typography variant="subtitle1" style={{ lineHeight: 0 }}>
                     {prefix}{' '}

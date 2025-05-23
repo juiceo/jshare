@@ -44,7 +44,7 @@ export const AvatarPicker = observer((props: AvatarPickerProps) => {
         <>
             <View style={{ position: 'relative', width: 128, height: 128 }}>
                 {(value || !fallback) && (
-                    <Image image={value} w={128} h={128} br="full" bg="background.elevation1" />
+                    <Image image={value} w={128} h={128} br="full" bg="background.secondary" />
                 )}
 
                 {!value && fallback?.type === 'ui-avatar' && (
@@ -53,7 +53,7 @@ export const AvatarPicker = observer((props: AvatarPickerProps) => {
                         w={128}
                         h={128}
                         br="full"
-                        bg="background.elevation1"
+                        bg="background.secondary"
                     />
                 )}
 

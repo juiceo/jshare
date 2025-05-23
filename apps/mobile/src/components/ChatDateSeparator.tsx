@@ -11,7 +11,7 @@ export type ChatDateSeparatorProps = {
 export const ChatDateSeparator = (props: ChatDateSeparatorProps) => {
     return (
         <Stack center p="2xl">
-            <Box bg="background.main" px="sm" br="lg">
+            <Box bg="background.primary" px="sm" br="lg">
                 <Typography variant="h5" style={{ lineHeight: 0 }}>
                     {formatDateRelative(props.date)}
                 </Typography>

@@ -10,13 +10,13 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     () => {
-        const user = useCurrentUser();
+        const user = SessionStore.user;
         const router = useRouter();
         const { code } = useLocalSearchParams<{ code: string }>();
         const group = useSuspenseQuery(trpc.groups.getByCode.queryOptions({ code })).data;
@@ -52,7 +52,7 @@ export default screen(
                                 image={group.coverImage}
                                 width={140}
                                 height={140}
-                                background="background.elevation1"
+                                background="background.secondary"
                                 br="full"
                             />
                             <Typography variant="h4">{group.name}</Typography>

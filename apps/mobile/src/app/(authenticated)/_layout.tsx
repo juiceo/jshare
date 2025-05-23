@@ -17,18 +17,20 @@ import { Stack as StackView } from '~/components/atoms/Stack';
 import { Button } from '~/components/Button';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
-import { useSession } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
         const { theme } = useTheme();
-        const { session, isLoading: isLoadingSession } = useSession();
+        const authState = SessionStore.state;
 
         const profileQuery = useQuery(
             trpc.models.profiles.findById.queryOptions(
-                session ? { ids: [session.user.id] } : skipToken
+                authState.type === 'authenticated'
+                    ? { ids: [authState.session.user.id] }
+                    : skipToken
             )
         );
         const profile = profileQuery.data?.[0];
@@ -61,7 +63,7 @@ export default screen(
             Store.profiles.update(profile.id, { termsAcceptedAt: new Date() });
         };
 
-        if (isLoadingSession || profileQuery.isLoading) {
+        if (authState.type === 'loading' || profileQuery.isLoading) {
             return (
                 <StackView center absoluteFill>
                     <ActivityIndicator />
@@ -69,7 +71,7 @@ export default screen(
             );
         }
 
-        if (!session || !profile) {
+        if (authState.type === 'unauthenticated' || authState.type === 'error' || !profile) {
             return <Redirect href={{ pathname: '/login' }} />;
         }
 
@@ -122,11 +124,11 @@ export default screen(
                 initialRouteName="(tabs)"
                 screenOptions={{
                     contentStyle: {
-                        backgroundColor: theme.palette.background.main,
+                        backgroundColor: theme.palette.background.primary,
                     },
 
                     headerStyle: {
-                        backgroundColor: theme.palette.background.main,
+                        backgroundColor: theme.palette.background.primary,
                     },
                     headerTintColor: theme.palette.text.primary,
                     headerTitleStyle: {

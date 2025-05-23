@@ -10,10 +10,10 @@ export default screen(() => {
         <Stack
             screenOptions={{
                 contentStyle: {
-                    backgroundColor: theme.palette.background.main,
+                    backgroundColor: theme.palette.background.primary,
                 },
                 headerStyle: {
-                    backgroundColor: theme.palette.background.main,
+                    backgroundColor: theme.palette.background.primary,
                 },
                 headerTintColor: theme.palette.text.primary,
                 headerTitleStyle: {

@@ -21,7 +21,7 @@ export const AppErrorBoundary = (props: PropsWithChildren) => {
 
     const renderFallback = (args: ErrorBoundaryFallbackArgs) => {
         return (
-            <Stack bg="background.main" flex={1}>
+            <Stack bg="background.primary" flex={1}>
                 <Stack flex={1} column center spacing="xl" p="xl">
                     <Icon
                         name="ServerCrash"

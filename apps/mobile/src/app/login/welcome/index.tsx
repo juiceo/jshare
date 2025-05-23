@@ -20,9 +20,9 @@ import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { toast } from '~/state/toast';
 import { screen } from '~/wrappers/screen';
-import { useSession } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     firstName: z.string().min(1, 'First name is required'),
@@ -50,14 +50,13 @@ export default screen(() => {
         resolver: zodResolver(schema),
     });
     const [isLoading, setLoading] = useState<boolean>(false);
-
-    const { session } = useSession();
+    const session = SessionStore.sessionMaybe;
 
     useEffect(() => {
         if (!session) {
             router.replace('/login');
         }
-    }, [router, session]);
+    }, [session, router]);
 
     const handleSubmit = async (data: Schema) => {
         const email = session?.user.email;

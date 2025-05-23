@@ -20,13 +20,13 @@ import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { EmptyState } from '~/components/util/EmptyState';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const user = useCurrentUser();
+        const user = SessionStore.user;
         const router = useRouter();
         const { theme } = useTheme();
         const { group, groupId } = useGroupContext();
@@ -130,7 +130,7 @@ export default screen(
                                 )}
                                 keyExtractor={(item) => item.userId}
                                 ItemSeparatorComponent={() => (
-                                    <Divider horizontal color="background.elevation1" />
+                                    <Divider horizontal color="background.secondary" />
                                 )}
                             />
                         </Tabs.Tab>
@@ -142,7 +142,7 @@ export default screen(
                                 )}
                                 keyExtractor={(item) => item.id}
                                 ItemSeparatorComponent={() => (
-                                    <Divider horizontal color="background.elevation1" />
+                                    <Divider horizontal color="background.secondary" />
                                 )}
                                 ListEmptyComponent={
                                     <EmptyState icon="CreditCard" title="No expenses yet" />
@@ -155,7 +155,7 @@ export default screen(
                                 renderItem={({ item }) => <PaymentListItem data={item.data} />}
                                 keyExtractor={(item) => item.id}
                                 ItemSeparatorComponent={() => (
-                                    <Divider horizontal color="background.elevation1" />
+                                    <Divider horizontal color="background.secondary" />
                                 )}
                                 ListEmptyComponent={
                                     <EmptyState icon="ArrowDownUp" title="No payments yet" />
@@ -188,11 +188,11 @@ export default screen(
 const getStyles = (theme: Theme) => {
     return StyleSheet.create({
         header: {
-            backgroundColor: theme.palette.background.main,
+            backgroundColor: theme.palette.background.primary,
         },
         tabBar: {
             borderBottomWidth: 1,
-            borderBottomColor: theme.palette.background.elevation1,
+            borderBottomColor: theme.palette.background.secondary,
         },
     });
 };

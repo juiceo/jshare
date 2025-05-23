@@ -100,7 +100,7 @@ export default screen(
                                 title="Welcome! 👋"
                                 message="Create or join a group to get started!"
                                 icon="Users"
-                                bg="background.elevation1"
+                                bg="background.secondary"
                                 br="xl"
                             />
                         )}

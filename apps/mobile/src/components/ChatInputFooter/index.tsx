@@ -68,7 +68,14 @@ export const ChatInputFooter = (props: ChatInputFooterProps) => {
 
     return (
         <Animated.View style={wrapperStyle}>
-            <Stack row alignCenter p="md" spacing="md" bg="background.main" style={{ zIndex: 100 }}>
+            <Stack
+                row
+                alignCenter
+                p="md"
+                spacing="md"
+                bg="background.primary"
+                style={{ zIndex: 100 }}
+            >
                 {!inputFocused && (
                     <Stack row center spacing="md" pr="md">
                         <Pressable onPress={onExpense}>
@@ -130,15 +137,15 @@ const getStyles = (theme: Theme) => {
     return StyleSheet.create({
         inputWrapper: {
             padding: theme.spacing.md,
-            backgroundColor: theme.palette.background.main,
+            backgroundColor: theme.palette.background.level2,
             borderTopWidth: 1,
-            borderTopColor: theme.palette.border.divider,
+            borderTopColor: theme.palette.border.primary,
         },
         input: {
             flex: 1,
             color: theme.palette.text.primary,
             fontSize: theme.typography.body1.fontSize,
-            backgroundColor: theme.palette.background.elevation1,
+            backgroundColor: theme.palette.background.primary,
             paddingHorizontal: theme.spacing.xl,
             paddingVertical: theme.spacing.md,
             borderRadius: theme.borderRadius['3xl'],

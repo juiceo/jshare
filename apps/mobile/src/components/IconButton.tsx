@@ -51,7 +51,7 @@ export const IconButton = (props: IconButtonProps) => {
             }
             case 'secondary': {
                 return variant === 'contained'
-                    ? theme.palette.background.elevation1
+                    ? theme.palette.background.secondary
                     : theme.palette.text.secondary;
             }
             case 'error': {

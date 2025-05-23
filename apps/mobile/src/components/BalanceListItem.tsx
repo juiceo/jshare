@@ -14,7 +14,7 @@ export type BalanceListItemProps = {
 export const BalanceListItem = (props: BalanceListItemProps) => {
     const { data, highlight } = props;
     return (
-        <Stack row p="xl" spacing="xl" bg={highlight ? 'background.elevation1' : undefined}>
+        <Stack row p="xl" spacing="xl" bg={highlight ? 'background.secondary' : undefined}>
             <Avatar userId={data.userId} size="lg" />
             <Stack column flex={1}>
                 <Typography variant="h6">

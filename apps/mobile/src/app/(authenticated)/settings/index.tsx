@@ -11,21 +11,19 @@ import { DeleteConfirmation } from '~/components/DeleteConfirmation';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { resetStores } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { screen } from '~/wrappers/screen';
-import { useSession } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const { signOut } = useSession();
-
         const deleteAccount = useMutation(trpc.profiles.delete.mutationOptions());
 
         const [isDeleting, setDeleting] = useState<boolean>(false);
 
         const handleDeleteAccount = async () => {
             await deleteAccount.mutateAsync();
-            signOut();
+            await SessionStore.signOut();
         };
 
         const handleClearLocalData = async () => {
@@ -41,7 +39,7 @@ export default screen(
                         <Typography m="md" variant="h5">
                             Local data
                         </Typography>
-                        <Stack p="xl" bg="background.elevation1" br="xl">
+                        <Stack p="xl" bg="background.secondary" br="xl">
                             <Typography variant="body1" mb="xl">
                                 JShare stores data on your device to improve performance, reduce
                                 data usage and provide offline capabilities. If you are experiencing
@@ -55,7 +53,7 @@ export default screen(
                         <Typography m="md" variant="h5" mt="2xl">
                             Account
                         </Typography>
-                        <Stack p="xl" bg="background.elevation1" br="xl">
+                        <Stack p="xl" bg="background.secondary" br="xl">
                             <Typography>
                                 To request an export of your account information, please send an
                                 email to{' '}

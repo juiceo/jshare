@@ -12,13 +12,12 @@ import { Icon } from '~/components/Icon';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const user = useCurrentUser();
-
+        const user = SessionStore.user;
         const profile = Store.profiles.findById(user.id);
 
         const updateAvatar = (avatar: DB.Image | null) => {
@@ -51,7 +50,7 @@ export default screen(
                             </Stack>
                         </Stack>
 
-                        <Stack bg="background.elevation1" br="xl">
+                        <Stack bg="background.secondary" br="xl">
                             <RectButton onPress={() => router.push('/profile')}>
                                 <Stack row alignCenter p="xl" spacing="xl">
                                     <Icon

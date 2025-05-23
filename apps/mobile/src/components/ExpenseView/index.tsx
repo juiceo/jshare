@@ -53,7 +53,7 @@ export const ExpenseView = observer((props: ExpenseViewProps) => {
                     </Typography>
                 )}
             </Stack>
-            <Stack column bg="background.elevation1" m="xl" br="xl">
+            <Stack column bg="background.secondary" m="xl" br="xl">
                 {expense.shares.map((share) => (
                     <Stack key={share.id} row alignCenter spacing="xl" p="xl">
                         <Avatar userId={share.userId} size="md" />

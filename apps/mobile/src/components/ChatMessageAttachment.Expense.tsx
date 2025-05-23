@@ -12,7 +12,7 @@ import { Avatar } from '~/components/Avatar';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { Store } from '~/lib/store/collections';
-import { useSession } from '~/wrappers/SessionProvider';
+import { SessionStore } from '~/lib/store/SessionStore';
 
 const screenW = Dimensions.get('window').width;
 
@@ -31,7 +31,7 @@ const ExpenseSkeleton = () => {
 const ExpenseDeleted = () => {
     return (
         <Stack
-            bg="background.elevation1"
+            bg="background.secondary"
             center
             style={{ width: screenW * 0.6, height: screenW * 0.6 }}
         >
@@ -43,9 +43,8 @@ const ExpenseDeleted = () => {
 };
 
 export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseAttachmentProps) => {
-    const { session } = useSession();
     const router = useRouter();
-    const userId = session?.user.id;
+    const user = SessionStore.user;
 
     const expense = Store.expenses.findById(props.expenseId);
     const isLoading = Store.expenses.isLoading();
@@ -61,7 +60,7 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
         return <ExpenseDeleted />;
     }
 
-    const ownShare = expense.data.shares.find((share) => share.userId === userId);
+    const ownShare = expense.data.shares.find((share) => share.userId === user.id);
 
     return (
         <BorderlessButton
@@ -73,7 +72,7 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
                 });
             }}
         >
-            <Stack bg="background.elevation1" p="2xl">
+            <Stack bg="background.secondary" p="2xl">
                 <Stack column center br="xl" mb="md" spacing="md">
                     <Avatar userId={expense.data.payerId} size="sm" />
                     <Typography variant="caption" color="hint" align="center">

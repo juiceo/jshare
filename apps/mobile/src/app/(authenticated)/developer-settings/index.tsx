@@ -16,7 +16,7 @@ export default screen(
                     <Stack p="xl" spacing="md">
                         <Stack
                             p="xl"
-                            bg="background.elevation1"
+                            bg="background.secondary"
                             br="xl"
                             row
                             justifyBetween

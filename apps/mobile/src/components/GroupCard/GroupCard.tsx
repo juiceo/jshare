@@ -12,7 +12,7 @@ import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { useUserBalance } from '~/hooks/useUserBalance';
 import { Store, type Docs } from '~/lib/store/collections';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
+import { SessionStore } from '~/lib/store/SessionStore';
 
 export type GroupCardProps = {
     group: Docs.Group;
@@ -21,7 +21,7 @@ export type GroupCardProps = {
 export const GroupCard = observer((props: GroupCardProps) => {
     const { group } = props;
 
-    const user = useCurrentUser();
+    const user = SessionStore.user;
 
     const expenses = Store.expenses.findMany({
         groupId: group.id,
@@ -46,13 +46,7 @@ export const GroupCard = observer((props: GroupCardProps) => {
     });
 
     return (
-        <Stack
-            br="xl"
-            bg="background.elevation1"
-            column
-            alignStretch
-            style={{ overflow: 'hidden' }}
-        >
+        <Stack br="xl" bg="background.secondary" column alignStretch style={{ overflow: 'hidden' }}>
             <Stack style={{ position: 'relative' }}>
                 <Image
                     height={140}

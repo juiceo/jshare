@@ -17,7 +17,7 @@ export default screen(() => {
                 <Stack
                     screenOptions={{
                         contentStyle: {
-                            backgroundColor: theme.palette.background.main,
+                            backgroundColor: theme.palette.background.primary,
                         },
                         headerShown: false,
                     }}

@@ -26,11 +26,11 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { Store, type Docs } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { trpc } from '~/lib/trpc';
 import { toast } from '~/state/toast';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 enum UserAction {
     TransferOwnership = 'Transfer ownership',
@@ -43,7 +43,7 @@ export default screen(
     observer(() => {
         const router = useRouter();
         const { theme } = useTheme();
-        const currentUser = useCurrentUser();
+        const user = SessionStore.user;
         const {
             group,
             groupId,
@@ -99,9 +99,9 @@ export default screen(
             const actions: ContextMenuAction[] = [];
             const isTemporaryUser = participant.data.temporary;
 
-            if (participant.id === currentUser.id) return [];
+            if (participant.id === user.id) return [];
 
-            if (isUserOwner(currentUser.id) && !isTemporaryUser) {
+            if (isUserOwner(user.id) && !isTemporaryUser) {
                 actions.push({
                     title: UserAction.TransferOwnership,
                     systemIcon: 'star',
@@ -121,7 +121,7 @@ export default screen(
                 }
             }
 
-            if (isUserAdmin(currentUser.id) && !isUserAdmin(participant.id)) {
+            if (isUserAdmin(user.id) && !isUserAdmin(participant.id)) {
                 actions.push({
                     title: UserAction.RemoveFromGroup,
                     systemIcon: 'trash',
@@ -205,7 +205,7 @@ export default screen(
                                 <Stack
                                     alignCenter
                                     row
-                                    bg="background.elevation1"
+                                    bg="background.secondary"
                                     p="xl"
                                     spacing="xl"
                                     br="xl"
@@ -232,7 +232,7 @@ export default screen(
 
                         <Stack
                             column
-                            bg="background.elevation1"
+                            bg="background.secondary"
                             br="xl"
                             style={{ overflow: 'hidden' }}
                         >
@@ -248,7 +248,7 @@ export default screen(
                                             Long press to edit users
                                         </Typography>
                                     </Stack>
-                                    <Divider horizontal color="background.main" />
+                                    <Divider horizontal color="background.primary" />
                                 </>
                             )}
                             {sortedParticipants.map((participant, index) => (
@@ -270,7 +270,7 @@ export default screen(
                                             alignCenter
                                             p="xl"
                                             spacing="xl"
-                                            bg="background.elevation1"
+                                            bg="background.secondary"
                                         >
                                             <Avatar userId={participant.id} size="lg" />
                                             <Stack column flex={1}>
@@ -326,7 +326,7 @@ export default screen(
                                         </Stack>
                                     </ContextMenu>
                                     {index !== sortedParticipants.length - 1 && (
-                                        <Divider horizontal color="background.main" />
+                                        <Divider horizontal color="background.primary" />
                                     )}
                                 </React.Fragment>
                             ))}
@@ -356,7 +356,7 @@ export default screen(
                             <Button
                                 color="error"
                                 variant="outlined"
-                                onPress={() => setRemovingUserId(currentUser.id)}
+                                onPress={() => setRemovingUserId(user.id)}
                                 disabled={isOwner}
                             >
                                 Leave group

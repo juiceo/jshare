@@ -17,19 +17,20 @@ export type PrimaryColor = {
 };
 
 export type BackgroundColor = {
-    default: string;
-    main: string;
-    elevation1: string;
-    elevation2: string;
-    elevation3: string;
-    dark1: string;
-    dark2: string;
-    dark3: string;
+    system: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    quaternary: string;
+    level1: string;
+    level2: string;
+    level3: string;
 };
 
 export type BorderColor = {
-    paper: string;
-    divider: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
 };
 
 export type TextColor = {

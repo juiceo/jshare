@@ -35,7 +35,7 @@ export const ImageUploader = observer((props: ImageUploaderProps) => {
         <>
             <Pressable onPress={() => setMenuOpen(true)}>
                 <Stack
-                    bg="background.elevation1"
+                    bg="background.secondary"
                     br="md"
                     style={{
                         width: '100%',

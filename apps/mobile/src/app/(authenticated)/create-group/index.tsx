@@ -15,8 +15,8 @@ import { CURRENCY_OPTIONS } from '~/components/CurrencyMenu';
 import { ImageUploader } from '~/components/ImageUploader/ImageUploader';
 import { Screen } from '~/components/Screen';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 const schema = z.object({
     name: z.string().min(1, 'Name is required'),
@@ -32,7 +32,7 @@ type Schema = z.infer<typeof schema>;
 
 export default screen(
     observer(() => {
-        const user = useCurrentUser();
+        const user = SessionStore.user;
         const router = useRouter();
         const profile = Store.profiles.findById(user.id);
 

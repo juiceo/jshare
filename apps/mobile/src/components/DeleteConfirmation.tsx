@@ -54,7 +54,7 @@ export const DeleteConfirmation = (props: DeleteConfirmationProps) => {
                                 placeholder="Type here to confirm"
                                 value={inputValue}
                                 onChange={setInputValue}
-                                backgroundColor="background.elevation2"
+                                backgroundColor="background.tertiary"
                                 TextInputProps={{
                                     textAlign: 'center',
                                     autoCapitalize: 'characters',

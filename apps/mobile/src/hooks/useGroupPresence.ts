@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { SessionStore } from '~/lib/store/SessionStore';
 import { supabase } from '~/lib/supabase';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export const useGroupPresence = (groupId: string) => {
-    const user = useCurrentUser();
+    const user = SessionStore.user;
 
     const [presentUserIds, setPresentUserIds] = useState<string[]>([]);
     const room = useMemo(() => {

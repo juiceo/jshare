@@ -19,13 +19,13 @@ import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { Store } from '~/lib/store/collections';
+import { SessionStore } from '~/lib/store/SessionStore';
 import { useGroupContext } from '~/wrappers/GroupContext';
 import { screen } from '~/wrappers/screen';
-import { useCurrentUser } from '~/wrappers/SessionProvider';
 
 export default screen(
     observer(() => {
-        const user = useCurrentUser();
+        const user = SessionStore.user;
         const router = useRouter();
         const [mode, setMode] = useState<'edit' | 'view'>('view');
         const [isDeleting, setDeleting] = useState<boolean>(false);

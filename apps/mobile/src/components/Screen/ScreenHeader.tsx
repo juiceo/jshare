@@ -53,7 +53,7 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                 paddingTop: isModal ? 0 : insets.top,
                 position: 'relative',
                 zIndex: 1000,
-                backgroundColor: alpha(theme.palette.background.main, 0.5),
+                backgroundColor: alpha(theme.palette.background.primary, 0.5),
             }}
         >
             <Stack row px="xl" py="md" spacing="xl">
@@ -115,17 +115,17 @@ export const ScreenHeader = (props: ScreenHeaderProps) => {
                         intensity={65}
                         style={{
                             borderBottomWidth: 1,
-                            borderBottomColor: theme.palette.background.elevation1,
+                            borderBottomColor: theme.palette.border.tertiary,
                         }}
                     >
                         {content}
                     </BlurView>
                 ) : (
                     <Box
-                        bg="background.main"
+                        bg="background.primary"
                         style={{
                             borderBottomWidth: 1,
-                            borderBottomColor: theme.palette.background.elevation1,
+                            borderBottomColor: theme.palette.border.tertiary,
                         }}
                     >
                         {content}
