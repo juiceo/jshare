@@ -4,7 +4,7 @@ export const darkPalette: ColorPalette = {
     brand: {
         primary: '#6991C7',
         secondary: '#A1C4FD',
-        tertiary: '#4F359B',
+        tertiary: '#223843',
     },
     accent: {
         primary: '#FF7070',

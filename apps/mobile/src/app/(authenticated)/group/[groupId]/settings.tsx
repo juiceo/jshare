@@ -275,31 +275,6 @@ const GroupSettingsScreen = screen(
                                         >
                                             <Avatar userId={participant.id} size="lg" />
                                             <Stack column flex={1}>
-                                                {isUserOwner(participant.id) ? (
-                                                    <Typography
-                                                        variant="caption"
-                                                        color="accent.primary"
-                                                    >
-                                                        <Icon
-                                                            name="Star"
-                                                            size={12}
-                                                            color="accent.primary"
-                                                        />
-                                                        {' Owner'}
-                                                    </Typography>
-                                                ) : isUserAdmin(participant.id) ? (
-                                                    <Typography
-                                                        variant="caption"
-                                                        color="accent.primary"
-                                                    >
-                                                        <Icon
-                                                            name="Key"
-                                                            size={12}
-                                                            color="accent.primary"
-                                                        />
-                                                        {' Admin'}
-                                                    </Typography>
-                                                ) : null}
                                                 <Typography variant="subtitle1">
                                                     <UserName
                                                         userId={participant.id}
@@ -323,7 +298,34 @@ const GroupSettingsScreen = screen(
                                                     </Typography>
                                                 )}
                                             </Stack>
-                                            {isAdmin && <Stack row center></Stack>}
+
+                                            <Stack row center>
+                                                {isUserOwner(participant.id) ? (
+                                                    <Typography
+                                                        variant="caption"
+                                                        color="brand.secondary"
+                                                    >
+                                                        <Icon
+                                                            name="Star"
+                                                            size={12}
+                                                            color="brand.secondary"
+                                                        />
+                                                        {' Owner'}
+                                                    </Typography>
+                                                ) : isUserAdmin(participant.id) ? (
+                                                    <Typography
+                                                        variant="caption"
+                                                        color="brand.secondary"
+                                                    >
+                                                        <Icon
+                                                            name="Key"
+                                                            size={12}
+                                                            color="brand.secondary"
+                                                        />
+                                                        {' Admin'}
+                                                    </Typography>
+                                                ) : null}
+                                            </Stack>
                                         </Stack>
                                     </ContextMenu>
                                     {index !== sortedParticipants.length - 1 && (

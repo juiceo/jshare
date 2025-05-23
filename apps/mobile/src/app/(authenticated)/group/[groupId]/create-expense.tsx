@@ -83,7 +83,7 @@ const CreateExpenseScreen = screen(
                                 {hasAmountMismatch && (
                                     <Typography
                                         variant="caption"
-                                        color="error.light"
+                                        color="error"
                                         align="center"
                                         p="md"
                                     >

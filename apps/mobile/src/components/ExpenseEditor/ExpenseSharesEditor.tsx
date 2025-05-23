@@ -52,7 +52,7 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
 
     return (
         <>
-            <Stack column bg="background.primary" br="xl">
+            <Stack column bg="background.secondary" br="xl">
                 <Stack p="xl" row alignCenter spacing="sm">
                     <Icon name="Info" size={12} color="text.secondary" />
                     <Typography variant="caption" color="tertiary" align="center">
@@ -81,7 +81,7 @@ export const ExpenseSharesEditor = (props: ExpenseSharesEditorProps) => {
                 <Divider horizontal color="background.primary" />
                 <RectButton onPress={() => setAddingUser(true)}>
                     <Stack row alignCenter spacing="md" p="xl">
-                        <Stack center bg="background.secondary" h={36} w={36} br="full">
+                        <Stack center bg="background.tertiary" h={36} w={36} br="full">
                             <Icon name="Plus" size={18} />
                         </Stack>
                         <Stack column>

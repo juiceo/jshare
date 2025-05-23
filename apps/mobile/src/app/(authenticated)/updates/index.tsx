@@ -96,7 +96,7 @@ const UpdatesScreen = screen(
                                 <Typography variant="caption" color="tertiary">
                                     May 12th, 2025
                                 </Typography>
-                                <Typography variant="h4" mb="xl" color="accent.primary">
+                                <Typography variant="h4" mb="xl" color="brand.primary">
                                     Added support for invite links
                                 </Typography>
                                 <Typography variant="body1">
@@ -108,7 +108,7 @@ const UpdatesScreen = screen(
                                 <Typography variant="caption" color="tertiary">
                                     May 8th, 2025
                                 </Typography>
-                                <Typography variant="h4" mb="xl" color="accent.primary">
+                                <Typography variant="h4" mb="xl" color="brand.primary">
                                     Introducing offline mode!
                                 </Typography>
                                 <Typography variant="body1">
