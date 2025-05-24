@@ -94,12 +94,26 @@ const UpdatesScreen = screen(
                         <Stack column spacing="3xl" mt="3xl">
                             <Stack>
                                 <Typography variant="caption" color="tertiary">
+                                    May 20th, 2025
+                                </Typography>
+                                <Typography variant="h4" mb="xl" color="brand.primary">
+                                    Improved user management
+                                </Typography>
+                                <Typography variant="body1" color="secondary">
+                                    Group owners and admins can now promote other users to group
+                                    admins, and remove users from the group. You can now also leave
+                                    groups yourself! When a user leaves or is removed from a group,
+                                    you must choose which other member to transfer their balance to.
+                                </Typography>
+                            </Stack>
+                            <Stack>
+                                <Typography variant="caption" color="tertiary">
                                     May 12th, 2025
                                 </Typography>
                                 <Typography variant="h4" mb="xl" color="brand.primary">
                                     Added support for invite links
                                 </Typography>
-                                <Typography variant="body1">
+                                <Typography variant="body1" color="secondary">
                                     You can now easily invite friends to join your group by just
                                     sharing a link with them!
                                 </Typography>
@@ -111,7 +125,7 @@ const UpdatesScreen = screen(
                                 <Typography variant="h4" mb="xl" color="brand.primary">
                                     Introducing offline mode!
                                 </Typography>
-                                <Typography variant="body1">
+                                <Typography variant="body1" color="secondary">
                                     JShare now supports offline mode! You can now use the app
                                     without an internet connection, and all of your changes will be
                                     synced when you come back online. This update also greatly

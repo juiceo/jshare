@@ -14,6 +14,8 @@ import { Checkbox } from '~/components/atoms/Checkbox';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
 import { Button } from '~/components/Button';
+import { IconButton } from '~/components/IconButton';
+import { InfoSheet } from '~/components/InfoSheet';
 import { Screen } from '~/components/Screen';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
@@ -26,6 +28,7 @@ const GroupSettleScreen = screen(
     observer(() => {
         const user = SessionStore.user;
         const router = useRouter();
+        const [showInfo, setShowInfo] = useState(false);
         const { group, groupId } = useGroupContext();
         const [checked, setChecked] = useState<PaymentObject[]>([]);
 
@@ -86,7 +89,18 @@ const GroupSettleScreen = screen(
 
         return (
             <Screen>
-                <Screen.Header title="Settle up" subtitle={group.data.name} blur />
+                <Screen.Header
+                    title="Settle up"
+                    subtitle={group.data.name}
+                    blur
+                    right={
+                        <IconButton
+                            variant="ghost"
+                            icon="CircleHelp"
+                            onPress={() => setShowInfo(true)}
+                        />
+                    }
+                />
                 <Screen.Content scrollable disableTopInset>
                     <Stack column center alignCenter p="2xl" ar="16/9">
                         {balance < 0 && (
@@ -97,7 +111,7 @@ const GroupSettleScreen = screen(
                                 <Typography variant="h1" align="center">
                                     {formatAmount(-balance, group.data.currency)}
                                 </Typography>
-                                <Typography variant="body1" align="center">
+                                <Typography variant="body1" align="center" color="secondary">
                                     to settle your balance
                                 </Typography>
                             </Stack>
@@ -110,7 +124,7 @@ const GroupSettleScreen = screen(
                                 <Typography variant="h1" align="center">
                                     {formatAmount(balance, group.data.currency)}
                                 </Typography>
-                                <Typography variant="body1" align="center">
+                                <Typography variant="body1" align="center" color="secondary">
                                     to settle your balance
                                 </Typography>
                             </Stack>
@@ -200,6 +214,12 @@ const GroupSettleScreen = screen(
                         </Screen.Footer>
                     )}
                 </>
+                <InfoSheet
+                    isOpen={showInfo}
+                    onClose={() => setShowInfo(false)}
+                    title="Settle up"
+                    description="You can settle up whenever you want to even out balances between group members. You can do this at any point, even if you are still planning to add more expenses - the group will continue working as normal."
+                />
             </Screen>
         );
     })

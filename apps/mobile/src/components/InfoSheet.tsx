@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { Keyboard } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 
@@ -18,6 +20,12 @@ export type OfflineInfoProps = {
 export const InfoSheet = (props: OfflineInfoProps) => {
     const insets = useSafeAreaInsets();
 
+    useEffect(() => {
+        if (props.isOpen) {
+            Keyboard.dismiss();
+        }
+    }, [props.isOpen]);
+
     return (
         <BottomSheet isOpen={props.isOpen} onClose={props.onClose}>
             <BottomSheetView style={{ paddingBottom: insets.bottom }}>
@@ -25,7 +33,7 @@ export const InfoSheet = (props: OfflineInfoProps) => {
                     <Typography variant="h3" mb="xl">
                         {props.title}
                     </Typography>
-                    <Typography variant="body1" align="center">
+                    <Typography variant="body1" align="center" color="secondary">
                         {props.description}
                     </Typography>
                 </Stack>
