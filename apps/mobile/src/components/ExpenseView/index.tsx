@@ -43,7 +43,7 @@ export const ExpenseView = observer((props: ExpenseViewProps) => {
                 </Stack>
             </Stack>
             <Stack column center>
-                <Typography variant="caption">
+                <Typography variant="caption" color="tertiary">
                     Created: {dayjs(expense.createdAt).format('MMM D, YYYY HH:mm')} by{' '}
                     <UserName userId={expense.ownerId} variant="short" />
                 </Typography>

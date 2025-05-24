@@ -9,6 +9,7 @@ import { formatAmount } from '@jshare/common';
 import { Box } from '~/components/atoms/Box';
 import { Stack } from '~/components/atoms/Stack';
 import { Avatar } from '~/components/Avatar';
+import { StatusBadge } from '~/components/StatusBadge';
 import { Typography } from '~/components/Typography';
 import { UserName } from '~/components/UserName';
 import { Store } from '~/lib/store/collections';
@@ -62,6 +63,14 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
 
     const ownShare = expense.data.shares.find((share) => share.userId === user.id);
 
+    const ownBalance = (() => {
+        const paid = expense.data.payerId === user.id ? expense.data.amount : 0;
+        const ownShare = expense.data.shares.find((share) => share.userId === user.id);
+        const received = ownShare ? ownShare.amount : 0;
+
+        return paid - received;
+    })();
+
     return (
         <BorderlessButton
             activeOpacity={0.9}
@@ -92,14 +101,15 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
                         {expense.data.description}
                     </Typography>
                 </Stack>
-                {!expense.data.archived && (
+                {!expense.data.archived && ownBalance !== 0 && (
                     <Stack column center>
-                        <Typography variant="h6">
-                            Your share:{' '}
-                            {ownShare
-                                ? formatAmount(ownShare.amount, ownShare.currency)
-                                : formatAmount(0, expense.data.currency)}
-                        </Typography>
+                        <StatusBadge
+                            prefix="You:"
+                            amount={ownBalance}
+                            currency={expense.data.currency}
+                            backgroundColor="background.tertiary"
+                            small
+                        />
                     </Stack>
                 )}
             </Stack>

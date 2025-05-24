@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -35,6 +35,12 @@ const ExpenseScreen = screen(
         }>();
 
         const expense = Store.expenses.findById(expenseId);
+
+        const canEdit = useMemo(() => {
+            if (expense?.data.ownerId === user.id) return true;
+            if (isAdmin) return true;
+            return false;
+        }, [expense?.data.ownerId, isAdmin, user.id]);
 
         const isOwner = expense?.data.ownerId === user.id;
 
@@ -95,14 +101,14 @@ const ExpenseScreen = screen(
                 <Screen.Footer>
                     {!expense.data.archived ? (
                         <Stack column spacing="md">
-                            {mode === 'view' && isOwner && (
+                            {mode === 'view' && canEdit && (
                                 <>
                                     <Button color="secondary" onPress={() => setMode('edit')}>
                                         Edit expense
                                     </Button>
                                 </>
                             )}
-                            {mode === 'view' && !isOwner && !isAdmin && (
+                            {mode === 'view' && !canEdit && (
                                 <Stack center column spacing="md" px="xl">
                                     <Icon name="Lock" />
                                     <Typography variant="caption" color="tertiary" align="center">

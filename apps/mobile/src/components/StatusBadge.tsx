@@ -1,5 +1,10 @@
 import { formatAmount } from '@jshare/common';
-import { useTheme } from '@jshare/theme';
+import {
+    useTheme,
+    type BackgroundColorPath,
+    type ColorPath,
+    type PrimaryColorPath,
+} from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/Typography';
@@ -8,6 +13,8 @@ export type StatusBadgeProps = {
     amount: number;
     currency: string;
     prefix?: string;
+    backgroundColor?: BackgroundColorPath | PrimaryColorPath;
+    small?: boolean;
 };
 
 export const StatusBadge = (props: StatusBadgeProps) => {
@@ -16,14 +23,22 @@ export const StatusBadge = (props: StatusBadgeProps) => {
     const isNegative = props.amount < 0;
     const isPositive = props.amount > 0;
     return (
-        <Stack row alignCenter bg="background.secondary" px="md" py="xs" br="xl" spacing="sm">
+        <Stack
+            row
+            alignCenter
+            bg={props.backgroundColor ?? 'background.secondary'}
+            px="md"
+            py="xs"
+            br="xl"
+            spacing="sm"
+        >
             {prefix && (
-                <Typography variant="h5" style={{ lineHeight: 0 }}>
+                <Typography variant={props.small ? 'h6' : 'h5'} style={{ lineHeight: 0 }}>
                     {prefix}{' '}
                 </Typography>
             )}
             <Typography
-                variant="h5"
+                variant={props.small ? 'h6' : 'h5'}
                 color="secondary"
                 style={{
                     lineHeight: 0,
