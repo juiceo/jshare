@@ -53,7 +53,9 @@ const YouScreen = screen(
                         <Stack bg="background.secondary" br="xl">
                             <RectButton onPress={() => router.push('/profile')}>
                                 <Stack row alignCenter p="xl" spacing="xl">
-                                    <Icon name="UserPen" size={24} color="text.secondary" />
+                                    <Stack center bg="background.level3" p="md" br="full">
+                                        <Icon name="UserPen" size={24} color="brand.primary" />
+                                    </Stack>
                                     <Typography variant="h5">Profile</Typography>
                                 </Stack>
                             </RectButton>
@@ -71,14 +73,22 @@ const YouScreen = screen(
                             <Divider horizontal color="background.primary" />
                             <RectButton onPress={() => router.push('/settings')}>
                                 <Stack row alignCenter p="xl" spacing="xl">
-                                    <Icon name="Cog" size={24} color="text.secondary" />
+                                    <Stack center bg="background.level3" p="md" br="full">
+                                        <Icon name="Cog" size={24} color="brand.primary" />
+                                    </Stack>
                                     <Typography variant="h5">Account & System</Typography>
                                 </Stack>
                             </RectButton>
                             <Divider horizontal color="background.primary" />
                             <RectButton onPress={() => router.push('/updates')}>
                                 <Stack row alignCenter p="xl" spacing="xl">
-                                    <Icon name="CloudDownload" size={24} color="text.secondary" />
+                                    <Stack center bg="background.level3" p="md" br="full">
+                                        <Icon
+                                            name="CloudDownload"
+                                            size={24}
+                                            color="brand.primary"
+                                        />
+                                    </Stack>
                                     <Typography variant="h5">Updates</Typography>
                                 </Stack>
                             </RectButton>
@@ -87,7 +97,9 @@ const YouScreen = screen(
                                     <Divider horizontal color="background.primary" />
                                     <RectButton onPress={() => router.push('/developer-settings')}>
                                         <Stack row alignCenter p="xl" spacing="xl">
-                                            <Icon name="Code" size={24} color="text.secondary" />
+                                            <Stack center bg="background.level3" p="md" br="full">
+                                                <Icon name="Code" size={24} color="brand.primary" />
+                                            </Stack>
                                             <Typography variant="h5">Developer settings</Typography>
                                         </Stack>
                                     </RectButton>

@@ -54,7 +54,7 @@ export const ImageUploadMenu = (props: ImageUploadMenuProps) => {
                             <Divider horizontal />
                             <BorderlessButton onPress={() => handleSelect('remove')}>
                                 <Stack row center p="2xl">
-                                    <Typography variant="button" color="error.light">
+                                    <Typography variant="button" color="error">
                                         Remove image
                                     </Typography>
                                 </Stack>

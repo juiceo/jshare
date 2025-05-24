@@ -2,8 +2,6 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
-import { useTheme } from '@jshare/theme';
-
 import { BottomSheet } from '~/components/atoms/BottomSheet';
 import { Divider } from '~/components/atoms/Divider';
 import { Stack } from '~/components/atoms/Stack';
@@ -78,7 +76,6 @@ type MenuItemProps = {
     onSelect: () => void;
 };
 export const MenuItem = (props: MenuItemProps) => {
-    const { theme } = useTheme();
     return (
         <RectButton onPress={props.onSelect}>
             <Stack row alignCenter p="xl" spacing="xl">

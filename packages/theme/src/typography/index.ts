@@ -63,13 +63,13 @@ export const typographyVariants: TypographyVariants = {
         letterSpacing: 0.1,
     },
     button: {
-        fontFamily: 'Inter_700Bold',
+        fontFamily: 'Poppins_700Bold',
         fontSize: 18,
         lineHeight: 20,
         letterSpacing: 0.1,
     },
     buttonSmall: {
-        fontFamily: 'Inter_700Bold',
+        fontFamily: 'Poppins_700Bold',
         fontSize: 14,
         lineHeight: 20,
         letterSpacing: 0.1,

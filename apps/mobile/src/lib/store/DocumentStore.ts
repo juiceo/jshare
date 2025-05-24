@@ -170,12 +170,11 @@ export class DocumentStore<
         this.sync = async (force?: boolean) => {
             if (!this.isReady) return;
             if (this.mode !== 'sync') return;
-            if (!SessionStore.isAuthenticated) {
-                this.debug('not authenticated, skipping sync');
-                return;
-            }
+            if (!SessionStore.isAuthenticated) return;
             if (!force) {
-                if (this.isSyncing) return;
+                if (this.isSyncing) {
+                    return;
+                }
                 if (this.lastSync) {
                     const now = Date.now();
                     if (now - this.lastSync.timestamp < this.staleTime) {
@@ -197,8 +196,17 @@ export class DocumentStore<
                 });
             }, 1);
 
+            this.debug('syncing!!!');
+
             try {
                 const result = await this.api.sync({ lastSync: this.lastSync?.timestamp ?? 0 });
+
+                if (!this.isReady) {
+                    runInAction(() => {
+                        this.isSyncing = false;
+                    });
+                    return;
+                }
 
                 runInAction(() => {
                     this.lastSync = result;
@@ -535,15 +543,10 @@ export class DocumentStore<
             await this.flushDeletes();
         };
 
-        if (this.mode === 'sync') {
-            setInterval(() => {
-                this.sync();
-            }, 1000);
-        }
-
         reaction(
             () => SessionStore.state,
             async (authState) => {
+                this.debug('authState changed', authState.type);
                 switch (authState.type) {
                     case 'error':
                     case 'unauthenticated': {
@@ -581,7 +584,9 @@ export class DocumentStore<
         this.init = async () => {
             if (!this.isReady) {
                 await this.hydrate();
-                this.isReady = true;
+                runInAction(() => {
+                    this.isReady = true;
+                });
             }
             flushAllMutations();
             this.sync(true);
@@ -634,6 +639,7 @@ export class DocumentStore<
     }
 
     private async clearPersistedState() {
+        this.debug(`clearing persisted state`);
         await AsyncStorage.removeItem(`DocumentStore::${this.name}`);
     }
 
@@ -948,6 +954,7 @@ export class DocumentStore<
             this.updates = {};
             this.deletes = {};
             this.creates = {};
+            this.lastSync = null;
             this.index.clear();
         });
         return this.clearPersistedState();

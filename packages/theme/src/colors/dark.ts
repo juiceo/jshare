@@ -4,12 +4,12 @@ export const darkPalette: ColorPalette = {
     brand: {
         primary: '#6991C7',
         secondary: '#A1C4FD',
-        tertiary: '#223843',
+        tertiary: '#6172F3',
     },
     accent: {
         primary: '#FF7070',
         secondary: '#CC5A5A',
-        tertiary: '#CC5A5A',
+        tertiary: '#FDA29B',
     },
     background: {
         system: '#0A0A0A',

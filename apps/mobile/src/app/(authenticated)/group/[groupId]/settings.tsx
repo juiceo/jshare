@@ -212,10 +212,10 @@ const GroupSettingsScreen = screen(
                                     mb="xl"
                                 >
                                     <Stack column flex={1}>
-                                        <Typography variant="caption">
+                                        <Typography variant="caption" color="tertiary">
                                             Tap to copy invite link
                                         </Typography>
-                                        <Typography variant="subtitle1" color="accent.primary">
+                                        <Typography variant="h6" color="accent.primary">
                                             {group.data.inviteCode}
                                         </Typography>
                                     </Stack>
@@ -275,7 +275,7 @@ const GroupSettingsScreen = screen(
                                         >
                                             <Avatar userId={participant.id} size="lg" />
                                             <Stack column flex={1}>
-                                                <Typography variant="subtitle1">
+                                                <Typography variant="h6">
                                                     <UserName
                                                         userId={participant.id}
                                                         variant="full"

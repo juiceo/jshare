@@ -13,7 +13,7 @@ export const SystemMessage = (props: SystemMessageProps) => {
     return props.message.data.text ? (
         <BlurView>
             <Stack center py="sm" px="md" style={{ backgroundColor: 'rgba(0,0,0,0.3)' }} br="2xl">
-                <Typography variant="caption" align="center">
+                <Typography variant="caption" align="center" color="secondary">
                     <TagText text={props.message.data.text} />
                 </Typography>
             </Stack>

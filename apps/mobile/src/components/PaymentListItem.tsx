@@ -29,11 +29,9 @@ export const PaymentListItem = (props: PaymentListItemProps) => {
                 </Typography>
             </Stack>
             <Stack column alignEnd justifyCenter>
-                <Typography variant="subtitle1">
-                    {formatAmount(data.amount, data.currency)}
-                </Typography>
+                <Typography variant="h6">{formatAmount(data.amount, data.currency)}</Typography>
                 {data.conversion && (
-                    <Typography variant="subtitle2" color="tertiary">
+                    <Typography variant="h6" color="tertiary">
                         = {formatAmount(data.conversion.amount, data.conversion.currency)}
                     </Typography>
                 )}

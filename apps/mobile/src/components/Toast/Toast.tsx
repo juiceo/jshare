@@ -39,7 +39,7 @@ export const Toast = (props: ToastProps) => {
         <Stack row alignCenter spacing="xl" p="xl" br="xl" style={styles.wrapper}>
             <Icon name="Info" size={24} color={iconColor} />
             <Stack column flex={1}>
-                <Typography variant="subtitle1" color="primary">
+                <Typography variant="body1" color="primary">
                     {title}
                 </Typography>
                 {message && (

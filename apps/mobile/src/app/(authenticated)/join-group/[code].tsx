@@ -57,7 +57,7 @@ const JoinGroupCodeScreen = screen(
                             />
                             <Typography variant="h4">{group.name}</Typography>
                             {isMember ? (
-                                <Typography variant="subtitle1">You're already a member</Typography>
+                                <Typography variant="body1">You're already a member</Typography>
                             ) : (
                                 <Typography variant="caption" color="tertiary" align="center">
                                     {plural({
@@ -79,7 +79,7 @@ const JoinGroupCodeScreen = screen(
                             <Stack column spacing="md" mt="2xl">
                                 <Typography variant="body1" align="center" color="primary">
                                     No group was found with the code{' '}
-                                    <Typography variant="subtitle1" color="brand.primary">
+                                    <Typography variant="h6" color="brand.primary">
                                         {code}
                                     </Typography>
                                 </Typography>

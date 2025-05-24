@@ -156,7 +156,7 @@ export const RemoveUserSheet = observer((props: RemoveUserSheetProps) => {
                     >
                         <Avatar userId={userId} size="lg" />
                         <Stack column spacing="xs">
-                            <Typography variant="subtitle1" color="secondary">
+                            <Typography variant="h6" color="secondary">
                                 <UserName userId={userId} variant="full" />
                             </Typography>
                             <Stack column spacing="none">

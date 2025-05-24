@@ -29,9 +29,9 @@ const _ChatMessage = observer((props: ChatMessageProps) => {
 
     const gradientColors = ((): [string, string] => {
         if (isSelf) {
-            return [darken(theme.palette.brand.primary, 0.5), theme.palette.brand.tertiary];
+            return ['#4E5BA6', '#363F72'];
         } else {
-            return [theme.palette.background.tertiary, theme.palette.background.quaternary];
+            return ['#61656C', '#373A41'];
         }
     })();
 

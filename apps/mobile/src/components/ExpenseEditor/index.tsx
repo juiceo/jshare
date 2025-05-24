@@ -90,7 +90,7 @@ export const ExpenseEditor = (props: ExpenseEditorProps) => {
                     errors={form.formState.errors}
                     name={'amount'}
                     render={({ message }) => (
-                        <Typography variant="caption" color="error.light">
+                        <Typography variant="caption" color="error">
                             {message}
                         </Typography>
                     )}
@@ -147,7 +147,7 @@ export const ExpenseEditor = (props: ExpenseEditorProps) => {
                 />
             </Stack>
             <Stack p="xl" mt="2xl">
-                <Typography variant="body1">Who's participating?</Typography>
+                <Typography variant="h6">Who's participating?</Typography>
             </Stack>
             <Controller
                 control={form.control}

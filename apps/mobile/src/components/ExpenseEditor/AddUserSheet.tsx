@@ -49,7 +49,7 @@ export const AddUserSheet = observer((props: AddUserSheetProps) => {
                     <Typography variant="h3" align="center" mb="xl">
                         Add person
                     </Typography>
-                    <Typography variant="caption" align="center" mb="2xl">
+                    <Typography variant="caption" align="center" mb="2xl" color="secondary">
                         Add someone who is not in the group yet - they'll be able to claim any
                         expenses assigned to them when they join!
                     </Typography>

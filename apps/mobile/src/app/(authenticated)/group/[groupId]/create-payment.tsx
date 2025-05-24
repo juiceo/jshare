@@ -137,7 +137,7 @@ const CreatePaymentScreen = screen(
                                         render={({ message }) => (
                                             <Typography
                                                 variant="caption"
-                                                color="error.light"
+                                                color="error"
                                                 align="center"
                                             >
                                                 {message}
@@ -249,10 +249,7 @@ const CreatePaymentScreen = screen(
                                             name={'recipient'}
                                             render={({ message }) => (
                                                 <Stack center p="xl">
-                                                    <Typography
-                                                        variant="caption"
-                                                        color="error.light"
-                                                    >
+                                                    <Typography variant="caption" color="error">
                                                         {message}
                                                     </Typography>
                                                 </Stack>

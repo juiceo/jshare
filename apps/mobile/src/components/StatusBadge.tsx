@@ -18,12 +18,12 @@ export const StatusBadge = (props: StatusBadgeProps) => {
     return (
         <Stack row alignCenter bg="background.secondary" px="md" py="xs" br="xl" spacing="sm">
             {prefix && (
-                <Typography variant="h6" style={{ lineHeight: 0 }}>
+                <Typography variant="h5" style={{ lineHeight: 0 }}>
                     {prefix}{' '}
                 </Typography>
             )}
             <Typography
-                variant="h6"
+                variant="h5"
                 color="secondary"
                 style={{
                     lineHeight: 0,

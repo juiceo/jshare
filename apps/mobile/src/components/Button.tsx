@@ -1,4 +1,4 @@
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import {
@@ -36,8 +36,10 @@ export const Button = (props: ButtonProps) => {
         onPress,
     } = props;
 
+    const styles = getStyles(theme);
     const primaryColor = getPrimaryColor({ variant, color }, theme);
-    const contrastColor = getContrastTextColor(primaryColor);
+    const contrastColor =
+        color === 'primary' ? theme.palette.text.primary : getContrastTextColor(primaryColor);
     const textColor = variant === 'contained' ? contrastColor : primaryColor;
 
     const sizeValue = size === 'sm' ? 32 : 52;
@@ -51,11 +53,14 @@ export const Button = (props: ButtonProps) => {
                     minHeight: sizeValue,
                     paddingHorizontal: size === 'sm' ? theme.spacing.lg : theme.spacing.xl,
                     backgroundColor: variant === 'contained' ? primaryColor : undefined,
-                    borderWidth: variant === 'outlined' ? 2 : 0,
+                    borderWidth: variant === 'outlined' ? 3 : 0,
                     borderColor: primaryColor,
                     borderStyle: 'solid',
                     borderRadius: sizeValue / 2,
                 },
+                props.disabled && variant === 'contained' && styles.disabledContained,
+                props.disabled && variant === 'outlined' && styles.disabledOutlined,
+                props.disabled && variant === 'ghost' && styles.disabledGhost,
                 getSxStyles(props, theme),
             ]}
             activeOpacity={0.1}
@@ -67,7 +72,12 @@ export const Button = (props: ButtonProps) => {
                 {loading && <ActivityIndicator color={textColor} size="small" />}
                 <Typography
                     variant={size === 'sm' ? 'buttonSmall' : 'button'}
-                    style={{ color: textColor }}
+                    style={[
+                        { color: textColor },
+                        props.disabled && variant === 'contained' && styles.disabledContainedText,
+                        props.disabled && variant === 'outlined' && styles.disabledOutlinedText,
+                        props.disabled && variant === 'ghost' && styles.disabledGhostText,
+                    ]}
                     align="center"
                 >
                     {props.children}
@@ -75,6 +85,29 @@ export const Button = (props: ButtonProps) => {
             </Stack>
         </RectButton>
     );
+};
+
+const getStyles = (theme: Theme) => {
+    return StyleSheet.create({
+        disabledContained: {
+            backgroundColor: theme.palette.background.tertiary,
+        },
+        disabledContainedText: {
+            color: theme.palette.text.disabled,
+        },
+        disabledOutlined: {
+            borderColor: theme.palette.background.quaternary,
+        },
+        disabledOutlinedText: {
+            color: theme.palette.text.disabled,
+        },
+        disabledGhost: {
+            backgroundColor: theme.palette.background.secondary,
+        },
+        disabledGhostText: {
+            color: theme.palette.text.disabled,
+        },
+    });
 };
 
 const getPrimaryColor = (
@@ -87,7 +120,7 @@ const getPrimaryColor = (
     switch (args.color) {
         case 'primary':
             return args.variant === 'contained'
-                ? theme.palette.brand.primary
+                ? theme.palette.brand.tertiary
                 : theme.palette.brand.secondary;
         case 'secondary':
             return args.variant === 'contained'
@@ -96,7 +129,7 @@ const getPrimaryColor = (
 
         case 'error':
             return args.variant === 'contained'
-                ? theme.palette.error.primary
-                : theme.palette.error.secondary;
+                ? theme.palette.error.secondary
+                : theme.palette.error.tertiary;
     }
 };

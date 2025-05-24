@@ -51,7 +51,7 @@ export const FormControl = (props: PropsWithChildren<FormControlProps>) => {
                     {!!label && (
                         <Typography
                             variant="caption"
-                            color={focused ? 'brand.primary' : 'secondary'}
+                            color={focused ? 'brand.secondary' : 'secondary'}
                         >
                             {label}
                         </Typography>

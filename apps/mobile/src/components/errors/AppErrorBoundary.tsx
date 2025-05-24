@@ -31,7 +31,7 @@ export const AppErrorBoundary = (props: PropsWithChildren) => {
                         Oh-oh, looks like something didn't quite go as planned. We've been notified
                         about this issue and we'll look into it as soon as possible.
                     </Typography>
-                    <Typography variant="caption" align="center" color="error.light">
+                    <Typography variant="caption" align="center" color="error">
                         Error message: {args.error.message}
                     </Typography>
                 </Stack>
