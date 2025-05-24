@@ -42,8 +42,6 @@ const ExpenseScreen = screen(
             return false;
         }, [expense?.data.ownerId, isAdmin, user.id]);
 
-        const isOwner = expense?.data.ownerId === user.id;
-
         const form = useForm<ExpenseEditorSchema>({
             resolver: zodResolver(expenseEditorSchema),
             defaultValues: {

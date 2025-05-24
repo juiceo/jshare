@@ -61,8 +61,6 @@ export const ChatMessageExpenseAttachment = observer((props: ChatMessageExpenseA
         return <ExpenseDeleted />;
     }
 
-    const ownShare = expense.data.shares.find((share) => share.userId === user.id);
-
     const ownBalance = (() => {
         const paid = expense.data.payerId === user.id ? expense.data.amount : 0;
         const ownShare = expense.data.shares.find((share) => share.userId === user.id);

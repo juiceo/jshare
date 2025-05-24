@@ -1,10 +1,5 @@
 import { formatAmount } from '@jshare/common';
-import {
-    useTheme,
-    type BackgroundColorPath,
-    type ColorPath,
-    type PrimaryColorPath,
-} from '@jshare/theme';
+import { useTheme, type BackgroundColorPath, type PrimaryColorPath } from '@jshare/theme';
 
 import { Stack } from '~/components/atoms/Stack';
 import { Typography } from '~/components/Typography';
